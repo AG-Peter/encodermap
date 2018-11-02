@@ -1,4 +1,4 @@
-import encoder_map as em
+import encodermap as em
 import numpy as np
 import os
 import matplotlib.pyplot as plt

@@ -1,10 +1,16 @@
 from setuptools import setup
 
-setup(name='encoder_map',
-      version='0.1',
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setup(name='encodermap',
+      version='0.0.1',
       description='python library for dimensionality reduction',
+      long_description=long_description,
+      long_description_content_type="text/markdown",
       author='Tobias Lemke',
-      packages=['encoder_map'],
+      url="https://github.com/AG-Peter/encodermap",
+      packages=['encodermap'],
       install_requires=[
           'numpy',
           'matplotlib',
@@ -12,4 +18,8 @@ setup(name='encoder_map',
           'MDAnalysis',
           'tqdm'
       ],
-      zip_safe=False)
+      classifiers=[
+          "Programming Language :: Python :: 3",
+          "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+          "Operating System :: OS Independent",
+      ])
