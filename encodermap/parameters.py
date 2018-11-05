@@ -27,7 +27,7 @@ class ParametersFramework:
     See example in examples/parameters.py for usage
     """
     def __init__(self):
-        self.main_path = ""
+        self.main_path = os.getcwd()
 
     def save(self, path=None):
         if not path:
@@ -70,7 +70,6 @@ class Parameters(ParametersFramework):
         self.batch_size = 256
         self.summary_step = max(1, int(self.n_steps / 1000))
         self.checkpoint_step = max(1, int(self.n_steps / 10))
-        self.main_path = ""
         self.analysis_path = ""
         self.sketch_parameters = (4.5, 12, 6, 1, 2, 6)
         self.sketch_cost_scale = 500

@@ -1,10 +1,10 @@
 from setuptools import setup
 
-with open("README.md", "r") as fh:
+with open("description.md", "r") as fh:
     long_description = fh.read()
 
 setup(name='encodermap',
-      version='0.0.1',
+      version='0.0.2',
       description='python library for dimensionality reduction',
       long_description=long_description,
       long_description_content_type="text/markdown",
