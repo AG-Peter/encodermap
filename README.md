@@ -5,15 +5,15 @@ Dimensionality reduction and generation of high-dimensional data with autoencode
 EncoderMap requires TensorFlow to be installed.
 Follow the [instructions on the TensorFlow website](https://www.tensorflow.org/install/pip) to install it 
 either in the cpu or gpu version.
-Then install EncoderMap with pip:
+Then install EncoderMap with pip.
+If you want to install it in your home directory use:
 ```bash
 pip3 install --user encodermap
 ```
-if you want to install it in your home directory or with:
+If you are in a virtual environment use:
 ```bash
 pip3 install encodermap
 ```
-if you are in a virtual environment.
 
 ## Minimal Example
 This example shows how to use EncoderMap to project points from a high dimensional data set to
@@ -24,7 +24,7 @@ number of dimensions.
 import encodermap as em
 import numpy as np
 
-high_dimensional_data = np.loadtxt("my_high_d_data.csv")
+high_dimensional_data = np.loadtxt("my_high_d_data.csv", delimiter=",")
 parameters = em.Parameters()
 
 autoencoder = em.Autoencoder(parameters, high_dimensional_data)

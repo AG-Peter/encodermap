@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
 from math import pi
 import json
-from .misc import search_and_replace
+from .misc import search_and_replace, run_path
 
 
 class ParametersFramework:
@@ -27,7 +27,7 @@ class ParametersFramework:
     See example in examples/parameters.py for usage
     """
     def __init__(self):
-        self.main_path = os.getcwd()
+        self.main_path = run_path(os.getcwd())
 
     def save(self, path=None):
         if not path:
