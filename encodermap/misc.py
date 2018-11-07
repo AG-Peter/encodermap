@@ -1,21 +1,3 @@
-"""
-EncoderMap
-Copyright (C) 2018  Tobias Lemke
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""
-
 import tensorflow as tf
 from math import pi
 import os
@@ -23,6 +5,11 @@ import numpy as np
 
 
 def add_layer_summaries(layer):
+    """
+
+    :param layer:
+    :return:
+    """
     weights = layer.variables[0]
     biases = layer.variables[1]
     variable_summaries(layer.name + "_weights", weights)
@@ -30,17 +17,36 @@ def add_layer_summaries(layer):
 
 
 def periodic_distance(a, b, periodicity=2*pi):
+    """
+
+    :param a:
+    :param b:
+    :param periodicity:
+    :return:
+    """
     d = tf.abs(b-a)
     return tf.minimum(d, periodicity-d)
 
 
 def periodic_distance_np(a, b):
+    """
+
+    :param a:
+    :param b:
+    :return:
+    """
     d = np.abs(b-a)
     return np.minimum(d, 2*pi-d)
 
 
 def variable_summaries(name, variables):
-    """Attach a lot of summaries to a Tensor (for TensorBoard visualization)."""
+    """
+    Attach several summaries to a Tensor for TensorBoard visualization.
+
+    :param name:
+    :param variables:
+    :return:
+    """
     if not isinstance(variables, list):
         variables = [variables]
 
@@ -63,41 +69,66 @@ def variable_summaries(name, variables):
 
 
 def create_dir(path):
+    """
+
+    :param path:
+    :return:
+    """
     if not os.path.isdir(path):
         os.makedirs(path)
     return path
 
 
-def sketchmap_cost(r_h, r_l, sig_h, a_h, b_h, sig_l, a_l, b_l):
+def distance_cost(r_h, r_l, sig_h, a_h, b_h, sig_l, a_l, b_l):
+    """
+
+    :param r_h:
+    :param r_l:
+    :param sig_h:
+    :param a_h:
+    :param b_h:
+    :param sig_l:
+    :param a_l:
+    :param b_l:
+    :return:
+    """
     dist_h = pairwise_dist(r_h)
     dist_l = pairwise_dist(r_l)
 
-    sig_h = sketchmap_sigmoid(dist_h, sig_h, a_h, b_h)
-    sig_l = sketchmap_sigmoid(dist_l, sig_l, a_l, b_l)
+    sig_h = sigmoid(dist_h, sig_h, a_h, b_h)
+    sig_l = sigmoid(dist_l, sig_l, a_l, b_l)
 
     cost = tf.reduce_mean(tf.square(sig_h - sig_l))
     return cost
 
 
-def sketchmap_sigmoid(r, sig, a, b):
+def sigmoid(r, sig, a, b):
+    """
+
+    :param r:
+    :param sig:
+    :param a:
+    :param b:
+    :return:
+    """
     return 1 - (1 + (2**(a/b) - 1) * (r/sig)**a)**(-b/a)
 
 
-def pairwise_dist(embeddings, squared=False):
-    """Compute the 2D matrix of distances between all the embeddings.
-    from https://omoindrot.github.io/triplet-loss
-
-    Args:
-        embeddings: tensor of shape (batch_size, embed_dim)
-        squared: Boolean. If true, output is the pairwise squared euclidean distance matrix.
-                 If false, output is the pairwise euclidean distance matrix.
-
-    Returns:
-        pairwise_distances: tensor of shape (batch_size, batch_size)
+def pairwise_dist(positions, squared=False):
     """
+    Compute the 2D matrix of distances between all the embeddings.
+
+    :param positions: tensor of shape (batch_size, position_dim)
+    :param squared: Boolean. If true, output is the pairwise squared euclidean distance matrix.
+        If false, output is the pairwise euclidean distance matrix.
+
+    :return: the pairwise_distances as a tensor of shape (batch_size, batch_size)
+    """
+    # thanks to https://omoindrot.github.io/triplet-loss
+
     # Get the dot product between all embeddings
     # shape (batch_size, batch_size)
-    dot_product = tf.matmul(embeddings, tf.transpose(embeddings))
+    dot_product = tf.matmul(positions, tf.transpose(positions))
 
     # Get squared L2 norm for each embedding. We can just take the diagonal of `dot_product`.
     # This also provides more numerical stability (the diagonal of the result will be exactly 0).
@@ -129,19 +160,19 @@ def pairwise_dist(embeddings, squared=False):
 def search_and_replace(file_path, search_pattern, replacement, out_path=None, backup=True):
     """
     Searches for a pattern in a text file and replaces it with the replacement
-    Args:
-        file_path: (str)
+
+    :param file_path: (str)
             path to the file to search
-        search_pattern: (str)
+    :param search_pattern: (str)
             pattern to search for
-        replacement: (str)
+    :param replacement: (str)
             string that replaces the search_pattern in the output file
-        out_path: (str)
+    :param out_path: (str)
             path where to write the output file. If no path is given the original file will be replaced.
-        backup: (bool)
+    :param backup: (bool)
             if backup is true the original file is renamed to filename.bak before it is overwritten
 
-    Returns:
+    :return:
 
     """
     with open(file_path, "r") as f:
@@ -161,10 +192,9 @@ def search_and_replace(file_path, search_pattern, replacement, out_path=None, ba
 def run_path(path):
     """
     Creates a directory at "path/run{i}" where i the i corresponding to the smallest not yet existing path
-    Args:
-        path: (str)
 
-    Returns: (str)
+    :param path: (str)
+    :return: (str)
         path of the created folder
 
     """

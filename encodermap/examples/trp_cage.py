@@ -37,6 +37,6 @@ cbar.set_label("helix rmsd")
 
 # generate structures along path
 pdb_path = os.path.join(parent_path, "trp_cage_extended.pdb")
-generator = em.plot.PathGenerate(axe, autoencoder, pdb_path)
+generator = em.plot.PathGenerateDihedrals(axe, autoencoder, pdb_path)
 
 plt.show()

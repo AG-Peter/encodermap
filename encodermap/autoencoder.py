@@ -1,24 +1,6 @@
-"""
-EncoderMap
-Copyright (C) 2018  Tobias Lemke
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""
-
 import tensorflow as tf
 import numpy as np
-from .misc import periodic_distance, variable_summaries, add_layer_summaries, sketchmap_cost
+from .misc import periodic_distance, variable_summaries, add_layer_summaries, distance_cost
 import os
 from .parameters import Parameters
 from tqdm import tqdm
@@ -27,7 +9,21 @@ from tqdm import tqdm
 class Autoencoder:
 
     def __init__(self, parameters, train_data=None, validation_data=None, checkpoint_path=None, n_inputs=None):
+        """
+        :param parameters: Parameters object as defined in :py:class:`encodermap.parameters.Parameters`
 
+        :param train_data: 2d numpy array where each row is treated as a training point
+
+        :param validation_data: A 2d numpy array. This data will only be used to calculate a validation error during
+                                training. It will not be used for training.
+
+        :param checkpoint_path: If a checkpoint path is given values like neural network weights stored in this
+                                checkpoint will be restored.
+
+        :param n_inputs: If no train_data is given, for example when an already trained network is restored from a
+                         checkpoint, the number of of inputs needs to be given. This should be equal to the number of
+                         columns of the train_data the network was originally trained with.
+        """
         # Parameters:
         self.p = parameters  # type: Parameters
         self.p.save()
@@ -91,6 +87,9 @@ class Autoencoder:
                 current_layer = tf.concat([tf.sin(inputs), tf.cos(inputs)], 1)
             else:
                 current_layer = inputs
+
+            assert len(self.p.n_neurons) == len(self.p.activation_functions) - 1, \
+                "you need one activation function more then layers given in n_neurons"
             for i, (n_neurons, act_fun) in enumerate(zip(self.p.n_neurons, self.p.activation_functions[1:])):
                 if act_fun:
                     act_fun = getattr(tf.nn, act_fun)
@@ -130,23 +129,30 @@ class Autoencoder:
     def _cost(self):
         self.auto_cost = tf.reduce_mean(
             tf.norm(periodic_distance(self.inputs, self.generated, self.p.periodicity), axis=1))
-        self.sketch_cost = sketchmap_cost(self.inputs, self.latent, *self.p.sketch_parameters)
-        self.mean_cost = tf.reduce_mean(tf.square(tf.norm(self.latent, axis=1)))
-        # Todo: square of square root is ineffcient
+        self.distance_cost = distance_cost(self.inputs, self.latent, *self.p.dist_sig_parameters)
+        self.center_cost = tf.reduce_mean(tf.square(tf.norm(self.latent, axis=1)))
+        # Todo: square of square root is inefficient
         self.reg_cost = tf.losses.get_regularization_loss()
-        cost = self.p.sketch_cost_scale * self.sketch_cost \
-                    + self.p.auto_cost_scale * self.auto_cost \
-                    + self.p.mean_cost_scale * self.mean_cost \
-                    + self.reg_cost
+        cost = self.p.distance_cost_scale * self.distance_cost \
+               + self.p.auto_cost_scale * self.auto_cost \
+               + self.p.center_cost_scale * self.center_cost \
+               + self.reg_cost
 
         tf.summary.scalar("cost", cost)
         tf.summary.scalar("auto_cost", self.auto_cost)
-        tf.summary.scalar("sketch_cost", self.sketch_cost)
-        tf.summary.scalar("mean_cost", self.mean_cost)
+        tf.summary.scalar("distance_cost", self.distance_cost)
+        tf.summary.scalar("center_cost", self.center_cost)
         tf.summary.scalar("reg_cost", self.reg_cost)
         return cost
 
     def encode(self, inputs):
+        """
+        Projects high dimensional data to a low dimensional space using the encoder part of the autoencoder.
+
+        :param inputs: 2d numpy array with the same number of columns as the used train_data
+        :return: 2d numpy array with the point projected the the low dimensional space. The number of columns is equal
+                 to the number of neurons in the bottleneck layer of the autoencoder.
+        """
         latents = []
         batches = np.array_split(inputs, max(1, int(len(inputs) / 2048)))
         for batch in batches:
@@ -156,6 +162,14 @@ class Autoencoder:
         return latents
 
     def generate(self, latent):
+        """
+        Generates new high-dimensional points based on given low-dimensional points using the decoder part of the
+        autoencoder.
+
+        :param latent: 2d numpy array containing points in the low-dimensional space. The number of columns must be
+                       equal to the number of neurons in the bottleneck layer of the autoencoder.
+        :return: 2d numpy array containing points in the high-dimensional space.
+        """
         generateds = []
         batches = np.array_split(latent, max(1, int(len(latent) / 2048)))
         for batch in batches:
@@ -164,12 +178,15 @@ class Autoencoder:
         generated = np.concatenate(generateds, axis=0)
         return generated
 
-    def random_batch(self, data, batch_size=None):
+    def _random_batch(self, data, batch_size=None):
         batch_size = batch_size or self.p.batch_size
         batch = data[np.random.choice(len(data), batch_size, replace=False)]
         return batch
 
     def train(self):
+        """
+        Train the autoencoder as specified in the parameters object.
+        """
         step = 0
         for step in tqdm(range(self.p.n_steps)):
             # feed_dict = {self.inputs: self.random_batch()}
@@ -179,7 +196,7 @@ class Autoencoder:
                 self.train_writer.add_summary(summary_values, step)
                 if self.validation_data is not None:
                     summary_values = self.sess.run(self.merged_summaries,
-                                                   feed_dict={self.inputs: self.random_batch(self.validation_data)})
+                                                   feed_dict={self.inputs: self._random_batch(self.validation_data)})
                     self.validation_writer.add_summary(summary_values, step)
             else:
                 self.sess.run(self.optimize)

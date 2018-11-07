@@ -1,21 +1,3 @@
-"""
-EncoderMap
-Copyright (C) 2018  Tobias Lemke
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""
-
 import numpy as np
 from scipy.interpolate import interp1d
 from matplotlib.lines import Line2D
@@ -29,7 +11,27 @@ from .dihedral_backmapping import dihedral_backmapping
 
 
 class ManualPath(object):
+    """
+    ManualPath is a tool to manually select a path in a matplotlib graph.
+    It supports two modes: "interpolated line", and "free draw".
+    Press "m" to switch modes.
+
+    In interpolated line mode klick in the graph to add an additional way point.
+    Press "delete" to remove the last way point.
+    Press "d" to remove all way points.
+    Press "enter" once you have finished you path selection.
+
+    In free draw mode press and hold the left mouse button while you draw a path.
+
+    Once the path selection is completed, the use_points method is called with the points on the selected path.
+    You can overwrite the use_points method to do what ever you want with the points on the path.
+    """
     def __init__(self, axe, n_points=200):
+        """
+
+        :param axe: matplotlib axe object for example from: fig, axe = plt.subplots()
+        :param n_points: Number of points distributed on the selected path.
+        """
         self.axe = axe
         self.canvas = axe.figure.canvas
         self.fig = axe.figure
@@ -47,13 +49,13 @@ class ManualPath(object):
         interpolated_line = Line2D([], [], c=self.control_line.get_markeredgecolor())
         self.interpolated_line = self.axe.add_line(interpolated_line)
 
-        self.modes = cycle([self.add_point_interp, self.free_draw])
+        self.modes = cycle([self._add_point_interp, self._free_draw])
         self.mode = next(self.modes)
-        self.click_cid = self.canvas.mpl_connect('key_press_event', self.on_key)
-        self.click_cid = self.canvas.mpl_connect('button_press_event', self.on_click)
-        self.draw_cid = self.canvas.mpl_connect('draw_event', self.grab_background)
+        self.click_cid = self.canvas.mpl_connect('key_press_event', self._on_key)
+        self.click_cid = self.canvas.mpl_connect('button_press_event', self._on_click)
+        self.draw_cid = self.canvas.mpl_connect('draw_event', self._grab_background)
 
-    def on_click(self, event):
+    def _on_click(self, event):
         # Ignore clicks outside axes
         if event.inaxes != self.axe:
             return
@@ -64,52 +66,52 @@ class ManualPath(object):
         if event.button == 1:
             self.mode(event)
 
-    def on_key(self, event):
+    def _on_key(self, event):
         if event.key == "m":
             self.mode = next(self.modes)
             return
         if event.key == "enter":
             points = np.array(self.interpolated_line.get_data()).T
-            self.reset_lines()
+            self._reset_lines()
             self.use_points(points)
-            self.grab_background()
+            self._grab_background()
 
             return
         if event.key == "d":
-            self.reset_lines()
+            self._reset_lines()
             return
         if event.key == "delete":
             del self.x_control[-1]
             del self.y_control[-1]
-            self.update_interp()
+            self._update_interp()
 
-    def free_draw(self, event):
+    def _free_draw(self, event):
         self.lasso = Lasso(event.inaxes,
                            (event.xdata, event.ydata),
-                           self.free_draw_callback)
+                           self._free_draw_callback)
         # acquire a lock on the widget drawing
         self.canvas.widgetlock(self.lasso)
 
-    def free_draw_callback(self, verts):
+    def _free_draw_callback(self, verts):
         points = np.array(verts)
         self.use_points(points)
         self.canvas.draw_idle()
         self.canvas.widgetlock.release(self.lasso)
         del self.lasso
 
-    def add_point_interp(self, event):
+    def _add_point_interp(self, event):
         self.x_control.append(event.xdata)
         self.y_control.append(event.ydata)
-        self.update_interp()
+        self._update_interp()
 
-    def update_interp(self):
+    def _update_interp(self):
         self.control_line.set_data(self.x_control, self.y_control)
-        x_i, y_i = self.interpolate(self.x_control, self.y_control)
-        x_i, y_i = self.interpolate(x_i, y_i)  # second iteration makes points more evenly spaced
+        x_i, y_i = self._interpolate(self.x_control, self.y_control)
+        x_i, y_i = self._interpolate(x_i, y_i)  # second iteration makes points more evenly spaced
         self.interpolated_line.set_data(x_i, y_i)
-        self.update_lines()
+        self._update_lines()
 
-    def interpolate(self, x, y):
+    def _interpolate(self, x, y):
         cumulative_distances = [0]
         for i in range(1, len(x)):
             dist = ((x[i] - x[i - 1]) ** 2 + (y[i] - y[i - 1]) ** 2) ** 0.5
@@ -128,15 +130,27 @@ class ManualPath(object):
         return x_i, y_i
 
     def use_points(self, points):
-        self.axe.plot(points[:, 0], points[:, 1], linestyle="", marker=".")
-        raise NotImplementedError("has to be implemeted in subclass")
+        """
+        Overwrite this method to use the selected points in any way you like.
 
-    def grab_background(self, event=None):
+        For Example:
+
+        >>> class MyManualPath(ManualPath):
+        >>>     def use_points(self, points):
+        >>>         print(points)
+
+        :param points: numpy array with points from the manual path selection
+        :return: None
+        """
+        self.axe.plot(points[:, 0], points[:, 1], linestyle="", marker=".")
+        raise NotImplementedError("has to be implemented in subclass")
+
+    def _grab_background(self, event=None):
         """
         When the figure is resized, hide the points, draw everything,
         and update the background.
-        Thanks to: https://stackoverflow.com/questions/29277080/efficient-matplotlib-redrawing
         """
+        # Thanks to: https://stackoverflow.com/questions/29277080/efficient-matplotlib-redrawing
         self.canvas.mpl_disconnect(self.draw_cid)
         self.interpolated_line.set_visible(False)
         self.control_line.set_visible(False)
@@ -150,9 +164,9 @@ class ManualPath(object):
         self.interpolated_line.set_visible(True)
         self.control_line.set_visible(True)
         self.canvas.draw()
-        self.draw_cid = self.canvas.mpl_connect('draw_event', self.grab_background)
+        self.draw_cid = self.canvas.mpl_connect('draw_event', self._grab_background)
 
-    def update_lines(self):
+    def _update_lines(self):
         """
         Efficiently update the figure, without needing to redraw the
         "background" artists.
@@ -163,19 +177,41 @@ class ManualPath(object):
         self.canvas.update()
         self.canvas.flush_events()
 
-    def reset_lines(self):
+    def _reset_lines(self):
         self.interpolated_line.set_data([[], []])
         self.control_line.set_data([[], []])
-        self.update_lines()
+        self._update_lines()
 
         self.x_control = []
         self.y_control = []
 
 
-class PathGenerate(ManualPath):
+class PathGenerateDihedrals(ManualPath):
+    """
+    This class inherits from :py:class:`encodermap.plot.ManualPath`.
+    The points from a manually selected path are fed into the decoder part of a given autoencoder.
+    The output of the autoencoder is used as phi psi dihedral angles to reconstruct protein conformations
+    based on the protein structure given with pdb_path.
+    Three output files are written for each selected path:
+    points.npy, generated.npy and generated.pdb which contain:
+    the points on the selected path, the generated output of
+    the autoencoder, and the generated protein conformations respectively.
+    Keep in mind that backbone dihedrals are not sufficient to describe a protein conformation completely.
+    Usually the backbone is reconstructed well but all side chains are messed up.
+    """
 
     def __init__(self, axe, autoencoder, pdb_path, save_path=None, n_points=200):
-        super(PathGenerate, self).__init__(axe, n_points=n_points)
+        """
+
+        :param axe: matplotlib axe object for example from: fig, axe = plt.subplots()
+        :param autoencoder: :py:class:`encodermap.autoencoder.Autoencoder` which was trained on protein dihedral
+            angles. The dihedrals have to be order starting from the amino end.
+            First all phi angles then all psi angles.
+        :param pdb_path: Path to a protein data bank (pdb) file of the protein
+        :param save_path: Path where outputs should be written
+        :param n_points: Number of points distributed on the selected path.
+        """
+        super(PathGenerateDihedrals, self).__init__(axe, n_points=n_points)
 
         self.autoencoder = autoencoder
         self.pdb_path = pdb_path

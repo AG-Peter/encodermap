@@ -1,21 +1,3 @@
-"""
-EncoderMap
-Copyright (C) 2018  Tobias Lemke
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""
-
 import os
 from math import pi
 import json
@@ -23,13 +5,16 @@ from .misc import search_and_replace, run_path
 
 
 class ParametersFramework:
-    """
-    See example in examples/parameters.py for usage
-    """
     def __init__(self):
         self.main_path = run_path(os.getcwd())
 
     def save(self, path=None):
+        """
+        Save parameters in json format
+
+        :param path: Path where parameters should be saved. If no path is given main_path/parameters.json is used.
+        :return: The path where the parameters were saved.
+        """
         if not path:
             path = os.path.join(self.main_path, "parameters.json")
         with open(path, 'w') as file:
@@ -38,6 +23,12 @@ class ParametersFramework:
 
     @classmethod
     def load(cls, path):
+        """
+        Loads the parameters saved in a json file into a new Parameter object.
+
+        :param path: path of the json parameter file
+        :return: a Parameter object
+        """
         with open(path, 'r') as file:
             params = json.load(file)
         if params["main_path"] != os.path.dirname(path):
@@ -62,20 +53,59 @@ class ParametersFramework:
 
 
 class Parameters(ParametersFramework):
+    """
+    :ivar main_path: Defines a main path where the parameters and other things might be stored.
+    :ivar n_neurons: List containing number of neurons for each layer up to the bottleneck layer.
+        For example [128, 128, 2] stands for an autoencoder with the following architecture
+        {i, 128, 128, 2, 128, 128, i} where i is the number of dimensions of the input data.
+    :ivar activation_functions: List of activation function names as implemented in TensorFlow.
+        For example: "relu", "tanh", "sigmoid" or "" to use no activation function.
+        The encoder part of the network takes the activation functions from the list starting with the second element.
+        The decoder part of the network takes the activation functions in reversed order starting with
+        the second element form the back. For example ["", "relu", "tanh", ""] would result in a autoencoder with
+        {"relu", "tanh", "", "tanh", "relu", ""} as sequence of activation functions.
+    :ivar periodicity: Defines the distance between periodic walls for the inputs.
+        For example 2pi for angular values in radians.
+        Set it to float("inf") for non-periodic inputs.
+
+    :ivar learning_rate: Learning rate used by the optimizer.
+    :ivar n_steps: Number of training steps.
+    :ivar batch_size: Number of training points used in each training step
+    :ivar summary_step: A summary for TensorBoard is writen every summary_step steps.
+    :ivar checkpoint_step: A checkpoint is writen every checkpoint_step steps.
+
+    :ivar dist_sig_parameters: Parameters for the sigmoid functions applied to the high- and low-dimensional distances
+        in the following order (sig_h, a_h, b_h, sig_l, a_l, b_l)
+    :ivar distance_cost_scale: Adjusts how much the distance based metric is weighted in the cost function.
+    :ivar auto_cost_scale: Adjusts how much the autoencoding cost is weighted in the cost function.
+    :ivar center_cost_scale: Adjusts how much the centering cost is weighted in the cost function.
+    :ivar l2_reg_constant: Adjusts how much the l2 regularisation is weighted in the cost function.
+
+    :ivar gpu_memory_fraction: Specifies the fraction of gpu memory blocked.
+        This can be reduced if multiple runs should run on one gpu in parallel.
+    :ivar analysis_path: A path that can be used to store analysis
+    :ivar id: Can be any name for the run. Might be useful for example for specific analysis for different data sets.
+
+
+    """
     def __init__(self):
+        super(Parameters, self).__init__()
         self.n_neurons = [128, 128, 2]
         self.activation_functions = ["", "tanh", "tanh", ""]
+        self.periodicity = 2 * pi
+
         self.learning_rate = 0.001
         self.n_steps = 100000
         self.batch_size = 256
-        self.summary_step = max(1, int(self.n_steps / 1000))
-        self.checkpoint_step = max(1, int(self.n_steps / 10))
-        self.analysis_path = ""
-        self.sketch_parameters = (4.5, 12, 6, 1, 2, 6)
-        self.sketch_cost_scale = 500
+        self.summary_step = 100
+        self.checkpoint_step = 5000
+
+        self.dist_sig_parameters = (4.5, 12, 6, 1, 2, 6)
+        self.distance_cost_scale = 500
         self.auto_cost_scale = 1
-        self.mean_cost_scale = 0.0001
-        self.id = ""
-        self.gpu_memory_fraction = 1
+        self.center_cost_scale = 0.0001
         self.l2_reg_constant = 0.001
-        self.periodicity = 2*pi  # use float("inf") for non periodic inputs
+
+        self.gpu_memory_fraction = 1
+        self.analysis_path = ""
+        self.id = ""
