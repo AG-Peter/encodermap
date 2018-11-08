@@ -6,7 +6,7 @@ from .misc import search_and_replace, run_path
 
 class ParametersFramework:
     def __init__(self):
-        self.main_path = run_path(os.getcwd())
+        self.main_path = os.getcwd()
 
     def save(self, path=None):
         """

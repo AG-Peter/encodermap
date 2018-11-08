@@ -208,3 +208,41 @@ def run_path(path):
         else:
             i += 1
     return output_path
+
+
+def random_on_cube_edges(n_points, sigma=0):
+    x = y = z = 1
+    r = np.random.uniform(size=n_points)
+
+    coordinates = np.zeros((n_points, 3))
+
+    ids = np.zeros(n_points)
+
+    a = np.array([[0, 0, 0]]*3 +
+                 [[x, y, 0]]*3 +
+                 [[0, y, z]]*3 +
+                 [[x, 0, z]]*3)
+
+    b = np.array([[x, 0, 0],
+                  [0, y, 0],
+                  [0, 0, z],
+                  [-x, 0, 0],
+                  [0, -y, 0],
+                  [0, 0, z],
+                  [x, 0, 0],
+                  [0, -y, 0],
+                  [0, 0, -z],
+                  [-x, 0, 0],
+                  [0, y, 0],
+                  [0, 0, -z],
+                  ])
+
+    for i in range(12):
+        mask = (i/12 < r) & (r < (i+1)/12)
+        coordinates[mask] += a[i] + (np.expand_dims(r[mask], axis=1) - i/12) * 12 * b[i]
+        ids[mask] = i
+
+    if sigma:
+        coordinates += np.random.normal(scale=sigma, size=(n_points, 3))
+
+    return coordinates, ids
