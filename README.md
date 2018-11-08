@@ -1,4 +1,4 @@
-# EncoderMap
+<img src="logo_m.png" width=50% align="right"/>
 
 Dimensionality reduction and generation of high-dimensional data with autoencoders
 
