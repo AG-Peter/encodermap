@@ -28,58 +28,60 @@ class Autoencoder:
         self.p = parameters  # type: Parameters
         self.p.save()
 
-        # Load Data:
-        if train_data is None:
-            assert n_inputs is not None, "If no train_data is given, n_inputs needs to be given"
-            self.train_data = np.zeros((3, n_inputs), dtype=np.float32)
-        else:
-            self.train_data = train_data.astype(np.float32)
+        self.graph = tf.Graph()
+        with self.graph.as_default():
 
-        if validation_data is None:
-            self.validation_data = None
-        else:
-            self.validation_data = validation_data.astype(np.float32)
+            # Load Data:
+            if train_data is None:
+                assert n_inputs is not None, "If no train_data is given, n_inputs needs to be given"
+                self.train_data = np.zeros((3, n_inputs), dtype=np.float32)
+            else:
+                self.train_data = train_data.astype(np.float32)
 
-        self.data_placeholder = tf.placeholder(self.train_data.dtype, self.train_data.shape)
-        self.data_set = tf.data.Dataset.from_tensor_slices(self.data_placeholder)
-        self.data_set = self.data_set.shuffle(buffer_size=len(self.train_data))
-        self.data_set = self.data_set.repeat()
-        self.data_set = self.data_set.batch(self.p.batch_size)
-        self.data_iterator = self.data_set.make_initializable_iterator()
+            if validation_data is None:
+                self.validation_data = None
+            else:
+                self.validation_data = validation_data.astype(np.float32)
 
-        # Setup Network:
-        self.inputs = self.data_iterator.get_next()
-        self.inputs = tf.placeholder_with_default(self.inputs, self.inputs.shape)
-        self.regularizer = tf.contrib.layers.l2_regularizer(scale=self.p.l2_reg_constant)
-        encoded = self._encode(self.inputs)
-        self.latent = tf.placeholder_with_default(encoded, encoded.shape)
-        variable_summaries("latent", self.latent)
-        self.generated = self._generate(self.latent)
+            self.data_placeholder = tf.placeholder(self.train_data.dtype, self.train_data.shape)
+            self.data_set = tf.data.Dataset.from_tensor_slices(self.data_placeholder)
+            self.data_set = self.data_set.shuffle(buffer_size=len(self.train_data))
+            self.data_set = self.data_set.repeat()
+            self.data_set = self.data_set.batch(self.p.batch_size)
+            self.data_iterator = self.data_set.make_initializable_iterator()
 
-        # Define Cost function:
-        self.cost = self._cost()
+            # Setup Network:
+            self.inputs = self.data_iterator.get_next()
+            self.inputs = tf.placeholder_with_default(self.inputs, self.inputs.shape)
+            self.regularizer = tf.contrib.layers.l2_regularizer(scale=self.p.l2_reg_constant)
+            encoded = self._encode(self.inputs)
+            self.latent = tf.placeholder_with_default(encoded, encoded.shape)
+            variable_summaries("latent", self.latent)
+            self.generated = self._generate(self.latent)
 
-        # Setup Optimizer:
-        self.optimizer = tf.train.AdamOptimizer(self.p.learning_rate)
-        gradients = self.optimizer.compute_gradients(self.cost)
-        # gradients = [(tf.Print(grad, [grad.shape, grad], "gradients", summarize=50), var) for grad, var in gradients]
-        self.optimize = self.optimizer.apply_gradients(gradients)
+            # Define Cost function:
+            self.cost = self._cost()
 
-        self.merged_summaries = tf.summary.merge_all()
+            # Setup Optimizer:
+            self.optimizer = tf.train.AdamOptimizer(self.p.learning_rate)
+            gradients = self.optimizer.compute_gradients(self.cost)
+            self.optimize = self.optimizer.apply_gradients(gradients)
 
-        # Setup Session
-        gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=self.p.gpu_memory_fraction)
-        self.sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
-        self.sess.run(tf.global_variables_initializer())
-        self.sess.run(self.data_iterator.initializer, feed_dict={self.data_placeholder: self.train_data})
-        self.train_writer = tf.summary.FileWriter(os.path.join(self.p.main_path, "train"), self.sess.graph)
-        if self.validation_data is not None:
-            self.validation_writer = tf.summary.FileWriter(os.path.join(self.p.main_path, "validation"), self.sess.graph)
-        self.saver = tf.train.Saver(max_to_keep=100)
+            self.merged_summaries = tf.summary.merge_all()
 
-        # load Checkpoint
-        if checkpoint_path:
-            self.saver.restore(self.sess, checkpoint_path)
+            # Setup Session
+            gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=self.p.gpu_memory_fraction)
+            self.sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options), graph=self.graph)
+            self.sess.run(tf.global_variables_initializer())
+            self.sess.run(self.data_iterator.initializer, feed_dict={self.data_placeholder: self.train_data})
+            self.train_writer = tf.summary.FileWriter(os.path.join(self.p.main_path, "train"), self.sess.graph)
+            if self.validation_data is not None:
+                self.validation_writer = tf.summary.FileWriter(os.path.join(self.p.main_path, "validation"), self.sess.graph)
+            self.saver = tf.train.Saver(max_to_keep=100)
+
+            # load Checkpoint
+            if checkpoint_path:
+                self.saver.restore(self.sess, checkpoint_path)
 
     def _encode(self, inputs):
         with tf.name_scope("encoder"):
