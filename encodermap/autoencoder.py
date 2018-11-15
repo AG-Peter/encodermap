@@ -27,6 +27,8 @@ class Autoencoder:
         # Parameters:
         self.p = parameters  # type: Parameters
         self.p.save()
+        print("Output files are saved to {}".format(self.p.main_path),
+              "as defined in 'main_path' in the parameters.")
 
         self.graph = tf.Graph()
         with self.graph.as_default():
