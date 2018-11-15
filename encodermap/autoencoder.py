@@ -207,3 +207,16 @@ class Autoencoder:
                 self.saver.save(self.sess, os.path.join(self.p.main_path, "checkpoints", "step{}.ckpt".format(step)))
         else:
             self.saver.save(self.sess, os.path.join(self.p.main_path, "checkpoints", "step{}.ckpt".format(step)))
+
+    def close(self):
+        """
+        Close tensorflow session to free resources.
+        :return:
+        """
+        self.sess.close()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
