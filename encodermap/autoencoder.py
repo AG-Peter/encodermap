@@ -133,7 +133,7 @@ class Autoencoder:
     def _cost(self):
         self.auto_cost = tf.reduce_mean(
             tf.norm(periodic_distance(self.inputs, self.generated, self.p.periodicity), axis=1))
-        self.distance_cost = distance_cost(self.inputs, self.latent, *self.p.dist_sig_parameters)
+        self.distance_cost = distance_cost(self.inputs, self.latent, *self.p.dist_sig_parameters, self.p.periodicity)
         self.center_cost = tf.reduce_mean(tf.square(tf.norm(self.latent, axis=1)))
         # Todo: square of square root is inefficient
         self.reg_cost = tf.losses.get_regularization_loss()

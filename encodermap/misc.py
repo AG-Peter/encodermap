@@ -80,7 +80,7 @@ def create_dir(path):
     return path
 
 
-def distance_cost(r_h, r_l, sig_h, a_h, b_h, sig_l, a_l, b_l):
+def distance_cost(r_h, r_l, sig_h, a_h, b_h, sig_l, a_l, b_l, periodicity):
     """
 
     :param r_h:
@@ -91,9 +91,11 @@ def distance_cost(r_h, r_l, sig_h, a_h, b_h, sig_l, a_l, b_l):
     :param sig_l:
     :param a_l:
     :param b_l:
+    :param periodicity:
     :return:
     """
-    dist_h = pairwise_dist(r_h)
+
+    dist_h = pairwise_dist_periodic(r_h, periodicity)
     dist_l = pairwise_dist(r_l)
 
     sig_h = sigmoid(dist_h, sig_h, a_h, b_h)
@@ -113,6 +115,14 @@ def sigmoid(r, sig, a, b):
     :return:
     """
     return 1 - (1 + (2**(a/b) - 1) * (r/sig)**a)**(-b/a)
+
+
+def pairwise_dist_periodic(positions, periodicity):
+    vecs = periodic_distance(tf.expand_dims(positions, axis=1), tf.expand_dims(positions, axis=0), periodicity)
+    mask = tf.to_float(tf.equal(vecs, 0.0))
+    vecs = vecs + mask * 1e-16  # gradient infinite for 0
+    dists = tf.norm(vecs, axis=2)
+    return dists
 
 
 def pairwise_dist(positions, squared=False):
