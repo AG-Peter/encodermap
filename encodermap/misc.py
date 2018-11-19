@@ -28,15 +28,16 @@ def periodic_distance(a, b, periodicity=2*pi):
     return tf.minimum(d, periodicity-d)
 
 
-def periodic_distance_np(a, b):
+def periodic_distance_np(a, b, periodicity=2*pi):
     """
 
     :param a:
     :param b:
+    :param periodicity:
     :return:
     """
     d = np.abs(b-a)
-    return np.minimum(d, 2*pi-d)
+    return np.minimum(d, periodicity-d)
 
 
 def variable_summaries(name, variables):

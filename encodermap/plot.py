@@ -4,10 +4,11 @@ from matplotlib.lines import Line2D
 from itertools import cycle
 from matplotlib.widgets import Lasso
 import os
-from .misc import create_dir
+from .misc import create_dir, periodic_distance_np, sigmoid
 import MDAnalysis as md
 import datetime
 from .dihedral_backmapping import dihedral_backmapping
+import matplotlib.pyplot as plt
 
 
 class ManualPath(object):
@@ -234,3 +235,38 @@ class PathGenerateDihedrals(ManualPath):
         with md.Writer(output_pdb_path) as w:
             for step in universe.trajectory:
                 w.write(universe.atoms)
+
+
+def distance_histogram(data, periodicity, sigmoid_parameters, axe=None):
+    """
+    Plots the histogram of all pairwise distances in the data.
+    If sigmoid parameters are given it also shows the sigmoid function and its normalized derivative.
+
+    :param data: each row should contain a point in a number_of _columns dimensional space.
+    :param periodicity: Periodicity of the data. use float("inf") for non periodic data
+    :param sigmoid_parameters: tuple (sigma, a, b)
+    :param axe: matplotlib axe object ore None. If None a new figure is generated.
+    :return:
+    """
+    vecs = periodic_distance_np(np.expand_dims(data, axis=1), np.expand_dims(data, axis=0), periodicity)
+    dists = np.linalg.norm(vecs, axis=2)
+    dists = dists.reshape(-1)
+
+    if axe is None:
+        fig, axe = plt.subplots()
+    axe2 = axe.twinx()
+    axe2.hist(dists, bins="auto", density=True)
+    x = np.linspace(0, max(dists), 1000)
+
+    y = sigmoid(x, *sigmoid_parameters)
+    dy = np.diff(y)
+    dy_norm = dy / max(dy)
+    axe.plot(x, y, color="C1", label="sigmoid")
+    axe.plot(x[:-1], dy_norm, color="C2", label="diff sigmoid")
+
+    axe.legend()
+    axe.set_xlabel("distance")
+    axe.set_ylim((0, 1))
+    axe.set_zorder(axe2.get_zorder() + 1)
+    axe.patch.set_visible(False)
+    return axe
