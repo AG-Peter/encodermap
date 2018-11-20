@@ -107,3 +107,6 @@ ENV/
 data/
 runs/
 runs_named/
+
+# pytest
+.pytest_cache/
