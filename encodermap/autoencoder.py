@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-from .misc import periodic_distance, variable_summaries, add_layer_summaries, distance_cost, distance_cost_unit_circle
+from .misc import periodic_distance, variable_summaries, add_layer_summaries, distance_cost
 import os
 from .parameters import Parameters
 from tqdm import tqdm
