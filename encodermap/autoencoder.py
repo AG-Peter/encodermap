@@ -1,9 +1,10 @@
 import tensorflow as tf
 import numpy as np
-from .misc import periodic_distance, variable_summaries, add_layer_summaries, distance_cost
+from .misc import periodic_distance, variable_summaries, add_layer_summaries, distance_cost, distance_cost_unit_circle
 import os
 from .parameters import Parameters
 from tqdm import tqdm
+from tensorflow.python.client import timeline
 
 
 class Autoencoder:
@@ -88,7 +89,9 @@ class Autoencoder:
     def _encode(self, inputs):
         with tf.name_scope("encoder"):
             if self.p.periodicity < float("inf"):
-                current_layer = tf.concat([tf.sin(inputs), tf.cos(inputs)], 1)
+                # Todo: This only works for 2pi periodicity!!!
+                self.unit_circle_inputs = tf.concat([tf.sin(inputs), tf.cos(inputs)], 1)
+                current_layer = self.unit_circle_inputs
             else:
                 current_layer = inputs
 
@@ -131,16 +134,18 @@ class Autoencoder:
             return current_layer
 
     def _cost(self):
-        self.auto_cost = tf.reduce_mean(
-            tf.norm(periodic_distance(self.inputs, self.generated, self.p.periodicity), axis=1))
-        self.distance_cost = distance_cost(self.inputs, self.latent, *self.p.dist_sig_parameters, self.p.periodicity)
-        self.center_cost = tf.reduce_mean(tf.square(tf.norm(self.latent, axis=1)))
-        # Todo: square of square root is inefficient
-        self.reg_cost = tf.losses.get_regularization_loss()
-        cost = self.p.distance_cost_scale * self.distance_cost \
-               + self.p.auto_cost_scale * self.auto_cost \
-               + self.p.center_cost_scale * self.center_cost \
-               + self.reg_cost
+        with tf.name_scope("cost"):
+            self.auto_cost = tf.reduce_mean(
+                tf.norm(periodic_distance(self.inputs, self.generated, self.p.periodicity), axis=1))
+            self.distance_cost = distance_cost(self.inputs, self.latent, *self.p.dist_sig_parameters,
+                                               self.p.periodicity)
+            self.center_cost = tf.reduce_mean(tf.square(tf.norm(self.latent, axis=1)))
+            # Todo: square of square root is inefficient
+            self.reg_cost = tf.losses.get_regularization_loss()
+            cost = self.p.distance_cost_scale * self.distance_cost \
+                   + self.p.auto_cost_scale * self.auto_cost \
+                   + self.p.center_cost_scale * self.center_cost \
+                   + self.reg_cost
 
         tf.summary.scalar("cost", cost)
         tf.summary.scalar("auto_cost", self.auto_cost)
@@ -209,6 +214,17 @@ class Autoencoder:
                 self.saver.save(self.sess, os.path.join(self.p.main_path, "checkpoints", "step{}.ckpt".format(step)))
         else:
             self.saver.save(self.sess, os.path.join(self.p.main_path, "checkpoints", "step{}.ckpt".format(step)))
+
+    def profile(self):
+        options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
+        run_metadata = tf.RunMetadata()
+        for i in range(5):
+            self.sess.run(self.optimize, options=options, run_metadata=run_metadata)
+
+            fetched_timeline = timeline.Timeline(run_metadata.step_stats)
+            chrome_trace = fetched_timeline.generate_chrome_trace_format()
+            with open(os.path.join(self.p.main_path, 'timeline{}.json'.format(i)), 'w') as f:
+                f.write(chrome_trace)
 
     def close(self):
         """

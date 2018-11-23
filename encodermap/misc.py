@@ -94,15 +94,18 @@ def distance_cost(r_h, r_l, sig_h, a_h, b_h, sig_l, a_l, b_l, periodicity):
     :param periodicity:
     :return:
     """
+    with tf.name_scope("distance_cost"):
+        if periodicity == float("inf"):
+            dist_h = pairwise_dist(r_h)
+        else:
+            dist_h = pairwise_dist_periodic(r_h, periodicity)
+        dist_l = pairwise_dist(r_l)
 
-    dist_h = pairwise_dist_periodic(r_h, periodicity)
-    dist_l = pairwise_dist(r_l)
+        sig_h = sigmoid(dist_h, sig_h, a_h, b_h)
+        sig_l = sigmoid(dist_l, sig_l, a_l, b_l)
 
-    sig_h = sigmoid(dist_h, sig_h, a_h, b_h)
-    sig_l = sigmoid(dist_l, sig_l, a_l, b_l)
-
-    cost = tf.reduce_mean(tf.square(sig_h - sig_l))
-    return cost
+        cost = tf.reduce_mean(tf.square(sig_h - sig_l))
+        return cost
 
 
 def sigmoid(r, sig, a, b):
@@ -118,11 +121,12 @@ def sigmoid(r, sig, a, b):
 
 
 def pairwise_dist_periodic(positions, periodicity):
-    vecs = periodic_distance(tf.expand_dims(positions, axis=1), tf.expand_dims(positions, axis=0), periodicity)
-    mask = tf.to_float(tf.equal(vecs, 0.0))
-    vecs = vecs + mask * 1e-16  # gradient infinite for 0
-    dists = tf.norm(vecs, axis=2)
-    return dists
+    with tf.name_scope("pairwise_dist_periodic"):
+        vecs = periodic_distance(tf.expand_dims(positions, axis=1), tf.expand_dims(positions, axis=0), periodicity)
+        mask = tf.to_float(tf.equal(vecs, 0.0))
+        vecs = vecs + mask * 1e-16  # gradient infinite for 0
+        dists = tf.norm(vecs, axis=2)
+        return dists
 
 
 def pairwise_dist(positions, squared=False):
@@ -137,33 +141,34 @@ def pairwise_dist(positions, squared=False):
     """
     # thanks to https://omoindrot.github.io/triplet-loss
 
-    # Get the dot product between all embeddings
-    # shape (batch_size, batch_size)
-    dot_product = tf.matmul(positions, tf.transpose(positions))
+    with tf.name_scope("pairwise_dist"):
+        # Get the dot product between all embeddings
+        # shape (batch_size, batch_size)
+        dot_product = tf.matmul(positions, tf.transpose(positions))
 
-    # Get squared L2 norm for each embedding. We can just take the diagonal of `dot_product`.
-    # This also provides more numerical stability (the diagonal of the result will be exactly 0).
-    # shape (batch_size,)
-    square_norm = tf.diag_part(dot_product)
+        # Get squared L2 norm for each embedding. We can just take the diagonal of `dot_product`.
+        # This also provides more numerical stability (the diagonal of the result will be exactly 0).
+        # shape (batch_size,)
+        square_norm = tf.diag_part(dot_product)
 
-    # Compute the pairwise distance matrix as we have:
-    # ||a - b||^2 = ||a||^2  - 2 <a, b> + ||b||^2
-    # shape (batch_size, batch_size)
-    distances = tf.expand_dims(square_norm, 0) - 2.0 * dot_product + tf.expand_dims(square_norm, 1)
+        # Compute the pairwise distance matrix as we have:
+        # ||a - b||^2 = ||a||^2  - 2 <a, b> + ||b||^2
+        # shape (batch_size, batch_size)
+        distances = tf.expand_dims(square_norm, 0) - 2.0 * dot_product + tf.expand_dims(square_norm, 1)
 
-    # Because of computation errors, some distances might be negative so we put everything >= 0.0
-    distances = tf.maximum(distances, 0.0)
+        # Because of computation errors, some distances might be negative so we put everything >= 0.0
+        distances = tf.maximum(distances, 0.0)
 
-    if not squared:
-        # Because the gradient of sqrt is infinite when distances == 0.0 (ex: on the diagonal)
-        # we need to add a small epsilon where distances == 0.0
-        mask = tf.to_float(tf.equal(distances, 0.0))
-        distances = distances + mask * 1e-16
+        if not squared:
+            # Because the gradient of sqrt is infinite when distances == 0.0 (ex: on the diagonal)
+            # we need to add a small epsilon where distances == 0.0
+            mask = tf.to_float(tf.equal(distances, 0.0))
+            distances = distances + mask * 1e-16
 
-        distances = tf.sqrt(distances)
+            distances = tf.sqrt(distances)
 
-        # Correct the epsilon added: set the distances on the mask to be exactly 0.0
-        distances = distances * (1.0 - mask)
+            # Correct the epsilon added: set the distances on the mask to be exactly 0.0
+            distances = distances * (1.0 - mask)
 
     return distances
 
