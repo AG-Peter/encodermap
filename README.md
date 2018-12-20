@@ -43,3 +43,6 @@ given points in the low dimensional space is possible:
 low_d_points = np.array([[0.1, 0.2], [0.3, 0.4], [0.2, 0.1]])
 newly_generated_high_d_points = autoencoder.generate(low_d_points)
 ```
+
+## Documentation
+More information are available in the [documentations](https://ag-peter.github.io/encodermap/).
