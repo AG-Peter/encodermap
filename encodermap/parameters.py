@@ -43,10 +43,7 @@ class ParametersFramework:
 
     def _setattrs(self, dictionary):
         for key, value in dictionary.items():
-            if hasattr(self, key):
-                setattr(self, key, value)
-            else:
-                raise ValueError("The parameter " + key + " is not supported")
+            setattr(self, key, value)
 
     def __getitem__(self, item):
         return getattr(self, item)
