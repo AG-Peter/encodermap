@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>plot &mdash; EncoderMap 0.0.2 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="EncoderMap 0.0.2 documentation" href="index.html"/>
+        <link rel="next" title="dihedral_backmapping" href="dihedral_backmapping.html"/>
+        <link rel="prev" title="parameters" href="parameters.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> EncoderMap
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="autoencoder.html">autoencoder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">parameters</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dihedral_backmapping.html">dihedral_backmapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html">misc</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">EncoderMap</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>plot</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/plot.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-encodermap.plot">
+<span id="plot"></span><h1>plot<a class="headerlink" href="#module-encodermap.plot" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="encodermap.plot.ManualPath">
+<em class="property">class </em><code class="descclassname">encodermap.plot.</code><code class="descname">ManualPath</code><span class="sig-paren">(</span><em>axe</em>, <em>n_points=200</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.ManualPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>ManualPath is a tool to manually select a path in a matplotlib graph.
+It supports two modes: &#8220;interpolated line&#8221;, and &#8220;free draw&#8221;.
+Press &#8220;m&#8221; to switch modes.</p>
+<p>In interpolated line mode klick in the graph to add an additional way point.
+Press &#8220;delete&#8221; to remove the last way point.
+Press &#8220;d&#8221; to remove all way points.
+Press &#8220;enter&#8221; once you have finished you path selection.</p>
+<p>In free draw mode press and hold the left mouse button while you draw a path.</p>
+<p>Once the path selection is completed, the use_points method is called with the points on the selected path.
+You can overwrite the use_points method to do what ever you want with the points on the path.</p>
+<dl class="method">
+<dt id="encodermap.plot.ManualPath.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>axe</em>, <em>n_points=200</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.ManualPath.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>axe</strong> &#8211; matplotlib axe object for example from: fig, axe = plt.subplots()</li>
+<li><strong>n_points</strong> &#8211; Number of points distributed on the selected path.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encodermap.plot.ManualPath.use_points">
+<code class="descname">use_points</code><span class="sig-paren">(</span><em>points</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.ManualPath.use_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overwrite this method to use the selected points in any way you like.</p>
+<p>For Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyManualPath</span><span class="p">(</span><span class="n">ManualPath</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">def</span> <span class="nf">use_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="k">print</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>points</strong> &#8211; numpy array with points from the manual path selection</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="encodermap.plot.PathGenerateDihedrals">
+<em class="property">class </em><code class="descclassname">encodermap.plot.</code><code class="descname">PathGenerateDihedrals</code><span class="sig-paren">(</span><em>axe</em>, <em>autoencoder</em>, <em>pdb_path</em>, <em>save_path=None</em>, <em>n_points=200</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.PathGenerateDihedrals" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class inherits from <a class="reference internal" href="#encodermap.plot.ManualPath" title="encodermap.plot.ManualPath"><code class="xref py py-class docutils literal"><span class="pre">encodermap.plot.ManualPath</span></code></a>.
+The points from a manually selected path are fed into the decoder part of a given autoencoder.
+The output of the autoencoder is used as phi psi dihedral angles to reconstruct protein conformations
+based on the protein structure given with pdb_path.
+Three output files are written for each selected path:
+points.npy, generated.npy and generated.pdb which contain:
+the points on the selected path, the generated output of
+the autoencoder, and the generated protein conformations respectively.
+Keep in mind that backbone dihedrals are not sufficient to describe a protein conformation completely.
+Usually the backbone is reconstructed well but all side chains are messed up.</p>
+<dl class="method">
+<dt id="encodermap.plot.PathGenerateDihedrals.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>axe</em>, <em>autoencoder</em>, <em>pdb_path</em>, <em>save_path=None</em>, <em>n_points=200</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.PathGenerateDihedrals.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>axe</strong> &#8211; matplotlib axe object for example from: fig, axe = plt.subplots()</li>
+<li><strong>autoencoder</strong> &#8211; <a class="reference internal" href="autoencoder.html#encodermap.autoencoder.Autoencoder" title="encodermap.autoencoder.Autoencoder"><code class="xref py py-class docutils literal"><span class="pre">encodermap.autoencoder.Autoencoder</span></code></a> which was trained on protein dihedral
+angles. The dihedrals have to be order starting from the amino end.
+First all phi angles then all psi angles.</li>
+<li><strong>pdb_path</strong> &#8211; Path to a protein data bank (pdb) file of the protein</li>
+<li><strong>save_path</strong> &#8211; Path where outputs should be written</li>
+<li><strong>n_points</strong> &#8211; Number of points distributed on the selected path.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encodermap.plot.PathGenerateDihedrals.use_points">
+<code class="descname">use_points</code><span class="sig-paren">(</span><em>points</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.PathGenerateDihedrals.use_points" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="encodermap.plot.distance_histogram">
+<code class="descclassname">encodermap.plot.</code><code class="descname">distance_histogram</code><span class="sig-paren">(</span><em>data</em>, <em>periodicity</em>, <em>sigmoid_parameters</em>, <em>axe=None</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.distance_histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the histogram of all pairwise distances in the data.
+If sigmoid parameters are given it also shows the sigmoid function and its normalized derivative.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> &#8211; each row should contain a point in a number_of _columns dimensional space.</li>
+<li><strong>periodicity</strong> &#8211; Periodicity of the data. use float(&#8220;inf&#8221;) for non periodic data</li>
+<li><strong>sigmoid_parameters</strong> &#8211; tuple (sigma, a, b)</li>
+<li><strong>axe</strong> &#8211; matplotlib axe object ore None. If None a new figure is generated.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dihedral_backmapping.html" class="btn btn-neutral float-right" title="dihedral_backmapping" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="parameters.html" class="btn btn-neutral" title="parameters" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Tobias Lemke.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

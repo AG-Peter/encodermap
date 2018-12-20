@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>autoencoder &mdash; EncoderMap 0.0.2 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="EncoderMap 0.0.2 documentation" href="index.html"/>
+        <link rel="next" title="parameters" href="parameters.html"/>
+        <link rel="prev" title="Documentation for EncoderMap" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> EncoderMap
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">autoencoder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plot.html">plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dihedral_backmapping.html">dihedral_backmapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html">misc</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">EncoderMap</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>autoencoder</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/autoencoder.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-encodermap.autoencoder">
+<span id="autoencoder"></span><h1>autoencoder<a class="headerlink" href="#module-encodermap.autoencoder" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="encodermap.autoencoder.Autoencoder">
+<em class="property">class </em><code class="descclassname">encodermap.autoencoder.</code><code class="descname">Autoencoder</code><span class="sig-paren">(</span><em>parameters</em>, <em>train_data=None</em>, <em>validation_data=None</em>, <em>checkpoint_path=None</em>, <em>n_inputs=None</em>, <em>conditionals=None</em>, <em>n_conditionals=None</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.autoencoder.Autoencoder" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="encodermap.autoencoder.Autoencoder.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>parameters</em>, <em>train_data=None</em>, <em>validation_data=None</em>, <em>checkpoint_path=None</em>, <em>n_inputs=None</em>, <em>conditionals=None</em>, <em>n_conditionals=None</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.autoencoder.Autoencoder.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parameters</strong> &#8211; Parameters object as defined in <a class="reference internal" href="parameters.html#encodermap.parameters.Parameters" title="encodermap.parameters.Parameters"><code class="xref py py-class docutils literal"><span class="pre">encodermap.parameters.Parameters</span></code></a></li>
+<li><strong>train_data</strong> &#8211; 2d numpy array where each row is treated as a training point</li>
+<li><strong>validation_data</strong> &#8211; A 2d numpy array. This data will only be used to calculate a validation error during
+training. It will not be used for training.</li>
+<li><strong>checkpoint_path</strong> &#8211; If a checkpoint path is given values like neural network weights stored in this
+checkpoint will be restored.</li>
+<li><strong>n_inputs</strong> &#8211; If no train_data is given, for example when an already trained network is restored from a
+checkpoint, the number of of inputs needs to be given. This should be equal to the number of
+columns of the train_data the network was originally trained with.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encodermap.autoencoder.Autoencoder.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.autoencoder.Autoencoder.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close tensorflow session to free resources.
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="encodermap.autoencoder.Autoencoder.encode">
+<code class="descname">encode</code><span class="sig-paren">(</span><em>inputs</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.autoencoder.Autoencoder.encode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Projects high dimensional data to a low dimensional space using the encoder part of the autoencoder.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inputs</strong> &#8211; 2d numpy array with the same number of columns as the used train_data</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">2d numpy array with the point projected the the low dimensional space. The number of columns is equal
+to the number of neurons in the bottleneck layer of the autoencoder.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encodermap.autoencoder.Autoencoder.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>latent</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.autoencoder.Autoencoder.generate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates new high-dimensional points based on given low-dimensional points using the decoder part of the
+autoencoder.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>latent</strong> &#8211; 2d numpy array containing points in the low-dimensional space. The number of columns must be
+equal to the number of neurons in the bottleneck layer of the autoencoder.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">2d numpy array containing points in the high-dimensional space.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encodermap.autoencoder.Autoencoder.train">
+<code class="descname">train</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.autoencoder.Autoencoder.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train the autoencoder as specified in the parameters object.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="parameters.html" class="btn btn-neutral float-right" title="parameters" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Documentation for EncoderMap" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Tobias Lemke.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
