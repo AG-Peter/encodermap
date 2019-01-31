@@ -45,4 +45,4 @@ newly_generated_high_d_points = autoencoder.generate(low_d_points)
 ```
 
 ## Documentation
-More information are available in the [documentations](https://ag-peter.github.io/encodermap/).
+More information is available in the [documentations](https://ag-peter.github.io/encodermap/).
