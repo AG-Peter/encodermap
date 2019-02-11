@@ -5,6 +5,7 @@ import os
 from .parameters import Parameters
 from tqdm import tqdm
 from tensorflow.python.client import timeline
+from math import pi
 
 
 class Autoencoder:
@@ -89,7 +90,8 @@ class Autoencoder:
     def _encode(self, inputs):
         with tf.name_scope("encoder"):
             if self.p.periodicity < float("inf"):
-                # Todo: This only works for 2pi periodicity!!!
+                if self.p.periodicity != 2 * pi:
+                    inputs = inputs / self.p.periodicity * 2 * pi
                 self.unit_circle_inputs = tf.concat([tf.sin(inputs), tf.cos(inputs)], 1)
                 current_layer = self.unit_circle_inputs
             else:
@@ -131,6 +133,8 @@ class Autoencoder:
             if self.p.periodicity < float("inf"):
                 split = self.train_data.shape[1]
                 current_layer = tf.atan2(current_layer[:, :split], current_layer[:, split:])
+                if self.p.periodicity != 2 * pi:
+                    current_layer = current_layer / (2*pi) * self.p.periodicity
             return current_layer
 
     def _cost(self):
