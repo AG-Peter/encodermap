@@ -63,7 +63,9 @@ class Parameters(ParametersFramework):
         {"relu", "tanh", "", "tanh", "relu", ""} as sequence of activation functions.
     :ivar periodicity: Defines the distance between periodic walls for the inputs.
         For example 2pi for angular values in radians.
-        Set it to float("inf") for non-periodic inputs.
+        All periodic data processed by EncoderMap must be wrapped to one periodic window.
+        E.g. data with 2pi periodicity may contain values from -pi to pi or from 0 to 2pi.
+        Set the periodicity to float("inf") for non-periodic inputs.
 
     :ivar learning_rate: Learning rate used by the optimizer.
     :ivar n_steps: Number of training steps.
