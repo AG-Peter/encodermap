@@ -17,10 +17,10 @@ class ManualPath(object):
     It supports two modes: "interpolated line", and "free draw".
     Press "m" to switch modes.
 
-    In interpolated line mode klick in the graph to add an additional way point.
+    In interpolated line mode click in the graph to add an additional way point.
     Press "delete" to remove the last way point.
     Press "d" to remove all way points.
-    Press "enter" once you have finished you path selection.
+    Press "enter" once you have finished your path selection.
 
     In free draw mode press and hold the left mouse button while you draw a path.
 

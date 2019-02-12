@@ -207,7 +207,7 @@ def search_and_replace(file_path, search_pattern, replacement, out_path=None, ba
 
 def run_path(path):
     """
-    Creates a directory at "path/run{i}" where i the i corresponding to the smallest not yet existing path
+    Creates a directory at "path/run{i}" where the i is corresponding to the smallest not yet existing path
 
     :param path: (str)
     :return: (str)
