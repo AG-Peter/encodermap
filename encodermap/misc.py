@@ -262,3 +262,15 @@ def random_on_cube_edges(n_points, sigma=0):
         coordinates += np.random.normal(scale=sigma, size=(n_points, 3))
 
     return coordinates, ids
+
+
+def rotation_matrix(axis_unit_vec, angle):
+    i = tf.eye(3)
+    cross_prod_matrix = tf.convert_to_tensor([[0, -axis_unit_vec[2], axis_unit_vec[1]],
+                                              [axis_unit_vec[2], 0, -axis_unit_vec[0]],
+                                              [-axis_unit_vec[1], axis_unit_vec[0], 0]])
+    r = tf.cos(angle) * i
+    r += tf.sin(angle) * cross_prod_matrix
+    axis_unit_vec = tf.expand_dims(axis_unit_vec, 1)
+    r += (1-tf.cos(angle)) * tf.matmul(axis_unit_vec, tf.transpose(axis_unit_vec))
+    return r

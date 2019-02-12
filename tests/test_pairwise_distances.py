@@ -1,4 +1,3 @@
-import unittest
 import encodermap as em
 import numpy as np
 from math import pi

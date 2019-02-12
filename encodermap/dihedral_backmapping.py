@@ -1,8 +1,10 @@
-from math import pi
+from math import pi, cos, sin
 import MDAnalysis as md
 import numpy as np
 from MDAnalysis.coordinates.memory import MemoryReader
 from MDAnalysis.analysis.base import AnalysisFromFunction
+from .misc import rotation_matrix
+import tensorflow as tf
 
 
 def _expand_universe(universe, length):
@@ -56,3 +58,27 @@ def dihedral_backmapping(pdb_path, dihedral_trajectory, rough_n_points=-1):
         for dihedral, value in zip(dihedrals, dihedral_values):
             _set_dihedral(dihedral, protein, value / (2 * pi) * 360)
     return uni
+
+
+def straight_tetrahedral_chain(n):
+    dx = cos(70.63 / 180 * pi)
+    dy = sin(70.63 / 180 * pi)
+    print(dx, dy)
+
+    coordinates = np.zeros((n, 3), dtype=np.float32)
+    indices = np.repeat(np.arange(int(n / 2) + 1), 2)
+    coordinates[:, 0] = (indices[1:n + 1] + dx * indices[0:n])
+    coordinates[:, 1] = dy * indices[0:n]
+    return coordinates
+
+
+def dihedrals_to_cartesian_tf(dihedrals):
+    cartesian = tf.constant(straight_tetrahedral_chain(len(dihedrals)+3))
+    for i in range(len(dihedrals)):
+        axis = cartesian[i+2] - cartesian[i+1]
+        axis /= tf.norm(axis)
+        rotated = cartesian[i + 2] + tf.matmul(cartesian[i + 3:] - cartesian[i + 2],
+                                               rotation_matrix(axis, dihedrals[i]))
+        cartesian = tf.concat([cartesian[:i+3], rotated], axis=0)
+
+    return cartesian
