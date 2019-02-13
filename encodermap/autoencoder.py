@@ -38,27 +38,33 @@ class Autoencoder:
             # Load Data:
             if train_data is None:
                 assert n_inputs is not None, "If no train_data is given, n_inputs needs to be given"
-                self.train_data = np.zeros((3, n_inputs), dtype=np.float32)
+                self.train_data = [np.zeros((3, n_inputs), dtype=np.float32)]
+            elif isinstance(train_data, np.ndarray):
+                self.train_data = [train_data.astype(np.float32)]
+            elif isinstance(train_data, (list, tuple)):
+                self.train_data = [dat.astype(np.float32) for dat in train_data]
             else:
-                self.train_data = train_data.astype(np.float32)
+                raise ValueError("{} is not supported as input type for train_data".format(type(train_data)))
 
             if validation_data is None:
                 self.validation_data = None
             else:
                 self.validation_data = validation_data.astype(np.float32)
+                # Todo: allow lists of validation data
 
-            self.data_placeholder = tf.placeholder(self.train_data.dtype, self.train_data.shape)
-            self.data_set = tf.data.Dataset.from_tensor_slices(self.data_placeholder)
-            self.data_set = self.data_set.shuffle(buffer_size=len(self.train_data))
+            self.data_placeholders = tuple(tf.placeholder(dat.dtype, dat.shape) for dat in self.train_data)
+            self.data_set = tf.data.Dataset.from_tensor_slices(self.data_placeholders)
+            self.data_set = self.data_set.shuffle(buffer_size=len(self.train_data[0]))
             self.data_set = self.data_set.repeat()
             self.data_set = self.data_set.batch(self.p.batch_size)
             self.data_iterator = self.data_set.make_initializable_iterator()
 
             # Setup Network:
             self.inputs = self.data_iterator.get_next()
-            self.inputs = tf.placeholder_with_default(self.inputs, self.inputs.shape)
+            self.main_inputs = self.inputs[0]
+            self.main_inputs = tf.placeholder_with_default(self.main_inputs, self.main_inputs.shape)
             self.regularizer = tf.contrib.layers.l2_regularizer(scale=self.p.l2_reg_constant)
-            encoded = self._encode(self.inputs)
+            encoded = self._encode(self.main_inputs)
             self.latent = tf.placeholder_with_default(encoded, encoded.shape)
             variable_summaries("latent", self.latent)
             self.generated = self._generate(self.latent)
@@ -77,7 +83,8 @@ class Autoencoder:
             gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=self.p.gpu_memory_fraction)
             self.sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options), graph=self.graph)
             self.sess.run(tf.global_variables_initializer())
-            self.sess.run(self.data_iterator.initializer, feed_dict={self.data_placeholder: self.train_data})
+            self.sess.run(self.data_iterator.initializer,
+                          feed_dict={p: d for p, d in zip(self.data_placeholders, self.train_data)})
             self.train_writer = tf.summary.FileWriter(os.path.join(self.p.main_path, "train"), self.sess.graph)
             if self.validation_data is not None:
                 self.validation_writer = tf.summary.FileWriter(os.path.join(self.p.main_path, "validation"), self.sess.graph)
@@ -117,9 +124,9 @@ class Autoencoder:
         with tf.name_scope("generator"):
             current_layer = inputs
             if self.p.periodicity < float("inf"):
-                n_neurons_with_inputs = [self.train_data.shape[1] * 2] + self.p.n_neurons
+                n_neurons_with_inputs = [self.main_inputs.shape[1] * 2] + self.p.n_neurons
             else:
-                n_neurons_with_inputs = [self.train_data.shape[1]] + self.p.n_neurons
+                n_neurons_with_inputs = [self.main_inputs.shape[1]] + self.p.n_neurons
             for n_neurons, act_fun in zip(n_neurons_with_inputs[-2::-1], self.p.activation_functions[-2::-1]):
                 if act_fun:
                     act_fun = getattr(tf.nn, act_fun)
@@ -131,7 +138,7 @@ class Autoencoder:
                                                 kernel_regularizer=self.regularizer,
                                                 bias_initializer=tf.random_normal_initializer(0.1, 0.05))
             if self.p.periodicity < float("inf"):
-                split = self.train_data.shape[1]
+                split = self.main_inputs.shape[1]
                 current_layer = tf.atan2(current_layer[:, :split], current_layer[:, split:])
                 if self.p.periodicity != 2 * pi:
                     current_layer = current_layer / (2*pi) * self.p.periodicity
@@ -140,8 +147,8 @@ class Autoencoder:
     def _cost(self):
         with tf.name_scope("cost"):
             self.auto_cost = tf.reduce_mean(
-                tf.norm(periodic_distance(self.inputs, self.generated, self.p.periodicity), axis=1))
-            self.distance_cost = distance_cost(self.inputs, self.latent, *self.p.dist_sig_parameters,
+                tf.norm(periodic_distance(self.main_inputs, self.generated, self.p.periodicity), axis=1))
+            self.distance_cost = distance_cost(self.main_inputs, self.latent, *self.p.dist_sig_parameters,
                                                self.p.periodicity)
             self.center_cost = tf.reduce_mean(tf.square(self.latent))
             self.reg_cost = tf.losses.get_regularization_loss()
@@ -168,7 +175,7 @@ class Autoencoder:
         latents = []
         batches = np.array_split(inputs, max(1, int(len(inputs) / 2048)))
         for batch in batches:
-            latent = self.sess.run(self.latent, feed_dict={self.inputs: batch})
+            latent = self.sess.run(self.latent, feed_dict={self.main_inputs: batch})
             latents.append(latent)
         latents = np.concatenate(latents, axis=0)
         return latents
@@ -208,7 +215,7 @@ class Autoencoder:
                 self.train_writer.add_summary(summary_values, step)
                 if self.validation_data is not None:
                     summary_values = self.sess.run(self.merged_summaries,
-                                                   feed_dict={self.inputs: self._random_batch(self.validation_data)})
+                                                   feed_dict={self.main_inputs: self._random_batch(self.validation_data)})
                     self.validation_writer.add_summary(summary_values, step)
             else:
                 self.sess.run(self.optimize)
