@@ -149,22 +149,25 @@ class Autoencoder:
         with tf.name_scope("cost"):
             cost = 0
             if self.p.auto_cost_scale != 0:
-                self.auto_cost = tf.reduce_mean(
-                    tf.norm(periodic_distance(self.main_inputs, self.generated, self.p.periodicity), axis=1))
-                cost += self.p.auto_cost_scale * self.auto_cost
+                auto_cost = tf.reduce_mean(
+                    tf.norm(periodic_distance(self.inputs, self.generated, self.p.periodicity), axis=1))
+                tf.summary.scalar("auto_cost", auto_cost)
+                cost += self.p.auto_cost_scale * auto_cost
 
             if self.p.distance_cost_scale != 0:
-                self.distance_cost = distance_cost(self.main_inputs, self.latent, *self.p.dist_sig_parameters,
-                                                   self.p.periodicity)
-                cost += self.p.distance_cost_scale * self.distance_cost
+                dist_cost = distance_cost(self.inputs, self.latent, *self.p.dist_sig_parameters, self.p.periodicity)
+                tf.summary.scalar("distance_cost", dist_cost)
+                cost += self.p.distance_cost_scale * dist_cost
 
             if self.p.center_cost_scale != 0:
-                self.center_cost = tf.reduce_mean(tf.square(self.latent))
-                cost += self.p.center_cost_scale * self.center_cost
+                center_cost = tf.reduce_mean(tf.square(self.latent))
+                tf.summary.scalar("center_cost", center_cost)
+                cost += self.p.center_cost_scale * center_cost
 
             if self.p.l2_reg_constant != 0:
-                self.reg_cost = tf.losses.get_regularization_loss()
-                cost += self.reg_cost
+                reg_cost = tf.losses.get_regularization_loss()
+                tf.summary.scalar("reg_cost", reg_cost)
+                cost += reg_cost
 
             if self.p.dihedral_to_cartesian_cost_scale != 0:
                 cartesian = dihedrals_to_cartesian_tf(self.generated)  # todo: phi, psi, omega
@@ -174,10 +177,6 @@ class Autoencoder:
                 tf.summary.scalar("dihedrals_to_cartesian_cost", dihedrals_to_cartesian_cost)
 
         tf.summary.scalar("cost", cost)
-        tf.summary.scalar("auto_cost", self.auto_cost)
-        tf.summary.scalar("distance_cost", self.distance_cost)
-        tf.summary.scalar("center_cost", self.center_cost)
-        tf.summary.scalar("reg_cost", self.reg_cost)
         return cost
 
     def encode(self, inputs):
