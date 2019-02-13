@@ -28,10 +28,10 @@ import numpy as np
 high_dimensional_data = np.loadtxt("my_high_d_data.csv", delimiter=",")
 parameters = em.Parameters()
 
-autoencoder = em.Autoencoder(parameters, high_dimensional_data)
-autoencoder.train()
+e_map = em.EncoderMap(parameters, high_dimensional_data)
+e_map.train()
 
-low_dimensional_projection = autoencoder.encode(high_dimensional_data)
+low_dimensional_projection = e_map.encode(high_dimensional_data)
 ```
 The resulting `low_dimensional_projection` array has the same number of rows as the `high_dimensional_data` 
 but the number of columns is two as high dimensional points are projected to a 2d space with default settings.
@@ -41,7 +41,7 @@ form a high dimensional to a low dimensional space. Also the generation of new h
 given points in the low dimensional space is possible:
 ```python
 low_d_points = np.array([[0.1, 0.2], [0.3, 0.4], [0.2, 0.1]])
-newly_generated_high_d_points = autoencoder.generate(low_d_points)
+newly_generated_high_d_points = e_map.generate(low_d_points)
 ```
 
 ## Documentation

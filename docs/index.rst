@@ -11,7 +11,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   autoencoder.rst
+   encodermap.rst
    parameters.rst
    plot.rst
    dihedral_backmapping.rst
