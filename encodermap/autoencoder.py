@@ -146,16 +146,24 @@ class Autoencoder:
 
     def _cost(self):
         with tf.name_scope("cost"):
-            self.auto_cost = tf.reduce_mean(
-                tf.norm(periodic_distance(self.main_inputs, self.generated, self.p.periodicity), axis=1))
-            self.distance_cost = distance_cost(self.main_inputs, self.latent, *self.p.dist_sig_parameters,
-                                               self.p.periodicity)
-            self.center_cost = tf.reduce_mean(tf.square(self.latent))
-            self.reg_cost = tf.losses.get_regularization_loss()
-            cost = self.p.distance_cost_scale * self.distance_cost \
-                   + self.p.auto_cost_scale * self.auto_cost \
-                   + self.p.center_cost_scale * self.center_cost \
-                   + self.reg_cost
+            cost = 0
+            if self.p.auto_cost_scale != 0:
+                self.auto_cost = tf.reduce_mean(
+                    tf.norm(periodic_distance(self.main_inputs, self.generated, self.p.periodicity), axis=1))
+                cost += self.p.auto_cost_scale * self.auto_cost
+
+            if self.p.distance_cost_scale != 0:
+                self.distance_cost = distance_cost(self.main_inputs, self.latent, *self.p.dist_sig_parameters,
+                                                   self.p.periodicity)
+                cost += self.p.distance_cost_scale * self.distance_cost
+
+            if self.p.center_cost_scale != 0:
+                self.center_cost = tf.reduce_mean(tf.square(self.latent))
+                cost += self.p.center_cost_scale * self.center_cost
+
+            if self.p.l2_reg_constant != 0:
+                self.reg_cost = tf.losses.get_regularization_loss()
+                cost += self.reg_cost
 
         tf.summary.scalar("cost", cost)
         tf.summary.scalar("auto_cost", self.auto_cost)
