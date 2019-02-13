@@ -11,12 +11,12 @@ parameters.dist_sig_parameters = (0.2, 3, 6, 1, 2, 6)
 parameters.periodicity = float("inf")
 
 # training:
-autoencoder = em.Autoencoder(parameters, high_d_data)
-autoencoder.train()
+e_map = em.EncoderMap(parameters, high_d_data)
+e_map.train()
 
 # projecting:
-low_d_projection = autoencoder.encode(high_d_data)
-generated = autoencoder.generate(low_d_projection)
+low_d_projection = e_map.encode(high_d_data)
+generated = e_map.generate(low_d_projection)
 
 
 #########################################################################

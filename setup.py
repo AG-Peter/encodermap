@@ -1,10 +1,14 @@
 from setuptools import setup
+import os
 
 with open("description.md", "r") as fh:
     long_description = fh.read()
 
+version_file = open(os.path.join("encodermap", 'VERSION'))
+version = version_file.read().strip()
+
 setup(name='encodermap',
-      version='0.0.5',
+      version=version,
       description='python library for dimensionality reduction',
       long_description=long_description,
       long_description_content_type="text/markdown",
