@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
-from .misc import periodic_distance, variable_summaries, add_layer_summaries, distance_cost
+from .misc import periodic_distance, variable_summaries, add_layer_summaries, distance_cost, pairwise_dist
+from .dihedral_backmapping import dihedrals_to_cartesian_tf
 import os
 from .parameters import Parameters
 from tqdm import tqdm
@@ -164,6 +165,13 @@ class Autoencoder:
             if self.p.l2_reg_constant != 0:
                 self.reg_cost = tf.losses.get_regularization_loss()
                 cost += self.reg_cost
+
+            if self.p.dihedral_to_cartesian_cost_scale != 0:
+                cartesian = dihedrals_to_cartesian_tf(self.generated)  # todo: phi, psi, omega
+                dihedrals_to_cartesian_cost = tf.reduce_mean(tf.square(
+                    pairwise_dist(self.inputs[1]) - pairwise_dist(cartesian)))
+                cost += dihedrals_to_cartesian_cost
+                tf.summary.scalar("dihedrals_to_cartesian_cost", dihedrals_to_cartesian_cost)
 
         tf.summary.scalar("cost", cost)
         tf.summary.scalar("auto_cost", self.auto_cost)

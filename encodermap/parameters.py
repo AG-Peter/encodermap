@@ -104,6 +104,7 @@ class Parameters(ParametersFramework):
         self.auto_cost_scale = 1
         self.center_cost_scale = 0.0001
         self.l2_reg_constant = 0.001
+        self.dihedral_to_cartesian_cost_scale = 0
 
         self.gpu_memory_fraction = 1
         self.analysis_path = ""
