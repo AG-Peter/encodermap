@@ -151,6 +151,6 @@ class TestDihedralToCartesianTf(tf.test.TestCase):
             fig = plt.figure()
             ax = fig.add_subplot(111, projection='3d')
             ax.plot(*cartesian.T)
-            ax.plot(*np.array(e_map.cartesians)[-1].T)
+            ax.plot(*e_map.cartesians[-1][0].T)
             set_axes_equal(ax)
             plt.show()

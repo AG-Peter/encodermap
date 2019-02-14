@@ -142,19 +142,24 @@ def pairwise_dist(positions, squared=False):
     # thanks to https://omoindrot.github.io/triplet-loss
 
     with tf.name_scope("pairwise_dist"):
+        if not tf.is_numeric_tensor(positions):
+            dihedrals = tf.convert_to_tensor(positions)
+        if len(positions.get_shape()) == 2:
+            positions = tf.expand_dims(positions, 0)
+
         # Get the dot product between all embeddings
         # shape (batch_size, batch_size)
-        dot_product = tf.matmul(positions, tf.transpose(positions))
+        dot_product = tf.matmul(positions, tf.transpose(positions, [0, 2, 1]))
 
         # Get squared L2 norm for each embedding. We can just take the diagonal of `dot_product`.
         # This also provides more numerical stability (the diagonal of the result will be exactly 0).
         # shape (batch_size,)
-        square_norm = tf.diag_part(dot_product)
+        square_norm = tf.linalg.diag_part(dot_product)
 
         # Compute the pairwise distance matrix as we have:
         # ||a - b||^2 = ||a||^2  - 2 <a, b> + ||b||^2
         # shape (batch_size, batch_size)
-        distances = tf.expand_dims(square_norm, 0) - 2.0 * dot_product + tf.expand_dims(square_norm, 1)
+        distances = tf.expand_dims(square_norm, 1) - 2.0 * dot_product + tf.expand_dims(square_norm, 2)
 
         # Because of computation errors, some distances might be negative so we put everything >= 0.0
         distances = tf.maximum(distances, 0.0)
