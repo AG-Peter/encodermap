@@ -73,8 +73,15 @@ def straight_tetrahedral_chain(n):
 
 
 def dihedrals_to_cartesian_tf(dihedrals):
-    cartesian = tf.constant(straight_tetrahedral_chain(len(dihedrals)+3))
-    for i in range(len(dihedrals)):
+
+    if tf.is_numeric_tensor(dihedrals):
+        print(dihedrals.shape)
+        n = int(dihedrals.shape[0])
+    else:
+        n = len(dihedrals)
+
+    cartesian = tf.constant(straight_tetrahedral_chain(n + 3))
+    for i in range(n):
         axis = cartesian[i+2] - cartesian[i+1]
         axis /= tf.norm(axis)
         rotated = cartesian[i + 2] + tf.matmul(cartesian[i + 3:] - cartesian[i + 2],

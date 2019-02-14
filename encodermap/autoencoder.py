@@ -148,14 +148,15 @@ class Autoencoder:
     def _cost(self):
         with tf.name_scope("cost"):
             cost = 0
-            if self.p.auto_cost_scale != 0:
+            # if self.p.auto_cost_scale != 0:
+            if True:
                 auto_cost = tf.reduce_mean(
-                    tf.norm(periodic_distance(self.inputs, self.generated, self.p.periodicity), axis=1))
+                    tf.norm(periodic_distance(self.main_inputs, self.generated, self.p.periodicity), axis=1))
                 tf.summary.scalar("auto_cost", auto_cost)
                 cost += self.p.auto_cost_scale * auto_cost
 
             if self.p.distance_cost_scale != 0:
-                dist_cost = distance_cost(self.inputs, self.latent, *self.p.dist_sig_parameters, self.p.periodicity)
+                dist_cost = distance_cost(self.main_inputs, self.latent, *self.p.dist_sig_parameters, self.p.periodicity)
                 tf.summary.scalar("distance_cost", dist_cost)
                 cost += self.p.distance_cost_scale * dist_cost
 
@@ -170,10 +171,10 @@ class Autoencoder:
                 cost += reg_cost
 
             if self.p.dihedral_to_cartesian_cost_scale != 0:
-                cartesian = dihedrals_to_cartesian_tf(self.generated)  # todo: phi, psi, omega
+                self.cartesian = dihedrals_to_cartesian_tf(self.generated[0])  # todo: phi, psi, omega
                 dihedrals_to_cartesian_cost = tf.reduce_mean(tf.square(
-                    pairwise_dist(self.inputs[1]) - pairwise_dist(cartesian)))
-                cost += dihedrals_to_cartesian_cost
+                    pairwise_dist(self.inputs[1][0]) - pairwise_dist(self.cartesian)))
+                cost += self.p.dihedral_to_cartesian_cost_scale * dihedrals_to_cartesian_cost
                 tf.summary.scalar("dihedrals_to_cartesian_cost", dihedrals_to_cartesian_cost)
 
         tf.summary.scalar("cost", cost)
@@ -222,11 +223,14 @@ class Autoencoder:
         Train the autoencoder as specified in the parameters object.
         """
         step = 0
+        self.cartesians = []
         for step in tqdm(range(self.p.n_steps)):
             # feed_dict = {self.inputs: self.random_batch()}
 
             if step % self.p.summary_step == 0:
-                _, summary_values = self.sess.run((self.optimize, self.merged_summaries))
+                # _, summary_values = self.sess.run((self.optimize, self.merged_summaries))
+                _, summary_values, cartesian = self.sess.run((self.optimize, self.merged_summaries, self.cartesian))
+                self.cartesians.append(cartesian)
                 self.train_writer.add_summary(summary_values, step)
                 if self.validation_data is not None:
                     summary_values = self.sess.run(self.merged_summaries,

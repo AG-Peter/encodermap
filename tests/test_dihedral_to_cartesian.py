@@ -3,7 +3,37 @@ import numpy as np
 from math import pi
 import tensorflow as tf
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
+import tempfile
+# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
+
+
+def set_axes_equal(ax):
+    '''Make axes of 3D plot have equal scale so that spheres appear as spheres,
+    cubes as cubes, etc..  This is one possible solution to Matplotlib's
+    ax.set_aspect('equal') and ax.axis('equal') not working for 3D.
+
+    Input
+      ax: a matplotlib axis, e.g., as output from plt.gca().
+    '''
+
+    x_limits = ax.get_xlim3d()
+    y_limits = ax.get_ylim3d()
+    z_limits = ax.get_zlim3d()
+
+    x_range = abs(x_limits[1] - x_limits[0])
+    x_middle = np.mean(x_limits)
+    y_range = abs(y_limits[1] - y_limits[0])
+    y_middle = np.mean(y_limits)
+    z_range = abs(z_limits[1] - z_limits[0])
+    z_middle = np.mean(z_limits)
+
+    # The plot bounding box is a sphere in the sense of the infinity
+    # norm, hence I call half the max range the plot radius.
+    plot_radius = 0.5*max([x_range, y_range, z_range])
+
+    ax.set_xlim3d([x_middle - plot_radius, x_middle + plot_radius])
+    ax.set_ylim3d([y_middle - plot_radius, y_middle + plot_radius])
+    ax.set_zlim3d([z_middle - plot_radius, z_middle + plot_radius])
 
 
 class TestDihedralToCartesianTf(tf.test.TestCase):
@@ -49,3 +79,37 @@ class TestDihedralToCartesianTf(tf.test.TestCase):
         with self.test_session():
             print(em.dihedrals_to_cartesian_tf(dihedrals).eval())
             self.assertAllClose(result, em.dihedrals_to_cartesian_tf(dihedrals).eval(), atol=1e-4)
+
+    def test_learn_helix(self):
+        phi = (-57.8 / 180 - 1) * pi
+        psi = (-47.0 / 180 - 1) * pi
+        omega = 0.0
+        dihedrals = [phi, psi, omega]*10
+        with self.test_session():
+            cartesian = em.dihedrals_to_cartesian_tf(dihedrals).eval()
+
+        with tempfile.TemporaryDirectory() as temp_path:
+            parameters = em.Parameters()
+            parameters.main_path = temp_path
+            parameters.dihedral_to_cartesian_cost_scale = 1
+            parameters.auto_cost_scale = 0
+            parameters.distance_cost_scale = 0
+            parameters.l2_reg_constant = 0.
+            parameters.batch_size = 1
+            parameters.n_steps = 1000
+            parameters.summary_step = 1
+
+            e_map = em.EncoderMap(parameters, (np.expand_dims(dihedrals, 0), np.expand_dims(cartesian, 0)))
+            e_map.train()
+
+            latent = e_map.encode(np.expand_dims(dihedrals, 0))
+            generated = e_map.generate(latent)
+
+            import matplotlib.pyplot as plt
+            from mpl_toolkits.mplot3d import Axes3D
+            fig = plt.figure()
+            ax = fig.add_subplot(111, projection='3d')
+            ax.plot(*cartesian.T)
+            ax.plot(*np.array(e_map.cartesians)[-1].T)
+            set_axes_equal(ax)
+            plt.show()
