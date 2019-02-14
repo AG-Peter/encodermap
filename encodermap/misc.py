@@ -265,12 +265,15 @@ def random_on_cube_edges(n_points, sigma=0):
 
 
 def rotation_matrix(axis_unit_vec, angle):
-    i = tf.eye(3)
-    cross_prod_matrix = tf.convert_to_tensor([[0, -axis_unit_vec[2], axis_unit_vec[1]],
-                                              [axis_unit_vec[2], 0, -axis_unit_vec[0]],
-                                              [-axis_unit_vec[1], axis_unit_vec[0], 0]])
+    angle = tf.expand_dims(tf.expand_dims(angle, axis=-1), axis=-1)
+    i = tf.expand_dims(tf.eye(3), 0)
+    zeros = tf.zeros(tf.shape(axis_unit_vec)[0])
+    cross_prod_matrix = tf.convert_to_tensor([[zeros, -axis_unit_vec[:, 2], axis_unit_vec[:, 1]],
+                                              [axis_unit_vec[:, 2], zeros, -axis_unit_vec[:, 0]],
+                                              [-axis_unit_vec[:, 1], axis_unit_vec[:, 0], zeros]])
+    cross_prod_matrix = tf.transpose(cross_prod_matrix, [2, 0, 1])
     r = tf.cos(angle) * i
     r += tf.sin(angle) * cross_prod_matrix
-    axis_unit_vec = tf.expand_dims(axis_unit_vec, 1)
-    r += (1-tf.cos(angle)) * tf.matmul(axis_unit_vec, tf.transpose(axis_unit_vec))
+    axis_unit_vec = tf.expand_dims(axis_unit_vec, 2)
+    r += (1-tf.cos(angle)) * tf.matmul(axis_unit_vec, tf.transpose(axis_unit_vec, [0, 2, 1]))
     return r

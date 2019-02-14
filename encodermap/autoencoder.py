@@ -171,9 +171,9 @@ class Autoencoder:
                 cost += reg_cost
 
             if self.p.dihedral_to_cartesian_cost_scale != 0:
-                self.cartesian = dihedrals_to_cartesian_tf(self.generated[0])  # todo: phi, psi, omega
+                self.cartesian = dihedrals_to_cartesian_tf(self.generated)  # todo: phi, psi, omega
                 dihedrals_to_cartesian_cost = tf.reduce_mean(tf.square(
-                    pairwise_dist(self.inputs[1][0]) - pairwise_dist(self.cartesian)))
+                    pairwise_dist(self.inputs[1]) - pairwise_dist(self.cartesian)))
                 cost += self.p.dihedral_to_cartesian_cost_scale * dihedrals_to_cartesian_cost
                 tf.summary.scalar("dihedrals_to_cartesian_cost", dihedrals_to_cartesian_cost)
 

@@ -74,18 +74,25 @@ def straight_tetrahedral_chain(n):
 
 def dihedrals_to_cartesian_tf(dihedrals):
 
-    if tf.is_numeric_tensor(dihedrals):
-        print(dihedrals.shape)
-        n = int(dihedrals.shape[0])
+    if not tf.is_numeric_tensor(dihedrals):
+        dihedrals = tf.convert_to_tensor(dihedrals)
+    if len(dihedrals.get_shape()) == 1:
+        one_d = True
+        dihedrals = tf.expand_dims(dihedrals, 0)
     else:
-        n = len(dihedrals)
+        one_d = False
+    n = int(dihedrals.shape[-1])
 
-    cartesian = tf.constant(straight_tetrahedral_chain(n + 3))
+    cartesian = tf.expand_dims(tf.constant(straight_tetrahedral_chain(n + 3)), 0)
+    cartesian = tf.tile(cartesian, [tf.shape(dihedrals)[0], 1, 1])
+
     for i in range(n):
-        axis = cartesian[i+2] - cartesian[i+1]
-        axis /= tf.norm(axis)
-        rotated = cartesian[i + 2] + tf.matmul(cartesian[i + 3:] - cartesian[i + 2],
-                                               rotation_matrix(axis, dihedrals[i]))
-        cartesian = tf.concat([cartesian[:i+3], rotated], axis=0)
+        axis = cartesian[:, i+2] - cartesian[:, i+1]
+        axis /= tf.norm(axis, axis=1, keepdims=True)
+        rotated = cartesian[:, i+2:i+3] + tf.matmul(cartesian[:, i + 3:] - cartesian[:, i+2:i+3],
+                                                    rotation_matrix(axis, dihedrals[:, i]))
+        cartesian = tf.concat([cartesian[:, :i+3], rotated], axis=1)
 
+    if one_d:
+        cartesian = tf.squeeze(cartesian)
     return cartesian
