@@ -154,3 +154,22 @@ class TestDihedralToCartesianTf(tf.test.TestCase):
             ax.plot(*e_map.cartesians[-1][0].T)
             set_axes_equal(ax)
             plt.show()
+
+    def test_straight_tetrahedral_chain_with_bond_lenght(self):
+        result = [[0.       , 0.       , 0.       ],
+                  [1.       , 0.       , 0.       ],
+                  [1.6633345, 1.8867929, 0.       ],
+                  [4.6633344, 1.8867929, 0.       ],
+                  [4.995002 , 2.8301892, 0.       ],
+                  [6.995002 , 2.8301892, 0.       ],
+                  [7.990003 , 5.6603785, 0.       ]]
+        cartesian = em.straight_tetrahedral_chain(bond_lengths=[1, 2, 3, 1, 2, 3])
+        self.assertAllClose(result, cartesian)
+
+        # import matplotlib.pyplot as plt
+        # from mpl_toolkits.mplot3d import Axes3D
+        # fig = plt.figure()
+        # ax = fig.add_subplot(111, projection='3d')
+        # ax.plot(*cartesian.T)
+        # set_axes_equal(ax)
+        # plt.show()

@@ -60,15 +60,29 @@ def dihedral_backmapping(pdb_path, dihedral_trajectory, rough_n_points=-1):
     return uni
 
 
-def straight_tetrahedral_chain(n):
+def straight_tetrahedral_chain(n_atoms=None, bond_lengths=None):
     dx = cos(70.63 / 180 * pi)
     dy = sin(70.63 / 180 * pi)
-    print(dx, dy)
 
-    coordinates = np.zeros((n, 3), dtype=np.float32)
-    indices = np.repeat(np.arange(int(n / 2) + 1), 2)
-    coordinates[:, 0] = (indices[1:n + 1] + dx * indices[0:n])
-    coordinates[:, 1] = dy * indices[0:n]
+    if n_atoms and not bond_lengths:
+        coordinates = np.zeros((n_atoms, 3), dtype=np.float32)
+        indices = np.repeat(np.arange(int(n_atoms / 2) + 1), 2)
+        coordinates[:, 0] = (indices[1:n_atoms + 1] + dx * indices[0:n_atoms])
+        coordinates[:, 1] = dy * indices[0:n_atoms]
+
+    elif (bond_lengths and not n_atoms) or n_atoms == len(bond_lengths)+1:
+        n_bonds = len(bond_lengths)
+        n_atoms = n_atoms or n_bonds+1
+
+        dxs = bond_lengths * np.tile([1, dx], int(n_atoms/2))[:n_bonds]
+        dys = bond_lengths * np.tile([0, dy], int(n_atoms/2))[:n_bonds]
+
+        coordinates = np.zeros((n_atoms, 3), dtype=np.float32)
+        coordinates[1:, 0] = np.cumsum(dxs)
+        coordinates[1:, 1] = np.cumsum(dys)
+
+    else:
+        raise ValueError("input not compatible")
     return coordinates
 
 
