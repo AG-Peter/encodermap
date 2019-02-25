@@ -230,7 +230,7 @@ class Autoencoder:
             if step % self.p.summary_step == 0:
                 # _, summary_values = self.sess.run((self.optimize, self.merged_summaries))
                 _, summary_values, cartesian = self.sess.run((self.optimize, self.merged_summaries, self.cartesian))
-                self.cartesians.append(cartesian)
+                self.cartesians.append(cartesian[0])
                 self.train_writer.add_summary(summary_values, step)
                 if self.validation_data is not None:
                     summary_values = self.sess.run(self.merged_summaries,

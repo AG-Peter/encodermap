@@ -1,4 +1,5 @@
 import encodermap as em
+import MDAnalysis as md
 import numpy as np
 from math import pi
 import tensorflow as tf
@@ -120,6 +121,18 @@ class TestDihedralToCartesianTf(tf.test.TestCase):
 
         with self.test_session():
             self.assertAllClose(result, em.dihedrals_to_cartesian_tf(dihedrals).eval(), atol=1e-4)
+
+    def test_straight_ala10_to_helix_array(self):
+        phi = -57.8 / 180 * pi
+        psi = -47.0 / 180 * pi
+        dihedrals = tf.convert_to_tensor(np.array([[phi, psi]*10]*10, dtype=np.float32)[:, 1:-1])
+        moldata = em.MolData(md.Universe("Ala10_helix.pdb"))
+
+        cartesian = em.dihedrals_to_cartesian_tf(dihedrals, moldata.straightened_cartesian,
+                                                 moldata.central_atom_indices, no_omega=True)
+        with self.test_session():
+            moldata.write_pdb("out.pdb", cartesian.eval())
+            moldata.write_pdb("straightened.pdb", moldata.straightened_cartesian.eval())
 
     def test_learn_helix(self):
         phi = (-57.8 / 180 - 1) * pi
