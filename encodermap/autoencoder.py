@@ -76,7 +76,8 @@ class Autoencoder:
             # Setup Optimizer:
             self.optimizer = tf.train.AdamOptimizer(self.p.learning_rate)
             gradients = self.optimizer.compute_gradients(self.cost)
-            self.optimize = self.optimizer.apply_gradients(gradients)
+            self.global_step = tf.train.create_global_step()
+            self.optimize = self.optimizer.apply_gradients(gradients, global_step=self.global_step)
 
             self.merged_summaries = tf.summary.merge_all()
 
@@ -222,27 +223,26 @@ class Autoencoder:
         """
         Train the autoencoder as specified in the parameters object.
         """
-        step = 0
-        self.cartesians = []
-        for step in tqdm(range(self.p.n_steps)):
-            # feed_dict = {self.inputs: self.random_batch()}
-
-            if step % self.p.summary_step == 0:
+        for i in tqdm(range(self.p.n_steps)):
+            if i % self.p.summary_step == 0:
                 # _, summary_values = self.sess.run((self.optimize, self.merged_summaries))
-                _, summary_values, cartesian = self.sess.run((self.optimize, self.merged_summaries, self.cartesian))
-                self.cartesians.append(cartesian[0])
-                self.train_writer.add_summary(summary_values, step)
+                _, summary_values = self.sess.run((self.optimize, self.merged_summaries))
+                self.train_writer.add_summary(summary_values, self.step())
                 if self.validation_data is not None:
                     summary_values = self.sess.run(self.merged_summaries,
                                                    feed_dict={self.main_inputs: self._random_batch(self.validation_data)})
-                    self.validation_writer.add_summary(summary_values, step)
+                    self.validation_writer.add_summary(summary_values, self.step())
             else:
                 self.sess.run(self.optimize)
 
-            if step % self.p.checkpoint_step == 0 and step != 0:
-                self.saver.save(self.sess, os.path.join(self.p.main_path, "checkpoints", "step{}.ckpt".format(step)))
+            if i % self.p.checkpoint_step == 0 and i != 0:
+                self.saver.save(self.sess, os.path.join(self.p.main_path, "checkpoints",
+                                                        "step{}.ckpt".format(self.step())))
         else:
-            self.saver.save(self.sess, os.path.join(self.p.main_path, "checkpoints", "step{}.ckpt".format(step)))
+            self.saver.save(self.sess, os.path.join(self.p.main_path, "checkpoints", "step{}.ckpt".format(self.step())))
+
+    def step(self):
+        return tf.train.global_step(self.sess, self.global_step)
 
     def profile(self):
         options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)

@@ -4,6 +4,7 @@ from MDAnalysis.coordinates.memory import MemoryReader
 from math import pi
 from MDAnalysis.analysis.base import AnalysisBase
 import os
+from tqdm import tqdm
 
 
 class AllProteinPhiPsi(AnalysisBase):
@@ -40,7 +41,7 @@ class AllProteinPhiPsi(AnalysisBase):
 
 
 class MolData:
-    def __init__(self, universe):
+    def __init__(self, universe, cache_path=""):
         self.universe = universe
 
         self.sorted_atoms = [atom
@@ -50,14 +51,29 @@ class MolData:
         self.central_atom_indices = [i for i in range(len(self.sorted_atoms))
                                      if self.sorted_atoms[i].name in ["N", "CA", "C"]]
 
-        self.cartesians = np.zeros((len(self.universe.trajectory), self.universe.atoms.n_atoms, 3), dtype=np.float32)
-        for i, frame in enumerate(self.universe.trajectory):
-            self.cartesians[i, ...] = [atom.position for atom in self.sorted_atoms]
+        try:
+            self.cartesians = np.load(os.path.join(cache_path, "cartesians.npy"))
+            print("Loaded cartesians from {}".format(cache_path))
 
-        allproteinphipsi = AllProteinPhiPsi(self.universe)
-        allproteinphipsi.run()
-        self.dihedrals = np.array(allproteinphipsi.dihedral_values, dtype=np.float32)
-        self.times = np.array(allproteinphipsi.times, dtype=np.float32)
+        except FileNotFoundError:
+            print("Loading Cartesians...")
+            self.cartesians = np.zeros((len(self.universe.trajectory), self.universe.atoms.n_atoms, 3), dtype=np.float32)
+            for i, frame in tqdm(enumerate(self.universe.trajectory), total=len(self.universe.trajectory)):
+                self.cartesians[i, ...] = [atom.position for atom in self.sorted_atoms]
+            if cache_path:
+                np.save(os.path.join(cache_path, "cartesians.npy"), self.cartesians)
+
+        try:
+            self.dihedrals = np.load(os.path.join(cache_path, "dihedrals.npy"))
+            print("Loaded dihedrals from {}".format(cache_path))
+
+        except FileNotFoundError:
+            print("Calculating dihedrals...")
+            allproteinphipsi = AllProteinPhiPsi(self.universe, verbose=True)
+            allproteinphipsi.run()
+            self.dihedrals = np.array(allproteinphipsi.dihedral_values, dtype=np.float32)
+            if cache_path:
+                np.save(os.path.join(cache_path, "dihedrals.npy"), self.dihedrals)
 
     @staticmethod
     def sort_key(atom):
