@@ -9,6 +9,7 @@ import MDAnalysis as md
 import datetime
 from .dihedral_backmapping import dihedral_backmapping
 import matplotlib.pyplot as plt
+import subprocess
 
 
 class ManualPath(object):
@@ -27,6 +28,7 @@ class ManualPath(object):
     Once the path selection is completed, the use_points method is called with the points on the selected path.
     You can overwrite the use_points method to do what ever you want with the points on the path.
     """
+
     def __init__(self, axe, n_points=200):
         """
 
@@ -235,6 +237,63 @@ class PathGenerateDihedrals(ManualPath):
         with md.Writer(output_pdb_path) as w:
             for step in universe.trajectory:
                 w.write(universe.atoms)
+
+
+class PathGenerateCartesians(ManualPath):
+    """
+    This class inherits from :py:class:`encodermap.plot.ManualPath`.
+    The points from a manually selected path are fed into the decoder part of a given autoencoder.
+    The output of the autoencoder is used as phi psi dihedral angles to reconstruct protein conformations
+    based on the protein structure given with pdb_path.
+    Three output files are written for each selected path:
+    points.npy, generated.npy and generated.pdb which contain:
+    the points on the selected path, the generated output of
+    the autoencoder, and the generated protein conformations respectively.
+    Keep in mind that backbone dihedrals are not sufficient to describe a protein conformation completely.
+    Usually the backbone is reconstructed well but all side chains are messed up.
+    """
+
+    def __init__(self, axe, autoencoder, mol_data, save_path=None, n_points=200, vmd_path=""):
+        """
+
+        :param axe: matplotlib axe object for example from: fig, axe = plt.subplots()
+        :param autoencoder: :py:class:`encodermap.autoencoder.Autoencoder` which was trained on protein dihedral
+            angles. The dihedrals have to be order starting from the amino end.
+            First all phi angles then all psi angles.
+        :param pdb_path: Path to a protein data bank (pdb) file of the protein
+        :param save_path: Path where outputs should be written
+        :param n_points: Number of points distributed on the selected path.
+        """
+        super().__init__(axe, n_points=n_points)
+
+        self.autoencoder = autoencoder
+        self.mol_data = mol_data
+        self.vmd_path = vmd_path
+
+        if save_path:
+            self.save_path = save_path
+        else:
+            self.save_path = autoencoder.p.main_path
+
+    def use_points(self, points):
+        current_save_path = create_dir(os.path.join(self.save_path, "generated_paths",
+                                                    datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")))
+        self.axe.plot(points[:, 0], points[:, 1], linestyle="", marker=".")
+        np.save(os.path.join(current_save_path, "points"), points)
+        dihedrals, cartesians = self.autoencoder.generate(points)
+        np.save(os.path.join(current_save_path, "generated_dihedrals.npy"), dihedrals)
+        np.save(os.path.join(current_save_path, "generated_cartesians.npy"), cartesians)
+
+        self.mol_data.write(current_save_path, cartesians)
+        if self.vmd_path:
+            cmd = "{} {} {}".format(self.vmd_path,
+                                    "generated.pdb",
+                                    "generated.xtc")
+            print(cmd)
+            process = subprocess.Popen(cmd, cwd=current_save_path, shell=True, stdin=subprocess.PIPE,
+                                       stdout=subprocess.PIPE)
+            process.stdin.write(b"animate delete beg 0 end 0 skip 0 0\n")
+            process.stdin.flush()
 
 
 def distance_histogram(data, periodicity, sigmoid_parameters, axe=None):

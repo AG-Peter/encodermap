@@ -224,7 +224,7 @@ class Autoencoder:
         Train the autoencoder as specified in the parameters object.
         """
         for i in tqdm(range(self.p.n_steps)):
-            if i % self.p.summary_step == 0:
+            if (i+1) % self.p.summary_step == 0:
                 # _, summary_values = self.sess.run((self.optimize, self.merged_summaries))
                 _, summary_values = self.sess.run((self.optimize, self.merged_summaries))
                 self.train_writer.add_summary(summary_values, self.step())
@@ -235,11 +235,12 @@ class Autoencoder:
             else:
                 self.sess.run(self.optimize)
 
-            if i % self.p.checkpoint_step == 0 and i != 0:
+            if (i+1) % self.p.checkpoint_step == 0:
                 self.saver.save(self.sess, os.path.join(self.p.main_path, "checkpoints",
                                                         "step{}.ckpt".format(self.step())))
         else:
             self.saver.save(self.sess, os.path.join(self.p.main_path, "checkpoints", "step{}.ckpt".format(self.step())))
+            self.train_writer.flush()
 
     def step(self):
         return tf.train.global_step(self.sess, self.global_step)

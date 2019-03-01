@@ -124,3 +124,23 @@ class DihedralCartesianEncoder(Autoencoder):
 
         tf.summary.scalar("cost", cost)
         return cost
+
+    def generate(self, latent):
+        """
+        Generates new high-dimensional points based on given low-dimensional points using the decoder part of the
+        autoencoder.
+
+        :param latent: 2d numpy array containing points in the low-dimensional space. The number of columns must be
+                       equal to the number of neurons in the bottleneck layer of the autoencoder.
+        :return:
+        """
+        all_dihedrals = []
+        all_cartesians = []
+        batches = np.array_split(latent, max(1, int(len(latent) / 2048)))
+        for batch in batches:
+            dihedrals, cartesians = self.sess.run((self.generated, self.cartesian), feed_dict={self.latent: batch})
+            all_dihedrals.append(dihedrals)
+            all_cartesians.append(cartesians)
+        all_dihedrals = np.concatenate(all_dihedrals, axis=0)
+        all_cartesians = np.concatenate(all_cartesians, axis=0)
+        return all_dihedrals, all_cartesians

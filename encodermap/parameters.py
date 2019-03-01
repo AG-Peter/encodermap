@@ -2,6 +2,7 @@ import os
 from math import pi
 import json
 from .misc import search_and_replace, run_path
+import datetime
 
 
 class ParametersFramework:
@@ -17,6 +18,10 @@ class ParametersFramework:
         """
         if not path:
             path = os.path.join(self.main_path, "parameters.json")
+        if os.path.isfile(path):
+            filename, extension = os.path.splitext(path)
+            time = datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
+            os.rename(path, filename + "_back_" + time + extension)
         with open(path, 'w') as file:
             json.dump(self.__dict__, file, indent=4, sort_keys=True)
         return path
