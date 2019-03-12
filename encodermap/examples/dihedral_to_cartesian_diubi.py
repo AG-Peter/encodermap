@@ -2,20 +2,20 @@ import encodermap as em
 import MDAnalysis as md
 import os
 
-run_settings = [[1, 1, 1], [1, 0, 1], [0, 1, 1], [1, 0, 0]]  # dihedral, Cartesian1, Cartesian2
+run_settings = [[1, 0, 1], [1, 1, 1], [0, 1, 1], [1, 0, 0]]  # dihedral, Cartesian1, Cartesian2
 
-structure_path = "/home/andrejb/Research/SIMS/2017_10_20_monoUb_nat/start.pdb"
-traj_path = "/home/andrejb/Research/SIMS/2017_10_20_monoUb_nat/traj.xtc"
+structure_path = "/home/andrejb/Research/SIMS/2017_04_27_G_2ub_m1_01_01/start.gro"
+traj_path = "/home/andrejb/Research/SIMS/2017_04_27_G_2ub_m1_01_01/traj.xtc"
 
 uni = md.Universe(structure_path, traj_path)
-selected_atoms = uni.select_atoms("resid 0:72 and (backbone or name O1 or name H or name CB)")
+selected_atoms = uni.select_atoms("backbone or name O1 or name H or name CB")
 
-moldata = em.MolData(selected_atoms, cache_path=em.misc.create_dir("data/ubi_without_tail_bb"))
+moldata = em.MolData(selected_atoms)
 
 for i in range(5):
     for setting in run_settings:
         parameters = em.Parameters()
-        parameters.main_path = em.misc.run_path(em.misc.create_dir("runs"))
+        parameters.main_path = em.misc.run_path(em.misc.create_dir("runs/diubi"))
         parameters.dihedral_to_cartesian_cost_scale = setting[1]
         parameters.auto_cost_scale = setting[0]
         parameters.distance_cost_scale = 0
@@ -25,7 +25,7 @@ for i in range(5):
         parameters.batch_size = 256
         parameters.n_steps = 10000
         parameters.summary_step = 100
-        parameters.gpu_memory_fraction = 0.4
+        parameters.gpu_memory_fraction = 1.0
         parameters.checkpoint_step = 1000
 
         e_map = em.DihedralCartesianEncoder(parameters, moldata)
