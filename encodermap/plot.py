@@ -175,7 +175,7 @@ class ManualPath(object):
         self.fig.canvas.restore_region(self.background)
         self.axe.draw_artist(self.interpolated_line)
         self.axe.draw_artist(self.control_line)
-        self.canvas.update()
+        self.canvas.draw()
         self.canvas.flush_events()
 
     def _reset_lines(self):

@@ -7,6 +7,8 @@ RUN pip install jupyter_contrib_nbextensions &&\
     jupyter contrib nbextension install &&\
     jupyter nbextension enable spellchecker/main --system
 
+RUN pip install ipympl
+
 EXPOSE 8888
 EXPOSE 6006
 
