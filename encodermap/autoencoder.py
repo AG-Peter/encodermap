@@ -224,6 +224,7 @@ class Autoencoder:
                 self.saver.save(self.sess, os.path.join(self.p.main_path, "checkpoints", "step{}.ckpt".format(step)))
         else:
             self.saver.save(self.sess, os.path.join(self.p.main_path, "checkpoints", "step{}.ckpt".format(step)))
+            self.train_writer.flush()
 
     def profile(self):
         options = tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE)
