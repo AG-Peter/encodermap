@@ -7,7 +7,8 @@ RUN pip install jupyter_contrib_nbextensions &&\
     jupyter contrib nbextension install &&\
     jupyter nbextension enable spellchecker/main --system
 
-RUN pip install ipympl
+RUN pip install nglview &&\
+    jupyter-nbextension enable nglview --py --system
 
 EXPOSE 8888
 EXPOSE 6006
