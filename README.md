@@ -1,4 +1,6 @@
-<img src="logo_m.png" width=49% align="right"/>
+<p align="right">
+<img src="logo_m.png" width=49% />
+</p>
 
 For a quick intro have a look at the following video:
 
