@@ -2,6 +2,7 @@
 <img src="logo_m.png" width=49% />
 </p>
 
+## Introduction
 For a quick intro have a look at the following video:
 
 [<p align="left"> <img src="thumbnail.png" width=50% /> </p>](https://youtu.be/JV59OABhNTY)
