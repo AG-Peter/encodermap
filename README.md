@@ -1,6 +1,9 @@
 <img src="logo_m.png" width=50% align="right"/>
 
-Dimensionality reduction and generation of high-dimensional data with autoencoders as described in:  
+For a quick intro have a look at the following video:  
+[![EncoderMap](thumbnail.png)](https://youtu.be/JV59OABhNTY "Introduction to EncoderMap")
+
+You can find more details in this article:  
 [Lemke, Tobias, and Christine Peter. "EncoderMap: Dimensionality Reduction and Generation of Molecule Conformations." Journal of chemical theory and computation 15.2 (2019): 1209-1215.](https://pubs.acs.org/doi/abs/10.1021/acs.jctc.8b00975)
 
 ## Installation
