@@ -1,6 +1,12 @@
-<img src="logo_m.png" width=50% align="right"/>
+<img src="logo_m.png" width=45% align="right" />
 
-Dimensionality reduction and generation of high-dimensional data with autoencoders
+## Introduction
+For a quick intro have a look at the following video:
+
+[<p align="left"> <img src="thumbnail.png" width=50% /> </p>](https://youtu.be/JV59OABhNTY)
+
+You can find more details in this article:  
+[Lemke, Tobias, and Christine Peter. "EncoderMap: Dimensionality Reduction and Generation of Molecule Conformations." Journal of chemical theory and computation 15.2 (2019): 1209-1215.](https://pubs.acs.org/doi/abs/10.1021/acs.jctc.8b00975)
 
 ## Installation
 EncoderMap requires TensorFlow to be installed.
@@ -43,6 +49,8 @@ given points in the low dimensional space is possible:
 low_d_points = np.array([[0.1, 0.2], [0.3, 0.4], [0.2, 0.1]])
 newly_generated_high_d_points = e_map.generate(low_d_points)
 ```
+## Tutorials
+To get started please check out the [tutorials](tutorials).
 
 ## Documentation
 More information is available in the [documentations](https://ag-peter.github.io/encodermap/).
