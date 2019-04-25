@@ -70,7 +70,8 @@ class DihedralCartesianEncoder(Autoencoder):
             self.merged_summaries = tf.summary.merge_all()
 
             # Setup Session
-            gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=self.p.gpu_memory_fraction)
+            # gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=self.p.gpu_memory_fraction)
+            gpu_options = tf.GPUOptions(allow_growth = True)
             self.sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options), graph=self.graph)
             self.sess.run(tf.global_variables_initializer())
             self.sess.run(self.data_iterator.initializer,
@@ -87,6 +88,8 @@ class DihedralCartesianEncoder(Autoencoder):
     def _cost(self):
         with tf.name_scope("cost"):
             cost = 0
+
+            cartesian_pairwise_dist = pairwise_dist(self.inputs[1])
             # if self.p.auto_cost_scale != 0:
             if True:
                 auto_cost = tf.reduce_mean(
@@ -98,6 +101,14 @@ class DihedralCartesianEncoder(Autoencoder):
                 dist_cost = distance_cost(self.main_inputs, self.latent, *self.p.dist_sig_parameters, self.p.periodicity)
                 tf.summary.scalar("distance_cost", dist_cost)
                 cost += self.p.distance_cost_scale * dist_cost
+
+            if self.p.cartesian_distance_cost_scale != 0:
+                cpd_shape = cartesian_pairwise_dist.shape
+                new_shape = (-1, cpd_shape[1]*cpd_shape[2])
+                dist_cost = distance_cost(tf.reshape(cartesian_pairwise_dist, shape=new_shape), self.latent, *self.p.cartesian_dist_sig_parameters,
+                                          float("inf"))
+                tf.summary.scalar("cartesian_distance_cost", dist_cost)
+                cost += self.p.cartesian_distance_cost_scale * dist_cost
 
             if self.p.center_cost_scale != 0:
                 center_cost = tf.reduce_mean(tf.square(self.latent))
@@ -117,7 +128,7 @@ class DihedralCartesianEncoder(Autoencoder):
                                                        self.straightened_cartesian,
                                                        self.moldata.central_atom_indices, no_omega=True)
             dihedrals_to_cartesian_cost = tf.reduce_mean(tf.square(
-                pairwise_dist(self.inputs[1]) - pairwise_dist(self.cartesian)))
+                cartesian_pairwise_dist - pairwise_dist(self.cartesian)))
             if self.p.dihedral_to_cartesian_cost_scale != 0:
                 cost += self.p.dihedral_to_cartesian_cost_scale * dihedrals_to_cartesian_cost
             tf.summary.scalar("dihedrals_to_cartesian_cost", dihedrals_to_cartesian_cost)

@@ -309,6 +309,11 @@ def distance_histogram(data, periodicity, sigmoid_parameters, axe=None):
     """
     vecs = periodic_distance_np(np.expand_dims(data, axis=1), np.expand_dims(data, axis=0), periodicity)
     dists = np.linalg.norm(vecs, axis=2)
+    while True:
+        try:
+            dists = np.linalg.norm(dists, axis=2)
+        except np.AxisError:
+            break
     dists = dists.reshape(-1)
 
     if axe is None:

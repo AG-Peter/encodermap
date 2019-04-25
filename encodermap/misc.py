@@ -130,15 +130,6 @@ def pairwise_dist_periodic(positions, periodicity):
 
 
 def pairwise_dist(positions, squared=False):
-    """
-    Compute the 2D matrix of distances between all the embeddings.
-
-    :param positions: tensor of shape (batch_size, position_dim)
-    :param squared: Boolean. If true, output is the pairwise squared euclidean distance matrix.
-        If false, output is the pairwise euclidean distance matrix.
-
-    :return: the pairwise_distances as a tensor of shape (batch_size, batch_size)
-    """
     # thanks to https://omoindrot.github.io/triplet-loss
 
     with tf.name_scope("pairwise_dist"):
