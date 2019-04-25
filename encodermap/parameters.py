@@ -81,7 +81,7 @@ class Parameters(ParametersFramework):
     :ivar l2_reg_constant: Adjusts how much the l2 regularisation is weighted in the cost function.
 
     :ivar gpu_memory_fraction: Specifies the fraction of gpu memory blocked.
-        This can be reduced if multiple runs should run on one gpu in parallel.
+        If it is 0 memory is allocated as needed.
     :ivar analysis_path: A path that can be used to store analysis
     :ivar id: Can be any name for the run. Might be useful for example for specific analysis for different data sets.
 
@@ -105,6 +105,6 @@ class Parameters(ParametersFramework):
         self.center_cost_scale = 0.0001
         self.l2_reg_constant = 0.001
 
-        self.gpu_memory_fraction = 1
+        self.gpu_memory_fraction = 0
         self.analysis_path = ""
         self.id = ""
