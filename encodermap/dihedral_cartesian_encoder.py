@@ -8,7 +8,7 @@ from .parameters import Parameters
 
 
 class DihedralCartesianEncoder(Autoencoder):
-    def __init__(self, parameters, moldata, validation_data=None, checkpoint_path=None):
+    def __init__(self, parameters, moldata, validation_data=None, checkpoint_path=None, trainable=True):
         """
         :param parameters: Parameters object as defined in :py:class:`encodermap.parameters.Parameters`
 
@@ -58,16 +58,24 @@ class DihedralCartesianEncoder(Autoencoder):
             variable_summaries("latent", self.latent)
             self.generated = self._generate(self.latent)
 
-            # Define Cost function:
-            self.cost = self._cost()
+            self.straightened_cartesian = dihedrals_to_cartesian_tf(-self.moldata.dihedrals[0],
+                                                                    self.moldata.cartesians[0],
+                                                                    self.moldata.central_atom_indices,
+                                                                    no_omega=True)
+            self.cartesian = dihedrals_to_cartesian_tf(self.generated,
+                                                       self.straightened_cartesian,
+                                                       self.moldata.central_atom_indices, no_omega=True)
+            if trainable:
+                # Define Cost function:
+                self.cost = self._cost()
 
-            # Setup Optimizer:
-            self.optimizer = tf.train.AdamOptimizer(self.p.learning_rate)
-            gradients = self.optimizer.compute_gradients(self.cost)
-            self.global_step = tf.train.create_global_step()
-            self.optimize = self.optimizer.apply_gradients(gradients, global_step=self.global_step)
+                # Setup Optimizer:
+                self.optimizer = tf.train.AdamOptimizer(self.p.learning_rate)
+                gradients = self.optimizer.compute_gradients(self.cost)
+                self.global_step = tf.train.create_global_step()
+                self.optimize = self.optimizer.apply_gradients(gradients, global_step=self.global_step)
 
-            self.merged_summaries = tf.summary.merge_all()
+                self.merged_summaries = tf.summary.merge_all()
 
             # Setup Session
             # gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=self.p.gpu_memory_fraction)
@@ -76,9 +84,11 @@ class DihedralCartesianEncoder(Autoencoder):
             self.sess.run(tf.global_variables_initializer())
             self.sess.run(self.data_iterator.initializer,
                           feed_dict={p: d for p, d in zip(self.data_placeholders, self.train_data)})
-            self.train_writer = tf.summary.FileWriter(os.path.join(self.p.main_path, "train"), self.sess.graph)
-            if self.validation_data is not None:
-                self.validation_writer = tf.summary.FileWriter(os.path.join(self.p.main_path, "validation"), self.sess.graph)
+
+            if trainable:
+                self.train_writer = tf.summary.FileWriter(os.path.join(self.p.main_path, "train"), self.sess.graph)
+                if self.validation_data is not None:
+                    self.validation_writer = tf.summary.FileWriter(os.path.join(self.p.main_path, "validation"), self.sess.graph)
             self.saver = tf.train.Saver(max_to_keep=100)
 
             # load Checkpoint
@@ -120,13 +130,6 @@ class DihedralCartesianEncoder(Autoencoder):
                 tf.summary.scalar("reg_cost", reg_cost)
                 cost += reg_cost
 
-            self.straightened_cartesian = dihedrals_to_cartesian_tf(-self.moldata.dihedrals[0],
-                                                                    self.moldata.cartesians[0],
-                                                                    self.moldata.central_atom_indices,
-                                                                    no_omega=True)
-            self.cartesian = dihedrals_to_cartesian_tf(self.generated,
-                                                       self.straightened_cartesian,
-                                                       self.moldata.central_atom_indices, no_omega=True)
             dihedrals_to_cartesian_cost = tf.reduce_mean(tf.square(
                 cartesian_pairwise_dist - pairwise_dist(self.cartesian)))
             if self.p.dihedral_to_cartesian_cost_scale != 0:

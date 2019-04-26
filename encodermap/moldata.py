@@ -6,6 +6,7 @@ from MDAnalysis.analysis.base import AnalysisBase
 import os
 from tqdm import tqdm
 from MDAnalysis.analysis.dihedrals import Dihedral
+from .misc import create_dir
 
 
 class MolData:
@@ -27,7 +28,7 @@ class MolData:
             for i, frame in tqdm(enumerate(self.universe.trajectory), total=len(self.universe.trajectory)):
                 self.cartesians[i, ...] = self.sorted_atoms.positions
             if cache_path:
-                np.save(os.path.join(cache_path, "cartesians.npy"), self.cartesians)
+                np.save(os.path.join(create_dir(cache_path), "cartesians.npy"), self.cartesians)
 
         try:
             self.dihedrals = np.load(os.path.join(cache_path, "dihedrals.npy"))
