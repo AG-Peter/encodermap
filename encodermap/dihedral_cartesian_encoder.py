@@ -43,7 +43,8 @@ class DihedralCartesianEncoder(Autoencoder):
 
             self.data_placeholders = tuple(tf.placeholder(dat.dtype, dat.shape) for dat in self.train_data)
             self.data_set = tf.data.Dataset.from_tensor_slices(self.data_placeholders)
-            self.data_set = self.data_set.shuffle(buffer_size=len(self.train_data[0]))
+            self.data_set = self.data_set.shuffle(buffer_size=len(self.train_data[0]))  # Todo: make parameter
+            # self.data_set = self.data_set.shuffle(buffer_size=10)
             self.data_set = self.data_set.repeat()
             self.data_set = self.data_set.batch(self.p.batch_size)
             self.data_iterator = self.data_set.make_initializable_iterator()
@@ -84,7 +85,6 @@ class DihedralCartesianEncoder(Autoencoder):
             self.sess.run(tf.global_variables_initializer())
             self.sess.run(self.data_iterator.initializer,
                           feed_dict={p: d for p, d in zip(self.data_placeholders, self.train_data)})
-
             if trainable:
                 self.train_writer = tf.summary.FileWriter(os.path.join(self.p.main_path, "train"), self.sess.graph)
                 if self.validation_data is not None:
@@ -112,13 +112,13 @@ class DihedralCartesianEncoder(Autoencoder):
                 tf.summary.scalar("distance_cost", dist_cost)
                 cost += self.p.distance_cost_scale * dist_cost
 
-            if self.p.cartesian_distance_cost_scale != 0:
-                cpd_shape = cartesian_pairwise_dist.shape
-                new_shape = (-1, cpd_shape[1]*cpd_shape[2])
-                dist_cost = distance_cost(tf.reshape(cartesian_pairwise_dist, shape=new_shape), self.latent, *self.p.cartesian_dist_sig_parameters,
-                                          float("inf"))
-                tf.summary.scalar("cartesian_distance_cost", dist_cost)
-                cost += self.p.cartesian_distance_cost_scale * dist_cost
+            # if self.p.cartesian_distance_cost_scale != 0:
+            #     cpd_shape = cartesian_pairwise_dist.shape
+            #     new_shape = (-1, cpd_shape[1]*cpd_shape[2])
+            #     dist_cost = distance_cost(tf.reshape(cartesian_pairwise_dist, shape=new_shape), self.latent, *self.p.cartesian_dist_sig_parameters,
+            #                               float("inf"))
+            #     tf.summary.scalar("cartesian_distance_cost", dist_cost)
+            #     cost += self.p.cartesian_distance_cost_scale * dist_cost
 
             if self.p.center_cost_scale != 0:
                 center_cost = tf.reduce_mean(tf.square(self.latent))
@@ -131,13 +131,23 @@ class DihedralCartesianEncoder(Autoencoder):
                 cost += reg_cost
 
             dihedrals_to_cartesian_cost = tf.reduce_mean(tf.square(
-                cartesian_pairwise_dist - pairwise_dist(self.cartesian)))
+                self.transform_pairwise_dists(cartesian_pairwise_dist)
+                - self.transform_pairwise_dists(pairwise_dist(self.cartesian))))
             if self.p.dihedral_to_cartesian_cost_scale != 0:
                 cost += self.p.dihedral_to_cartesian_cost_scale * dihedrals_to_cartesian_cost
             tf.summary.scalar("dihedrals_to_cartesian_cost", dihedrals_to_cartesian_cost)
 
         tf.summary.scalar("cost", cost)
         return cost
+
+    # @staticmethod
+    # def transform_pairwise_dists(pwd):
+    #     return 1/(pwd + 1e-16)
+
+    @staticmethod
+    def transform_pairwise_dists(pwd):
+        return pwd
+
 
     def generate(self, latent):
         """

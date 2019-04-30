@@ -87,7 +87,7 @@ def straight_tetrahedral_chain(n_atoms=None, bond_lengths=None):
 
 
 def dihedrals_to_cartesian_tf(dihedrals, cartesian=None, central_atom_indices=None, no_omega=False):
-    dihedrals = -dihedrals + pi
+    dihedrals = dihedrals - pi
 
     if not tf.is_numeric_tensor(dihedrals):
         dihedrals = tf.convert_to_tensor(dihedrals)

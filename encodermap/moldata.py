@@ -9,8 +9,33 @@ from MDAnalysis.analysis.dihedrals import Dihedral
 from .misc import create_dir
 
 
+class Positions(AnalysisBase):
+    def __init__(self, atomgroup, **kwargs):
+        super(Positions, self).__init__(atomgroup.universe.trajectory,
+                                          **kwargs)
+        self._ag = atomgroup
+
+    def _prepare(self):
+        # OPTIONAL
+        # Called before iteration on the trajectory has begun.
+        # Data structures can be set up at this time
+        self.result = []
+
+    def _single_frame(self):
+        # REQUIRED
+        # Called after the trajectory is moved onto each new frame.
+        # store result of `some_function` for a single frame
+        self.result.append(self._ag.positions)
+
+    def _conclude(self):
+        # OPTIONAL
+        # Called once iteration on the trajectory is finished.
+        # Apply normalisation and averaging to results here.
+        self.result = np.asarray(self.result)
+
+
 class MolData:
-    def __init__(self, atom_group, cache_path=""):
+    def __init__(self, atom_group, cache_path="", start=None, stop=None, step=None,):
         self.universe = atom_group.universe
         self.atom_group = atom_group
 
@@ -24,9 +49,12 @@ class MolData:
 
         except FileNotFoundError:
             print("Loading Cartesians...")
-            self.cartesians = np.zeros((len(self.universe.trajectory), self.atom_group.n_atoms, 3), dtype=np.float32)
-            for i, frame in tqdm(enumerate(self.universe.trajectory), total=len(self.universe.trajectory)):
-                self.cartesians[i, ...] = self.sorted_atoms.positions
+            # self.cartesians = np.zeros((len(self.universe.trajectory), self.atom_group.n_atoms, 3), dtype=np.float32)
+            # for i, frame in tqdm(enumerate(self.universe.trajectory), total=len(self.universe.trajectory)):
+            #     self.cartesians[i, ...] = self.sorted_atoms.positions
+            positions = Positions(self.sorted_atoms, verbose=True).run(start=start, stop=stop, step=step)
+            self.cartesians = positions.result
+
             if cache_path:
                 np.save(os.path.join(create_dir(cache_path), "cartesians.npy"), self.cartesians)
 
@@ -45,7 +73,7 @@ class MolData:
                 if psi:
                     self.dihedral_atoms.append(psi.dihedral)
 
-            dihedrals = Dihedral(self.dihedral_atoms, verbose=True).run()
+            dihedrals = Dihedral(self.dihedral_atoms, verbose=True).run(start=start, stop=stop, step=step)
             self.dihedrals = dihedrals.angles.astype(np.float32)
             self.dihedrals *= pi/180
             if cache_path:
@@ -64,7 +92,7 @@ class MolData:
             result = positions[atom.name]
         except KeyError:
             result = 4
-        return (atom.resindex, result)
+        return (atom.resnum, result)
 
     def write(self, path, coordinates, name="generated"):
         coordinates = np.array(coordinates)
