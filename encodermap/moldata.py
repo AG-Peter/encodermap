@@ -74,25 +74,9 @@ class MolData:
                 if len(psi_atoms) == 4:
                     dihedral_atoms.append(psi_atoms.dihedral)
             dihedrals = Dihedral(dihedral_atoms, verbose=True).run(start=start, stop=stop, step=step)
-            self.dihedrals = dihedrals.angles.astype(np.float32)
-            self.dihedrals *= pi / 180
-
-            self.dihedral_atoms = []
-            for residue in atom_group.residues:
-                phi = residue.phi_selection()
-                if phi:
-                    self.dihedral_atoms.append(phi.dihedral)
-                psi = residue.psi_selection()
-                if psi:
-                    self.dihedral_atoms.append(psi.dihedral)
-
-            dihedrals_old = Dihedral(self.dihedral_atoms, verbose=True).run(start=start, stop=stop, step=step)
-            self.dihedrals_old = dihedrals_old.angles.astype(np.float32)
-            self.dihedrals_old *= pi / 180
 
             if cache_path:
                 np.save(os.path.join(cache_path, "dihedrals.npy"), self.dihedrals)
-
 
     def __iadd__(self, other):
         assert np.all(self.sorted_atoms.names == other.sorted_atoms.names)

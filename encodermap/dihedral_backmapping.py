@@ -95,9 +95,9 @@ def dihedrals_to_cartesian_tf(dihedrals, cartesian=None, central_atom_indices=No
         dihedrals = tf.expand_dims(dihedrals, 0)
     else:
         one_d = False
-    dihedrals = dihedrals - pi
 
     n = int(dihedrals.shape[-1])
+    dihedrals = -dihedrals
 
     if cartesian is None:
         cartesian = tf.constant(straight_tetrahedral_chain(n + 3))

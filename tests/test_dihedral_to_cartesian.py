@@ -39,9 +39,10 @@ def set_axes_equal(ax):
 
 class TestDihedralToCartesianTf(tf.test.TestCase):
     def test_straight_to_helix(self):
-        phi = (-57.8 / 180) * pi
-        psi = (-47.0 / 180) * pi
-        omega = pi
+        phi = (57.8 / 180) * pi + pi
+        psi = (47.0 / 180) * pi + pi
+
+        omega = 0
         dihedrals = [phi, psi, omega]*10
         result = [[0., 0., 0., ],
                   [1., 0., 0.],
@@ -91,11 +92,10 @@ class TestDihedralToCartesianTf(tf.test.TestCase):
 
             self.assertAllClose(result, cartesians, atol=1e-4)
 
-
     def test_straight_to_helix_array(self):
-        phi = (-57.8 / 180) * pi
-        psi = (-47.0 / 180) * pi
-        omega = pi
+        phi = (+57.8 / 180) * pi + pi
+        psi = (+47.0 / 180) * pi + pi
+        omega = 0
         dihedrals = tf.convert_to_tensor(np.array([[phi, psi, omega]*10]*10, dtype=np.float32))
         result = np.array([[[0., 0., 0., ],
                   [1., 0., 0.],
@@ -152,3 +152,16 @@ class TestDihedralToCartesianTf(tf.test.TestCase):
         # ax.plot(*cartesian.T)
         # set_axes_equal(ax)
         # plt.show()
+
+    def test_ala_helix_to_straight(self):
+        uni = md.Universe("Ala10_helix.pdb")
+        selected_atoms = uni.select_atoms("backbone or name O1 or name H or name CB")
+        moldata = em.MolData(selected_atoms)
+        with tempfile.TemporaryDirectory() as tempdir:
+            p = em.Parameters()
+            p.main_path = tempdir
+            e_map = em.DihedralCartesianEncoder(p, moldata)
+            straightened_cartesian = e_map.sess.run(e_map.straightened_cartesian)
+
+        end2end = np.linalg.norm(straightened_cartesian[0] - straightened_cartesian[-1])
+        self.assertAlmostEqual(end2end, 24.09287, places=3)
