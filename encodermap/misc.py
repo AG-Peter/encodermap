@@ -134,7 +134,7 @@ def pairwise_dist(positions, squared=False):
 
     with tf.name_scope("pairwise_dist"):
         if not tf.is_numeric_tensor(positions):
-            dihedrals = tf.convert_to_tensor(positions)
+            positions = tf.convert_to_tensor(positions)
         if len(positions.get_shape()) == 2:
             positions = tf.expand_dims(positions, 0)
 

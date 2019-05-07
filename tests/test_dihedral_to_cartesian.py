@@ -39,9 +39,9 @@ def set_axes_equal(ax):
 
 class TestDihedralToCartesianTf(tf.test.TestCase):
     def test_straight_to_helix(self):
-        phi = (-57.8 / 180 - 1) * pi
-        psi = (-47.0 / 180 - 1) * pi
-        omega = 0.0
+        phi = (-57.8 / 180) * pi
+        psi = (-47.0 / 180) * pi
+        omega = pi
         dihedrals = [phi, psi, omega]*10
         result = [[0., 0., 0., ],
                   [1., 0., 0.],
@@ -78,12 +78,24 @@ class TestDihedralToCartesianTf(tf.test.TestCase):
                   [-4.51824706, 6.92154852, 0.37312124]]
 
         with self.test_session():
-            self.assertAllClose(result, em.dihedrals_to_cartesian_tf(dihedrals).eval(), atol=1e-4)
+            cartesians = em.dihedrals_to_cartesian_tf(dihedrals).eval()
+
+            # import matplotlib.pyplot as plt
+            # from mpl_toolkits.mplot3d import Axes3D
+            # fig = plt.figure()
+            # ax = fig.add_subplot(111, projection='3d')
+            # ax.plot(*np.array(result).T)
+            # ax.plot(*np.array(cartesians).T)
+            # set_axes_equal(ax)
+            # plt.show()
+
+            self.assertAllClose(result, cartesians, atol=1e-4)
+
 
     def test_straight_to_helix_array(self):
-        phi = (-57.8 / 180 - 1) * pi
-        psi = (-47.0 / 180 - 1) * pi
-        omega = 0.0
+        phi = (-57.8 / 180) * pi
+        psi = (-47.0 / 180) * pi
+        omega = pi
         dihedrals = tf.convert_to_tensor(np.array([[phi, psi, omega]*10]*10, dtype=np.float32))
         result = np.array([[[0., 0., 0., ],
                   [1., 0., 0.],
@@ -121,52 +133,6 @@ class TestDihedralToCartesianTf(tf.test.TestCase):
 
         with self.test_session():
             self.assertAllClose(result, em.dihedrals_to_cartesian_tf(dihedrals).eval(), atol=1e-4)
-
-    def test_straight_ala10_to_helix_array(self):
-        phi = -57.8 / 180 * pi
-        psi = -47.0 / 180 * pi
-        dihedrals = tf.convert_to_tensor(np.array([[phi, psi]*10]*10, dtype=np.float32)[:, 1:-1])
-        moldata = em.MolData(md.Universe("Ala10_helix.pdb"))
-
-        cartesian = em.dihedrals_to_cartesian_tf(dihedrals, moldata.straightened_cartesian,
-                                                 moldata.central_atom_indices, no_omega=True)
-        with self.test_session():
-            moldata.write_pdb("out.pdb", cartesian.eval())
-            moldata.write_pdb("straightened.pdb", moldata.straightened_cartesian.eval())
-
-    def test_learn_helix(self):
-        phi = (-57.8 / 180 - 1) * pi
-        psi = (-47.0 / 180 - 1) * pi
-        omega = 0.0
-        dihedrals = [phi, psi, omega]*10
-        with self.test_session():
-            cartesian = em.dihedrals_to_cartesian_tf(dihedrals).eval()
-
-        with tempfile.TemporaryDirectory() as temp_path:
-            parameters = em.Parameters()
-            parameters.main_path = temp_path
-            parameters.dihedral_to_cartesian_cost_scale = 1
-            parameters.auto_cost_scale = 0
-            parameters.distance_cost_scale = 0
-            parameters.l2_reg_constant = 0.
-            parameters.batch_size = 1
-            parameters.n_steps = 1000
-            parameters.summary_step = 1
-
-            e_map = em.EncoderMap(parameters, (np.expand_dims(dihedrals, 0), np.expand_dims(cartesian, 0)))
-            e_map.train()
-
-            latent = e_map.encode(np.expand_dims(dihedrals, 0))
-            generated = e_map.generate(latent)
-
-            import matplotlib.pyplot as plt
-            from mpl_toolkits.mplot3d import Axes3D
-            fig = plt.figure()
-            ax = fig.add_subplot(111, projection='3d')
-            ax.plot(*cartesian.T)
-            ax.plot(*e_map.cartesians[-1][0].T)
-            set_axes_equal(ax)
-            plt.show()
 
     def test_straight_tetrahedral_chain_with_bond_lenght(self):
         result = [[0.       , 0.       , 0.       ],

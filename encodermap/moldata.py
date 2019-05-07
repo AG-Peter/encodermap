@@ -37,7 +37,6 @@ class Positions(AnalysisBase):
 class MolData:
     def __init__(self, atom_group, cache_path="", start=None, stop=None, step=None,):
         self.universe = atom_group.universe
-        self.atom_group = atom_group
 
         self.sorted_atoms = self.universe.atoms[[atom.ix for atom in sorted(atom_group.atoms, key=self.sort_key)]]
 
@@ -64,8 +63,22 @@ class MolData:
 
         except FileNotFoundError:
             print("Calculating dihedrals...")
+            dihedral_atoms = []
+            for i in set(self.sorted_atoms.resnums):
+                phi_atoms = (self.universe.select_atoms("resnum {} and name C".format(i-1)) +
+                       self.universe.select_atoms("resnum {} and (name N or name CA or name C)".format(i)))
+                if len(phi_atoms) == 4:
+                    dihedral_atoms.append(phi_atoms.dihedral)
+                psi_atoms = (self.universe.select_atoms("resnum {} and (name N or name CA or name C)".format(i)) +
+                       self.universe.select_atoms("resnum {} and name N".format(i+1)))
+                if len(psi_atoms) == 4:
+                    dihedral_atoms.append(psi_atoms.dihedral)
+            dihedrals = Dihedral(dihedral_atoms, verbose=True).run(start=start, stop=stop, step=step)
+            self.dihedrals = dihedrals.angles.astype(np.float32)
+            self.dihedrals *= pi / 180
+
             self.dihedral_atoms = []
-            for residue in self.atom_group.residues:
+            for residue in atom_group.residues:
                 phi = residue.phi_selection()
                 if phi:
                     self.dihedral_atoms.append(phi.dihedral)
@@ -73,11 +86,19 @@ class MolData:
                 if psi:
                     self.dihedral_atoms.append(psi.dihedral)
 
-            dihedrals = Dihedral(self.dihedral_atoms, verbose=True).run(start=start, stop=stop, step=step)
-            self.dihedrals = dihedrals.angles.astype(np.float32)
-            self.dihedrals *= pi/180
+            dihedrals_old = Dihedral(self.dihedral_atoms, verbose=True).run(start=start, stop=stop, step=step)
+            self.dihedrals_old = dihedrals_old.angles.astype(np.float32)
+            self.dihedrals_old *= pi / 180
+
             if cache_path:
                 np.save(os.path.join(cache_path, "dihedrals.npy"), self.dihedrals)
+
+
+    def __iadd__(self, other):
+        assert np.all(self.sorted_atoms.names == other.sorted_atoms.names)
+        self.cartesians = np.concatenate([self.cartesians, other.cartesians], axis=0)
+        self.dihedrals = np.concatenate([self.dihedrals, other.dihedrals], axis=0)
+        return self
 
     @staticmethod
     def sort_key(atom):

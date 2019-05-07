@@ -235,7 +235,7 @@ class Autoencoder:
             else:
                 self.sess.run(self.optimize)
 
-            if (i+1) % self.p.checkpoint_step == 0:
+            if (self.step()) % self.p.checkpoint_step == 0:
                 self.saver.save(self.sess, os.path.join(self.p.main_path, "checkpoints",
                                                         "step{}.ckpt".format(self.step())))
         else:

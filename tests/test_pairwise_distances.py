@@ -38,4 +38,4 @@ class TestPairwiseDistances(tf.test.TestCase):
         points = [[1/8, 1/2], [7/8, 1/2]]
         pairwise_dists = em.misc.pairwise_dist(points)
         with self.test_session():
-            self.assertAllClose([[0, 6/8], [6/8, 0]], pairwise_dists.eval())
+            self.assertAllClose([[[0, 6/8], [6/8, 0]]], pairwise_dists.eval())

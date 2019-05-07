@@ -73,6 +73,7 @@ class DihedralCartesianEncoder(Autoencoder):
                 # Setup Optimizer:
                 self.optimizer = tf.train.AdamOptimizer(self.p.learning_rate)
                 gradients = self.optimizer.compute_gradients(self.cost)
+                variable_summaries("gradients_last", gradients[-1])
                 self.global_step = tf.train.create_global_step()
                 self.optimize = self.optimizer.apply_gradients(gradients, global_step=self.global_step)
 
@@ -112,7 +113,7 @@ class DihedralCartesianEncoder(Autoencoder):
                 tf.summary.scalar("distance_cost", dist_cost)
                 cost += self.p.distance_cost_scale * dist_cost
 
-            # if self.p.cartesian_distance_cost_scale != 0:
+            # if self.p.cartesian_distance_cost_scale:
             #     cpd_shape = cartesian_pairwise_dist.shape
             #     new_shape = (-1, cpd_shape[1]*cpd_shape[2])
             #     dist_cost = distance_cost(tf.reshape(cartesian_pairwise_dist, shape=new_shape), self.latent, *self.p.cartesian_dist_sig_parameters,
@@ -147,7 +148,6 @@ class DihedralCartesianEncoder(Autoencoder):
     @staticmethod
     def transform_pairwise_dists(pwd):
         return pwd
-
 
     def generate(self, latent):
         """
