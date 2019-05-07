@@ -6,6 +6,7 @@ from MDAnalysis.analysis.base import AnalysisBase
 import os
 from tqdm import tqdm
 from MDAnalysis.analysis.dihedrals import Dihedral
+from MDAnalysis.lib.distances import calc_angles
 from .misc import create_dir
 
 
@@ -15,21 +16,37 @@ class Positions(AnalysisBase):
         self._ag = atomgroup
 
     def _prepare(self):
-        # OPTIONAL
-        # Called before iteration on the trajectory has begun.
-        # Data structures can be set up at this time
         self.result = []
 
     def _single_frame(self):
-        # REQUIRED
-        # Called after the trajectory is moved onto each new frame.
-        # store result of `some_function` for a single frame
         self.result.append(self._ag.positions)
 
     def _conclude(self):
-        # OPTIONAL
-        # Called once iteration on the trajectory is finished.
-        # Apply normalisation and averaging to results here.
+        self.result = np.asarray(self.result)
+
+
+class Angles(AnalysisBase):
+    def __init__(self, atomgroups, **kwargs):
+        super(Angles, self).__init__(atomgroups[0].universe.trajectory, **kwargs)
+        self.atomgroups = atomgroups
+
+        if any([len(ag) != 3 for ag in atomgroups]):
+            raise ValueError("All AtomGroups must contain 3 atoms")
+
+        self.ag1 = md.AtomGroup([ag[0] for ag in atomgroups])
+        self.ag2 = md.AtomGroup([ag[1] for ag in atomgroups])
+        self.ag3 = md.AtomGroup([ag[2] for ag in atomgroups])
+
+    def _prepare(self):
+        self.result = []
+
+    def _single_frame(self):
+        angle = calc_angles(self.ag1.positions, self.ag2.positions,
+                            self.ag3.positions,
+                            box=self.ag1.dimensions)
+        self.result.append(angle)
+
+    def _conclude(self):
         self.result = np.asarray(self.result)
 
 
@@ -47,9 +64,6 @@ class MolData:
 
         except FileNotFoundError:
             print("Loading Cartesians...")
-            # self.cartesians = np.zeros((len(self.universe.trajectory), self.atom_group.n_atoms, 3), dtype=np.float32)
-            # for i, frame in tqdm(enumerate(self.universe.trajectory), total=len(self.universe.trajectory)):
-            #     self.cartesians[i, ...] = self.sorted_atoms.positions
             positions = Positions(self.sorted_atoms, verbose=True).run(start=start, stop=stop, step=step)
             self.cartesians = positions.result
 
@@ -73,9 +87,27 @@ class MolData:
                 if len(psi_atoms) == 4:
                     dihedral_atoms.append(psi_atoms.dihedral)
             dihedrals = Dihedral(dihedral_atoms, verbose=True).run(start=start, stop=stop, step=step)
+            self.dihedrals = dihedrals.angles.astype(np.float32)
+            self.dihedrals *= pi / 180
 
             if cache_path:
                 np.save(os.path.join(cache_path, "dihedrals.npy"), self.dihedrals)
+
+        try:
+            self.angles = np.load(os.path.join(cache_path, "angles.npy"))
+            print("Loaded angles from {}".format(cache_path))
+
+        except FileNotFoundError:
+            print("Calculating angles...")
+            angle_atoms = []
+            for i in range(len(self.central_atom_indices)-2):
+                angle_atoms.append(self.sorted_atoms[self.central_atom_indices[i:i+3]])
+
+            angles = Angles(angle_atoms, verbose=True).run(start=start, stop=stop, step=step)
+            self.angles = angles.result.astype(np.float32)
+
+            if cache_path:
+                np.save(os.path.join(create_dir(cache_path), "angles.npy"), self.angles)
 
     def __iadd__(self, other):
         assert np.all(self.sorted_atoms.names == other.sorted_atoms.names)
