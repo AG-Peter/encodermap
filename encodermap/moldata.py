@@ -11,8 +11,7 @@ from .misc import create_dir
 
 class Positions(AnalysisBase):
     def __init__(self, atomgroup, **kwargs):
-        super(Positions, self).__init__(atomgroup.universe.trajectory,
-                                          **kwargs)
+        super(Positions, self).__init__(atomgroup.universe.trajectory, **kwargs)
         self._ag = atomgroup
 
     def _prepare(self):
@@ -65,12 +64,12 @@ class MolData:
             print("Calculating dihedrals...")
             dihedral_atoms = []
             for i in set(self.sorted_atoms.resnums):
-                phi_atoms = (self.universe.select_atoms("resnum {} and name C".format(i-1)) +
-                       self.universe.select_atoms("resnum {} and (name N or name CA or name C)".format(i)))
+                phi_atoms = (self.universe.select_atoms("resnum {} and name C".format(i - 1)) +
+                             self.universe.select_atoms("resnum {} and (name N or name CA or name C)".format(i)))
                 if len(phi_atoms) == 4:
                     dihedral_atoms.append(phi_atoms.dihedral)
                 psi_atoms = (self.universe.select_atoms("resnum {} and (name N or name CA or name C)".format(i)) +
-                       self.universe.select_atoms("resnum {} and name N".format(i+1)))
+                             self.universe.select_atoms("resnum {} and name N".format(i + 1)))
                 if len(psi_atoms) == 4:
                     dihedral_atoms.append(psi_atoms.dihedral)
             dihedrals = Dihedral(dihedral_atoms, verbose=True).run(start=start, stop=stop, step=step)
@@ -97,7 +96,7 @@ class MolData:
             result = positions[atom.name]
         except KeyError:
             result = 4
-        return (atom.resnum, result)
+        return atom.resnum, result
 
     def write(self, path, coordinates, name="generated"):
         coordinates = np.array(coordinates)
