@@ -58,6 +58,7 @@ class MolData:
 
         self.central_atom_indices = [i for i, atom in enumerate(self.sorted_atoms) if atom.name in ["N", "CA", "C"]]
 
+        # Cartesians:
         try:
             self.cartesians = np.load(os.path.join(cache_path, "cartesians.npy"))
             print("Loaded cartesians from {}".format(cache_path))
@@ -65,11 +66,12 @@ class MolData:
         except FileNotFoundError:
             print("Loading Cartesians...")
             positions = Positions(self.sorted_atoms, verbose=True).run(start=start, stop=stop, step=step)
-            self.cartesians = positions.result
+            self.cartesians = positions.result.astype(np.float32)
 
             if cache_path:
                 np.save(os.path.join(create_dir(cache_path), "cartesians.npy"), self.cartesians)
 
+        # Dihedrals:
         try:
             self.dihedrals = np.load(os.path.join(cache_path, "dihedrals.npy"))
             print("Loaded dihedrals from {}".format(cache_path))
@@ -93,6 +95,7 @@ class MolData:
             if cache_path:
                 np.save(os.path.join(cache_path, "dihedrals.npy"), self.dihedrals)
 
+        # Angles:
         try:
             self.angles = np.load(os.path.join(cache_path, "angles.npy"))
             print("Loaded angles from {}".format(cache_path))
@@ -108,6 +111,19 @@ class MolData:
 
             if cache_path:
                 np.save(os.path.join(create_dir(cache_path), "angles.npy"), self.angles)
+
+        # Lengths:
+        try:
+            self.lengths = np.load(os.path.join(cache_path, "lengths.npy"))
+            print("Loaded lengths from {}".format(cache_path))
+
+        except FileNotFoundError:
+            print("Calculating lengths...")
+            central_cartesians = self.cartesians[:, self.central_atom_indices]
+            vecs = central_cartesians[:, :-1] - central_cartesians[:, 1:]
+            self.lengths = np.linalg.norm(vecs, axis=2)
+            if cache_path:
+                np.save(os.path.join(create_dir(cache_path), "lengths.npy"), self.lengths)
 
     def __iadd__(self, other):
         assert np.all(self.sorted_atoms.names == other.sorted_atoms.names)

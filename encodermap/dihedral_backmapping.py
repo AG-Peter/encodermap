@@ -86,6 +86,28 @@ def straight_tetrahedral_chain(n_atoms=None, bond_lengths=None):
     return coordinates
 
 
+def chain_in_plane(lengths, angles):
+
+    prev_angle = tf.zeros(angles.shape[0])
+    xs = [tf.zeros((lengths.shape[0]))]
+    ys = [tf.zeros((lengths.shape[0]))]
+    sign = 1
+
+    for i in range(angles.shape[1]):
+        prev_angle = tf.Print(prev_angle, [prev_angle])
+        xs.append(xs[-1] + lengths[:, i] * tf.cos(prev_angle))
+        ys.append(ys[-1] + lengths[:, i] * tf.sin(prev_angle) * sign)
+        prev_angle = pi - angles[:, i] - prev_angle
+        sign *= -1
+
+    xs.append(xs[-1] + lengths[:, i+1] * tf.cos(prev_angle))
+    ys.append(ys[-1] + lengths[:, i+1] * tf.sin(prev_angle) * sign)
+
+    cartesians = tf.stack([tf.stack(xs, axis=1), tf.stack(ys, axis=1)], axis=2)
+
+    return cartesians
+
+
 def dihedrals_to_cartesian_tf(dihedrals, cartesian=None, central_atom_indices=None, no_omega=False):
 
     if not tf.is_numeric_tensor(dihedrals):
