@@ -6,4 +6,5 @@ from .dihedral_backmapping import dihedral_backmapping, straight_tetrahedral_cha
     chain_in_plane
 from .encodermap import EncoderMap
 from .dihedral_cartesian_encoder import DihedralCartesianEncoder
+from .angle_dihedral_cartesian_encoder import AngleDihedralCartesianEncoder
 from .moldata import MolData

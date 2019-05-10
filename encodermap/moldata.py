@@ -84,10 +84,17 @@ class MolData:
                              self.universe.select_atoms("resnum {} and (name N or name CA or name C)".format(i)))
                 if len(phi_atoms) == 4:
                     dihedral_atoms.append(phi_atoms.dihedral)
+
                 psi_atoms = (self.universe.select_atoms("resnum {} and (name N or name CA or name C)".format(i)) +
                              self.universe.select_atoms("resnum {} and name N".format(i + 1)))
                 if len(psi_atoms) == 4:
                     dihedral_atoms.append(psi_atoms.dihedral)
+
+                omega_atoms = (self.universe.select_atoms("resnum {} and (name CA or name C)".format(i)) +
+                             self.universe.select_atoms("resnum {} and (name N or name CA)".format(i + 1)))
+                if len(psi_atoms) == 4:
+                    dihedral_atoms.append(omega_atoms.dihedral)
+
             dihedrals = Dihedral(dihedral_atoms, verbose=True).run(start=start, stop=stop, step=step)
             self.dihedrals = dihedrals.angles.astype(np.float32)
             self.dihedrals *= pi / 180
@@ -119,8 +126,8 @@ class MolData:
 
         except FileNotFoundError:
             print("Calculating lengths...")
-            central_cartesians = self.cartesians[:, self.central_atom_indices]
-            vecs = central_cartesians[:, :-1] - central_cartesians[:, 1:]
+            self.central_cartesians = self.cartesians[:, self.central_atom_indices]
+            vecs = self.central_cartesians[:, :-1] - self.central_cartesians[:, 1:]
             self.lengths = np.linalg.norm(vecs, axis=2)
             if cache_path:
                 np.save(os.path.join(create_dir(cache_path), "lengths.npy"), self.lengths)
@@ -146,13 +153,18 @@ class MolData:
             result = 4
         return atom.resnum, result
 
-    def write(self, path, coordinates, name="generated"):
+    def write(self, path, coordinates, name="generated", only_central=False):
         coordinates = np.array(coordinates)
         if coordinates.ndim == 2:
             coordinates = np.expand_dims(coordinates, 0)
-        output_universe = md.Merge(self.sorted_atoms)
+        if only_central:
+            output_universe = md.Merge(self.sorted_atoms[self.central_atom_indices])
+            self.sorted_atoms[self.central_atom_indices].write(os.path.join(path, "{}.pdb".format(name)))
+        else:
+            output_universe = md.Merge(self.sorted_atoms)
+            self.sorted_atoms.write(os.path.join(path, "{}.pdb".format(name)))
         output_universe.load_new(coordinates, format=MemoryReader)
-        self.sorted_atoms.write(os.path.join(path, "{}.pdb".format(name)))
+
         with md.Writer(os.path.join(path, "{}.xtc".format(name))) as w:
             for step in output_universe.trajectory:
                 w.write(output_universe.atoms)

@@ -87,14 +87,14 @@ def straight_tetrahedral_chain(n_atoms=None, bond_lengths=None):
 
 
 def chain_in_plane(lengths, angles):
+    batch_size = tf.shape(angles)[0]
 
-    prev_angle = tf.zeros(angles.shape[0])
-    xs = [tf.zeros((lengths.shape[0]))]
-    ys = [tf.zeros((lengths.shape[0]))]
+    prev_angle = tf.zeros((batch_size))
+    xs = [tf.zeros((batch_size))]
+    ys = [tf.zeros((batch_size))]
     sign = 1
 
     for i in range(angles.shape[1]):
-        prev_angle = tf.Print(prev_angle, [prev_angle])
         xs.append(xs[-1] + lengths[:, i] * tf.cos(prev_angle))
         ys.append(ys[-1] + lengths[:, i] * tf.sin(prev_angle) * sign)
         prev_angle = pi - angles[:, i] - prev_angle
@@ -103,7 +103,9 @@ def chain_in_plane(lengths, angles):
     xs.append(xs[-1] + lengths[:, i+1] * tf.cos(prev_angle))
     ys.append(ys[-1] + lengths[:, i+1] * tf.sin(prev_angle) * sign)
 
-    cartesians = tf.stack([tf.stack(xs, axis=1), tf.stack(ys, axis=1)], axis=2)
+    xs = tf.stack(xs, axis=1)
+    ys = tf.stack(ys, axis=1)
+    cartesians = tf.stack([xs, ys, tf.zeros(tf.shape(xs))], axis=2)
 
     return cartesians
 
@@ -123,10 +125,11 @@ def dihedrals_to_cartesian_tf(dihedrals, cartesian=None, central_atom_indices=No
 
     if cartesian is None:
         cartesian = tf.constant(straight_tetrahedral_chain(n + 3))
-    cartesian = tf.tile(tf.expand_dims(cartesian, axis=0), [tf.shape(dihedrals)[0], 1, 1])
+    if len(cartesian.get_shape()) == 2:
+        cartesian = tf.tile(tf.expand_dims(cartesian, axis=0), [tf.shape(dihedrals)[0], 1, 1])
 
     if central_atom_indices is None:
-        cai = list(range(n+3))
+        cai = list(range(cartesian.shape[1]))
     else:
         cai = central_atom_indices
 
