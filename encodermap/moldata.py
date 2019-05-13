@@ -71,6 +71,8 @@ class MolData:
             if cache_path:
                 np.save(os.path.join(create_dir(cache_path), "cartesians.npy"), self.cartesians)
 
+        self.central_cartesians = self.cartesians[:, self.central_atom_indices]
+
         # Dihedrals:
         try:
             self.dihedrals = np.load(os.path.join(cache_path, "dihedrals.npy"))
@@ -126,7 +128,6 @@ class MolData:
 
         except FileNotFoundError:
             print("Calculating lengths...")
-            self.central_cartesians = self.cartesians[:, self.central_atom_indices]
             vecs = self.central_cartesians[:, :-1] - self.central_cartesians[:, 1:]
             self.lengths = np.linalg.norm(vecs, axis=2)
             if cache_path:

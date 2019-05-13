@@ -280,11 +280,14 @@ class PathGenerateCartesians(ManualPath):
                                                     datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")))
         self.axe.plot(points[:, 0], points[:, 1], linestyle="", marker=".")
         np.save(os.path.join(current_save_path, "points"), points)
-        dihedrals, cartesians = self.autoencoder.generate(points)
+        try:
+            dihedrals, cartesians = self.autoencoder.generate(points)
+        except ValueError:
+            angles, dihedrals, cartesians = self.autoencoder.generate(points)
         np.save(os.path.join(current_save_path, "generated_dihedrals.npy"), dihedrals)
         np.save(os.path.join(current_save_path, "generated_cartesians.npy"), cartesians)
 
-        self.mol_data.write(current_save_path, cartesians)
+        self.mol_data.write(current_save_path, cartesians, only_central=True)
         if self.vmd_path:
             cmd = "{} {} {}".format(self.vmd_path,
                                     "generated.pdb",
