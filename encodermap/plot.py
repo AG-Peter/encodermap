@@ -7,7 +7,7 @@ import os
 from .misc import create_dir, periodic_distance_np, sigmoid
 import MDAnalysis as md
 import datetime
-from .dihedral_backmapping import dihedral_backmapping
+from .backmapping import dihedral_backmapping
 import matplotlib.pyplot as plt
 import subprocess
 

@@ -148,3 +148,29 @@ def dihedrals_to_cartesian_tf(dihedrals, cartesian=None, central_atom_indices=No
     if one_d:
         cartesian = tf.squeeze(cartesian)
     return cartesian
+
+
+def guess_sp2_atom(cartesians, atom_names, bond_partner, angle_to_previous, bond_length):
+    assert cartesians.shape[1] == len(atom_names)
+    added_cartesians = []
+    for i in range(1, len(atom_names)-1):
+        if atom_names[i] == bond_partner:
+            prev_vec = cartesians[:, i - 1] - cartesians[:, i]
+            next_vex = cartesians[:, i + 1] - cartesians[:, i]
+
+            perpendicular_axis = tf.cross(prev_vec, next_vex)
+            perpendicular_axis /= tf.norm(perpendicular_axis, axis=1, keepdims=True)
+            bond_vec = tf.matmul(tf.expand_dims(prev_vec, 1), rotation_matrix(perpendicular_axis, angle_to_previous))
+            bond_vec = bond_vec[:, 0, :]
+            bond_vec *= bond_length / tf.norm(bond_vec, axis=1, keepdims=True)
+            added_cartesians.append(cartesians[:, i] + bond_vec)
+    added_cartesians = tf.stack(added_cartesians, axis=1)
+    return added_cartesians
+
+
+def guess_amide_H(cartesians, atom_names):
+    return guess_sp2_atom(cartesians, atom_names, "N", 123/180*pi, 1.10)
+
+
+def guess_amide_O(cartesians, atom_names):
+    return guess_sp2_atom(cartesians, atom_names, "C", 121/180*pi, 1.24)

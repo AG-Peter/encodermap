@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 from .misc import periodic_distance, variable_summaries, add_layer_summaries, distance_cost, pairwise_dist
-from .dihedral_backmapping import dihedrals_to_cartesian_tf
+from .backmapping import dihedrals_to_cartesian_tf
 import os
 from .parameters import Parameters
 from tqdm import tqdm
