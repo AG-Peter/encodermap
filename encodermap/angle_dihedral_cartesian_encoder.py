@@ -115,7 +115,7 @@ class AngleDihedralCartesianEncoder(Autoencoder):
             # if self.p.auto_cost_scale != 0:
             if True:
                 auto_cost = tf.reduce_mean(
-                    tf.norm(periodic_distance(self.main_inputs, self.generated, self.p.periodicity), axis=1))
+                    tf.abs(periodic_distance(self.main_inputs, self.generated, self.p.periodicity)))
                 tf.summary.scalar("auto_cost", auto_cost)
                 cost += self.p.auto_cost_scale * auto_cost
 
@@ -142,7 +142,7 @@ class AngleDihedralCartesianEncoder(Autoencoder):
                 tf.summary.scalar("reg_cost", reg_cost)
                 cost += reg_cost
 
-            dihedrals_to_cartesian_cost = tf.reduce_mean(tf.square(
+            dihedrals_to_cartesian_cost = tf.reduce_mean(tf.abs(
                 self.transform_pairwise_dists(cartesian_pairwise_dist)
                 - self.transform_pairwise_dists(pairwise_dist(self.cartesian))))
             if self.p.dihedral_to_cartesian_cost_scale != 0:
