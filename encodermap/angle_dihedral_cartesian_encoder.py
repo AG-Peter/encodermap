@@ -2,7 +2,7 @@ from .autoencoder import Autoencoder
 import tensorflow as tf
 import numpy as np
 from .misc import periodic_distance, variable_summaries, add_layer_summaries, distance_cost, pairwise_dist
-from .backmapping import dihedrals_to_cartesian_tf, chain_in_plane
+from .backmapping import dihedrals_to_cartesian_tf, chain_in_plane, guess_amide_H, guess_amide_O, merge_cartesians
 import os
 from .parameters import Parameters
 from math import pi
@@ -70,6 +70,13 @@ class AngleDihedralCartesianEncoder(Autoencoder):
             self.chain_in_plane = chain_in_plane(mean_lengths, self.generated_angles)
             self.cartesian = dihedrals_to_cartesian_tf(self.generated_dihedrals + pi,
                                                        self.chain_in_plane)
+
+            self.amide_H_cartesian = guess_amide_H(self.cartesian, moldata.central_atoms.names)
+            self.amide_O_cartesian = guess_amide_O(self.cartesian, moldata.central_atoms.names)
+
+            self.cartesian_with_guessed_atoms = merge_cartesians(self.cartesian, moldata.central_atoms.names,
+                                                                 self.amide_H_cartesian, self.amide_O_cartesian)
+
             if trainable:
                 # Define Cost function:
                 self.cost = self._cost()
@@ -169,7 +176,8 @@ class AngleDihedralCartesianEncoder(Autoencoder):
         for batch in batches:
             angles, dihedrals, cartesians = self.sess.run((self.generated_angles,
                                                            self.generated_dihedrals,
-                                                           self.cartesian), feed_dict={self.latent: batch})
+                                                           self.cartesian_with_guessed_atoms),
+                                                          feed_dict={self.latent: batch})
             all_dihedrals.append(dihedrals)
             all_cartesians.append(cartesians)
             all_angles.append(angles)

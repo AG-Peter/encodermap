@@ -287,7 +287,7 @@ class PathGenerateCartesians(ManualPath):
         np.save(os.path.join(current_save_path, "generated_dihedrals.npy"), dihedrals)
         np.save(os.path.join(current_save_path, "generated_cartesians.npy"), cartesians)
 
-        self.mol_data.write(current_save_path, cartesians, only_central=True)
+        self.mol_data.write(current_save_path, cartesians, only_central=False)
         if self.vmd_path:
             cmd = "{} {} {}".format(self.vmd_path,
                                     "generated.pdb",

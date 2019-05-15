@@ -57,6 +57,7 @@ class MolData:
         self.sorted_atoms = self.universe.atoms[[atom.ix for atom in sorted(atom_group.atoms, key=self.sort_key)]]
 
         self.central_atom_indices = [i for i, atom in enumerate(self.sorted_atoms) if atom.name in ["N", "CA", "C"]]
+        self.central_atoms = self.sorted_atoms[self.central_atom_indices]
 
         # Cartesians:
         try:
@@ -136,7 +137,10 @@ class MolData:
     def __iadd__(self, other):
         assert np.all(self.sorted_atoms.names == other.sorted_atoms.names)
         self.cartesians = np.concatenate([self.cartesians, other.cartesians], axis=0)
+        self.central_cartesians = np.concatenate([self.central_cartesians, other.central_cartesians], axis=0)
         self.dihedrals = np.concatenate([self.dihedrals, other.dihedrals], axis=0)
+        self.angles = np.concatenate([self.angles, other.angles], axis=0)
+        self.lengths = np.concatenate([self.lengths, other.lengths], axis=0)
         return self
 
     @staticmethod
@@ -159,7 +163,7 @@ class MolData:
         if coordinates.ndim == 2:
             coordinates = np.expand_dims(coordinates, 0)
         if only_central:
-            output_universe = md.Merge(self.sorted_atoms[self.central_atom_indices])
+            output_universe = md.Merge(self.central_atoms)
             self.sorted_atoms[self.central_atom_indices].write(os.path.join(path, "{}.pdb".format(name)))
         else:
             output_universe = md.Merge(self.sorted_atoms)

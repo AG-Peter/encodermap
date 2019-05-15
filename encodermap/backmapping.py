@@ -153,12 +153,15 @@ def dihedrals_to_cartesian_tf(dihedrals, cartesian=None, central_atom_indices=No
 def guess_sp2_atom(cartesians, atom_names, bond_partner, angle_to_previous, bond_length):
     assert cartesians.shape[1] == len(atom_names)
     added_cartesians = []
-    for i in range(1, len(atom_names)-1):
+    for i in range(1, len(atom_names)):
         if atom_names[i] == bond_partner:
             prev_vec = cartesians[:, i - 1] - cartesians[:, i]
-            next_vex = cartesians[:, i + 1] - cartesians[:, i]
+            try:
+                next_vec = cartesians[:, i + 1] - cartesians[:, i]
+            except ValueError:
+                next_vec = cartesians[:, i - 2] - cartesians[:, i]
 
-            perpendicular_axis = tf.cross(prev_vec, next_vex)
+            perpendicular_axis = tf.cross(prev_vec, next_vec)
             perpendicular_axis /= tf.norm(perpendicular_axis, axis=1, keepdims=True)
             bond_vec = tf.matmul(tf.expand_dims(prev_vec, 1), rotation_matrix(perpendicular_axis, angle_to_previous))
             bond_vec = bond_vec[:, 0, :]
@@ -174,3 +177,21 @@ def guess_amide_H(cartesians, atom_names):
 
 def guess_amide_O(cartesians, atom_names):
     return guess_sp2_atom(cartesians, atom_names, "C", 121/180*pi, 1.24)
+
+
+def merge_cartesians(central_cartesians, central_atom_names, H_cartesians, O_cartesians):
+    cartesian = [central_cartesians[:, 0]]
+    h_i = 0
+    o_i = 0
+    for i in range(1, len(central_atom_names)):
+        atom_name = central_atom_names[i]
+        cartesian.append(central_cartesians[:, i])
+        if atom_name == "N":
+            cartesian.append(H_cartesians[:, h_i])
+            h_i += 1
+        elif atom_name == "C":
+            cartesian.append(O_cartesians[:, o_i])
+            o_i += 1
+    cartesian = tf.stack(cartesian, axis=1)
+    assert cartesian.shape[1] == central_cartesians.shape[1] + H_cartesians.shape[1] + O_cartesians.shape[1]
+    return cartesian
