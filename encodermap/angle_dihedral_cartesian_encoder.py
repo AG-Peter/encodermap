@@ -142,9 +142,12 @@ class AngleDihedralCartesianEncoder(Autoencoder):
                 tf.summary.scalar("reg_cost", reg_cost)
                 cost += reg_cost
 
+            gen_cartesian_pairwise_dist = pairwise_dist(self.cartesian)
+            tf.summary.scalar("clashes", tf.reduce_mean(tf.count_nonzero(gen_cartesian_pairwise_dist < 1, axis=(1, 2), dtype=tf.float32)
+                                                        - int(self.cartesian.shape[1])) / 2)
             dihedrals_to_cartesian_cost = tf.reduce_mean(tf.abs(
                 self.transform_pairwise_dists(cartesian_pairwise_dist)
-                - self.transform_pairwise_dists(pairwise_dist(self.cartesian))))
+                - self.transform_pairwise_dists(gen_cartesian_pairwise_dist)))
             if self.p.dihedral_to_cartesian_cost_scale != 0:
                 cost += self.p.dihedral_to_cartesian_cost_scale * dihedrals_to_cartesian_cost
             tf.summary.scalar("dihedrals_to_cartesian_cost", dihedrals_to_cartesian_cost)
