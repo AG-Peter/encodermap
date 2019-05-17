@@ -111,13 +111,22 @@ class AngleDihedralCartesianEncoder(Autoencoder):
         with tf.name_scope("cost"):
             cost = 0
 
-            cartesian_pairwise_dist = pairwise_dist(self.inputs[2])
+            cartesian_pairwise_dist = pairwise_dist(self.inputs[2], flat=True)
             # if self.p.auto_cost_scale != 0:
-            if True:
+            if self.p.auto_cost_variant == "mean_square":
+                auto_cost = tf.reduce_mean(
+                    tf.square(periodic_distance(self.main_inputs, self.generated, self.p.periodicity)))
+            elif self.p.auto_cost_variant == "mean_abs":
                 auto_cost = tf.reduce_mean(
                     tf.abs(periodic_distance(self.main_inputs, self.generated, self.p.periodicity)))
-                tf.summary.scalar("auto_cost", auto_cost)
-                cost += self.p.auto_cost_scale * auto_cost
+            elif self.p.auto_cost_variant == "mean_norm":
+                auto_cost = tf.reduce_mean(
+                    tf.norm(periodic_distance(self.main_inputs, self.generated, self.p.periodicity), axis=1))
+            else:
+                raise ValueError("auto_cost_variant {} not available".format(self.p.auto_cost_variant))
+
+            tf.summary.scalar("auto_cost", auto_cost)
+            cost += self.p.auto_cost_scale * auto_cost
 
             if self.p.distance_cost_scale != 0:
                 dist_cost = distance_cost(self.main_inputs, self.latent, *self.p.dist_sig_parameters, self.p.periodicity)
@@ -142,12 +151,23 @@ class AngleDihedralCartesianEncoder(Autoencoder):
                 tf.summary.scalar("reg_cost", reg_cost)
                 cost += reg_cost
 
-            gen_cartesian_pairwise_dist = pairwise_dist(self.cartesian)
-            tf.summary.scalar("clashes", tf.reduce_mean(tf.count_nonzero(gen_cartesian_pairwise_dist < 1, axis=(1, 2), dtype=tf.float32)
-                                                        - int(self.cartesian.shape[1])) / 2)
-            dihedrals_to_cartesian_cost = tf.reduce_mean(tf.abs(
-                self.transform_pairwise_dists(cartesian_pairwise_dist)
-                - self.transform_pairwise_dists(gen_cartesian_pairwise_dist)))
+            gen_cartesian_pairwise_dist = pairwise_dist(self.cartesian, flat=True)
+            self.clashes = tf.count_nonzero(gen_cartesian_pairwise_dist < 1, axis=1, dtype=tf.float32)
+            tf.summary.scalar("clashes", tf.reduce_mean(self.clashes))
+
+            if self.p.dihedral_to_cartesian_cost_variant == "mean_square":
+                dihedrals_to_cartesian_cost = tf.reduce_mean(tf.square(
+                    cartesian_pairwise_dist - gen_cartesian_pairwise_dist))
+            elif self.p.dihedral_to_cartesian_cost_variant == "mean_abs":
+                dihedrals_to_cartesian_cost = tf.reduce_mean(tf.abs(
+                    cartesian_pairwise_dist - gen_cartesian_pairwise_dist))
+            elif self.p.dihedral_to_cartesian_cost_variant == "mean_norm":
+                dihedrals_to_cartesian_cost = tf.reduce_mean(tf.norm(
+                    cartesian_pairwise_dist - gen_cartesian_pairwise_dist, axis=1))
+            else:
+                raise ValueError("dihedral_to_cartesian_cost_variant {} not available".
+                                 format(self.p.dihedral_to_cartesian_cost_variant))
+
             if self.p.dihedral_to_cartesian_cost_scale != 0:
                 cost += self.p.dihedral_to_cartesian_cost_scale * dihedrals_to_cartesian_cost
             tf.summary.scalar("dihedrals_to_cartesian_cost", dihedrals_to_cartesian_cost)
@@ -155,15 +175,7 @@ class AngleDihedralCartesianEncoder(Autoencoder):
         tf.summary.scalar("cost", cost)
         return cost
 
-    # @staticmethod
-    # def transform_pairwise_dists(pwd):
-    #     return 1/(pwd + 1e-16)
-
-    @staticmethod
-    def transform_pairwise_dists(pwd):
-        return pwd
-
-    def generate(self, latent):
+    def generate(self, latent, quantity=None):
         """
         Generates new high-dimensional points based on given low-dimensional points using the decoder part of the
         autoencoder.
@@ -172,19 +184,27 @@ class AngleDihedralCartesianEncoder(Autoencoder):
                        equal to the number of neurons in the bottleneck layer of the autoencoder.
         :return:
         """
-        all_dihedrals = []
-        all_cartesians = []
-        all_angles = []
-        batches = np.array_split(latent, max(1, int(len(latent) / 2048)))
-        for batch in batches:
-            angles, dihedrals, cartesians = self.sess.run((self.generated_angles,
-                                                           self.generated_dihedrals,
-                                                           self.cartesian_with_guessed_atoms),
-                                                          feed_dict={self.latent: batch})
-            all_dihedrals.append(dihedrals)
-            all_cartesians.append(cartesians)
-            all_angles.append(angles)
-        all_dihedrals = np.concatenate(all_dihedrals, axis=0)
-        all_cartesians = np.concatenate(all_cartesians, axis=0)
-        all_angles = np.concatenate(all_angles, axis=0)
-        return all_angles, all_dihedrals, all_cartesians
+        if quantity is None:
+            all_dihedrals = []
+            all_cartesians = []
+            all_angles = []
+            batches = np.array_split(latent, max(1, int(len(latent) / 2048)))
+            for batch in batches:
+                angles, dihedrals, cartesians = self.sess.run((self.generated_angles,
+                                                               self.generated_dihedrals,
+                                                               self.cartesian_with_guessed_atoms),
+                                                              feed_dict={self.latent: batch})
+                all_dihedrals.append(dihedrals)
+                all_cartesians.append(cartesians)
+                all_angles.append(angles)
+            all_dihedrals = np.concatenate(all_dihedrals, axis=0)
+            all_cartesians = np.concatenate(all_cartesians, axis=0)
+            all_angles = np.concatenate(all_angles, axis=0)
+            return all_angles, all_dihedrals, all_cartesians
+
+        else:
+            results = []
+            batches = np.array_split(latent, max(1, int(len(latent) / 2048)))
+            for batch in batches:
+                results.append(self.sess.run(quantity, feed_dict={self.latent: batch}))
+            return np.concatenate(results, axis=0)

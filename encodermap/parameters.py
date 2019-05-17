@@ -107,9 +107,11 @@ class Parameters(ParametersFramework):
         self.dist_sig_parameters = (4.5, 12, 6, 1, 2, 6)
         self.distance_cost_scale = 500
         self.auto_cost_scale = 1
+        self.auto_cost_variant = "mean_abs"
         self.center_cost_scale = 0.0001
         self.l2_reg_constant = 0.001
         self.dihedral_to_cartesian_cost_scale = 0
+        self.dihedral_to_cartesian_cost_variant = "mean_abs"
 
         self.gpu_memory_fraction = 1
         self.analysis_path = ""

@@ -129,7 +129,7 @@ def pairwise_dist_periodic(positions, periodicity):
         return dists
 
 
-def pairwise_dist(positions, squared=False):
+def pairwise_dist(positions, squared=False, flat=False):
     # thanks to https://omoindrot.github.io/triplet-loss
 
     with tf.name_scope("pairwise_dist"):
@@ -154,6 +154,12 @@ def pairwise_dist(positions, squared=False):
 
         # Because of computation errors, some distances might be negative so we put everything >= 0.0
         distances = tf.maximum(distances, 0.0)
+
+        if flat:
+            n = int(positions.shape[1])
+            mask = np.ones((n, n), dtype=bool)
+            mask[np.tril_indices(n)] = False
+            distances = tf.boolean_mask(distances, mask, axis=1)
 
         if not squared:
             # Because the gradient of sqrt is infinite when distances == 0.0 (ex: on the diagonal)
