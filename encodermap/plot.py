@@ -299,7 +299,7 @@ class PathGenerateCartesians(ManualPath):
             process.stdin.flush()
 
 
-def distance_histogram(data, periodicity, sigmoid_parameters, axe=None):
+def distance_histogram(data, periodicity, sigmoid_parameters, axes=None, low_d_max=5):
     """
     Plots the histogram of all pairwise distances in the data.
     If sigmoid parameters are given it also shows the sigmoid function and its normalized derivative.
@@ -319,21 +319,41 @@ def distance_histogram(data, periodicity, sigmoid_parameters, axe=None):
             break
     dists = dists.reshape(-1)
 
-    if axe is None:
-        fig, axe = plt.subplots()
-    axe2 = axe.twinx()
-    axe2.hist(dists, bins="auto", density=True)
+    if axes is None:
+        fig, axes = plt.subplots(2)
+    axe2 = axes[0].twinx()
+    counts, edges, patches = axe2.hist(dists, bins="auto", density=True, edgecolor='black')
     x = np.linspace(0, max(dists), 1000)
 
-    y = sigmoid(x, *sigmoid_parameters)
+    y = sigmoid(x, *sigmoid_parameters[:3])
+    edges_sig = sigmoid(edges, *sigmoid_parameters[:3])
     dy = np.diff(y)
     dy_norm = dy / max(dy)
-    axe.plot(x, y, color="C1", label="sigmoid")
-    axe.plot(x[:-1], dy_norm, color="C2", label="diff sigmoid")
+    axes[0].plot(x, y, color="C1", label="sigmoid")
+    axes[0].plot(x[:-1], dy_norm, color="C2", label="diff sigmoid")
 
-    axe.legend()
-    axe.set_xlabel("distance")
-    axe.set_ylim((0, 1))
-    axe.set_zorder(axe2.get_zorder() + 1)
-    axe.patch.set_visible(False)
-    return axe
+    axes[0].legend()
+    axes[0].set_xlabel("distance")
+    axes[0].set_ylim((0, 1))
+    axes[0].set_zorder(axe2.get_zorder() + 1)
+    axes[0].patch.set_visible(False)
+
+    x = np.linspace(0, low_d_max, 1000)
+    y = sigmoid(x, *sigmoid_parameters[3:])
+    dy = np.diff(y)
+    dy_norm = dy / max(dy)
+    idx = np.argmin(np.abs(np.expand_dims(edges_sig, axis=1) - np.expand_dims(y, axis=0)), axis=1)
+    edges_x = x[idx]
+
+    axes[1].plot(x, y, color="C1", label="sigmoid")
+
+    axes[1].legend()
+    axes[1].set_xlabel("distance")
+    axes[1].set_ylim((0, 1))
+    for i in range(len(edges)):
+        if edges_x[i] != edges_x[-1]:
+            axes[1].annotate('', xy=(edges[i], 0), xytext=(edges_x[i], 0), xycoords=axes[0].transData,
+                             textcoords=axes[1].transData,
+                             arrowprops=dict(facecolor='black', arrowstyle='-', clip_on=False))
+
+    return axes

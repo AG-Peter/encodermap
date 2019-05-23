@@ -39,3 +39,20 @@ class TestPairwiseDistances(tf.test.TestCase):
         pairwise_dists = em.misc.pairwise_dist(points)
         with self.test_session():
             self.assertAllClose([[[0, 6/8], [6/8, 0]]], pairwise_dists.eval())
+
+    def test_compare_pairwise_dist_and_periodic_pairwise_dist(self):
+        points = np.random.normal(size=(10, 3))
+        points = points.astype(np.float32)
+        pairwise_dists = em.misc.pairwise_dist(points)
+        periodic_pwd = em.misc.pairwise_dist_periodic(points, 10000)
+        with self.test_session():
+            self.assertAllClose(periodic_pwd.eval().reshape(-1), pairwise_dists.eval().reshape(-1))
+
+    def test_pairwise_dist_flat(self):
+        points = np.array([[0, 0],
+                           [1, 0],
+                           [0, 1]])
+        points = points.astype(np.float32)
+        pairwise_dists = em.misc.pairwise_dist(points, flat=True)
+        with self.test_session():
+            self.assertAllClose(pairwise_dists.eval(), [[1, 1, 2**(1/2)]])

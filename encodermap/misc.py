@@ -121,6 +121,7 @@ def sigmoid(r, sig, a, b):
 
 
 def pairwise_dist_periodic(positions, periodicity):
+    assert len(positions.shape) == 2
     with tf.name_scope("pairwise_dist_periodic"):
         vecs = periodic_distance(tf.expand_dims(positions, axis=1), tf.expand_dims(positions, axis=0), periodicity)
         mask = tf.to_float(tf.equal(vecs, 0.0))
@@ -279,3 +280,10 @@ def rotation_matrix(axis_unit_vec, angle):
     axis_unit_vec = tf.expand_dims(axis_unit_vec, 2)
     r += (1-tf.cos(angle)) * tf.matmul(axis_unit_vec, tf.transpose(axis_unit_vec, [0, 2, 1]))
     return r
+
+
+def potential_energy(angles, dihedrals, distances):
+    energy = 0
+    energies = tf.where(distances < 2, tf.minimum(10-distances, (1/distances)**12), tf.zeros(tf.shape(distances)))
+    energy += tf.reduce_mean(tf.reduce_sum(energies, axis=1))
+    return energy
