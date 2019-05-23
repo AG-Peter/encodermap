@@ -147,6 +147,7 @@ class MolData:
     def sort_key(atom):
         positions = {"N": 1,
                      "H": 2,
+                     "CD": 2,  # Todo: remove special rule for prolines doesnt make sense for other AS
                      "CA": 3,
                      "C": 5,
                      "O": 6,

@@ -116,6 +116,10 @@ class Parameters(ParametersFramework):
         self.cartesian_dist_sig_parameters = self.dist_sig_parameters
         self.cartesian_distance_cost_scale = 0
 
+        self.cartesian_pwd_start = None
+        self.cartesian_pwd_stop = None
+        self.cartesian_pwd_step = None
+
         self.gpu_memory_fraction = 1
         self.analysis_path = ""
         self.id = ""

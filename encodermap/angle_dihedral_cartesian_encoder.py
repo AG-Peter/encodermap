@@ -111,7 +111,13 @@ class AngleDihedralCartesianEncoder(Autoencoder):
         with tf.name_scope("cost"):
             cost = 0
 
-            cartesian_pairwise_dist = pairwise_dist(self.inputs[2], flat=True)
+            cartesian_pairwise_dist = pairwise_dist(self.inputs[2][:, self.p.cartesian_pwd_start:
+                                                                      self.p.cartesian_pwd_stop:
+                                                                      self.p.cartesian_pwd_step], flat=True)
+            gen_cartesian_pairwise_dist = pairwise_dist(self.cartesian[:, self.p.cartesian_pwd_start:
+                                                                          self.p.cartesian_pwd_stop:
+                                                                          self.p.cartesian_pwd_step], flat=True)
+
             # if self.p.auto_cost_scale != 0:
             if self.p.auto_cost_variant == "mean_square":
                 auto_cost = tf.reduce_mean(
@@ -150,8 +156,7 @@ class AngleDihedralCartesianEncoder(Autoencoder):
                 tf.summary.scalar("reg_cost", reg_cost)
                 cost += reg_cost
 
-            gen_cartesian_pairwise_dist = pairwise_dist(self.cartesian, flat=True)
-            self.clashes = tf.count_nonzero(gen_cartesian_pairwise_dist < 1, axis=1, dtype=tf.float32)
+            self.clashes = tf.count_nonzero(pairwise_dist(self.cartesian, flat=True) < 1, axis=1, dtype=tf.float32)
             tf.summary.scalar("clashes", tf.reduce_mean(self.clashes))
 
             if self.p.dihedral_to_cartesian_cost_variant == "mean_square":
