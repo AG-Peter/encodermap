@@ -23,13 +23,13 @@ class TestPeriodicDistances(tf.test.TestCase):
 
 class TestPairwiseDistances(tf.test.TestCase):
     def test_pairwise_dist_periodic(self):
-        points = [[1/8, 1/2], [7/8, 1/2]]
+        points = np.array([[1/8, 1/2], [7/8, 1/2]], dtype=np.float32)
         pairwise_dists = em.misc.pairwise_dist_periodic(points, 1)
         with self.test_session():
             self.assertAllClose([[0, 1/4], [1/4, 0]], pairwise_dists.eval())
 
     def test_pairwise_dist_periodic_not_periodic_case(self):
-        points = [[1/8, 1/2], [7/8, 1/2]]
+        points = np.array([[1/8, 1/2], [7/8, 1/2]], dtype=np.float32)
         pairwise_dists = em.misc.pairwise_dist_periodic(points, float("inf"))
         with self.test_session():
             self.assertAllClose([[0, 6/8], [6/8, 0]], pairwise_dists.eval())

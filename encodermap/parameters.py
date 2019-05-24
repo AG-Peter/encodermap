@@ -120,6 +120,6 @@ class Parameters(ParametersFramework):
         self.cartesian_pwd_stop = None
         self.cartesian_pwd_step = None
 
-        self.gpu_memory_fraction = 1
+        self.gpu_memory_fraction = 0
         self.analysis_path = ""
         self.id = ""

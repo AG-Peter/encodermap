@@ -152,16 +152,3 @@ class TestDihedralToCartesianTf(tf.test.TestCase):
         # ax.plot(*cartesian.T)
         # set_axes_equal(ax)
         # plt.show()
-
-    def test_ala_helix_to_straight(self):
-        uni = md.Universe("Ala10_helix.pdb")
-        selected_atoms = uni.select_atoms("backbone or name O1 or name H or name CB")
-        moldata = em.MolData(selected_atoms)
-        with tempfile.TemporaryDirectory() as tempdir:
-            p = em.Parameters()
-            p.main_path = tempdir
-            e_map = em.DihedralCartesianEncoder(p, moldata)
-            straightened_cartesian = e_map.sess.run(e_map.straightened_cartesian)
-
-        end2end = np.linalg.norm(straightened_cartesian[0] - straightened_cartesian[-1])
-        self.assertAlmostEqual(end2end, 24.09287, places=3)
