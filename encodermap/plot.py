@@ -3,6 +3,7 @@ from scipy.interpolate import interp1d
 from matplotlib.lines import Line2D
 from itertools import cycle
 from matplotlib.widgets import Lasso
+from matplotlib.path import Path
 import os
 from .misc import create_dir, periodic_distance_np, sigmoid
 import MDAnalysis as md
@@ -288,6 +289,40 @@ class PathGenerateCartesians(ManualPath):
         np.save(os.path.join(current_save_path, "generated_cartesians.npy"), cartesians)
 
         self.mol_data.write(current_save_path, cartesians, only_central=False)
+        if self.vmd_path:
+            cmd = "{} {} {}".format(self.vmd_path,
+                                    "generated.pdb",
+                                    "generated.xtc")
+            print(cmd)
+            process = subprocess.Popen(cmd, cwd=current_save_path, shell=True, stdin=subprocess.PIPE,
+                                       stdout=subprocess.PIPE)
+            process.stdin.write(b"animate delete beg 0 end 0 skip 0 0\n")
+            process.stdin.flush()
+
+
+class PathSelect(ManualPath):
+    def __init__(self, axe, data, autoencoder, mol_data, save_path=None, n_points=200, vmd_path=""):
+        super().__init__(axe, n_points=n_points)
+
+        self.autoencoder = autoencoder
+        self.mol_data = mol_data
+        self.vmd_path = vmd_path
+        self.data = data
+
+        if save_path:
+            self.save_path = save_path
+        else:
+            self.save_path = autoencoder.p.main_path
+
+    def use_points(self, points):
+        current_save_path = create_dir(os.path.join(self.save_path, "selected",
+                                                    datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")))
+        indices = np.nonzero(Path(points).contains_points(self.data))[0]
+        self.axe.scatter(self.data[indices, 0], self.data[indices, 1])
+        self.axe.plot(points[:, 0], points[:, 1], linestyle="", marker=".")
+        np.save(os.path.join(current_save_path, "indices"), indices)
+
+        self.mol_data.write(current_save_path, self.mol_data.cartesians[indices], only_central=False)
         if self.vmd_path:
             cmd = "{} {} {}".format(self.vmd_path,
                                     "generated.pdb",
