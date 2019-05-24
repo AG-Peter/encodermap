@@ -11,7 +11,8 @@ from math import pi
 
 class Autoencoder:
 
-    def __init__(self, parameters, train_data=None, validation_data=None, checkpoint_path=None, n_inputs=None):
+    def __init__(self, parameters, train_data=None, validation_data=None, checkpoint_path=None, n_inputs=None,
+                 read_only=False):
         """
         :param parameters: Parameters object as defined in :py:class:`encodermap.parameters.Parameters`
 
@@ -29,49 +30,28 @@ class Autoencoder:
         """
         # Parameters:
         self.p = parameters  # type: Parameters
-        self.p.save()
+        self.n_inputs = n_inputs
+        if not read_only:
+            self.p.save()
         print("Output files are saved to {}".format(self.p.main_path),
               "as defined in 'main_path' in the parameters.")
+
+        self.train_data = train_data
+        self.validation_data = validation_data
+
+        self._prepare_data()
 
         self.graph = tf.Graph()
         with self.graph.as_default():
 
-            # Load Data:
-            if train_data is None:
-                assert n_inputs is not None, "If no train_data is given, n_inputs needs to be given"
-                self.train_data = [np.zeros((3, n_inputs), dtype=np.float32)]
-            elif isinstance(train_data, np.ndarray):
-                self.train_data = [train_data.astype(np.float32)]
-            elif isinstance(train_data, (list, tuple)):
-                self.train_data = [dat.astype(np.float32) for dat in train_data]
-            else:
-                raise ValueError("{} is not supported as input type for train_data".format(type(train_data)))
+            self._setup_data_iterator()
 
-            if validation_data is None:
-                self.validation_data = None
-            else:
-                self.validation_data = validation_data.astype(np.float32)
-                # Todo: allow lists of validation data
+            self._setup_network()
 
-            self.data_placeholders = tuple(tf.placeholder(dat.dtype, dat.shape) for dat in self.train_data)
-            self.data_set = tf.data.Dataset.from_tensor_slices(self.data_placeholders)
-            self.data_set = self.data_set.shuffle(buffer_size=len(self.train_data[0]))
-            self.data_set = self.data_set.repeat()
-            self.data_set = self.data_set.batch(self.p.batch_size)
-            self.data_iterator = self.data_set.make_initializable_iterator()
-
-            # Setup Network:
-            self.inputs = self.data_iterator.get_next()
-            self.main_inputs = self.inputs[0]
-            self.main_inputs = tf.placeholder_with_default(self.main_inputs, self.main_inputs.shape)
-            self.regularizer = tf.contrib.layers.l2_regularizer(scale=self.p.l2_reg_constant)
-            encoded = self._encode(self.main_inputs)
-            self.latent = tf.placeholder_with_default(encoded, encoded.shape)
-            variable_summaries("latent", self.latent)
-            self.generated = self._generate(self.latent)
-
-            # Define Cost function:
-            self.cost = self._cost()
+            with tf.name_scope("cost"):
+                self.cost = 0
+                self._setup_cost()
+                tf.summary.scalar("combined_cost", self.cost)
 
             # Setup Optimizer:
             self.optimizer = tf.train.AdamOptimizer(self.p.learning_rate)
@@ -90,14 +70,48 @@ class Autoencoder:
             self.sess.run(tf.global_variables_initializer())
             self.sess.run(self.data_iterator.initializer,
                           feed_dict={p: d for p, d in zip(self.data_placeholders, self.train_data)})
-            self.train_writer = tf.summary.FileWriter(os.path.join(self.p.main_path, "train"), self.sess.graph)
-            if self.validation_data is not None:
-                self.validation_writer = tf.summary.FileWriter(os.path.join(self.p.main_path, "validation"), self.sess.graph)
+            if not read_only:
+                self.train_writer = tf.summary.FileWriter(os.path.join(self.p.main_path, "train"), self.sess.graph)
+                if self.validation_data is not None:
+                    self.validation_writer = tf.summary.FileWriter(os.path.join(self.p.main_path, "validation"), self.sess.graph)
             self.saver = tf.train.Saver(max_to_keep=100)
 
             # load Checkpoint
             if checkpoint_path:
                 self.saver.restore(self.sess, checkpoint_path)
+
+    def _prepare_data(self):
+        if self.train_data is None:
+            assert self.n_inputs is not None, "If no train_data is given, n_inputs needs to be given"
+            self.train_data = [np.zeros((3, self.n_inputs), dtype=np.float32)]
+        elif isinstance(self.train_data, np.ndarray):
+            self.train_data = [self.train_data.astype(np.float32)]
+        elif isinstance(self.train_data, (list, tuple)):
+            self.train_data = [dat.astype(np.float32) for dat in self.train_data]
+        else:
+            raise ValueError("{} is not supported as input type for train_data".format(type(train_data)))
+
+        if self.validation_data is not None:
+            self.validation_data = validation_data.astype(np.float32)
+            # Todo: allow lists of validation data
+
+    def _setup_network(self):
+        self.inputs = self.data_iterator.get_next()
+        self.main_inputs = self.inputs[0]
+        self.main_inputs = tf.placeholder_with_default(self.main_inputs, self.main_inputs.shape)
+        self.regularizer = tf.contrib.layers.l2_regularizer(scale=self.p.l2_reg_constant)
+        encoded = self._encode(self.main_inputs)
+        self.latent = tf.placeholder_with_default(encoded, encoded.shape)
+        variable_summaries("latent", self.latent)
+        self.generated = self._generate(self.latent)
+
+    def _setup_data_iterator(self):
+        self.data_placeholders = tuple(tf.placeholder(dat.dtype, dat.shape) for dat in self.train_data)
+        self.data_set = tf.data.Dataset.from_tensor_slices(self.data_placeholders)
+        self.data_set = self.data_set.shuffle(buffer_size=len(self.train_data[0]))
+        self.data_set = self.data_set.repeat()
+        self.data_set = self.data_set.batch(self.p.batch_size)
+        self.data_iterator = self.data_set.make_initializable_iterator()
 
     def _encode(self, inputs):
         with tf.name_scope("encoder"):
@@ -149,40 +163,41 @@ class Autoencoder:
                     current_layer = current_layer / (2*pi) * self.p.periodicity
             return current_layer
 
-    def _cost(self):
-        with tf.name_scope("cost"):
-            cost = 0
-            # if self.p.auto_cost_scale != 0:
-            if True:
+    def _setup_cost(self):
+        self._auto_cost()
+        self._center_cost()
+        self._l2_reg_cost()
+
+    def _auto_cost(self):
+        if self.p.auto_cost_scale is not None:
+            if self.p.auto_cost_variant == "mean_square":
+                auto_cost = tf.reduce_mean(
+                    tf.square(periodic_distance(self.main_inputs, self.generated, self.p.periodicity)))
+            elif self.p.auto_cost_variant == "mean_abs":
+                auto_cost = tf.reduce_mean(
+                    tf.abs(periodic_distance(self.main_inputs, self.generated, self.p.periodicity)))
+            elif self.p.auto_cost_variant == "mean_norm":
                 auto_cost = tf.reduce_mean(
                     tf.norm(periodic_distance(self.main_inputs, self.generated, self.p.periodicity), axis=1))
-                tf.summary.scalar("auto_cost", auto_cost)
-                cost += self.p.auto_cost_scale * auto_cost
+            else:
+                raise ValueError("auto_cost_variant {} not available".format(self.p.auto_cost_variant))
+            tf.summary.scalar("auto_cost", auto_cost)
+            if self.p.auto_cost_scale != 0:
+                self.cost += self.p.auto_cost_scale * auto_cost
 
-            if self.p.distance_cost_scale != 0:
-                dist_cost = distance_cost(self.main_inputs, self.latent, *self.p.dist_sig_parameters, self.p.periodicity)
-                tf.summary.scalar("distance_cost", dist_cost)
-                cost += self.p.distance_cost_scale * dist_cost
-
-            if self.p.center_cost_scale != 0:
-                center_cost = tf.reduce_mean(tf.square(self.latent))
-                tf.summary.scalar("center_cost", center_cost)
-                cost += self.p.center_cost_scale * center_cost
-
+    def _l2_reg_cost(self):
+        if self.p.l2_reg_constant is not None:
+            reg_cost = tf.losses.get_regularization_loss()
+            tf.summary.scalar("reg_cost", reg_cost)
             if self.p.l2_reg_constant != 0:
-                reg_cost = tf.losses.get_regularization_loss()
-                tf.summary.scalar("reg_cost", reg_cost)
-                cost += reg_cost
+                self.cost += reg_cost
 
-            if self.p.dihedral_to_cartesian_cost_scale != 0:
-                self.cartesian = dihedrals_to_cartesian_tf(self.generated)  # todo: phi, psi, omega
-                dihedrals_to_cartesian_cost = tf.reduce_mean(tf.square(
-                    pairwise_dist(self.inputs[1]) - pairwise_dist(self.cartesian)))
-                cost += self.p.dihedral_to_cartesian_cost_scale * dihedrals_to_cartesian_cost
-                tf.summary.scalar("dihedrals_to_cartesian_cost", dihedrals_to_cartesian_cost)
-
-        tf.summary.scalar("cost", cost)
-        return cost
+    def _center_cost(self):
+        if self.p.center_cost_scale is not None:
+            center_cost = tf.reduce_mean(tf.square(self.latent))
+            tf.summary.scalar("center_cost", center_cost)
+            if self.p.center_cost_scale != 0:
+                self.cost += self.p.center_cost_scale * center_cost
 
     def encode(self, inputs):
         """
