@@ -86,7 +86,7 @@ class Parameters(ParametersFramework):
     :ivar l2_reg_constant: Adjusts how much the l2 regularisation is weighted in the cost function.
 
     :ivar gpu_memory_fraction: Specifies the fraction of gpu memory blocked.
-        This can be reduced if multiple runs should run on one gpu in parallel.
+        If it is 0 memory is allocated as needed.
     :ivar analysis_path: A path that can be used to store analysis
     :ivar id: Can be any name for the run. Might be useful for example for specific analysis for different data sets.
 
@@ -115,7 +115,7 @@ class Parameters(ParametersFramework):
         self.potential_energy_cost_scale = 0
         self.cartesian_dist_sig_parameters = self.dist_sig_parameters
         self.cartesian_distance_cost_scale = 0
-
+        
         self.cartesian_pwd_start = None
         self.cartesian_pwd_stop = None
         self.cartesian_pwd_step = None

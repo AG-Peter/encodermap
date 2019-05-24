@@ -82,7 +82,10 @@ class Autoencoder:
             self.merged_summaries = tf.summary.merge_all()
 
             # Setup Session
-            gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=self.p.gpu_memory_fraction)
+            if self.p.gpu_memory_fraction == 0:
+                gpu_options = tf.GPUOptions(allow_growth=True)
+            else:
+                gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=self.p.gpu_memory_fraction)
             self.sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options), graph=self.graph)
             self.sess.run(tf.global_variables_initializer())
             self.sess.run(self.data_iterator.initializer,
