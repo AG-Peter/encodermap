@@ -43,6 +43,7 @@ class Autoencoder:
 
         self.graph = tf.Graph()
         with self.graph.as_default():
+            self.global_step = tf.train.create_global_step()
 
             self._setup_data_iterator()
 
@@ -56,7 +57,6 @@ class Autoencoder:
             # Setup Optimizer:
             self.optimizer = tf.train.AdamOptimizer(self.p.learning_rate)
             gradients = self.optimizer.compute_gradients(self.cost)
-            self.global_step = tf.train.create_global_step()
             self.optimize = self.optimizer.apply_gradients(gradients, global_step=self.global_step)
 
             self.merged_summaries = tf.summary.merge_all()

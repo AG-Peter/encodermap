@@ -149,7 +149,19 @@ class AngleDihedralCartesianEncoder(Autoencoder):
 
             tf.summary.scalar("cartesian_cost", cartesian_cost)
             if self.p.cartesian_cost_scale != 0:
-                self.cost += self.p.cartesian_cost_scale * cartesian_cost
+                if self.p.cartesian_cost_scale_soft_start[0] is None:
+                    self.cost += self.p.cartesian_cost_scale * cartesian_cost
+                else:
+                    a = self.p.cartesian_cost_scale_soft_start[0]
+                    b = self.p.cartesian_cost_scale_soft_start[1]
+                    cost_scale = tf.case([(tf.less(self.global_step, a),
+                                           lambda:tf.constant(0, tf.float32)),
+                                          (tf.greater(self.global_step, b),
+                                           lambda:tf.constant(self.p.cartesian_cost_scale, tf.float32))],
+                                         default=lambda:self.p.cartesian_cost_scale/(b-a)*
+                                                 (tf.cast(self.global_step, tf.float32)-a))
+                    tf.summary.scalar("cartesian_cost_scale", cost_scale)
+                    self.cost += cost_scale * cartesian_cost
 
     def generate(self, latent, quantity=None):
         if quantity is None:

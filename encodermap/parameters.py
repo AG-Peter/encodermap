@@ -131,6 +131,7 @@ class ADCParameters(Parameters):
         self.dihedral_cost_variant = "mean_abs"
 
         self.cartesian_cost_scale = 0.01
+        self.cartesian_cost_scale_soft_start = (None, None)  # begin, end
         self.cartesian_cost_variant = "mean_abs"
 
         self.cartesian_dist_sig_parameters = self.dist_sig_parameters
