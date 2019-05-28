@@ -110,16 +110,33 @@ class Parameters(ParametersFramework):
         self.auto_cost_variant = "mean_abs"
         self.center_cost_scale = 0.0001
         self.l2_reg_constant = 0.001
-        self.dihedral_to_cartesian_cost_scale = 0
-        self.dihedral_to_cartesian_cost_variant = "mean_abs"
-        self.potential_energy_cost_scale = 0
-        self.cartesian_dist_sig_parameters = self.dist_sig_parameters
-        self.cartesian_distance_cost_scale = 0
-        
-        self.cartesian_pwd_start = None
-        self.cartesian_pwd_stop = None
-        self.cartesian_pwd_step = None
 
         self.gpu_memory_fraction = 0
         self.analysis_path = ""
         self.id = ""
+
+
+class ADCParameters(Parameters):
+    def __init__(self):
+        super(ADCParameters, self).__init__()
+
+        self.cartesian_pwd_start = None
+        self.cartesian_pwd_stop = None
+        self.cartesian_pwd_step = None
+
+        self.angle_cost_scale = 1
+        self.angle_cost_variant = "mean_abs"
+
+        self.dihedral_cost_scale = 1
+        self.dihedral_cost_variant = "mean_abs"
+
+        self.cartesian_cost_scale = 0.01
+        self.cartesian_cost_variant = "mean_abs"
+
+        self.cartesian_dist_sig_parameters = self.dist_sig_parameters
+        self.cartesian_distance_cost_scale = 500
+
+        self.use_backbone_angles = True
+
+        self.auto_cost_scale = None
+        self.distance_cost_scale = None

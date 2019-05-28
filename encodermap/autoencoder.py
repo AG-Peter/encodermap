@@ -29,7 +29,7 @@ class Autoencoder:
                          columns of the train_data the network was originally trained with.
         """
         # Parameters:
-        self.p = parameters  # type: Parameters
+        self.p = parameters
         self.n_inputs = n_inputs
         if not read_only:
             self.p.save()
@@ -92,7 +92,7 @@ class Autoencoder:
             raise ValueError("{} is not supported as input type for train_data".format(type(train_data)))
 
         if self.validation_data is not None:
-            self.validation_data = validation_data.astype(np.float32)
+            self.validation_data = self.validation_data.astype(np.float32)
             # Todo: allow lists of validation data
 
     def _setup_network(self):

@@ -94,18 +94,17 @@ def distance_cost(r_h, r_l, sig_h, a_h, b_h, sig_l, a_l, b_l, periodicity):
     :param periodicity:
     :return:
     """
-    with tf.name_scope("distance_cost"):
-        if periodicity == float("inf"):
-            dist_h = pairwise_dist(r_h)
-        else:
-            dist_h = pairwise_dist_periodic(r_h, periodicity)
-        dist_l = pairwise_dist(r_l)
+    if periodicity == float("inf"):
+        dist_h = pairwise_dist(r_h)
+    else:
+        dist_h = pairwise_dist_periodic(r_h, periodicity)
+    dist_l = pairwise_dist(r_l)
 
-        sig_h = sigmoid(dist_h, sig_h, a_h, b_h)
-        sig_l = sigmoid(dist_l, sig_l, a_l, b_l)
+    sig_h = sigmoid(dist_h, sig_h, a_h, b_h)
+    sig_l = sigmoid(dist_l, sig_l, a_l, b_l)
 
-        cost = tf.reduce_mean(tf.square(sig_h - sig_l))
-        return cost
+    cost = tf.reduce_mean(tf.square(sig_h - sig_l))
+    return cost
 
 
 def sigmoid(r, sig, a, b):

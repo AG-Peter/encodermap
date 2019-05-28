@@ -3,12 +3,17 @@ import tensorflow as tf
 import numpy as np
 from .misc import periodic_distance, variable_summaries, potential_energy, distance_cost, pairwise_dist
 from .backmapping import dihedrals_to_cartesian_tf, chain_in_plane, guess_amide_H, guess_amide_O, merge_cartesians
-import os
-from .parameters import Parameters
+from .moldata import MolData
+from .parameters import ADCParameters
 from math import pi
 
 
 class AngleDihedralCartesianEncoder(Autoencoder):
+
+    def __init__(self, *args, **kwargs):
+        super(AngleDihedralCartesianEncoder, self).__init__(*args, **kwargs)
+        assert isinstance(self.p, ADCParameters)
+        assert isinstance(self.train_moldata, MolData)
 
     def _prepare_data(self):
         self.train_moldata = self.train_data
@@ -24,7 +29,10 @@ class AngleDihedralCartesianEncoder(Autoencoder):
 
     def _setup_network(self):
         self.inputs = self.data_iterator.get_next()
-        self.main_inputs = tf.concat([self.inputs[0], self.inputs[1]], axis=1)
+        if self.p.use_backbone_angles:
+            self.main_inputs = tf.concat([self.inputs[0], self.inputs[1]], axis=1)
+        else:
+            self.main_inputs = self.inputs[1]
         self.main_inputs = tf.placeholder_with_default(self.main_inputs, self.main_inputs.shape)
         self.regularizer = tf.contrib.layers.l2_regularizer(scale=self.p.l2_reg_constant)
         encoded = self._encode(self.main_inputs)
@@ -32,8 +40,13 @@ class AngleDihedralCartesianEncoder(Autoencoder):
         variable_summaries("latent", self.latent)
         self.generated = self._generate(self.latent)
 
-        self.generated_angles = self.generated[:, :self.inputs[0].shape[1]]
-        self.generated_dihedrals = self.generated[:, self.inputs[0].shape[1]:]
+        if self.p.use_backbone_angles:
+            self.generated_angles = self.generated[:, :self.inputs[0].shape[1]]
+            self.generated_dihedrals = self.generated[:, self.inputs[0].shape[1]:]
+        else:
+            self.generated_dihedrals = self.generated
+            self.generated_angles = tf.tile(np.expand_dims(np.mean(self.train_moldata.angles, axis=0), axis=0),
+                                            [tf.shape(self.generated_dihedrals)[0], 1])
 
         mean_lengths = np.expand_dims(np.mean(self.train_moldata.lengths, axis=0), axis=0)
         self.chain_in_plane = chain_in_plane(mean_lengths, self.generated_angles)
@@ -58,12 +71,50 @@ class AngleDihedralCartesianEncoder(Autoencoder):
         tf.summary.scalar("clashes", tf.reduce_mean(self.clashes))
 
     def _setup_cost(self):
-        self._auto_cost()
+        self._dihedral_cost()
+        self._angle_cost()
+        self._cartesian_cost()
+
         self._distance_cost()
         self._cartesian_distance_cost()
         self._center_cost()
         self._l2_reg_cost()
-        self._convert_to_cartesians_cost()
+
+    def _dihedral_cost(self):
+        if self.p.dihedral_cost_scale is not None:
+            if self.p.dihedral_cost_variant == "mean_square":
+                dihedral_cost = tf.reduce_mean(
+                    tf.square(periodic_distance(self.inputs[1], self.generated_dihedrals, self.p.periodicity)))
+            elif self.p.dihedral_cost_variant == "mean_abs":
+                dihedral_cost = tf.reduce_mean(
+                    tf.abs(periodic_distance(self.inputs[1], self.generated_dihedrals, self.p.periodicity)))
+            elif self.p.dihedral_cost_variant == "mean_norm":
+                dihedral_cost = tf.reduce_mean(
+                    tf.norm(periodic_distance(self.inputs[1], self.generated_dihedrals, self.p.periodicity),
+                            axis=1))
+            else:
+                raise ValueError("dihedral_cost_variant {} not available".format(self.p.auto_cost_variant))
+            tf.summary.scalar("dihedral_cost", dihedral_cost)
+            if self.p.dihedral_cost_scale != 0:
+                self.cost += self.p.dihedral_cost_scale * dihedral_cost
+
+    def _angle_cost(self):
+        if self.p.angle_cost_scale is not None:
+            if self.p.angle_cost_variant == "mean_square":
+                angle_cost = tf.reduce_mean(
+                    tf.square(periodic_distance(self.inputs[0], self.generated_angles, self.p.periodicity)))
+            elif self.p.angle_cost_variant == "mean_abs":
+                angle_cost = tf.reduce_mean(
+                    tf.abs(periodic_distance(self.inputs[0], self.generated_angles, self.p.periodicity)))
+            elif self.p.angle_cost_variant == "mean_norm":
+                angle_cost = tf.reduce_mean(
+                    tf.norm(periodic_distance(self.inputs[0], self.generated_angles, self.p.periodicity),
+                            axis=1))
+            else:
+                raise ValueError("angle_cost_variant {} not available".format(self.p.auto_cost_variant))
+            tf.summary.scalar("angle_cost", angle_cost)
+            if self.p.angle_cost_scale != 0:
+                self.cost += self.p.angle_cost_scale * angle_cost
 
     def _distance_cost(self):
         if self.p.distance_cost_scale is not None:
@@ -81,34 +132,26 @@ class AngleDihedralCartesianEncoder(Autoencoder):
             if self.p.cartesian_distance_cost_scale != 0:
                 self.cost += self.p.cartesian_distance_cost_scale * dist_cost
 
-    def _convert_to_cartesians_cost(self):
-        if self.p.dihedral_to_cartesian_cost_scale is not None:
-            if self.p.dihedral_to_cartesian_cost_variant == "mean_square":
-                dihedrals_to_cartesian_cost = tf.reduce_mean(tf.square(
+    def _cartesian_cost(self):
+        if self.p.cartesian_cost_scale is not None:
+            if self.p.cartesian_cost_variant == "mean_square":
+                cartesian_cost = tf.reduce_mean(tf.square(
                     self.input_cartesian_pairwise_dist - self.gen_cartesian_pairwise_dist))
-            elif self.p.dihedral_to_cartesian_cost_variant == "mean_abs":
-                dihedrals_to_cartesian_cost = tf.reduce_mean(tf.abs(
+            elif self.p.cartesian_cost_variant == "mean_abs":
+                cartesian_cost = tf.reduce_mean(tf.abs(
                     self.input_cartesian_pairwise_dist - self.gen_cartesian_pairwise_dist))
-            elif self.p.dihedral_to_cartesian_cost_variant == "mean_norm":
-                dihedrals_to_cartesian_cost = tf.reduce_mean(tf.norm(
+            elif self.p.cartesian_cost_variant == "mean_norm":
+                cartesian_cost = tf.reduce_mean(tf.norm(
                     self.input_cartesian_pairwise_dist - self.gen_cartesian_pairwise_dist, axis=1))
             else:
-                raise ValueError("convert_to_cartesians_cost_variant {} not available".
+                raise ValueError("cartesian_cost_variant {} not available".
                                  format(self.p.dihedral_to_cartesian_cost_variant))
 
-            tf.summary.scalar("convert_to_cartesians_cost", dihedrals_to_cartesian_cost)
-            if self.p.dihedral_to_cartesian_cost_scale != 0:
-                self.cost += self.p.dihedral_to_cartesian_cost_scale * dihedrals_to_cartesian_cost
+            tf.summary.scalar("cartesian_cost", cartesian_cost)
+            if self.p.cartesian_cost_scale != 0:
+                self.cost += self.p.cartesian_cost_scale * cartesian_cost
 
     def generate(self, latent, quantity=None):
-        """
-        Generates new high-dimensional points based on given low-dimensional points using the decoder part of the
-        autoencoder.
-
-        :param latent: 2d numpy array containing points in the low-dimensional space. The number of columns must be
-                       equal to the number of neurons in the bottleneck layer of the autoencoder.
-        :return:
-        """
         if quantity is None:
             all_dihedrals = []
             all_cartesians = []
