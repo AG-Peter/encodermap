@@ -246,6 +246,7 @@ class Autoencoder:
         :return:
         """
         self.sess.close()
+        tf.reset_default_graph()
 
     def __enter__(self):
         return self
