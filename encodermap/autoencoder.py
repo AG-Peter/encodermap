@@ -1,4 +1,5 @@
 import tensorflow as tf
+from tensorflow.python.framework import ops as tf_ops
 import numpy as np
 from .misc import periodic_distance, variable_summaries, add_layer_summaries, distance_cost
 import os
@@ -246,10 +247,13 @@ class Autoencoder:
         :return:
         """
         self.sess.close()
-        tf.reset_default_graph()
+        tf_ops.dismantle_graph(self.graph)
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+        
+    def __del__(self):
         self.close()
