@@ -152,3 +152,36 @@ class TestDihedralToCartesianTf(tf.test.TestCase):
         # ax.plot(*cartesian.T)
         # set_axes_equal(ax)
         # plt.show()
+
+    def test_straight_to_helix_v2(self):
+        phi = (57.8 / 180) * pi + pi
+        psi = (47.0 / 180) * pi + pi
+
+        omega = 0
+        dihedrals = tf.constant([[phi, psi, omega] * 10]*2)
+
+        lengths = tf.constant(np.ones((2, 32), dtype=np.float32))
+        angles = tf.constant(np.ones((2, 31), dtype=np.float32) * 120 / 180 * pi)
+
+        with self.test_session() as sess:
+            chain_in_plane = em.backmapping.chain_in_plane(lengths, angles)
+            cartesians = em.backmapping.dihedral_to_cartesian_tf_one_way(dihedrals, chain_in_plane).eval()
+            cartesians2 = em.backmapping.dihedrals_to_cartesian_tf(dihedrals, chain_in_plane).eval()
+
+            cartesians_old = em.backmapping.dihedrals_to_cartesian_tf_old(dihedrals, chain_in_plane).eval()
+
+            import matplotlib.pyplot as plt
+            from mpl_toolkits.mplot3d import Axes3D
+            fig = plt.figure()
+            ax = fig.add_subplot(111, projection='3d')
+            # ax.plot(*np.array(result).T)
+            ax.plot(*np.array(cartesians[0]).T)
+            ax.plot(*np.array(cartesians[0, 0:1]).T, marker="o")
+            ax.plot(*np.array(cartesians2[0]).T)
+            ax.plot(*np.array(cartesians2[0, 0:1]).T, marker="o")
+            ax.plot(*np.array(cartesians_old[0]).T)
+            ax.plot(*np.array(cartesians_old[0, 0:1]).T, marker="o")
+            set_axes_equal(ax)
+            plt.show()
+
+            # self.assertAllClose(result, cartesians, atol=1e-4)

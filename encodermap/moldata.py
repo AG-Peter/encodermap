@@ -7,6 +7,7 @@ import os
 from tqdm import tqdm
 from MDAnalysis.analysis.dihedrals import Dihedral
 from MDAnalysis.lib.distances import calc_angles
+from MDAnalysis.analysis.align import AlignTraj
 from .misc import create_dir
 
 
@@ -159,7 +160,7 @@ class MolData:
             result = 4
         return atom.resnum, result
 
-    def write(self, path, coordinates, name="generated", only_central=False):
+    def write(self, path, coordinates, name="generated", only_central=False, align_reference=None, align_select="all"):
         coordinates = np.array(coordinates)
         if coordinates.ndim == 2:
             coordinates = np.expand_dims(coordinates, 0)
@@ -170,6 +171,10 @@ class MolData:
             output_universe = md.Merge(self.sorted_atoms)
             self.sorted_atoms.write(os.path.join(path, "{}.pdb".format(name)))
         output_universe.load_new(coordinates, format=MemoryReader)
+
+        if align_reference is not None:
+            align_traj = AlignTraj(output_universe, align_reference, align_select, in_memory=True)
+            align_traj.run()
 
         with md.Writer(os.path.join(path, "{}.xtc".format(name))) as w:
             for step in output_universe.trajectory:

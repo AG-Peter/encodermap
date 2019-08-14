@@ -126,13 +126,16 @@ class ADCParameters(Parameters):
 
         self.angle_cost_scale = 1
         self.angle_cost_variant = "mean_abs"
+        self.angle_cost_reference = 1
 
         self.dihedral_cost_scale = 1
         self.dihedral_cost_variant = "mean_abs"
+        self.dihedral_cost_reference = 1
 
         self.cartesian_cost_scale = 0.01
         self.cartesian_cost_scale_soft_start = (None, None)  # begin, end
         self.cartesian_cost_variant = "mean_abs"
+        self.cartesian_cost_reference = 1
 
         self.cartesian_dist_sig_parameters = self.dist_sig_parameters
         self.cartesian_distance_cost_scale = 500

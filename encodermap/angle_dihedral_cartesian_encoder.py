@@ -94,6 +94,7 @@ class AngleDihedralCartesianEncoder(Autoencoder):
                             axis=1))
             else:
                 raise ValueError("dihedral_cost_variant {} not available".format(self.p.auto_cost_variant))
+            dihedral_cost /= self.p.dihedral_cost_reference
             tf.summary.scalar("dihedral_cost", dihedral_cost)
             if self.p.dihedral_cost_scale != 0:
                 self.cost += self.p.dihedral_cost_scale * dihedral_cost
@@ -112,6 +113,7 @@ class AngleDihedralCartesianEncoder(Autoencoder):
                             axis=1))
             else:
                 raise ValueError("angle_cost_variant {} not available".format(self.p.auto_cost_variant))
+            angle_cost /= self.p.angle_cost_reference
             tf.summary.scalar("angle_cost", angle_cost)
             if self.p.angle_cost_scale != 0:
                 self.cost += self.p.angle_cost_scale * angle_cost
@@ -146,7 +148,7 @@ class AngleDihedralCartesianEncoder(Autoencoder):
             else:
                 raise ValueError("cartesian_cost_variant {} not available".
                                  format(self.p.dihedral_to_cartesian_cost_variant))
-
+            cartesian_cost /= self.p.cartesian_cost_reference
             tf.summary.scalar("cartesian_cost", cartesian_cost)
             if self.p.cartesian_cost_scale != 0:
                 if self.p.cartesian_cost_scale_soft_start[0] is None:
@@ -188,3 +190,45 @@ class AngleDihedralCartesianEncoder(Autoencoder):
             for batch in batches:
                 results.append(self.sess.run(quantity, feed_dict={self.latent: batch}))
             return np.concatenate(results, axis=0)
+
+
+class AngleDihedralCartesianEncoderDummy(AngleDihedralCartesianEncoder):
+    def _setup_network(self):
+        self.inputs = self.data_iterator.get_next()
+        if self.p.use_backbone_angles:
+            self.main_inputs = tf.concat([self.inputs[0], self.inputs[1]], axis=1)
+        else:
+            self.main_inputs = self.inputs[1]
+        self.main_inputs = tf.placeholder_with_default(self.main_inputs, self.main_inputs.shape)
+        self.regularizer = tf.contrib.layers.l2_regularizer(scale=self.p.l2_reg_constant)
+        encoded = self._encode(self.main_inputs)
+        self.latent = tf.placeholder_with_default(encoded, encoded.shape)
+        variable_summaries("latent", self.latent)
+        self.generated = self._generate(self.latent)
+
+        self.generated_dihedrals = tf.tile(np.expand_dims(np.mean(self.train_moldata.dihedrals, axis=0), axis=0),
+                                        [tf.shape(self.main_inputs)[0], 1])
+        self.generated_angles = tf.tile(np.expand_dims(np.mean(self.train_moldata.angles, axis=0), axis=0),
+                                        [tf.shape(self.main_inputs)[0], 1])
+
+        mean_lengths = np.expand_dims(np.mean(self.train_moldata.lengths, axis=0), axis=0)
+        self.chain_in_plane = chain_in_plane(mean_lengths, self.generated_angles)
+        self.cartesian = dihedrals_to_cartesian_tf(self.generated_dihedrals + pi,
+                                                   self.chain_in_plane)
+
+        self.amide_H_cartesian = guess_amide_H(self.cartesian, self.train_moldata.central_atoms.names)
+        self.amide_O_cartesian = guess_amide_O(self.cartesian, self.train_moldata.central_atoms.names)
+
+        self.cartesian_with_guessed_atoms = merge_cartesians(self.cartesian, self.train_moldata.central_atoms.names,
+                                                             self.amide_H_cartesian, self.amide_O_cartesian)
+
+        self.input_cartesian_pairwise_dist = pairwise_dist(self.inputs[2][:, self.p.cartesian_pwd_start:
+                                                                      self.p.cartesian_pwd_stop:
+                                                                      self.p.cartesian_pwd_step], flat=True)
+
+        self.gen_cartesian_pairwise_dist = pairwise_dist(self.cartesian[:, self.p.cartesian_pwd_start:
+                                                                          self.p.cartesian_pwd_stop:
+                                                                          self.p.cartesian_pwd_step], flat=True)
+
+        self.clashes = tf.count_nonzero(pairwise_dist(self.cartesian, flat=True) < 1, axis=1, dtype=tf.float32)
+        tf.summary.scalar("clashes", tf.reduce_mean(self.clashes))

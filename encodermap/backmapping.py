@@ -110,7 +110,7 @@ def chain_in_plane(lengths, angles):
     return cartesians
 
 
-def dihedrals_to_cartesian_tf(dihedrals, cartesian=None, central_atom_indices=None, no_omega=False):
+def dihedrals_to_cartesian_tf_old(dihedrals, cartesian=None, central_atom_indices=None, no_omega=False):
 
     if not tf.is_numeric_tensor(dihedrals):
         dihedrals = tf.convert_to_tensor(dihedrals)
@@ -145,9 +145,89 @@ def dihedrals_to_cartesian_tf(dihedrals, cartesian=None, central_atom_indices=No
                       rotation_matrix(axis, dihedrals[:, i]))
         cartesian = tf.concat([cartesian[:, :cai[j+2]+1], rotated], axis=1)
 
-    if one_d:
-        cartesian = tf.squeeze(cartesian)
     return cartesian
+
+
+def dihedrals_to_cartesian_tf(dihedrals, cartesian):
+
+    if not tf.is_numeric_tensor(dihedrals):
+        dihedrals = tf.convert_to_tensor(dihedrals)
+
+    n = int(dihedrals.shape[-1])
+
+    if len(cartesian.get_shape()) == 2:
+        cartesian = tf.tile(tf.expand_dims(cartesian, axis=0), [tf.shape(dihedrals)[0], 1, 1])
+
+    split = int(int(cartesian.shape[1])/2)
+
+    cartesian_right = cartesian[:, split-1:]
+    dihedrals_right = dihedrals[:, split-1:]
+
+    cartesian_left = cartesian[:, split+1::-1]
+    dihedrals_left = dihedrals[:, split-2::-1]
+
+    new_cartesian_right = dihedral_to_cartesian_tf_one_way(dihedrals_right, cartesian_right)
+    new_cartesian_left = dihedral_to_cartesian_tf_one_way(dihedrals_left, cartesian_left)
+
+    new_cartesian = tf.concat([new_cartesian_left[:, ::-1], new_cartesian_right[:, 3:]], axis=1)
+
+    return new_cartesian
+
+
+def dihedral_to_cartesian_tf_one_way(dihedrals, cartesian):
+    n = int(dihedrals.shape[-1])
+    dihedrals = -dihedrals
+
+    rotated = cartesian[:, 1:]
+    collected_cartesians = [cartesian[:, 0:1]]
+    for i in range(n):
+        collected_cartesians.append(rotated[:, 0:1])
+        axis = rotated[:, 1] - rotated[:, 0]
+        axis /= tf.norm(axis, axis=1, keepdims=True)
+        offset = rotated[:, 1:2]
+        rotated = offset + tf.matmul(rotated[:, 1:] - offset, rotation_matrix(axis, dihedrals[:, i]))
+    collected_cartesians.append(rotated)
+    collected_cartesians = tf.concat(collected_cartesians, axis=1)
+    return collected_cartesians
+
+
+# def dihedral_to_cartesian_tf_one_way2(dihedrals, cartesian):
+#     n = int(dihedrals.shape[-1])
+#     dihedrals = -dihedrals
+#
+#     n_batch = tf.shape(cartesian)[0]
+#
+#     new_cartesians = tf.Variable(np.zeros((256, int(cartesian.shape[1]), 3), dtype=np.float32), trainable=False)
+#     new_cartesians = new_cartesians[:n_batch].assign(cartesian)
+#
+#     for i in range(n):
+#         axis = new_cartesians[:n_batch, i + 2] - new_cartesians[:n_batch, i + 1]
+#         axis /= tf.norm(axis, axis=1, keepdims=True)
+#         new_cartesians[:n_batch, i + 3:].assign(new_cartesians[:n_batch, i + 2:i + 3] +
+#                                          tf.matmul(new_cartesians[:n_batch, i + 3:] - new_cartesians[:n_batch, i + 2:i + 3],
+#                                                    rotation_matrix(axis, dihedrals[:, i])))
+#     return new_cartesians[:n_batch]
+
+# def dihedrals_to_cartesian_tf(dihedrals, cartesian):
+#
+#     if not tf.is_numeric_tensor(dihedrals):
+#         dihedrals = tf.convert_to_tensor(dihedrals)
+#
+#     n = int(dihedrals.shape[-1])
+#     dihedrals = -dihedrals
+#
+#     if len(cartesian.get_shape()) == 2:
+#         cartesian = tf.tile(tf.expand_dims(cartesian, axis=0), [tf.shape(dihedrals)[0], 1, 1])
+#
+#     for i in range(n):
+#         axis = cartesian[:, i + 2] - cartesian[:, i + 1]
+#         axis /= tf.norm(axis, axis=1, keepdims=True)
+#         rotated = cartesian[:, i + 2:i + 2 + 1] + \
+#                   tf.matmul(cartesian[:, i + 3:] - cartesian[:, i + 2:i + 3],
+#                             rotation_matrix(axis, dihedrals[:, i]))
+#         cartesian = tf.concat([cartesian[:, :i + 3], rotated], axis=1)
+#
+#     return cartesian
 
 
 def guess_sp2_atom(cartesians, atom_names, bond_partner, angle_to_previous, bond_length):

@@ -55,7 +55,7 @@ class ManualPath(object):
 
         self.modes = cycle([self._add_point_interp, self._free_draw])
         self.mode = next(self.modes)
-        self.click_cid = self.canvas.mpl_connect('key_press_event', self._on_key)
+        self.key_cid = self.canvas.mpl_connect('key_press_event', self._on_key)
         self.click_cid = self.canvas.mpl_connect('button_press_event', self._on_click)
         self.draw_cid = self.canvas.mpl_connect('draw_event', self._grab_background)
 
@@ -241,20 +241,9 @@ class PathGenerateDihedrals(ManualPath):
 
 
 class PathGenerateCartesians(ManualPath):
-    """
-    This class inherits from :py:class:`encodermap.plot.ManualPath`.
-    The points from a manually selected path are fed into the decoder part of a given autoencoder.
-    The output of the autoencoder is used as phi psi dihedral angles to reconstruct protein conformations
-    based on the protein structure given with pdb_path.
-    Three output files are written for each selected path:
-    points.npy, generated.npy and generated.pdb which contain:
-    the points on the selected path, the generated output of
-    the autoencoder, and the generated protein conformations respectively.
-    Keep in mind that backbone dihedrals are not sufficient to describe a protein conformation completely.
-    Usually the backbone is reconstructed well but all side chains are messed up.
-    """
 
-    def __init__(self, axe, autoencoder, mol_data, save_path=None, n_points=200, vmd_path=""):
+    def __init__(self, axe, autoencoder, mol_data, save_path=None, n_points=200, vmd_path="",
+                 align_reference=None, align_select="all"):
         """
 
         :param axe: matplotlib axe object for example from: fig, axe = plt.subplots()
@@ -270,6 +259,9 @@ class PathGenerateCartesians(ManualPath):
         self.autoencoder = autoencoder
         self.mol_data = mol_data
         self.vmd_path = vmd_path
+
+        self.align_reference = align_reference
+        self.align_select = align_select
 
         if save_path:
             self.save_path = save_path
@@ -288,7 +280,8 @@ class PathGenerateCartesians(ManualPath):
         np.save(os.path.join(current_save_path, "generated_dihedrals.npy"), dihedrals)
         np.save(os.path.join(current_save_path, "generated_cartesians.npy"), cartesians)
 
-        self.mol_data.write(current_save_path, cartesians, only_central=False)
+        self.mol_data.write(current_save_path, cartesians, only_central=False,
+                            align_reference=self.align_reference, align_select=self.align_select)
         if self.vmd_path:
             cmd = "{} {} {}".format(self.vmd_path,
                                     "generated.pdb",
@@ -301,13 +294,17 @@ class PathGenerateCartesians(ManualPath):
 
 
 class PathSelect(ManualPath):
-    def __init__(self, axe, data, autoencoder, mol_data, save_path=None, n_points=200, vmd_path=""):
+    def __init__(self, axe, data, autoencoder, mol_data, save_path=None, n_points=200, vmd_path="",
+                 align_reference=None, align_select="all"):
         super().__init__(axe, n_points=n_points)
 
         self.autoencoder = autoencoder
         self.mol_data = mol_data
         self.vmd_path = vmd_path
         self.data = data
+
+        self.align_reference = align_reference
+        self.align_select = align_select
 
         if save_path:
             self.save_path = save_path
@@ -320,9 +317,11 @@ class PathSelect(ManualPath):
         indices = np.nonzero(Path(points).contains_points(self.data))[0]
         self.axe.scatter(self.data[indices, 0], self.data[indices, 1])
         self.axe.plot(points[:, 0], points[:, 1], linestyle="", marker=".")
+        np.save(os.path.join(current_save_path, "points"), self.data[indices, :])
         np.save(os.path.join(current_save_path, "indices"), indices)
 
-        self.mol_data.write(current_save_path, self.mol_data.cartesians[indices], only_central=False)
+        self.mol_data.write(current_save_path, self.mol_data.cartesians[indices], only_central=False,
+                            align_reference=self.align_reference, align_select=self.align_select)
         if self.vmd_path:
             cmd = "{} {} {}".format(self.vmd_path,
                                     "generated.pdb",
