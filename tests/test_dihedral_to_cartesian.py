@@ -38,59 +38,6 @@ def set_axes_equal(ax):
 
 
 class TestDihedralToCartesianTf(tf.test.TestCase):
-    def test_straight_to_helix(self):
-        phi = (57.8 / 180) * pi + pi
-        psi = (47.0 / 180) * pi + pi
-
-        omega = 0
-        dihedrals = [phi, psi, omega]*10
-        result = [[0., 0., 0., ],
-                  [1., 0., 0.],
-                  [1.33166722, 0.94339645, 0.],
-                  [0.96741215, 1.42302374, 0.79829563],
-                  [1.08880021, 0.85355615, 1.61129723],
-                  [0.72454514, 1.33318344, 2.40959286],
-                  [-0.23997373, 1.54789329, 2.25596008],
-                  [-0.70886876, 0.73651815, 1.90695029],
-                  [-1.67338763, 0.951228, 1.75331751],
-                  [-1.74499922, 1.71664339, 1.11377778],
-                  [-1.14157263, 1.55412119, 0.33309675],
-                  [-1.21318422, 2.31953658, -0.30644299],
-                  [-0.97755207, 3.16914765, 0.16540288],
-                  [-0.13573978, 3.03560281, 0.68839222],
-                  [0.09989237, 3.88521388, 1.16023808],
-                  [-0.65820911, 4.15648941, 1.75327411],
-                  [-0.96694806, 3.3645823, 2.28011695],
-                  [-1.72504954, 3.63585784, 2.87315298],
-                  [-2.46428712, 4.01272662, 2.31503316],
-                  [-2.63384221, 3.40789298, 1.53694105],
-                  [-3.37307979, 3.78476176, 0.97882123],
-                  [-3.12477419, 4.70531417, 0.6772792],
-                  [-2.18945319, 4.69745201, 0.32356631],
-                  [-1.94114759, 5.61800442, 0.02202428],
-                  [-2.03578205, 6.25454616, 0.7874385],
-                  [-1.60222551, 5.86370596, 1.59939456],
-                  [-1.69685998, 6.50024771, 2.36480878],
-                  [-2.66649702, 6.68630791, 2.52350853],
-                  [-3.17315552, 5.82417585, 2.52855474],
-                  [-4.14279257, 6.01023606, 2.68725449],
-                  [-4.48234517, 6.62813877, 1.97809986],
-                  [-4.17869445, 6.30364579, 1.08227588],
-                  [-4.51824706, 6.92154852, 0.37312124]]
-
-        with self.test_session():
-            cartesians = em.dihedrals_to_cartesian_tf(dihedrals).eval()
-
-            # import matplotlib.pyplot as plt
-            # from mpl_toolkits.mplot3d import Axes3D
-            # fig = plt.figure()
-            # ax = fig.add_subplot(111, projection='3d')
-            # ax.plot(*np.array(result).T)
-            # ax.plot(*np.array(cartesians).T)
-            # set_axes_equal(ax)
-            # plt.show()
-
-            self.assertAllClose(result, cartesians, atol=1e-4)
 
     def test_straight_to_helix_array(self):
         phi = (+57.8 / 180) * pi + pi
@@ -132,7 +79,18 @@ class TestDihedralToCartesianTf(tf.test.TestCase):
                   [-4.51824706, 6.92154852, 0.37312124]]]*10, dtype=np.float32)
 
         with self.test_session():
-            self.assertAllClose(result, em.dihedrals_to_cartesian_tf(dihedrals).eval(), atol=1e-4)
+            cartesians = em.dihedrals_to_cartesian_tf(dihedrals,
+                                                      tf.constant(em.straight_tetrahedral_chain(33))).eval()
+            # self.assertAllClose(result, cartesians, atol=1e-4)
+
+        import matplotlib.pyplot as plt
+        from mpl_toolkits.mplot3d import Axes3D
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        ax.plot(*np.array(result[0]).T)
+        ax.plot(*np.array(cartesians[0]).T)
+        set_axes_equal(ax)
+        plt.show()
 
     def test_straight_tetrahedral_chain_with_bond_lenght(self):
         result = [[0.       , 0.       , 0.       ],
