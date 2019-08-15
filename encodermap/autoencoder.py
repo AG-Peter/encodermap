@@ -281,7 +281,10 @@ class Autoencoder:
         :return:
         """
         self.sess.close()
-        tf_ops.dismantle_graph(self.graph)
+        try:
+            tf_ops.dismantle_graph(self.graph)  # not implemented in older versions of tensorflow
+        except AttributeError:
+            pass
 
     def __enter__(self):
         return self

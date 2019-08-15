@@ -2,6 +2,7 @@ import tensorflow as tf
 from math import pi
 import os
 import numpy as np
+from tensorboard.backend.event_processing.event_accumulator import EventAccumulator
 
 
 def add_layer_summaries(layer):
@@ -286,3 +287,10 @@ def potential_energy(angles, dihedrals, distances):
     energies = tf.where(distances < 2, tf.minimum(10-distances, (1/distances)**12), tf.zeros(tf.shape(distances)))
     energy += tf.reduce_mean(tf.reduce_sum(energies, axis=1))
     return energy
+
+
+def read_from_log(run_path, names):
+    ea = EventAccumulator(run_path)
+    ea.Reload()
+    results = [np.array(ea.Scalars(name)) for name in names]
+    return results

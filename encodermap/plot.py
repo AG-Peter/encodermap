@@ -371,6 +371,7 @@ def distance_histogram(data, periodicity, sigmoid_parameters, axes=None, low_d_m
     axes[0].set_ylim((0, 1))
     axes[0].set_zorder(axe2.get_zorder() + 1)
     axes[0].patch.set_visible(False)
+    axes[0].set_title("high-d")
 
     x = np.linspace(0, low_d_max, 1000)
     y = sigmoid(x, *sigmoid_parameters[3:])
@@ -384,10 +385,11 @@ def distance_histogram(data, periodicity, sigmoid_parameters, axes=None, low_d_m
     axes[1].legend()
     axes[1].set_xlabel("distance")
     axes[1].set_ylim((0, 1))
+    axes[1].set_title("low-d")
     for i in range(len(edges)):
         if edges_x[i] != edges_x[-1]:
             axes[1].annotate('', xy=(edges[i], 0), xytext=(edges_x[i], 0), xycoords=axes[0].transData,
                              textcoords=axes[1].transData,
                              arrowprops=dict(facecolor='black', arrowstyle='-', clip_on=False))
-
+    axes[0].figure.tight_layout()
     return axes

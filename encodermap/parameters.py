@@ -124,7 +124,7 @@ class ADCParameters(Parameters):
         self.cartesian_pwd_stop = None
         self.cartesian_pwd_step = None
 
-        self.angle_cost_scale = 1
+        self.angle_cost_scale = 0
         self.angle_cost_variant = "mean_abs"
         self.angle_cost_reference = 1
 
@@ -132,15 +132,15 @@ class ADCParameters(Parameters):
         self.dihedral_cost_variant = "mean_abs"
         self.dihedral_cost_reference = 1
 
-        self.cartesian_cost_scale = 0.01
+        self.cartesian_cost_scale = 1
         self.cartesian_cost_scale_soft_start = (None, None)  # begin, end
         self.cartesian_cost_variant = "mean_abs"
         self.cartesian_cost_reference = 1
 
         self.cartesian_dist_sig_parameters = self.dist_sig_parameters
-        self.cartesian_distance_cost_scale = 500
+        self.cartesian_distance_cost_scale = 1
 
-        self.use_backbone_angles = True
+        self.use_backbone_angles = False
 
         self.auto_cost_scale = None
         self.distance_cost_scale = None
