@@ -9,6 +9,7 @@ from MDAnalysis.analysis.dihedrals import Dihedral
 from MDAnalysis.lib.distances import calc_angles
 from MDAnalysis.analysis.align import AlignTraj
 from .misc import create_dir
+from collections import OrderedDict
 
 
 class Positions(AnalysisBase):
@@ -83,7 +84,7 @@ class MolData:
         except FileNotFoundError:
             print("Calculating dihedrals...")
             dihedral_atoms = []
-            for i in set(self.sorted_atoms.resnums):
+            for i in OrderedDict.fromkeys(self.sorted_atoms.resnums):
                 phi_atoms = (self.universe.select_atoms("resnum {} and name C".format(i - 1)) +
                              self.universe.select_atoms("resnum {} and (name N or name CA or name C)".format(i)))
                 if len(phi_atoms) == 4:
