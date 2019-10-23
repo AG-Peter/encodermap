@@ -85,18 +85,18 @@ class MolData:
             print("Calculating dihedrals...")
             dihedral_atoms = []
             for i in OrderedDict.fromkeys(self.sorted_atoms.resnums):
-                phi_atoms = (self.universe.select_atoms("resnum {} and name C".format(i - 1)) +
-                             self.universe.select_atoms("resnum {} and (name N or name CA or name C)".format(i)))
+                phi_atoms = (self.sorted_atoms.select_atoms("resnum {} and name C".format(i - 1)) +
+                             self.sorted_atoms.select_atoms("resnum {} and (name N or name CA or name C)".format(i)))
                 if len(phi_atoms) == 4:
                     dihedral_atoms.append(phi_atoms.dihedral)
 
-                psi_atoms = (self.universe.select_atoms("resnum {} and (name N or name CA or name C)".format(i)) +
-                             self.universe.select_atoms("resnum {} and name N".format(i + 1)))
+                psi_atoms = (self.sorted_atoms.select_atoms("resnum {} and (name N or name CA or name C)".format(i)) +
+                             self.sorted_atoms.select_atoms("resnum {} and name N".format(i + 1)))
                 if len(psi_atoms) == 4:
                     dihedral_atoms.append(psi_atoms.dihedral)
 
-                omega_atoms = (self.universe.select_atoms("resnum {} and (name CA or name C)".format(i)) +
-                             self.universe.select_atoms("resnum {} and (name N or name CA)".format(i + 1)))
+                omega_atoms = (self.sorted_atoms.select_atoms("resnum {} and (name CA or name C)".format(i)) +
+                             self.sorted_atoms.select_atoms("resnum {} and (name N or name CA)".format(i + 1)))
                 if len(psi_atoms) == 4:
                     dihedral_atoms.append(omega_atoms.dihedral)
 
@@ -136,6 +136,10 @@ class MolData:
             if cache_path:
                 np.save(os.path.join(create_dir(cache_path), "lengths.npy"), self.lengths)
 
+        assert self.lengths.shape[1] == self.central_cartesians.shape[1] - 1
+        assert self.angles.shape[1] == self.central_cartesians.shape[1] - 2
+        assert self.dihedrals.shape[1] == self.central_cartesians.shape[1] - 3
+
     def __iadd__(self, other):
         assert np.all(self.sorted_atoms.names == other.sorted_atoms.names)
         self.cartesians = np.concatenate([self.cartesians, other.cartesians], axis=0)
@@ -153,7 +157,8 @@ class MolData:
                      "CA": 3,
                      "C": 5,
                      "O": 6,
-                     "OXT": 7
+                     "OXT": 7,
+                     "O1": 8
                      }
         try:
             result = positions[atom.name]
