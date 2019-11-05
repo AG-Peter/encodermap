@@ -269,4 +269,4 @@ def distance_histogram(data, periodicity, sigmoid_parameters, axe=None):
     axe.set_ylim((0, 1))
     axe.set_zorder(axe2.get_zorder() + 1)
     axe.patch.set_visible(False)
-    return axe
+    return axe, axe2
