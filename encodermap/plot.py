@@ -336,13 +336,14 @@ class PathSelect(ManualPath):
 def distance_histogram(data, periodicity, sigmoid_parameters, axes=None, low_d_max=5):
     """
     Plots the histogram of all pairwise distances in the data.
-    If sigmoid parameters are given it also shows the sigmoid function and its normalized derivative.
+    It also shows the sigmoid function and its normalized derivative.
 
     :param data: each row should contain a point in a number_of _columns dimensional space.
     :param periodicity: Periodicity of the data. use float("inf") for non periodic data
     :param sigmoid_parameters: tuple (sigma, a, b)
-    :param axe: matplotlib axe object ore None. If None a new figure is generated.
-    :return:
+    :param axes: Array like structure with two matplotlib axe objects ore None. If None a new figure is generated.
+    :param low_d_max: upper limit for plotting the low_d sigmoid
+    :return: matplotlib axe objects
     """
     vecs = periodic_distance_np(np.expand_dims(data, axis=1), np.expand_dims(data, axis=0), periodicity)
     dists = np.linalg.norm(vecs, axis=2)
@@ -392,4 +393,4 @@ def distance_histogram(data, periodicity, sigmoid_parameters, axes=None, low_d_m
                              textcoords=axes[1].transData,
                              arrowprops=dict(facecolor='black', arrowstyle='-', clip_on=False))
     axes[0].figure.tight_layout()
-    return axes
+    return axes[0], axe2, axes[1]

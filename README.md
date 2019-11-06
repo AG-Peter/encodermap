@@ -9,7 +9,7 @@ You can find more details in this article:
 [Lemke, Tobias, and Christine Peter. "EncoderMap: Dimensionality Reduction and Generation of Molecule Conformations." Journal of chemical theory and computation 15.2 (2019): 1209-1215.](https://pubs.acs.org/doi/abs/10.1021/acs.jctc.8b00975)
 
 ## Installation
-EncoderMap requires TensorFlow to be installed.
+EncoderMap requires TensorFlow 1.x to be installed. (TensorFlow 2 is not yet supported)
 Follow the [instructions on the TensorFlow website](https://www.tensorflow.org/install/pip) to install it 
 either in the cpu or gpu version.
 Then install EncoderMap with pip.
