@@ -60,7 +60,7 @@ pwd = em.misc.pairwise_dist(
     moldata.central_cartesians[::1000, parameters.cartesian_pwd_start::parameters.cartesian_pwd_step], flat=True)
 with tf.Session() as sess:
     pwd = sess.run(pwd)
-axe = em.plot.distance_histogram(pwd, float("inf"), parameters.cartesian_dist_sig_parameters)
+axes = em.plot.distance_histogram(pwd, float("inf"), parameters.cartesian_dist_sig_parameters)
 plt.show()
 # somehow matplotlib messes with this setting and causes problems in tensorflow
 locale.setlocale(locale.LC_NUMERIC, "en_US.UTF-8")
