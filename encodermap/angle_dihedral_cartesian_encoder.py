@@ -9,8 +9,29 @@ from math import pi
 
 
 class AngleDihedralCartesianEncoder(Autoencoder):
+    """
+    This EncoderMap variant is specially designed for protein conformations.
+    During the training, the cartesian conformations of the backbone chain are reconstructed from backbone angles and
+    dihedrals.
+    This allows for a more sophisticated comparison of input conformations and generated conformations and improves
+    the accuracy of generated conformations especially for large proteins.
+    We achieve this with the cartesian_cost where we compare pairwise distances between atoms in cartesian coordinates
+    in the input and generated conformations.
+    """
 
     def __init__(self, *args, **kwargs):
+        """
+        :param parameters: ADCParameters object as defined in :class:`.ADCParameters`
+
+        :param train_data: the training data as a :class:`.MolData` object
+
+        :param validation_data: not yet supported
+
+        :param checkpoint_path: If a checkpoint path is given, values like neural network weights stored in this
+                                checkpoint will be restored.
+
+        :param read_only: if True, no output is writen
+        """
         super(AngleDihedralCartesianEncoder, self).__init__(*args, **kwargs)
         assert isinstance(self.p, ADCParameters)
         assert isinstance(self.train_moldata, MolData)

@@ -82,6 +82,8 @@ class Parameters(ParametersFramework):
         in the following order (sig_h, a_h, b_h, sig_l, a_l, b_l)
     :ivar distance_cost_scale: Adjusts how much the distance based metric is weighted in the cost function.
     :ivar auto_cost_scale: Adjusts how much the autoencoding cost is weighted in the cost function.
+    :ivar auto_cost_variant: defines how the auto cost is calculated. Must be one of: "mean_square", "mean_abs",
+        "mean_norm"
     :ivar center_cost_scale: Adjusts how much the centering cost is weighted in the cost function.
     :ivar l2_reg_constant: Adjusts how much the l2 regularisation is weighted in the cost function.
 
@@ -117,6 +119,46 @@ class Parameters(ParametersFramework):
 
 
 class ADCParameters(Parameters):
+    """
+    This is the parameter object for the AngleDihedralCartesianEncoder. It holds all the parameters that the Parameters
+    object includes, plus the following parameters:
+
+
+    :ivar cartesian_pwd_start: index of the first atom to use for the pairwise distance calculation
+    :ivar cartesian_pwd_stop: index of the last atom to use for the pairwise distance calculation
+    :ivar cartesian_pwd_step: step for the calculation of paiwise distances. E.g. for a chain of atoms
+        N-C_a-C-N-C_a-C... cartesian_pwd_start=1 and cartesian_pwd_step=3 will result in using all C-alpha atoms for the
+        pairwise distance calculation.
+
+    :ivar use_backbone_angles: Allows to define whether backbone bond angles should be learned (True) or if instead mean
+        values should be used to generate conformations (False)
+    :ivar angle_cost_scale: Adjusts how much the angle cost is weighted in the cost function.
+    :ivar angle_cost_variant: Defines how the angle cost is calculated. Must be one of: "mean_square", "mean_abs",
+        "mean_norm"
+    :ivar angle_cost_reference: Can be used to normalize the angle cost with the cost of same reference model (dummy)
+
+    :ivar dihedral_cost_scale: Adjusts how much the dihedral cost is weighted in the cost function.
+    :ivar dihedral_cost_variant: Defines how the dihedral cost is calculated. Must be one of: "mean_square", "mean_abs",
+        "mean_norm"
+    :ivar dihedral_cost_reference: Can be used to normalize the dihedral cost with the cost of same reference model
+        (dummy)
+
+    :ivar cartesian_cost_scale: Adjusts how much the cartesian cost is weighted in the cost function.
+    :ivar cartesian_cost_scale_soft_start: Allows to slowly turn on the cartesian cost. Must be a tuple with
+        (begin, ende) or (None, None) If begin and end are given, cartesian_cost_scale will be increased linearly in the
+        given range
+    :ivar cartesian_cost_variant: Defines how the cartesian cost is calculated. Must be one of: "mean_square",
+        "mean_abs", "mean_norm"
+    :ivar cartesian_cost_reference: Can be used to normalize the cartesian cost with the cost of same reference model
+        (dummy)
+
+    :ivar cartesian_dist_sig_parameters: Parameters for the sigmoid functions applied to the high- and low-dimensional
+        distances in the following order (sig_h, a_h, b_h, sig_l, a_l, b_l)
+    :ivar cartesian_distance_cost_scale: Adjusts how much the cartesian distance cost is weighted in the cost function.
+
+
+
+    """
     def __init__(self):
         super(ADCParameters, self).__init__()
 
@@ -124,6 +166,7 @@ class ADCParameters(Parameters):
         self.cartesian_pwd_stop = None
         self.cartesian_pwd_step = None
 
+        self.use_backbone_angles = False
         self.angle_cost_scale = 0
         self.angle_cost_variant = "mean_abs"
         self.angle_cost_reference = 1
@@ -140,7 +183,6 @@ class ADCParameters(Parameters):
         self.cartesian_dist_sig_parameters = self.dist_sig_parameters
         self.cartesian_distance_cost_scale = 1
 
-        self.use_backbone_angles = False
 
         self.auto_cost_scale = None
         self.distance_cost_scale = None

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>misc &mdash; EncoderMap 0.0.10 documentation</title>
+  <title>misc &mdash; EncoderMap 0.0.11 documentation</title>
   
 
   
@@ -30,8 +30,8 @@
   
 
   
-    <link rel="top" title="EncoderMap 0.0.10 documentation" href="index.html"/>
-        <link rel="prev" title="dihedral_backmapping" href="dihedral_backmapping.html"/> 
+    <link rel="top" title="EncoderMap 0.0.11 documentation" href="index.html"/>
+        <link rel="prev" title="backmapping" href="backmapping.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0.0.10
+                0.0.11
               </div>
             
           
@@ -82,9 +82,11 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="encodermap.html">EncoderMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angle_dihedral_cartesian_encoder.html">AngleDihedralCartesianEncoder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moldata.html">MolData</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parameters.html">parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="plot.html">plot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dihedral_backmapping.html">dihedral_backmapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backmapping.html">backmapping</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">misc</a></li>
 </ul>
 
@@ -191,25 +193,8 @@
 
 <dl class="function">
 <dt id="encodermap.misc.pairwise_dist">
-<code class="descclassname">encodermap.misc.</code><code class="descname">pairwise_dist</code><span class="sig-paren">(</span><em>positions</em>, <em>squared=False</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.misc.pairwise_dist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the 2D matrix of distances between all the embeddings.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>positions</strong> &#8211; tensor of shape (batch_size, position_dim)</li>
-<li><strong>squared</strong> &#8211; Boolean. If true, output is the pairwise squared euclidean distance matrix.
-If false, output is the pairwise euclidean distance matrix.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the pairwise_distances as a tensor of shape (batch_size, batch_size)</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descclassname">encodermap.misc.</code><code class="descname">pairwise_dist</code><span class="sig-paren">(</span><em>positions</em>, <em>squared=False</em>, <em>flat=False</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.misc.pairwise_dist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="function">
 <dt id="encodermap.misc.pairwise_dist_periodic">
@@ -259,8 +244,23 @@ If false, output is the pairwise euclidean distance matrix.</li>
 </dd></dl>
 
 <dl class="function">
+<dt id="encodermap.misc.potential_energy">
+<code class="descclassname">encodermap.misc.</code><code class="descname">potential_energy</code><span class="sig-paren">(</span><em>angles</em>, <em>dihedrals</em>, <em>distances</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.misc.potential_energy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="encodermap.misc.random_on_cube_edges">
 <code class="descclassname">encodermap.misc.</code><code class="descname">random_on_cube_edges</code><span class="sig-paren">(</span><em>n_points</em>, <em>sigma=0</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.misc.random_on_cube_edges" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="encodermap.misc.read_from_log">
+<code class="descclassname">encodermap.misc.</code><code class="descname">read_from_log</code><span class="sig-paren">(</span><em>run_path</em>, <em>names</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.misc.read_from_log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="encodermap.misc.rotation_matrix">
+<code class="descclassname">encodermap.misc.</code><code class="descname">rotation_matrix</code><span class="sig-paren">(</span><em>axis_unit_vec</em>, <em>angle</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.misc.rotation_matrix" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -362,7 +362,7 @@ if backup is true the original file is renamed to filename.bak before it is over
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="dihedral_backmapping.html" class="btn btn-neutral" title="dihedral_backmapping" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="backmapping.html" class="btn btn-neutral" title="backmapping" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -393,7 +393,7 @@ if backup is true the original file is renamed to filename.bak before it is over
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.10',
+            VERSION:'0.0.11',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

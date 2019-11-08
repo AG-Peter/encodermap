@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>plot &mdash; EncoderMap 0.0.10 documentation</title>
+  <title>plot &mdash; EncoderMap 0.0.11 documentation</title>
   
 
   
@@ -30,8 +30,8 @@
   
 
   
-    <link rel="top" title="EncoderMap 0.0.10 documentation" href="index.html"/>
-        <link rel="next" title="dihedral_backmapping" href="dihedral_backmapping.html"/>
+    <link rel="top" title="EncoderMap 0.0.11 documentation" href="index.html"/>
+        <link rel="next" title="backmapping" href="backmapping.html"/>
         <link rel="prev" title="parameters" href="parameters.html"/> 
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.10
+                0.0.11
               </div>
             
           
@@ -83,9 +83,11 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="encodermap.html">EncoderMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angle_dihedral_cartesian_encoder.html">AngleDihedralCartesianEncoder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moldata.html">MolData</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parameters.html">parameters</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">plot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dihedral_backmapping.html">dihedral_backmapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backmapping.html">backmapping</a></li>
 <li class="toctree-l1"><a class="reference internal" href="misc.html">misc</a></li>
 </ul>
 
@@ -188,6 +190,44 @@ You can overwrite the use_points method to do what ever you want with the points
 </dd></dl>
 
 <dl class="class">
+<dt id="encodermap.plot.PathGenerateCartesians">
+<em class="property">class </em><code class="descclassname">encodermap.plot.</code><code class="descname">PathGenerateCartesians</code><span class="sig-paren">(</span><em>axe</em>, <em>autoencoder</em>, <em>mol_data</em>, <em>save_path=None</em>, <em>n_points=200</em>, <em>vmd_path=''</em>, <em>align_reference=None</em>, <em>align_select='all'</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.PathGenerateCartesians" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class inherits from <a class="reference internal" href="#encodermap.plot.ManualPath" title="encodermap.plot.ManualPath"><code class="xref py py-class docutils literal"><span class="pre">encodermap.plot.ManualPath</span></code></a>.
+It is used to select paths in a 2d map and to generate conformations for these paths with a
+AngleDihedralCartesianEncoder.</p>
+<dl class="method">
+<dt id="encodermap.plot.PathGenerateCartesians.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>axe</em>, <em>autoencoder</em>, <em>mol_data</em>, <em>save_path=None</em>, <em>n_points=200</em>, <em>vmd_path=''</em>, <em>align_reference=None</em>, <em>align_select='all'</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.PathGenerateCartesians.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>axe</strong> &#8211; matplotlib axe object for example from: fig, axe = plt.subplots()</li>
+<li><strong>autoencoder</strong> &#8211; <a class="reference internal" href="angle_dihedral_cartesian_encoder.html#encodermap.AngleDihedralCartesianEncoder" title="encodermap.AngleDihedralCartesianEncoder"><code class="xref py py-class docutils literal"><span class="pre">AngleDihedralCartesianEncoder</span></code></a></li>
+<li><strong>mol_data</strong> &#8211; <a class="reference internal" href="moldata.html#encodermap.MolData" title="encodermap.MolData"><code class="xref py py-class docutils literal"><span class="pre">MolData</span></code></a></li>
+<li><strong>save_path</strong> &#8211; Path where outputs should be written</li>
+<li><strong>n_points</strong> &#8211; Number of points distributed on the selected path.</li>
+<li><strong>vmd_path</strong> &#8211; If a path to vmd is given, the generated conformations will be directly opened in vmd.</li>
+<li><strong>align_reference</strong> &#8211; Allows to allign the generated conformations according to some reference.
+The reference should be given as MDAnalysis atomgroup</li>
+<li><strong>align_select</strong> &#8211; Allows to select which atoms should be used for the alignment. e.g. &#8220;resid 5:60&#8221;
+default is &#8220;all&#8221;. Have a look at the MDAnalysis selection syntax for more details.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encodermap.plot.PathGenerateCartesians.use_points">
+<code class="descname">use_points</code><span class="sig-paren">(</span><em>points</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.PathGenerateCartesians.use_points" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="encodermap.plot.PathGenerateDihedrals">
 <em class="property">class </em><code class="descclassname">encodermap.plot.</code><code class="descname">PathGenerateDihedrals</code><span class="sig-paren">(</span><em>axe</em>, <em>autoencoder</em>, <em>pdb_path</em>, <em>save_path=None</em>, <em>n_points=200</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.PathGenerateDihedrals" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class inherits from <a class="reference internal" href="#encodermap.plot.ManualPath" title="encodermap.plot.ManualPath"><code class="xref py py-class docutils literal"><span class="pre">encodermap.plot.ManualPath</span></code></a>.
@@ -229,11 +269,26 @@ First all phi angles then all psi angles.</li>
 
 </dd></dl>
 
+<dl class="class">
+<dt id="encodermap.plot.PathSelect">
+<em class="property">class </em><code class="descclassname">encodermap.plot.</code><code class="descname">PathSelect</code><span class="sig-paren">(</span><em>axe</em>, <em>data</em>, <em>autoencoder</em>, <em>mol_data</em>, <em>save_path=None</em>, <em>n_points=200</em>, <em>vmd_path=''</em>, <em>align_reference=None</em>, <em>align_select='all'</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.PathSelect" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="encodermap.plot.PathSelect.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>axe</em>, <em>data</em>, <em>autoencoder</em>, <em>mol_data</em>, <em>save_path=None</em>, <em>n_points=200</em>, <em>vmd_path=''</em>, <em>align_reference=None</em>, <em>align_select='all'</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.PathSelect.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="encodermap.plot.PathSelect.use_points">
+<code class="descname">use_points</code><span class="sig-paren">(</span><em>points</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.PathSelect.use_points" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="function">
 <dt id="encodermap.plot.distance_histogram">
-<code class="descclassname">encodermap.plot.</code><code class="descname">distance_histogram</code><span class="sig-paren">(</span><em>data</em>, <em>periodicity</em>, <em>sigmoid_parameters</em>, <em>axe=None</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.distance_histogram" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">encodermap.plot.</code><code class="descname">distance_histogram</code><span class="sig-paren">(</span><em>data</em>, <em>periodicity</em>, <em>sigmoid_parameters</em>, <em>axes=None</em>, <em>low_d_max=5</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.distance_histogram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots the histogram of all pairwise distances in the data.
-If sigmoid parameters are given it also shows the sigmoid function and its normalized derivative.</p>
+It also shows the sigmoid function and its normalized derivative.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -242,11 +297,12 @@ If sigmoid parameters are given it also shows the sigmoid function and its norma
 <li><strong>data</strong> &#8211; each row should contain a point in a number_of _columns dimensional space.</li>
 <li><strong>periodicity</strong> &#8211; Periodicity of the data. use float(&#8220;inf&#8221;) for non periodic data</li>
 <li><strong>sigmoid_parameters</strong> &#8211; tuple (sigma, a, b)</li>
-<li><strong>axe</strong> &#8211; matplotlib axe object ore None. If None a new figure is generated.</li>
+<li><strong>axes</strong> &#8211; Array like structure with two matplotlib axe objects ore None. If None a new figure is generated.</li>
+<li><strong>low_d_max</strong> &#8211; upper limit for plotting the low_d sigmoid</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">matplotlib axe objects</p>
 </td>
 </tr>
 </tbody>
@@ -262,7 +318,7 @@ If sigmoid parameters are given it also shows the sigmoid function and its norma
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="dihedral_backmapping.html" class="btn btn-neutral float-right" title="dihedral_backmapping" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="backmapping.html" class="btn btn-neutral float-right" title="backmapping" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="parameters.html" class="btn btn-neutral" title="parameters" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -296,7 +352,7 @@ If sigmoid parameters are given it also shows the sigmoid function and its norma
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.10',
+            VERSION:'0.0.11',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

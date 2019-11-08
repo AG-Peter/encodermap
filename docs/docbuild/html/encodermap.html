@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>EncoderMap &mdash; EncoderMap 0.0.10 documentation</title>
+  <title>EncoderMap &mdash; EncoderMap 0.0.11 documentation</title>
   
 
   
@@ -30,8 +30,8 @@
   
 
   
-    <link rel="top" title="EncoderMap 0.0.10 documentation" href="index.html"/>
-        <link rel="next" title="parameters" href="parameters.html"/>
+    <link rel="top" title="EncoderMap 0.0.11 documentation" href="index.html"/>
+        <link rel="next" title="AngleDihedralCartesianEncoder" href="angle_dihedral_cartesian_encoder.html"/>
         <link rel="prev" title="Documentation for EncoderMap" href="index.html"/> 
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.10
+                0.0.11
               </div>
             
           
@@ -83,9 +83,11 @@
             
                 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="">EncoderMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angle_dihedral_cartesian_encoder.html">AngleDihedralCartesianEncoder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moldata.html">MolData</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parameters.html">parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="plot.html">plot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dihedral_backmapping.html">dihedral_backmapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backmapping.html">backmapping</a></li>
 <li class="toctree-l1"><a class="reference internal" href="misc.html">misc</a></li>
 </ul>
 
@@ -135,24 +137,25 @@
 <h1>EncoderMap<a class="headerlink" href="#encodermap" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="encodermap.EncoderMap">
-<em class="property">class </em><code class="descclassname">encodermap.</code><code class="descname">EncoderMap</code><span class="sig-paren">(</span><em>parameters</em>, <em>train_data=None</em>, <em>validation_data=None</em>, <em>checkpoint_path=None</em>, <em>n_inputs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.EncoderMap" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">encodermap.</code><code class="descname">EncoderMap</code><span class="sig-paren">(</span><em>parameters</em>, <em>train_data=None</em>, <em>validation_data=None</em>, <em>checkpoint_path=None</em>, <em>n_inputs=None</em>, <em>read_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.EncoderMap" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="encodermap.EncoderMap.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>parameters</em>, <em>train_data=None</em>, <em>validation_data=None</em>, <em>checkpoint_path=None</em>, <em>n_inputs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.EncoderMap.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>parameters</em>, <em>train_data=None</em>, <em>validation_data=None</em>, <em>checkpoint_path=None</em>, <em>n_inputs=None</em>, <em>read_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.EncoderMap.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>parameters</strong> &#8211; Parameters object as defined in <a class="reference internal" href="parameters.html#encodermap.parameters.Parameters" title="encodermap.parameters.Parameters"><code class="xref py py-class docutils literal"><span class="pre">encodermap.parameters.Parameters</span></code></a></li>
+<li><strong>parameters</strong> &#8211; Parameters object as defined in <a class="reference internal" href="parameters.html#encodermap.parameters.Parameters" title="encodermap.parameters.Parameters"><code class="xref py py-class docutils literal"><span class="pre">Parameters</span></code></a></li>
 <li><strong>train_data</strong> &#8211; 2d numpy array where each row is treated as a training point</li>
 <li><strong>validation_data</strong> &#8211; A 2d numpy array. This data will only be used to calculate a validation error during
 training. It will not be used for training.</li>
-<li><strong>checkpoint_path</strong> &#8211; If a checkpoint path is given values like neural network weights stored in this
+<li><strong>checkpoint_path</strong> &#8211; If a checkpoint path is given, values like neural network weights stored in this
 checkpoint will be restored.</li>
 <li><strong>n_inputs</strong> &#8211; If no train_data is given, for example when an already trained network is restored from a
 checkpoint, the number of of inputs needs to be given. This should be equal to the number of
 columns of the train_data the network was originally trained with.</li>
+<li><strong>read_only</strong> &#8211; if True, no output is writen</li>
 </ul>
 </td>
 </tr>
@@ -208,6 +211,11 @@ equal to the number of neurons in the bottleneck layer of the autoencoder.</td>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="encodermap.EncoderMap.step">
+<code class="descname">step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.EncoderMap.step" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="encodermap.EncoderMap.train">
 <code class="descname">train</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.EncoderMap.train" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train the autoencoder as specified in the parameters object.</p>
@@ -224,7 +232,7 @@ equal to the number of neurons in the bottleneck layer of the autoencoder.</td>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="parameters.html" class="btn btn-neutral float-right" title="parameters" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="angle_dihedral_cartesian_encoder.html" class="btn btn-neutral float-right" title="AngleDihedralCartesianEncoder" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="Documentation for EncoderMap" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -258,7 +266,7 @@ equal to the number of neurons in the bottleneck layer of the autoencoder.</td>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.10',
+            VERSION:'0.0.11',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

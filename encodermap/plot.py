@@ -241,18 +241,27 @@ class PathGenerateDihedrals(ManualPath):
 
 
 class PathGenerateCartesians(ManualPath):
+    """
+    This class inherits from :class:`encodermap.plot.ManualPath`.
+    It is used to select paths in a 2d map and to generate conformations for these paths with a
+    AngleDihedralCartesianEncoder.
+    """
 
     def __init__(self, axe, autoencoder, mol_data, save_path=None, n_points=200, vmd_path="",
                  align_reference=None, align_select="all"):
         """
 
         :param axe: matplotlib axe object for example from: fig, axe = plt.subplots()
-        :param autoencoder: :py:class:`encodermap.autoencoder.Autoencoder` which was trained on protein dihedral
-            angles. The dihedrals have to be order starting from the amino end.
-            First all phi angles then all psi angles.
-        :param pdb_path: Path to a protein data bank (pdb) file of the protein
+        :param autoencoder: :class:`.AngleDihedralCartesianEncoder`
+        :param mol_data: :class:`.MolData`
         :param save_path: Path where outputs should be written
         :param n_points: Number of points distributed on the selected path.
+        :param vmd_path: If a path to vmd is given, the generated conformations will be directly opened in vmd.
+        :param align_reference: Allows to allign the generated conformations according to some reference.
+            The reference should be given as MDAnalysis atomgroup
+        :param align_select: Allows to select which atoms should be used for the alignment. e.g. "resid 5:60"
+            default is "all". Have a look at the MDAnalysis selection syntax for more details.
+
         """
         super().__init__(axe, n_points=n_points)
 

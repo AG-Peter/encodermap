@@ -12,7 +12,9 @@ Contents:
    :maxdepth: 2
 
    encodermap.rst
+   angle_dihedral_cartesian_encoder.rst
+   moldata.rst
    parameters.rst
    plot.rst
-   dihedral_backmapping.rst
+   backmapping.rst
    misc.rst

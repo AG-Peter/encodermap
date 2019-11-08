@@ -53,7 +53,23 @@ class Angles(AnalysisBase):
 
 
 class MolData:
+    """
+    MolData is designed to extract and hold conformational information from trajectories.
+
+    :ivar cartesians: numpy array of the trajectory atom coordinates
+    :ivar central_cartesians: cartesian coordinates of the central backbone atoms (N-CA-C-N-CA-C...)
+    :ivar dihedrals: all backbone dihederals (phi, psi, omega)
+    :ivar angles: all bond angles of the central backbone atoms
+    :ivar lengths: all bond lengths between neighbouring central atoms
+    """
     def __init__(self, atom_group, cache_path="", start=None, stop=None, step=None,):
+        """
+        :param atom_group: MDAnalysis atom group
+        :param cache_path: Allows to define a path where the calculated variables can be cached.
+        :param start: first frame to analyze
+        :param stop: last frame to analyze
+        :param step: step of the analyzes
+        """
         self.universe = atom_group.universe
 
         self.sorted_atoms = self.universe.atoms[[atom.ix for atom in sorted(atom_group.atoms, key=self.sort_key)]]
@@ -167,6 +183,19 @@ class MolData:
         return atom.resnum, result
 
     def write(self, path, coordinates, name="generated", only_central=False, align_reference=None, align_select="all"):
+        """
+        Writes a trajectory for the given coordinates.
+
+        :param path: directory where to save the trajectory
+        :param coordinates: numpy array of xyz coordinates (atoms, frames, xyz)
+        :param name: filename (without extension)
+        :param only_central: if True only central atom coordinates are expected (N-Ca-C...)
+        :param align_reference: Allows to allign the generated conformations according to some reference.
+            The reference should be given as MDAnalysis atomgroup
+        :param align_select: Allows to select which atoms should be used for the alignment. e.g. "resid 5:60"
+            default is "all". Have a look at the MDAnalysis selection syntax for more details.
+        :return:
+        """
         coordinates = np.array(coordinates)
         if coordinates.ndim == 2:
             coordinates = np.expand_dims(coordinates, 0)

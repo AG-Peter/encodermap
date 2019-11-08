@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MolData &mdash; EncoderMap 0.0.11 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="EncoderMap 0.0.11 documentation" href="index.html"/>
+        <link rel="next" title="parameters" href="parameters.html"/>
+        <link rel="prev" title="AngleDihedralCartesianEncoder" href="angle_dihedral_cartesian_encoder.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> EncoderMap
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.11
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="encodermap.html">EncoderMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angle_dihedral_cartesian_encoder.html">AngleDihedralCartesianEncoder</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">MolData</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plot.html">plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backmapping.html">backmapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc.html">misc</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">EncoderMap</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>MolData</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/moldata.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="moldata">
+<h1>MolData<a class="headerlink" href="#moldata" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="encodermap.MolData">
+<em class="property">class </em><code class="descclassname">encodermap.</code><code class="descname">MolData</code><span class="sig-paren">(</span><em>atom_group</em>, <em>cache_path=''</em>, <em>start=None</em>, <em>stop=None</em>, <em>step=None</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.MolData" title="Permalink to this definition">¶</a></dt>
+<dd><p>MolData is designed to extract and hold conformational information from trajectories.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cartesians</strong> &#8211; numpy array of the trajectory atom coordinates</li>
+<li><strong>central_cartesians</strong> &#8211; cartesian coordinates of the central backbone atoms (N-CA-C-N-CA-C...)</li>
+<li><strong>dihedrals</strong> &#8211; all backbone dihederals (phi, psi, omega)</li>
+<li><strong>angles</strong> &#8211; all bond angles of the central backbone atoms</li>
+<li><strong>lengths</strong> &#8211; all bond lengths between neighbouring central atoms</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="encodermap.MolData.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>atom_group</em>, <em>cache_path=''</em>, <em>start=None</em>, <em>stop=None</em>, <em>step=None</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.MolData.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>atom_group</strong> &#8211; MDAnalysis atom group</li>
+<li><strong>cache_path</strong> &#8211; Allows to define a path where the calculated variables can be cached.</li>
+<li><strong>start</strong> &#8211; first frame to analyze</li>
+<li><strong>stop</strong> &#8211; last frame to analyze</li>
+<li><strong>step</strong> &#8211; step of the analyzes</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="encodermap.MolData.sort_key">
+<em class="property">static </em><code class="descname">sort_key</code><span class="sig-paren">(</span><em>atom</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.MolData.sort_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="encodermap.MolData.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>path</em>, <em>coordinates</em>, <em>name='generated'</em>, <em>only_central=False</em>, <em>align_reference=None</em>, <em>align_select='all'</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.MolData.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes a trajectory for the given coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> &#8211; directory where to save the trajectory</li>
+<li><strong>coordinates</strong> &#8211; numpy array of xyz coordinates (atoms, frames, xyz)</li>
+<li><strong>name</strong> &#8211; filename (without extension)</li>
+<li><strong>only_central</strong> &#8211; if True only central atom coordinates are expected (N-Ca-C...)</li>
+<li><strong>align_reference</strong> &#8211; Allows to allign the generated conformations according to some reference.
+The reference should be given as MDAnalysis atomgroup</li>
+<li><strong>align_select</strong> &#8211; Allows to select which atoms should be used for the alignment. e.g. &#8220;resid 5:60&#8221;
+default is &#8220;all&#8221;. Have a look at the MDAnalysis selection syntax for more details.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="parameters.html" class="btn btn-neutral float-right" title="parameters" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="angle_dihedral_cartesian_encoder.html" class="btn btn-neutral" title="AngleDihedralCartesianEncoder" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Tobias Lemke.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.11',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

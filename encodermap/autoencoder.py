@@ -15,19 +15,20 @@ class Autoencoder:
     def __init__(self, parameters, train_data=None, validation_data=None, checkpoint_path=None, n_inputs=None,
                  read_only=False):
         """
-        :param parameters: Parameters object as defined in :py:class:`encodermap.parameters.Parameters`
+        :param parameters: Parameters object as defined in :class:`.Parameters`
 
         :param train_data: 2d numpy array where each row is treated as a training point
 
         :param validation_data: A 2d numpy array. This data will only be used to calculate a validation error during
                                 training. It will not be used for training.
 
-        :param checkpoint_path: If a checkpoint path is given values like neural network weights stored in this
+        :param checkpoint_path: If a checkpoint path is given, values like neural network weights stored in this
                                 checkpoint will be restored.
 
         :param n_inputs: If no train_data is given, for example when an already trained network is restored from a
                          checkpoint, the number of of inputs needs to be given. This should be equal to the number of
                          columns of the train_data the network was originally trained with.
+        :param read_only: if True, no output is writen
         """
         # Parameters:
         self.p = parameters

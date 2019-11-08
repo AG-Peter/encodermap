@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dihedral_backmapping &mdash; EncoderMap 0.0.10 documentation</title>
+  <title>backmapping &mdash; EncoderMap 0.0.11 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="EncoderMap 0.0.10 documentation" href="index.html"/>
+    <link rel="top" title="EncoderMap 0.0.11 documentation" href="index.html"/>
         <link rel="next" title="misc" href="misc.html"/>
         <link rel="prev" title="plot" href="plot.html"/> 
 
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.10
+                0.0.11
               </div>
             
           
@@ -83,9 +83,11 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="encodermap.html">EncoderMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="angle_dihedral_cartesian_encoder.html">AngleDihedralCartesianEncoder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moldata.html">MolData</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parameters.html">parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="plot.html">plot</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">dihedral_backmapping</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">backmapping</a></li>
 <li class="toctree-l1"><a class="reference internal" href="misc.html">misc</a></li>
 </ul>
 
@@ -117,11 +119,11 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>dihedral_backmapping</li>
+    <li>backmapping</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/dihedral_backmapping.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/backmapping.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -131,11 +133,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-encodermap.dihedral_backmapping">
-<span id="dihedral-backmapping"></span><h1>dihedral_backmapping<a class="headerlink" href="#module-encodermap.dihedral_backmapping" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-encodermap.backmapping">
+<span id="backmapping"></span><h1>backmapping<a class="headerlink" href="#module-encodermap.backmapping" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="encodermap.dihedral_backmapping.dihedral_backmapping">
-<code class="descclassname">encodermap.dihedral_backmapping.</code><code class="descname">dihedral_backmapping</code><span class="sig-paren">(</span><em>pdb_path</em>, <em>dihedral_trajectory</em>, <em>rough_n_points=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.dihedral_backmapping.dihedral_backmapping" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.backmapping.chain_in_plane">
+<code class="descclassname">encodermap.backmapping.</code><code class="descname">chain_in_plane</code><span class="sig-paren">(</span><em>lengths</em>, <em>angles</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.backmapping.chain_in_plane" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="encodermap.backmapping.dihedral_backmapping">
+<code class="descclassname">encodermap.backmapping.</code><code class="descname">dihedral_backmapping</code><span class="sig-paren">(</span><em>pdb_path</em>, <em>dihedral_trajectory</em>, <em>rough_n_points=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.backmapping.dihedral_backmapping" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes a pdb file with a peptide and creates a trajectory based on the dihedral angles given.
 It simply rotates around the dihedral angle axis. In the result side-chains might overlap but the backbone should
 turn out quite well.</p>
@@ -157,6 +164,46 @@ max(1, int(len(dihedral_trajectory) / rough_n_points)) with rough_n_points = -1 
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="function">
+<dt id="encodermap.backmapping.dihedral_to_cartesian_tf_one_way">
+<code class="descclassname">encodermap.backmapping.</code><code class="descname">dihedral_to_cartesian_tf_one_way</code><span class="sig-paren">(</span><em>dihedrals</em>, <em>cartesian</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.backmapping.dihedral_to_cartesian_tf_one_way" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="encodermap.backmapping.dihedrals_to_cartesian_tf">
+<code class="descclassname">encodermap.backmapping.</code><code class="descname">dihedrals_to_cartesian_tf</code><span class="sig-paren">(</span><em>dihedrals</em>, <em>cartesian</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.backmapping.dihedrals_to_cartesian_tf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="encodermap.backmapping.dihedrals_to_cartesian_tf_old">
+<code class="descclassname">encodermap.backmapping.</code><code class="descname">dihedrals_to_cartesian_tf_old</code><span class="sig-paren">(</span><em>dihedrals</em>, <em>cartesian=None</em>, <em>central_atom_indices=None</em>, <em>no_omega=False</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.backmapping.dihedrals_to_cartesian_tf_old" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="encodermap.backmapping.guess_amide_H">
+<code class="descclassname">encodermap.backmapping.</code><code class="descname">guess_amide_H</code><span class="sig-paren">(</span><em>cartesians</em>, <em>atom_names</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.backmapping.guess_amide_H" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="encodermap.backmapping.guess_amide_O">
+<code class="descclassname">encodermap.backmapping.</code><code class="descname">guess_amide_O</code><span class="sig-paren">(</span><em>cartesians</em>, <em>atom_names</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.backmapping.guess_amide_O" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="encodermap.backmapping.guess_sp2_atom">
+<code class="descclassname">encodermap.backmapping.</code><code class="descname">guess_sp2_atom</code><span class="sig-paren">(</span><em>cartesians</em>, <em>atom_names</em>, <em>bond_partner</em>, <em>angle_to_previous</em>, <em>bond_length</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.backmapping.guess_sp2_atom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="encodermap.backmapping.merge_cartesians">
+<code class="descclassname">encodermap.backmapping.</code><code class="descname">merge_cartesians</code><span class="sig-paren">(</span><em>central_cartesians</em>, <em>central_atom_names</em>, <em>H_cartesians</em>, <em>O_cartesians</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.backmapping.merge_cartesians" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="encodermap.backmapping.straight_tetrahedral_chain">
+<code class="descclassname">encodermap.backmapping.</code><code class="descname">straight_tetrahedral_chain</code><span class="sig-paren">(</span><em>n_atoms=None</em>, <em>bond_lengths=None</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.backmapping.straight_tetrahedral_chain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 
@@ -201,7 +248,7 @@ max(1, int(len(dihedral_trajectory) / rough_n_points)) with rough_n_points = -1 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.10',
+            VERSION:'0.0.11',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
