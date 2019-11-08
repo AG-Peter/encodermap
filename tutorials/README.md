@@ -6,7 +6,7 @@ You can either install all requirements directly on your system or you can run t
 ## Inside Docker
 
 If Docker is not installed on your system already, first [install Docker](https://docs.docker.com/install/).
-If you are on a linux system you should also [add yor user to the docker group](https://docs.docker.com/install/linux/linux-postinstall/) to get permissions to start docker containers.
+If you are on a linux system you should also [add your user to the docker group](https://docs.docker.com/install/linux/linux-postinstall/) to get permissions to start docker containers.
 
 Clone this repository to some location of your choice:
 ```bash
