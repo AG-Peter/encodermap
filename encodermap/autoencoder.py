@@ -247,22 +247,22 @@ class Autoencoder:
             if (i+1) % self.p.summary_step == 0:
                 # _, summary_values = self.sess.run((self.optimize, self.merged_summaries))
                 _, summary_values = self.sess.run((self.optimize, self.merged_summaries))
-                self.train_writer.add_summary(summary_values, self.step())
+                self.train_writer.add_summary(summary_values, self._step())
                 if self.validation_data is not None:
                     summary_values = self.sess.run(self.merged_summaries,
                                                    feed_dict={self.main_inputs: self._random_batch(self.validation_data)})
-                    self.validation_writer.add_summary(summary_values, self.step())
+                    self.validation_writer.add_summary(summary_values, self._step())
             else:
                 self.sess.run(self.optimize)
 
-            if (self.step()) % self.p.checkpoint_step == 0:
+            if (self._step()) % self.p.checkpoint_step == 0:
                 self.saver.save(self.sess, os.path.join(self.p.main_path, "checkpoints",
-                                                        "step{}.ckpt".format(self.step())))
+                                                        "step{}.ckpt".format(self._step())))
         else:
-            self.saver.save(self.sess, os.path.join(self.p.main_path, "checkpoints", "step{}.ckpt".format(self.step())))
+            self.saver.save(self.sess, os.path.join(self.p.main_path, "checkpoints", "step{}.ckpt".format(self._step())))
             self.train_writer.flush()
 
-    def step(self):
+    def _step(self):
         return tf.train.global_step(self.sess, self.global_step)
 
     def profile(self):
