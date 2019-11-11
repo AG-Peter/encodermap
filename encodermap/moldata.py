@@ -182,7 +182,7 @@ class MolData:
             result = 4
         return atom.resnum, result
 
-    def write(self, path, coordinates, name="generated", only_central=False, align_reference=None, align_select="all"):
+    def write(self, path, coordinates, name="generated.xtc", only_central=False, align_reference=None, align_select="all"):
         """
         Writes a trajectory for the given coordinates.
 
@@ -211,6 +211,6 @@ class MolData:
             align_traj = AlignTraj(output_universe, align_reference, align_select, in_memory=True)
             align_traj.run()
 
-        with md.Writer(os.path.join(path, "{}.xtc".format(name))) as w:
+        with md.Writer(os.path.join(path, name)) as w:
             for step in output_universe.trajectory:
                 w.write(output_universe.atoms)
