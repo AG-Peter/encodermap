@@ -54,7 +54,7 @@ caxe = axe2.imshow(-np.log(hist.T), origin='low', extent=[xedges[0], xedges[-1],
 cbar = fig2.colorbar(caxe)
 cbar.set_label("-ln(p)", labelpad=0)
 axe2.set_title("Selector")
-selector = em.plot.PathSelect(axe2, projected, e_map, moldata, vmd_path="/home/soft/bin/vmd",
+selector = em.plot.PathSelect(axe2, projected, moldata, e_map.p.main_path, vmd_path="/home/soft/bin/vmd",
                               align_reference=moldata.sorted_atoms, align_select=selection_for_alignment)
 
 plt.show()

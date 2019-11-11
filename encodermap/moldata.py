@@ -182,13 +182,14 @@ class MolData:
             result = 4
         return atom.resnum, result
 
-    def write(self, path, coordinates, name="generated.xtc", only_central=False, align_reference=None, align_select="all"):
+    def write(self, path, coordinates, name="generated", formats=("pdb", "xtc"), only_central=False, align_reference=None, align_select="all"):
         """
         Writes a trajectory for the given coordinates.
 
         :param path: directory where to save the trajectory
-        :param coordinates: numpy array of xyz coordinates (atoms, frames, xyz)
+        :param coordinates: numpy array of xyz coordinates (frames, atoms, xyz)
         :param name: filename (without extension)
+        :param formats: specify which formats schould be used to write structure and trajectory. default: ("pdb", "xtc")
         :param only_central: if True only central atom coordinates are expected (N-Ca-C...)
         :param align_reference: Allows to allign the generated conformations according to some reference.
             The reference should be given as MDAnalysis atomgroup
@@ -201,16 +202,16 @@ class MolData:
             coordinates = np.expand_dims(coordinates, 0)
         if only_central:
             output_universe = md.Merge(self.central_atoms)
-            self.sorted_atoms[self.central_atom_indices].write(os.path.join(path, "{}.pdb".format(name)))
+            self.sorted_atoms[self.central_atom_indices].write(os.path.join(path, "{}.{}".format(name, formats[0])))
         else:
             output_universe = md.Merge(self.sorted_atoms)
-            self.sorted_atoms.write(os.path.join(path, "{}.pdb".format(name)))
+            self.sorted_atoms.write(os.path.join(path, "{}.{}".format(name, formats[0])))
         output_universe.load_new(coordinates, format=MemoryReader)
 
         if align_reference is not None:
             align_traj = AlignTraj(output_universe, align_reference, align_select, in_memory=True)
             align_traj.run()
 
-        with md.Writer(os.path.join(path, name)) as w:
+        with md.Writer(os.path.join(path, "{}.{}".format(name, formats[1]))) as w:
             for step in output_universe.trajectory:
                 w.write(output_universe.atoms)

@@ -303,30 +303,45 @@ class PathGenerateCartesians(ManualPath):
 
 
 class PathSelect(ManualPath):
-    def __init__(self, axe, data, autoencoder, mol_data, save_path=None, n_points=200, vmd_path="",
+    """
+        This class inherits from :class:`encodermap.plot.ManualPath`.
+        It is used to select areas in a 2d map and to write all conformations in these areas to separate trajectories.
+        """
+    def __init__(self, axe, projected, mol_data, save_path, n_points=200, vmd_path="",
                  align_reference=None, align_select="all"):
+        """
+
+        :param axe: matplotlib axe object for example from: fig, axe = plt.subplots()
+        :param projected: points in the map (must be the same number of points as conformations in mol_data)
+        :param mol_data: :class:`.MolData`
+        :param save_path: Path where outputs should be written
+        :param n_points: Number of points distributed on the selected path.
+        :param vmd_path: If a path to vmd is given, the generated conformations will be directly opened in vmd.
+        :param align_reference: Allows to allign the generated conformations according to some reference.
+            The reference should be given as MDAnalysis atomgroup
+        :param align_select: Allows to select which atoms should be used for the alignment. e.g. "resid 5:60"
+            default is "all". Have a look at the MDAnalysis selection syntax for more details.
+
+        """
         super().__init__(axe, n_points=n_points)
 
-        self.autoencoder = autoencoder
         self.mol_data = mol_data
         self.vmd_path = vmd_path
-        self.data = data
+        self.projected = projected
+        assert len(projected) == len(mol_data.dihedrals)
 
         self.align_reference = align_reference
         self.align_select = align_select
 
-        if save_path:
-            self.save_path = save_path
-        else:
-            self.save_path = autoencoder.p.main_path
+        self.save_path = save_path
 
     def use_points(self, points):
         current_save_path = create_dir(os.path.join(self.save_path, "selected",
                                                     datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")))
-        indices = np.nonzero(Path(points).contains_points(self.data))[0]
-        self.axe.scatter(self.data[indices, 0], self.data[indices, 1])
+        indices = np.nonzero(Path(points).contains_points(self.projected))[0]
+        self.axe.scatter(self.projected[indices, 0], self.projected[indices, 1])
         self.axe.plot(points[:, 0], points[:, 1], linestyle="", marker=".")
-        np.save(os.path.join(current_save_path, "points"), self.data[indices, :])
+        np.save(os.path.join(current_save_path, "points"), self.projected[indices, :])
         np.save(os.path.join(current_save_path, "indices"), indices)
 
         self.mol_data.write(current_save_path, self.mol_data.cartesians[indices], only_central=False,
