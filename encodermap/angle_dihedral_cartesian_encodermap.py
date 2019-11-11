@@ -8,7 +8,7 @@ from .parameters import ADCParameters
 from math import pi
 
 
-class AngleDihedralCartesianEncoder(Autoencoder):
+class AngleDihedralCartesianEncoderMap(Autoencoder):
     """
     This EncoderMap variant is specially designed for protein conformations.
     During the training, the cartesian conformations of the backbone chain are reconstructed from backbone angles and
@@ -32,7 +32,7 @@ class AngleDihedralCartesianEncoder(Autoencoder):
 
         :param read_only: if True, no output is writen
         """
-        super(AngleDihedralCartesianEncoder, self).__init__(*args, **kwargs)
+        super(AngleDihedralCartesianEncoderMap, self).__init__(*args, **kwargs)
         assert isinstance(self.p, ADCParameters)
         assert isinstance(self.train_moldata, MolData)
 
@@ -213,7 +213,7 @@ class AngleDihedralCartesianEncoder(Autoencoder):
             return np.concatenate(results, axis=0)
 
 
-class AngleDihedralCartesianEncoderDummy(AngleDihedralCartesianEncoder):
+class AngleDihedralCartesianEncoderMapDummy(AngleDihedralCartesianEncoderMap):
     def _setup_network(self):
         self.inputs = self.data_iterator.get_next()
         if self.p.use_backbone_angles:

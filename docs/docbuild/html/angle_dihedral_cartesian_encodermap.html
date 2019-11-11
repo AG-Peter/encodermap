@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>AngleDihedralCartesianEncoder &mdash; EncoderMap 0.0.11 documentation</title>
+  <title>AngleDihedralCartesianEncoderMap &mdash; EncoderMap 0.0.11 documentation</title>
   
 
   
@@ -83,7 +83,7 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="encodermap.html">EncoderMap</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">AngleDihedralCartesianEncoder</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">AngleDihedralCartesianEncoderMap</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moldata.html">MolData</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parameters.html">parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="plot.html">plot</a></li>
@@ -119,11 +119,11 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>AngleDihedralCartesianEncoder</li>
+    <li>AngleDihedralCartesianEncoderMap</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/angle_dihedral_cartesian_encoder.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/angle_dihedral_cartesian_encodermap.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -133,11 +133,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="angledihedralcartesianencoder">
-<h1>AngleDihedralCartesianEncoder<a class="headerlink" href="#angledihedralcartesianencoder" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="angledihedralcartesianencodermap">
+<h1>AngleDihedralCartesianEncoderMap<a class="headerlink" href="#angledihedralcartesianencodermap" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="encodermap.AngleDihedralCartesianEncoder">
-<em class="property">class </em><code class="descclassname">encodermap.</code><code class="descname">AngleDihedralCartesianEncoder</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoder" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.AngleDihedralCartesianEncoderMap">
+<em class="property">class </em><code class="descclassname">encodermap.</code><code class="descname">AngleDihedralCartesianEncoderMap</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderMap" title="Permalink to this definition">¶</a></dt>
 <dd><p>This EncoderMap variant is specially designed for protein conformations.
 During the training, the cartesian conformations of the backbone chain are reconstructed from backbone angles and
 dihedrals.
@@ -146,8 +146,8 @@ the accuracy of generated conformations especially for large proteins.
 We achieve this with the cartesian_cost where we compare pairwise distances between atoms in cartesian coordinates
 in the input and generated conformations.</p>
 <dl class="method">
-<dt id="encodermap.AngleDihedralCartesianEncoder.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoder.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.AngleDihedralCartesianEncoderMap.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderMap.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -167,15 +167,15 @@ checkpoint will be restored.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="encodermap.AngleDihedralCartesianEncoder.close">
-<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoder.close" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.AngleDihedralCartesianEncoderMap.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderMap.close" title="Permalink to this definition">¶</a></dt>
 <dd><p>Close tensorflow session to free resources.
 :return:</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="encodermap.AngleDihedralCartesianEncoder.encode">
-<code class="descname">encode</code><span class="sig-paren">(</span><em>inputs</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoder.encode" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.AngleDihedralCartesianEncoderMap.encode">
+<code class="descname">encode</code><span class="sig-paren">(</span><em>inputs</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderMap.encode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Projects high dimensional data to a low dimensional space using the encoder part of the autoencoder.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -191,34 +191,34 @@ to the number of neurons in the bottleneck layer of the autoencoder.</td>
 </dd></dl>
 
 <dl class="method">
-<dt id="encodermap.AngleDihedralCartesianEncoder.generate">
-<code class="descname">generate</code><span class="sig-paren">(</span><em>latent</em>, <em>quantity=None</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoder.generate" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.AngleDihedralCartesianEncoderMap.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>latent</em>, <em>quantity=None</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderMap.generate" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="encodermap.AngleDihedralCartesianEncoder.profile">
-<code class="descname">profile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoder.profile" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.AngleDihedralCartesianEncoderMap.profile">
+<code class="descname">profile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderMap.profile" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="encodermap.AngleDihedralCartesianEncoder.step">
-<code class="descname">step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoder.step" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.AngleDihedralCartesianEncoderMap.step">
+<code class="descname">step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderMap.step" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="encodermap.AngleDihedralCartesianEncoder.train">
-<code class="descname">train</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoder.train" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.AngleDihedralCartesianEncoderMap.train">
+<code class="descname">train</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderMap.train" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train the autoencoder as specified in the parameters object.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="encodermap.AngleDihedralCartesianEncoderDummy">
-<em class="property">class </em><code class="descclassname">encodermap.</code><code class="descname">AngleDihedralCartesianEncoderDummy</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderDummy" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.AngleDihedralCartesianEncoderMapDummy">
+<em class="property">class </em><code class="descclassname">encodermap.</code><code class="descname">AngleDihedralCartesianEncoderMapDummy</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderMapDummy" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
-<dt id="encodermap.AngleDihedralCartesianEncoderDummy.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderDummy.__init__" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.AngleDihedralCartesianEncoderMapDummy.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderMapDummy.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -238,15 +238,15 @@ checkpoint will be restored.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="encodermap.AngleDihedralCartesianEncoderDummy.close">
-<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderDummy.close" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.AngleDihedralCartesianEncoderMapDummy.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderMapDummy.close" title="Permalink to this definition">¶</a></dt>
 <dd><p>Close tensorflow session to free resources.
 :return:</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="encodermap.AngleDihedralCartesianEncoderDummy.encode">
-<code class="descname">encode</code><span class="sig-paren">(</span><em>inputs</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderDummy.encode" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.AngleDihedralCartesianEncoderMapDummy.encode">
+<code class="descname">encode</code><span class="sig-paren">(</span><em>inputs</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderMapDummy.encode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Projects high dimensional data to a low dimensional space using the encoder part of the autoencoder.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -262,23 +262,23 @@ to the number of neurons in the bottleneck layer of the autoencoder.</td>
 </dd></dl>
 
 <dl class="method">
-<dt id="encodermap.AngleDihedralCartesianEncoderDummy.generate">
-<code class="descname">generate</code><span class="sig-paren">(</span><em>latent</em>, <em>quantity=None</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderDummy.generate" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.AngleDihedralCartesianEncoderMapDummy.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>latent</em>, <em>quantity=None</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderMapDummy.generate" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="encodermap.AngleDihedralCartesianEncoderDummy.profile">
-<code class="descname">profile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderDummy.profile" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.AngleDihedralCartesianEncoderMapDummy.profile">
+<code class="descname">profile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderMapDummy.profile" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="encodermap.AngleDihedralCartesianEncoderDummy.step">
-<code class="descname">step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderDummy.step" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.AngleDihedralCartesianEncoderMapDummy.step">
+<code class="descname">step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderMapDummy.step" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="encodermap.AngleDihedralCartesianEncoderDummy.train">
-<code class="descname">train</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderDummy.train" title="Permalink to this definition">¶</a></dt>
+<dt id="encodermap.AngleDihedralCartesianEncoderMapDummy.train">
+<code class="descname">train</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.AngleDihedralCartesianEncoderMapDummy.train" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train the autoencoder as specified in the parameters object.</p>
 </dd></dl>
 

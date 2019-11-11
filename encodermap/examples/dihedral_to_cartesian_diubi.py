@@ -72,7 +72,7 @@ dummy_parameters.main_path = em.misc.create_dir(os.path.join(parameters.main_pat
 dummy_parameters.n_steps = int(len(moldata.dihedrals) / parameters.batch_size)
 dummy_parameters.summary_step = 1
 
-e_map = em.AngleDihedralCartesianEncoderDummy(dummy_parameters, moldata)
+e_map = em.AngleDihedralCartesianEncoderMapDummy(dummy_parameters, moldata)
 e_map.train()
 e_map.close()
 e_map = None
@@ -91,7 +91,7 @@ np.savetxt(os.path.join(dummy_parameters.main_path, "adc_cost_means.txt"), np.ar
 
 # First run without C_alpha cost
 parameters.n_steps = parameters.cartesian_cost_scale_soft_start[0]
-e_map = em.AngleDihedralCartesianEncoder(parameters, moldata)
+e_map = em.AngleDihedralCartesianEncoderMap(parameters, moldata)
 e_map.train()
 e_map.close()
 e_map = None
@@ -102,7 +102,7 @@ parameters.cartesian_cost_scale = 1
 ckpt_path = os.path.join(parameters.main_path, "checkpoints", "step{}.ckpt"
                          .format(parameters.cartesian_cost_scale_soft_start[0]))
 
-e_map = em.AngleDihedralCartesianEncoder(parameters, moldata, checkpoint_path=ckpt_path)
+e_map = em.AngleDihedralCartesianEncoderMap(parameters, moldata, checkpoint_path=ckpt_path)
 e_map.train()
 e_map.close()
 e_map = None

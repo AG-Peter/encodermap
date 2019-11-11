@@ -26,8 +26,8 @@ moldata = em.MolData(selected_atoms, cache_path="data/{}/cache".format(molname))
 # ######################### Load parameters and checkpoint #########################
 
 parameters = em.ADCParameters.load(os.path.join(main_path, "parameters.json"))
-e_map = em.AngleDihedralCartesianEncoder(parameters, moldata,
-                                         checkpoint_path=os.path.join(main_path, "checkpoints",
+e_map = em.AngleDihedralCartesianEncoderMap(parameters, moldata,
+                                            checkpoint_path=os.path.join(main_path, "checkpoints",
                                                                       "step{}.ckpt".format(step)), read_only=True)
 
 

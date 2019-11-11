@@ -4,7 +4,7 @@ from . import misc
 from . import plot
 from .backmapping import *
 from .encodermap import EncoderMap
-from .angle_dihedral_cartesian_encoder import AngleDihedralCartesianEncoder, AngleDihedralCartesianEncoderDummy
+from .angle_dihedral_cartesian_encodermap import AngleDihedralCartesianEncoderMap, AngleDihedralCartesianEncoderMapDummy
 from .moldata import MolData
 
 try:
