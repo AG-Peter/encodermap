@@ -13,10 +13,13 @@ molname = "diubi"
 
 # ######################### Load data #########################
 
-structure_path = "data/{}/start.gro".format(molname)
-trajectory_path = "data/{}/traj.xtc".format(molname)
+# Data available at:
+# https://www.kaggle.com/andrejberg/md-simulations-of-linear-ubiquitin-dimers
 
-uni = md.Universe(structure_path, trajectory_path)
+structure_path = "data/{}/01.pdb".format(molname)
+trajectory_paths = ["data/{}/{:02d}.xtc".format(molname, i+1) for i in range(12)]
+
+uni = md.Universe(structure_path, trajectory_paths)
 
 # select only atoms in the backbone or directly bound to the backbone. Atoms in the side chains are not supported (yet)
 selected_atoms = uni.select_atoms("backbone or name H or name O1 or (name CD and resname PRO)")
