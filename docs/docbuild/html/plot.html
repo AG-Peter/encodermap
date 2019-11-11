@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>plot &mdash; EncoderMap 0.0.11 documentation</title>
+  <title>plot &mdash; EncoderMap 2.0.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="EncoderMap 0.0.11 documentation" href="index.html"/>
+    <link rel="top" title="EncoderMap 2.0.0 documentation" href="index.html"/>
         <link rel="next" title="backmapping" href="backmapping.html"/>
         <link rel="prev" title="parameters" href="parameters.html"/> 
 
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.11
+                2.0.0
               </div>
             
           
@@ -271,11 +271,33 @@ First all phi angles then all psi angles.</li>
 
 <dl class="class">
 <dt id="encodermap.plot.PathSelect">
-<em class="property">class </em><code class="descclassname">encodermap.plot.</code><code class="descname">PathSelect</code><span class="sig-paren">(</span><em>axe</em>, <em>data</em>, <em>autoencoder</em>, <em>mol_data</em>, <em>save_path=None</em>, <em>n_points=200</em>, <em>vmd_path=''</em>, <em>align_reference=None</em>, <em>align_select='all'</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.PathSelect" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<em class="property">class </em><code class="descclassname">encodermap.plot.</code><code class="descname">PathSelect</code><span class="sig-paren">(</span><em>axe</em>, <em>projected</em>, <em>mol_data</em>, <em>save_path</em>, <em>n_points=200</em>, <em>vmd_path=''</em>, <em>align_reference=None</em>, <em>align_select='all'</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.PathSelect" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class inherits from <a class="reference internal" href="#encodermap.plot.ManualPath" title="encodermap.plot.ManualPath"><code class="xref py py-class docutils literal"><span class="pre">encodermap.plot.ManualPath</span></code></a>.
+It is used to select areas in a 2d map and to write all conformations in these areas to separate trajectories.</p>
+<dl class="method">
 <dt id="encodermap.plot.PathSelect.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>axe</em>, <em>data</em>, <em>autoencoder</em>, <em>mol_data</em>, <em>save_path=None</em>, <em>n_points=200</em>, <em>vmd_path=''</em>, <em>align_reference=None</em>, <em>align_select='all'</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.PathSelect.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>axe</em>, <em>projected</em>, <em>mol_data</em>, <em>save_path</em>, <em>n_points=200</em>, <em>vmd_path=''</em>, <em>align_reference=None</em>, <em>align_select='all'</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.PathSelect.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>axe</strong> &#8211; matplotlib axe object for example from: fig, axe = plt.subplots()</li>
+<li><strong>projected</strong> &#8211; points in the map (must be the same number of points as conformations in mol_data)</li>
+<li><strong>mol_data</strong> &#8211; <a class="reference internal" href="moldata.html#encodermap.MolData" title="encodermap.MolData"><code class="xref py py-class docutils literal"><span class="pre">MolData</span></code></a></li>
+<li><strong>save_path</strong> &#8211; Path where outputs should be written</li>
+<li><strong>n_points</strong> &#8211; Number of points distributed on the selected path.</li>
+<li><strong>vmd_path</strong> &#8211; If a path to vmd is given, the generated conformations will be directly opened in vmd.</li>
+<li><strong>align_reference</strong> &#8211; Allows to allign the generated conformations according to some reference.
+The reference should be given as MDAnalysis atomgroup</li>
+<li><strong>align_select</strong> &#8211; Allows to select which atoms should be used for the alignment. e.g. &#8220;resid 5:60&#8221;
+default is &#8220;all&#8221;. Have a look at the MDAnalysis selection syntax for more details.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="encodermap.plot.PathSelect.use_points">
@@ -352,7 +374,7 @@ It also shows the sigmoid function and its normalized derivative.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.11',
+            VERSION:'2.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

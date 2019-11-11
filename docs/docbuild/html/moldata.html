@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MolData &mdash; EncoderMap 0.0.11 documentation</title>
+  <title>MolData &mdash; EncoderMap 2.0.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="EncoderMap 0.0.11 documentation" href="index.html"/>
+    <link rel="top" title="EncoderMap 2.0.0 documentation" href="index.html"/>
         <link rel="next" title="parameters" href="parameters.html"/>
         <link rel="prev" title="AngleDihedralCartesianEncoderMap" href="angle_dihedral_cartesian_encodermap.html"/> 
 
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.0.11
+                2.0.0
               </div>
             
           
@@ -181,7 +181,7 @@
 
 <dl class="method">
 <dt id="encodermap.MolData.write">
-<code class="descname">write</code><span class="sig-paren">(</span><em>path</em>, <em>coordinates</em>, <em>name='generated'</em>, <em>only_central=False</em>, <em>align_reference=None</em>, <em>align_select='all'</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.MolData.write" title="Permalink to this definition">¶</a></dt>
+<code class="descname">write</code><span class="sig-paren">(</span><em>path</em>, <em>coordinates</em>, <em>name='generated'</em>, <em>formats=('pdb'</em>, <em>'xtc')</em>, <em>only_central=False</em>, <em>align_reference=None</em>, <em>align_select='all'</em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.MolData.write" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes a trajectory for the given coordinates.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -189,8 +189,9 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>path</strong> &#8211; directory where to save the trajectory</li>
-<li><strong>coordinates</strong> &#8211; numpy array of xyz coordinates (atoms, frames, xyz)</li>
+<li><strong>coordinates</strong> &#8211; numpy array of xyz coordinates (frames, atoms, xyz)</li>
 <li><strong>name</strong> &#8211; filename (without extension)</li>
+<li><strong>formats</strong> &#8211; specify which formats schould be used to write structure and trajectory. default: (&#8220;pdb&#8221;, &#8220;xtc&#8221;)</li>
 <li><strong>only_central</strong> &#8211; if True only central atom coordinates are expected (N-Ca-C...)</li>
 <li><strong>align_reference</strong> &#8211; Allows to allign the generated conformations according to some reference.
 The reference should be given as MDAnalysis atomgroup</li>
@@ -251,7 +252,7 @@ default is &#8220;all&#8221;. Have a look at the MDAnalysis selection syntax for
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.11',
+            VERSION:'2.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
