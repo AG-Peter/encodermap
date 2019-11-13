@@ -1,9 +1,9 @@
-<img src="logo_m.png" width=45% align="right" />
+<img src="pic/logo_m.png" width=45% align="right" />
 
 ## Introduction
 For a quick intro have a look at the following video:
 
-[<p align="left"> <img src="thumbnail.png" width=50% /> </p>](https://youtu.be/JV59OABhNTY)
+[<p align="left"> <img src="pic/thumbnail.png" width=50% /> </p>](https://youtu.be/JV59OABhNTY)
 
 You can find more information in these two articles:  
 [Lemke, Tobias, and Christine Peter. "EncoderMap: Dimensionality Reduction and Generation of Molecule Conformations." Journal of chemical theory and computation 15.2 (2019): 1209-1215.](https://pubs.acs.org/doi/abs/10.1021/acs.jctc.8b00975)
@@ -59,3 +59,6 @@ Also, have a look at the [examples](encodermap/examples).
 
 ## Documentation
 More information is available in the [documentations](https://ag-peter.github.io/encodermap/).
+
+## Questions
+If you have any questions you can have a look at the [FAQ](questions.md) (not very extensive yet), and you are most welcome to [open an issue here on GitHub](https://github.com/AG-Peter/encodermap/issues/new).
