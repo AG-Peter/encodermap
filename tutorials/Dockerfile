@@ -1,7 +1,7 @@
-FROM tensorflow/tensorflow:1.13.1-py3-jupyter
+FROM tensorflow/tensorflow:1.15.0-py3-jupyter
 
 RUN rm -rf tensorflow-tutorials &&\
-    pip install encodermap==0.0.10
+    pip install encodermap==2.0.1
 
 RUN pip install jupyter_contrib_nbextensions &&\
     jupyter contrib nbextension install &&\
