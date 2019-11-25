@@ -5,7 +5,7 @@ high_d_data, ids = em.misc.random_on_cube_edges(10000, sigma=0.05)
 
 # setting parameters:
 parameters = em.Parameters()
-parameters.main_path = em.misc.run_path("/home/tobias/Desktop/test_cuboid")
+parameters.main_path = em.misc.run_path("runs/cube/")
 parameters.n_steps = 10000
 parameters.dist_sig_parameters = (0.2, 3, 6, 1, 2, 6)
 parameters.periodicity = float("inf")
