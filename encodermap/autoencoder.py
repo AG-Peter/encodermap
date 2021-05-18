@@ -91,7 +91,7 @@ class Autoencoder:
         elif isinstance(self.train_data, (list, tuple)):
             self.train_data = [dat.astype(np.float32) for dat in self.train_data]
         else:
-            raise ValueError("{} is not supported as input type for train_data".format(type(train_data)))
+            raise ValueError("{} is not supported as input type for train_data".format(type(self.train_data)))
 
         if self.validation_data is not None:
             self.validation_data = self.validation_data.astype(np.float32)
