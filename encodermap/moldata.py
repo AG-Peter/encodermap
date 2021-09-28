@@ -113,7 +113,7 @@ class MolData:
 
                 omega_atoms = (self.sorted_atoms.select_atoms("resnum {} and (name CA or name C)".format(i)) +
                              self.sorted_atoms.select_atoms("resnum {} and (name N or name CA)".format(i + 1)))
-                if len(psi_atoms) == 4:
+                if len(omega_atoms) == 4:
                     dihedral_atoms.append(omega_atoms.dihedral)
 
             dihedrals = Dihedral(dihedral_atoms, verbose=True).run(start=start, stop=stop, step=step)
