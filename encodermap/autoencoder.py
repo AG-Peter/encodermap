@@ -281,7 +281,8 @@ class Autoencoder:
         Close tensorflow session to free resources.
         :return:
         """
-        self.sess.close()
+        if hasattr(self, 'sess'):
+            self.sess.close()
         try:
             tf_ops.dismantle_graph(self.graph)  # not implemented in older versions of tensorflow
         except AttributeError:
@@ -292,6 +293,6 @@ class Autoencoder:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
-        
+
     def __del__(self):
         self.close()
