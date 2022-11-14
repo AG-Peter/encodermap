@@ -20,7 +20,8 @@ setup(name='encodermap',
           'matplotlib',
           'scipy',
           'MDAnalysis',
-          'tqdm'
+          'tqdm',
+          'tensorflow==1.14'
       ],
       classifiers=[
           "Programming Language :: Python :: 3",
