@@ -21,7 +21,7 @@ setup(name='encodermap',
           'scipy',
           'MDAnalysis',
           'tqdm',
-          'tensorflow==1.14',
+          'tensorflow==2.7.2',
           'protobuf==3.20'
       ],
       classifiers=[
