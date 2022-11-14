@@ -22,7 +22,7 @@ setup(name='encodermap',
           'MDAnalysis',
           'tqdm',
           'tensorflow==1.14',
-          'protobuf==3.20'
+          'protobuf==3.20.2'
       ],
       classifiers=[
           "Programming Language :: Python :: 3",
