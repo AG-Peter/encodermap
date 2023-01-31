@@ -1,5 +1,8 @@
 .. _starter_notebooks:
 
+Starter notebooks
+=================
+
 Some notebooks to get you going with EncoderMap
 
 .. toctree::

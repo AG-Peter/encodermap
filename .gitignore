@@ -65,7 +65,13 @@ instance/
 .scrapy
 
 # Sphinx documentation
-# docs/_build/
+docs/_build/
+docs/build/
+docs/source/user_guide_and_exmaples/*.pdb
+docs/source/user_guide_and_exmaples/*.xtc
+docs/source/user_guide_and_exmaples/*.csv
+docs/source/user_guide_and_exmaples/*.png
+
 
 # PyBuilder
 target/
@@ -112,6 +118,34 @@ runs/
 tb_callbacks/
 development/
 runs_named/
+tutorials/notebooks_MD/01_The_new_Info_classes.ipynb
+*.json
+*.yaml
+!.pre-commit-config.yaml
+!.github/workflows/*.yaml
+*deprecated*
+model/
+test_only_losses
+
+# MDAnalysis cache
+*.lock
+*.npz
+
+# Windows Stuff
+System\ Volume\ Information
+
+# Encodermap stuff
+encodermap_runs/
 
 # pytest
 .pytest_cache/
+
+# manual stuff
+/Dockerfile
+/docker-compose.yaml
+*dask-worker-space*
+/act.vault
+
+# vmd
+*vmd_script.tcl*
+*vmdscene.dat*

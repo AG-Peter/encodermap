@@ -9,5 +9,6 @@ topic and contains examples.
 .. toctree::
     :maxdepth: 2
 
+    code_examples
     starter_notebooks
     intermediate_notebooks

@@ -1,5 +1,8 @@
 .. _intermediate_notebooks:
 
+Intermediate notebooks
+======================
+
 Some notebooks to get you going with EncoderMap
 
 .. toctree::
