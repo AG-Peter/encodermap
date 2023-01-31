@@ -1,0 +1,84 @@
+[tool.mypy]
+exclude = [
+    "development",
+    "encodermap/models/models_dep",
+    "encodermap/encodermap_tf1",
+    "encodermap/examples"
+]
+namespace_packages = true
+follow_imports = "silent"
+ignore_missing_imports = true
+packages = [
+    "encodermap"
+]
+enable-incomplete-features = true
+plugins = "numpy.typing.mypy_plugin"
+
+[tool.coverage.run]
+branch = true
+command_line = "-m unittest discover -s tests"
+
+[tool.coverage.html]
+directory = "docs/source/_static"
+title = "coverage_report"
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "def __str__",
+    "__all__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
+show_missing = true
+omit = [
+    "*Test*",
+    "*test*",
+    "*/usr/local/lib*",
+    "*Users*",
+    "*__init__*",
+    "*__autograph_generated*"
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+exclude = '''
+
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+    | development
+  )/
+  | foo.py           # also separately exclude a file named foo.py in
+                     # the root of the project
+)
+'''
+
+[tool.vulture]
+exclude = ["tests/", "development/"]
+# ignore_decorators = ["@app.route", "@require_*"]
+# ignore_names = ["visit_*", "do_*"]
+# make_whitelist = true
+min_confidence = 80
+paths = ["encodermap"]
+sort_by_size = true
+verbose = false
+
+[tool.isort]
+profile = "black"
+src_paths = ["encodermap", "tests"]

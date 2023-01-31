@@ -1,0 +1,10 @@
+coverage
+html-testRunner
+black
+isort
+vulture
+pycodestyle
+tensor_annotations_tensorflow_stubs
+tensor_annotations
+data-science-types
+progress-reporter

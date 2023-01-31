@@ -1,0 +1,45 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.0.1
+  hooks:
+  - id: trailing-whitespace
+  - id: check-added-large-files
+    exclude: 'tutorials/notebooks_starter/asp7.csv|tutorials/notebooks_starter/asp7.xtc|tutorials/notebooks_starter/Tensorboard_Images.png|tutorials/notebooks_intermediate/glu7.xtc'
+  - id: end-of-file-fixer
+  - id: check-ast
+    exclude: development/
+  - id: check-yaml
+    exclude: .github/
+  - id: detect-private-key
+
+#- repo: https://github.com/pre-commit/mirrors-mypy
+#  rev: v0.910-1  # Use the sha / tag you want to point at
+#  hooks:
+#  - id: mypy
+#    args: [--config-file pyproject.toml]
+
+- repo: https://github.com/pycqa/isort
+  rev: 5.11.5
+  hooks:
+    - id: isort
+      name: isort (python)
+
+- repo: https://github.com/psf/black
+  rev: 22.10.0
+  hooks:
+    - id: black
+      exclude: development*
+      args: [--config=./pyproject.toml]
+
+# - repo: https://github.com/jendrikseipp/vulture
+#   rev: v2.3 # or any later Vulture version
+#   hooks:
+#     - id: vulture
+
+- repo: https://github.com/kevinsawade/pre-commit-hooks
+  rev: latest # new pushed of my repos are available as @latest
+  hooks:
+    - id: clear-ipynb-cells
+    # - id: run-pycodestyle

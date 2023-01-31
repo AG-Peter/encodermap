@@ -1,8 +1,9 @@
-import encodermap as em
-import numpy as np
 import os
-import matplotlib.pyplot as plt
 
+import matplotlib.pyplot as plt
+import numpy as np
+
+import encodermap as em
 
 # setting parameters
 data_path = "./data"
@@ -30,8 +31,15 @@ low_d_projection = e_map.encode(dihedrals)
 
 print("plotting result ...")
 fig, axe = plt.subplots()
-caxe = axe.scatter(low_d_projection[:, 0], low_d_projection[:, 1], c=data[:, -1], s=0.1, cmap="nipy_spectral",
-                   marker="o", linewidths=0)
+caxe = axe.scatter(
+    low_d_projection[:, 0],
+    low_d_projection[:, 1],
+    c=data[:, -1],
+    s=0.1,
+    cmap="nipy_spectral",
+    marker="o",
+    linewidths=0,
+)
 cbar = fig.colorbar(caxe)
 cbar.set_label("helix rmsd")
 

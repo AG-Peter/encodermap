@@ -22,18 +22,44 @@ generated = e_map.generate(low_d_projection)
 #########################################################################
 # Plotting:
 
-from mpl_toolkits.mplot3d import Axes3D  # somehow this conflicts with tensorflow if imported earlier
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import (  # somehow this conflicts with tensorflow if imported earlier
+    Axes3D,
+)
 
 fig = plt.figure()
-axe = fig.add_subplot(111, projection='3d')
-axe.scatter(high_d_data[:, 0], high_d_data[:, 1], high_d_data[:, 2], c=ids, marker="o", linewidths=0, cmap="tab10")
+axe = fig.add_subplot(111, projection="3d")
+axe.scatter(
+    high_d_data[:, 0],
+    high_d_data[:, 1],
+    high_d_data[:, 2],
+    c=ids,
+    marker="o",
+    linewidths=0,
+    cmap="tab10",
+)
 
 fig, axe = plt.subplots()
-axe.scatter(low_d_projection[:, 0], low_d_projection[:, 1], c=ids, s=5, marker="o", linewidths=0, cmap="tab10")
+axe.scatter(
+    low_d_projection[:, 0],
+    low_d_projection[:, 1],
+    c=ids,
+    s=5,
+    marker="o",
+    linewidths=0,
+    cmap="tab10",
+)
 
 fig = plt.figure()
-axe = fig.add_subplot(111, projection='3d')
-axe.scatter(generated[:, 0], generated[:, 1], generated[:, 2], c=ids, marker="o", linewidths=0, cmap="tab10")
+axe = fig.add_subplot(111, projection="3d")
+axe.scatter(
+    generated[:, 0],
+    generated[:, 1],
+    generated[:, 2],
+    c=ids,
+    marker="o",
+    linewidths=0,
+    cmap="tab10",
+)
 
 plt.show()

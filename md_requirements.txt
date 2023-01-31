@@ -1,0 +1,14 @@
+pyEMMA
+h5py
+h5netcdf
+mdtraj # Might need 1.9.3 because of incompatibilities with astunparse
+scipy
+networkx
+seaborn
+pandas
+nglview
+PyYAML
+xarray
+mdshare
+dask
+numba

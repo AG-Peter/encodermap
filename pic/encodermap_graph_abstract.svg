@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 296.99999"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="encodermap_graph_abstract.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#425066"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.28"
+     inkscape:cx="-124.82105"
+     inkscape:cy="1069.4227"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:pagecheckerboard="true"
+     inkscape:window-width="3440"
+     inkscape:window-height="1367"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     showborder="false" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g4298"
+       transform="translate(-153.79017,18.177825)">
+      <rect
+         rx="8.7539043"
+         ry="8.7539043"
+         y="-32.081085"
+         x="138.72174"
+         height="51.585506"
+         width="83.162086"
+         id="rect815"
+         style="opacity:1;fill:none;fill-opacity:0.94117647;stroke:#e77800;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text819"
+         y="-21.566084"
+         x="143.66661"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-21.566084"
+           x="143.66661"
+           id="tspan817"
+           sodipodi:role="line">em.TrajEnsemble</tspan></text>
+      <text
+         id="text843"
+         y="-13.048396"
+         x="167.0441"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan827"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-13.048396"
+           x="167.0441"
+           sodipodi:role="line">Fancy list for SingleTraj objects.</tspan><tspan
+           id="tspan4278"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-9.5206184"
+           x="167.0441"
+           sodipodi:role="line">can load CVs from Featurizer, files</tspan><tspan
+           id="tspan4280"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-5.9928408"
+           x="167.0441"
+           sodipodi:role="line">np.array, etc.</tspan><tspan
+           id="tspan4282"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-2.4650626"
+           x="167.0441"
+           sodipodi:role="line">TrajEnsemble.CVs is dict of np.arrays</tspan><tspan
+           id="tspan4284"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="1.0627151"
+           x="167.0441"
+           sodipodi:role="line">TrajEnsemble._CVs is xarray dataset with</tspan><tspan
+           id="tspan4288"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="4.5904927"
+           x="167.0441"
+           sodipodi:role="line">shape (trajs, frames, x, y), where</tspan><tspan
+           id="tspan4292"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="8.1182709"
+           x="167.0441"
+           sodipodi:role="line">x can be anything from 0 to n_atoms</tspan><tspan
+           id="tspan4294"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="11.646049"
+           x="167.0441"
+           sodipodi:role="line">and y can be anything from 0 to 3</tspan><tspan
+           id="tspan4296"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="15.173826"
+           x="167.0441"
+           sodipodi:role="line">(xyz positions).</tspan><tspan
+           id="tspan4254"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="18.701605"
+           x="167.0441"
+           sodipodi:role="line" /></text>
+    </g>
+    <g
+       id="g4234"
+       transform="translate(-20.665255,-7.4238087)">
+      <rect
+         rx="8.7539053"
+         ry="8.7539053"
+         y="-83.510277"
+         x="28.672651"
+         height="51.585506"
+         width="83.162094"
+         id="rect815-5"
+         style="opacity:1;fill:none;fill-opacity:0.94117647;stroke:#e77800;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text819-9"
+         y="-72.995277"
+         x="33.617519"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-72.995277"
+           x="33.617519"
+           id="tspan817-4"
+           sodipodi:role="line">em.SingleTraj</tspan></text>
+      <text
+         id="text843-8"
+         y="-64.790222"
+         x="52.305416"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan827-3"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-64.790222"
+           x="52.305416"
+           sodipodi:role="line">The SingleTraj class contains a single</tspan><tspan
+           id="tspan919"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-61.262444"
+           x="52.305416"
+           sodipodi:role="line">trajectory. The location of trajectory</tspan><tspan
+           id="tspan923"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-57.734665"
+           x="52.305416"
+           sodipodi:role="line">and topology is stored and the xyz</tspan><tspan
+           id="tspan925"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-54.20689"
+           x="52.305416"
+           sodipodi:role="line">data is only loaded when needed. This</tspan><tspan
+           id="tspan927"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-50.679111"
+           x="52.305416"
+           sodipodi:role="line">class keeps track of frames and CVs</tspan><tspan
+           id="tspan929"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-47.151333"
+           x="52.305416"
+           sodipodi:role="line">and allows saving them in one HDF5</tspan><tspan
+           id="tspan931"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-43.623554"
+           x="52.305416"
+           sodipodi:role="line">file. If constructed from a HDF5 file,</tspan><tspan
+           id="tspan933"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-40.095779"
+           x="52.305416"
+           sodipodi:role="line">CVs and frames can be loaded as</tspan><tspan
+           id="tspan909"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-36.568001"
+           x="52.305416"
+           sodipodi:role="line">needed.</tspan></text>
+    </g>
+    <g
+       id="g4478"
+       transform="translate(-31.139881,67.471818)">
+      <rect
+         rx="8.7539062"
+         ry="8.7539062"
+         y="-104.94092"
+         x="147.68054"
+         height="51.585506"
+         width="83.162094"
+         id="rect815-5-6"
+         style="opacity:1;fill:none;fill-opacity:0.94117647;stroke:#e77800;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text819-9-7"
+         y="-94.425919"
+         x="152.62541"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-94.425919"
+           x="152.62541"
+           id="tspan817-4-4"
+           sodipodi:role="line">em.Featurizer</tspan></text>
+      <text
+         id="text843-8-5"
+         y="-86.220871"
+         x="171.31329"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan909-0"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-86.220871"
+           x="171.31329"
+           sodipodi:role="line">Heavily relies on PyEMMA's Featurizer</tspan><tspan
+           id="tspan1082"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-82.693092"
+           x="171.31329"
+           sodipodi:role="line">but allows working with multiple</tspan><tspan
+           id="tspan1084"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-79.165314"
+           x="171.31329"
+           sodipodi:role="line">topologies (wt and mutant). </tspan><tspan
+           id="tspan4316"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-75.637535"
+           x="171.31329"
+           sodipodi:role="line">Parallelizes loading of features/CVs.</tspan><tspan
+           id="tspan4320"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-72.109756"
+           x="171.31329"
+           sodipodi:role="line">Either in-memory or out-of-memory.</tspan><tspan
+           id="tspan4322"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-68.581985"
+           x="171.31329"
+           sodipodi:role="line">In contrast to PyEMMA's featurizer</tspan><tspan
+           id="tspan4324"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-65.054207"
+           x="171.31329"
+           sodipodi:role="line">this one can deal with multiple</tspan><tspan
+           id="tspan4326"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-61.526428"
+           x="171.31329"
+           sodipodi:role="line">topologies.</tspan></text>
+    </g>
+    <rect
+       style="opacity:1;fill:#e77800;fill-opacity:1;stroke:#e77800;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect815-5-8"
+       width="83.162102"
+       height="51.585506"
+       x="-29.043228"
+       y="-164.49474"
+       ry="8.7539053" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-10.463355"
+       y="-134.91927"
+       id="text819-9-4"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan817-4-0"
+         x="-10.463355"
+         y="-134.91927"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:125%;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332">MD Data</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:0.94117647;stroke:#e77800;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect815-5-83"
+       width="305.14282"
+       height="211.54221"
+       x="-29.043228"
+       y="-127.3309"
+       ry="8.7539053"
+       rx="8.7539053" />
+    <g
+       id="g4534"
+       transform="translate(-15.898817,-81.672481)">
+      <rect
+         rx="8.7539062"
+         ry="8.7539062"
+         y="-34.930397"
+         x="198.48164"
+         height="51.585506"
+         width="83.162102"
+         id="rect815-5-6-0"
+         style="opacity:1;fill:none;fill-opacity:0.94117647;stroke:#e77800;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text819-9-7-1"
+         y="-24.4154"
+         x="203.42651"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555582px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-24.4154"
+           x="203.42651"
+           id="tspan817-4-4-7"
+           sodipodi:role="line">em.features</tspan></text>
+      <text
+         id="text843-8-5-8"
+         y="-16.210352"
+         x="222.1144"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan4326-7"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-16.210352"
+           x="222.1144"
+           sodipodi:role="line">Serializiable Classes that can be</tspan><tspan
+           id="tspan4468"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-12.682574"
+           x="222.1144"
+           sodipodi:role="line">provided to em.Featurizer to extract</tspan><tspan
+           id="tspan4470"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-9.1547966"
+           x="222.1144"
+           sodipodi:role="line">common CVs from MD data.</tspan><tspan
+           id="tspan4472"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-5.6270185"
+           x="222.1144"
+           sodipodi:role="line">Examples: Dihedral angles of backbone</tspan><tspan
+           id="tspan4474"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-2.0992408"
+           x="222.1144"
+           sodipodi:role="line">and sidechains, Angles of backbone</tspan><tspan
+           id="tspan4476"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="1.428537"
+           x="222.1144"
+           sodipodi:role="line">atoms and sidechains.</tspan></text>
+    </g>
+    <g
+       id="g4428"
+       transform="matrix(3.590374,0,0,4.1093099,-342.19214,645.86784)">
+      <rect
+         rx="8.7539062"
+         ry="8.7539062"
+         y="-223.76079"
+         x="89.403893"
+         height="17.513098"
+         width="105.40098"
+         id="rect815-5-6-4"
+         style="opacity:1;fill:none;fill-opacity:0.94117647;stroke:#e77800;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text819-9-7-9"
+         y="-213.05775"
+         x="95.288979"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan4424"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555582px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="-213.05775"
+           x="95.288979"
+           sodipodi:role="line">import encodermap as em</tspan></text>
+    </g>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:0.94117647;stroke:#e77800;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect815-5-6-0-9"
+       width="83.162102"
+       height="51.585506"
+       x="-162.5687"
+       y="-268.85062"
+       ry="8.7539062"
+       rx="8.7539062" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-157.62384"
+       y="-258.33563"
+       id="text819-9-7-1-9"><tspan
+         sodipodi:role="line"
+         id="tspan817-4-4-7-7"
+         x="-157.62384"
+         y="-258.33563"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.0555563px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332">em.features</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-138.93594"
+       y="-250.13058"
+       id="text843-8-5-8-8"><tspan
+         sodipodi:role="line"
+         x="-138.93594"
+         y="-250.13058"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+         id="tspan4326-7-2">Serializiable Classes that can be</tspan><tspan
+         sodipodi:role="line"
+         x="-138.93594"
+         y="-246.60281"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+         id="tspan4468-5">provided to em.Featurizer to extract</tspan><tspan
+         sodipodi:role="line"
+         x="-138.93594"
+         y="-243.07504"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+         id="tspan4470-3">common CVs from MD data.</tspan><tspan
+         sodipodi:role="line"
+         x="-138.93594"
+         y="-239.54724"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+         id="tspan4472-4">Examples: Dihedral angles of backbone</tspan><tspan
+         sodipodi:role="line"
+         x="-138.93594"
+         y="-236.01947"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+         id="tspan4474-9">and sidechains, Angles of backbone</tspan><tspan
+         sodipodi:role="line"
+         x="-138.93594"
+         y="-232.4917"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+         id="tspan4476-0">atoms and sidechains.</tspan></text>
+    <g
+       id="g4603"
+       transform="translate(-94.754754,7.3584749)">
+      <rect
+         rx="8.7539062"
+         ry="8.7539062"
+         y="31.759327"
+         x="79.686317"
+         height="17.441824"
+         width="83.162102"
+         id="rect815-5-6-0-9-0"
+         style="opacity:1;fill:none;fill-opacity:0.94117647;stroke:#e77800;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text819-9-7-1-9-1"
+         y="43.110569"
+         x="87.732803"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.0555563px;font-family:Polly;-inkscape-font-specification:'Polly, Normal';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke-width:0.26458332"
+           y="43.110569"
+           x="87.732803"
+           id="tspan817-4-4-7-7-9"
+           sodipodi:role="line">Tensorflow Dataset</tspan></text>
+    </g>
+  </g>
+</svg>

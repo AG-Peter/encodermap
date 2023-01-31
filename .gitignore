@@ -10,6 +10,7 @@ __pycache__/
 .Python
 env/
 build/
+_static/
 develop-eggs/
 dist/
 downloads/
@@ -39,6 +40,8 @@ pip-delete-this-directory.txt
 htmlcov/
 .tox/
 .coverage
+docs/build/html/coverage/
+.coverage/
 .coverage.*
 .cache
 nosetests.xml
@@ -106,6 +109,8 @@ ENV/
 # project files
 data/
 runs/
+tb_callbacks/
+development/
 runs_named/
 
 # pytest

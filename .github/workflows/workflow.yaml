@@ -1,0 +1,181 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Workflow
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  test_and_coverage:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9]
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies 🔧
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install .
+
+      - name: Test optional imports without all packages
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+        run: |
+          required_packages_test=$( python -m unittest tests/test_optional_imports_before_installing_reqs.py )
+          echo "::set-env name=Req_out::$required_packages_test"
+
+      - name: Fail on non-working optional imports
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+        uses: actions/github-script@v3
+        if: ${{ env.Req_out }}
+        with:
+          script: |
+            core.setFailed('Optional Packages cause test_optional_imports_before_installing_reqs.py to fail.')
+
+      - name: Install MD dependencies 🔧
+        run: |
+          if [ -f md_requirements.txt ]; then pip install -r md_requirements.txt ; fi
+          if [ -f tests/test_requirements.txt ]; then pip install -r tests/test_requirements.txt ; fi
+
+      - name: Run Unittests 🧪 and Coverage 🐍
+        env:
+            ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+        run: |
+          if [ -z ${Req_out} ] ; then
+            echo "Tests with required packages ran previously and result is ${{ env.Req_out }}"
+          else
+            echo "No previous Test results to compare this one with"
+          fi
+          out=$( python tests/run_unittests_and_coverage.py )
+          stringarray=($out)
+          percent=${stringarray[-1]}
+          COV=${percent%.*}
+          PERCENT=${COV}%
+          echo $COV
+          echo $PERCENT
+          echo "::set-env name=Percent::$PERCENT"
+          if [[ "$COV" -le 50 ]] ; then
+            COLOR=red
+          elif [[ "$COV" -gt 80 ]] ; then
+            COLOR=green
+          else
+            COLOR=orange
+          fi
+          echo $COLOR
+          echo "::set-env name=Color::$COLOR"
+
+      - name: Create Awesome Badge
+        uses: schneegans/dynamic-badges-action@v1.0.0
+        with:
+          auth: ${{ secrets.GIST_SECRET_FOR_DYNAMIC_BADGE }}
+          gistID: e4969c0b8ce8edeb862af753cff43ad0
+          filename: test.json
+          label: Coverage
+          namedLogo: Codecov
+          message: ${{ env.Percent }}
+          color: ${{ env.Color }}
+
+
+  build_doc:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 3.9 ]
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies 🔧
+        run: |
+          sudo apt-get install -y pandoc
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f md_requirements.txt ]; then pip install -r md_requirements.txt ; fi
+          if [ -f tests/test_requirements.txt ]; then pip install -r tests/test_requirements.txt ; fi
+          if [ -f docs/sphinx_requirements.txt ]; then pip install -r docs/sphinx_requirements.txt ; fi
+          pip install .
+
+      - name: Run Unittests 🧪 and Coverage 🐍
+        run: |
+          python tests/run_unittests_and_coverage.py
+
+      - name: Run Sphinx 📚
+        run: |
+          cd docs
+          make html
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: docs/build/ # The folder the action should deploy.
+
+  publish_test_pypi:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9]
+
+    steps:
+
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Tag with latest 🏷️
+        uses: EndBug/latest-tag@latest
+        with:
+          # If a description is provided, the action will use it to create an annotated tag. If none is given, the action will create a lightweight tag.
+          # Optional
+          description: This is the latest version of AG-Peter/encodermap
+
+      - name: Install pypa/build
+        run: >-
+          python -m
+          pip install
+          build
+          --user
+      - name: Build a binary wheel and a source tarball
+        run: >-
+          python -m
+          build
+          --sdist
+          --wheel
+          --outdir dist/
+          .
+      - name: Publish distribution 📦 to PyPI
+        if: startsWith(github.ref, 'refs/tags')
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}

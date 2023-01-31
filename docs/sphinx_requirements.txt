@@ -1,0 +1,11 @@
+sphinx
+sphinxcontrib.yt
+nbsphinx
+sphinx-copybutton
+sphinxcontrib-bibtex
+nbsphinx-link
+sphinx-design
+pydata-sphinx-theme
+m2r2
+mistune==0.8.4
+livereload

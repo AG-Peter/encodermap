@@ -1,0 +1,8 @@
+tqdm
+tensorboard
+traitlets
+numpy
+matplotlib
+tensorflow # ==2.4.0 # Fixes __array__() takes 1 positional argument but 2 were given
+tables
+MDAnalysis
