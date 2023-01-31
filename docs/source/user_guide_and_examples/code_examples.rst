@@ -14,4 +14,3 @@ Here are some useful code examples: `:ref:cube`
     dihedral_to_cartesian_diubi
     dihedral_to_cartesian_diubi_analysis
     trp_cage
-

@@ -5,7 +5,7 @@ For a quick intro have a look at the following video:
 
 [<p align="left"> <img src="pic/thumbnail.png" width=50% /> </p>](https://youtu.be/JV59OABhNTY)
 
-You can find more information in these two articles:  
+You can find more information in these two articles:
 [Lemke, Tobias, and Christine Peter. "EncoderMap: Dimensionality Reduction and Generation of Molecule Conformations." Journal of chemical theory and computation 15.2 (2019): 1209-1215.](https://pubs.acs.org/doi/abs/10.1021/acs.jctc.8b00975)
 
 [Lemke, T., Berg, A., Jain, A., & Peter, C. "EncoderMap (II): Visualizing important molecular motions with improved generation of protein conformations" Journal of chemical information and modeling (2019).](https://doi.org/10.1021/acs.jcim.9b00675)
@@ -13,7 +13,7 @@ You can find more information in these two articles:
 
 ## Installation
 EncoderMap requires TensorFlow 1.x to be installed. (TensorFlow 2 is not yet supported)
-Follow the [instructions on the TensorFlow website](https://www.tensorflow.org/install/pip) to install it 
+Follow the [instructions on the TensorFlow website](https://www.tensorflow.org/install/pip) to install it
 either in the cpu or gpu version.
 Then install EncoderMap with pip.
 If you want to install it in your home directory use:

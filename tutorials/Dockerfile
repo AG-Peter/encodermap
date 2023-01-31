@@ -12,4 +12,3 @@ RUN pip install nglview &&\
 
 EXPOSE 8888
 EXPOSE 6006
-

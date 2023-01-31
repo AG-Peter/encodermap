@@ -1,6 +1,6 @@
-import encodermap as em
 import matplotlib.pyplot as plt
 
+import encodermap as em
 
 data, ids = em.misc.random_on_cube_edges(1000, sigma=0.05)
 

@@ -1,6 +1,6 @@
 # Tutorials
 
-There are two options how to do the tutorials. 
+There are two options how to do the tutorials.
 You can either install all requirements directly on your system or you can run the tutorials in an isolated Docker environment where all requirements for the tutorials are set up for you.
 
 ## Inside Docker
