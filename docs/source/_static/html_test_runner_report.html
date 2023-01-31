@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EncoderMap Unittest Report from 2023-01-31T15:12:08+01:00</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="text-capitalize">EncoderMap Unittest Report from 2023-01-31T15:12:08+01:00</h2>
+                <p class='attribute'><strong>Start Time: </strong>2023-01-31 15:12:08</p>
+                <p class='attribute'><strong>Duration: </strong>1 ms</p>
+                <p class='attribute'><strong>Summary: </strong>Total: 14, Pass: 0, Error: 14</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>unittest.loader._FailedTest</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='warning'>
+                            <td class="col-xs-10">test_angles</td>
+                            <td class="col-xs-1">
+                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_angles
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_angles.py", line 34, in <module>
+    import encodermap as em
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+</p><p style="color:maroon;">ImportError: Failed to import test module: test_angles
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_angles.py", line 34, in <module>
+    import encodermap as em
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+
+</p>
+                            </td>
+                        </tr>
+                        <tr class='warning'>
+                            <td class="col-xs-10">test_autoencoder</td>
+                            <td class="col-xs-1">
+                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_autoencoder
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_autoencoder.py", line 29, in <module>
+    import encodermap.autoencoder.autoencoder as autoencoder
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+</p><p style="color:maroon;">ImportError: Failed to import test module: test_autoencoder
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_autoencoder.py", line 29, in <module>
+    import encodermap.autoencoder.autoencoder as autoencoder
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+
+</p>
+                            </td>
+                        </tr>
+                        <tr class='warning'>
+                            <td class="col-xs-10">test_backmapping_em1_em2</td>
+                            <td class="col-xs-1">
+                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_backmapping_em1_em2
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_backmapping_em1_em2.py", line 27, in <module>
+    import encodermap as em
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+</p><p style="color:maroon;">ImportError: Failed to import test module: test_backmapping_em1_em2
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_backmapping_em1_em2.py", line 27, in <module>
+    import encodermap as em
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+
+</p>
+                            </td>
+                        </tr>
+                        <tr class='warning'>
+                            <td class="col-xs-10">test_dihedral_to_cartesian</td>
+                            <td class="col-xs-1">
+                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_dihedral_to_cartesian
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_dihedral_to_cartesian.py", line 33, in <module>
+    import encodermap.encodermap_tf1 as em_tf1
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+</p><p style="color:maroon;">ImportError: Failed to import test module: test_dihedral_to_cartesian
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_dihedral_to_cartesian.py", line 33, in <module>
+    import encodermap.encodermap_tf1 as em_tf1
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+
+</p>
+                            </td>
+                        </tr>
+                        <tr class='warning'>
+                            <td class="col-xs-10">test_featurizer</td>
+                            <td class="col-xs-1">
+                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_featurizer
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_featurizer.py", line 56, in <module>
+    import encodermap as em
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+</p><p style="color:maroon;">ImportError: Failed to import test module: test_featurizer
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_featurizer.py", line 56, in <module>
+    import encodermap as em
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+
+</p>
+                            </td>
+                        </tr>
+                        <tr class='warning'>
+                            <td class="col-xs-10">test_interactive_plotting</td>
+                            <td class="col-xs-1">
+                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_interactive_plotting
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_interactive_plotting.py", line 33, in <module>
+    from encodermap import ADCParameters, AngleDihedralCartesianEncoderMap
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+</p><p style="color:maroon;">ImportError: Failed to import test module: test_interactive_plotting
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_interactive_plotting.py", line 33, in <module>
+    from encodermap import ADCParameters, AngleDihedralCartesianEncoderMap
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+
+</p>
+                            </td>
+                        </tr>
+                        <tr class='warning'>
+                            <td class="col-xs-10">test_losses</td>
+                            <td class="col-xs-1">
+                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_losses
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_losses.py", line 703, in <module>
+    import encodermap.loss_functions.loss_functions as loss_functions
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+</p><p style="color:maroon;">ImportError: Failed to import test module: test_losses
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_losses.py", line 703, in <module>
+    import encodermap.loss_functions.loss_functions as loss_functions
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+
+</p>
+                            </td>
+                        </tr>
+                        <tr class='warning'>
+                            <td class="col-xs-10">test_moldata</td>
+                            <td class="col-xs-1">
+                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_moldata
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_moldata.py", line 27, in <module>
+    import encodermap.encodermap_tf1 as em_tf1
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+</p><p style="color:maroon;">ImportError: Failed to import test module: test_moldata
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_moldata.py", line 27, in <module>
+    import encodermap.encodermap_tf1 as em_tf1
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+
+</p>
+                            </td>
+                        </tr>
+                        <tr class='warning'>
+                            <td class="col-xs-10">test_non_backbone_atoms</td>
+                            <td class="col-xs-1">
+                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_non_backbone_atoms
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_non_backbone_atoms.py", line 33, in <module>
+    import encodermap as em
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+</p><p style="color:maroon;">ImportError: Failed to import test module: test_non_backbone_atoms
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_non_backbone_atoms.py", line 33, in <module>
+    import encodermap as em
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+
+</p>
+                            </td>
+                        </tr>
+                        <tr class='warning'>
+                            <td class="col-xs-10">test_optional_imports</td>
+                            <td class="col-xs-1">
+                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_optional_imports
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_optional_imports.py", line 57, in <module>
+    import encodermap._optional_imports as _optional_imports
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+</p><p style="color:maroon;">ImportError: Failed to import test module: test_optional_imports
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_optional_imports.py", line 57, in <module>
+    import encodermap._optional_imports as _optional_imports
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+
+</p>
+                            </td>
+                        </tr>
+                        <tr class='warning'>
+                            <td class="col-xs-10">test_pairwise_distances</td>
+                            <td class="col-xs-1">
+                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_pairwise_distances
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_pairwise_distances.py", line 222, in <module>
+    import encodermap.misc.distances as distances
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+</p><p style="color:maroon;">ImportError: Failed to import test module: test_pairwise_distances
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_pairwise_distances.py", line 222, in <module>
+    import encodermap.misc.distances as distances
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+
+</p>
+                            </td>
+                        </tr>
+                        <tr class='warning'>
+                            <td class="col-xs-10">test_trajinfo</td>
+                            <td class="col-xs-1">
+                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_trajinfo
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_trajinfo.py", line 59, in <module>
+    from encodermap.loading.features import CentralDihedrals
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+</p><p style="color:maroon;">ImportError: Failed to import test module: test_trajinfo
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_trajinfo.py", line 59, in <module>
+    from encodermap.loading.features import CentralDihedrals
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+
+</p>
+                            </td>
+                        </tr>
+                        <tr class='warning'>
+                            <td class="col-xs-10">test_version</td>
+                            <td class="col-xs-1">
+                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_version
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_version.py", line 25, in <module>
+    import encodermap as em
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+</p><p style="color:maroon;">ImportError: Failed to import test module: test_version
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_version.py", line 25, in <module>
+    import encodermap as em
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+
+</p>
+                            </td>
+                        </tr>
+                        <tr class='warning'>
+                            <td class="col-xs-10">test_xarray</td>
+                            <td class="col-xs-1">
+                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_xarray
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_xarray.py", line 30, in <module>
+    import encodermap.misc.xarray as xarray
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+</p><p style="color:maroon;">ImportError: Failed to import test module: test_xarray
+Traceback (most recent call last):
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_xarray.py", line 30, in <module>
+    import encodermap.misc.xarray as xarray
+  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
+    from .backmapping import *
+ModuleNotFoundError: No module named 'encodermap.backmapping'
+
+</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 14, Pass: 0, Error: 14 -- Duration: 1 ms
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('td').on('click', '.btn', function(e){
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                var $this = $(this);
+                var $nextRow = $this.closest('tr').next('tr');
+                $nextRow.slideToggle("fast");
+                $this.text(function(i, text){
+                    if (text === 'View') {
+                        return 'Hide';
+                    } else {
+                        return 'View';
+                    };
+                });
+            });
+        });
+    </script>
+</body>
+</html

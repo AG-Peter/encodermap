@@ -1,0 +1,45 @@
+REMARK   1 CREATED WITH MDTraj 1.9.6, 2022-08-19
+CRYST1   64.441   64.441   64.441  60.00  60.00  90.00 P 1           1
+MODEL        0
+ATOM      1  B1  RES A   1       0.000   0.000   0.000  1.00  0.00           B
+ATOM      2  B2  RES A   2      10.000   0.000   0.000  1.00  0.00           B
+ATOM      3  B3  RES A   3      10.000  10.000   0.000  1.00  0.00           B
+ATOM      4  B4  RES A   4      20.000  10.000   0.000  1.00  0.00           B
+TER       5      RES A   4
+ENDMDL
+MODEL        1
+ATOM      1  B1  RES A   1       0.000   0.000   0.000  1.00  0.00           B
+ATOM      2  B2  RES A   2      10.000   0.000   0.000  1.00  0.00           B
+ATOM      3  B3  RES A   3      10.000  10.000   0.000  1.00  0.00           B
+ATOM      4  B4  RES A   4       0.000  10.000   0.000  1.00  0.00           B
+TER       5      RES A   4
+ENDMDL
+MODEL        2
+ATOM      1  B1  RES A   1       0.000   0.000   0.000  1.00  0.00           B
+ATOM      2  B2  RES A   2      20.000   0.000   0.000  1.00  0.00           B
+ATOM      3  B3  RES A   3      20.000  10.000   0.000  1.00  0.00           B
+ATOM      4  B4  RES A   4      30.000   5.000   5.000  1.00  0.00           B
+TER       5      RES A   4
+ENDMDL
+MODEL        3
+ATOM      1  B1  RES A   1       0.000   0.000   0.000  1.00  0.00           B
+ATOM      2  B2  RES A   2      10.000   0.000   0.000  1.00  0.00           B
+ATOM      3  B3  RES A   3      10.000  10.000   0.000  1.00  0.00           B
+ATOM      4  B4  RES A   4      15.000  10.000   0.000  1.00  0.00           B
+TER       5      RES A   4
+ENDMDL
+MODEL        4
+ATOM      1  B1  RES A   1       0.000   0.000   0.000  1.00  0.00           B
+ATOM      2  B2  RES A   2      10.000   0.000   0.000  1.00  0.00           B
+ATOM      3  B3  RES A   3      10.000  10.000   0.000  1.00  0.00           B
+ATOM      4  B4  RES A   4      15.000   0.000  10.000  1.00  0.00           B
+TER       5      RES A   4
+ENDMDL
+MODEL        5
+ATOM      1  B1  RES A   1       0.000   0.000   0.000  1.00  0.00           B
+ATOM      2  B2  RES A   2      10.000   0.000   0.000  1.00  0.00           B
+ATOM      3  B3  RES A   3      10.000  10.000   0.000  1.00  0.00           B
+ATOM      4  B4  RES A   4      10.000  15.000  10.000  1.00  0.00           B
+TER       5      RES A   4
+ENDMDL
+END
