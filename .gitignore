@@ -67,10 +67,10 @@ instance/
 # Sphinx documentation
 docs/_build/
 docs/build/
-docs/source/user_guide_and_exmaples/*.pdb
-docs/source/user_guide_and_exmaples/*.xtc
-docs/source/user_guide_and_exmaples/*.csv
-docs/source/user_guide_and_exmaples/*.png
+./docs/source/user_guide_and_exmaples/asp7.pdb
+./docs/source/user_guide_and_exmaples/*.xtc
+./docs/source/user_guide_and_exmaples/*.csv
+./docs/source/user_guide_and_exmaples/*.png
 
 
 # PyBuilder

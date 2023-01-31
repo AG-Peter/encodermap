@@ -12,3 +12,4 @@ xarray
 mdshare
 dask
 numba
+dsitributed

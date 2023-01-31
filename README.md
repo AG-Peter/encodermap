@@ -1,4 +1,11 @@
-<img src="pic/logo_m.png" width=45% align="right" />
+<img src="pic/new_logo_m.png" width=45% align="right" />
+
+![Test](https://github.com/AG-Peter/encodermap/actions/workflows/workflow.yaml/badge.svg?branch=main)
+![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/kevinsawade/e4969c0b8ce8edeb862af753cff43ad0/raw/test.json)
+![color](https://img.shields.io/badge/color-e77800-e77800)
+[![badge](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
+[![badge](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 
 ## Introduction
 For a quick intro have a look at the following video:
@@ -12,7 +19,20 @@ You can find more information in these two articles:
 
 
 ## Installation
-EncoderMap requires TensorFlow 1.x to be installed. (TensorFlow 2 is not yet supported)
+
+**Version 3.0.0 is currently not on PyPI. Install with:**
+
+```bash
+pip install git+https://github.com/AG-Peter/encodermap.git
+```
+
+**Install optional packages for using MD data:
+
+```bash
+pip install -r https://raw.githubusercontent.com/AG-Peter/encodermap/main/tests/test_requirements.md
+```
+
+EncoderMap requires TensorFlow >=2.9 to be installed. (TensorFlow 2 is not yet supported)
 Follow the [instructions on the TensorFlow website](https://www.tensorflow.org/install/pip) to install it
 either in the cpu or gpu version.
 Then install EncoderMap with pip.
@@ -62,3 +82,31 @@ More information is available in the [documentations](https://ag-peter.github.io
 
 ## Questions
 If you have any questions you can have a look at the [FAQ](questions.md) (not very extensive yet), and you are most welcome to [open an issue here on GitHub](https://github.com/AG-Peter/encodermap/issues/new).
+
+## Citations
+
+```
+@article{lemke2019encodermap,
+  title={Encodermap: Dimensionality reduction and generation of molecule conformations},
+  author={Lemke, Tobias and Peter, Christine},
+  journal={Journal of chemical theory and computation},
+  volume={15},
+  number={2},
+  pages={1209--1215},
+  year={2019},
+  publisher={ACS Publications}
+}
+```
+
+```
+@article{lemke2019encodermap,
+  title={EncoderMap (II): Visualizing important molecular motions with improved generation of protein conformations},
+  author={Lemke, Tobias and Berg, Andrej and Jain, Alok and Peter, Christine},
+  journal={Journal of Chemical Information and Modeling},
+  volume={59},
+  number={11},
+  pages={4550--4560},
+  year={2019},
+  publisher={ACS Publications}
+}
+```
