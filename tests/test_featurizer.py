@@ -216,7 +216,8 @@ class TestFeatures(unittest.TestCase):
         self.traj = SingleTraj(traj_path)
 
         traj_paths = (Path(__file__) / "../../tests/data").resolve()
-        traj_paths = list(traj_paths.glob("known_angles_*.h5"))[::-1]
+        traj_paths = list(traj_paths.glob("known_angles_*.h5"))
+        traj_paths = list(sorted(traj_paths, key=lambda x: int(str(x)[-4])))
         self.trajs = em.TrajEnsemble(traj_paths)
 
         md_traj_xtc = (

@@ -82,6 +82,11 @@ class SortableSuite(unittest.TestSuite):
 
 
 if __name__ == "__main__":
+    omit = ["*Test*", "*test*", "*/usr/local/lib*", "*Users*", "*__init__*"]
+    cov = coverage.Coverage(
+        config_file=str(Path(__file__).resolve().parent.parent / "pyproject.toml")
+    )
+    cov.start()
     loader = unittest.TestLoader()
     loader.suiteClass = SortableSuite
     test_suite = loader.discover(
@@ -126,11 +131,6 @@ if __name__ == "__main__":
     print("saved html report")
 
     # run the test
-    omit = ["*Test*", "*test*", "*/usr/local/lib*", "*Users*", "*__init__*"]
-    cov = coverage.Coverage(
-        config_file=str(Path(__file__).resolve().parent.parent / "pyproject.toml")
-    )
-    cov.start()
     result = runner.run(test_suite)
     cov.stop()
     print(f"Saving coverage report to {out_dir}")

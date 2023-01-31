@@ -405,13 +405,13 @@ class TestLossesPeriodic(tf.test.TestCase):
         self.assertNotEqual(
             distance_loss_tf1_case2,
             0,
-            msg=f"Uniform input (np.zeros(100, 10) {inp[:5, :5]} and random latent (100, 2) {latent[:5, :]} did not not equal 0 in distance_loss_tf1 (periodic), but {distance_loss_tf1_case2}",
+            msg=f"Uniform input (np.zeros(100, 10) {inp[:5, :5]} and random latent (100, 2) {latent[:5, :]} did not NOT equal 0 in distance_loss_tf1 (periodic), but {distance_loss_tf1_case2}",
         )
         distance_loss_tf2_case2 = loss_functions.distance_loss(model_)(inp)
         self.assertNotEqual(
             distance_loss_tf2_case2.numpy(),
             0,
-            msg=f"Uniform input (np.zeros(100, 10) {inp[:5, :5]} and random latent (100, 2) {latent[:5, :]} did not not equal 0 in distance_loss_tf2 (periodic), but {distance_loss_tf2_case2}",
+            msg=f"Uniform input (np.zeros(100, 10) {inp[:5, :5]} and random latent (100, 2) {latent[:5, :]} did not NOT equal 0 in distance_loss_tf2 (periodic), but {distance_loss_tf2_case2}",
         )
         self.assertEqual(distance_loss_tf1_case2, distance_loss_tf2_case2)
         # Case 3

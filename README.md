@@ -17,6 +17,12 @@ You can find more information in these two articles:
 
 [Lemke, T., Berg, A., Jain, A., & Peter, C. "EncoderMap (II): Visualizing important molecular motions with improved generation of protein conformations" Journal of chemical information and modeling (2019).](https://doi.org/10.1021/acs.jcim.9b00675)
 
+## Documentation
+
+Find the documentation at:
+
+https://ag-peter.github.io/encoder_map_private/
+
 
 ## Installation
 
