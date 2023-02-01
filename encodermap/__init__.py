@@ -90,22 +90,22 @@ should aid computational chemists and also structural biologists:
 ################################################################################
 
 
-from encodermap._version import __version__
-from encodermap.autoencoder.autoencoder import (
+from ._version import __version__
+from .autoencoder.autoencoder import (
     AngleDihedralCartesianEncoderMap,
     Autoencoder,
     EncoderMap,
 )
-from encodermap.callbacks.callbacks import EncoderMapBaseCallback
-from encodermap.loading import features
-from encodermap.loading.featurizer import Featurizer
-from encodermap.misc.function_def import function
-from encodermap.moldata.moldata import MolData
-from encodermap.parameters.parameters import ADCParameters, Parameters
-from encodermap.plot.interactive_plotting import InteractivePlotting
-from encodermap.trajinfo.info_all import TrajEnsemble
-from encodermap.trajinfo.info_single import SingleTraj
-from encodermap.trajinfo.repository import Repository
+from .callbacks.callbacks import EncoderMapBaseCallback
+from .loading import features
+from .loading.featurizer import Featurizer
+from .misc.function_def import function
+from .moldata.moldata import MolData
+from .parameters.parameters import ADCParameters, Parameters
+from .plot.interactive_plotting import InteractivePlotting
+from .trajinfo.info_all import TrajEnsemble
+from .trajinfo.info_single import SingleTraj
+from .trajinfo.repository import Repository
 
 
 def load(
