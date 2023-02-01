@@ -334,8 +334,7 @@
 <li class="toctree-l2"><a class="reference internal" href="02_training_with_different_topologies.html">Training with different topologies</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="md_notebooks.html">Learn how EncoderMap handles MD data and trajectory ensembles</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="01_working_with_trajectory_ensembles.html">Working with trajectory ensembles</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="md_notebooks.html">Learn how EncoderMap handles MD data and trajectory ensembles</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul class="simple">
 </ul>
 </li>
 </ul>
@@ -675,14 +674,14 @@ File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/pyth
 <span class="ansi-green-intense-fg ansi-bold">     88</span> <span style="color: rgb(95,135,135)">################################################################################</span>
 <span class="ansi-green-intense-fg ansi-bold">     89</span> <span style="color: rgb(95,135,135)"># Imports</span>
 <span class="ansi-green-intense-fg ansi-bold">     90</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     93</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">encodermap</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">_version</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> __version__
-<span class="ansi-green-fg">---&gt; 94</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">encodermap</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">autoencoder</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">autoencoder</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-intense-fg ansi-bold">     93</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">_version</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> __version__
+<span class="ansi-green-fg">---&gt; 94</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">autoencoder</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">autoencoder</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
 <span class="ansi-green-intense-fg ansi-bold">     95</span>     AngleDihedralCartesianEncoderMap,
 <span class="ansi-green-intense-fg ansi-bold">     96</span>     Autoencoder,
 <span class="ansi-green-intense-fg ansi-bold">     97</span>     EncoderMap,
 <span class="ansi-green-intense-fg ansi-bold">     98</span> )
-<span class="ansi-green-intense-fg ansi-bold">     99</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">encodermap</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> EncoderMapBaseCallback
-<span class="ansi-green-intense-fg ansi-bold">    100</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">encodermap</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">loading</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> features
+<span class="ansi-green-intense-fg ansi-bold">     99</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> EncoderMapBaseCallback
+<span class="ansi-green-intense-fg ansi-bold">    100</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">loading</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> features
 
 <span class="ansi-red-fg">ModuleNotFoundError</span>: No module named &#39;encodermap.autoencoder&#39;
 </pre></div></div>
@@ -718,7 +717,7 @@ x^2 + y^2 - 1 &= 0
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[&lt;matplotlib.lines.Line2D at 0x7f306a4b44f0&gt;]
+[&lt;matplotlib.lines.Line2D at 0x7fc3c47b04f0&gt;]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -762,7 +761,7 @@ x^2 + y^2 - 1 &= 0
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.contour.QuadContourSet at 0x7f30683b1f40&gt;
+&lt;matplotlib.contour.QuadContourSet at 0x7fc3c46b1f40&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1025,7 +1024,7 @@ Cell <span class="ansi-green-fg">In[14], line 1</span>
 <section id="Output">
 <h2>Output<a class="headerlink" href="#Output" title="Permalink to this heading">#</a></h2>
 <p>Here’s what Tensorboard should put out:</p>
-<p><img alt="363b16b01a214944ae061ac0d8ae623b" class="no-scaled-link" src="../_images/custom_loss_functions_1.png" style="width: 800px;" /></p>
+<p><img alt="565b89ffd92d4977ac9ea11943b95181" class="no-scaled-link" src="../_images/custom_loss_functions_1.png" style="width: 800px;" /></p>
 <section id="Conclusion">
 <h3>Conclusion<a class="headerlink" href="#Conclusion" title="Permalink to this heading">#</a></h3>
 <p>Using the closure method, you can easily add new loss functions to EncoderMap.</p>

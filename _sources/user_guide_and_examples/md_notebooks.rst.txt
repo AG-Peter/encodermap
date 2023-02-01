@@ -8,4 +8,4 @@ Some notebooks to introduce you to collective variables and trajectory ensembles
 .. toctree::
     :maxdepth: 2
 
-    01_working_with_trajectory_ensembles
+    01_Working_with_trajectory_ensembles
