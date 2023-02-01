@@ -9,3 +9,4 @@ pydata-sphinx-theme
 m2r2
 mistune==0.8.4
 livereload
+ipykernel
