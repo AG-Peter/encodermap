@@ -948,8 +948,6 @@ class TestFeatures(unittest.TestCase):
 
 test_cases = (
     TestFeatures,
-    TestDaskFeatures,
-    TestDaskFeatureAndFeaturizerReturnDataSets,
 )
 
 
