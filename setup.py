@@ -21,7 +21,6 @@ setup(
         "encodermap.plot",
         "encodermap.callbacks",
         "encodermap.autoencoder",
-        "encodermap.data",
         "encodermap.encodermap_tf1",
         "encodermap.loading",
         "encodermap.loss_functions",
