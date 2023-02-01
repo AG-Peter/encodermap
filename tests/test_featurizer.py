@@ -946,9 +946,7 @@ class TestFeatures(unittest.TestCase):
             self.md_traj.load_CV(["central_dihedrals", "side_dihedrals"])
 
 
-test_cases = (
-    TestFeatures,
-)
+test_cases = (TestFeatures,)
 
 
 def load_tests(loader, tests, pattern):

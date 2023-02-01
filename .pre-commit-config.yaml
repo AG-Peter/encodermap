@@ -39,7 +39,7 @@ repos:
 #     - id: vulture
 
 - repo: https://github.com/kevinsawade/pre-commit-hooks
-  rev: latest # new pushed of my repos are available as @latest
+  rev: 0.0.4 # new pushed of my repos are available as @latest
   hooks:
     - id: clear-ipynb-cells
     # - id: run-pycodestyle
