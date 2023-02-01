@@ -1,0 +1,891 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>encodermap.plot.interactive_plotting &#8212; encodermap 3.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/encodermap/plot/interactive_plotting';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <h1>Source code for encodermap.plot.interactive_plotting</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># encodermap/plot/interactive_plotting.py</span>
+<span class="c1">################################################################################</span>
+<span class="c1"># Encodermap: A python library for dimensionality reduction.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2019-2022 University of Konstanz and the Authors</span>
+<span class="c1">#</span>
+<span class="c1"># Authors:</span>
+<span class="c1"># Kevin Sawade, Tobias Lemke</span>
+<span class="c1">#</span>
+<span class="c1"># Encodermap is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as</span>
+<span class="c1"># published by the Free Software Foundation, either version 2.1</span>
+<span class="c1"># of the License, or (at your option) any later version.</span>
+<span class="c1"># This package is distributed in the hope that it will be useful to other</span>
+<span class="c1"># researches. IT DOES NOT COME WITH ANY WARRANTY WHATSOEVER; without even the</span>
+<span class="c1"># implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span>
+<span class="c1"># See the GNU Lesser General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">################################################################################</span>
+<span class="sd">&quot;&quot;&quot;ToDo:</span>
+<span class="sd">    * Check if vmd rendering works</span>
+<span class="sd">    * Animate the path and the torsions inside the Interactive Plotting class.</span>
+<span class="sd">    * ToolTip when hovering over buttons.</span>
+<span class="sd">    * Path Tool.</span>
+<span class="sd">    * Allow a path that selects closest points for points on path. Maybe do both for any given bezier/path path.</span>
+<span class="sd">    * Allow autoencoder to be None. Catch the exception that tries to get autoencoder.trajs.</span>
+<span class="sd">    * Superpose option with mdtraj not working</span>
+<span class="sd">    * Keep the lasso select.</span>
+<span class="sd">    * Movie along paths.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Imports</span>
+<span class="c1">##############################################################################</span>
+
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">groupby</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib.path</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">.._optional_imports</span> <span class="kn">import</span> <span class="n">_optional_import</span>
+<span class="kn">from</span> <span class="nn">..autoencoder.autoencoder</span> <span class="kn">import</span> <span class="n">AngleDihedralCartesianEncoderMap</span>
+<span class="kn">from</span> <span class="nn">..misc.clustering</span> <span class="kn">import</span> <span class="n">gen_dummy_traj</span><span class="p">,</span> <span class="n">get_cluster_frames</span>
+<span class="kn">from</span> <span class="nn">..misc.misc</span> <span class="kn">import</span> <span class="n">_datetime_windows_and_linux_compatible</span><span class="p">,</span> <span class="n">all_equal</span>
+<span class="kn">from</span> <span class="nn">..plot.plotting</span> <span class="kn">import</span> <span class="n">plot_cluster</span>
+<span class="kn">from</span> <span class="nn">..trajinfo.info_all</span> <span class="kn">import</span> <span class="n">TrajEnsemble</span>
+<span class="kn">from</span> <span class="nn">..trajinfo.info_single</span> <span class="kn">import</span> <span class="n">SingleTraj</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">_unpack_cluster_info</span><span class="p">,</span> <span class="n">_unpack_path_info</span>
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Optional Imports</span>
+<span class="c1">##############################################################################</span>
+
+
+<span class="n">sns</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;seaborn&quot;</span><span class="p">)</span>
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Classes</span>
+<span class="c1">##############################################################################</span>
+
+
+<div class="viewcode-block" id="InteractivePlotting"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting">[docs]</a><span class="k">class</span> <span class="nc">InteractivePlotting</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to open up an interactive plotting window.</span>
+
+<span class="sd">    Contains sub-classes to handle user-clickable menus and selectors.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        trajs (encodermap.TrajEnsemble): The trajs passed into this class.</span>
+<span class="sd">        fig (matplotlib.figure): The figure plotted onto. If ax is passed when</span>
+<span class="sd">            this class is instantiated the parent figure will be fetched with</span>
+<span class="sd">            self.fig = self.ax.get_figure()</span>
+<span class="sd">        ax (matplotlib.axes): The axes where the lowd data of the trajs</span>
+<span class="sd">            is plotted on.</span>
+<span class="sd">        menu_ax (matplotlib.axes): The axes where the normal menu is plotted on.</span>
+<span class="sd">        status_menu_ax (matplotlib.axes): The axes on which the status menu is plotted on.</span>
+<span class="sd">        pts (matplotlib.collections.Collection): The points which are plotted. Based on some</span>
+<span class="sd">            other class variables the color of this collection is adjusted.</span>
+<span class="sd">        statusmenu (encodermap.plot.utils.StatusMenu): The menu containing the</span>
+<span class="sd">            status buttons.</span>
+<span class="sd">        menu (encodermap.plot.utils.Menu): The menu containing the remaining buttons.</span>
+<span class="sd">        tool (encodermap.plot.utils.SelectFromCollection): The currentlty active</span>
+<span class="sd">            tool used to select points. This can be lasso, polygon, etc...</span>
+<span class="sd">        mode (str): Current mode of the statusmenu.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; sess = ep.InteractivePlotting(trajs)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="InteractivePlotting.__init__"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">autoencoder</span><span class="p">,</span>
+        <span class="n">trajs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">align_string</span><span class="o">=</span><span class="s2">&quot;name CA&quot;</span><span class="p">,</span>
+        <span class="n">top</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">hist</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+        <span class="n">ball_and_stick</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">top_index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate the InteractivePlotting class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            trajs (encodermap.TrajEnsemble): The trajs of which the lowd info</span>
+<span class="sd">                should be plotted.</span>
+<span class="sd">            ax (matplotlib.axes, optional): On what axes to plot. If no axes is provided</span>
+<span class="sd">                a new figure and axes will be created defaults to None.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># the align string for the cluster dummy method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">align_string</span> <span class="o">=</span> <span class="n">align_string</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">top</span> <span class="o">=</span> <span class="n">top</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hist</span> <span class="o">=</span> <span class="n">hist</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">autoencoder</span> <span class="o">=</span> <span class="n">autoencoder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ball_and_stick</span> <span class="o">=</span> <span class="n">ball_and_stick</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">top_index</span> <span class="o">=</span> <span class="n">top_index</span>
+
+        <span class="c1"># scatter kws</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scatter_kws</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="p">{</span><span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span> <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span> <span class="o">**</span><span class="n">scatter_kws</span><span class="p">}</span>
+
+        <span class="c1"># close all plots</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
+
+        <span class="c1"># decide on fate of data</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="s2">&quot;lowd&quot;</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using the attribute `lowd` of provided `trajs`&quot;</span><span class="p">)</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">lowd</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="p">(</span><span class="n">TrajEnsemble</span><span class="p">,</span> <span class="n">SingleTraj</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span>
+                <span class="nb">isinstance</span><span class="p">(</span><span class="n">autoencoder</span><span class="p">,</span> <span class="n">AngleDihedralCartesianEncoderMap</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="n">autoencoder</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;AngleDihedralCartesianEncoderMap&quot;</span>
+            <span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="s2">&quot;Using the provided `autoencoder` and `trajs` to create a projection.&quot;</span>
+                <span class="p">)</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">autoencoder</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">trajs</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">autoencoder</span><span class="p">,</span> <span class="s2">&quot;encode&quot;</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using the `encode` method of `autoencoder` with provided data.&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+                    <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+                    <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">data</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int64&quot;</span><span class="p">)</span>
+                    <span class="n">dense_shape</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+                    <span class="n">values</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">data</span><span class="p">)]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">SparseTensor</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">dense_shape</span><span class="p">)</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">autoencoder</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">autoencoder</span><span class="p">,</span> <span class="s2">&quot;encode&quot;</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using the `train_data` attribute of `autoencoder`.&quot;</span><span class="p">)</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">autoencoder</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mocking data with np.random&quot;</span><span class="p">)</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">19680801</span><span class="p">)</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using provided `data` to call encoder.&quot;</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">autoencoder</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+
+        <span class="c1"># see what traj has been provided</span>
+        <span class="k">if</span> <span class="n">trajs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span> <span class="o">=</span> <span class="n">autoencoder</span><span class="o">.</span><span class="n">trajs</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span> <span class="o">=</span> <span class="n">SingleTraj</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="n">traj_num</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">_gen_ensemble</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span> <span class="o">=</span> <span class="n">TrajEnsemble</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span> <span class="o">=</span> <span class="n">trajs</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">SingleTraj</span><span class="p">):</span>
+            <span class="k">if</span> <span class="s2">&quot;lowd&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">:</span>
+                <span class="n">selfself</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">load_CV</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">attr_name</span><span class="o">=</span><span class="s2">&quot;lowd&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;lowd&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">load_CVs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">attr_name</span><span class="o">=</span><span class="s2">&quot;lowd&quot;</span><span class="p">)</span>
+
+        <span class="c1"># decide what function to use to build clusters</span>
+        <span class="c1"># Decided against gen_dummy traj as get_cluster_frames works better with jinja2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cluster_building_fn</span> <span class="o">=</span> <span class="n">get_cluster_frames</span>
+
+        <span class="c1"># create fig and ax</span>
+        <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># create fig and ax</span>
+            <span class="n">subplot_kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">autoscale_on</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+                <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+            <span class="p">)</span>  <span class="c1"># subplot_kw=subplot_kw)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_figure</span><span class="p">()</span>
+
+        <span class="c1"># add the axes to create the menus on</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu_ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">([</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">],</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;lightblue&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_menu_ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span>
+            <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.49</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">],</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;lightyellow&quot;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># remove everything in these axes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_menu_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool</span> <span class="o">=</span> <span class="n">DummyTool</span><span class="p">()</span>
+
+        <span class="c1"># plot</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">scatter_kws</span><span class="p">)</span>
+
+        <span class="c1"># hist</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hist</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">hist2d</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">mpl</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">LogNorm</span><span class="p">())</span>
+
+        <span class="c1"># Check whether mouse enters drawing area</span>
+        <span class="c1"># Upon entering drawing area tools are initialized based on current mode</span>
+        <span class="c1"># Leave event currently serves no purpose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cid_ax_enter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">mpl_connect</span><span class="p">(</span>
+            <span class="s2">&quot;axes_enter_event&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_enter_ax</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cid_ax_leave</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">mpl_connect</span><span class="p">(</span>
+            <span class="s2">&quot;axes_leave_event&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_leave_ax</span>
+        <span class="p">)</span>
+
+        <span class="c1"># chech button presses and compare them with the status of the menuitems</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cid_on_click</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">mpl_connect</span><span class="p">(</span>
+            <span class="s2">&quot;button_release_event&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_click</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Instantiate Menu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statusmenu</span> <span class="o">=</span> <span class="n">StatusMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_menu_ax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span> <span class="o">=</span> <span class="n">Menu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menu_ax</span><span class="p">)</span>
+
+        <span class="c1"># Show</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="InteractivePlotting.on_click"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.on_click">[docs]</a>    <span class="k">def</span> <span class="nf">on_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Decides whether the release event happened in the drawing area or the menu.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            event (matplotlib.backend_bases.Event): The event provided by figure.canvas.connect().</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">inaxes</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">on_click_tool</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">on_click_menu</span><span class="p">(</span><span class="n">event</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InteractivePlotting.on_enter_ax"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.on_enter_ax">[docs]</a>    <span class="k">def</span> <span class="nf">on_enter_ax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Chosses the tool to use when self.ax is entered, based on current mode.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            event (matplotlib.backend_bases.Event): The event provided by figure.canvas.connect().</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># print(&#39;Axis is entered&#39;)</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">inaxes</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;Idle&quot;</span><span class="p">:</span>
+            <span class="c1"># reset point coloration</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pts</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">&quot;C0&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tool</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">inaxes</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s2">&quot;Idle&quot;</span><span class="p">:</span>
+            <span class="c1"># statusmenu</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">statusmenu</span><span class="o">.</span><span class="n">menuitems</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+                    <span class="n">method</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+                    <span class="n">method</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="InteractivePlotting.on_leave_ax"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.on_leave_ax">[docs]</a>    <span class="k">def</span> <span class="nf">on_leave_ax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Disconnect the current tool.&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="InteractivePlotting.on_click_tool"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.on_click_tool">[docs]</a>    <span class="k">def</span> <span class="nf">on_click_tool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Left here for convenience if some tools need a button release event.&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="InteractivePlotting.on_click_menu"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.on_click_menu">[docs]</a>    <span class="k">def</span> <span class="nf">on_click_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Chooses the function to call based on what MenuItem was clicked.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            event (matplotlib.backend_bases.Event): The event provided by figure.canvas.connect().</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="o">.</span><span class="n">menuitems</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">check_select</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+                <span class="n">method</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">))</span>
+                <span class="n">method</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="InteractivePlotting.reset"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called when &#39;Reset&#39; is pressed.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;user_selected_points&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">_CVs</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="s2">&quot;user_selected_points&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">autoencoder</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+            <span class="kc">None</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">align_string</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hist</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scatter_kws</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ball_and_stick</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="InteractivePlotting.write"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called when &#39;Write&#39; is pressed.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;Idle&quot;</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">_datetime_windows_and_linux_compatible</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;Bezier&quot;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;Path&quot;</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">autoencoder</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">main_path</span><span class="si">}</span><span class="s2">/generated_paths/&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">autoencoder</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">main_path</span><span class="si">}</span><span class="s2">/generated_paths/generated_</span><span class="si">{</span><span class="n">time</span><span class="si">}</span><span class="s2">.pdb&quot;</span>
+            <span class="p">)</span>
+            <span class="k">with</span> <span class="n">mda</span><span class="o">.</span><span class="n">Writer</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="k">as</span> <span class="n">w</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">uni</span><span class="o">.</span><span class="n">trajectory</span><span class="p">:</span>
+                    <span class="n">w</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uni</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Generated Path with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">generated</span><span class="p">)</span><span class="si">}</span><span class="s2"> points saved at </span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;user_selected_points&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;First set the points before writing them to disk.&quot;</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="n">max_</span><span class="p">,</span> <span class="n">fname</span> <span class="o">=</span> <span class="n">_unpack_cluster_info</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">autoencoder</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">main_path</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tool</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dummy_traj</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">align_string</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cluster </span><span class="si">{</span><span class="n">max_</span><span class="si">}</span><span class="s2"> saved at </span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InteractivePlotting.set_points"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.set_points">[docs]</a>    <span class="k">def</span> <span class="nf">set_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called when &#39;Set Points&#39; is pressed.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;Idle&quot;</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s2">&quot;Idle&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;tool&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tool </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="si">}</span><span class="s2"> not yet implemented.&quot;</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;Bezier&quot;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;Path&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_points</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Tool </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="si">}</span><span class="s2"> returned not the requested unique points.&quot;</span>
+                <span class="p">)</span>
+                <span class="k">return</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dummy_traj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoencoder</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">path_points</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;mdanalysis&quot;</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">top_index</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="n">ngl</span><span class="o">.</span><span class="n">show_mdanalysis</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dummy_traj</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ball_and_stick</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">clear_representations</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">add_ball_and_stick</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Generated Path with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dummy_traj</span><span class="o">.</span><span class="n">trajectory</span><span class="p">)</span><span class="si">}</span><span class="s2"> points is accessible as InteractivePlotting.view.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">indices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s2">&quot;Bezier&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s2">&quot;Path&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Currently working on rendering the cluster. I&#39;ll let you know, when I&#39;m finished.&quot;</span>
+            <span class="p">)</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
+
+            <span class="c1"># update user defined clustering</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="s2">&quot;user_selected_points&quot;</span>
+            <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">:</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">n_frames</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">_</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">except</span> <span class="ne">IndexError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">SystemExit</span> <span class="kn">from</span> <span class="nn">e</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">load_CVs</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+                <span class="n">max_</span> <span class="o">=</span> <span class="n">_</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+                <span class="n">_</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">load_CVs</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+
+            <span class="c1"># change coloration of self.pts</span>
+            <span class="n">color_palette</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;Paired&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">cluster_colors</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="o">*</span><span class="n">color_palette</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+            <span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pts</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="n">cluster_colors</span><span class="p">)</span>
+
+            <span class="n">max_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dummy_traj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cluster_building_fn</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="p">,</span>
+                <span class="n">max_</span><span class="p">,</span>
+                <span class="n">nglview</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">shorten</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">stack_atoms</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">,</span>
+                <span class="n">align_string</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">align_string</span><span class="p">,</span>
+                <span class="n">ball_and_stick</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ball_and_stick</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ball_and_stick</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dummy_traj</span><span class="p">)):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">clear_representations</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">add_ball_and_stick</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Cluster </span><span class="si">{</span><span class="n">max_</span><span class="si">}</span><span class="s2"> is accessible as InteractivePlotting.view.&quot;</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="InteractivePlotting.render_move"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.render_move">[docs]</a>    <span class="k">def</span> <span class="nf">render_move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="InteractivePlotting.lasso"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.lasso">[docs]</a>    <span class="k">def</span> <span class="nf">lasso</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool</span> <span class="o">=</span> <span class="n">SelectFromCollection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pts</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InteractivePlotting.rectangle"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.rectangle">[docs]</a>    <span class="k">def</span> <span class="nf">rectangle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool</span> <span class="o">=</span> <span class="n">SelectFromCollection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pts</span><span class="p">,</span> <span class="n">selector</span><span class="o">=</span><span class="n">RectangleSelector</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InteractivePlotting.ellipse"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.ellipse">[docs]</a>    <span class="k">def</span> <span class="nf">ellipse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ellipse not yet implemented&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InteractivePlotting.polygon"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.polygon">[docs]</a>    <span class="k">def</span> <span class="nf">polygon</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">textstr</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="s2">&quot;Select points in the figure by enclosing them within a polygon.&quot;</span><span class="p">,</span>
+                <span class="c1"># Press the &#39;esc&#39; key to start a new polygon.</span>
+                <span class="s2">&quot;Try holding the &#39;shift&#39; key to move all of the vertices.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Try holding the &#39;ctrl&#39; key to move a single vertex.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># these are matplotlib.patch.Patch properties</span>
+        <span class="n">props</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;wheat&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+        <span class="c1"># place a text box in upper left in axes coords</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">manual_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+            <span class="mf">0.05</span><span class="p">,</span>
+            <span class="mf">0.95</span><span class="p">,</span>
+            <span class="n">textstr</span><span class="p">,</span>
+            <span class="n">transform</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
+            <span class="n">fontsize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+            <span class="n">verticalalignment</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span>
+            <span class="n">bbox</span><span class="o">=</span><span class="n">props</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool</span> <span class="o">=</span> <span class="n">SelectFromCollection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pts</span><span class="p">,</span> <span class="n">selector</span><span class="o">=</span><span class="n">PolygonSelector</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InteractivePlotting.path"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.path">[docs]</a>    <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="InteractivePlotting.bezier"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.bezier">[docs]</a>    <span class="k">def</span> <span class="nf">bezier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">Line2D</span><span class="p">([],</span> <span class="p">[],</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;#666666&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">mew</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">mec</span><span class="o">=</span><span class="s2">&quot;#204a87&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool</span> <span class="o">=</span> <span class="n">BezierBuilder</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InteractivePlotting.accept"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.InteractivePlotting.accept">[docs]</a>    <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;manual_text&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">manual_text</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">manual_text</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;Bezier&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">path_points</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tool</span><span class="o">.</span><span class="n">ind</span><span class="p">)</span>
+        <span class="n">selected_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool</span><span class="o">.</span><span class="n">ind</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">selected_indices</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cluster_zoomed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="s2">&quot;user_selected_points&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="n">max_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">plot_cluster_zoomed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="p">,</span> <span class="n">max_</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">statusmenu</span><span class="o">.</span><span class="n">status</span></div>
+</pre></div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023, Kevin Sawade, Tobias Lemke.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

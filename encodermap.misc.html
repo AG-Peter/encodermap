@@ -1,0 +1,1850 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>encodermap.misc package &#8212; encodermap 3.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'encodermap.misc';</script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="_static/logo_cube_300.png" class="logo__image only-light" alt="Logo image">
+    <img src="_static/logo_cube_300.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="encodermap.autoencoder.html">encodermap.autoencoder package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.callbacks.html">encodermap.callbacks package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.data.html">encodermap.data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.encodermap_tf1.html">encodermap.encodermap_tf1 package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.loading.html">encodermap.loading package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.loss_functions.html">encodermap.loss_functions package</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">encodermap.misc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.models.html">encodermap.models package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.moldata.html">encodermap.moldata package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.parameters.html">encodermap.parameters package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.plot.html">encodermap.plot package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.trajinfo.html">encodermap.trajinfo package</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="encodermap-misc-package">
+<h1>encodermap.misc package<a class="headerlink" href="#encodermap-misc-package" title="Permalink to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="module-encodermap.misc.backmapping">
+<span id="encodermap-misc-backmapping-module"></span><h2>encodermap.misc.backmapping module<a class="headerlink" href="#module-encodermap.misc.backmapping" title="Permalink to this heading">#</a></h2>
+<p>Backmapping functions largely based upon encodermap_tf1’s nackmapping an martini-tools backwards.py</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>Using Quaternions in Tensorflow rotation matrices could be accelerated?</p></li>
+<li><p>Multi Top.</p></li>
+</ul>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.backmapping._dihedral">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.backmapping.</span></span><span class="sig-name descname"><span class="pre">_dihedral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xyz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/backmapping.html#_dihedral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.backmapping._dihedral" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns current dihedral angle between positions.</p>
+<p>Adapted from MDTraj.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xyz</strong> (<em>np.ndarray</em><em>)</em><em>. This function only takes a xyz array</em><em> of </em><em>a single frame and uses np.expand_dims</em><em>(</em>) – to make that fame work with the <cite>_displacement</cite> function from mdtraj.</p></li>
+<li><p><strong>indices</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>list</em><em>]</em>) – List of 4 ints describing the dihedral.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.backmapping._displacement">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.backmapping.</span></span><span class="sig-name descname"><span class="pre">_displacement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xyz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pairs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/backmapping.html#_displacement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.backmapping._displacement" title="Permalink to this definition">#</a></dt>
+<dd><p>Displacement vector between pairs of points in each frame</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.backmapping._get_far_and_near_networkx">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.backmapping.</span></span><span class="sig-name descname"><span class="pre">_get_far_and_near_networkx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bondgraph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/backmapping.html#_get_far_and_near_networkx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.backmapping._get_far_and_near_networkx" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns near and far sides for a list of edges giving the indices of the two atoms at which the structure is broken.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bondgraph</strong> (<em>networkx.classes.graph.Graph</em>) – The bondgraph describing the protein.</p></li>
+<li><p><strong>edge_indices</strong> (<em>np.ndarray</em>) – The edges the graph will be broken at.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tuple containing the following:</dt><dd><p>near_sides (list of np.ndarray): List of integer arrays giving the near sides. len(near_sides) == len(edge_indices).
+far_sides (list of np.ndarray): Same as near sides, but this time the far sides.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.backmapping.backbone_hydrogen_oxygen_crossproduct">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.backmapping.</span></span><span class="sig-name descname"><span class="pre">backbone_hydrogen_oxygen_crossproduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backbone_positions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/backmapping.html#backbone_hydrogen_oxygen_crossproduct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.backmapping.backbone_hydrogen_oxygen_crossproduct" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-encodermap.misc.clustering">
+<span id="encodermap-misc-clustering-module"></span><h2>encodermap.misc.clustering module<a class="headerlink" href="#module-encodermap.misc.clustering" title="Permalink to this heading">#</a></h2>
+<p>Functions for building clusters.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.clustering._gen_dummy_traj_single">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.clustering.</span></span><span class="sig-name descname"><span class="pre">_gen_dummy_traj_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_no</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">align_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'name</span> <span class="pre">CA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nglview</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stack_atoms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shorten</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">superpose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cluster_membership'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subunit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_align_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'name</span> <span class="pre">CA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_traj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/clustering.html#_gen_dummy_traj_single"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.clustering._gen_dummy_traj_single" title="Permalink to this definition">#</a></dt>
+<dd><p>Called when only one cluster is needed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.clustering.gen_dummy_traj">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.clustering.</span></span><span class="sig-name descname"><span class="pre">gen_dummy_traj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_no</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">align_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'name</span> <span class="pre">CA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nglview</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stack_atoms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shorten</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">superpose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cluster_membership'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subunit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_align_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'name</span> <span class="pre">CA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_traj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/clustering.html#gen_dummy_traj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.clustering.gen_dummy_traj" title="Permalink to this definition">#</a></dt>
+<dd><p>Makes a dummy traj from an encodermap trajectory which contains
+trajectories with different topology.</p>
+<p>This function takes an encodermap.TrajEnsemble object and returns mdtraj
+trajectories for clustered data. This function can concatenate trajs even
+if the topology of trajecotries in the TrajEnsemble class is different. The
+topology of this dummy traj will be wrong, but the atomic positions are
+correct.</p>
+<p>This function constructs a traj of length cluster_membership.count(cluster_no)
+with the topology of the first frame of this cluster
+(trajs.get_single_frame(cluster_membership.index(cluster_no))) and changes the
+atomic coordinates of this traj based on the other frames in this cluster.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have loaded the encodermap functions with the ‘no_load’
+backend a second call to this function with the same parameters will
+be faster, because the trajectory frames have been loaded to memory.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajs</strong> (<em>encodermap.TrajEnsemble</em>) – The trajs which were clustered.</p></li>
+<li><p><strong>cluster_no</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>int</em><em>, </em><em>np.ndarray</em><em>, </em><em>list</em><em>]</em>) – The cluster_no of the cluster to make the dummy traj from.
+Can be:
+* int or int: The cluster will be found by using the trajs own cluster_membership in the trajs pandas dataframe.
+* np.array or list: If list or np.array is provided multiple clusters are returned and colored according to clsuter_no.</p></li>
+<li><p><strong>align_string</strong> (<em>str</em><em>, </em><em>optional</em>) – Use this mdtraj atom selection string to align the frames
+of the dummy traj. Defaults to ‘name CA’.</p></li>
+<li><p><strong>nglview</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to return a tuple of an nglview.view object and the traj
+or not. Defaults to False.</p></li>
+<li><p><strong>stack_atoms</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to stack all frames into a single frame with
+mutliple structures in it. This option is useful, if you want to
+generate a picture of interpenetrating structures. Defaults to False.</p></li>
+<li><p><strong>shorten</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to return all structures or just a subset of
+roughly ten structures. Defaults to False.</p></li>
+<li><p><strong>max_frames</strong> (<em>int</em><em>, </em><em>optional</em>) – Only return so many frames. If set to -1 all frames will
+be returned. Defaults to -1.</p></li>
+<li><p><strong>superpose</strong> (<em>Union</em><em>(</em><em>bool</em><em>, </em><em>mdtraj.Trajectory</em><em>)</em><em>, </em><em>optional</em>) – Whether the frames of the returned traj should be superposed
+to frame 0 of the traj. If an mdtraj Trajectory is provided this trajectory is used to superpose. Defaults to True.</p></li>
+<li><p><strong>subunit</strong> (<em>str</em><em>, </em><em>optional</em>) – When you want to only visualize an ensemble of certain parts of your protein but keep some
+part stationary (see <cite>align_str</cite>), you can provide a mdtraj selection string. This part of the
+protein will only be rendered from the first frame. The other parts will be rendered as an ensemble
+of structures (either along atom (<cite>stack_atoms</cite> = True) or time (<cite>stack_atoms</cite> = False)). Defaults to ‘’.</p></li>
+<li><p><strong>ref_align_string</strong> (<em>str</em><em>, </em><em>optional</em>) – When the type of <cite>superpose</cite> is mdtraj.Trajectory with a different topology
+than <cite>trajs</cite>, you can give a different align string into this argument. Defaults to ‘name CA’.</p></li>
+<li><p><strong>base_traj</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>mdtraj.Trajectory</em><em>]</em><em>, </em><em>optional</em>) – An mdtraj.Trajectory that will be set to the coordinates from
+trajs, instead of trajs[0]. Normally, the first traj in <cite>trajs</cite> (trajs[0]) will be used as a base traj.
+It will be extended into the time-direction until it has the desired number of frames (shorten=True; 10,
+max_frames=N, N; etc.). If you don’t want to use this traj but something else, you can feed this option
+an mdtraj.Trajectory object. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>A tuple containing:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>view (nglview.view): The nglview.view object if nglview == True,</dt><dd><p>is None otherwise.</p>
+</dd>
+<dt>dummy_traj (mdtraj.Trajectory): The mdtraj trajectory with wrong</dt><dd><p>topology but correct atomic positions.</p>
+</dd>
+</dl>
+</div></blockquote>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See the render_vmd function in this document
+to render an image of the returned traj.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.clustering.get_cluster_frames">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.clustering.</span></span><span class="sig-name descname"><span class="pre">get_cluster_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_no</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">align_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'name</span> <span class="pre">CA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nglview</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stack_atoms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shorten</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">superpose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cluster_membership'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subunit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ball_and_stick</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'viridis'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/clustering.html#get_cluster_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.clustering.get_cluster_frames" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-encodermap.misc.distances">
+<span id="encodermap-misc-distances-module"></span><h2>encodermap.misc.distances module<a class="headerlink" href="#module-encodermap.misc.distances" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.distances.pairwise_dist">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.distances.</span></span><span class="sig-name descname"><span class="pre">pairwise_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">squared</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/distances.html#pairwise_dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.distances.pairwise_dist" title="Permalink to this definition">#</a></dt>
+<dd><p>Tensorflow implementation of <cite>scipy.spatial.distances.cdist</cite>.</p>
+<p>Returns a tensor with shape (positions.shape[1], positions.shape[1]).
+This tensor is the distance matrix of the provided positions. The
+matrix is hollow, i.e. the diagonal elements are zero.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>positions</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>tf.Tensor</em><em>]</em>) – Collection of
+n-dimensional points. positions.shape[0] are points.
+positions.shape[1] are dimensions.</p></li>
+<li><p><strong>squared</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to return the pairwise squared
+euclidean distance matrix or normal euclidean distance matrix.
+Defaults to False.</p></li>
+<li><p><strong>flat</strong> (<em>bool</em><em>, </em><em>otpional</em>) – Whether to return only the lower triangle of
+the hollow matrix. Setting this to true mimics the behavior
+of <cite>scipy.spatial.distance.pdist</cite>. Defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.distances.pairwise_dist_periodic">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.distances.</span></span><span class="sig-name descname"><span class="pre">pairwise_dist_periodic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/distances.html#pairwise_dist_periodic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.distances.pairwise_dist_periodic" title="Permalink to this definition">#</a></dt>
+<dd><p>Pairwise distances using periodicity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>positions</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>tf.Tensor</em><em>]</em>) – The positions of the points.
+Currently only 2D arrays with positions.shape[0] == n_points
+and positions.shape[1] == 1 (rotational values) is supported.</p></li>
+<li><p><strong>periodicity</strong> (<em>float</em>) – The periodicity of the data. Most often
+you will use either 2*pi or 360.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.distances.periodic_distance">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.distances.</span></span><span class="sig-name descname"><span class="pre">periodic_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6.283185307179586</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/distances.html#periodic_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.distances.periodic_distance" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates distance between two points and respects periodicity.</p>
+<p>If the provided dataset is periodic (i.e. angles and torsion angles), the returned
+distance is corrected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>tf.Tensor</em>) – Coordinate of point a.</p></li>
+<li><p><strong>b</strong> (<em>tf.Tensor</em>) – Coordinate of point b.</p></li>
+<li><p><strong>periodicity</strong> (<em>float</em><em>, </em><em>optional</em>) – The periodicity (i.e. the box length/ maximum angle)
+of your data. Defaults to 2*pi. Provide float(‘inf’) for no periodicity.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">]]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">3.1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">3.1</span><span class="p">]]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">periodic_distance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+<span class="go">[[1.68318531]</span>
+<span class="go"> [1.68318531]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.distances.periodic_distance_np">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.distances.</span></span><span class="sig-name descname"><span class="pre">periodic_distance_np</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6.283185307179586</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/distances.html#periodic_distance_np"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.distances.periodic_distance_np" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates distance between two points and respects periodicity.</p>
+<p>If the provided dataset is periodic (i.e. angles and torsion angles), the returned
+distance is corrected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>np.ndarray</em>) – Coordinate of point a.</p></li>
+<li><p><strong>b</strong> (<em>np.ndarray</em>) – Coordinate of point b.</p></li>
+<li><p><strong>periodicity</strong> (<em>float</em><em>, </em><em>optional</em>) – The periodicity (i.e. the box length/ maximum angle)
+of your data. Defaults to 2*pi. Provide float(‘inf’) for no periodicity.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.distances.sigmoid">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.distances.</span></span><span class="sig-name descname"><span class="pre">sigmoid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/distances.html#sigmoid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.distances.sigmoid" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a sigmoid function with specified parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sig</strong> (<em>float</em>) – Sigma.</p></li>
+<li><p><strong>a</strong> (<em>float</em>) – <ol class="loweralpha simple">
+<li></li>
+</ol>
+</p></li>
+<li><p><strong>b</strong> (<em>float</em>) – <ol class="loweralpha simple" start="2">
+<li></li>
+</ol>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A function that can be used to calculate the sigmoid with the</dt><dd><p>specified parameters.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.misc.errors">
+<span id="encodermap-misc-errors-module"></span><h2>encodermap.misc.errors module<a class="headerlink" href="#module-encodermap.misc.errors" title="Permalink to this heading">#</a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="encodermap.misc.errors.BadError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.misc.errors.</span></span><span class="sig-name descname"><span class="pre">BadError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/errors.html#BadError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.errors.BadError" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></p>
+<p>Raised when the Error is really bad.</p>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.misc.function_def">
+<span id="encodermap-misc-function-def-module"></span><h2>encodermap.misc.function_def module<a class="headerlink" href="#module-encodermap.misc.function_def" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.function_def.function">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.function_def.</span></span><span class="sig-name descname"><span class="pre">function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/function_def.html#function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.function_def.function" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-encodermap.misc.misc">
+<span id="encodermap-misc-misc-module"></span><h2>encodermap.misc.misc module<a class="headerlink" href="#module-encodermap.misc.misc" title="Permalink to this heading">#</a></h2>
+<p>Miscellaneous functions.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.misc._can_be_feature">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.misc.</span></span><span class="sig-name descname"><span class="pre">_can_be_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/misc.html#_can_be_feature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.misc._can_be_feature" title="Permalink to this definition">#</a></dt>
+<dd><p>Function to decide whether the input can be interpreted by the Featurizer class.</p>
+<p>Outputs True, if inp == ‘all’ or inp is a list of strings contained in FEATURE_NAMES.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>inp</strong> (<em>Any</em>) – The input.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True, if inp can be interpreted by featurizer.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">encodermap.misc.misc</span> <span class="kn">import</span> <span class="n">_can_be_feature</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_can_be_feature</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_can_be_feature</span><span class="p">(</span><span class="s1">&#39;no&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_can_be_feature</span><span class="p">([</span><span class="s1">&#39;AllCartesians&#39;</span><span class="p">,</span> <span class="s1">&#39;central_dihedrals&#39;</span><span class="p">])</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.misc._datetime_windows_and_linux_compatible">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.misc.</span></span><span class="sig-name descname"><span class="pre">_datetime_windows_and_linux_compatible</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/misc.html#_datetime_windows_and_linux_compatible"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.misc._datetime_windows_and_linux_compatible" title="Permalink to this definition">#</a></dt>
+<dd><p>Portable way to get <cite>now</cite> as either a linux or windows compatible string.</p>
+<dl class="simple">
+<dt>For linux systems strings in this manner will be returned:</dt><dd><p>2022-07-13T16:04:04+02:00</p>
+</dd>
+<dt>For windows systems strings in this manner will be returned:</dt><dd><p>2022-07-13_16-04-46</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.misc._flatten_model">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.misc.</span></span><span class="sig-name descname"><span class="pre">_flatten_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_nested</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/misc.html#_flatten_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.misc._flatten_model" title="Permalink to this definition">#</a></dt>
+<dd><p>Flattens a nested tensorflow.keras.models.Model.</p>
+<p>Can be useful if a model consists of two sequential models and needs to
+be flattened to be plotted.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.misc._validate_uri">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.misc.</span></span><span class="sig-name descname"><span class="pre">_validate_uri</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/misc.html#_validate_uri"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.misc._validate_uri" title="Permalink to this definition">#</a></dt>
+<dd><p>Checks whether the <a href="#id3"><span class="problematic" id="id4">str_</span></a> is a valid uri.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.misc.create_n_cube">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.misc.</span></span><span class="sig-name descname"><span class="pre">create_n_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points_along_edge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">same_colored_edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/misc.html#create_n_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.misc.create_n_cube" title="Permalink to this definition">#</a></dt>
+<dd><p>Creates points along the edges of an n-dimensional unit hyper-cube.</p>
+<p>The cube is created using networkx.hypercube_graph and points are placed along
+the edges of the cube. By providing a sigma value the points can be shifted
+by some Gaussian noise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – The dimension of the Hypercube (can also take 1 or 2).
+Defaults to 3.</p></li>
+<li><p><strong>points_along_edge</strong> (<em>int</em><em>, </em><em>optional</em>) – How many points should be placed along any edge.
+By increasing the number of dimensions, the number of edges
+increases, which also increases the total number of points. Defaults to 500.</p></li>
+<li><p><strong>sigma</strong> (<em>float</em><em>, </em><em>optional</em>) – The sigma value for np.random.normal which
+introduces Gaussian noise to the positions of the points. Defaults to 0.05.</p></li>
+<li><p><strong>same_color_edges</strong> (<em>int</em><em>, </em><em>optional</em>) – How many edges of the Hypercube should
+be colored with the same color. This can be used to later
+better visualize the edges of the cube. Defaults to 3.</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – If an int is provided this will be used as a seed
+for np.random and fix the random state. Defaults to None which produces
+random results every time this function is called.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tuple containing the following:</dt><dd><p>coordinates (np.ndarray): The coordinates of the points.
+colors (np.ndarray): Integers that can be used for coloration.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># A sigma value of zero means no noise at all.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coords</span><span class="p">,</span> <span class="n">colors</span> <span class="o">=</span> <span class="n">create_n_cube</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">[0., 1.]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.misc.get_full_common_str_and_ref">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.misc.</span></span><span class="sig-name descname"><span class="pre">get_full_common_str_and_ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tops</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">common_str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/misc.html#get_full_common_str_and_ref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.misc.get_full_common_str_and_ref" title="Permalink to this definition">#</a></dt>
+<dd><p>Matches traj_files, top_files and common string and returns lists with the
+same length matching the provided common str.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajs</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – A list of str pointing to trajectory files.</p></li>
+<li><p><strong>tops</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – A list of str pointing to topology files.</p></li>
+<li><p><strong>common_str</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – A list of strings that can be found in
+both trajs and tops (i.e. substrings).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.misc.plot_model">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.misc.</span></span><span class="sig-name descname"><span class="pre">plot_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/misc.html#plot_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.misc.plot_model" title="Permalink to this definition">#</a></dt>
+<dd><p>Plots keras model using tf.keras.utils.plot_model</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.misc.run_path">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.misc.</span></span><span class="sig-name descname"><span class="pre">run_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/misc.html#run_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.misc.run_path" title="Permalink to this definition">#</a></dt>
+<dd><p>Creates a directory at “path/run{i}” where the i is corresponding to the smallest not yet existing path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Path to the run folder.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The new output path.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<dl>
+<dt>Exampples:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;run1/&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">em</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">run_path</span><span class="p">(</span><span class="s1">&#39;run1/&#39;</span><span class="p">)</span>
+<span class="go">&#39;run2/&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">()</span>
+<span class="go">[&#39;run1/&#39;, &#39;run2/&#39;]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.misc.saving_loading_models">
+<span id="encodermap-misc-saving-loading-models-module"></span><h2>encodermap.misc.saving_loading_models module<a class="headerlink" href="#module-encodermap.misc.saving_loading_models" title="Permalink to this heading">#</a></h2>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>This is in a desperate need of rework.</p></li>
+</ul>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.saving_loading_models.load_list_of_models">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.saving_loading_models.</span></span><span class="sig-name descname"><span class="pre">load_list_of_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_objects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">keras.engine.training.Model</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/encodermap/misc/saving_loading_models.html#load_list_of_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.saving_loading_models.load_list_of_models" title="Permalink to this definition">#</a></dt>
+<dd><p>Load the models supplied in <cite>models</cite> using keras.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>models</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The paths of the models to be loaded</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.saving_loading_models.load_model">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.saving_loading_models.</span></span><span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">autoencoder_class</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AutoencoderClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite_tensorboard_bool</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trajs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="reference/trajectory_classes.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><span class="pre">TrajEnsemble</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sparse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AutoencoderClass</span></span></span><a class="reference internal" href="_modules/encodermap/misc/saving_loading_models.html#load_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.saving_loading_models.load_model" title="Permalink to this definition">#</a></dt>
+<dd><p>Reloads a tf.keras.Model from a checkpoint path.</p>
+<p>For this, an AutoencoderClass is necessary, to provide the corresponding
+custom objects, such as loss functions.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.saving_loading_models.model_sort_key">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.saving_loading_models.</span></span><span class="sig-name descname"><span class="pre">model_sort_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/encodermap/misc/saving_loading_models.html#model_sort_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.saving_loading_models.model_sort_key" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns numerical values baed on whether <cite>model_name</cite> contains substrings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model_name</strong> (<em>str</em>) – The filepath to the saved model.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns 0 for ‘encoder’, 1 for ‘decoder’, 2 for everything else.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.saving_loading_models.save_model">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.saving_loading_models.</span></span><span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">main_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inp_class_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/saving_loading_models.html#save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.saving_loading_models.save_model" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-encodermap.misc.summaries">
+<span id="encodermap-misc-summaries-module"></span><h2>encodermap.misc.summaries module<a class="headerlink" href="#module-encodermap.misc.summaries" title="Permalink to this heading">#</a></h2>
+<p>Functions that write stuff to tensorboard. Mainly used for the iumage callbacks.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.summaries._gen_hist">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.summaries.</span></span><span class="sig-name descname"><span class="pre">_gen_hist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/summaries.html#_gen_hist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.summaries._gen_hist" title="Permalink to this definition">#</a></dt>
+<dd><p>Creates matplotlib histogram and returns tensorflow Tensor that represents an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>tf.Tensor</em><em>]</em>) – The xy data to be used. data.ndim should be 2.
+1st dimension the datapoints, 2nd dimension x, y.</p></li>
+<li><p><strong>hist_kws</strong> (<em>dict</em>) – Additional keywords to be passed to matplotlib.pyplot.hist2d().</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tensorflow tensor that can be written to Tensorboard with tf.summary.image().</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.summaries._gen_nan_image">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.summaries.</span></span><span class="sig-name descname"><span class="pre">_gen_nan_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/summaries.html#_gen_nan_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.summaries._gen_nan_image" title="Permalink to this definition">#</a></dt>
+<dd><p>Creates matplotlib image, whith debug info.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tensorflow tensor that can be written to Tensorboard with tf.summary.image().</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tf.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.summaries._gen_scatter">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.summaries.</span></span><span class="sig-name descname"><span class="pre">_gen_scatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/summaries.html#_gen_scatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.summaries._gen_scatter" title="Permalink to this definition">#</a></dt>
+<dd><p>Creates matplotlib scatter plot and returns tensorflow Tensor that represents an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>tf.Tensor</em><em>]</em>) – The xy data to be used. data.ndim should be 2.
+1st dimension the datapoints, 2nd dimension x, y.</p></li>
+<li><p><strong>scatter_kws</strong> (<em>dict</em>) – Additional keywords to be passed to matplotlib.pyplot.scatter().</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tensorflow tensor that can be written to Tensorboard with tf.summary.image().</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.summaries.add_layer_summaries">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.summaries.</span></span><span class="sig-name descname"><span class="pre">add_layer_summaries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/summaries.html#add_layer_summaries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.summaries.add_layer_summaries" title="Permalink to this definition">#</a></dt>
+<dd><p>Adds summaries for a layer to Tensorboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layer</strong> (<em>tf.keras.layers.Layer</em>) – The layer.</p></li>
+<li><p><strong>step</strong> (<em>Union</em><em>[</em><em>tf.Tensor</em><em>, </em><em>int</em><em>, </em><em>None</em><em>]</em><em>, </em><em>optional</em>) – The current step.
+Can be either a Tensor or None. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.summaries.image_summary">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.summaries.</span></span><span class="sig-name descname"><span class="pre">image_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lowd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'s':</span> <span class="pre">20}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'bins':</span> <span class="pre">50}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_fns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/summaries.html#image_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.summaries.image_summary" title="Permalink to this definition">#</a></dt>
+<dd><p>Writes an image to Tensorboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lowd</strong> (<em>np.ndarray</em>) – The data to plot. Usually that will be the output of the latent space of the
+Autoencoder. This array has to be of dimensionality 2 (rows and columns). The first two points of the
+rows will be used as xy coordinates in a scatter plot.</p></li>
+<li><p><strong>step</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>None</em><em>]</em><em>, </em><em>optional</em>) – The training step under which you can find the image
+in tensorboard. Defaults to None.</p></li>
+<li><p><strong>scatter_kws</strong> (<em>dict</em><em>, </em><em>optional</em>) – A dictionary with keyword arguments to be passed to matpltlib.pyplot.scatter().
+Defaults to {‘s’: 20}.</p></li>
+<li><p><strong>hist_kws</strong> (<em>dict</em><em>, </em><em>optional</em>) – A dictionary with keyword arguments to be passed to matpltlib.pyplot.hist2d().
+Defaults to {‘bins’: 50}.</p></li>
+<li><p><strong>additional_fns</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>list</em><em>]</em><em>, </em><em>optional</em>) – A list of functions that take the data of the latent space
+and return a tf.Tensor that can be logged to tensorboard with tf.summary.image().</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – When lowd.ndim is not 2 and when len(lowd) != len(ids)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.misc.transformations">
+<span id="encodermap-misc-transformations-module"></span><h2>encodermap.misc.transformations module<a class="headerlink" href="#module-encodermap.misc.transformations" title="Permalink to this heading">#</a></h2>
+<p>Homogeneous Transformation Matrices and Quaternions.</p>
+<p>A library for calculating 4x4 matrices for translating, rotating, reflecting,
+scaling, shearing, projecting, orthogonalizing, and superimposing arrays of
+3D homogeneous coordinates as well as for converting between rotation matrices,
+Euler angles, and quaternions. Also includes an Arcball control object and
+functions to decompose transformation matrices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/">Christoph Gohlke</a></p>
+</dd>
+<dt class="field-even">Organization<span class="colon">:</span></dt>
+<dd class="field-even"><p>Laboratory for Fluorescence Dynamics, University of California, Irvine</p>
+</dd>
+<dt class="field-odd">Version<span class="colon">:</span></dt>
+<dd class="field-odd"><p>2013.06.29</p>
+</dd>
+</dl>
+<section id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="http://www.python.org">CPython 2.7 or 3.3</a></p></li>
+<li><p><a class="reference external" href="http://www.numpy.org">Numpy 1.7</a></p></li>
+<li><p><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/">Transformations.c 2013.01.18</a>
+(recommended for speedup of some functions)</p></li>
+</ul>
+</section>
+<section id="notes">
+<h3>Notes<a class="headerlink" href="#notes" title="Permalink to this heading">#</a></h3>
+<p>The API is not stable yet and is expected to change between revisions.</p>
+<p>This Python code is not optimized for speed. Refer to the transformations.c
+module for a faster implementation of some functions.</p>
+<p>Documentation in HTML format can be generated with epydoc.</p>
+<p>Matrices (M) can be inverted using numpy.linalg.inv(M), be concatenated using
+numpy.dot(M0, M1), or transform homogeneous coordinate arrays (v) using
+numpy.dot(M, v) for shape (4, *) column vectors, respectively
+numpy.dot(v, M.T) for shape (*, 4) row vectors (“array of points”).</p>
+<p>This module follows the “column vectors on the right” and “row major storage”
+(C contiguous) conventions. The translation components are in the right column
+of the transformation matrix, i.e. M[:3, 3].
+The transpose of the transformation matrices may have to be used to interface
+with other graphics systems, e.g. with OpenGL’s glMultMatrixd(). See also [16].</p>
+<p>Calculations are carried out with numpy.float64 precision.</p>
+<p>Vector, point, quaternion, and matrix function arguments are expected to be
+“array like”, i.e. tuple, list, or numpy arrays.</p>
+<p>Return types are numpy arrays unless specified otherwise.</p>
+<p>Angles are in radians unless specified otherwise.</p>
+<p>Quaternions w+ix+jy+kz are represented as [w, x, y, z].</p>
+<p>A triple of Euler angles can be applied/interpreted in 24 ways, which can
+be specified using a 4 character string or encoded 4-tuple:</p>
+<blockquote>
+<div><p><em>Axes 4-string</em>: e.g. ‘sxyz’ or ‘ryxy’</p>
+<ul class="simple">
+<li><p>first character : rotations are applied to ‘s’tatic or ‘r’otating frame</p></li>
+<li><p>remaining characters : successive rotation axis ‘x’, ‘y’, or ‘z’</p></li>
+</ul>
+<p><em>Axes 4-tuple</em>: e.g. (0, 0, 0, 0) or (1, 1, 1, 1)</p>
+<ul class="simple">
+<li><p>inner axis: code of axis (‘x’:0, ‘y’:1, ‘z’:2) of rightmost matrix.</p></li>
+<li><p>parity : even (0) if inner axis ‘x’ is followed by ‘y’, ‘y’ is followed
+by ‘z’, or ‘z’ is followed by ‘x’. Otherwise odd (1).</p></li>
+<li><p>repetition : first and last axis are same (1) or different (0).</p></li>
+<li><p>frame : rotations are applied to static (0) or rotating (1) frame.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Matrices and transformations. Ronald Goldman.
+In “Graphics Gems I”, pp 472-475. Morgan Kaufmann, 1990.</p></li>
+<li><p>More matrices and transformations: shear and pseudo-perspective.
+Ronald Goldman. In “Graphics Gems II”, pp 320-323. Morgan Kaufmann, 1991.</p></li>
+<li><p>Decomposing a matrix into simple transformations. Spencer Thomas.
+In “Graphics Gems II”, pp 320-323. Morgan Kaufmann, 1991.</p></li>
+<li><p>Recovering the data from the transformation matrix. Ronald Goldman.
+In “Graphics Gems II”, pp 324-331. Morgan Kaufmann, 1991.</p></li>
+<li><p>Euler angle conversion. Ken Shoemake.
+In “Graphics Gems IV”, pp 222-229. Morgan Kaufmann, 1994.</p></li>
+<li><p>Arcball rotation control. Ken Shoemake.
+In “Graphics Gems IV”, pp 175-192. Morgan Kaufmann, 1994.</p></li>
+<li><p>Representing attitude: Euler angles, unit quaternions, and rotation
+vectors. James Diebel. 2006.</p></li>
+<li><p>A discussion of the solution for the best rotation to relate two sets
+of vectors. W Kabsch. Acta Cryst. 1978. A34, 827-828.</p></li>
+<li><p>Closed-form solution of absolute orientation using unit quaternions.
+BKP Horn. J Opt Soc Am A. 1987. 4(4):629-642.</p></li>
+<li><p>Quaternions. Ken Shoemake.
+<a class="reference external" href="http://www.sfu.ca/~jwa3/cmpt461/files/quatut.pdf">http://www.sfu.ca/~jwa3/cmpt461/files/quatut.pdf</a></p></li>
+<li><p>From quaternion to matrix and back. JMP van Waveren. 2005.
+<a class="reference external" href="http://www.intel.com/cd/ids/developer/asmo-na/eng/293748.htm">http://www.intel.com/cd/ids/developer/asmo-na/eng/293748.htm</a></p></li>
+<li><p>Uniform random rotations. Ken Shoemake.
+In “Graphics Gems III”, pp 124-132. Morgan Kaufmann, 1992.</p></li>
+<li><p>Quaternion in molecular modeling. CFF Karney.
+J Mol Graph Mod, 25(5):595-604</p></li>
+<li><p>New method for extracting the quaternion from a rotation matrix.
+Itzhack Y Bar-Itzhack, J Guid Contr Dynam. 2000. 23(6): 1085-1087.</p></li>
+<li><p>Multiple View Geometry in Computer Vision. Hartley and Zissermann.
+Cambridge University Press; 2nd Ed. 2004. Chapter 4, Algorithm 4.7, p 130.</p></li>
+<li><p>Column Vectors vs. Row Vectors.
+<a class="reference external" href="http://steve.hollasch.net/cgindex/math/matrix/column-vec.html">http://steve.hollasch.net/cgindex/math/matrix/column-vec.html</a></p></li>
+</ol>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.123</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.234</span><span class="p">,</span> <span class="mf">2.345</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">origin</span><span class="p">,</span> <span class="n">xaxis</span><span class="p">,</span> <span class="n">yaxis</span><span class="p">,</span> <span class="n">zaxis</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="n">identity_matrix</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Rx</span> <span class="o">=</span> <span class="n">rotation_matrix</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">xaxis</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Ry</span> <span class="o">=</span> <span class="n">rotation_matrix</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">yaxis</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Rz</span> <span class="o">=</span> <span class="n">rotation_matrix</span><span class="p">(</span><span class="n">gamma</span><span class="p">,</span> <span class="n">zaxis</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">concatenate_matrices</span><span class="p">(</span><span class="n">Rx</span><span class="p">,</span> <span class="n">Ry</span><span class="p">,</span> <span class="n">Rz</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">euler</span> <span class="o">=</span> <span class="n">euler_from_matrix</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="s1">&#39;rxyz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">allclose</span><span class="p">([</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">],</span> <span class="n">euler</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Re</span> <span class="o">=</span> <span class="n">euler_matrix</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="s1">&#39;rxyz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_same_transform</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">Re</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">al</span><span class="p">,</span> <span class="n">be</span><span class="p">,</span> <span class="n">ga</span> <span class="o">=</span> <span class="n">euler_from_matrix</span><span class="p">(</span><span class="n">Re</span><span class="p">,</span> <span class="s1">&#39;rxyz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_same_transform</span><span class="p">(</span><span class="n">Re</span><span class="p">,</span> <span class="n">euler_matrix</span><span class="p">(</span><span class="n">al</span><span class="p">,</span> <span class="n">be</span><span class="p">,</span> <span class="n">ga</span><span class="p">,</span> <span class="s1">&#39;rxyz&#39;</span><span class="p">))</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qx</span> <span class="o">=</span> <span class="n">quaternion_about_axis</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">xaxis</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qy</span> <span class="o">=</span> <span class="n">quaternion_about_axis</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">yaxis</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qz</span> <span class="o">=</span> <span class="n">quaternion_about_axis</span><span class="p">(</span><span class="n">gamma</span><span class="p">,</span> <span class="n">zaxis</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">quaternion_multiply</span><span class="p">(</span><span class="n">qx</span><span class="p">,</span> <span class="n">qy</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">quaternion_multiply</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">qz</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Rq</span> <span class="o">=</span> <span class="n">quaternion_matrix</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_same_transform</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">Rq</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="n">scale_matrix</span><span class="p">(</span><span class="mf">1.23</span><span class="p">,</span> <span class="n">origin</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">T</span> <span class="o">=</span> <span class="n">translation_matrix</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span> <span class="o">=</span> <span class="n">shear_matrix</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">xaxis</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">zaxis</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">random_rotation_matrix</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">concatenate_matrices</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">angles</span><span class="p">,</span> <span class="n">trans</span><span class="p">,</span> <span class="n">persp</span> <span class="o">=</span> <span class="n">decompose_matrix</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="mf">1.23</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">trans</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">shear</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">beta</span><span class="p">),</span> <span class="mi">0</span><span class="p">])</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_same_transform</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">euler_matrix</span><span class="p">(</span><span class="n">axes</span><span class="o">=</span><span class="s1">&#39;sxyz&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">angles</span><span class="p">))</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">M1</span> <span class="o">=</span> <span class="n">compose_matrix</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">angles</span><span class="p">,</span> <span class="n">trans</span><span class="p">,</span> <span class="n">persp</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_same_transform</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">M1</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v0</span><span class="p">,</span> <span class="n">v1</span> <span class="o">=</span> <span class="n">random_vector</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">random_vector</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">rotation_matrix</span><span class="p">(</span><span class="n">angle_between_vectors</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">v1</span><span class="p">),</span> <span class="n">vector_product</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">v1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v2</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">M</span><span class="p">[:</span><span class="mi">3</span><span class="p">,:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">numpy</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">unit_vector</span><span class="p">(</span><span class="n">v1</span><span class="p">),</span> <span class="n">unit_vector</span><span class="p">(</span><span class="n">v2</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.transformations._import_module">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.transformations.</span></span><span class="sig-name descname"><span class="pre">_import_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'_py_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'_'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/transformations.html#_import_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.transformations._import_module" title="Permalink to this definition">#</a></dt>
+<dd><p>Try import all public attributes from module into global namespace.</p>
+<p>Existing attributes with name clashes are renamed with prefix.
+Attributes starting with underscore are ignored by default.</p>
+<p>Return True on successful import.</p>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.misc.xarray">
+<span id="encodermap-misc-xarray-module"></span><h2>encodermap.misc.xarray module<a class="headerlink" href="#module-encodermap.misc.xarray" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.xarray._validate_uri">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.xarray.</span></span><span class="sig-name descname"><span class="pre">_validate_uri</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/misc.html#_validate_uri"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.xarray._validate_uri" title="Permalink to this definition">#</a></dt>
+<dd><p>Checks whether the <a href="#id5"><span class="problematic" id="id6">str_</span></a> is a valid uri.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.xarray.construct_xarray_from_numpy">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.xarray.</span></span><span class="sig-name descname"><span class="pre">construct_xarray_from_numpy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><span class="pre">SingleTraj</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_n_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">xr.DataArray</span></span></span><a class="reference internal" href="_modules/encodermap/misc/xarray.html#construct_xarray_from_numpy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.xarray.construct_xarray_from_numpy" title="Permalink to this definition">#</a></dt>
+<dd><p>Constructs an xarray dataarray from a numpy array.</p>
+<dl class="simple">
+<dt>Three different cases are recognized:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>The input array in data has ndim == 2. This kind of feature/CV is a per-frame feature, like the membership</dt><dd><p>to clusters. Every frame of every trajectory is assigned a single value (most often int values).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>The input array in data has ndim == 3: This is also a per-frame feature/CV, but this time every frame</dt><dd><p>is characterized by a series of values. These values can be dihedral angles in the backbone starting from
+the protein’s N-terminus to the C-terminus, or pairwise distance features between certain atoms.
+The xarray datarrat constructed from this kind of data will have a label dimension that will either
+contain generic labels like ‘CUSTOM_FEATURE FEATURE 0’ or labels defined by the featurizer such as
+‘SIDECHAIN ANGLE CHI1 OF RESIDUE 1LYS’.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>The input array in data has ndim == 4. Here, the same feature/CV is duplicated for the protein’s atoms.</dt><dd><p>Besides the XYZ coordinates of the atoms no other CVs should fall into this case. The labels will be
+2-dimensional with ‘POSITION OF ATOM H1 IN RESIDUE 1LYS’ in dimension 0 and either ‘X’, ‘Y’ or ‘Z’ in
+dimension 1.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>traj</strong> (<em>em.SingleTraj</em>) – The trajectory we want to create the xarray dataarray for.</p></li>
+<li><p><strong>data</strong> (<em>np.ndarray</em>) – The numpy array we want to create the data from. Note, that the data passed into this
+function should be expanded by np.expand_dim(a, axis=0), so to add a new axis to the complete data
+containing the trajectories of a trajectory ensemble.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the feature. This can be choosen freely. Names like ‘central_angles’, ‘backbone_torsions’
+would make the most sense.</p></li>
+<li><p><strong>labels</strong> (<em>Optional</em><em>[</em><em>list</em><em>]</em>) – If you have specific labels for your CVs in mind, you can overwrite the
+generic ‘CUSTOM_FEATURE FEATURE 0’ labels with providing a list for this argument. If None is provided,
+generic names will be given to the features. Defaults to None.</p></li>
+<li><p><strong>check_n_frames</strong> (<em>bool</em>) – Whether to check whether the number of frames in the trajectory matches the len
+of the data in at least one dimension. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An <cite>xarray.Dataarray</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>xarray.Dataarray</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">encodermap.misc.xarray</span> <span class="kn">import</span> <span class="n">construct_xarray_from_numpy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># load file from RCSB and give it traj num to represent it in a potential trajectory ensemble</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;https://files.rcsb.org/view/1GHC.pdb&#39;</span><span class="p">,</span> <span class="n">traj_num</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># single trajectory needs to be expaneded into &#39;trajectory&#39; axis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z_coordinate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">xyz</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">da</span> <span class="o">=</span> <span class="n">construct_xarray_from_numpy</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">z_coordinate</span><span class="p">,</span> <span class="s1">&#39;z_coordinate&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;Z_COORDINATE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+<span class="go">[&#39;Z_COORDINATE FEATURE 0&#39; &#39;Z_COORDINATE FEATURE 1&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;traj_num&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="go">[1]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;time_units&#39;</span><span class="p">])</span>
+<span class="go">ps</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.xarray.unpack_data_and_feature">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.xarray.</span></span><span class="sig-name descname"><span class="pre">unpack_data_and_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="encodermap.html#encodermap.Featurizer" title="encodermap.Featurizer"><span class="pre">Featurizer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><span class="pre">SingleTraj</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">put_indices_into_attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">xr.Dataset</span></span></span><a class="reference internal" href="_modules/encodermap/misc/xarray.html#unpack_data_and_feature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.xarray.unpack_data_and_feature" title="Permalink to this definition">#</a></dt>
+<dd><p>Makes a <cite>xarray.Dataset</cite> from data and a featurizer.</p>
+<p>Usually, if you add multiple features to a PyEMMA featurizer, they are
+stacked along the feature axis. Let’s say, you have a trajectory with 20 frames
+and 3 residues. If you add the Ramachandran angles, you get 6 features (3xphi, 3xpsi).
+If you then also add the end-to-end distance as a feature, the data returned by
+PyEMMA will have the shape (20, 7). This function returns the correct indices,
+so that iteration of <cite>zip(Featurizer.active_features, indices)</cite> will yield the
+correct results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feat</strong> (<em>em.Featurizer</em>) – An instance of the currently used <cite>encodermap.Featurizer</cite>.</p></li>
+<li><p><strong>traj</strong> (<em>em.SingleTraj</em>) – An instance of <cite>encodermap.SingleTraj</cite>, that the data
+in <cite>input_data</cite> was computed from</p></li>
+<li><p><strong>input_data</strong> (<em>np.ndarray</em>) – The data, as returned from PyEMMA.</p></li>
+<li><p><strong>put_indices_into_attrs</strong> (<em>bool</em>) – Whether to put the indices into the attrs.
+This needs to be False, when Ensembles are loaded because the Features
+of the ensemble load function do not match the real indices that should be there.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An <cite>xarray.Dataset</cite> with all features in a nice format.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>xarray.Dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.misc.xarray_save_wrong_hdf5">
+<span id="encodermap-misc-xarray-save-wrong-hdf5-module"></span><h2>encodermap.misc.xarray_save_wrong_hdf5 module<a class="headerlink" href="#module-encodermap.misc.xarray_save_wrong_hdf5" title="Permalink to this heading">#</a></h2>
+<p>Allows the combined storing of CVs and trajectories in single HDF5/NetCDF4 files.</p>
+<p>These files represent collated and completed trajectory ensembles, which can be
+lazy-loaded (memory efficient) and used as training input for encodermap’s NNs.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.xarray_save_wrong_hdf5._get_scheduler">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.xarray_save_wrong_hdf5.</span></span><span class="sig-name descname"><span class="pre">_get_scheduler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">get</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/xarray/backends/locks.html#_get_scheduler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.xarray_save_wrong_hdf5._get_scheduler" title="Permalink to this definition">#</a></dt>
+<dd><p>Determine the dask scheduler that is being used.</p>
+<p>None is returned if no dask scheduler is active.</p>
+<section id="see-also">
+<h3>See Also<a class="headerlink" href="#see-also" title="Permalink to this heading">#</a></h3>
+<p>dask.base.get_scheduler</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.xarray_save_wrong_hdf5._to_netcdf">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.xarray_save_wrong_hdf5.</span></span><span class="sig-name descname"><span class="pre">_to_netcdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_or_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'w'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Mapping</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unlimited_dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multifile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invalid_netcdf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Delayed</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/encodermap/misc/xarray_save_wrong_hdf5.html#_to_netcdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.xarray_save_wrong_hdf5._to_netcdf" title="Permalink to this definition">#</a></dt>
+<dd><p>This function creates an appropriate datastore for writing a dataset to
+disk as a netCDF file</p>
+<p>See <cite>Dataset.to_netcdf</cite> for full API docs.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">multifile</span></code> argument is only for the private use of save_mfdataset.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.xarray_save_wrong_hdf5._validate_attrs">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.xarray_save_wrong_hdf5.</span></span><span class="sig-name descname"><span class="pre">_validate_attrs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/encodermap/misc/xarray_save_wrong_hdf5.html#_validate_attrs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.xarray_save_wrong_hdf5._validate_attrs" title="Permalink to this definition">#</a></dt>
+<dd><p><cite>attrs</cite> must have a string key and a value which is either: a number,
+a string, an ndarray or a list/tuple of numbers/strings.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.xarray_save_wrong_hdf5._validate_dataset_names">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.xarray_save_wrong_hdf5.</span></span><span class="sig-name descname"><span class="pre">_validate_dataset_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/encodermap/misc/xarray_save_wrong_hdf5.html#_validate_dataset_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.xarray_save_wrong_hdf5._validate_dataset_names" title="Permalink to this definition">#</a></dt>
+<dd><p>DataArray.name and Dataset keys must be a string or None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.xarray_save_wrong_hdf5.save_netcdf_alongside_mdtraj">
+<span class="sig-prename descclassname"><span class="pre">encodermap.misc.xarray_save_wrong_hdf5.</span></span><span class="sig-name descname"><span class="pre">save_netcdf_alongside_mdtraj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/encodermap/misc/xarray_save_wrong_hdf5.html#save_netcdf_alongside_mdtraj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.xarray_save_wrong_hdf5.save_netcdf_alongside_mdtraj" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-encodermap.misc">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-encodermap.misc" title="Permalink to this heading">#</a></h2>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submodules">
+   Submodules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.misc.backmapping">
+   encodermap.misc.backmapping module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.backmapping._dihedral">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _dihedral()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.backmapping._displacement">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _displacement()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.backmapping._get_far_and_near_networkx">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _get_far_and_near_networkx()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.backmapping.backbone_hydrogen_oxygen_crossproduct">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       backbone_hydrogen_oxygen_crossproduct()
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.misc.clustering">
+   encodermap.misc.clustering module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.clustering._gen_dummy_traj_single">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _gen_dummy_traj_single()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.clustering.gen_dummy_traj">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       gen_dummy_traj()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.clustering.get_cluster_frames">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       get_cluster_frames()
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.misc.distances">
+   encodermap.misc.distances module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.distances.pairwise_dist">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       pairwise_dist()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.distances.pairwise_dist_periodic">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       pairwise_dist_periodic()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.distances.periodic_distance">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       periodic_distance()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.distances.periodic_distance_np">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       periodic_distance_np()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.distances.sigmoid">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       sigmoid()
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.misc.errors">
+   encodermap.misc.errors module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.errors.BadError">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       BadError
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.misc.function_def">
+   encodermap.misc.function_def module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.function_def.function">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       function()
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.misc.misc">
+   encodermap.misc.misc module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.misc._can_be_feature">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _can_be_feature()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.misc._datetime_windows_and_linux_compatible">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _datetime_windows_and_linux_compatible()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.misc._flatten_model">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _flatten_model()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.misc._validate_uri">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _validate_uri()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.misc.create_n_cube">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       create_n_cube()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.misc.get_full_common_str_and_ref">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       get_full_common_str_and_ref()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.misc.plot_model">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       plot_model()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.misc.run_path">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       run_path()
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.misc.saving_loading_models">
+   encodermap.misc.saving_loading_models module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.saving_loading_models.load_list_of_models">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       load_list_of_models()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.saving_loading_models.load_model">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       load_model()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.saving_loading_models.model_sort_key">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       model_sort_key()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.saving_loading_models.save_model">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       save_model()
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.misc.summaries">
+   encodermap.misc.summaries module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.summaries._gen_hist">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _gen_hist()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.summaries._gen_nan_image">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _gen_nan_image()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.summaries._gen_scatter">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _gen_scatter()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.summaries.add_layer_summaries">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       add_layer_summaries()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.summaries.image_summary">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       image_summary()
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.misc.transformations">
+   encodermap.misc.transformations module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#requirements">
+     Requirements
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#notes">
+     Notes
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#references">
+     References
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#examples">
+     Examples
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.transformations._import_module">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _import_module()
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.misc.xarray">
+   encodermap.misc.xarray module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.xarray._validate_uri">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _validate_uri()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.xarray.construct_xarray_from_numpy">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       construct_xarray_from_numpy()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.xarray.unpack_data_and_feature">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       unpack_data_and_feature()
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.misc.xarray_save_wrong_hdf5">
+   encodermap.misc.xarray_save_wrong_hdf5 module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.xarray_save_wrong_hdf5._get_scheduler">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _get_scheduler()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.xarray_save_wrong_hdf5._to_netcdf">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _to_netcdf()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.xarray_save_wrong_hdf5._validate_attrs">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _validate_attrs()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.xarray_save_wrong_hdf5._validate_dataset_names">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _validate_dataset_names()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.misc.xarray_save_wrong_hdf5.save_netcdf_alongside_mdtraj">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       save_netcdf_alongside_mdtraj()
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.misc">
+   Module contents
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="_sources/encodermap.misc.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023, Kevin Sawade, Tobias Lemke.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,717 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>encodermap.encodermap_tf1.backmapping &#8212; encodermap 3.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/encodermap/encodermap_tf1/backmapping';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <h1>Source code for encodermap.encodermap_tf1.backmapping</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">sin</span>
+
+<span class="kn">import</span> <span class="nn">MDAnalysis</span> <span class="k">as</span> <span class="nn">md</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow.compat.v1</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">MDAnalysis.analysis.base</span> <span class="kn">import</span> <span class="n">AnalysisFromFunction</span>
+<span class="kn">from</span> <span class="nn">MDAnalysis.coordinates.memory</span> <span class="kn">import</span> <span class="n">MemoryReader</span>
+
+<span class="kn">from</span> <span class="nn">.misc</span> <span class="kn">import</span> <span class="n">rotation_matrix</span>
+
+
+<div class="viewcode-block" id="_expand_universe"><a class="viewcode-back" href="../../../encodermap.encodermap_tf1.html#encodermap.encodermap_tf1.backmapping._expand_universe">[docs]</a><span class="k">def</span> <span class="nf">_expand_universe</span><span class="p">(</span><span class="n">universe</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+    <span class="n">coordinates</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">AnalysisFromFunction</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ag</span><span class="p">:</span> <span class="n">ag</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">universe</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">results</span>
+    <span class="p">)</span>
+    <span class="n">coordinates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">universe</span><span class="o">.</span><span class="n">load_new</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">MemoryReader</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="_set_dihedral"><a class="viewcode-back" href="../../../encodermap.encodermap_tf1.html#encodermap.encodermap_tf1.backmapping._set_dihedral">[docs]</a><span class="k">def</span> <span class="nf">_set_dihedral</span><span class="p">(</span><span class="n">dihedral</span><span class="p">,</span> <span class="n">atoms</span><span class="p">,</span> <span class="n">angle</span><span class="p">):</span>
+    <span class="n">current_angle</span> <span class="o">=</span> <span class="n">dihedral</span><span class="o">.</span><span class="n">dihedral</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+    <span class="n">head</span> <span class="o">=</span> <span class="n">atoms</span><span class="p">[</span><span class="n">dihedral</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">id</span> <span class="p">:]</span>
+    <span class="n">vec</span> <span class="o">=</span> <span class="n">dihedral</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">dihedral</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">position</span>
+    <span class="n">head</span><span class="o">.</span><span class="n">rotateby</span><span class="p">(</span><span class="n">angle</span> <span class="o">-</span> <span class="n">current_angle</span><span class="p">,</span> <span class="n">vec</span><span class="p">,</span> <span class="n">dihedral</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">position</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dihedral_backmapping"><a class="viewcode-back" href="../../../encodermap.encodermap_tf1.html#encodermap.encodermap_tf1.backmapping.dihedral_backmapping">[docs]</a><span class="k">def</span> <span class="nf">dihedral_backmapping</span><span class="p">(</span><span class="n">pdb_path</span><span class="p">,</span> <span class="n">dihedral_trajectory</span><span class="p">,</span> <span class="n">rough_n_points</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Takes a pdb file with a peptide and creates a trajectory based on the dihedral angles given.</span>
+<span class="sd">    It simply rotates around the dihedral angle axis. In the result side-chains might overlap but the backbone should</span>
+<span class="sd">    turn out quite well.</span>
+
+<span class="sd">    :param pdb_path: (str)</span>
+<span class="sd">    :param dihedral_trajectory:</span>
+<span class="sd">        array-like of shape (traj_length, number_of_dihedrals)</span>
+<span class="sd">    :param rough_n_points: (int) a step_size to select a subset of values from dihedral_trajectory is calculated by</span>
+<span class="sd">        max(1, int(len(dihedral_trajectory) / rough_n_points)) with rough_n_points = -1 all values are used.</span>
+<span class="sd">    :return: (MDAnalysis.Universe)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">step_size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dihedral_trajectory</span><span class="p">)</span> <span class="o">/</span> <span class="n">rough_n_points</span><span class="p">))</span>
+    <span class="n">dihedral_trajectory</span> <span class="o">=</span> <span class="n">dihedral_trajectory</span><span class="p">[::</span><span class="n">step_size</span><span class="p">]</span>
+
+    <span class="n">uni</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">Universe</span><span class="p">(</span><span class="n">pdb_path</span><span class="p">)</span>
+    <span class="n">protein</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">select_atoms</span><span class="p">(</span><span class="s2">&quot;protein&quot;</span><span class="p">)</span>
+
+    <span class="n">dihedrals</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">residue</span> <span class="ow">in</span> <span class="n">protein</span><span class="o">.</span><span class="n">residues</span><span class="p">:</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">residue</span><span class="o">.</span><span class="n">phi_selection</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">phi</span><span class="p">:</span>
+            <span class="n">dihedrals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">residue</span> <span class="ow">in</span> <span class="n">protein</span><span class="o">.</span><span class="n">residues</span><span class="p">:</span>
+        <span class="n">psi</span> <span class="o">=</span> <span class="n">residue</span><span class="o">.</span><span class="n">psi_selection</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">psi</span><span class="p">:</span>
+            <span class="n">dihedrals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
+
+    <span class="n">_expand_universe</span><span class="p">(</span><span class="n">uni</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dihedral_trajectory</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">dihedral_values</span><span class="p">,</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dihedral_trajectory</span><span class="p">,</span> <span class="n">uni</span><span class="o">.</span><span class="n">trajectory</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">dihedral</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dihedrals</span><span class="p">,</span> <span class="n">dihedral_values</span><span class="p">):</span>
+            <span class="n">_set_dihedral</span><span class="p">(</span><span class="n">dihedral</span><span class="p">,</span> <span class="n">protein</span><span class="p">,</span> <span class="n">value</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="mi">360</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">uni</span></div>
+
+
+<div class="viewcode-block" id="straight_tetrahedral_chain"><a class="viewcode-back" href="../../../encodermap.encodermap_tf1.html#encodermap.encodermap_tf1.backmapping.straight_tetrahedral_chain">[docs]</a><span class="k">def</span> <span class="nf">straight_tetrahedral_chain</span><span class="p">(</span><span class="n">n_atoms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bond_lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="mf">70.63</span> <span class="o">/</span> <span class="mi">180</span> <span class="o">*</span> <span class="n">pi</span><span class="p">)</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="mf">70.63</span> <span class="o">/</span> <span class="mi">180</span> <span class="o">*</span> <span class="n">pi</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">n_atoms</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">bond_lengths</span><span class="p">:</span>
+        <span class="n">coordinates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_atoms</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n_atoms</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">coordinates</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="mi">1</span> <span class="p">:</span> <span class="n">n_atoms</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">indices</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n_atoms</span><span class="p">]</span>
+        <span class="n">coordinates</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">indices</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n_atoms</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="p">(</span><span class="n">bond_lengths</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">n_atoms</span><span class="p">)</span> <span class="ow">or</span> <span class="n">n_atoms</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">bond_lengths</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">n_bonds</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bond_lengths</span><span class="p">)</span>
+        <span class="n">n_atoms</span> <span class="o">=</span> <span class="n">n_atoms</span> <span class="ow">or</span> <span class="n">n_bonds</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="n">dxs</span> <span class="o">=</span> <span class="n">bond_lengths</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="n">dx</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_atoms</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))[:</span><span class="n">n_bonds</span><span class="p">]</span>
+        <span class="n">dys</span> <span class="o">=</span> <span class="n">bond_lengths</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">dy</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_atoms</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))[:</span><span class="n">n_bonds</span><span class="p">]</span>
+
+        <span class="n">coordinates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_atoms</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">coordinates</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">dxs</span><span class="p">)</span>
+        <span class="n">coordinates</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">dys</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;input not compatible&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">coordinates</span></div>
+
+
+<div class="viewcode-block" id="chain_in_plane"><a class="viewcode-back" href="../../../encodermap.encodermap_tf1.html#encodermap.encodermap_tf1.backmapping.chain_in_plane">[docs]</a><span class="k">def</span> <span class="nf">chain_in_plane</span><span class="p">(</span><span class="n">lengths</span><span class="p">,</span> <span class="n">angles</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reconstructs cartesions from distances and angles.&quot;&quot;&quot;</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">angles</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">prev_angle</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">batch_size</span><span class="p">))</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">batch_size</span><span class="p">))]</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">batch_size</span><span class="p">))]</span>
+    <span class="n">sign</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">xs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">lengths</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">prev_angle</span><span class="p">))</span>
+        <span class="n">ys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ys</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">lengths</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">prev_angle</span><span class="p">)</span> <span class="o">*</span> <span class="n">sign</span><span class="p">)</span>
+        <span class="n">prev_angle</span> <span class="o">=</span> <span class="n">pi</span> <span class="o">-</span> <span class="n">angles</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">prev_angle</span>
+        <span class="n">sign</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="n">xs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">lengths</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">prev_angle</span><span class="p">))</span>
+    <span class="n">ys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ys</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">lengths</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">prev_angle</span><span class="p">)</span> <span class="o">*</span> <span class="n">sign</span><span class="p">)</span>
+
+    <span class="n">xs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ys</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">cartesians</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">xs</span><span class="p">))],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cartesians</span></div>
+
+
+<div class="viewcode-block" id="dihedrals_to_cartesian_tf_old"><a class="viewcode-back" href="../../../encodermap.encodermap_tf1.html#encodermap.encodermap_tf1.backmapping.dihedrals_to_cartesian_tf_old">[docs]</a><span class="k">def</span> <span class="nf">dihedrals_to_cartesian_tf_old</span><span class="p">(</span>
+    <span class="n">dihedrals</span><span class="p">,</span> <span class="n">cartesian</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">central_atom_indices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">no_omega</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">):</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">tf</span><span class="o">.</span><span class="n">is_numeric_tensor</span><span class="p">(</span><span class="n">dihedrals</span><span class="p">):</span>
+        <span class="n">dihedrals</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">dihedrals</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dihedrals</span><span class="o">.</span><span class="n">get_shape</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">one_d</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">dihedrals</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">dihedrals</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">one_d</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">dihedrals</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">dihedrals</span> <span class="o">=</span> <span class="o">-</span><span class="n">dihedrals</span>
+
+    <span class="k">if</span> <span class="n">cartesian</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cartesian</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">straight_tetrahedral_chain</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cartesian</span><span class="o">.</span><span class="n">get_shape</span><span class="p">())</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">cartesian</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">cartesian</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">dihedrals</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">central_atom_indices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cai</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">cartesian</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">cai</span> <span class="o">=</span> <span class="n">central_atom_indices</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">no_omega</span><span class="p">:</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="nb">int</span><span class="p">((</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">axis</span> <span class="o">=</span> <span class="n">cartesian</span><span class="p">[:,</span> <span class="n">cai</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]]</span> <span class="o">-</span> <span class="n">cartesian</span><span class="p">[:,</span> <span class="n">cai</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]]</span>
+        <span class="n">axis</span> <span class="o">/=</span> <span class="n">tf</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">rotated</span> <span class="o">=</span> <span class="n">cartesian</span><span class="p">[:,</span> <span class="n">cai</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="p">:</span> <span class="n">cai</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span>
+            <span class="n">cartesian</span><span class="p">[:,</span> <span class="n">cai</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">cartesian</span><span class="p">[:,</span> <span class="n">cai</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="p">:</span> <span class="n">cai</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="n">rotation_matrix</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">dihedrals</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]),</span>
+        <span class="p">)</span>
+        <span class="n">cartesian</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">cartesian</span><span class="p">[:,</span> <span class="p">:</span> <span class="n">cai</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">rotated</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cartesian</span></div>
+
+
+<div class="viewcode-block" id="dihedrals_to_cartesian_tf"><a class="viewcode-back" href="../../../encodermap.encodermap_tf1.html#encodermap.encodermap_tf1.backmapping.dihedrals_to_cartesian_tf">[docs]</a><span class="k">def</span> <span class="nf">dihedrals_to_cartesian_tf</span><span class="p">(</span><span class="n">dihedrals</span><span class="p">,</span> <span class="n">cartesian</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">tf</span><span class="o">.</span><span class="n">is_numeric_tensor</span><span class="p">(</span><span class="n">dihedrals</span><span class="p">):</span>
+        <span class="n">dihedrals</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">dihedrals</span><span class="p">)</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">dihedrals</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cartesian</span><span class="o">.</span><span class="n">get_shape</span><span class="p">())</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">cartesian</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">cartesian</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">dihedrals</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="n">split</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">cartesian</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">cartesian_right</span> <span class="o">=</span> <span class="n">cartesian</span><span class="p">[:,</span> <span class="n">split</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:]</span>
+    <span class="n">dihedrals_right</span> <span class="o">=</span> <span class="n">dihedrals</span><span class="p">[:,</span> <span class="n">split</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:]</span>
+
+    <span class="n">cartesian_left</span> <span class="o">=</span> <span class="n">cartesian</span><span class="p">[:,</span> <span class="n">split</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">::</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">dihedrals_left</span> <span class="o">=</span> <span class="n">dihedrals</span><span class="p">[:,</span> <span class="n">split</span> <span class="o">-</span> <span class="mi">2</span> <span class="p">::</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">new_cartesian_right</span> <span class="o">=</span> <span class="n">dihedral_to_cartesian_tf_one_way</span><span class="p">(</span>
+        <span class="n">dihedrals_right</span><span class="p">,</span> <span class="n">cartesian_right</span>
+    <span class="p">)</span>
+    <span class="n">new_cartesian_left</span> <span class="o">=</span> <span class="n">dihedral_to_cartesian_tf_one_way</span><span class="p">(</span>
+        <span class="n">dihedrals_left</span><span class="p">,</span> <span class="n">cartesian_left</span>
+    <span class="p">)</span>
+
+    <span class="n">new_cartesian</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">new_cartesian_left</span><span class="p">[:,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">new_cartesian_right</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">new_cartesian</span></div>
+
+
+<div class="viewcode-block" id="dihedral_to_cartesian_tf_one_way"><a class="viewcode-back" href="../../../encodermap.encodermap_tf1.html#encodermap.encodermap_tf1.backmapping.dihedral_to_cartesian_tf_one_way">[docs]</a><span class="k">def</span> <span class="nf">dihedral_to_cartesian_tf_one_way</span><span class="p">(</span><span class="n">dihedrals</span><span class="p">,</span> <span class="n">cartesian</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">dihedrals</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">dihedrals</span> <span class="o">=</span> <span class="o">-</span><span class="n">dihedrals</span>
+
+    <span class="n">rotated</span> <span class="o">=</span> <span class="n">cartesian</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="n">collected_cartesians</span> <span class="o">=</span> <span class="p">[</span><span class="n">cartesian</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">collected_cartesians</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rotated</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">axis</span> <span class="o">=</span> <span class="n">rotated</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">rotated</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">axis</span> <span class="o">/=</span> <span class="n">tf</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">rotated</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">rotated</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span>
+            <span class="n">rotated</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">offset</span><span class="p">,</span> <span class="n">rotation_matrix</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">dihedrals</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span>
+        <span class="p">)</span>
+    <span class="n">collected_cartesians</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rotated</span><span class="p">)</span>
+    <span class="n">collected_cartesians</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">collected_cartesians</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">collected_cartesians</span></div>
+
+
+<span class="c1"># def dihedral_to_cartesian_tf_one_way2(dihedrals, cartesian):</span>
+<span class="c1">#     n = int(dihedrals.shape[-1])</span>
+<span class="c1">#     dihedrals = -dihedrals</span>
+<span class="c1">#</span>
+<span class="c1">#     n_batch = tf.shape(cartesian)[0]</span>
+<span class="c1">#</span>
+<span class="c1">#     new_cartesians = tf.Variable(np.zeros((256, int(cartesian.shape[1]), 3), dtype=np.float32), trainable=False)</span>
+<span class="c1">#     new_cartesians = new_cartesians[:n_batch].assign(cartesian)</span>
+<span class="c1">#</span>
+<span class="c1">#     for i in range(n):</span>
+<span class="c1">#         axis = new_cartesians[:n_batch, i + 2] - new_cartesians[:n_batch, i + 1]</span>
+<span class="c1">#         axis /= tf.norm(axis, axis=1, keepdims=True)</span>
+<span class="c1">#         new_cartesians[:n_batch, i + 3:].assign(new_cartesians[:n_batch, i + 2:i + 3] +</span>
+<span class="c1">#                                          tf.matmul(new_cartesians[:n_batch, i + 3:] - new_cartesians[:n_batch, i + 2:i + 3],</span>
+<span class="c1">#                                                    rotation_matrix(axis, dihedrals[:, i])))</span>
+<span class="c1">#     return new_cartesians[:n_batch]</span>
+
+<span class="c1"># def dihedrals_to_cartesian_tf(dihedrals, cartesian):</span>
+<span class="c1">#</span>
+<span class="c1">#     if not tf.is_numeric_tensor(dihedrals):</span>
+<span class="c1">#         dihedrals = tf.convert_to_tensor(dihedrals)</span>
+<span class="c1">#</span>
+<span class="c1">#     n = int(dihedrals.shape[-1])</span>
+<span class="c1">#     dihedrals = -dihedrals</span>
+<span class="c1">#</span>
+<span class="c1">#     if len(cartesian.get_shape()) == 2:</span>
+<span class="c1">#         cartesian = tf.tile(tf.expand_dims(cartesian, axis=0), [tf.shape(dihedrals)[0], 1, 1])</span>
+<span class="c1">#</span>
+<span class="c1">#     for i in range(n):</span>
+<span class="c1">#         axis = cartesian[:, i + 2] - cartesian[:, i + 1]</span>
+<span class="c1">#         axis /= tf.norm(axis, axis=1, keepdims=True)</span>
+<span class="c1">#         rotated = cartesian[:, i + 2:i + 2 + 1] + \</span>
+<span class="c1">#                   tf.matmul(cartesian[:, i + 3:] - cartesian[:, i + 2:i + 3],</span>
+<span class="c1">#                             rotation_matrix(axis, dihedrals[:, i]))</span>
+<span class="c1">#         cartesian = tf.concat([cartesian[:, :i + 3], rotated], axis=1)</span>
+<span class="c1">#</span>
+<span class="c1">#     return cartesian</span>
+
+
+<div class="viewcode-block" id="guess_sp2_atom"><a class="viewcode-back" href="../../../encodermap.encodermap_tf1.html#encodermap.encodermap_tf1.backmapping.guess_sp2_atom">[docs]</a><span class="k">def</span> <span class="nf">guess_sp2_atom</span><span class="p">(</span>
+    <span class="n">cartesians</span><span class="p">,</span> <span class="n">atom_names</span><span class="p">,</span> <span class="n">bond_partner</span><span class="p">,</span> <span class="n">angle_to_previous</span><span class="p">,</span> <span class="n">bond_length</span>
+<span class="p">):</span>
+    <span class="k">assert</span> <span class="n">cartesians</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">atom_names</span><span class="p">)</span>
+    <span class="n">added_cartesians</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">atom_names</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">atom_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">bond_partner</span><span class="p">:</span>
+            <span class="n">prev_vec</span> <span class="o">=</span> <span class="n">cartesians</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">cartesians</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">next_vec</span> <span class="o">=</span> <span class="n">cartesians</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">cartesians</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+            <span class="k">except</span> <span class="n">tf</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">InvalidArgumentError</span><span class="p">:</span>
+                <span class="n">next_vec</span> <span class="o">=</span> <span class="n">cartesians</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">cartesians</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+
+            <span class="n">perpendicular_axis</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">prev_vec</span><span class="p">,</span> <span class="n">next_vec</span><span class="p">)</span>
+            <span class="n">perpendicular_axis</span> <span class="o">/=</span> <span class="n">tf</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">perpendicular_axis</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">bond_vec</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span>
+                <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">prev_vec</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="n">rotation_matrix</span><span class="p">(</span><span class="n">perpendicular_axis</span><span class="p">,</span> <span class="n">angle_to_previous</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="n">bond_vec</span> <span class="o">=</span> <span class="n">bond_vec</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="n">bond_vec</span> <span class="o">*=</span> <span class="n">bond_length</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">bond_vec</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">added_cartesians</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cartesians</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">bond_vec</span><span class="p">)</span>
+    <span class="n">added_cartesians</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">added_cartesians</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">added_cartesians</span></div>
+
+
+<div class="viewcode-block" id="guess_amide_H"><a class="viewcode-back" href="../../../encodermap.encodermap_tf1.html#encodermap.encodermap_tf1.backmapping.guess_amide_H">[docs]</a><span class="k">def</span> <span class="nf">guess_amide_H</span><span class="p">(</span><span class="n">cartesians</span><span class="p">,</span> <span class="n">atom_names</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">guess_sp2_atom</span><span class="p">(</span><span class="n">cartesians</span><span class="p">,</span> <span class="n">atom_names</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="mi">123</span> <span class="o">/</span> <span class="mi">180</span> <span class="o">*</span> <span class="n">pi</span><span class="p">,</span> <span class="mf">1.10</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="guess_amide_O"><a class="viewcode-back" href="../../../encodermap.encodermap_tf1.html#encodermap.encodermap_tf1.backmapping.guess_amide_O">[docs]</a><span class="k">def</span> <span class="nf">guess_amide_O</span><span class="p">(</span><span class="n">cartesians</span><span class="p">,</span> <span class="n">atom_names</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">guess_sp2_atom</span><span class="p">(</span><span class="n">cartesians</span><span class="p">,</span> <span class="n">atom_names</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="mi">121</span> <span class="o">/</span> <span class="mi">180</span> <span class="o">*</span> <span class="n">pi</span><span class="p">,</span> <span class="mf">1.24</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="merge_cartesians"><a class="viewcode-back" href="../../../encodermap.encodermap_tf1.html#encodermap.encodermap_tf1.backmapping.merge_cartesians">[docs]</a><span class="k">def</span> <span class="nf">merge_cartesians</span><span class="p">(</span>
+    <span class="n">central_cartesians</span><span class="p">,</span> <span class="n">central_atom_names</span><span class="p">,</span> <span class="n">H_cartesians</span><span class="p">,</span> <span class="n">O_cartesians</span>
+<span class="p">):</span>
+    <span class="n">cartesian</span> <span class="o">=</span> <span class="p">[</span><span class="n">central_cartesians</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span>
+    <span class="n">h_i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">o_i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">central_atom_names</span><span class="p">)):</span>
+        <span class="n">atom_name</span> <span class="o">=</span> <span class="n">central_atom_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">cartesian</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">central_cartesians</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">atom_name</span> <span class="o">==</span> <span class="s2">&quot;N&quot;</span><span class="p">:</span>
+            <span class="n">cartesian</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">H_cartesians</span><span class="p">[:,</span> <span class="n">h_i</span><span class="p">])</span>
+            <span class="n">h_i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">atom_name</span> <span class="o">==</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span>
+            <span class="n">cartesian</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">O_cartesians</span><span class="p">[:,</span> <span class="n">o_i</span><span class="p">])</span>
+            <span class="n">o_i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">cartesian</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">cartesian</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">cartesian</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="o">==</span> <span class="n">central_cartesians</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">H_cartesians</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">O_cartesians</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">cartesian</span></div>
+</pre></div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023, Kevin Sawade, Tobias Lemke.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

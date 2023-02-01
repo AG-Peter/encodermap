@@ -1,0 +1,1282 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>encodermap.loading.featurizer &#8212; encodermap 3.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/encodermap/loading/featurizer';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <h1>Source code for encodermap.loading.featurizer</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># encodermap/loading/featurizer.py</span>
+<span class="c1">################################################################################</span>
+<span class="c1"># Encodermap: A python library for dimensionality reduction.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2019-2022 University of Konstanz and the Authors</span>
+<span class="c1">#</span>
+<span class="c1"># Authors:</span>
+<span class="c1"># Kevin Sawade</span>
+<span class="c1">#</span>
+<span class="c1"># Encodermap is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as</span>
+<span class="c1"># published by the Free Software Foundation, either version 2.1</span>
+<span class="c1"># of the License, or (at your option) any later version.</span>
+<span class="c1"># This package is distributed in the hope that it will be useful to other</span>
+<span class="c1"># researches. IT DOES NOT COME WITH ANY WARRANTY WHATSOEVER; without even the</span>
+<span class="c1"># implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span>
+<span class="c1"># See the GNU Lesser General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">################################################################################</span>
+<span class="sd">&quot;&quot;&quot;Classes to be used as custom features with pyemma add_custom_feature</span>
+
+<span class="sd">ToDo:</span>
+<span class="sd">    * Write Docstrings.</span>
+<span class="sd">    * Write Examples.</span>
+<span class="sd">    * Sidechain angles, distances not working correctly.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Imports</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">.._optional_imports</span> <span class="kn">import</span> <span class="n">_optional_import</span>
+<span class="kn">from</span> <span class="nn">..loading</span> <span class="kn">import</span> <span class="n">features</span>
+<span class="kn">from</span> <span class="nn">..misc.misc</span> <span class="kn">import</span> <span class="n">FEATURE_NAMES</span><span class="p">,</span> <span class="n">_validate_uri</span>
+<span class="kn">from</span> <span class="nn">..misc.xarray</span> <span class="kn">import</span> <span class="n">get_indices_by_feature_dim</span><span class="p">,</span> <span class="n">unpack_data_and_feature</span>
+<span class="kn">from</span> <span class="nn">..trajinfo.info_all</span> <span class="kn">import</span> <span class="n">TrajEnsemble</span>
+<span class="kn">from</span> <span class="nn">..trajinfo.info_single</span> <span class="kn">import</span> <span class="n">SingleTraj</span>
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Optional Imports</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="n">featurizer</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;pyemma&quot;</span><span class="p">,</span> <span class="s2">&quot;coordinates.featurizer&quot;</span><span class="p">)</span>
+<span class="n">source</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;pyemma&quot;</span><span class="p">,</span> <span class="s2">&quot;coordinates.source&quot;</span><span class="p">)</span>
+<span class="n">xr</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;xarray&quot;</span><span class="p">)</span>
+<span class="n">CHI1_ATOMS</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry.dihedral.CHI1_ATOMS&quot;</span><span class="p">)</span>
+<span class="n">CHI2_ATOMS</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry.dihedral.CHI2_ATOMS&quot;</span><span class="p">)</span>
+<span class="n">CHI3_ATOMS</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry.dihedral.CHI3_ATOMS&quot;</span><span class="p">)</span>
+<span class="n">CHI4_ATOMS</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry.dihedral.CHI4_ATOMS&quot;</span><span class="p">)</span>
+<span class="n">CHI5_ATOMS</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry.dihedral.CHI5_ATOMS&quot;</span><span class="p">)</span>
+<span class="n">Client</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;dask&quot;</span><span class="p">,</span> <span class="s2">&quot;distributed.Client&quot;</span><span class="p">)</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Typing</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+    <span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span>
+    <span class="kn">from</span> <span class="nn">mdtraj.geometry.dihedral</span> <span class="kn">import</span> <span class="p">(</span>
+        <span class="n">CHI1_ATOMS</span><span class="p">,</span>
+        <span class="n">CHI2_ATOMS</span><span class="p">,</span>
+        <span class="n">CHI3_ATOMS</span><span class="p">,</span>
+        <span class="n">CHI4_ATOMS</span><span class="p">,</span>
+        <span class="n">CHI5_ATOMS</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="kn">from</span> <span class="nn">pyemma.coordinates</span> <span class="kn">import</span> <span class="n">featurizer</span><span class="p">,</span> <span class="n">source</span>
+    <span class="kn">from</span> <span class="nn">pyemma.coordinates.data._base.datasource</span> <span class="kn">import</span> <span class="n">DataSource</span>
+    <span class="kn">from</span> <span class="nn">pyemma.coordinates.data.featurization._base</span> <span class="kn">import</span> <span class="n">Feature</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Globals</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Featurizer&quot;</span><span class="p">]</span>
+
+
+<span class="n">UNDERSOCRE_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;central_dihedrals&quot;</span><span class="p">:</span> <span class="s2">&quot;CentralDihedrals&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;all_cartesians&quot;</span><span class="p">:</span> <span class="s2">&quot;AllCartesians&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;all_distances&quot;</span><span class="p">:</span> <span class="s2">&quot;AllBondDistances&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;central_cartesians&quot;</span><span class="p">:</span> <span class="s2">&quot;CentralCartesians&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;central_distances&quot;</span><span class="p">:</span> <span class="s2">&quot;CentralBondDistances&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;central_angles&quot;</span><span class="p">:</span> <span class="s2">&quot;CentralAngles&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;side_cartesians&quot;</span><span class="p">:</span> <span class="s2">&quot;SideChainCartesians&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;side_distances&quot;</span><span class="p">:</span> <span class="s2">&quot;SideChainBondDistances&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;side_angles&quot;</span><span class="p">:</span> <span class="s2">&quot;SideChainAngles&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;side_dihedrals&quot;</span><span class="p">:</span> <span class="s2">&quot;SideChainDihedrals&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Utils</span>
+<span class="c1">##############################################################################</span>
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Classes</span>
+<span class="c1">##############################################################################</span>
+
+
+<div class="viewcode-block" id="Featurizer"><a class="viewcode-back" href="../../../encodermap.loading.html#encodermap.Featurizer">[docs]</a><span class="k">class</span> <span class="nc">Featurizer</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">trajs</span><span class="p">,</span> <span class="n">in_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">in_memory</span><span class="p">:</span>
+            <span class="bp">cls</span> <span class="o">=</span> <span class="n">PyEMMAFeaturizer</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">.dask_featurizer</span> <span class="kn">import</span> <span class="n">DaskFeaturizer</span>
+
+            <span class="bp">cls</span> <span class="o">=</span> <span class="n">DaskFeaturizer</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">trajs</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">format_output</span><span class="p">(</span>
+    <span class="n">inps</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">DataSource</span><span class="p">],</span>
+    <span class="n">feats</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Feature</span><span class="p">],</span>
+    <span class="n">trajs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">TrajEnsemble</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">PyEMMAFeaturizer</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">TrajEnsemble</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Formats the output of multiple topologies.</span>
+
+<span class="sd">    Iterates over the features in `feats` and looks for the feature</span>
+<span class="sd">    with the greatest dimension, i.e. the longest returned describe. This</span>
+<span class="sd">    feature yields the column names, the non-defined values are np.nan</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        inps (list[DataSource]): The list of inputs, that</span>
+<span class="sd">            return the values of the feats, when `get_output()` is called.</span>
+<span class="sd">        feats (list[encodermap.loading.Featurizer]: These featurizers collect the</span>
+<span class="sd">            features and will be used to determine the highest length of feats.</span>
+<span class="sd">        trajs (list[encodermap.trajinfo.TrajEnsemble]): List of trajs with</span>
+<span class="sd">            identical topologies.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple[list[np.ndarray], list[Featurizer], list[TrajEnsembe]: The</span>
+<span class="sd">            data, that `TrajEnsemble` can work with.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">Featurizer_out</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># append to this</span>
+    <span class="n">all_out</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">feat_out</span> <span class="o">=</span> <span class="n">Featurizer_out</span><span class="p">()</span>
+    <span class="n">feat_out</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">max_feat_lengths</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">feats</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">active_features</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">max_feat_lengths</span><span class="p">:</span>
+                <span class="n">max_feat_lengths</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">feat_out</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">EmptyFeature</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">()),</span> <span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">(),</span> <span class="n">f</span><span class="o">.</span><span class="n">indexes</span><span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;SideChainDihedrals&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">:</span>
+                    <span class="n">labels</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">labels</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">max_feat_lengths</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">()):</span>
+                    <span class="n">max_feat_lengths</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+                    <span class="n">labels</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+                    <span class="n">feat_out</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">EmptyFeature</span><span class="p">(</span>
+                        <span class="n">name</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">()),</span> <span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">(),</span> <span class="n">f</span><span class="o">.</span><span class="n">indexes</span>
+                    <span class="p">)</span>
+
+    <span class="c1"># rejig the sidechain labels</span>
+    <span class="n">side_key</span> <span class="o">=</span> <span class="s2">&quot;SideChainDihedrals&quot;</span>
+    <span class="k">if</span> <span class="n">side_key</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">:</span>
+        <span class="n">labels</span><span class="p">[</span><span class="n">side_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">side_key</span><span class="p">])</span>
+        <span class="n">labels</span><span class="p">[</span><span class="n">side_key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="n">labels</span><span class="p">[</span><span class="n">side_key</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">13</span><span class="p">]))</span>
+        <span class="p">)</span>
+        <span class="n">index_of_sidechain_dihedral_features</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">side_key</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">feat_out</span><span class="o">.</span><span class="n">features</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">new_empty_feat</span> <span class="o">=</span> <span class="n">EmptyFeature</span><span class="p">(</span>
+            <span class="n">side_key</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">side_key</span><span class="p">]),</span>
+            <span class="n">labels</span><span class="p">[</span><span class="n">side_key</span><span class="p">],</span>
+            <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">feat_out</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">index_of_sidechain_dihedral_features</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_empty_feat</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">feat_out</span><span class="o">.</span><span class="n">features</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span> <span class="o">==</span> <span class="n">f</span><span class="o">.</span><span class="n">_dim</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Could not consolidate the features of the </span><span class="si">{</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;feature. The `labels` dict, which dictates the size &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;of the resulting array with np.nan&#39;s defines a shape &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="si">}</span><span class="s2">, but the feature defines a shape of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;(or `f._dim = </span><span class="si">{</span><span class="n">f</span><span class="o">.</span><span class="n">_dim</span><span class="si">}</span><span class="s2">`). The labels dict gives these labels:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">, the feature labels gives these labels:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+
+    <span class="c1"># flatten the labels. These will be the columns for a pandas dataframe.</span>
+    <span class="c1"># At the start the dataframe will be full of np.nan.</span>
+    <span class="c1"># The values of inp.get_output() will then be used in conjunction with</span>
+    <span class="c1"># The labels of the features to fill this dataframe partially</span>
+    <span class="n">flat_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">labels</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">flat_labels</span><span class="p">)</span> <span class="o">==</span> <span class="nb">sum</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="n">_dim</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">feat_out</span><span class="o">.</span><span class="n">features</span><span class="p">]):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;The length of the generic CV labels (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">flat_labels</span><span class="p">)</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;does not match the length of the labels of the generic features &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">_dim</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">feat_out</span><span class="o">.</span><span class="n">features</span><span class="p">]</span><span class="si">}</span><span class="s2">).&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># iterate over the sorted trajs, inps, and feats</span>
+    <span class="k">for</span> <span class="n">inp</span><span class="p">,</span> <span class="n">feat</span><span class="p">,</span> <span class="n">sub_trajs</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">inps</span><span class="p">,</span> <span class="n">feats</span><span class="p">,</span> <span class="n">trajs</span><span class="p">):</span>
+        <span class="c1"># make a flat list for this specific feature space</span>
+        <span class="n">describe_this_feature</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">feat</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">active_features</span><span class="p">:</span>
+            <span class="c1"># make sure generic labels are used</span>
+            <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">!=</span> <span class="s2">&quot;generic_describe&quot;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;It seems like this feature: </span><span class="si">{</span><span class="n">f</span><span class="o">.</span><span class="vm">__class__</span><span class="si">}</span><span class="s2"> does not return generic &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;feature names but topology-specifc ones (generic: &#39;SIDECHDIH CHI1 1&#39;, &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;topology specific: &#39;SIDECHDIH CHI1 ASP1&#39;). Normally, encodermap&#39;s &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;features can be instantiated with a `generic_labels=True` flag to &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;overwrite the features `describe()` method with a `generic_describe()` &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;method. This changes the `.__func__.__name__` of the `describe()` method &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;to &#39;generic_describe&#39;. However the func name for this feature is &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+            <span class="n">describe_this_feature</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+        <span class="c1"># use the output to fill a pandas dataframe with all labels</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">get_output</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">o</span><span class="p">,</span> <span class="n">traj</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">sub_trajs</span><span class="p">):</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)),</span> <span class="n">columns</span><span class="o">=</span><span class="n">flat_labels</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">describe_this_feature</span><span class="p">,</span> <span class="n">out</span><span class="o">.</span><span class="n">T</span><span class="p">)})</span>
+            <span class="n">all_out</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">df</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">feat_out</span><span class="p">,</span> <span class="n">traj</span><span class="p">))</span>
+
+    <span class="c1"># make sure the sapes of all df matches</span>
+    <span class="n">shapes</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">all_out</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">shapes</span><span class="p">)))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Alignment was not possible. Some values exhibit different shapes: &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">shapes</span><span class="p">))</span><span class="si">}</span><span class="s2">. All shapes:</span><span class="se">\n\n</span><span class="si">{</span><span class="p">[</span><span class="n">o</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">all_out</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">all_out</span>
+
+
+<span class="k">class</span> <span class="nc">PyEMMAFeaturizer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span> <span class="o">=</span> <span class="n">trajs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_copy_docstrings_from_pyemma</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_copy_docstrings_from_pyemma</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">feat_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">feat_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_all</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">feat_</span><span class="o">.</span><span class="n">add_all</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_selection</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">feat_</span><span class="o">.</span><span class="n">add_selection</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_distances</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">feat_</span><span class="o">.</span><span class="n">add_distances</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_distances_ca</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">feat_</span><span class="o">.</span><span class="n">add_distances_ca</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_inverse_distances</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">feat_</span><span class="o">.</span><span class="n">add_inverse_distances</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_contacts</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">feat_</span><span class="o">.</span><span class="n">add_contacts</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_residue_mindist</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">feat_</span><span class="o">.</span><span class="n">add_residue_mindist</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_group_COM</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">feat_</span><span class="o">.</span><span class="n">add_group_COM</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_residue_COM</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">feat_</span><span class="o">.</span><span class="n">add_residue_COM</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_group_mindist</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">feat_</span><span class="o">.</span><span class="n">add_group_mindist</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_angles</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">feat_</span><span class="o">.</span><span class="n">add_angles</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_dihedrals</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">feat_</span><span class="o">.</span><span class="n">add_dihedrals</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_backbone_torsions</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">feat_</span><span class="o">.</span><span class="n">add_backbone_torsions</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_chi1_torsions</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">feat_</span><span class="o">.</span><span class="n">add_chi1_torsions</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_sidechain_torsions</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">feat_</span><span class="o">.</span><span class="n">add_sidechain_torsions</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_minrmsd_to_ref</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">feat_</span><span class="o">.</span><span class="n">add_minrmsd_to_ref</span><span class="o">.</span><span class="vm">__doc__</span>
+
+    <span class="k">def</span> <span class="nf">get_output</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;single_top&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">active_features</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No features loaded. No output will be returned&quot;</span><span class="p">)</span>
+                <span class="k">return</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">features</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No features loaded. No output will be returned&quot;</span><span class="p">)</span>
+                <span class="k">return</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;single_top&quot;</span><span class="p">:</span>
+            <span class="n">datasets</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inp</span><span class="o">.</span><span class="n">get_output</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">traj</span><span class="p">,</span> <span class="n">out</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="p">,</span> <span class="n">out</span><span class="p">):</span>
+                <span class="n">datasets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unpack_data_and_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">traj</span><span class="p">,</span> <span class="n">out</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">datasets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;traj_num&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                    <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">traj_num</span><span class="p">]</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="n">datasets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">combine_nested</span><span class="p">(</span><span class="n">datasets</span><span class="p">,</span> <span class="n">concat_dim</span><span class="o">=</span><span class="s2">&quot;traj_num&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;traj_num&quot;</span><span class="p">])</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="p">)</span>
+                    <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;traj_num&quot;</span><span class="p">])</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">n_trajs</span>
+                <span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;The combineNnested xarray method returned &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;a bad dataset, which has </span><span class="si">{</span><span class="n">out</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;traj_num&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;trajectories, but the featurizer has </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">trajs</span><span class="si">}</span><span class="s2"> &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;trajectories.&quot;</span>
+                    <span class="p">)</span>
+                <span class="c1"># out = xr.concat(datasets, dim=&#39;traj_num&#39;)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">format_output</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorted_trajs</span><span class="p">)</span>
+            <span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><span class="n">unpack_data_and_feature</span><span class="p">(</span><span class="n">o</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">o</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">o</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">out</span><span class="p">]</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">datasets</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="s2">&quot;traj_num&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">def</span> <span class="nf">add_list_of_feats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds features to the Featurizer to be loaded either in-memory or out-of-memory.</span>
+<span class="sd">        `which` can be either &#39;all&#39; or a list of the following strings. &#39;all&#39; will add all of these features:</span>
+<span class="sd">        * &#39;AllCartesians&#39;: Cartesian coordinates of all atoms with shape (n_frames, n_atoms, 3).</span>
+<span class="sd">        * &#39;AllBondDistances&#39;: Bond distances of all bonds recognized by mdtraj. Use top = md.Topology.from_openmm()</span>
+<span class="sd">            if mdtraj does not recognize all bonds.</span>
+<span class="sd">        * &#39;CentralCartesians&#39;: Cartesians of the N, C, CA atoms in the backbone with shape (n_frames, n_residues * 3, 3).</span>
+<span class="sd">        * &#39;CentralBondDistances&#39;: The bond distances of the N, C, CA bonds with shape (n_frames, n_residues * 3 - 1).</span>
+<span class="sd">        * &#39;CentralAngles&#39;: The angles between the backbone bonds with shape (n_frames, n_residues * 3 - 2).</span>
+<span class="sd">        * &#39;CentralDihedrals&#39;: The dihedrals between the backbone atoms (omega, phi, psi). With shape (n_frames,</span>
+<span class="sd">            n_residues * 3 - 3).</span>
+<span class="sd">        * &#39;SideChainCartesians&#39;: Cartesians of the sidechain-atoms. Starting with CB, CG, ...</span>
+<span class="sd">        * &#39;SideChainBondDistances&#39;: Bond distances between the sidechain atoms. starting with the CA-CG bond.</span>
+<span class="sd">        * &#39;SideChainAngles&#39;: Angles between sidechain atoms. Starting with the C-CA-CB angle.</span>
+<span class="sd">        * &#39;SideChainDihedrals&#39;: Dihedrals of the sidechains (chi1, chi2, chi3).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            which (Union[str, list], optional). Either add &#39;all&#39; features or a list of features. See Above for</span>
+<span class="sd">                possible features. Defaults to &#39;all&#39;.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">which</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">which</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+                <span class="n">which</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="s2">&quot;CentralCartesians&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;CentralBondDistances&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;CentralAngles&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;CentralDihedrals&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;SideChainDihedrals&quot;</span><span class="p">,</span>
+                <span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">which</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">which</span> <span class="o">=</span> <span class="p">[</span><span class="n">which</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;single_top&quot;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">cf</span> <span class="ow">in</span> <span class="n">which</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">cf</span> <span class="ow">in</span> <span class="n">UNDERSOCRE_MAPPING</span><span class="p">:</span>
+                    <span class="n">cf</span> <span class="o">=</span> <span class="n">UNDERSOCRE_MAPPING</span><span class="p">[</span><span class="n">cf</span><span class="p">]</span>
+                <span class="n">feature</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">cf</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_custom_feature</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">cf</span> <span class="ow">in</span> <span class="n">which</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">cf</span> <span class="ow">in</span> <span class="n">UNDERSOCRE_MAPPING</span><span class="p">:</span>
+                    <span class="n">cf</span> <span class="o">=</span> <span class="n">UNDERSOCRE_MAPPING</span><span class="p">[</span><span class="n">cf</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">top</span><span class="p">,</span> <span class="n">feat</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="p">):</span>
+                    <span class="n">feature</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">cf</span><span class="p">)(</span><span class="n">top</span><span class="p">,</span> <span class="n">generic_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">feat</span><span class="o">.</span><span class="n">add_custom_feature</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using PyEMMA&#39;s `add_x` functions is not possible when TrajEnsemble contains multiple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_all</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using PyEMMA&#39;s `add_x` functions is not possible when TrajEnsemble contains multiple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_selection</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using PyEMMA&#39;s `add_x` functions is not possible when TrajEnsemble contains multiple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_distances</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_distances_ca</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using PyEMMA&#39;s `add_x` functions is not possible when TrajEnsemble contains multiple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_distances_ca</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_inverse_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using PyEMMA&#39;s `add_x` functions is not possible when TrajEnsemble contains multiple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_inverse_distances</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_contacts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using PyEMMA&#39;s `add_x` functions is not possible when TrajEnsemble contains multiple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_contacts</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_residue_mindist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using PyEMMA&#39;s `add_x` functions is not possible when TrajEnsemble contains multiple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_residue_mindist</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_group_COM</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using PyEMMA&#39;s `add_x` functions is not possible when TrajEnsemble contains multiple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_group_COM</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_residue_COM</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using PyEMMA&#39;s `add_x` functions is not possible when TrajEnsemble contains multiple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_residue_COM</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_group_mindist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using PyEMMA&#39;s `add_x` functions is not possible when TrajEnsemble contains multiple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_group_mindist</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_angles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using PyEMMA&#39;s `add_x` functions is not possible when TrajEnsemble contains multiple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_angles</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_dihedrals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using PyEMMA&#39;s `add_x` functions is not possible when TrajEnsemble contains multiple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_dihedrals</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_backbone_torsions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using PyEMMA&#39;s `add_x` functions is not possible when TrajEnsemble contains multiple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_backbone_torsions</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_chi1_torsions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using PyEMMA&#39;s `add_x` functions is not possible when TrajEnsemble contains multiple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_sidechain_torsions</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;chi1&quot;</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_sidechain_torsions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using PyEMMA&#39;s `add_x` functions is not possible when TrajEnsemble contains multiple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_sidechain_torsions</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_minrmsd_to_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;multiple_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using PyEMMA&#39;s `add_x` functions is not possible when TrajEnsemble contains multiple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_minrmsd_to_ref</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_custom_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feature</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">add_custom_feature</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">features</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;single_top&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">active_features</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">features</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sorted_info_single</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;single_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Attribute is only accessible, when working with mutliple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">info_all</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorted_trajs</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">traj</span> <span class="ow">in</span> <span class="n">info_all</span><span class="p">:</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sorted_featurizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;single_top&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Attribute is only accessible, when working with mutliple topologies.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">feat</span><span class="p">,</span> <span class="n">info_all</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorted_trajs</span><span class="p">):</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">feat</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">info_all</span><span class="o">.</span><span class="n">n_trajs</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">trajs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trajs</span>
+
+    <span class="k">def</span> <span class="nf">describe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+
+    <span class="nd">@trajs</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">trajs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trajs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">SingleTraj</span><span class="p">)</span> <span class="ow">or</span> <span class="n">trajs</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;SingleTraj&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_trajs</span> <span class="o">=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">_gen_ensemble</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">top</span> <span class="o">=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">top</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feat</span> <span class="o">=</span> <span class="n">featurizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">_validate_uri</span><span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">traj_file</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">inp</span> <span class="o">=</span> <span class="n">source</span><span class="p">([</span><span class="n">trajs</span><span class="o">.</span><span class="n">xyz</span><span class="p">],</span> <span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">inp</span> <span class="o">=</span> <span class="n">source</span><span class="p">([</span><span class="n">trajs</span><span class="o">.</span><span class="n">traj_file</span><span class="p">],</span> <span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">traj_file</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">top_file</span><span class="p">)</span>
+                    <span class="k">raise</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;single_top&quot;</span>
+        <span class="k">elif</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">TrajEnsemble</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="n">trajs</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;TrajEnsemble&quot;</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">top</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_trajs</span> <span class="o">=</span> <span class="n">trajs</span>
+                <span class="c1"># self.top = Topologies(trajs.top)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">top</span> <span class="o">=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">top</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sorted_trajs</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">top</span> <span class="ow">in</span> <span class="n">trajs</span><span class="o">.</span><span class="n">top</span><span class="p">:</span>
+                    <span class="n">matching_trajs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                        <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">top</span> <span class="o">==</span> <span class="n">top</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span> <span class="n">trajs</span><span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sorted_trajs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TrajEnsemble</span><span class="p">(</span><span class="n">matching_trajs</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">feat</span> <span class="o">=</span> <span class="p">[</span><span class="n">Featurizer</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorted_trajs</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">inp</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">source</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">traj_file</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">t_subset</span><span class="p">],</span> <span class="n">features</span><span class="o">=</span><span class="n">feat</span><span class="o">.</span><span class="n">feat</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">t_subset</span><span class="p">,</span> <span class="n">feat</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sorted_trajs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="p">)</span>
+                <span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;multiple_top&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_trajs</span> <span class="o">=</span> <span class="n">trajs</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">top</span> <span class="o">=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">top</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">feat</span> <span class="o">=</span> <span class="n">featurizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">_validate_uri</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">traj_file</span><span class="p">)</span> <span class="k">for</span> <span class="n">traj</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">]):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">inp</span> <span class="o">=</span> <span class="n">source</span><span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">xtc</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">inp</span> <span class="o">=</span> <span class="n">source</span><span class="p">(</span>
+                        <span class="p">[</span><span class="n">traj</span><span class="o">.</span><span class="n">traj_file</span> <span class="k">for</span> <span class="n">traj</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">],</span> <span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">feat</span>
+                    <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;single_top&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;trajs must be </span><span class="si">{</span><span class="n">SingleTraj</span><span class="o">.</span><span class="vm">__class__</span><span class="si">}</span><span class="s2"> or </span><span class="si">{</span><span class="n">TrajEnsemble</span><span class="o">.</span><span class="vm">__class__</span><span class="si">}</span><span class="s2">, you provided </span><span class="si">{</span><span class="n">trajs</span><span class="o">.</span><span class="vm">__class__</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;single_top&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">active_features</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="n">features</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;single_top&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;single_top&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">feat</span><span class="p">])</span>
+
+
+<span class="k">class</span> <span class="nc">EmptyFeature</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to fill with attributes to be read by encodermap.xarray.</span>
+
+<span class="sd">    This class will be used in multiple_top mode, where the attributes</span>
+<span class="sd">    _dim, describe and name will be overwritten with correct values to</span>
+<span class="sd">    build features that contain NaN values.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">_dim</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">indexes</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the Empty feature.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The name of the feature.</span>
+<span class="sd">            _dim (int): The feature length of the feature shape=(n_frames, ferature).</span>
+<span class="sd">            description (list of str): The description for every feature.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dim</span> <span class="o">=</span> <span class="n">_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indexes</span> <span class="o">=</span> <span class="n">indexes</span>
+
+    <span class="k">def</span> <span class="nf">describe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span>
+
+
+<span class="k">class</span> <span class="nc">Topologies</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tops</span><span class="p">,</span> <span class="n">alignments</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tops</span> <span class="o">=</span> <span class="n">tops</span>
+        <span class="k">if</span> <span class="n">alignments</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">alignments</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s2">&quot;side_dihedrals&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;central_cartesians&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;central_distances&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;central_angles&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;central_dihedrals&quot;</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alignments</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="p">{}</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">alignments</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compare_tops</span><span class="p">()</span>
+        <span class="n">allowed_strings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+            <span class="nb">filter</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">True</span> <span class="k">if</span> <span class="s2">&quot;side&quot;</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">UNDERSOCRE_MAPPING</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">i</span> <span class="ow">in</span> <span class="n">allowed_strings</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">alignments</span><span class="p">]):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Invalid alignment string in `alignments`. Allowed strings are </span><span class="si">{</span><span class="n">allowed_strings</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">compare_tops</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">n_residues</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">tops</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">n_residues</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tops</span><span class="p">]):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Using Different Topologies currenlty only works if all contain the same number of residues.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">generators</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">residues</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tops</span><span class="p">]</span>
+        <span class="n">sidechains</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;sidechain&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tops</span><span class="p">]</span>
+        <span class="n">all_bonds</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="n">t</span><span class="o">.</span><span class="n">bonds</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tops</span>
+        <span class="p">]</span>
+
+        <span class="c1"># iterate over residues of the sequences</span>
+        <span class="n">n_res_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">n_residues</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tops</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_res_max</span><span class="p">):</span>
+            <span class="c1"># get some info</span>
+            <span class="n">residues</span> <span class="o">=</span> <span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">generators</span><span class="p">]</span>
+            <span class="n">all_atoms</span> <span class="o">=</span> <span class="p">[[</span><span class="n">a</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">residues</span><span class="p">]</span>
+            <span class="n">atoms</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="nb">list</span><span class="p">(</span>
+                    <span class="nb">filter</span><span class="p">(</span>
+                        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">True</span>
+                        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">index</span> <span class="ow">in</span> <span class="n">sel</span> <span class="ow">and</span> <span class="s2">&quot;H&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="s2">&quot;OXT&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span>
+                        <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">sel</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">residues</span><span class="p">,</span> <span class="n">sidechains</span><span class="p">)</span>
+            <span class="p">]</span>
+            <span class="n">atoms_indices</span> <span class="o">=</span> <span class="p">[[</span><span class="n">a</span><span class="o">.</span><span class="n">index</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">atoms_</span><span class="p">]</span> <span class="k">for</span> <span class="n">atoms_</span> <span class="ow">in</span> <span class="n">atoms</span><span class="p">]</span>
+            <span class="n">bonds</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="nb">list</span><span class="p">(</span>
+                    <span class="nb">filter</span><span class="p">(</span>
+                        <span class="k">lambda</span> <span class="n">bond</span><span class="p">:</span> <span class="kc">True</span> <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">b</span> <span class="ow">in</span> <span class="n">ai</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">bond</span><span class="p">])</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span> <span class="n">ab</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">ai</span><span class="p">,</span> <span class="n">ab</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">atoms_indices</span><span class="p">,</span> <span class="n">all_bonds</span><span class="p">)</span>
+            <span class="p">]</span>
+
+            <span class="c1"># reduce the integers of atoms_indices and bonds, so that N is 0. That way, we can compare them, even, when</span>
+            <span class="c1"># two amino aicds in the chains are different</span>
+            <span class="n">N_indices</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;N&quot;</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">atoms</span><span class="p">))[</span>
+                    <span class="mi">0</span>
+                <span class="p">]</span><span class="o">.</span><span class="n">index</span>
+                <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">residues</span>
+            <span class="p">]</span>
+
+            <span class="c1"># align to respective N</span>
+            <span class="n">atoms_indices</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">[</span><span class="n">x</span> <span class="o">-</span> <span class="n">N</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">y</span><span class="p">]</span> <span class="k">for</span> <span class="n">y</span><span class="p">,</span> <span class="n">N</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">atoms_indices</span><span class="p">,</span> <span class="n">N_indices</span><span class="p">)</span>
+            <span class="p">]</span>
+            <span class="n">bonds</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">[(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">N</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">N</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">y</span><span class="p">]</span> <span class="k">for</span> <span class="n">y</span><span class="p">,</span> <span class="n">N</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bonds</span><span class="p">,</span> <span class="n">N_indices</span><span class="p">)</span>
+            <span class="p">]</span>
+
+            <span class="n">chi1</span> <span class="o">=</span> <span class="p">[</span><span class="nb">any</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">CHI1_ATOMS</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">all_atoms</span><span class="p">]</span>
+            <span class="n">chi2</span> <span class="o">=</span> <span class="p">[</span><span class="nb">any</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">CHI2_ATOMS</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">all_atoms</span><span class="p">]</span>
+            <span class="n">chi3</span> <span class="o">=</span> <span class="p">[</span><span class="nb">any</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">CHI3_ATOMS</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">all_atoms</span><span class="p">]</span>
+            <span class="n">chi4</span> <span class="o">=</span> <span class="p">[</span><span class="nb">any</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">CHI4_ATOMS</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">all_atoms</span><span class="p">]</span>
+            <span class="n">chi5</span> <span class="o">=</span> <span class="p">[</span><span class="nb">any</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">CHI5_ATOMS</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">all_atoms</span><span class="p">]</span>
+            <span class="n">chi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">chi1</span><span class="p">,</span> <span class="n">chi2</span><span class="p">,</span> <span class="n">chi3</span><span class="p">,</span> <span class="n">chi4</span><span class="p">,</span> <span class="n">chi5</span><span class="p">])</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">alignments</span><span class="p">[</span><span class="s2">&quot;side_dihedrals&quot;</span><span class="p">][</span><span class="sa">f</span><span class="s2">&quot;residue_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chi</span>
+
+            <span class="k">if</span> <span class="s2">&quot;side_cartesians&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignments</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                    <span class="s2">&quot;Cartesians between different topologies can currently not be aligned.&quot;</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="s2">&quot;side_distances&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignments</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                    <span class="s2">&quot;Distances between different topologies can currently not be aligned.&quot;</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="s2">&quot;side_angles&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignments</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                    <span class="s2">&quot;Angles between different topologies can currently not be aligned.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop_double_false</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">drop_double_false</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Drops features that None of the topologies have.</span>
+
+<span class="sd">        For example: Asp and Glu. Asp has a chi1 and chi2 torsion. Glu has chi1, chi2 and chi3. Both</span>
+<span class="sd">        don&#39;t have chi4 or chi5. In self.compare_tops these dihedrals are still considered. In this</span>
+<span class="sd">        method they will be removed.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">alignment</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">residue</span><span class="p">,</span> <span class="n">array</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">where</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">alignments</span><span class="p">[</span><span class="n">alignment</span><span class="p">][</span><span class="n">residue</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">where</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">get_max_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alignment</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Maximum length that a feature should have given a certain axis.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            alignment (str): The key for `self.alignments`.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">alignment_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignments</span><span class="p">[</span><span class="n">alignment</span><span class="p">]</span>
+        <span class="n">stacked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">alignment_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span>
+        <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">stacked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Flase is 0</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">format_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">feats</span><span class="p">,</span> <span class="n">sorted_trajs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Formats the output of an em.Featurizer object using the alignment info.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            inputs (list): List of pyemma.coordinates.data.feature_reader.FeatureReader objects.</span>
+<span class="sd">            feats (list): List of encodermap.Featurizer objetcs.</span>
+<span class="sd">            sorted_trajs (list): List of em.TrajEnsemble objects sorted in the same way as `self.tops`.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">feat</span><span class="p">,</span> <span class="n">trajs</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+            <span class="nb">zip</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tops</span><span class="p">,</span> <span class="n">feats</span><span class="p">,</span> <span class="n">sorted_trajs</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="n">value_dict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">traj_ind</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">traj</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">get_output</span><span class="p">(),</span> <span class="n">trajs</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="nb">any</span><span class="p">(</span>
+                    <span class="p">[</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">EmptyFeature</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">feat</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">active_features</span><span class="p">]</span>
+                <span class="p">):</span>
+                    <span class="kn">from</span> <span class="nn">..misc.xarray</span> <span class="kn">import</span> <span class="n">add_one_by_one</span>
+
+                    <span class="n">ffunc</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">True</span> <span class="k">if</span> <span class="s2">&quot;NaN&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">else</span> <span class="kc">False</span>
+                    <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">add_one_by_one</span><span class="p">(</span>
+                        <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="n">ffunc</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">())))</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">feat</span><span class="o">.</span><span class="n">features</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">indices</span> <span class="o">=</span> <span class="n">get_indices_by_feature_dim</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">traj</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+                <span class="c1"># divide the values returned by PyEMMA</span>
+                <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">name</span> <span class="o">=</span> <span class="n">FEATURE_NAMES</span><span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+                    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                        <span class="n">name</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+                    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                        <span class="n">name</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+                    <span class="k">if</span> <span class="n">traj_ind</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">value_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">value_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="n">ind</span><span class="p">])</span>
+
+            <span class="c1"># stack along the frame axis, just like pyemma would</span>
+            <span class="n">value_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+            <span class="c1"># put nans in all features specified by alignment</span>
+            <span class="k">for</span> <span class="n">alignment</span><span class="p">,</span> <span class="n">alignment_dict</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">alignments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">alignment</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">value_dict</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">max_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_max_length</span><span class="p">(</span><span class="n">alignment</span><span class="p">)</span>
+                <span class="n">new_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span>
+                    <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">value_dict</span><span class="p">[</span><span class="n">alignment</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">max_length</span><span class="p">),</span>
+                    <span class="n">fill_value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">where</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">alignment_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()])[:,</span> <span class="n">i</span><span class="p">]</span>
+                <span class="n">new_values</span><span class="p">[:,</span> <span class="n">where</span><span class="p">]</span> <span class="o">=</span> <span class="n">value_dict</span><span class="p">[</span><span class="n">alignment</span><span class="p">]</span>
+                <span class="n">value_dict</span><span class="p">[</span><span class="n">alignment</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_values</span>
+
+                <span class="c1"># find the index of the feature in feat.feat.active_features</span>
+                <span class="n">names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">feat</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">active_features</span><span class="p">]</span>
+                <span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">([</span><span class="n">n</span> <span class="ow">in</span> <span class="n">FEATURE_NAMES</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">names</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">([</span><span class="n">FEATURE_NAMES</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">==</span> <span class="n">alignment</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">names</span><span class="p">[</span><span class="n">index</span><span class="p">]])</span>
+                <span class="p">]</span>
+
+                <span class="c1"># get the old description and change it around</span>
+                <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">active_features</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">EmptyFeature</span><span class="p">):</span>
+                    <span class="n">old_desc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                        <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">feat</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">active_features</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()]</span>
+                    <span class="p">)</span>
+                    <span class="n">new_desc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                        <span class="p">[</span>
+                            <span class="sa">f</span><span class="s2">&quot;NaN due to ensemble with other topologies </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
+                            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_length</span><span class="p">)</span>
+                        <span class="p">]</span>
+                    <span class="p">)</span>
+                    <span class="n">new_desc</span><span class="p">[</span><span class="n">where</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_desc</span>
+                    <span class="n">new_desc</span> <span class="o">=</span> <span class="n">new_desc</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+                    <span class="c1"># get the old indexes and add the NaNs</span>
+                    <span class="n">old_indexes</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">active_features</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">indexes</span>
+                    <span class="n">new_indexes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span>
+                        <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">max_length</span><span class="p">,</span> <span class="n">old_indexes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">fill_value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+                    <span class="p">)</span>
+                    <span class="n">new_indexes</span><span class="p">[</span><span class="n">where</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_indexes</span>
+
+                    <span class="c1"># create empty feature</span>
+                    <span class="n">new_class</span> <span class="o">=</span> <span class="n">EmptyFeature</span><span class="p">(</span>
+                        <span class="n">alignment</span><span class="p">,</span> <span class="n">max_length</span><span class="p">,</span> <span class="n">new_desc</span><span class="p">,</span> <span class="n">new_indexes</span>
+                    <span class="p">)</span>
+                    <span class="n">feat</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">active_features</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_class</span>
+
+            <span class="n">new_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">new_values</span><span class="p">,</span> <span class="n">feat</span><span class="p">,</span> <span class="n">trajs</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">def</span> <span class="nf">format_output_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">feats</span><span class="p">,</span> <span class="n">sorted_trajs</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Will be implemented once tfRecords are implemented.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tops</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">StopIteration</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tops</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023, Kevin Sawade, Tobias Lemke.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

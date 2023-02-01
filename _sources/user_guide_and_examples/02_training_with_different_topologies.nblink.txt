@@ -1,0 +1,10 @@
+{
+    "path" : "../../../tutorials/notebooks_intermediate/02_training_with_different_topologies.ipynb",
+    "extra-media": [
+        "../../../tutorials/notebooks_starter/asp7.pdb",
+        "../../../tutorials/notebooks_starter/asp7.xtc",
+        "../../../tutorials/notebooks_intermediate/glu7.xtc",
+        "../../../tutorials/notebooks_intermediate/glu7.pdb",
+        "../../../tutorials/notebooks_intermediate/path.npy"
+    ]
+}

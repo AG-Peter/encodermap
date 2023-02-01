@@ -1,0 +1,1416 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>encodermap.plot.utils &#8212; encodermap 3.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/encodermap/plot/utils';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <h1>Source code for encodermap.plot.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># encodermap/plot/utils.py</span>
+<span class="c1">################################################################################</span>
+<span class="c1"># Encodermap: A python library for dimensionality reduction.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2019-2022 University of Konstanz and the Authors</span>
+<span class="c1">#</span>
+<span class="c1"># Authors:</span>
+<span class="c1"># Kevin Sawade</span>
+<span class="c1">#</span>
+<span class="c1"># Encodermap is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as</span>
+<span class="c1"># published by the Free Software Foundation, either version 2.1</span>
+<span class="c1"># of the License, or (at your option) any later version.</span>
+<span class="c1"># This package is distributed in the hope that it will be useful to other</span>
+<span class="c1"># researches. IT DOES NOT COME WITH ANY WARRANTY WHATSOEVER; without even the</span>
+<span class="c1"># implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span>
+<span class="c1"># See the GNU Lesser General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">################################################################################</span>
+
+<span class="sd">&quot;&quot;&quot;Utils for plotting. Ideas and Code taken from the matplotlib documentation.</span>
+<span class="sd">Menu: https://matplotlib.org/3.1.0/gallery/widgets/menu.html</span>
+<span class="sd">LassoSelector: https://matplotlib.org/3.1.1/gallery/widgets/lasso_selector_demo_sgskip.html</span>
+<span class="sd">PolygonSelector: https://matplotlib.org/3.1.3/gallery/widgets/polygon_selector_demo.html</span>
+<span class="sd">Bezier: https://gist.github.com/gavincangan/b88a978e878e9bb1c0f8804e3af8de3c</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Imports</span>
+<span class="c1">##############################################################################</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib.artist</span> <span class="kn">import</span> <span class="n">Artist</span>
+<span class="kn">from</span> <span class="nn">matplotlib.lines</span> <span class="kn">import</span> <span class="n">Line2D</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Rectangle</span>
+<span class="kn">from</span> <span class="nn">matplotlib.path</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">matplotlib.widgets</span> <span class="kn">import</span> <span class="n">LassoSelector</span><span class="p">,</span> <span class="n">PolygonSelector</span><span class="p">,</span> <span class="n">RectangleSelector</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">binom</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="kn">from</span> <span class="nn">.._optional_imports</span> <span class="kn">import</span> <span class="n">_optional_import</span>
+<span class="kn">from</span> <span class="nn">..encodermap_tf1.backmapping</span> <span class="kn">import</span> <span class="n">dihedral_backmapping</span>
+<span class="kn">from</span> <span class="nn">..misc.clustering</span> <span class="kn">import</span> <span class="n">gen_dummy_traj</span><span class="p">,</span> <span class="n">get_cluster_frames</span>
+<span class="kn">from</span> <span class="nn">..misc.misc</span> <span class="kn">import</span> <span class="n">_datetime_windows_and_linux_compatible</span>
+<span class="kn">from</span> <span class="nn">.plotting</span> <span class="kn">import</span> <span class="n">plot_cluster</span>
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Optional Imports</span>
+<span class="c1">##############################################################################</span>
+
+
+<span class="n">jinja2</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;jinja2&quot;</span><span class="p">)</span>
+<span class="n">ngl</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;nglview&quot;</span><span class="p">)</span>
+<span class="n">mda</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;MDAnalysis&quot;</span><span class="p">)</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">)</span>
+<span class="n">pd</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;pandas&quot;</span><span class="p">)</span>
+<span class="n">binom</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;scipy&quot;</span><span class="p">,</span> <span class="s2">&quot;special.binom&quot;</span><span class="p">)</span>
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Globals</span>
+<span class="c1">##############################################################################</span>
+
+<span class="n">_all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Props&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SelectFromCollection&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;StatusMenu&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Menu&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ModeButton&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MenuItem&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Functions (mainly for ternary plotting)</span>
+<span class="c1">##############################################################################</span>
+
+
+<div class="viewcode-block" id="calculate_dssps"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.calculate_dssps">[docs]</a><span class="k">def</span> <span class="nf">calculate_dssps</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">simplified</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates dssp from TrajEnsemble.</span>
+
+<span class="sd">    Calculates dssps from ep.TrajEnsemble and returns a numpy array.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        trajs (ep.TrajEnsemble): The TrajEnsemble class to calculate the dssps from.</span>
+<span class="sd">        simplified (bool, optional): Whether to return [H ,E, C] dssp values (True),</span>
+<span class="sd">            or [H, B, E, G, I, T, S, &#39;&#39;] dssp values (False). Defaults to True.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: The dssp array of shape (trajs.n_frames, trajs.n_residues);</span>
+
+<span class="sd">    ToDo:</span>
+<span class="sd">        Make it work with different protein legths.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">all_dssp</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="n">trajs</span><span class="o">.</span><span class="n">n_trajs</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">traj</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">:</span>
+        <span class="n">dssp</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">compute_dssp</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+        <span class="n">all_dssp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dssp</span><span class="p">)</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+    <span class="n">pbar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">all_dssp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">all_dssp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">all_dssp</span></div>
+
+
+<div class="viewcode-block" id="abc_to_rgb"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.abc_to_rgb">[docs]</a><span class="k">def</span> <span class="nf">abc_to_rgb</span><span class="p">(</span><span class="n">A</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Map values A, B, C (all in domain [0,1]) to</span>
+<span class="sd">    suitable red, green, blue values.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">B</span> <span class="o">+</span> <span class="n">C</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="n">C</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="n">B</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="digitize_dssp"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.digitize_dssp">[docs]</a><span class="k">def</span> <span class="nf">digitize_dssp</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">dssp</span><span class="p">,</span> <span class="n">imshow</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">progbar</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Digitizes the DSSP array&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">progbar</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">progbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="n">all_dssp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">dssp</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">],</span> <span class="n">assume_unique</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s2">&quot;B&quot;</span> <span class="ow">in</span> <span class="n">dssp</span><span class="p">:</span>
+        <span class="n">sorted_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sorted_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">])</span>
+    <span class="n">num_aas</span> <span class="o">=</span> <span class="n">dssp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">uniques</span> <span class="o">=</span> <span class="n">correct_missing_uniques</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dssp</span><span class="p">],</span>
+        <span class="n">sorted_</span><span class="o">=</span><span class="n">sorted_</span><span class="p">,</span>
+        <span class="n">progbar</span><span class="o">=</span><span class="n">progbar</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">uniques</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">uniques</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">uniques</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:]</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">u</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[</span><span class="n">sorted_</span><span class="o">.</span><span class="n">argsort</span><span class="p">()]</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">uniques</span><span class="p">])</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">indices</span><span class="p">)])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_aas</span>
+    <span class="p">)</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">abc_to_rgb</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">counts</span><span class="o">.</span><span class="n">T</span><span class="p">)])</span>
+    <span class="k">if</span> <span class="n">imshow</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;digitizing&quot;</span><span class="p">)</span>
+        <span class="n">digitized</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">bins</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">lowd</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">lowd</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">H</span><span class="p">,</span> <span class="n">xedges</span><span class="p">,</span> <span class="n">yedges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram2d</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">bins</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">bins</span><span class="p">):</span>
+                <span class="n">where</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                    <span class="p">(</span>
+                        <span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">lowd</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">xedges</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                        <span class="o">&amp;</span> <span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">lowd</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">xedges</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+                    <span class="p">)</span>
+                    <span class="o">&amp;</span> <span class="p">(</span>
+                        <span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">lowd</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">yedges</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                        <span class="o">&amp;</span> <span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">lowd</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">yedges</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+                    <span class="p">)</span>
+                <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">where</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">counts_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="n">where</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">color</span> <span class="o">=</span> <span class="n">abc_to_rgb</span><span class="p">(</span><span class="o">*</span><span class="n">counts_</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="n">where</span><span class="p">],</span> <span class="n">counts_</span><span class="p">)</span>
+                        <span class="k">raise</span>
+                    <span class="n">digitized</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">color</span>
+                <span class="n">progbar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">digitized</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">colors</span></div>
+
+
+<div class="viewcode-block" id="correct_missing_uniques"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.correct_missing_uniques">[docs]</a><span class="k">def</span> <span class="nf">correct_missing_uniques</span><span class="p">(</span><span class="n">uniques</span><span class="p">,</span> <span class="n">sorted_</span><span class="p">,</span> <span class="n">progbar</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Takes a list of DSSP letters and counts and adds zeros for all missing letters in sorted_.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        uniques (list of np.ndarray): A list of np.ndarrays. For every frame the DSSP letters</span>
+<span class="sd">            and their respective counts should be provided. So for example</span>
+<span class="sd">            [&#39;H&#39;, 151] or [&#39;H&#39;, &#39;E&#39;, 75, 76].</span>
+<span class="sd">        sorted_ (np.ndarray): The sorted list of DSSP letters. This list will be used to update every</span>
+<span class="sd">            frame. So The using [&#39;H&#39;, &#39;E&#39;, &#39;C&#39;], the two examples from above will become [&#39;H&#39;, &#39;E&#39;, &#39;C&#39;, 151, 0, 0]</span>
+<span class="sd">            or [&#39;H&#39;, &#39;E&#39;, &#39;C&#39;, 75, 76, 0], respectively.</span>
+<span class="sd">        progbar (tqdm): A tqdm progbar. Defaults to None</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: The corrected uniques.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">progbar</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">progbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">uniques</span><span class="p">),</span> <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">u</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">uniques</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sorted_</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">letters</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">counts</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+            <span class="n">newline</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sorted_</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">letters</span><span class="p">,</span> <span class="n">counts</span><span class="p">):</span>
+                <span class="n">newline</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sorted_</span> <span class="o">==</span> <span class="n">l</span><span class="p">)]</span> <span class="o">=</span> <span class="n">c</span>
+            <span class="n">newline</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">sorted_</span><span class="p">,</span> <span class="n">newline</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)])</span>
+            <span class="n">uniques</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">newline</span>
+        <span class="n">progbar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+    <span class="n">uniques</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">uniques</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">uniques</span></div>
+
+
+<div class="viewcode-block" id="_get_system_info"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils._get_system_info">[docs]</a><span class="k">def</span> <span class="nf">_get_system_info</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">getpass</span>
+    <span class="kn">import</span> <span class="nn">platform</span>
+    <span class="kn">import</span> <span class="nn">re</span>
+    <span class="kn">import</span> <span class="nn">socket</span>
+    <span class="kn">import</span> <span class="nn">uuid</span>
+
+    <span class="kn">import</span> <span class="nn">psutil</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;platform&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;system_user&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getuser</span><span class="p">()</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;platform_release&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;platform_version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">version</span><span class="p">()</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;architecture&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">machine</span><span class="p">()</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;hostname&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;ip_address&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostbyname</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">())</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;mac_address&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%012x</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">uuid</span><span class="o">.</span><span class="n">getnode</span><span class="p">()))</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;processor&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">processor</span><span class="p">()</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;ram&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">psutil</span><span class="o">.</span><span class="n">virtual_memory</span><span class="p">()</span><span class="o">.</span><span class="n">total</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1024.0</span><span class="o">**</span><span class="mi">3</span><span class="p">)))</span> <span class="o">+</span> <span class="s2">&quot; GB&quot;</span>
+        <span class="k">return</span> <span class="n">info</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">info</span></div>
+
+
+<div class="viewcode-block" id="_check_all_templates_defined"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils._check_all_templates_defined">[docs]</a><span class="k">def</span> <span class="nf">_check_all_templates_defined</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">info_dict</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">re</span>
+
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\{(.*?)\}&quot;</span>
+    <span class="n">matches</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">template</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+    <span class="n">min_matches</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">matchNum</span><span class="p">,</span> <span class="n">match</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">matches</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">groupNum</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">())):</span>
+            <span class="n">min_matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">groupNum</span><span class="p">))</span>
+    <span class="n">min_matches</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="nb">set</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;{{&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;}}&quot;</span><span class="p">),</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">min_matches</span><span class="p">]))</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">key</span> <span class="ow">in</span> <span class="n">info_dict</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">min_matches</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">missing</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">min_matches</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">info_dict</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Not all expressions defined in template. Missing expressions: </span><span class="si">{</span><span class="n">missing</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="_create_readme"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils._create_readme">[docs]</a><span class="k">def</span> <span class="nf">_create_readme</span><span class="p">(</span><span class="n">main_path</span><span class="p">,</span> <span class="n">now</span><span class="p">,</span> <span class="n">info_dict</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
+    <span class="kn">from</span> <span class="nn">pip._internal.operations</span> <span class="kn">import</span> <span class="n">freeze</span>
+
+    <span class="kn">from</span> <span class="nn">.._version</span> <span class="kn">import</span> <span class="n">__version__</span>
+    <span class="kn">from</span> <span class="nn">.jinja_template</span> <span class="kn">import</span> <span class="n">template</span>
+
+    <span class="c1"># update info dict</span>
+    <span class="n">md_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">main_path</span><span class="p">,</span> <span class="s2">&quot;README.md&quot;</span><span class="p">)</span>
+    <span class="n">pip_freeze</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">freeze</span><span class="o">.</span><span class="n">freeze</span><span class="p">():</span>
+        <span class="n">pip_freeze</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;    </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">info_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;pip_freeze&quot;</span><span class="p">:</span> <span class="n">pip_freeze</span><span class="p">})</span>
+    <span class="n">info_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">md_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]})</span>
+    <span class="n">info_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;now&quot;</span><span class="p">:</span> <span class="n">now</span><span class="p">})</span>
+    <span class="n">info_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;encodermap_version&quot;</span><span class="p">:</span> <span class="n">__version__</span><span class="p">})</span>
+    <span class="n">info_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_get_system_info</span><span class="p">())</span>
+
+    <span class="c1"># check</span>
+    <span class="k">assert</span> <span class="n">_check_all_templates_defined</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">info_dict</span><span class="p">)</span>
+
+    <span class="c1"># jinja2</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="n">jinja2</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
+        <span class="n">info_dict</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># write</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">md_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="_match_tops_and_trajs"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils._match_tops_and_trajs">[docs]</a><span class="k">def</span> <span class="nf">_match_tops_and_trajs</span><span class="p">(</span><span class="n">min_topfiles</span><span class="p">,</span> <span class="n">list_of_frames</span><span class="p">):</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">min_topfiles</span><span class="p">}</span>
+    <span class="n">top_file_match</span> <span class="o">=</span> <span class="p">{</span><span class="n">md</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">top</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">min_topfiles</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">list_of_frames</span><span class="p">:</span>
+        <span class="n">top_file</span> <span class="o">=</span> <span class="n">top_file_match</span><span class="p">[</span><span class="n">frame</span><span class="o">.</span><span class="n">top</span><span class="p">]</span>
+        <span class="n">out</span><span class="p">[</span><span class="n">top_file</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+
+<div class="viewcode-block" id="_unpack_cluster_info"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils._unpack_cluster_info">[docs]</a><span class="k">def</span> <span class="nf">_unpack_cluster_info</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">main_path</span><span class="p">,</span> <span class="n">selector</span><span class="p">,</span> <span class="n">dummy_traj</span><span class="p">,</span> <span class="n">align_string</span><span class="p">):</span>
+    <span class="n">max_</span> <span class="o">=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">[</span><span class="s2">&quot;user_selected_points&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">where</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">[</span><span class="s2">&quot;user_selected_points&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">max_</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">_datetime_windows_and_linux_compatible</span><span class="p">()</span>
+
+    <span class="c1"># make dirs</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">main_path</span><span class="p">,</span> <span class="s2">&quot;clusters&quot;</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">main_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">main_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;clusters/</span><span class="si">{</span><span class="n">now</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">main_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># define names</span>
+    <span class="n">pdb_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">main_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;cluster_id_</span><span class="si">{</span><span class="n">max_</span><span class="si">}</span><span class="s2">_stacked_10_structs.pdb&quot;</span><span class="p">)</span>
+    <span class="n">pdb_start_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">main_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;cluster_id_</span><span class="si">{</span><span class="n">max_</span><span class="si">}</span><span class="s2">_start.pdb&quot;</span><span class="p">)</span>
+    <span class="n">pdb_origin_names</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">main_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;cluster_id_</span><span class="si">{</span><span class="n">max_</span><span class="si">}</span><span class="s2">_pdb_origins.txt&quot;</span><span class="p">)</span>
+    <span class="n">xtc_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">main_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;cluster_id_</span><span class="si">{</span><span class="n">max_</span><span class="si">}</span><span class="s2">.xtc&quot;</span><span class="p">)</span>
+    <span class="n">csv_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">main_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;cluster_id_</span><span class="si">{</span><span class="n">max_</span><span class="si">}</span><span class="s2">_selected_points.csv&quot;</span><span class="p">)</span>
+    <span class="n">png_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">main_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;cluster_id_</span><span class="si">{</span><span class="n">max_</span><span class="si">}</span><span class="s2">_image.png&quot;</span><span class="p">)</span>
+    <span class="n">lowd_npy_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">main_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;cluster_id_</span><span class="si">{</span><span class="n">max_</span><span class="si">}</span><span class="s2">_cluster_lowd_points.npy&quot;</span>
+    <span class="p">)</span>
+    <span class="n">indices_npy_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">main_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;cluster_id_</span><span class="si">{</span><span class="n">max_</span><span class="si">}</span><span class="s2">_cluster_lowd_points_indices.npy&quot;</span>
+    <span class="p">)</span>
+    <span class="n">current_clustering</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">main_path</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;cluster_id_</span><span class="si">{</span><span class="n">max_</span><span class="si">}</span><span class="s2">_cluster_current_clustering_user_selected_points.npy&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">selector_npy_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">main_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;cluster_id_</span><span class="si">{</span><span class="n">max_</span><span class="si">}</span><span class="s2">_selector_points.npy&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parents_trajs</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">main_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;cluster_id_</span><span class="si">{</span><span class="n">max_</span><span class="si">}</span><span class="s2">_all_plotted_trajs_in_correct_order.txt&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># save edges of selector</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selector</span><span class="o">.</span><span class="n">lasso</span><span class="p">,</span> <span class="n">PolygonSelector</span><span class="p">):</span>
+        <span class="n">verts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">selector</span><span class="o">.</span><span class="n">lasso</span><span class="o">.</span><span class="n">_xs</span><span class="p">,</span> <span class="n">selector</span><span class="o">.</span><span class="n">lasso</span><span class="o">.</span><span class="n">_ys</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">selector_npy_name</span> <span class="o">=</span> <span class="n">selector_npy_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+            <span class="s2">&quot;selector&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">selector</span><span class="o">.</span><span class="n">lasso</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">selector_npy_name</span><span class="p">,</span> <span class="n">verts</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Can currenlty only save the vertices of Polygon.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># save pdb</span>
+    <span class="c1"># if list is provided the pdbs of the list need to be saved</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dummy_traj</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">traj</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dummy_traj</span><span class="p">):</span>
+            <span class="n">_pdb_name</span> <span class="o">=</span> <span class="n">pdb_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.pdb&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;_struct_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.pdb&quot;</span><span class="p">)</span>
+            <span class="n">traj</span><span class="o">.</span><span class="n">save_pdb</span><span class="p">(</span><span class="n">_pdb_name</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dummy_traj</span><span class="o">.</span><span class="n">save_pdb</span><span class="p">(</span><span class="n">pdb_name</span><span class="p">)</span>
+
+    <span class="c1"># render png</span>
+    <span class="n">plot_cluster</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">pdb_name</span><span class="p">,</span> <span class="n">png_name</span><span class="p">,</span> <span class="n">max_</span><span class="p">)</span>
+
+    <span class="c1"># save all trajs</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">parents_trajs</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">traj</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">traj_file</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">top_file</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">traj</span><span class="o">.</span><span class="n">common_str</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+    <span class="c1"># create df</span>
+    <span class="k">if</span> <span class="n">trajs</span><span class="o">.</span><span class="n">lowd</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">lowd_coords</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="k">elif</span> <span class="n">trajs</span><span class="o">.</span><span class="n">lowd</span><span class="o">.</span><span class="n">shaoe</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">lowd_coords</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">lowd_coords</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;lowd_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">lowd</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])}</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;trajectory file&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;topology file&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;frame number&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="o">**</span><span class="n">lowd_coords</span><span class="p">,</span>
+            <span class="s2">&quot;cluster id&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;trajectory number&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="sa">f</span><span class="s2">&quot;unique id in set of </span><span class="si">{</span><span class="n">trajs</span><span class="o">.</span><span class="n">n_trajs</span><span class="si">}</span><span class="s2"> trajs&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">where</span><span class="p">:</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">get_single_frame</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">frame</span><span class="o">.</span><span class="n">traj_num</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">traj_frame</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">id</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">traj_frame</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">id</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;trajectory file&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">traj_file</span><span class="p">),</span>
+                <span class="s2">&quot;topology file&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">top_file</span><span class="p">),</span>
+                <span class="s2">&quot;frame number&quot;</span><span class="p">:</span> <span class="n">traj_frame</span><span class="p">,</span>
+                <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">frame</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="s2">&quot;cluster id&quot;</span><span class="p">:</span> <span class="n">max_</span><span class="p">,</span>
+                <span class="s2">&quot;trajectory number&quot;</span><span class="p">:</span> <span class="n">frame</span><span class="o">.</span><span class="n">traj_num</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;unique id in set of </span><span class="si">{</span><span class="n">trajs</span><span class="o">.</span><span class="n">n_trajs</span><span class="si">}</span><span class="s2"> trajs&quot;</span><span class="p">:</span> <span class="n">w</span><span class="p">,</span>
+                <span class="o">**</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lowd_coords</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">frame</span><span class="o">.</span><span class="n">lowd</span><span class="p">)},</span>
+            <span class="p">},</span>
+            <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;trajectory file&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="s2">&quot;topology file&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="s2">&quot;frame number&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+            <span class="o">**</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">float</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">lowd_coords</span><span class="p">},</span>
+            <span class="s2">&quot;cluster id&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="s2">&quot;trajectory number&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;unique id in set of </span><span class="si">{</span><span class="n">trajs</span><span class="o">.</span><span class="n">n_trajs</span><span class="si">}</span><span class="s2"> trajs&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">csv_name</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># save npy</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">lowd_npy_name</span><span class="p">,</span> <span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">[</span><span class="s2">&quot;user_selected_points&quot;</span><span class="p">][</span><span class="n">where</span><span class="p">])</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">indices_npy_name</span><span class="p">,</span> <span class="n">where</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">current_clustering</span><span class="p">,</span> <span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">[</span><span class="s2">&quot;user_selected_points&quot;</span><span class="p">])</span>
+
+    <span class="c1"># save full traj</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">dummy_traj</span> <span class="o">=</span> <span class="n">get_cluster_frames</span><span class="p">(</span>
+        <span class="n">trajs</span><span class="p">,</span>
+        <span class="n">max_</span><span class="p">,</span>
+        <span class="n">nglview</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">shorten</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">stack_atoms</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">col</span><span class="o">=</span><span class="s2">&quot;user_selected_points&quot;</span><span class="p">,</span>
+        <span class="n">align_string</span><span class="o">=</span><span class="n">align_string</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">min_topfiles</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">top_file</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">]))</span>
+    <span class="n">top_traj_dict</span> <span class="o">=</span> <span class="n">_match_tops_and_trajs</span><span class="p">(</span><span class="n">min_topfiles</span><span class="p">,</span> <span class="n">dummy_traj</span><span class="p">)</span>
+    <span class="n">basenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">trajs</span><span class="o">.</span><span class="n">basename_fn</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">top_traj_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pdb_origin_names</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">top_traj_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">_pdb_start_name</span> <span class="o">=</span> <span class="n">pdb_start_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                <span class="s2">&quot;.pdb&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;_traj_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_from_</span><span class="si">{</span><span class="n">basenames</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">.pdb&quot;</span>
+            <span class="p">)</span>
+            <span class="n">_xtc_name</span> <span class="o">=</span> <span class="n">xtc_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.xtc&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;_traj_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.xtc&quot;</span><span class="p">)</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">_pdb_start_name</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_pdb_start_name</span><span class="si">}</span><span class="s2"> is a copy (`shutil.copyfile`) of </span><span class="si">{</span><span class="n">min_topfiles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">. The corresponding trajectory files might originate from other places. Refer to </span><span class="si">{</span><span class="n">parents_trajs</span><span class="si">}</span><span class="s2"> for info about xtcs.</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">frame</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">traj_out</span> <span class="o">=</span> <span class="n">frame</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">traj_out</span> <span class="o">=</span> <span class="n">traj_out</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+                <span class="n">traj_out</span><span class="o">.</span><span class="n">save_xtc</span><span class="p">(</span><span class="n">_xtc_name</span><span class="p">)</span>
+
+        <span class="c1"># create an info dict</span>
+        <span class="n">info_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;pdb_name&quot;</span><span class="p">:</span> <span class="n">pdb_name</span><span class="p">,</span>
+            <span class="s2">&quot;pdb_start_name&quot;</span><span class="p">:</span> <span class="n">pdb_start_name</span><span class="p">,</span>
+            <span class="s2">&quot;pdb_origin_names&quot;</span><span class="p">:</span> <span class="n">pdb_origin_names</span><span class="p">,</span>
+            <span class="s2">&quot;xtc_name&quot;</span><span class="p">:</span> <span class="n">xtc_name</span><span class="p">,</span>
+            <span class="s2">&quot;csv_name&quot;</span><span class="p">:</span> <span class="n">csv_name</span><span class="p">,</span>
+            <span class="s2">&quot;png_name&quot;</span><span class="p">:</span> <span class="n">png_name</span><span class="p">,</span>
+            <span class="s2">&quot;lowd_npy_name&quot;</span><span class="p">:</span> <span class="n">lowd_npy_name</span><span class="p">,</span>
+            <span class="s2">&quot;indices_npy_name&quot;</span><span class="p">:</span> <span class="n">indices_npy_name</span><span class="p">,</span>
+            <span class="s2">&quot;current_clustering&quot;</span><span class="p">:</span> <span class="n">current_clustering</span><span class="p">,</span>
+            <span class="s2">&quot;selector_npy_name&quot;</span><span class="p">:</span> <span class="n">selector_npy_name</span><span class="p">,</span>
+            <span class="s2">&quot;parents_trajs&quot;</span><span class="p">:</span> <span class="n">parents_trajs</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">info_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">info_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="n">info_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;cluster_id&quot;</span><span class="p">:</span> <span class="n">max_</span><span class="p">})</span>
+        <span class="n">info_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;cluster_id&quot;</span><span class="p">:</span> <span class="n">max_</span><span class="p">})</span>
+        <span class="n">info_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;n_trajs&quot;</span><span class="p">:</span> <span class="n">trajs</span><span class="o">.</span><span class="n">n_trajs</span><span class="p">})</span>
+        <span class="n">info_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;cluster_n_points&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">where</span><span class="p">)})</span>
+        <span class="n">info_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;basename&quot;</span><span class="p">:</span> <span class="n">trajs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">basename</span><span class="p">})</span>
+        <span class="n">info_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;cluster_abspath&quot;</span><span class="p">:</span> <span class="n">main_path</span><span class="p">})</span>
+
+        <span class="c1"># create a readme</span>
+        <span class="n">_create_readme</span><span class="p">(</span><span class="n">main_path</span><span class="p">,</span> <span class="n">now</span><span class="p">,</span> <span class="n">info_dict</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">max_</span><span class="p">,</span> <span class="n">main_path</span></div>
+
+
+<div class="viewcode-block" id="_unpack_path_info"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils._unpack_path_info">[docs]</a><span class="k">def</span> <span class="nf">_unpack_path_info</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Classes</span>
+<span class="c1">##############################################################################</span>
+
+
+<div class="viewcode-block" id="Props"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.Props">[docs]</a><span class="k">class</span> <span class="nc">Props</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to contain the properties of MenuItems.</span>
+
+<span class="sd">    Each MenuItem contains two copies of this class.</span>
+<span class="sd">    One for props when the mouse cursor hovers over them.</span>
+<span class="sd">    One for the rest of times.</span>
+<span class="sd">    Can be used used as class or as dict.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        labelcolor (str): The color of the text.</span>
+<span class="sd">        labelcolor_rgb (tuple): The RGBA value of labelcolor.</span>
+<span class="sd">        bgcolor (str): The color of the background.</span>
+<span class="sd">        bgcolor_rgb (tuple): The RGBA value of bgcolor.</span>
+<span class="sd">        fontsize (int): The fontsize.</span>
+<span class="sd">        alpha (float): The alpha value of the background.</span>
+<span class="sd">        defaults (dict): Class Variable of default values.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; props = Props()</span>
+<span class="sd">        &gt;&gt;&gt; props.labelcolor</span>
+<span class="sd">        black</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;labelcolor&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;bgcolor&quot;</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;fontsize&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">}</span>
+
+<div class="viewcode-block" id="Props.__init__"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.Props.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate the Props class.</span>
+
+<span class="sd">        Takes a dict as input and overwrites the class defaults. The dict is directly</span>
+<span class="sd">        stored as an attribute and can be accessed via dot-notation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **kwargs: Dict containing values. If unknonwn values are passed they will be dropped.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dropping unknown dict entry for </span><span class="se">{{</span><span class="s2">&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="se">}}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bgcolor_rgb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">mpl</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bgcolor</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">labelcolor_rgb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">mpl</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labelcolor</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Props._setattr"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.Props._setattr">[docs]</a>    <span class="k">def</span> <span class="nf">_setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__setitiem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Props._string_summary"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.Props._string_summary">[docs]</a>    <span class="k">def</span> <span class="nf">_string_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;ep.plotting.interactive.Props class containing Info for the MenuItem class.&quot;</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_string_summary</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_string_summary</span><span class="p">()</span><span class="si">}</span><span class="s2"> Object at 0x</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">:</span><span class="s2">02x</span><span class="si">}</span><span class="s2">&gt;&quot;</span></div>
+
+
+<div class="viewcode-block" id="BezierBuilder"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.BezierBuilder">[docs]</a><span class="k">class</span> <span class="nc">BezierBuilder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bézier curve interactive builder.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BezierBuilder.__init__"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.BezierBuilder.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">control_polygon</span><span class="p">,</span> <span class="n">ax_main</span><span class="p">,</span> <span class="n">ax_bernstein</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor.</span>
+<span class="sd">        Receives the initial control polygon of the curve.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">control_polygon</span> <span class="o">=</span> <span class="n">control_polygon</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">control_polygon</span><span class="o">.</span><span class="n">get_xdata</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">control_polygon</span><span class="o">.</span><span class="n">get_ydata</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">control_polygon</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">canvas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax_main</span> <span class="o">=</span> <span class="n">ax_main</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax_bernstein</span> <span class="o">=</span> <span class="n">ax_bernstein</span>
+
+        <span class="c1"># Event handler for mouse clicking</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">mpl_connect</span><span class="p">(</span><span class="s2">&quot;button_press_event&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># Create Bézier curve</span>
+        <span class="n">line_bezier</span> <span class="o">=</span> <span class="n">Line2D</span><span class="p">([],</span> <span class="p">[],</span> <span class="n">c</span><span class="o">=</span><span class="n">control_polygon</span><span class="o">.</span><span class="n">get_markeredgecolor</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bezier_curve</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax_main</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="n">line_bezier</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="c1"># Ignore clicks outside axes</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">inaxes</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">control_polygon</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Add point</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">xdata</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">ydata</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">control_polygon</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yp</span><span class="p">)</span>
+
+        <span class="c1"># Rebuild Bézier curve and update canvas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bezier_curve</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_build_bezier</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_bernstein</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_bezier</span><span class="p">()</span>
+
+<div class="viewcode-block" id="BezierBuilder._build_bezier"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.BezierBuilder._build_bezier">[docs]</a>    <span class="k">def</span> <span class="nf">_build_bezier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">Bezier</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yp</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span></div>
+
+<div class="viewcode-block" id="BezierBuilder._update_bezier"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.BezierBuilder._update_bezier">[docs]</a>    <span class="k">def</span> <span class="nf">_update_bezier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="BezierBuilder._update_bernstein"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.BezierBuilder._update_bernstein">[docs]</a>    <span class="k">def</span> <span class="nf">_update_bernstein</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax_bernstein</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xp</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax_bernstein</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">Bernstein</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">kk</span><span class="p">)(</span><span class="n">t</span><span class="p">))</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Bernstein basis, N = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ind</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bezier_curve</span><span class="o">.</span><span class="n">get_data</span><span class="p">())</span><span class="o">.</span><span class="n">T</span>
+
+<div class="viewcode-block" id="BezierBuilder.disconnect"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.BezierBuilder.disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">mpl_disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cid</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Bernstein"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.Bernstein">[docs]</a><span class="k">def</span> <span class="nf">Bernstein</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bernstein polynomial.&quot;&quot;&quot;</span>
+    <span class="n">coeff</span> <span class="o">=</span> <span class="n">binom</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_bpoly</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">coeff</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="n">k</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">k</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_bpoly</span></div>
+
+
+<div class="viewcode-block" id="Bezier"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.Bezier">[docs]</a><span class="k">def</span> <span class="nf">Bezier</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build Bézier curve from points.&quot;&quot;&quot;</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">num</span><span class="p">)</span>
+    <span class="n">curve</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">curve</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">Bernstein</span><span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ii</span><span class="p">)(</span><span class="n">t</span><span class="p">),</span> <span class="n">points</span><span class="p">[</span><span class="n">ii</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">curve</span></div>
+
+
+<div class="viewcode-block" id="DummyTool"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.DummyTool">[docs]</a><span class="k">class</span> <span class="nc">DummyTool</span><span class="p">:</span>
+<div class="viewcode-block" id="DummyTool.disconnect"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.DummyTool.disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div></div>
+
+
+<div class="viewcode-block" id="SelectFromCollection"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.SelectFromCollection">[docs]</a><span class="k">class</span> <span class="nc">SelectFromCollection</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Select indices from a matplotlib collection using `LassoSelector`.</span>
+
+<span class="sd">    Selected indices are saved in the `ind` attribute. This tool fades out the</span>
+<span class="sd">    points that are not part of the selection (i.e., reduces their alpha</span>
+<span class="sd">    values). If your collection has alpha &lt; 1, this tool will permanently</span>
+<span class="sd">    alter the alpha values.</span>
+
+<span class="sd">    Note that this tool selects collection objects based on their *origins*</span>
+<span class="sd">    (i.e., `offsets`).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ax (matplotlib.axes.Axes): Axes to interact with.</span>
+<span class="sd">        collection (matplotlib.collections.Collection): Subclass of collection</span>
+<span class="sd">            you want to select from.</span>
+<span class="sd">        alpha_other (float): To highlight a selection, this tool sets all</span>
+<span class="sd">            selected points to an alpha value of 1 and non-selected points to</span>
+<span class="sd">            `alpha_other`. Needs to fulfill 0 &lt;= alpha_other &lt;= 1</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">collection</span><span class="p">,</span> <span class="n">alpha_other</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">selector</span><span class="o">=</span><span class="n">LassoSelector</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">canvas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">collection</span> <span class="o">=</span> <span class="n">collection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha_other</span> <span class="o">=</span> <span class="n">alpha_other</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">xys</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">get_offsets</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Npts</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xys</span><span class="p">)</span>
+
+        <span class="c1"># Ensure that we have separate colors for each object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">get_facecolors</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Collection must have a facecolor&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Npts</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lasso</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">onselect</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">onselect</span><span class="p">,</span> <span class="n">useblit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="SelectFromCollection.onselect"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.SelectFromCollection.onselect">[docs]</a>    <span class="k">def</span> <span class="nf">onselect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verts</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">verts</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">contains_points</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xys</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha_other</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ind</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">set_facecolors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw_idle</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SelectFromCollection.disconnect"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.SelectFromCollection.disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lasso</span><span class="o">.</span><span class="n">disconnect_events</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">set_facecolors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw_idle</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SelectFromCollection._string_summary"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.SelectFromCollection._string_summary">[docs]</a>    <span class="k">def</span> <span class="nf">_string_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;encodermap.SelectFromCollection object. Selecting points &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;from a set of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Npts</span><span class="si">}</span><span class="s2"> points. The current selector tool &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;is matplotlotlib&#39;s </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lasso</span><span class="si">}</span><span class="s2"> tool. The selected points are &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ind</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">s</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_string_summary</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_string_summary</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="MenuItem"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.MenuItem">[docs]</a><span class="k">class</span> <span class="nc">MenuItem</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">,</span> <span class="n">mpl</span><span class="o">.</span><span class="n">artist</span><span class="o">.</span><span class="n">Artist</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">fig</span><span class="p">,</span>
+        <span class="n">xy</span><span class="p">,</span>
+        <span class="n">width</span><span class="p">,</span>
+        <span class="n">height</span><span class="p">,</span>
+        <span class="n">labelstr</span><span class="p">,</span>
+        <span class="n">props</span><span class="o">=</span><span class="p">{},</span>
+        <span class="n">hoverprops</span><span class="o">=</span><span class="p">{},</span>
+        <span class="n">on_select</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">standalone</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="c1"># define props and hoverprops</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labelstr</span> <span class="o">=</span> <span class="n">labelstr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">standalone</span> <span class="o">=</span> <span class="n">standalone</span>
+        <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;labelcolor&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;bgcolor&quot;</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;fontsize&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">},</span>
+            <span class="o">**</span><span class="n">props</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">hoverprops</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;labelcolor&quot;</span><span class="p">:</span> <span class="s2">&quot;C0&quot;</span><span class="p">,</span> <span class="s2">&quot;bgcolor&quot;</span><span class="p">:</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;fontsize&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">},</span>
+            <span class="o">**</span><span class="n">hoverprops</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">props</span> <span class="o">=</span> <span class="n">Props</span><span class="p">(</span><span class="o">**</span><span class="n">props</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hoverprops</span> <span class="o">=</span> <span class="n">Props</span><span class="p">(</span><span class="o">**</span><span class="n">hoverprops</span><span class="p">)</span>
+
+        <span class="c1"># set the on_select method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_select</span> <span class="o">=</span> <span class="n">on_select</span>
+
+        <span class="c1"># add a select event</span>
+        <span class="c1"># hover event is only included if standalone is true</span>
+        <span class="c1"># i.e. the MenuItem is not Instantiated from a Menu</span>
+        <span class="c1"># In the case this is instantiated from a menu. The menu wil handle the hover</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cid_button</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">mpl_connect</span><span class="p">(</span>
+            <span class="s2">&quot;button_release_event&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_select</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">standalone</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cid_move</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">mpl_connect</span><span class="p">(</span>
+                <span class="s2">&quot;motion_notify_event&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_hover</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Instantiate text and Rectangle</span>
+        <span class="n">mpl</span><span class="o">.</span><span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">xy</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">labelstr</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">labelstr</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">labelcolor</span><span class="p">,</span>
+            <span class="n">fontproperties</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">fontsize</span><span class="p">),</span>
+            <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">verticalalignment</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+            <span class="n">horizontalalignment</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># final thing to do is set the props of</span>
+        <span class="c1"># the rectangle based whether a cursor hovers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_hover_props</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># after artist has been placed get it ready</span>
+        <span class="c1"># for accepting hover events</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hover</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="MenuItem.set_figure"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.MenuItem.set_figure">[docs]</a>    <span class="k">def</span> <span class="nf">set_figure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figure</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Overwriting Base Class method to include labelstr&quot;&quot;&quot;</span>
+        <span class="n">mpl</span><span class="o">.</span><span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="o">.</span><span class="n">set_figure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figure</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">set_figure</span><span class="p">(</span><span class="n">figure</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MenuItem.set_axes"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.MenuItem.set_axes">[docs]</a>    <span class="k">def</span> <span class="nf">set_axes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axes</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Overwriting Base Class method to include labelstr&quot;&quot;&quot;</span>
+        <span class="n">mpl</span><span class="o">.</span><span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="o">.</span><span class="n">set_axes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">set_axes</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MenuItem.set_transform"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.MenuItem.set_transform">[docs]</a>    <span class="k">def</span> <span class="nf">set_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transform</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Overwriting Base Class method to include labelstr&quot;&quot;&quot;</span>
+        <span class="n">mpl</span><span class="o">.</span><span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="o">.</span><span class="n">set_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transform</span><span class="p">)</span>
+        <span class="c1"># set text to center of self(.rect)</span>
+        <span class="n">bbox</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bbox</span><span class="p">()</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">bbox</span><span class="o">.</span><span class="n">x0</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">bbox</span><span class="o">.</span><span class="n">width</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">bbox</span><span class="o">.</span><span class="n">y0</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">bbox</span><span class="o">.</span><span class="n">height</span>
+        <span class="n">texttrans</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">Affine2D</span><span class="p">()</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">transData</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">set_transform</span><span class="p">(</span><span class="n">texttrans</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MenuItem.set_data"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.MenuItem.set_data">[docs]</a>    <span class="k">def</span> <span class="nf">set_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Overwriting Base Class method to include labelstr&quot;&quot;&quot;</span>
+        <span class="c1"># if len(x):</span>
+        <span class="c1">#     self.text.set_position((x[-1], y[-1]))</span>
+        <span class="n">mpl</span><span class="o">.</span><span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="o">.</span><span class="n">labelcolor_rgb</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MenuItem.check_select"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.MenuItem.check_select">[docs]</a>    <span class="k">def</span> <span class="nf">check_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="n">over</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">over</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_select</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">on_select</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="MenuItem.draw"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.MenuItem.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">renderer</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Overwriting Base Class method to include labelstr&quot;&quot;&quot;</span>
+        <span class="c1"># draw my label at the end of the line with 2 pixel offset</span>
+        <span class="n">mpl</span><span class="o">.</span><span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">renderer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">renderer</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MenuItem.set_hover_props"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.MenuItem.set_hover_props">[docs]</a>    <span class="k">def</span> <span class="nf">set_hover_props</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">check</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">check</span><span class="p">:</span>
+            <span class="n">props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hoverprops</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">props</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="n">props</span><span class="o">.</span><span class="n">bgcolor_rgb</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">props</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="n">props</span><span class="o">.</span><span class="n">labelcolor_rgb</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MenuItem.set_hover"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.MenuItem.set_hover">[docs]</a>    <span class="k">def</span> <span class="nf">set_hover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check the hover status of MenuItem&quot;&quot;&quot;</span>
+        <span class="n">check</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="n">changed</span> <span class="o">=</span> <span class="n">check</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hover</span>
+        <span class="k">if</span> <span class="n">changed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_hover_props</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hover</span> <span class="o">=</span> <span class="n">check</span>
+        <span class="k">if</span> <span class="n">changed</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">standalone</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">changed</span></div></div>
+
+
+<div class="viewcode-block" id="ModeButton"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.ModeButton">[docs]</a><span class="k">class</span> <span class="nc">ModeButton</span><span class="p">(</span><span class="n">MenuItem</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># overwite the labelstr with &#39;Idle&#39;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ModeButton</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># overwrite the on_select function with on_select_rotation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pressed</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="ModeButton.check_select"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.ModeButton.check_select">[docs]</a>    <span class="k">def</span> <span class="nf">check_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">overwrite</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">over</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">over</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_select</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">on_select</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pressed</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">pressed</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pressed</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_hover_props</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pressed</span></div>
+
+<div class="viewcode-block" id="ModeButton.set_hover"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.ModeButton.set_hover">[docs]</a>    <span class="k">def</span> <span class="nf">set_hover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check the hover status of MenuItem&quot;&quot;&quot;</span>
+        <span class="n">check</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="n">changed</span> <span class="o">=</span> <span class="n">check</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hover</span>
+        <span class="k">if</span> <span class="n">changed</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">pressed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_hover_props</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hover</span> <span class="o">=</span> <span class="n">check</span>
+        <span class="k">return</span> <span class="n">changed</span></div>
+
+<div class="viewcode-block" id="ModeButton._on_select_rotation"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.ModeButton._on_select_rotation">[docs]</a>    <span class="k">def</span> <span class="nf">_on_select_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Old function to rotate labelstrings.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labelrotation</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labelstr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labelrotation</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labelstr</span><span class="p">)</span></div></div>
+        <span class="c1"># print(f&quot;You pressed {self.labelstr}&quot;)</span>
+
+
+<div class="viewcode-block" id="Menu"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.Menu">[docs]</a><span class="k">class</span> <span class="nc">Menu</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Reset&quot;</span><span class="p">,</span> <span class="s2">&quot;Write&quot;</span><span class="p">,</span> <span class="s2">&quot;Set Points&quot;</span><span class="p">]):</span>
+        <span class="c1"># suppresscomposite</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_figure</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suppressComposite</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># add the menu items</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuitems</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_items</span><span class="p">(</span><span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">)</span>
+
+        <span class="c1"># mpl_connect move to set hover stuff</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">mpl_connect</span><span class="p">(</span><span class="s2">&quot;motion_notify_event&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_move</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Menu.on_move"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.Menu.on_move">[docs]</a>    <span class="k">def</span> <span class="nf">on_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="n">draw</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">menuitems</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">draw</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">set_hover</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">draw</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+                <span class="k">break</span></div>
+
+<div class="viewcode-block" id="Menu.add_items"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.Menu.add_items">[docs]</a>    <span class="k">def</span> <span class="nf">add_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_coords</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">coords</span><span class="p">)):</span>
+            <span class="c1"># on_select = lambda item: print(f&quot;You pressed {item.labelstr}.&quot;)</span>
+            <span class="n">on_select</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="kc">True</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">MenuItem</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">labelstr</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">on_select</span><span class="o">=</span><span class="n">on_select</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menuitems</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Menu.get_coords"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.Menu.get_coords">[docs]</a>    <span class="k">def</span> <span class="nf">get_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">no_items</span><span class="p">,</span> <span class="n">gap_space</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+        <span class="n">no_gaps</span> <span class="o">=</span> <span class="n">no_items</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">total_length</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">no_gaps</span> <span class="o">*</span> <span class="n">gap_space</span>
+        <span class="n">length_per</span> <span class="o">=</span> <span class="n">total_length</span> <span class="o">/</span> <span class="n">no_items</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">no_items</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">coords</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">length_per</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">coords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">[</span>
+                        <span class="n">coords</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">gap_space</span><span class="p">,</span>
+                        <span class="n">coords</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">gap_space</span> <span class="o">+</span> <span class="n">length_per</span><span class="p">,</span>
+                    <span class="p">]</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="n">coords</span></div></div>
+
+
+<div class="viewcode-block" id="StatusMenu"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.StatusMenu">[docs]</a><span class="k">class</span> <span class="nc">StatusMenu</span><span class="p">(</span><span class="n">Menu</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;Lasso&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Rectangle&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Ellipse&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Path&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Bezier&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Idle&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Mode&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="c1"># call the parent class to use its get_coords() method</span>
+        <span class="c1"># the add_items method is overwritten</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">StatusMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">)</span>
+
+        <span class="c1"># set the label rotation and the current status</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_idle</span><span class="p">()</span>
+
+        <span class="c1"># click notify event to change self.status and switch ModeButtons off</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">mpl_connect</span><span class="p">(</span><span class="s2">&quot;button_release_event&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_click</span><span class="p">)</span>
+
+<div class="viewcode-block" id="StatusMenu.set_idle"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.StatusMenu.set_idle">[docs]</a>    <span class="k">def</span> <span class="nf">set_idle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the idle status. Called at __init__ and</span>
+<span class="sd">        when nothing is pressed.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;Idle&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuitems</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">]</span><span class="o">.</span><span class="n">set_hover_props</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menuitems</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">]</span><span class="o">.</span><span class="n">pressed</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="StatusMenu.on_click"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.StatusMenu.on_click">[docs]</a>    <span class="k">def</span> <span class="nf">on_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="n">draw</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">menuitems</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">draw</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">pressed</span>
+            <span class="k">if</span> <span class="n">draw</span> <span class="ow">and</span> <span class="n">key</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Changing Mode to </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">menuitems</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">]</span><span class="o">.</span><span class="n">set_hover_props</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">menuitems</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">]</span><span class="o">.</span><span class="n">pressed</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">menuitems</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">]</span><span class="o">.</span><span class="n">check_select</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">pressed</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">menuitems</span><span class="o">.</span><span class="n">values</span><span class="p">()]):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Changing Mode to Idle&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_idle</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="StatusMenu.add_items"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.utils.StatusMenu.add_items">[docs]</a>    <span class="k">def</span> <span class="nf">add_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_coords</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">coords</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="s2">&quot;Mode&quot;</span><span class="p">:</span>
+                <span class="n">on_select</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="kc">None</span>  <span class="c1"># print(f&quot;You pressed {item.labelstr}.&quot;)</span>
+                <span class="c1"># overwrite props and hoverprops</span>
+                <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;labelcolor&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;bgcolor&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;fontsize&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+                    <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="n">hoverprops</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;labelcolor&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;bgcolor&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;fontsize&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+                    <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="n">MenuItem</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span>
+                    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                    <span class="mi">1</span><span class="p">,</span>
+                    <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="n">labelstr</span><span class="o">=</span><span class="n">s</span><span class="p">,</span>
+                    <span class="n">on_select</span><span class="o">=</span><span class="n">on_select</span><span class="p">,</span>
+                    <span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span>
+                    <span class="n">hoverprops</span><span class="o">=</span><span class="n">hoverprops</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">pressed</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># on_select = lambda item: print(f&quot;You pressed {item.labelstr}.&quot;)</span>
+                <span class="n">on_select</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="kc">True</span>
+                <span class="c1"># item = ModeButton(self.fig, self.ax, s, on_select=on_select)</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="n">ModeButton</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">labelstr</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">on_select</span><span class="o">=</span><span class="n">on_select</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menuitems</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div></div>
+</pre></div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023, Kevin Sawade, Tobias Lemke.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

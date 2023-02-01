@@ -1,0 +1,1065 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>encodermap.misc.xarray &#8212; encodermap 3.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/encodermap/misc/xarray';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <h1>Source code for encodermap.misc.xarray</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># encodermap/misc/xarray.py</span>
+<span class="c1">################################################################################</span>
+<span class="c1"># Encodermap: A python library for dimensionality reduction.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2019-2022 University of Konstanz and the Authors</span>
+<span class="c1">#</span>
+<span class="c1"># Authors:</span>
+<span class="c1"># Kevin Sawade, Tobias Lemke</span>
+<span class="c1">#</span>
+<span class="c1"># Encodermap is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as</span>
+<span class="c1"># published by the Free Software Foundation, either version 2.1</span>
+<span class="c1"># of the License, or (at your option) any later version.</span>
+<span class="c1"># This package is distributed in the hope that it will be useful to other</span>
+<span class="c1"># researches. IT DOES NOT COME WITH ANY WARRANTY WHATSOEVER; without even the</span>
+<span class="c1"># implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span>
+<span class="c1"># See the GNU Lesser General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">################################################################################</span>
+<span class="c1">################################################################################</span>
+<span class="c1"># Imports</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.._optional_imports</span> <span class="kn">import</span> <span class="n">_optional_import</span>
+<span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="n">BadError</span>
+<span class="kn">from</span> <span class="nn">.misc</span> <span class="kn">import</span> <span class="n">FEATURE_NAMES</span><span class="p">,</span> <span class="n">_validate_uri</span>
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Optional Imports</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="n">xr</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;xarray&quot;</span><span class="p">)</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Typing</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+
+    <span class="kn">from</span> <span class="nn">..loading.featurizer</span> <span class="kn">import</span> <span class="n">Featurizer</span>
+    <span class="kn">from</span> <span class="nn">..trajinfo</span> <span class="kn">import</span> <span class="n">SingleTraj</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Globals</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;construct_xarray_from_numpy&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;unpack_data_and_feature&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Functions</span>
+<span class="c1">################################################################################</span>
+
+
+<div class="viewcode-block" id="construct_xarray_from_numpy"><a class="viewcode-back" href="../../../encodermap.misc.html#encodermap.misc.xarray.construct_xarray_from_numpy">[docs]</a><span class="k">def</span> <span class="nf">construct_xarray_from_numpy</span><span class="p">(</span>
+    <span class="n">traj</span><span class="p">:</span> <span class="n">SingleTraj</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">labels</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">check_n_frames</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Constructs an xarray dataarray from a numpy array.</span>
+
+<span class="sd">    Three different cases are recognized:</span>
+<span class="sd">        * The input array in data has ndim == 2. This kind of feature/CV is a per-frame feature, like the membership</span>
+<span class="sd">            to clusters. Every frame of every trajectory is assigned a single value (most often int values).</span>
+<span class="sd">        * The input array in data has ndim == 3: This is also a per-frame feature/CV, but this time every frame</span>
+<span class="sd">            is characterized by a series of values. These values can be dihedral angles in the backbone starting from</span>
+<span class="sd">            the protein&#39;s N-terminus to the C-terminus, or pairwise distance features between certain atoms.</span>
+<span class="sd">            The xarray datarrat constructed from this kind of data will have a label dimension that will either</span>
+<span class="sd">            contain generic labels like &#39;CUSTOM_FEATURE FEATURE 0&#39; or labels defined by the featurizer such as</span>
+<span class="sd">            &#39;SIDECHAIN ANGLE CHI1 OF RESIDUE 1LYS&#39;.</span>
+<span class="sd">        * The input array in data has ndim == 4. Here, the same feature/CV is duplicated for the protein&#39;s atoms.</span>
+<span class="sd">            Besides the XYZ coordinates of the atoms no other CVs should fall into this case. The labels will be</span>
+<span class="sd">            2-dimensional with &#39;POSITION OF ATOM H1 IN RESIDUE 1LYS&#39; in dimension 0 and either &#39;X&#39;, &#39;Y&#39; or &#39;Z&#39; in</span>
+<span class="sd">            dimension 1.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        traj (em.SingleTraj): The trajectory we want to create the xarray dataarray for.</span>
+<span class="sd">        data (np.ndarray): The numpy array we want to create the data from. Note, that the data passed into this</span>
+<span class="sd">            function should be expanded by np.expand_dim(a, axis=0), so to add a new axis to the complete data</span>
+<span class="sd">            containing the trajectories of a trajectory ensemble.</span>
+<span class="sd">        name (str): The name of the feature. This can be choosen freely. Names like &#39;central_angles&#39;, &#39;backbone_torsions&#39;</span>
+<span class="sd">            would make the most sense.</span>
+<span class="sd">        labels (Optional[list]): If you have specific labels for your CVs in mind, you can overwrite the</span>
+<span class="sd">            generic &#39;CUSTOM_FEATURE FEATURE 0&#39; labels with providing a list for this argument. If None is provided,</span>
+<span class="sd">            generic names will be given to the features. Defaults to None.</span>
+<span class="sd">        check_n_frames (bool): Whether to check whether the number of frames in the trajectory matches the len</span>
+<span class="sd">            of the data in at least one dimension. Defaults to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        xarray.Dataarray: An `xarray.Dataarray`.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; import encodermap as em</span>
+<span class="sd">        &gt;&gt;&gt; from encodermap.misc.xarray import construct_xarray_from_numpy</span>
+<span class="sd">        &gt;&gt;&gt; # load file from RCSB and give it traj num to represent it in a potential trajectory ensemble</span>
+<span class="sd">        &gt;&gt;&gt; traj = em.load(&#39;https://files.rcsb.org/view/1GHC.pdb&#39;, traj_num=1)</span>
+<span class="sd">        &gt;&gt;&gt; # single trajectory needs to be expaneded into &#39;trajectory&#39; axis</span>
+<span class="sd">        &gt;&gt;&gt; z_coordinate = np.expand_dims(traj.xyz[:,:,0], 0)</span>
+<span class="sd">        &gt;&gt;&gt; da = construct_xarray_from_numpy(traj, z_coordinate, &#39;z_coordinate&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; print(da.coords[&#39;Z_COORDINATE&#39;].values[:2])</span>
+<span class="sd">        [&#39;Z_COORDINATE FEATURE 0&#39; &#39;Z_COORDINATE FEATURE 1&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; print(da.coords[&#39;traj_num&#39;].values)</span>
+<span class="sd">        [1]</span>
+<span class="sd">        &gt;&gt;&gt; print(da.attrs[&#39;time_units&#39;])</span>
+<span class="sd">        ps</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">check_n_frames</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">any</span><span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Data and traj misaligned. traj_frames: </span><span class="si">{</span><span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span><span class="si">}</span><span class="s2">, data.shape: </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, attr_name: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">traj</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;no_load&quot;</span><span class="p">:</span>
+        <span class="n">with_time</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">with_time</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2"> FEATURE </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="n">da</span> <span class="o">=</span> <span class="n">make_frame_CV_dataarray</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">traj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">with_time</span><span class="o">=</span><span class="n">with_time</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2"> FEATURE </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="n">da</span> <span class="o">=</span> <span class="n">make_dataarray</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">traj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">with_time</span><span class="o">=</span><span class="n">with_time</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2"> FEATURE </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])]</span>
+        <span class="n">da</span> <span class="o">=</span> <span class="n">make_position_dataarray_from_numpy</span><span class="p">(</span>
+            <span class="n">labels</span><span class="p">,</span> <span class="n">traj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">with_time</span><span class="o">=</span><span class="n">with_time</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;The provided data has a dimensionality of </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">ndim</span><span class="si">}</span><span class="s2">, but only 2, 3 and 4 are supported.&quot;</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">da</span></div>
+
+
+<div class="viewcode-block" id="unpack_data_and_feature"><a class="viewcode-back" href="../../../encodermap.misc.html#encodermap.misc.xarray.unpack_data_and_feature">[docs]</a><span class="k">def</span> <span class="nf">unpack_data_and_feature</span><span class="p">(</span>
+    <span class="n">feat</span><span class="p">:</span> <span class="n">Featurizer</span><span class="p">,</span>
+    <span class="n">traj</span><span class="p">:</span> <span class="n">SingleTraj</span><span class="p">,</span>
+    <span class="n">input_data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">put_indices_into_attrs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Makes a `xarray.Dataset` from data and a featurizer.</span>
+
+<span class="sd">    Usually, if you add multiple features to a PyEMMA featurizer, they are</span>
+<span class="sd">    stacked along the feature axis. Let&#39;s say, you have a trajectory with 20 frames</span>
+<span class="sd">    and 3 residues. If you add the Ramachandran angles, you get 6 features (3xphi, 3xpsi).</span>
+<span class="sd">    If you then also add the end-to-end distance as a feature, the data returned by</span>
+<span class="sd">    PyEMMA will have the shape (20, 7). This function returns the correct indices,</span>
+<span class="sd">    so that iteration of `zip(Featurizer.active_features, indices)` will yield the</span>
+<span class="sd">    correct results.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        feat (em.Featurizer): An instance of the currently used `encodermap.Featurizer`.</span>
+<span class="sd">        traj (em.SingleTraj): An instance of `encodermap.SingleTraj`, that the data</span>
+<span class="sd">            in `input_data` was computed from</span>
+<span class="sd">        input_data (np.ndarray): The data, as returned from PyEMMA.</span>
+<span class="sd">        put_indices_into_attrs (bool): Whether to put the indices into the attrs.</span>
+<span class="sd">            This needs to be False, when Ensembles are loaded because the Features</span>
+<span class="sd">            of the ensemble load function do not match the real indices that should be there.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        xarray.Dataset: An `xarray.Dataset` with all features in a nice format.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># this needs to be done, because pyemma concatenates the data</span>
+    <span class="c1"># along the feature axis</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">get_indices_by_feature_dim</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">traj</span><span class="p">,</span> <span class="n">input_data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="n">DAs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">indexes</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">[:,</span> <span class="n">ind</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">FEATURE_NAMES</span><span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">assert</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">f</span><span class="o">.</span><span class="n">_dim</span>
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">traj</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">traj</span><span class="o">.</span><span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="s2">&quot;Shape of provided data does not fit traj. Traj &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;has </span><span class="si">{</span><span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span><span class="si">=}</span><span class="s2">. Data has shape </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">traj</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+                <span class="k">assert</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">DAs</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">name</span>
+                <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span><span class="w"> </span><span class="n">x</span><span class="p">:</span><span class="w"> </span><span class="kc">True</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="kc">False</span><span class="p">,</span><span class="w"> </span><span class="nb">list</span><span class="p">(</span><span class="n">DAs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))))</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;AllCartesians&quot;</span><span class="p">,</span> <span class="s2">&quot;CentralCartesians&quot;</span><span class="p">,</span> <span class="s2">&quot;SideChainCartesians&quot;</span><span class="p">]:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">traj</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">DAs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_position_dataarray</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">(),</span> <span class="n">traj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">DAs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_dataarray</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">(),</span> <span class="n">traj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+        <span class="c1"># the indices/indexes used to create this dataarray.</span>
+        <span class="c1"># This can be useful for later. To redo some analysis</span>
+        <span class="c1"># or use tensorflow for the geometric computations of these values.</span>
+        <span class="c1"># some PyEMMA features give the indexes different names e.g &#39;group_definitions&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">indexes</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">indexes</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="fm">__dir__</span><span class="p">():</span>
+                <span class="k">if</span> <span class="s2">&quot;inde&quot;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+                    <span class="n">indexes</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">f</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;GroupCOMFeature&quot;</span>
+                <span class="ow">or</span> <span class="n">f</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;ResidueCOMFeature&quot;</span>
+            <span class="p">):</span>
+                <span class="n">indexes</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">group_definitions</span>
+            <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;MinRmsdFeature&quot;</span><span class="p">:</span>
+                <span class="n">indexes</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">atom_indices</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">indexes</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">e</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">DAs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">put_indices_into_attrs</span><span class="p">:</span>
+        <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">assign_attrs</span><span class="p">(</span><span class="n">indexes</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ds</span></div>
+
+
+<span class="k">def</span> <span class="nf">construct_xarray_from_feat</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">input_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+        <span class="s2">&quot;Marked for deprecation, because featurizer returns its own dataset.&quot;</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">make_frame_CV_dataarray</span><span class="p">(</span>
+    <span class="n">labels</span><span class="p">,</span> <span class="n">traj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">with_time</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frame_indices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labels2</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make a dataarray from a frame CV feature.</span>
+
+<span class="sd">    A normal features yields multiple values per trajectory frame (e.g. the</span>
+<span class="sd">    backbone dihedral angles give 2 * n_residues features per frame). A frame</span>
+<span class="sd">    CV feature is just a single value for a trajectory. Examples are:</span>
+<span class="sd">        * The distance between a binding pocket and a ligand.</span>
+<span class="sd">        * The volume of the unitcell.</span>
+<span class="sd">        * Whether a molecule is in state 1 or 2, could be described as a binary frame CV features.</span>
+
+<span class="sd">    This method has additional logic. If `data` has a shape of (1, n_frames, 1) it</span>
+<span class="sd">    is left as is. If it has a shape of (1, n_frames), it will be expanded on the -1 axis to</span>
+<span class="sd">    shape (1, n_frames, 1).</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Please make sure, that the input data conforms to the nm, ps, rad coordinates.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        labels (list[str]): The labels, that specify the `CV_num` dimension. This</span>
+<span class="sd">            requires the expression `len(labels == data.shape[2]` to be True. If you</span>
+<span class="sd">            build the dataarray from a feature. The `labels` argument usually will</span>
+<span class="sd">            be `feature.describe()`.</span>
+<span class="sd">        traj (encodermap.SingleTraj): An `encodermap.SingleTraj` trajectory.</span>
+<span class="sd">            Why `SingleTraj` and not `TrajEnsemble`? That is, because in EncoderMap,</span>
+<span class="sd">            an xarray.Dataarray always represents one feature, of one trajectory.</span>
+<span class="sd">            A trajectory can have multiple features, which is represented as an</span>
+<span class="sd">            `xarray.Dataset`. For that, the function `unpack_data_and_feature` is used.</span>
+<span class="sd">            The `TrajEnsemble` trajectory does not even have its own `xarray.Dataset`. This</span>
+<span class="sd">            dataset is created ad hoc, by merging the datasets of the trajectories along</span>
+<span class="sd">            the `traj_num` axis.</span>
+<span class="sd">        name (str): The name of the feature. This name will be used to group similar</span>
+<span class="sd">            features in the large `xarray.Dataset`s of trajectory ensembles. If you</span>
+<span class="sd">            construct this dataarray from a feature, you can either use `feature.name`,</span>
+<span class="sd">            or `feature.__class__.__name__`.</span>
+<span class="sd">        data (Union[np.ndarray, dask.array]): The data to fill the dataarray with.</span>
+<span class="sd">        with_time (Optional[Union[bool, np.ndarray]]): Whether to add the time of</span>
+<span class="sd">            the frames to the `frame_num` axis. Can be either True, or False, or a</span>
+<span class="sd">            `np.ndarray`, in which case the data in this array will be used. Defaults to True.</span>
+<span class="sd">        frame_indices (Optional[np.ndarray]) The indices of the trajectory on disk.</span>
+<span class="sd">            This can come in handy, if the trajectory is loaded out of-memory and</span>
+<span class="sd">            distributed, in which case, MDAnalysis is used to load data.</span>
+<span class="sd">            MDTraj does never load the trajectory coordinates. This the attribute</span>
+<span class="sd">            `_original_frame_indices` in the trajectory will be empty. However, as</span>
+<span class="sd">            the distributed task did already assign frames to the workers, we have</span>
+<span class="sd">            this number, we just need to use it. If set to None `_original_frame_indices`</span>
+<span class="sd">            will be used. Otherwise, the `np.ndarray` provided here, will be used.</span>
+<span class="sd">        labels2 (Optional[list[str]]): Optional labels to supersede the labels in `labels`.</span>
+<span class="sd">            This can be especially useful for trajectory ensembles, which might differ</span>
+<span class="sd">            in a lot of places (i.e. single amino acid exchange). If the labels are</span>
+<span class="sd">            too strict (LYS1 ATOM1 C), the data of two slightly different proteins</span>
+<span class="sd">            can not be concatenated. If the labels are generic (AA1 ATOM1), this can</span>
+<span class="sd">            be done. Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        xarray.Dataarray: The resulting dataarray.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">make_dataarray</span><span class="p">(</span>
+        <span class="n">labels</span><span class="p">,</span>
+        <span class="n">traj</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">,</span>
+        <span class="n">with_time</span><span class="p">,</span>
+        <span class="n">frame_indices</span><span class="p">,</span>
+        <span class="n">labels2</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">make_position_dataarray_from_numpy</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">traj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">with_time</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">frame_indices</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">id</span>
+    <span class="k">if</span> <span class="n">frame_indices</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">frame_indices</span> <span class="o">=</span> <span class="n">frame_indices</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span>
+        <span class="n">coords</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;traj_num&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">traj</span><span class="o">.</span><span class="n">traj_num</span><span class="p">]),</span>
+            <span class="s2">&quot;traj_name&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">traj</span><span class="o">.</span><span class="n">basename</span><span class="p">]),</span>
+            <span class="s2">&quot;frame_num&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;frame_num&quot;</span><span class="p">,</span> <span class="n">frame_indices</span><span class="p">),</span>
+            <span class="s2">&quot;ATOM&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;ATOM&quot;</span><span class="p">,</span> <span class="n">atoms</span><span class="p">),</span>
+            <span class="s2">&quot;COORDS&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;POSITION X&quot;</span><span class="p">,</span> <span class="s2">&quot;POSITION Y&quot;</span><span class="p">,</span> <span class="s2">&quot;POSITION Z&quot;</span><span class="p">],</span>
+        <span class="p">},</span>
+        <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span> <span class="s2">&quot;frame_num&quot;</span><span class="p">,</span> <span class="s2">&quot;ATOM&quot;</span><span class="p">,</span> <span class="s2">&quot;COORDS&quot;</span><span class="p">],</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;length_units&quot;</span><span class="p">:</span> <span class="s2">&quot;nm&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;time_units&quot;</span><span class="p">:</span> <span class="s2">&quot;ps&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;angle_units&quot;</span><span class="p">:</span> <span class="s2">&quot;rad&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;full_path&quot;</span><span class="p">:</span> <span class="n">traj</span><span class="o">.</span><span class="n">traj_file</span><span class="p">,</span>
+            <span class="s2">&quot;topology_file&quot;</span><span class="p">:</span> <span class="n">traj</span><span class="o">.</span><span class="n">top_file</span><span class="p">,</span>
+            <span class="s2">&quot;feature_axis&quot;</span><span class="p">:</span> <span class="s2">&quot;ATOM&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">with_time</span><span class="p">:</span>
+        <span class="n">da</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;frame_num&quot;</span><span class="p">,</span> <span class="n">traj</span><span class="o">.</span><span class="n">time</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">da</span>
+
+
+<span class="k">def</span> <span class="nf">make_position_dataarray</span><span class="p">(</span>
+    <span class="n">labels</span><span class="p">,</span> <span class="n">traj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">with_time</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frame_indices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labels2</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates dataarray belonging to cartesian positions.</span>
+
+<span class="sd">    Similar to `make_datarray`, but the shapes are even larger. As every atom</span>
+<span class="sd">    contributes 3 coordinates (x, y, z) to the data, the shape of the returned</span>
+<span class="sd">    dataarray is (1, no_of_frames, no_of_atoms_considered, 3).</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Please make sure, that the input data conforms to the nm, ps, rad coordinates.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        labels (list[str]): The labels, that specify the `CV_num` dimension. This</span>
+<span class="sd">            requires the expression `len(labels == data.shape[2]` to be True. If you</span>
+<span class="sd">            build the dataarray from a feature. The `labels` argument usually will</span>
+<span class="sd">            be `feature.describe()`.</span>
+<span class="sd">        traj (encodermap.SingleTraj): An `encodermap.SingleTraj` trajectory.</span>
+<span class="sd">            Why `SingleTraj` and not `TrajEnsemble`? That is, because in EncoderMap,</span>
+<span class="sd">            an xarray.Dataarray always represents one feature, of one trajectory.</span>
+<span class="sd">            A trajectory can have multiple features, which is represented as an</span>
+<span class="sd">            `xarray.Dataset`. For that, the function `unpack_data_and_feature` is used.</span>
+<span class="sd">            The `TrajEnsemble` trajectory does not even have its own `xarray.Dataset`. This</span>
+<span class="sd">            dataset is created ad hoc, by merging the datasets of the trajectories along</span>
+<span class="sd">            the `traj_num` axis.</span>
+<span class="sd">        name (str): The name of the feature. This name will be used to group similar</span>
+<span class="sd">            features in the large `xarray.Dataset`s of trajectory ensembles. If you</span>
+<span class="sd">            construct this dataarray from a feature, you can either use `feature.name`,</span>
+<span class="sd">            or `feature.__class__.__name__`.</span>
+<span class="sd">        data (Union[np.ndarray, dask.array]): The data to fill the dataarray with.</span>
+<span class="sd">        with_time (Union[bool, np.ndarray]): Whether to add the time of</span>
+<span class="sd">            the frames to the `frame_num` axis. Can be either True, or False, or a</span>
+<span class="sd">            `np.ndarray`, in which case the data in this array will be used. Defaults to True.</span>
+<span class="sd">        frame_indices (Optional[np.ndarray]) The indices of the trajectory on disk.</span>
+<span class="sd">            This can come in handy, if the trajectory is loaded out of-memory and</span>
+<span class="sd">            distributed, in which case, MDAnalysis is used to load data.</span>
+<span class="sd">            MDTraj does never load the trajectory coordinates. This the attribute</span>
+<span class="sd">            `_original_frame_indices` in the trajectory will be empty. However, as</span>
+<span class="sd">            the distributed task did already assign frames to the workers, we have</span>
+<span class="sd">            this number, we just need to use it. If set to None `_original_frame_indices`</span>
+<span class="sd">            will be used. Otherwise, the `np.ndarray` provided here, will be used.</span>
+<span class="sd">        labels2 (Optional[list[str]]): Optional labels to supersede the labels in `labels`.</span>
+<span class="sd">            This can be especially useful for trajectory ensembles, which might differ</span>
+<span class="sd">            in a lot of places (i.e. single amino acid exchange). If the labels are</span>
+<span class="sd">            too strict (LYS1 ATOM1 C), the data of two slightly different proteins</span>
+<span class="sd">            can not be concatenated. If the labels are generic (AA1 ATOM1), this can</span>
+<span class="sd">            be done. Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        xarray.Dataarray: The resulting dataarray.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">frame_indices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">frame_indices</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">id</span>
+        <span class="k">if</span> <span class="n">frame_indices</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">frame_indices</span> <span class="o">=</span> <span class="n">frame_indices</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># frame_indices = traj._original_frame_indices</span>
+        <span class="c1"># if not np.any(frame_indices):</span>
+        <span class="c1">#     frame_indices = traj.id</span>
+        <span class="c1"># if frame_indices.ndim &gt; 1:</span>
+        <span class="c1">#     frame_indices = frame_indices[:, 1]</span>
+
+    <span class="k">if</span> <span class="n">labels2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">labels2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="p">[</span><span class="mi">11</span><span class="p">:]</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">[::</span><span class="mi">3</span><span class="p">]]</span>
+
+    <span class="n">da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span>
+        <span class="n">coords</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;traj_num&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">traj</span><span class="o">.</span><span class="n">traj_num</span><span class="p">]),</span>
+            <span class="s2">&quot;traj_name&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">traj</span><span class="o">.</span><span class="n">basename</span><span class="p">]),</span>
+            <span class="s2">&quot;frame_num&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;frame_num&quot;</span><span class="p">,</span> <span class="n">frame_indices</span><span class="p">),</span>
+            <span class="s2">&quot;ATOM&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;ATOM&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="p">),</span>
+            <span class="s2">&quot;COORDS&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;POSITION X&quot;</span><span class="p">,</span> <span class="s2">&quot;POSITION Y&quot;</span><span class="p">,</span> <span class="s2">&quot;POSITION Z&quot;</span><span class="p">],</span>
+        <span class="p">},</span>
+        <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span> <span class="s2">&quot;frame_num&quot;</span><span class="p">,</span> <span class="s2">&quot;ATOM&quot;</span><span class="p">,</span> <span class="s2">&quot;COORDS&quot;</span><span class="p">],</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
+        <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;length_units&quot;</span><span class="p">:</span> <span class="s2">&quot;nm&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;time_units&quot;</span><span class="p">:</span> <span class="s2">&quot;ps&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;angle_units&quot;</span><span class="p">:</span> <span class="s2">&quot;rad&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;full_path&quot;</span><span class="p">:</span> <span class="n">traj</span><span class="o">.</span><span class="n">traj_file</span><span class="p">,</span>
+            <span class="s2">&quot;topology_file&quot;</span><span class="p">:</span> <span class="n">traj</span><span class="o">.</span><span class="n">top_file</span><span class="p">,</span>
+            <span class="s2">&quot;feature_axis&quot;</span><span class="p">:</span> <span class="s2">&quot;ATOM&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">with_time</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">with_time</span><span class="p">:</span>
+            <span class="n">da</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;frame_num&quot;</span><span class="p">,</span> <span class="n">traj</span><span class="o">.</span><span class="n">time</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">da</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;frame_num&quot;</span><span class="p">,</span> <span class="n">with_time</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">da</span>
+
+
+<span class="k">def</span> <span class="nf">make_dataarray</span><span class="p">(</span>
+    <span class="n">labels</span><span class="p">,</span> <span class="n">traj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">with_time</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frame_indices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labels2</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates a dataarray belonging to a feature.</span>
+
+<span class="sd">    The shapes are a bit different that what most people might be used to. As</span>
+<span class="sd">    EncoderMap was meant to work with ensembles of trajectories, the data is usually</span>
+<span class="sd">    shaped as (traj_num, frame_num, CV_num), or even (traj_num, frame_num, atom_num, 3).</span>
+
+<span class="sd">    The `xarray.Dataarray`, that is returned by this function reflects this. As a</span>
+<span class="sd">    dataarray is attributed to a single trajectory, the first shape will always be 1.</span>
+<span class="sd">    So for a collective variable, that describes n features, the shape of the returned</span>
+<span class="sd">    datarray will be (1, n_frames, n). Combining multiple trajectories, the first number</span>
+<span class="sd">    can increase.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Please make sure, that the input data conforms to the nm, ps, rad coordinates.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        labels (list[str]): The labels, that specify the `CV_num` dimension. This</span>
+<span class="sd">            requires the expression `len(labels == data.shape[2]` to be True. If you</span>
+<span class="sd">            build the dataarray from a feature. The `labels` argument usually will</span>
+<span class="sd">            be `feature.describe()`.</span>
+<span class="sd">        traj (encodermap.SingleTraj): An `encodermap.SingleTraj` trajectory.</span>
+<span class="sd">            Why `SingleTraj` and not `TrajEnsemble`? That is, because in EncoderMap,</span>
+<span class="sd">            an xarray.Dataarray always represents one feature, of one trajectory.</span>
+<span class="sd">            A trajectory can have multiple features, which is represented as an</span>
+<span class="sd">            `xarray.Dataset`. For that, the function `unpack_data_and_feature` is used.</span>
+<span class="sd">            The `TrajEnsemble` trajectory does not even have its own `xarray.Dataset`. This</span>
+<span class="sd">            dataset is created ad hoc, by merging the datasets of the trajectories along</span>
+<span class="sd">            the `traj_num` axis.</span>
+<span class="sd">        name (str): The name of the feature. This name will be used to group similar</span>
+<span class="sd">            features in the large `xarray.Dataset`s of trajectory ensembles. If you</span>
+<span class="sd">            construct this dataarray from a feature, you can either use `feature.name`,</span>
+<span class="sd">            or `feature.__class__.__name__`.</span>
+<span class="sd">        data (Union[np.ndarray, dask.array]): The data to fill the dataarray with.</span>
+<span class="sd">        with_time (Optional[Union[bool, np.ndarray]]): Whether to add the time of</span>
+<span class="sd">            the frames to the `frame_num` axis. Can be either True, or False, or a</span>
+<span class="sd">            `np.ndarray`, in which case the data in this array will be used. Defaults to True.</span>
+<span class="sd">        frame_indices (Optional[np.ndarray]) The indices of the trajectory on disk.</span>
+<span class="sd">            This can come in handy, if the trajectory is loaded out of-memory and</span>
+<span class="sd">            distributed, in which case, MDAnalysis is used to load data.</span>
+<span class="sd">            MDTraj does never load the trajectory coordinates. This the attribute</span>
+<span class="sd">            `_original_frame_indices` in the trajectory will be empty. However, as</span>
+<span class="sd">            the distributed task did already assign frames to the workers, we have</span>
+<span class="sd">            this number, we just need to use it. If set to None `_original_frame_indices`</span>
+<span class="sd">            will be used. Otherwise, the `np.ndarray` provided here, will be used.</span>
+<span class="sd">        labels2 (Optional[list[str]]): Optional labels to supersede the labels in `labels`.</span>
+<span class="sd">            This can be especially useful for trajectory ensembles, which might differ</span>
+<span class="sd">            in a lot of places (i.e. single amino acid exchange). If the labels are</span>
+<span class="sd">            too strict (LYS1 ATOM1 C), the data of two slightly different proteins</span>
+<span class="sd">            can not be concatenated. If the labels are generic (AA1 ATOM1), this can</span>
+<span class="sd">            be done. Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        xarray.Dataarray: The resulting dataarray.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">frame_indices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">frame_indices</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">id</span>
+        <span class="k">if</span> <span class="n">frame_indices</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">frame_indices</span> <span class="o">=</span> <span class="n">frame_indices</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># frame_indices = traj._original_frame_indices</span>
+        <span class="c1"># if not np.any(frame_indices):</span>
+        <span class="c1">#     frame_indices = traj.id</span>
+        <span class="c1"># if frame_indices.ndim &gt; 1:</span>
+        <span class="c1">#     frame_indices = frame_indices[:, 1]</span>
+
+    <span class="k">if</span> <span class="n">labels2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">labels2</span>
+
+    <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="p">)]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span>
+        <span class="n">coords</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;traj_num&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">traj</span><span class="o">.</span><span class="n">traj_num</span><span class="p">]),</span>
+            <span class="s2">&quot;traj_name&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">traj</span><span class="o">.</span><span class="n">basename</span><span class="p">]),</span>
+            <span class="s2">&quot;frame_num&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;frame_num&quot;</span><span class="p">,</span> <span class="n">frame_indices</span><span class="p">),</span>
+            <span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">():</span> <span class="n">labels</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span> <span class="s2">&quot;frame_num&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()],</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;length_units&quot;</span><span class="p">:</span> <span class="s2">&quot;nm&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;time_units&quot;</span><span class="p">:</span> <span class="s2">&quot;ps&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;angle_units&quot;</span><span class="p">:</span> <span class="s2">&quot;rad&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;full_path&quot;</span><span class="p">:</span> <span class="n">traj</span><span class="o">.</span><span class="n">traj_file</span><span class="p">,</span>
+            <span class="s2">&quot;topology_file&quot;</span><span class="p">:</span> <span class="n">traj</span><span class="o">.</span><span class="n">top_file</span><span class="p">,</span>
+            <span class="s2">&quot;feature_axis&quot;</span><span class="p">:</span> <span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">with_time</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">with_time</span><span class="p">:</span>
+            <span class="n">da</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;frame_num&quot;</span><span class="p">,</span> <span class="n">traj</span><span class="o">.</span><span class="n">time</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">da</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;frame_num&quot;</span><span class="p">,</span> <span class="n">with_time</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">da</span>
+
+
+<span class="k">def</span> <span class="nf">make_ensemble_xarray</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;length_units&quot;</span><span class="p">:</span> <span class="s2">&quot;nm&quot;</span><span class="p">,</span> <span class="s2">&quot;time_units&quot;</span><span class="p">:</span> <span class="s2">&quot;ps&quot;</span><span class="p">,</span> <span class="s2">&quot;angle_units&quot;</span><span class="p">:</span> <span class="s2">&quot;rad&quot;</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;traj_num&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span>
+            <span class="s2">&quot;frame_num&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;frame_num&quot;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span>
+            <span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">():</span> <span class="p">(</span>
+                <span class="s2">&quot;frame_num&quot;</span><span class="p">,</span>
+                <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2"> Frame Feature </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])],</span>
+            <span class="p">),</span>
+        <span class="p">}</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span> <span class="s2">&quot;frame_num&quot;</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;traj_num&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span>
+            <span class="s2">&quot;frame_num&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;frame_num&quot;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span>
+            <span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">():</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2"> Feature </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])],</span>
+        <span class="p">}</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span> <span class="s2">&quot;frame_num&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span>
+    <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;traj_num&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span>
+            <span class="s2">&quot;frame_num&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;frame_num&quot;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span>
+            <span class="s2">&quot;ATOM&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;ATOM&quot;</span><span class="p">,</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;ATOM </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])]),</span>
+            <span class="s2">&quot;COORDS&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;POSITION X&quot;</span><span class="p">,</span> <span class="s2">&quot;POSITION Y&quot;</span><span class="p">,</span> <span class="s2">&quot;POSITION Z&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span> <span class="s2">&quot;frame_num&quot;</span><span class="p">,</span> <span class="s2">&quot;ATOM&quot;</span><span class="p">,</span> <span class="s2">&quot;COORDS&quot;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Too high dimensional data for ensemble.&quot;</span><span class="p">)</span>
+    <span class="n">da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="n">dims</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">da</span>
+
+
+<span class="k">def</span> <span class="nf">get_indices_by_feature_dim</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">traj</span><span class="p">,</span> <span class="n">input_data_shape</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Unpacks the concatenated features returned by PyEMMA.</span>
+
+<span class="sd">    Usually, if you add multiple features to a PyEMMA featurizer, they are</span>
+<span class="sd">    stacked along the feature axis. Let&#39;s say, you have a trajectory with 20 frames</span>
+<span class="sd">    and 3 residues. If you add the Ramachandran angles, you get 6 features (3xphi, 3xpsi).</span>
+<span class="sd">    If you then also add the end-to-end distance as a feature, the data returned by</span>
+<span class="sd">    PyEMMA will have the shape (20, 7). This function returns the correct indices,</span>
+<span class="sd">    so that iteration of `zip(Featurizer.active_features, indices)` will yield the</span>
+<span class="sd">    correct results.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        feat (em.Featurizer): Instance of `encodermap.Featurizer`. The featurizer knows</span>
+<span class="sd">            how many entries every feature takes up in the feature space.</span>
+<span class="sd">        traj (encodermap.SingleTraj): An instance of `SingleTraj`. This is needed</span>
+<span class="sd">            for a single purpose: PyEMMA returns malformed data for .pdb files, that</span>
+<span class="sd">            are loaded from the protein database</span>
+<span class="sd">            (i.e. `traj = em.SingleTraj(&#39;https://files.rcsb.org/view/1GHC.pdb&#39;`).</span>
+<span class="sd">            This is prevented by providing the traj and do a small check.</span>
+<span class="sd">        input_data_shape (tuple): The data, that should conform to the slicing.</span>
+<span class="sd">            Also needed for some checks.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list[np.ndarray]: List of `np.ndarray`s that correctly slice the data.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">features</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">add_one_by_one</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="n">_dim</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">feat</span><span class="o">.</span><span class="n">features</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">traj</span><span class="o">.</span><span class="n">extension</span> <span class="o">==</span> <span class="s2">&quot;.pdb&quot;</span> <span class="ow">and</span> <span class="n">_validate_uri</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">traj_file</span><span class="p">):</span>
+            <span class="c1"># for internet pdb files we need to slice the data. this negates the next assert but meh.</span>
+            <span class="k">raise</span> <span class="n">BadError</span><span class="p">(</span>
+                <span class="s2">&quot;For some reason pyemma.coordinates.source does not like working with internet pdb files.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">indices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">input_data_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">feat</span><span class="o">.</span><span class="n">features</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">describe</span><span class="p">()))</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">_dim</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">input_data_shape</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">Exception</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">indices</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">indices</span><span class="p">[</span><span class="mi">1</span><span class="p">:])]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">feat</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_dim</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">indices</span>
+
+
+<span class="k">def</span> <span class="nf">add_one_by_one</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates a new list from l with elements added one after another.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        l (list): The input list.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: The output list.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; l = [0, 2, 4, 5, 7]</span>
+<span class="sd">        &gt;&gt;&gt; add_one_by_one(l)</span>
+<span class="sd">        [0, 2, 6, 11, 18]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">new_l</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">cumsum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">elt</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+        <span class="n">cumsum</span> <span class="o">+=</span> <span class="n">elt</span>
+        <span class="n">new_l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cumsum</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_l</span>
+</pre></div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023, Kevin Sawade, Tobias Lemke.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

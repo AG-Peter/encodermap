@@ -1,0 +1,1108 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>encodermap.plot.plotting &#8212; encodermap 3.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/encodermap/plot/plotting';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <h1>Source code for encodermap.plot.plotting</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># encodermap/plot/plotting.py</span>
+<span class="c1">################################################################################</span>
+<span class="c1"># Encodermap: A python library for dimensionality reduction.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2019-2022 University of Konstanz and the Authors</span>
+<span class="c1">#</span>
+<span class="c1"># Authors:</span>
+<span class="c1"># Kevin Sawade, Tobias Lemke</span>
+<span class="c1">#</span>
+<span class="c1"># Encodermap is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as</span>
+<span class="c1"># published by the Free Software Foundation, either version 2.1</span>
+<span class="c1"># of the License, or (at your option) any later version.</span>
+<span class="c1"># This package is distributed in the hope that it will be useful to other</span>
+<span class="c1"># researches. IT DOES NOT COME WITH ANY WARRANTY WHATSOEVER; without even the</span>
+<span class="c1"># implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span>
+<span class="c1"># See the GNU Lesser General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">################################################################################</span>
+<span class="sd">&quot;&quot;&quot;Convenience functions for Plotting.</span>
+
+<span class="sd">Todo:</span>
+<span class="sd">    * Add interactive Plotting</span>
+<span class="sd">    * Find a way to use interactive plotting with less points but still cluster everything.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Imports</span>
+<span class="c1">##############################################################################</span>
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.._optional_imports</span> <span class="kn">import</span> <span class="n">_optional_import</span>
+<span class="kn">from</span> <span class="nn">..encodermap_tf1.misc</span> <span class="kn">import</span> <span class="n">periodic_distance_np</span><span class="p">,</span> <span class="n">sigmoid</span>
+<span class="kn">from</span> <span class="nn">..misc.clustering</span> <span class="kn">import</span> <span class="n">gen_dummy_traj</span><span class="p">,</span> <span class="n">rmsd_centroid_of_cluster</span>
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Optional Imports</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="n">md</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">)</span>
+
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Globals</span>
+<span class="c1">##############################################################################</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;distance_histogram&quot;</span><span class="p">]</span>
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Utilities</span>
+<span class="c1">##############################################################################</span>
+
+
+<div class="viewcode-block" id="distance_histogram"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.plotting.distance_histogram">[docs]</a><span class="k">def</span> <span class="nf">distance_histogram</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">,</span> <span class="n">sigmoid_parameters</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">low_d_max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots the histogram of all pairwise distances in the data.</span>
+<span class="sd">    It also shows the sigmoid function and its normalized derivative.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (np.ndarray): 2-dimensional numpy array. Columns should iterate over the dimensions of the datapoints,</span>
+<span class="sd">            i.e. the dimensionality of the data. The rows should iterate over datapoints.</span>
+<span class="sd">        periodicity (float): Periodicity of the data. Use float(&quot;inf&quot;) for non-periodic data.</span>
+<span class="sd">        sigmoid_parameters (tuple): Tuple of sketchmap sigmoid parameters in shape (sigma, a, b).</span>
+<span class="sd">        axes (Union[np.ndarray, None], optional): A numpy array of two matplotlib.axes objects or None. If None is provided,</span>
+<span class="sd">            the axes will be created. Defaults to None.</span>
+<span class="sd">        low_d_max (int, optional): Upper limit for plotting the low_d sigmoid. Defaults to 5.</span>
+<span class="sd">        bins (Union[str, int]. optional): Number of bins for histogram. Use &#39;auto&#39; to let matplotlib decide how</span>
+<span class="sd">            many bins to use. Defaults to &#39;auto&#39;.</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vecs</span> <span class="o">=</span> <span class="n">periodic_distance_np</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">periodicity</span>
+    <span class="p">)</span>
+    <span class="n">dists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vecs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">dists</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">np</span><span class="o">.</span><span class="n">AxisError</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="n">dists</span> <span class="o">=</span> <span class="n">dists</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">axes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">axe2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+    <span class="n">counts</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">patches</span> <span class="o">=</span> <span class="n">axe2</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+        <span class="n">dists</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span>
+    <span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">dists</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">sigmoid_parameters</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">edges_sig</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="o">*</span><span class="n">sigmoid_parameters</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">dy_norm</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">dy</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;sigmoid&quot;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">dy_norm</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C2&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;diff sigmoid&quot;</span><span class="p">)</span>
+
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;distance&quot;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_zorder</span><span class="p">(</span><span class="n">axe2</span><span class="o">.</span><span class="n">get_zorder</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;high-d&quot;</span><span class="p">)</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">low_d_max</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">sigmoid_parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">dy_norm</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">dy</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">edges_sig</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
+    <span class="n">edges_x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;sigmoid&quot;</span><span class="p">)</span>
+
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;distance&quot;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;low-d&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">edges</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">edges_x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">edges_x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+                <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">edges_x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">xycoords</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">transData</span><span class="p">,</span>
+                <span class="n">textcoords</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">transData</span><span class="p">,</span>
+                <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">clip_on</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">axe2</span><span class="p">,</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="_zoomingBoxManual"><a class="viewcode-back" href="../../../encodermap.plot.html#encodermap.plot.plotting._zoomingBoxManual">[docs]</a><span class="k">def</span> <span class="nf">_zoomingBoxManual</span><span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">roiKwargs</span><span class="o">=</span><span class="p">{},</span> <span class="n">arrowKwargs</span><span class="o">=</span><span class="p">{}):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fakes a zoom effect between two mpl.axes.Axes.</span>
+
+<span class="sd">    Uses mpl.patches.ConnectionPatch and mpl.patches.Rectangle</span>
+<span class="sd">    to make it seem like ax2 is a zoomed in version of ax1.</span>
+<span class="sd">    Instead of defining the coordinates of the zooming rectangle</span>
+<span class="sd">    The axes limits of ax2 are used.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ax1 (plt.axes): The axes with the zoomed-out data.</span>
+<span class="sd">        ax2 (plt.axes): The second axes with the zoomed-in data.</span>
+<span class="sd">        color (str): The color of the zoom effect. Is passed into mpl,</span>
+<span class="sd">            thus can be str, or tuple, ... Defaults to &#39;red&#39;</span>
+<span class="sd">        linewidth (int): The linewidth. Defaults to 2.</span>
+<span class="sd">        roiKwargs (dict): Keyworded arguments for the rectangle.</span>
+<span class="sd">            Defaults to {}.</span>
+<span class="sd">        arrowKwargs (dict): Keyworded arguments for the arrow.</span>
+<span class="sd">            Defaults to {}.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">limits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">*</span><span class="n">ax2</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">(),</span> <span class="o">*</span><span class="n">ax2</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()])</span>
+    <span class="n">roi</span> <span class="o">=</span> <span class="n">limits</span>
+    <span class="n">roiKwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="nb">dict</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;fill&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;linestyle&quot;</span><span class="p">,</span> <span class="s2">&quot;dashed&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="n">color</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;linewidth&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">),</span>
+        <span class="o">**</span><span class="n">roiKwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span>
+        <span class="n">mpl</span><span class="o">.</span><span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">roi</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">roi</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span> <span class="n">roi</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">roi</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">roi</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">roi</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">**</span><span class="n">roiKwargs</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">arrowKwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="nb">dict</span><span class="p">([(</span><span class="s2">&quot;arrowstyle&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="n">color</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;linewidth&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="p">)]),</span>
+        <span class="o">**</span><span class="n">arrowKwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">corners</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">limits</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">limits</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]])</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">con1</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">patches</span><span class="o">.</span><span class="n">ConnectionPatch</span><span class="p">(</span>
+        <span class="n">xyA</span><span class="o">=</span><span class="n">corners</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">xyB</span><span class="o">=</span><span class="n">corners</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">coordsA</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">,</span>
+        <span class="n">coordsB</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">,</span>
+        <span class="n">axesA</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span>
+        <span class="n">axesB</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">con1</span><span class="o">.</span><span class="n">set_color</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">con1</span><span class="p">)</span>
+    <span class="n">con1</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">con2</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">patches</span><span class="o">.</span><span class="n">ConnectionPatch</span><span class="p">(</span>
+        <span class="n">xyA</span><span class="o">=</span><span class="n">corners</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+        <span class="n">xyB</span><span class="o">=</span><span class="n">corners</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+        <span class="n">coordsA</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">,</span>
+        <span class="n">coordsB</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">,</span>
+        <span class="n">axesA</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span>
+        <span class="n">axesB</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">con2</span><span class="o">.</span><span class="n">set_color</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">con2</span><span class="p">)</span>
+    <span class="n">con2</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">render_vmd</span><span class="p">(</span>
+    <span class="n">filepath</span><span class="p">,</span>
+    <span class="n">rotation</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">script_location</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+    <span class="n">image_location</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+    <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">image_name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="n">drawframes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">ssupdate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">renderer</span><span class="o">=</span><span class="s2">&quot;tachyon&quot;</span><span class="p">,</span>
+    <span class="n">additional_spheres</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">additional_lines</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">surf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">custom_script</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Render pdb file with combination of vmd, tachyon and image magick.</span>
+
+<span class="sd">    This function creates a standardised vmd tcl/tk script and writes it</span>
+<span class="sd">    to disk. Then vmd is called with the subprocess package and used to</span>
+<span class="sd">    create a tachyon input file. Tachyon is then called to render the image</span>
+<span class="sd">    with ambient occlusion and soft lighting. The output is a high quality</span>
+<span class="sd">    targa (.tga) image, which is converted to png using image magick.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filepath (str): Location of the pdb file which should be rendered.</span>
+<span class="sd">        rotation ([x_rot, y_rot, z_rot], optional): List of rotation values. Defaults to [0, 0, 0].</span>
+<span class="sd">        scale (float, optional): By how much the structure should be scaled. Defaults to 1.</span>
+<span class="sd">        script_location (str, optional): Where to save the script. Script will be removed</span>
+<span class="sd">            after finish nonehteless. Defaults to &#39;auto&#39; and writes into cwd.</span>
+<span class="sd">        image_location (str, optional): Where to render the images file to. Will be</span>
+<span class="sd">            deleted nonetheless. Don&#39;t give an extension for this. Defaults to &#39;auto&#39; and</span>
+<span class="sd">            writes into cwd.</span>
+<span class="sd">        debug (bool, optional): Print debug info. Defaults to False.</span>
+<span class="sd">        image_name (str, optional): This string will be used to save the image to after it has</span>
+<span class="sd">            been rendered and converted to png. This will not be deleted. Defaults to &#39;&#39;.</span>
+<span class="sd">        drawframes (bool, optional): If a trajectory is loaded, this will render all frames in it.</span>
+<span class="sd">            Defaults to False.</span>
+<span class="sd">        ssupdate (bool, optional): Updates the secondary structure for every frame. Normally</span>
+<span class="sd">            vmd uses the secondary structure of the first frame. Setting this to True calcs</span>
+<span class="sd">            the sec struct for every frame. Defaults to True.</span>
+<span class="sd">        renderer (str, optional): Which renderer to use.</span>
+<span class="sd">            * &#39;tachyon&#39; uses the external Tachyon rendered. So vmd -&gt; .dat -&gt; .tga -&gt; .png.</span>
+<span class="sd">            * &#39;snapshot&#39; uses the vmd internal snapshot renderer.</span>
+<span class="sd">            Defaults to &#39;tachyon&#39;.</span>
+<span class="sd">        additional_spheres (list, optional): Draw spheres around two subunits to make</span>
+<span class="sd">            them visually more distinct. Takes a list of lists. Each list in the main</span>
+<span class="sd">            list should contain 4 values [x, y, z, r] (r for radius). Defaults to [].</span>
+<span class="sd">        additional_lines (list, optional): A list of additional lines that should be added to the</span>
+<span class="sd">            script. Please refert to the vmd manual for further info. Defaults to [].</span>
+<span class="sd">        surf (Union[str, None], optional): A string defining the surface renderer. Can either be</span>
+<span class="sd">            &#39;quicksurf&#39; or &#39;surf&#39;. If None is provided, the surface won&#39;t be rendered (falls back</span>
+<span class="sd">            to cartoon representation). Defaults to None.</span>
+<span class="sd">        custom_script (Union[str, None], optional): Provide a completely custom script as this option.</span>
+<span class="sd">            The render commands will still be appended to this script. If None is provided, the</span>
+<span class="sd">            default script will be used.</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        See this nice webpage about rendering publication worthy images with vmd.</span>
+<span class="sd">        https://www.ks.uiuc.edu/Research/vmd/minitutorials/tachyonao/</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        image (np.ndarray): This array contains the raw pixel data.</span>
+<span class="sd">            Can be used with matplotlib to have a quick view of the image.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; pdb_file = &#39;/path/to/pdbfile.pdb&#39;</span>
+<span class="sd">        &gt;&gt;&gt; image = render_vmd(pdb_file, scale=2)</span>
+<span class="sd">        &gt;&gt;&gt; plt.imshow(image)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">image_location</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="s2">&quot;The argument image_location does not take a file extension, because the name is used for a .dat, .tga and .png file.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># add a shebang to the script</span>
+    <span class="c1"># script = &#39;#!/home/soft/bin/vmd\n\n&#39;</span>
+
+    <span class="c1"># print debug hello world</span>
+    <span class="n">script</span> <span class="o">=</span> <span class="s1">&#39;puts &quot;Hello World&quot;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="c1"># if a list of files is provided we iterate over them</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+            <span class="c1"># load molecule and change representation</span>
+            <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;mol new </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="n">surf</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;mol modstyle 0 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> newcartoon 0.3 50</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;mol modcolor 0 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> structure</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="k">elif</span> <span class="n">surf</span> <span class="o">==</span> <span class="s2">&quot;quicksurf&quot;</span><span class="p">:</span>
+                <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;mol modstyle 0 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> quicksurf 0.6 0.7 0.7 Medium</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;mol modstyle 0 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">surf</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;mol modmaterial 0 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> AOChalky</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="n">drawframes</span> <span class="ow">and</span> <span class="n">md</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">n_frames</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">renderer</span> <span class="o">==</span> <span class="s2">&quot;STL&quot;</span><span class="p">:</span>
+                    <span class="kn">import</span> <span class="nn">warnings</span>
+
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                        <span class="s2">&quot;Rendering multiple frames with STL may lead to undesired results. Instead of yielding the union of all single-frame surfaces, you will get a mishmash of all surfaces with intersection faces etc.&quot;</span>
+                    <span class="p">)</span>
+                <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;mol drawframes 0 </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> 0:1:999</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># load molecule and change representation</span>
+        <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;mol new </span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="n">surf</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;mol modstyle 0 0 newcartoon 0.3 50</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;mol modcolor 0 0 structure</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">elif</span> <span class="n">surf</span> <span class="o">==</span> <span class="s2">&quot;quicksurf&quot;</span><span class="p">:</span>
+            <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;mol modstyle 0 0 quicksurf 0.6 0.7 0.7 Medium</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;mol modstyle 0 0 </span><span class="si">{</span><span class="n">surf</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;mol modmaterial 0 0 AOChalky</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="n">drawframes</span><span class="p">:</span>
+            <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;mol drawframes 0 0 0:1:999</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="k">if</span> <span class="n">ssupdate</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[93m&quot;</span>
+            <span class="o">+</span> <span class="s2">&quot;For the ssupdate function to work encodermap/vmd/sscache.tcl will be sourced within vmd. If no Error is thrown the file is present.&quot;</span>
+            <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span>
+        <span class="p">)</span>
+        <span class="n">sscache_location</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="o">+</span> <span class="s2">&quot;/vmd/sscache.tcl&quot;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">sscache_location</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The sscache.tcl script is not here: </span><span class="si">{</span><span class="n">sscache_location</span><span class="si">}</span><span class="s2">. Please put it there.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;source </span><span class="si">{</span><span class="n">sscache_location</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;start_sscache 0</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="c1">#         script += &quot;proc update_secondary_structure_assigment { args } {&quot;</span>
+    <span class="c1">#         script += &quot;  foreach molid [molinfo list] {&quot;</span>
+    <span class="c1">#         script += &quot;    mol ssrecalc $molid&quot;</span>
+    <span class="c1">#         script += &quot;  }&quot;</span>
+    <span class="c1">#         script += &quot;}&quot;</span>
+    <span class="c1">#         script += &quot;trace variable vmd_frame(0) w update_secondary_structure_assigment&quot;</span>
+
+    <span class="c1"># change some parameters to make a nice image</span>
+    <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;color Display Background white</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;color Axes Labels black</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;display depthcue off</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;display ambientocclusion on</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;display aoambient 1.0</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;display aodirect 0.3</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;display antialias on</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="c1"># script += &#39;display resize 2000 2000\n&#39;</span>
+    <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;axes location off</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="c1"># scale and rotate</span>
+    <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;rotate x by </span><span class="si">{</span><span class="n">rotation</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;rotate y by </span><span class="si">{</span><span class="n">rotation</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;rotate z by </span><span class="si">{</span><span class="n">rotation</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;scale by </span><span class="si">{</span><span class="n">scale</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="c1"># define image location</span>
+    <span class="k">if</span> <span class="n">image_location</span> <span class="o">==</span> <span class="s2">&quot;auto&quot;</span><span class="p">:</span>
+        <span class="n">image_location</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/vmdscene&quot;</span>
+
+    <span class="c1"># add spheres</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">additional_spheres</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">additional_spheres</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="s2">&quot;iceblue&quot;</span><span class="p">]):</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;draw color </span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;draw sphere </span><span class="se">{{</span><span class="s2"> </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s2"> </span><span class="se">}}</span><span class="s2"> radius </span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2"> resolution 25</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;draw material Transparent</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="c1"># add additional lines</span>
+    <span class="k">if</span> <span class="n">additional_lines</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">additional_lines</span><span class="p">:</span>
+            <span class="n">script</span> <span class="o">+=</span> <span class="n">line</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="k">if</span> <span class="n">custom_script</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">script</span> <span class="o">=</span> <span class="n">custom_script</span>
+
+    <span class="c1"># render command. Alternatively, I can use external Tachyon, which makes better images</span>
+    <span class="k">if</span> <span class="n">renderer</span> <span class="o">==</span> <span class="s2">&quot;tachyon&quot;</span><span class="p">:</span>
+        <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;render Tachyon </span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.dat</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="k">elif</span> <span class="n">renderer</span> <span class="o">==</span> <span class="s2">&quot;snapshot&quot;</span><span class="p">:</span>
+        <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;render aasamples TachyonInternal 6</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;render TachyonInternal </span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.tga</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="k">elif</span> <span class="n">renderer</span> <span class="o">==</span> <span class="s2">&quot;STL&quot;</span><span class="p">:</span>
+        <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;axes location off</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;render STL </span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.stl</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="k">elif</span> <span class="n">renderer</span> <span class="o">==</span> <span class="s2">&quot;Wavefront&quot;</span><span class="p">:</span>
+        <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;axes location off</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">script</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;render Wavefront </span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.obj</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;Other renderers than tachyon and snaphsot currently not supported.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># list molecules and quit</span>
+    <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;mol list</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">script</span> <span class="o">+=</span> <span class="s2">&quot;quit&quot;</span>
+
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">script</span><span class="p">)</span>
+
+    <span class="c1"># write the script</span>
+    <span class="k">if</span> <span class="n">script_location</span> <span class="o">==</span> <span class="s2">&quot;auto&quot;</span><span class="p">:</span>
+        <span class="n">script_location</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/vmd_script.tcl&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">script_location</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">script</span><span class="p">)</span>
+
+    <span class="c1"># call vmd -e script</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;vmd -e </span><span class="si">{</span><span class="n">script_location</span><span class="si">}</span><span class="s2"> -dispdev none&quot;</span>
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+        <span class="n">cmd</span><span class="p">,</span>
+        <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+        <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+        <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+        <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="p">(</span><span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">)</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">stderr</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+
+    <span class="c1"># check if image has been written</span>
+    <span class="k">if</span> <span class="n">renderer</span> <span class="o">==</span> <span class="s2">&quot;tachyon&quot;</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.dat&quot;</span>
+        <span class="p">),</span> <span class="s2">&quot;Tachyon datafile not generated by renderer&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.tga&quot;</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Snapshot image not created. </span><span class="si">{</span><span class="n">stderr</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.tga&quot;</span>
+    <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Tachyon datafile not generated by renderer. Here&#39;s the script:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">script</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+
+    <span class="k">if</span> <span class="n">renderer</span> <span class="o">==</span> <span class="s2">&quot;tachyon&quot;</span><span class="p">:</span>
+        <span class="c1"># call Tachyon and render</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/usr/bin/tachyon -aasamples 12 </span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.dat -res 2000 2000 -fullshade -format TARGA -o </span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.tga&quot;</span>
+        <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+            <span class="n">cmd</span><span class="p">,</span>
+            <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+            <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+            <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+            <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="p">(</span><span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">)</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">stderr</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+
+        <span class="c1"># check if image has been written</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.tga&quot;</span>
+        <span class="p">),</span> <span class="s2">&quot;Tachyon renderer did not render image&quot;</span>
+
+    <span class="k">if</span> <span class="n">renderer</span> <span class="o">==</span> <span class="s2">&quot;STL&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">image_name</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.stl&quot;</span><span class="p">,</span> <span class="n">image_name</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">trimesh</span>
+
+        <span class="n">mesh</span> <span class="o">=</span> <span class="n">trimesh</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.stl&quot;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.stl&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mesh</span>
+
+    <span class="k">if</span> <span class="n">renderer</span> <span class="o">==</span> <span class="s2">&quot;Wavefront&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">image_name</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.obj&quot;</span><span class="p">,</span> <span class="n">image_name</span><span class="p">)</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.mtl&quot;</span><span class="p">,</span> <span class="n">image_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.obj&quot;</span><span class="p">,</span> <span class="s2">&quot;.mtl&quot;</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Find the rendered images at </span><span class="si">{</span><span class="n">image_name</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">image_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.obj&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;.mtl&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># convert to png</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/usr/bin/convert </span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.tga </span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.png&quot;</span>
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+        <span class="n">cmd</span><span class="p">,</span>
+        <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+        <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+        <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+        <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="p">(</span><span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">)</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">stderr</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+
+    <span class="c1"># read image</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
+
+    <span class="c1"># write image if name has been provided</span>
+    <span class="k">if</span> <span class="n">image_name</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">image_name</span><span class="p">):</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span> <span class="n">image_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">image_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># remove temporary files</span>
+    <span class="k">if</span> <span class="n">renderer</span> <span class="o">==</span> <span class="s2">&quot;tachyon&quot;</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.dat&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.tga&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_location</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
+    <span class="c1"># os.remove(f&#39;{script_location}&#39;)</span>
+
+    <span class="c1"># return matplotlib image object</span>
+    <span class="k">return</span> <span class="n">image</span>
+
+
+<span class="k">def</span> <span class="nf">render_movie</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">scatter_data</span><span class="p">,</span> <span class="n">dummy_traj</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">plot_cluster</span><span class="p">(</span>
+    <span class="n">trajs</span><span class="p">,</span> <span class="n">pdb_path</span><span class="p">,</span> <span class="n">png_path</span><span class="p">,</span> <span class="n">cluster_no</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">&quot;user_selected_points&quot;</span>
+<span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1</span> <span class="kn">import</span> <span class="n">make_axes_locatable</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="p">((</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">),</span> <span class="p">(</span><span class="n">ax3</span><span class="p">,</span> <span class="n">ax4</span><span class="p">))</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">cluster_no</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cluster_no</span> <span class="o">=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+    <span class="c1"># prepare ax1 to make the two side histograms</span>
+    <span class="n">divider</span> <span class="o">=</span> <span class="n">make_axes_locatable</span><span class="p">(</span><span class="n">ax4</span><span class="p">)</span>
+    <span class="n">axHistx</span> <span class="o">=</span> <span class="n">divider</span><span class="o">.</span><span class="n">append_axes</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># , sharex=ax1)</span>
+    <span class="n">axHisty</span> <span class="o">=</span> <span class="n">divider</span><span class="o">.</span><span class="n">append_axes</span><span class="p">(</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># , sharey=ax1)</span>
+
+    <span class="c1"># some data management</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">lowd</span>
+    <span class="n">where</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="n">cluster_no</span><span class="p">)</span>
+    <span class="n">not_where</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">!=</span> <span class="n">cluster_no</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># scatter everything grey and cluster blue</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="n">where</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="n">not_where</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x in a.u.&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y in a.u.&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scatter of low-dimensional data&quot;</span><span class="p">)</span>
+
+    <span class="c1"># density</span>
+    <span class="n">bin_density</span> <span class="o">=</span> <span class="mi">46</span>
+    <span class="n">log_density</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># ax2 gets hexbin density</span>
+    <span class="c1"># x_bins = np.linspace(x.min(), x.max(), bin_density)</span>
+    <span class="c1"># y_bins = np.linspace(y.min(), y.max(), bin_density)</span>
+    <span class="n">H</span><span class="p">,</span> <span class="n">xedges</span><span class="p">,</span> <span class="n">yedges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram2d</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bin_density</span><span class="p">)</span>
+    <span class="n">extent</span> <span class="o">=</span> <span class="p">[</span><span class="n">xedges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xedges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">yedges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">yedges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="n">xcenters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">xedges</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">xedges</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ycenters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">yedges</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">yedges</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">xcenters</span><span class="p">,</span> <span class="n">ycenters</span><span class="p">)</span>
+    <span class="n">extent</span> <span class="o">=</span> <span class="p">[</span><span class="n">xedges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xedges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">yedges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">yedges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="k">if</span> <span class="n">log_density</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">):</span>  <span class="c1"># ignore division by zero error</span>
+            <span class="n">F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">F</span> <span class="o">=</span> <span class="n">H</span>
+    <span class="c1"># mappable = ax2.hexbin(x=X.ravel(), y=Y.ravel(), C=F.T.ravel(), cmap=plt.cm.turbo_r, extent=extent,</span>
+    <span class="c1">#                       norm=mpl.colors.PowerNorm(1), gridsize=bin_density +1)</span>
+    <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s2">&quot;turbo&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">with_extremes</span><span class="p">(</span><span class="n">under</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">mappable</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">H</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">H</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x in a.u.&quot;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y in a.u.&quot;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Log density of points&quot;</span><span class="p">)</span>
+
+    <span class="c1"># colorbar for ax2</span>
+    <span class="c1"># colorbar</span>
+    <span class="c1"># use the axes divider method to add colorbar</span>
+    <span class="n">ax_divider</span> <span class="o">=</span> <span class="n">make_axes_locatable</span><span class="p">(</span><span class="n">ax2</span><span class="p">)</span>
+    <span class="c1"># add colorbaraxis to work with ticks and whatnot</span>
+    <span class="n">cax</span> <span class="o">=</span> <span class="n">ax_divider</span><span class="o">.</span><span class="n">append_axes</span><span class="p">(</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s2">&quot;7%&quot;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="s2">&quot;2%&quot;</span><span class="p">)</span>
+    <span class="c1"># define colorbar norm. I like to work with values between 0 and 1</span>
+    <span class="c1"># initialize colormap</span>
+    <span class="n">cb</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mappable</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">)</span>
+    <span class="n">cax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Number of points&quot;</span><span class="p">)</span>
+
+    <span class="c1"># cluster on ax4</span>
+    <span class="c1"># x hist</span>
+    <span class="n">spines</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">axHistx</span><span class="o">.</span><span class="n">spines</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+    <span class="n">spines</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">spines</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">axHistx</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+    <span class="n">H</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">patches</span> <span class="o">=</span> <span class="n">axHistx</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">][</span><span class="n">where</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">axHistx</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">)</span>
+    <span class="n">axHistx</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Scatter of Cluster&quot;</span><span class="p">)</span>
+
+    <span class="c1"># y hist</span>
+    <span class="n">spines</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">axHisty</span><span class="o">.</span><span class="n">spines</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+    <span class="n">spines</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">spines</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">axHisty</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+    <span class="n">H</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">patches</span> <span class="o">=</span> <span class="n">axHisty</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">][</span><span class="n">where</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;horizontal&quot;</span>
+    <span class="p">)</span>
+    <span class="n">axHisty</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">)</span>
+
+    <span class="c1"># scatter data</span>
+    <span class="n">ax4</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">where</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">where</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">spines</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">ax4</span><span class="o">.</span><span class="n">spines</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+    <span class="n">spines</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">spines</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ax4</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x in a.u.&quot;</span><span class="p">)</span>
+    <span class="n">ax4</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y in a.u.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># annotate rms</span>
+    <span class="n">rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+        <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">where</span><span class="p">]))</span>
+        <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">where</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">where</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="o">+</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">where</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">where</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;RMS = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">rms</span><span class="p">,</span><span class="w"> </span><span class="n">decimals</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">ax4</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax1</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+
+    <span class="c1"># annotate geometric center</span>
+    <span class="n">centroid</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">where</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">where</span><span class="p">])]</span>
+    <span class="n">ax4</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">centroid</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">)</span>
+    <span class="n">ax4</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+        <span class="s2">&quot;geom. center&quot;</span><span class="p">,</span>
+        <span class="n">xy</span><span class="o">=</span><span class="n">centroid</span><span class="p">,</span>
+        <span class="n">xycoords</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">,</span>
+        <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">),</span>
+        <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;axes fraction&quot;</span><span class="p">,</span>
+        <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+        <span class="n">horizontalalignment</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span>
+        <span class="n">verticalalignment</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># annotate rmsd center</span>
+    <span class="c1"># view, dummy_traj = gen_dummy_traj(trajs, cluster_no, max_frames=100, col=col)</span>
+    <span class="c1"># index, distances, centroid = rmsd_centroid_of_cluster(dummy_traj, parallel=False)</span>
+    <span class="c1"># idx = np.round(np.linspace(0, len(where) - 1, 100)).astype(int)</span>
+    <span class="c1"># where = where[idx]</span>
+    <span class="c1"># centroid = data[where[0][::5][index]]</span>
+    <span class="c1"># ax4.scatter(*centroid, s=50, c=&#39;C2&#39;)</span>
+    <span class="c1"># ax4.annotate(&#39;rmsd center&#39;,</span>
+    <span class="c1">#             xy=centroid, xycoords=&#39;data&#39;,</span>
+    <span class="c1">#             xytext=(0.95, 0.85), textcoords=&#39;axes fraction&#39;,</span>
+    <span class="c1">#             arrowprops=dict(facecolor=&#39;black&#39;, shrink=0.05, fc=&quot;w&quot;, ec=&quot;k&quot;, lw=2),</span>
+    <span class="c1">#             horizontalalignment=&#39;right&#39;, verticalalignment=&#39;top&#39;, color=&#39;C2&#39;)</span>
+
+    <span class="c1"># make vmd snapshot</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">render_vmd</span><span class="p">(</span>
+            <span class="n">pdb_path</span><span class="p">,</span> <span class="n">drawframes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">renderer</span><span class="o">=</span><span class="s2">&quot;tachyon&quot;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.5</span>
+        <span class="p">)</span>
+        <span class="n">ax3</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="p">[</span><span class="n">k</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">ax3</span><span class="o">.</span><span class="n">spines</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+        <span class="n">ax3</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+        <span class="n">ax3</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+        <span class="n">ax3</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Image of cluster&quot;</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">ax3</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;VMD Rendering not possible&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># # calculate distances between rmsd centroid and all other points</span>
+    <span class="c1"># distances = scipy.spatial.distance.cdist(centroid.reshape(1, 2), np.stack([x, y]).T)</span>
+    <span class="c1"># H, edges, patches = ax3.hist(distances.flatten(), color=&#39;C1&#39;)</span>
+    <span class="c1"># ax3.set_title(&quot;Distances to rmsd centroid.&quot;)</span>
+    <span class="c1"># ax3.set_xlabel(&quot;Distance in a.u.&quot;)</span>
+    <span class="c1"># ax3.set_ylabel(&quot;Count&quot;)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cluster </span><span class="si">{</span><span class="n">cluster_no</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">png_path</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+</pre></div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023, Kevin Sawade, Tobias Lemke.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

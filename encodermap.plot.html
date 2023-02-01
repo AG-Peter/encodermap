@@ -1,0 +1,2251 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>encodermap.plot package &#8212; encodermap 3.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'encodermap.plot';</script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="_static/logo_cube_300.png" class="logo__image only-light" alt="Logo image">
+    <img src="_static/logo_cube_300.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="encodermap.autoencoder.html">encodermap.autoencoder package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.callbacks.html">encodermap.callbacks package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.data.html">encodermap.data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.encodermap_tf1.html">encodermap.encodermap_tf1 package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.loading.html">encodermap.loading package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.loss_functions.html">encodermap.loss_functions package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.misc.html">encodermap.misc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.models.html">encodermap.models package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.moldata.html">encodermap.moldata package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.parameters.html">encodermap.parameters package</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">encodermap.plot package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.trajinfo.html">encodermap.trajinfo package</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="encodermap-plot-package">
+<h1>encodermap.plot package<a class="headerlink" href="#encodermap-plot-package" title="Permalink to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="module-encodermap.plot.interactive_plotting">
+<span id="encodermap-plot-interactive-plotting-module"></span><h2>encodermap.plot.interactive_plotting module<a class="headerlink" href="#module-encodermap.plot.interactive_plotting" title="Permalink to this heading">#</a></h2>
+<p>ToDo:
+* Check if vmd rendering works
+* Animate the path and the torsions inside the Interactive Plotting class.
+* ToolTip when hovering over buttons.
+* Path Tool.
+* Allow a path that selects closest points for points on path. Maybe do both for any given bezier/path path.
+* Allow autoencoder to be None. Catch the exception that tries to get autoencoder.trajs.
+* Superpose option with mdtraj not working
+* Keep the lasso select.
+* Movie along paths.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.plot.interactive_plotting.</span></span><span class="sig-name descname"><span class="pre">InteractivePlotting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">autoencoder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trajs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">align_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'name</span> <span class="pre">CA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'s':</span> <span class="pre">5}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ball_and_stick</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to open up an interactive plotting window.</p>
+<p>Contains sub-classes to handle user-clickable menus and selectors.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.trajs">
+<span class="sig-name descname"><span class="pre">trajs</span></span><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.trajs" title="Permalink to this definition">#</a></dt>
+<dd><p>The trajs passed into this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>encodermap.TrajEnsemble</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.fig">
+<span class="sig-name descname"><span class="pre">fig</span></span><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.fig" title="Permalink to this definition">#</a></dt>
+<dd><p>The figure plotted onto. If ax is passed when
+this class is instantiated the parent figure will be fetched with
+self.fig = self.ax.get_figure()</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>matplotlib.figure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.ax">
+<span class="sig-name descname"><span class="pre">ax</span></span><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.ax" title="Permalink to this definition">#</a></dt>
+<dd><p>The axes where the lowd data of the trajs
+is plotted on.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>matplotlib.axes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.menu_ax">
+<span class="sig-name descname"><span class="pre">menu_ax</span></span><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.menu_ax" title="Permalink to this definition">#</a></dt>
+<dd><p>The axes where the normal menu is plotted on.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>matplotlib.axes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.status_menu_ax">
+<span class="sig-name descname"><span class="pre">status_menu_ax</span></span><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.status_menu_ax" title="Permalink to this definition">#</a></dt>
+<dd><p>The axes on which the status menu is plotted on.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>matplotlib.axes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.pts">
+<span class="sig-name descname"><span class="pre">pts</span></span><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.pts" title="Permalink to this definition">#</a></dt>
+<dd><p>The points which are plotted. Based on some
+other class variables the color of this collection is adjusted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>matplotlib.collections.Collection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.statusmenu">
+<span class="sig-name descname"><span class="pre">statusmenu</span></span><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.statusmenu" title="Permalink to this definition">#</a></dt>
+<dd><p>The menu containing the
+status buttons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#encodermap.plot.utils.StatusMenu" title="encodermap.plot.utils.StatusMenu">encodermap.plot.utils.StatusMenu</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.menu">
+<span class="sig-name descname"><span class="pre">menu</span></span><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.menu" title="Permalink to this definition">#</a></dt>
+<dd><p>The menu containing the remaining buttons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#encodermap.plot.utils.Menu" title="encodermap.plot.utils.Menu">encodermap.plot.utils.Menu</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.tool">
+<span class="sig-name descname"><span class="pre">tool</span></span><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.tool" title="Permalink to this definition">#</a></dt>
+<dd><p>The currentlty active
+tool used to select points. This can be lasso, polygon, etc…</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#encodermap.plot.utils.SelectFromCollection" title="encodermap.plot.utils.SelectFromCollection">encodermap.plot.utils.SelectFromCollection</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.mode">
+<span class="sig-name descname"><span class="pre">mode</span></span><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.mode" title="Permalink to this definition">#</a></dt>
+<dd><p>Current mode of the statusmenu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sess</span> <span class="o">=</span> <span class="n">ep</span><span class="o">.</span><span class="n">InteractivePlotting</span><span class="p">(</span><span class="n">trajs</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">autoencoder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trajs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">align_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'name</span> <span class="pre">CA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'s':</span> <span class="pre">5}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ball_and_stick</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.__init__" title="Permalink to this definition">#</a></dt>
+<dd><p>Instantiate the InteractivePlotting class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajs</strong> (<em>encodermap.TrajEnsemble</em>) – The trajs of which the lowd info
+should be plotted.</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib.axes</em><em>, </em><em>optional</em>) – On what axes to plot. If no axes is provided
+a new figure and axes will be created defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.accept">
+<span class="sig-name descname"><span class="pre">accept</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.accept"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.accept" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.bezier">
+<span class="sig-name descname"><span class="pre">bezier</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.bezier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.bezier" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.cluster_zoomed">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cluster_zoomed</span></span><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.cluster_zoomed" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.ellipse">
+<span class="sig-name descname"><span class="pre">ellipse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.ellipse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.ellipse" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.lasso">
+<span class="sig-name descname"><span class="pre">lasso</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.lasso"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.lasso" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><a class="headerlink" href="#id0" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.on_click">
+<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.on_click"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.on_click" title="Permalink to this definition">#</a></dt>
+<dd><p>Decides whether the release event happened in the drawing area or the menu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>event</strong> (<em>matplotlib.backend_bases.Event</em>) – The event provided by figure.canvas.connect().</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.on_click_menu">
+<span class="sig-name descname"><span class="pre">on_click_menu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.on_click_menu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.on_click_menu" title="Permalink to this definition">#</a></dt>
+<dd><p>Chooses the function to call based on what MenuItem was clicked.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>event</strong> (<em>matplotlib.backend_bases.Event</em>) – The event provided by figure.canvas.connect().</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.on_click_tool">
+<span class="sig-name descname"><span class="pre">on_click_tool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.on_click_tool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.on_click_tool" title="Permalink to this definition">#</a></dt>
+<dd><p>Left here for convenience if some tools need a button release event.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.on_enter_ax">
+<span class="sig-name descname"><span class="pre">on_enter_ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.on_enter_ax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.on_enter_ax" title="Permalink to this definition">#</a></dt>
+<dd><p>Chosses the tool to use when self.ax is entered, based on current mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>event</strong> (<em>matplotlib.backend_bases.Event</em>) – The event provided by figure.canvas.connect().</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.on_leave_ax">
+<span class="sig-name descname"><span class="pre">on_leave_ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.on_leave_ax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.on_leave_ax" title="Permalink to this definition">#</a></dt>
+<dd><p>Disconnect the current tool.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.path">
+<span class="sig-name descname"><span class="pre">path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.path" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.polygon">
+<span class="sig-name descname"><span class="pre">polygon</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.polygon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.polygon" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.rectangle">
+<span class="sig-name descname"><span class="pre">rectangle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.rectangle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.rectangle" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.render_move">
+<span class="sig-name descname"><span class="pre">render_move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.render_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.render_move" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.reset" title="Permalink to this definition">#</a></dt>
+<dd><p>Called when ‘Reset’ is pressed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.set_points">
+<span class="sig-name descname"><span class="pre">set_points</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.set_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.set_points" title="Permalink to this definition">#</a></dt>
+<dd><p>Called when ‘Set Points’ is pressed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.interactive_plotting.InteractivePlotting.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/interactive_plotting.html#InteractivePlotting.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.interactive_plotting.InteractivePlotting.write" title="Permalink to this definition">#</a></dt>
+<dd><p>Called when ‘Write’ is pressed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-encodermap.plot.jinja_template">
+<span id="encodermap-plot-jinja-template-module"></span><h2>encodermap.plot.jinja_template module<a class="headerlink" href="#module-encodermap.plot.jinja_template" title="Permalink to this heading">#</a></h2>
+<p>This is a template for a README.md generated when a user writes a cluster to disk.</p>
+</section>
+<section id="module-encodermap.plot.plotting">
+<span id="encodermap-plot-plotting-module"></span><h2>encodermap.plot.plotting module<a class="headerlink" href="#module-encodermap.plot.plotting" title="Permalink to this heading">#</a></h2>
+<p>Convenience functions for Plotting.</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>Add interactive Plotting</p></li>
+<li><p>Find a way to use interactive plotting with less points but still cluster everything.</p></li>
+</ul>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.plot.plotting._zoomingBoxManual">
+<span class="sig-prename descclassname"><span class="pre">encodermap.plot.plotting.</span></span><span class="sig-name descname"><span class="pre">_zoomingBoxManual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'red'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roiKwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arrowKwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/plotting.html#_zoomingBoxManual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.plotting._zoomingBoxManual" title="Permalink to this definition">#</a></dt>
+<dd><p>Fakes a zoom effect between two mpl.axes.Axes.</p>
+<p>Uses mpl.patches.ConnectionPatch and mpl.patches.Rectangle
+to make it seem like ax2 is a zoomed in version of ax1.
+Instead of defining the coordinates of the zooming rectangle
+The axes limits of ax2 are used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax1</strong> (<em>plt.axes</em>) – The axes with the zoomed-out data.</p></li>
+<li><p><strong>ax2</strong> (<em>plt.axes</em>) – The second axes with the zoomed-in data.</p></li>
+<li><p><strong>color</strong> (<em>str</em>) – The color of the zoom effect. Is passed into mpl,
+thus can be str, or tuple, … Defaults to ‘red’</p></li>
+<li><p><strong>linewidth</strong> (<em>int</em>) – The linewidth. Defaults to 2.</p></li>
+<li><p><strong>roiKwargs</strong> (<em>dict</em>) – Keyworded arguments for the rectangle.
+Defaults to {}.</p></li>
+<li><p><strong>arrowKwargs</strong> (<em>dict</em>) – Keyworded arguments for the arrow.
+Defaults to {}.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.plot.plotting.distance_histogram">
+<span class="sig-prename descclassname"><span class="pre">encodermap.plot.plotting.</span></span><span class="sig-name descname"><span class="pre">distance_histogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigmoid_parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low_d_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/plotting.html#distance_histogram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.plotting.distance_histogram" title="Permalink to this definition">#</a></dt>
+<dd><p>Plots the histogram of all pairwise distances in the data.
+It also shows the sigmoid function and its normalized derivative.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>np.ndarray</em>) – 2-dimensional numpy array. Columns should iterate over the dimensions of the datapoints,
+i.e. the dimensionality of the data. The rows should iterate over datapoints.</p></li>
+<li><p><strong>periodicity</strong> (<em>float</em>) – Periodicity of the data. Use float(“inf”) for non-periodic data.</p></li>
+<li><p><strong>sigmoid_parameters</strong> (<em>tuple</em>) – Tuple of sketchmap sigmoid parameters in shape (sigma, a, b).</p></li>
+<li><p><strong>axes</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>None</em><em>]</em><em>, </em><em>optional</em>) – A numpy array of two matplotlib.axes objects or None. If None is provided,
+the axes will be created. Defaults to None.</p></li>
+<li><p><strong>low_d_max</strong> (<em>int</em><em>, </em><em>optional</em>) – Upper limit for plotting the low_d sigmoid. Defaults to 5.</p></li>
+<li><p><strong>bins</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>. optional</em>) – Number of bins for histogram. Use ‘auto’ to let matplotlib decide how
+many bins to use. Defaults to ‘auto’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.plot.utils">
+<span id="encodermap-plot-utils-module"></span><h2>encodermap.plot.utils module<a class="headerlink" href="#module-encodermap.plot.utils" title="Permalink to this heading">#</a></h2>
+<p>Utils for plotting. Ideas and Code taken from the matplotlib documentation.
+Menu: <a class="reference external" href="https://matplotlib.org/3.1.0/gallery/widgets/menu.html">https://matplotlib.org/3.1.0/gallery/widgets/menu.html</a>
+LassoSelector: <a class="reference external" href="https://matplotlib.org/3.1.1/gallery/widgets/lasso_selector_demo_sgskip.html">https://matplotlib.org/3.1.1/gallery/widgets/lasso_selector_demo_sgskip.html</a>
+PolygonSelector: <a class="reference external" href="https://matplotlib.org/3.1.3/gallery/widgets/polygon_selector_demo.html">https://matplotlib.org/3.1.3/gallery/widgets/polygon_selector_demo.html</a>
+Bezier: <a class="reference external" href="https://gist.github.com/gavincangan/b88a978e878e9bb1c0f8804e3af8de3c">https://gist.github.com/gavincangan/b88a978e878e9bb1c0f8804e3af8de3c</a></p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Bernstein">
+<span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">Bernstein</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#Bernstein"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.Bernstein" title="Permalink to this definition">#</a></dt>
+<dd><p>Bernstein polynomial.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Bezier">
+<span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">Bezier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#Bezier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.Bezier" title="Permalink to this definition">#</a></dt>
+<dd><p>Build Bézier curve from points.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.plot.utils.BezierBuilder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">BezierBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">control_polygon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax_main</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax_bernstein</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#BezierBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.BezierBuilder" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Bézier curve interactive builder.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.BezierBuilder.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">control_polygon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax_main</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax_bernstein</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#BezierBuilder.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.BezierBuilder.__init__" title="Permalink to this definition">#</a></dt>
+<dd><p>Constructor.
+Receives the initial control polygon of the curve.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.BezierBuilder._build_bezier">
+<span class="sig-name descname"><span class="pre">_build_bezier</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#BezierBuilder._build_bezier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.BezierBuilder._build_bezier" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.BezierBuilder._update_bernstein">
+<span class="sig-name descname"><span class="pre">_update_bernstein</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#BezierBuilder._update_bernstein"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.BezierBuilder._update_bernstein" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.BezierBuilder._update_bezier">
+<span class="sig-name descname"><span class="pre">_update_bezier</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#BezierBuilder._update_bezier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.BezierBuilder._update_bezier" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.BezierBuilder.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#BezierBuilder.disconnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.BezierBuilder.disconnect" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.plot.utils.BezierBuilder.ind">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ind</span></span><a class="headerlink" href="#encodermap.plot.utils.BezierBuilder.ind" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.plot.utils.DummyTool">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">DummyTool</span></span><a class="reference internal" href="_modules/encodermap/plot/utils.html#DummyTool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.DummyTool" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.DummyTool.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#DummyTool.disconnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.DummyTool.disconnect" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Menu">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">Menu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['Reset',</span> <span class="pre">'Write',</span> <span class="pre">'Set</span> <span class="pre">Points']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#Menu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.Menu" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Menu.add_items">
+<span class="sig-name descname"><span class="pre">add_items</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#Menu.add_items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.Menu.add_items" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Menu.get_coords">
+<span class="sig-name descname"><span class="pre">get_coords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">no_items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap_space</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#Menu.get_coords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.Menu.get_coords" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Menu.on_move">
+<span class="sig-name descname"><span class="pre">on_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#Menu.on_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.Menu.on_move" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.plot.utils.MenuItem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">MenuItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labelstr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hoverprops</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_select</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standalone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#MenuItem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.MenuItem" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Rectangle</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Artist</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.MenuItem.check_select">
+<span class="sig-name descname"><span class="pre">check_select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#MenuItem.check_select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.MenuItem.check_select" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.MenuItem.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">renderer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#MenuItem.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.MenuItem.draw" title="Permalink to this definition">#</a></dt>
+<dd><p>Overwriting Base Class method to include labelstr</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.MenuItem.set">
+<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agg_filter=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">animated=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">antialiased=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capstyle=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_box=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_on=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_path=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edgecolor=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facecolor=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gid=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hatch=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hover=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hover_props=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_layout=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joinstyle=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linestyle=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mouseover=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_effects=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">picker=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rasterized=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sketch_params=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snap=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visible=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xy=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zorder=&lt;UNSET&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.utils.MenuItem.set" title="Permalink to this definition">#</a></dt>
+<dd><p>Set multiple properties at once.</p>
+<p>Supported properties are</p>
+<dl class="simple">
+<dt>Properties:</dt><dd><p>agg_filter: a filter function, which takes a (m, n, 3) float array and a dpi value, and returns a (m, n, 3) array and two offsets from the bottom left corner of the image
+alpha: scalar or None
+angle: unknown
+animated: bool
+antialiased or aa: bool or None
+axes: unknown
+bounds: (left, bottom, width, height)
+capstyle: <cite>.CapStyle</cite> or {‘butt’, ‘projecting’, ‘round’}
+clip_box: <cite>.Bbox</cite>
+clip_on: bool
+clip_path: Patch or (Path, Transform) or None
+color: color
+data: unknown
+edgecolor or ec: color or None
+facecolor or fc: color or None
+figure: unknown
+fill: bool
+gid: str
+hatch: {‘/’, ‘\’, ‘|’, ‘-’, ‘+’, ‘x’, ‘o’, ‘O’, ‘.’, ‘*’}
+height: unknown
+hover: unknown
+hover_props: unknown
+in_layout: bool
+joinstyle: <cite>.JoinStyle</cite> or {‘miter’, ‘round’, ‘bevel’}
+label: object
+linestyle or ls: {‘-’, ‘–’, ‘-.’, ‘:’, ‘’, (offset, on-off-seq), …}
+linewidth or lw: float or None
+mouseover: bool
+path_effects: <cite>.AbstractPathEffect</cite>
+picker: None or bool or float or callable
+rasterized: bool
+sketch_params: (scale: float, length: float, randomness: float)
+snap: bool or None
+transform: unknown
+url: str
+visible: bool
+width: unknown
+x: unknown
+xy: (float, float)
+y: unknown
+zorder: float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.MenuItem.set_axes">
+<span class="sig-name descname"><span class="pre">set_axes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#MenuItem.set_axes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.MenuItem.set_axes" title="Permalink to this definition">#</a></dt>
+<dd><p>Overwriting Base Class method to include labelstr</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.MenuItem.set_data">
+<span class="sig-name descname"><span class="pre">set_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#MenuItem.set_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.MenuItem.set_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Overwriting Base Class method to include labelstr</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.MenuItem.set_figure">
+<span class="sig-name descname"><span class="pre">set_figure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figure</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#MenuItem.set_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.MenuItem.set_figure" title="Permalink to this definition">#</a></dt>
+<dd><p>Overwriting Base Class method to include labelstr</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.MenuItem.set_hover">
+<span class="sig-name descname"><span class="pre">set_hover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#MenuItem.set_hover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.MenuItem.set_hover" title="Permalink to this definition">#</a></dt>
+<dd><p>Check the hover status of MenuItem</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.MenuItem.set_hover_props">
+<span class="sig-name descname"><span class="pre">set_hover_props</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">check</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#MenuItem.set_hover_props"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.MenuItem.set_hover_props" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.MenuItem.set_transform">
+<span class="sig-name descname"><span class="pre">set_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transform</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#MenuItem.set_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.MenuItem.set_transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Overwriting Base Class method to include labelstr</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.plot.utils.ModeButton">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">ModeButton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#ModeButton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.ModeButton" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#encodermap.plot.utils.MenuItem" title="encodermap.plot.utils.MenuItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">MenuItem</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.ModeButton._on_select_rotation">
+<span class="sig-name descname"><span class="pre">_on_select_rotation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#ModeButton._on_select_rotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.ModeButton._on_select_rotation" title="Permalink to this definition">#</a></dt>
+<dd><p>Old function to rotate labelstrings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.ModeButton.check_select">
+<span class="sig-name descname"><span class="pre">check_select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#ModeButton.check_select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.ModeButton.check_select" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.ModeButton.set">
+<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agg_filter=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">animated=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">antialiased=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capstyle=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_box=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_on=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_path=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edgecolor=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facecolor=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gid=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hatch=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hover=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hover_props=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_layout=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joinstyle=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linestyle=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mouseover=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_effects=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">picker=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rasterized=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sketch_params=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snap=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visible=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xy=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y=&lt;UNSET&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zorder=&lt;UNSET&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#encodermap.plot.utils.ModeButton.set" title="Permalink to this definition">#</a></dt>
+<dd><p>Set multiple properties at once.</p>
+<p>Supported properties are</p>
+<dl class="simple">
+<dt>Properties:</dt><dd><p>agg_filter: a filter function, which takes a (m, n, 3) float array and a dpi value, and returns a (m, n, 3) array and two offsets from the bottom left corner of the image
+alpha: scalar or None
+angle: unknown
+animated: bool
+antialiased or aa: bool or None
+axes: unknown
+bounds: (left, bottom, width, height)
+capstyle: <cite>.CapStyle</cite> or {‘butt’, ‘projecting’, ‘round’}
+clip_box: <cite>.Bbox</cite>
+clip_on: bool
+clip_path: Patch or (Path, Transform) or None
+color: color
+data: unknown
+edgecolor or ec: color or None
+facecolor or fc: color or None
+figure: unknown
+fill: bool
+gid: str
+hatch: {‘/’, ‘\’, ‘|’, ‘-’, ‘+’, ‘x’, ‘o’, ‘O’, ‘.’, ‘*’}
+height: unknown
+hover: unknown
+hover_props: unknown
+in_layout: bool
+joinstyle: <cite>.JoinStyle</cite> or {‘miter’, ‘round’, ‘bevel’}
+label: object
+linestyle or ls: {‘-’, ‘–’, ‘-.’, ‘:’, ‘’, (offset, on-off-seq), …}
+linewidth or lw: float or None
+mouseover: bool
+path_effects: <cite>.AbstractPathEffect</cite>
+picker: None or bool or float or callable
+rasterized: bool
+sketch_params: (scale: float, length: float, randomness: float)
+snap: bool or None
+transform: unknown
+url: str
+visible: bool
+width: unknown
+x: unknown
+xy: (float, float)
+y: unknown
+zorder: float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.ModeButton.set_hover">
+<span class="sig-name descname"><span class="pre">set_hover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#ModeButton.set_hover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.ModeButton.set_hover" title="Permalink to this definition">#</a></dt>
+<dd><p>Check the hover status of MenuItem</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Props">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">Props</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#Props"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.Props" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to contain the properties of MenuItems.</p>
+<p>Each MenuItem contains two copies of this class.
+One for props when the mouse cursor hovers over them.
+One for the rest of times.
+Can be used used as class or as dict.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Props.labelcolor">
+<span class="sig-name descname"><span class="pre">labelcolor</span></span><a class="headerlink" href="#encodermap.plot.utils.Props.labelcolor" title="Permalink to this definition">#</a></dt>
+<dd><p>The color of the text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Props.labelcolor_rgb">
+<span class="sig-name descname"><span class="pre">labelcolor_rgb</span></span><a class="headerlink" href="#encodermap.plot.utils.Props.labelcolor_rgb" title="Permalink to this definition">#</a></dt>
+<dd><p>The RGBA value of labelcolor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Props.bgcolor">
+<span class="sig-name descname"><span class="pre">bgcolor</span></span><a class="headerlink" href="#encodermap.plot.utils.Props.bgcolor" title="Permalink to this definition">#</a></dt>
+<dd><p>The color of the background.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Props.bgcolor_rgb">
+<span class="sig-name descname"><span class="pre">bgcolor_rgb</span></span><a class="headerlink" href="#encodermap.plot.utils.Props.bgcolor_rgb" title="Permalink to this definition">#</a></dt>
+<dd><p>The RGBA value of bgcolor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Props.fontsize">
+<span class="sig-name descname"><span class="pre">fontsize</span></span><a class="headerlink" href="#encodermap.plot.utils.Props.fontsize" title="Permalink to this definition">#</a></dt>
+<dd><p>The fontsize.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Props.alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><a class="headerlink" href="#encodermap.plot.utils.Props.alpha" title="Permalink to this definition">#</a></dt>
+<dd><p>The alpha value of the background.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Props.defaults">
+<span class="sig-name descname"><span class="pre">defaults</span></span><a class="headerlink" href="#encodermap.plot.utils.Props.defaults" title="Permalink to this definition">#</a></dt>
+<dd><p>Class Variable of default values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">props</span> <span class="o">=</span> <span class="n">Props</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">props</span><span class="o">.</span><span class="n">labelcolor</span>
+<span class="go">black</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Props.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#Props.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.Props.__init__" title="Permalink to this definition">#</a></dt>
+<dd><p>Instantiate the Props class.</p>
+<p>Takes a dict as input and overwrites the class defaults. The dict is directly
+stored as an attribute and can be accessed via dot-notation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Dict containing values. If unknonwn values are passed they will be dropped.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Props._setattr">
+<span class="sig-name descname"><span class="pre">_setattr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#Props._setattr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.Props._setattr" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.Props._string_summary">
+<span class="sig-name descname"><span class="pre">_string_summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#Props._string_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.Props._string_summary" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id2">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bgcolor_rgb</span></span><a class="headerlink" href="#id2" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">defaults</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'alpha':</span> <span class="pre">0.2,</span> <span class="pre">'bgcolor':</span> <span class="pre">'blue',</span> <span class="pre">'fontsize':</span> <span class="pre">15,</span> <span class="pre">'labelcolor':</span> <span class="pre">'black'}</span></em><a class="headerlink" href="#id3" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id4">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">labelcolor_rgb</span></span><a class="headerlink" href="#id4" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.plot.utils.SelectFromCollection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">SelectFromCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_other=0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selector=&lt;class</span> <span class="pre">'matplotlib.widgets.LassoSelector'&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#SelectFromCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.SelectFromCollection" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Select indices from a matplotlib collection using <cite>LassoSelector</cite>.</p>
+<p>Selected indices are saved in the <cite>ind</cite> attribute. This tool fades out the
+points that are not part of the selection (i.e., reduces their alpha
+values). If your collection has alpha &lt; 1, this tool will permanently
+alter the alpha values.</p>
+<p>Note that this tool selects collection objects based on their <em>origins</em>
+(i.e., <cite>offsets</cite>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax</strong> (<em>matplotlib.axes.Axes</em>) – Axes to interact with.</p></li>
+<li><p><strong>collection</strong> (<em>matplotlib.collections.Collection</em>) – Subclass of collection
+you want to select from.</p></li>
+<li><p><strong>alpha_other</strong> (<em>float</em>) – To highlight a selection, this tool sets all
+selected points to an alpha value of 1 and non-selected points to
+<cite>alpha_other</cite>. Needs to fulfill 0 &lt;= alpha_other &lt;= 1</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.SelectFromCollection._string_summary">
+<span class="sig-name descname"><span class="pre">_string_summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#SelectFromCollection._string_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.SelectFromCollection._string_summary" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.SelectFromCollection.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#SelectFromCollection.disconnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.SelectFromCollection.disconnect" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.SelectFromCollection.onselect">
+<span class="sig-name descname"><span class="pre">onselect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verts</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#SelectFromCollection.onselect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.SelectFromCollection.onselect" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.plot.utils.StatusMenu">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">StatusMenu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#StatusMenu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.StatusMenu" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#encodermap.plot.utils.Menu" title="encodermap.plot.utils.Menu"><code class="xref py py-class docutils literal notranslate"><span class="pre">Menu</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.StatusMenu.add_items">
+<span class="sig-name descname"><span class="pre">add_items</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#StatusMenu.add_items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.StatusMenu.add_items" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.StatusMenu.on_click">
+<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#StatusMenu.on_click"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.StatusMenu.on_click" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.plot.utils.StatusMenu.set_idle">
+<span class="sig-name descname"><span class="pre">set_idle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#StatusMenu.set_idle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.StatusMenu.set_idle" title="Permalink to this definition">#</a></dt>
+<dd><p>Sets the idle status. Called at __init__ and
+when nothing is pressed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.plot.utils._check_all_templates_defined">
+<span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">_check_all_templates_defined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#_check_all_templates_defined"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils._check_all_templates_defined" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.plot.utils._create_readme">
+<span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">_create_readme</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">main_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">now</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#_create_readme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils._create_readme" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.plot.utils._get_system_info">
+<span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">_get_system_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#_get_system_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils._get_system_info" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.plot.utils._match_tops_and_trajs">
+<span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">_match_tops_and_trajs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_topfiles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_of_frames</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#_match_tops_and_trajs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils._match_tops_and_trajs" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.plot.utils._unpack_cluster_info">
+<span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">_unpack_cluster_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">main_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dummy_traj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">align_string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#_unpack_cluster_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils._unpack_cluster_info" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.plot.utils._unpack_path_info">
+<span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">_unpack_path_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#_unpack_path_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils._unpack_path_info" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.plot.utils.abc_to_rgb">
+<span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">abc_to_rgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#abc_to_rgb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.abc_to_rgb" title="Permalink to this definition">#</a></dt>
+<dd><p>Map values A, B, C (all in domain [0,1]) to
+suitable red, green, blue values.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.plot.utils.calculate_dssps">
+<span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">calculate_dssps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simplified</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#calculate_dssps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.calculate_dssps" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates dssp from TrajEnsemble.</p>
+<p>Calculates dssps from ep.TrajEnsemble and returns a numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajs</strong> (<em>ep.TrajEnsemble</em>) – The TrajEnsemble class to calculate the dssps from.</p></li>
+<li><p><strong>simplified</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to return [H ,E, C] dssp values (True),
+or [H, B, E, G, I, T, S, ‘’] dssp values (False). Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The dssp array of shape (trajs.n_frames, trajs.n_residues);</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id5">
+<p class="admonition-title">Todo</p>
+<p>Make it work with different protein legths.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.plot.utils.correct_missing_uniques">
+<span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">correct_missing_uniques</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uniques</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sorted_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#correct_missing_uniques"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.correct_missing_uniques" title="Permalink to this definition">#</a></dt>
+<dd><p>Takes a list of DSSP letters and counts and adds zeros for all missing letters in <a href="#id6"><span class="problematic" id="id7">sorted_</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uniques</strong> (<em>list</em><em> of </em><em>np.ndarray</em>) – A list of np.ndarrays. For every frame the DSSP letters
+and their respective counts should be provided. So for example
+[‘H’, 151] or [‘H’, ‘E’, 75, 76].</p></li>
+<li><p><strong>sorted</strong> (<em>np.ndarray</em>) – The sorted list of DSSP letters. This list will be used to update every
+frame. So The using [‘H’, ‘E’, ‘C’], the two examples from above will become [‘H’, ‘E’, ‘C’, 151, 0, 0]
+or [‘H’, ‘E’, ‘C’, 75, 76, 0], respectively.</p></li>
+<li><p><strong>progbar</strong> (<em>tqdm</em>) – A tqdm progbar. Defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corrected uniques.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.plot.utils.digitize_dssp">
+<span class="sig-prename descclassname"><span class="pre">encodermap.plot.utils.</span></span><span class="sig-name descname"><span class="pre">digitize_dssp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dssp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imshow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/plot/utils.html#digitize_dssp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.utils.digitize_dssp" title="Permalink to this definition">#</a></dt>
+<dd><p>Digitizes the DSSP array</p>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.plot">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-encodermap.plot" title="Permalink to this heading">#</a></h2>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submodules">
+   Submodules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.plot.interactive_plotting">
+   encodermap.plot.interactive_plotting module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       InteractivePlotting
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.trajs">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.trajs
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.fig">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.fig
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.ax">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.ax
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.menu_ax">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.menu_ax
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.status_menu_ax">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.status_menu_ax
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.pts">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.pts
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.statusmenu">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.statusmenu
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.menu">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.menu
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.tool">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.tool
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.mode">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.mode
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.__init__">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.__init__()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.accept">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.accept()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.bezier">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.bezier()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.cluster_zoomed">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.cluster_zoomed
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.ellipse">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.ellipse()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.lasso">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.lasso()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id0">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.mode
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.on_click">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.on_click()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.on_click_menu">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.on_click_menu()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.on_click_tool">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.on_click_tool()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.on_enter_ax">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.on_enter_ax()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.on_leave_ax">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.on_leave_ax()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.path">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.path()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.polygon">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.polygon()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.rectangle">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.rectangle()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.render_move">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.render_move()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.reset">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.reset()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.set_points">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.set_points()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.interactive_plotting.InteractivePlotting.write">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         InteractivePlotting.write()
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.plot.jinja_template">
+   encodermap.plot.jinja_template module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.plot.plotting">
+   encodermap.plot.plotting module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.plotting._zoomingBoxManual">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _zoomingBoxManual()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.plotting.distance_histogram">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       distance_histogram()
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.plot.utils">
+   encodermap.plot.utils module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils.Bernstein">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Bernstein()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils.Bezier">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Bezier()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils.BezierBuilder">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       BezierBuilder
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.BezierBuilder.__init__">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         BezierBuilder.__init__()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.BezierBuilder._build_bezier">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         BezierBuilder._build_bezier()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.BezierBuilder._update_bernstein">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         BezierBuilder._update_bernstein()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.BezierBuilder._update_bezier">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         BezierBuilder._update_bezier()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.BezierBuilder.disconnect">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         BezierBuilder.disconnect()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.BezierBuilder.ind">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         BezierBuilder.ind
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils.DummyTool">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       DummyTool
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.DummyTool.disconnect">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         DummyTool.disconnect()
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils.Menu">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Menu
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.Menu.add_items">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Menu.add_items()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.Menu.get_coords">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Menu.get_coords()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.Menu.on_move">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Menu.on_move()
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils.MenuItem">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       MenuItem
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.MenuItem.check_select">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         MenuItem.check_select()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.MenuItem.draw">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         MenuItem.draw()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.MenuItem.set">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         MenuItem.set()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.MenuItem.set_axes">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         MenuItem.set_axes()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.MenuItem.set_data">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         MenuItem.set_data()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.MenuItem.set_figure">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         MenuItem.set_figure()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.MenuItem.set_hover">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         MenuItem.set_hover()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.MenuItem.set_hover_props">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         MenuItem.set_hover_props()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.MenuItem.set_transform">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         MenuItem.set_transform()
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils.ModeButton">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       ModeButton
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.ModeButton._on_select_rotation">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         ModeButton._on_select_rotation()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.ModeButton.check_select">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         ModeButton.check_select()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.ModeButton.set">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         ModeButton.set()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.ModeButton.set_hover">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         ModeButton.set_hover()
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils.Props">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Props
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.Props.labelcolor">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Props.labelcolor
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.Props.labelcolor_rgb">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Props.labelcolor_rgb
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.Props.bgcolor">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Props.bgcolor
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.Props.bgcolor_rgb">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Props.bgcolor_rgb
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.Props.fontsize">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Props.fontsize
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.Props.alpha">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Props.alpha
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.Props.defaults">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Props.defaults
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.Props.__init__">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Props.__init__()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.Props._setattr">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Props._setattr()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.Props._string_summary">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Props._string_summary()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Props.bgcolor_rgb
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Props.defaults
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Props.labelcolor_rgb
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils.SelectFromCollection">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       SelectFromCollection
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.SelectFromCollection._string_summary">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SelectFromCollection._string_summary()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.SelectFromCollection.disconnect">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SelectFromCollection.disconnect()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.SelectFromCollection.onselect">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SelectFromCollection.onselect()
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils.StatusMenu">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       StatusMenu
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.StatusMenu.add_items">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         StatusMenu.add_items()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.StatusMenu.on_click">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         StatusMenu.on_click()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.plot.utils.StatusMenu.set_idle">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         StatusMenu.set_idle()
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils._check_all_templates_defined">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _check_all_templates_defined()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils._create_readme">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _create_readme()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils._get_system_info">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _get_system_info()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils._match_tops_and_trajs">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _match_tops_and_trajs()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils._unpack_cluster_info">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _unpack_cluster_info()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils._unpack_path_info">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _unpack_path_info()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils.abc_to_rgb">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       abc_to_rgb()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils.calculate_dssps">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       calculate_dssps()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils.correct_missing_uniques">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       correct_missing_uniques()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.plot.utils.digitize_dssp">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       digitize_dssp()
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.plot">
+   Module contents
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="_sources/encodermap.plot.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023, Kevin Sawade, Tobias Lemke.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

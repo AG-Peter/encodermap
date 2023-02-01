@@ -1,0 +1,2446 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>encodermap.loading package &#8212; encodermap 3.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'encodermap.loading';</script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="_static/logo_cube_300.png" class="logo__image only-light" alt="Logo image">
+    <img src="_static/logo_cube_300.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="encodermap.autoencoder.html">encodermap.autoencoder package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.callbacks.html">encodermap.callbacks package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.data.html">encodermap.data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.encodermap_tf1.html">encodermap.encodermap_tf1 package</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">encodermap.loading package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.loss_functions.html">encodermap.loss_functions package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.misc.html">encodermap.misc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.models.html">encodermap.models package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.moldata.html">encodermap.moldata package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.parameters.html">encodermap.parameters package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.plot.html">encodermap.plot package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.trajinfo.html">encodermap.trajinfo package</a></li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <section id="encodermap-loading-package">
+<h1>encodermap.loading package<a class="headerlink" href="#encodermap-loading-package" title="Permalink to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="encodermap-loading-dask-featurizer-module">
+<h2>encodermap.loading.dask_featurizer module<a class="headerlink" href="#encodermap-loading-dask-featurizer-module" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="encodermap-loading-delayed-module">
+<h2>encodermap.loading.delayed module<a class="headerlink" href="#encodermap-loading-delayed-module" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="module-encodermap.loading.features">
+<span id="encodermap-loading-features-module"></span><h2>encodermap.loading.features module<a class="headerlink" href="#module-encodermap.loading.features" title="Permalink to this heading">#</a></h2>
+<p>Classes to be used as custom features with pyemma add_custom_feature</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>Write tests</p></li>
+<li><p>Put the describe_last_feats function into utils.</p></li>
+<li><p>Add Nan feature.</p></li>
+<li><p>Write Examples.</p></li>
+</ul>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllBondDistances">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.loading.features.</span></span><span class="sig-name descname"><span class="pre">AllBondDistances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#AllBondDistances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.AllBondDistances" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">DistanceFeature</span></code></p>
+<p>Feature that collects all bonds in a topology.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllBondDistances.top">
+<span class="sig-name descname"><span class="pre">top</span></span><a class="headerlink" href="#encodermap.loading.features.AllBondDistances.top" title="Permalink to this definition">#</a></dt>
+<dd><p>Topology of this feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mdtraj.Topology</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllBondDistances.indexes">
+<span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#encodermap.loading.features.AllBondDistances.indexes" title="Permalink to this definition">#</a></dt>
+<dd><p>The numpy array returned from <cite>top.select(‘all’)</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllBondDistances.prefix_label">
+<span class="sig-name descname"><span class="pre">prefix_label</span></span><a class="headerlink" href="#encodermap.loading.features.AllBondDistances.prefix_label" title="Permalink to this definition">#</a></dt>
+<dd><p>A prefix for the labels. In this case it is ‘DISTANCE’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllBondDistances.__serialize_fields">
+<span class="sig-name descname"><span class="pre">__serialize_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('distance_indexes',</span> <span class="pre">'periodic')</span></em><a class="headerlink" href="#encodermap.loading.features.AllBondDistances.__serialize_fields" title="Permalink to this definition">#</a></dt>
+<dd><p>attribute names to serialize</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllBondDistances.__serialize_version">
+<span class="sig-name descname"><span class="pre">__serialize_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#encodermap.loading.features.AllBondDistances.__serialize_version" title="Permalink to this definition">#</a></dt>
+<dd><p>version of class definition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllBondDistances.describe">
+<span class="sig-name descname"><span class="pre">describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#AllBondDistances.describe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.AllBondDistances.describe" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a list of labels, that can be used to unambiguously define
+atoms in the protein topology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of labels. This list has as many entries as atoms in <cite>self.top</cite>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllBondDistances.generic_describe">
+<span class="sig-name descname"><span class="pre">generic_describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#AllBondDistances.generic_describe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.AllBondDistances.generic_describe" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#id0" title="Permalink to this definition">#</a></dt>
+<dd><p>A (n_angles, 2) shaped numpy array giving the atom indices
+of the distances to be calculated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllBondDistances.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#encodermap.loading.features.AllBondDistances.name" title="Permalink to this definition">#</a></dt>
+<dd><p>The name of the class: “AllBondDistances”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">prefix_label</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DISTANCE</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">'</span></em><a class="headerlink" href="#id2" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllCartesians">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.loading.features.</span></span><span class="sig-name descname"><span class="pre">AllCartesians</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#AllCartesians"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.AllCartesians" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">SelectionFeature</span></code></p>
+<p>Feature that collects all cartesian position of all atoms in the trajectory.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllCartesians.top">
+<span class="sig-name descname"><span class="pre">top</span></span><a class="headerlink" href="#encodermap.loading.features.AllCartesians.top" title="Permalink to this definition">#</a></dt>
+<dd><p>Topology of this feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mdtraj.Topology</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllCartesians.indexes">
+<span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#encodermap.loading.features.AllCartesians.indexes" title="Permalink to this definition">#</a></dt>
+<dd><p>The numpy array returned from <cite>top.select(‘all’)</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllCartesians.prefix_label">
+<span class="sig-name descname"><span class="pre">prefix_label</span></span><a class="headerlink" href="#encodermap.loading.features.AllCartesians.prefix_label" title="Permalink to this definition">#</a></dt>
+<dd><p>A prefix for the labels. In this case it is ‘POSITION’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllCartesians.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">top</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#AllCartesians.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.AllCartesians.__init__" title="Permalink to this definition">#</a></dt>
+<dd><p>Instantiate the AllCartesians class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>top</strong> (<em>mdtraj.Topology</em>) – A mdtraj topology.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllCartesians.__serialize_fields">
+<span class="sig-name descname"><span class="pre">__serialize_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('indexes',)</span></em><a class="headerlink" href="#encodermap.loading.features.AllCartesians.__serialize_fields" title="Permalink to this definition">#</a></dt>
+<dd><p>attribute names to serialize</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllCartesians.__serialize_version">
+<span class="sig-name descname"><span class="pre">__serialize_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#encodermap.loading.features.AllCartesians.__serialize_version" title="Permalink to this definition">#</a></dt>
+<dd><p>version of class definition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllCartesians.describe">
+<span class="sig-name descname"><span class="pre">describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#AllCartesians.describe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.AllCartesians.describe" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a list of labels, that can be used to unambiguously define
+atoms in the protein topology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of labels. This list has as many entries as atoms in <cite>self.top</cite>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.loading.features.AllCartesians.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#encodermap.loading.features.AllCartesians.name" title="Permalink to this definition">#</a></dt>
+<dd><p>The name of this class: ‘AllCartesians’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">prefix_label</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'POSITION</span> <span class="pre">'</span></em><a class="headerlink" href="#id3" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralAngles">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.loading.features.</span></span><span class="sig-name descname"><span class="pre">CentralAngles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#CentralAngles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.CentralAngles" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AngleFeature</span></code></p>
+<p>Feature that collects all angles in the backbone of a topology.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralAngles.top">
+<span class="sig-name descname"><span class="pre">top</span></span><a class="headerlink" href="#encodermap.loading.features.CentralAngles.top" title="Permalink to this definition">#</a></dt>
+<dd><p>Topology of this feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mdtraj.Topology</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralAngles.indexes">
+<span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#encodermap.loading.features.CentralAngles.indexes" title="Permalink to this definition">#</a></dt>
+<dd><p>The numpy array returned from <cite>top.select(‘all’)</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralAngles.prefix_label">
+<span class="sig-name descname"><span class="pre">prefix_label</span></span><a class="headerlink" href="#encodermap.loading.features.CentralAngles.prefix_label" title="Permalink to this definition">#</a></dt>
+<dd><p>A prefix for the labels. In this case it is ‘CENTERANGLE’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralAngles.__serialize_fields">
+<span class="sig-name descname"><span class="pre">__serialize_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('angle_indexes',</span> <span class="pre">'deg',</span> <span class="pre">'cossin',</span> <span class="pre">'periodic')</span></em><a class="headerlink" href="#encodermap.loading.features.CentralAngles.__serialize_fields" title="Permalink to this definition">#</a></dt>
+<dd><p>attribute names to serialize</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralAngles.__serialize_version">
+<span class="sig-name descname"><span class="pre">__serialize_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#encodermap.loading.features.CentralAngles.__serialize_version" title="Permalink to this definition">#</a></dt>
+<dd><p>version of class definition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralAngles.describe">
+<span class="sig-name descname"><span class="pre">describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#CentralAngles.describe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.CentralAngles.describe" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a list of labels, that can be used to unambiguously define
+atoms in the protein topology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of labels. This list has as many entries as atoms in <cite>self.top</cite>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralAngles.generic_describe">
+<span class="sig-name descname"><span class="pre">generic_describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#CentralAngles.generic_describe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.CentralAngles.generic_describe" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id4">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#id4" title="Permalink to this definition">#</a></dt>
+<dd><p>A (n_angles, 3) shaped numpy array giving the atom indices
+of the angles to be calculated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralAngles.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#encodermap.loading.features.CentralAngles.name" title="Permalink to this definition">#</a></dt>
+<dd><p>The name of the class: “CentralAngles”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">prefix_label</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CENTERANGLE</span> <span class="pre">'</span></em><a class="headerlink" href="#id5" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralBondDistances">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.loading.features.</span></span><span class="sig-name descname"><span class="pre">CentralBondDistances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#CentralBondDistances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.CentralBondDistances" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="reference/featurization.html#encodermap.loading.features.AllBondDistances" title="encodermap.loading.features.AllBondDistances"><code class="xref py py-class docutils literal notranslate"><span class="pre">AllBondDistances</span></code></a></p>
+<p>Feature that collects all bonds in the backbone of a topology.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralBondDistances.top">
+<span class="sig-name descname"><span class="pre">top</span></span><a class="headerlink" href="#encodermap.loading.features.CentralBondDistances.top" title="Permalink to this definition">#</a></dt>
+<dd><p>Topology of this feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mdtraj.Topology</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralBondDistances.indexes">
+<span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#encodermap.loading.features.CentralBondDistances.indexes" title="Permalink to this definition">#</a></dt>
+<dd><p>The numpy array returned from <cite>top.select(‘all’)</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralBondDistances.prefix_label">
+<span class="sig-name descname"><span class="pre">prefix_label</span></span><a class="headerlink" href="#encodermap.loading.features.CentralBondDistances.prefix_label" title="Permalink to this definition">#</a></dt>
+<dd><p>A prefix for the labels. In this case it is ‘CENTERDISTANCE’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralBondDistances.__serialize_fields">
+<span class="sig-name descname"><span class="pre">__serialize_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('distance_indexes',</span> <span class="pre">'periodic')</span></em><a class="headerlink" href="#encodermap.loading.features.CentralBondDistances.__serialize_fields" title="Permalink to this definition">#</a></dt>
+<dd><p>attribute names to serialize</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralBondDistances.__serialize_version">
+<span class="sig-name descname"><span class="pre">__serialize_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#encodermap.loading.features.CentralBondDistances.__serialize_version" title="Permalink to this definition">#</a></dt>
+<dd><p>version of class definition</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id6">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#id6" title="Permalink to this definition">#</a></dt>
+<dd><p>A (n_angles, 2) shaped numpy array giving the atom indices
+of the distances to be calculated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralBondDistances.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#encodermap.loading.features.CentralBondDistances.name" title="Permalink to this definition">#</a></dt>
+<dd><p>The name of the class: “CentralBondDistances”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">prefix_label</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CENTERDISTANCE</span>&#160; <span class="pre">'</span></em><a class="headerlink" href="#id7" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralCartesians">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.loading.features.</span></span><span class="sig-name descname"><span class="pre">CentralCartesians</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#CentralCartesians"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.CentralCartesians" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="reference/featurization.html#encodermap.loading.features.AllCartesians" title="encodermap.loading.features.AllCartesians"><code class="xref py py-class docutils literal notranslate"><span class="pre">AllCartesians</span></code></a></p>
+<p>Feature that collects all cartesian position of the backbone atoms.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralCartesians.top">
+<span class="sig-name descname"><span class="pre">top</span></span><a class="headerlink" href="#encodermap.loading.features.CentralCartesians.top" title="Permalink to this definition">#</a></dt>
+<dd><p>Topology of this feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mdtraj.Topology</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralCartesians.indexes">
+<span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#encodermap.loading.features.CentralCartesians.indexes" title="Permalink to this definition">#</a></dt>
+<dd><p>The numpy array returned from <cite>top.select(‘all’)</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralCartesians.prefix_label">
+<span class="sig-name descname"><span class="pre">prefix_label</span></span><a class="headerlink" href="#encodermap.loading.features.CentralCartesians.prefix_label" title="Permalink to this definition">#</a></dt>
+<dd><p>A prefix for the labels. In this case it is ‘CENTERPOS’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralCartesians.__serialize_fields">
+<span class="sig-name descname"><span class="pre">__serialize_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('indexes',)</span></em><a class="headerlink" href="#encodermap.loading.features.CentralCartesians.__serialize_fields" title="Permalink to this definition">#</a></dt>
+<dd><p>attribute names to serialize</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralCartesians.__serialize_version">
+<span class="sig-name descname"><span class="pre">__serialize_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#encodermap.loading.features.CentralCartesians.__serialize_version" title="Permalink to this definition">#</a></dt>
+<dd><p>version of class definition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralCartesians.describe">
+<span class="sig-name descname"><span class="pre">describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#CentralCartesians.describe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.CentralCartesians.describe" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a list of labels, that can be used to unambiguously define
+atoms in the protein topology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of labels. This list has as manyu entries as atoms in <cite>self.top</cite>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralCartesians.generic_describe">
+<span class="sig-name descname"><span class="pre">generic_describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#CentralCartesians.generic_describe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.CentralCartesians.generic_describe" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralCartesians.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#encodermap.loading.features.CentralCartesians.name" title="Permalink to this definition">#</a></dt>
+<dd><p>The name of the class: “CentralCartesians”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">prefix_label</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CENTERPOS'</span></em><a class="headerlink" href="#id8" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralDihedrals">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.loading.features.</span></span><span class="sig-name descname"><span class="pre">CentralDihedrals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#CentralDihedrals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.CentralDihedrals" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">DihedralFeature</span></code></p>
+<p>Feature that collects all dihedrals in the backbone of a topology.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralDihedrals.top">
+<span class="sig-name descname"><span class="pre">top</span></span><a class="headerlink" href="#encodermap.loading.features.CentralDihedrals.top" title="Permalink to this definition">#</a></dt>
+<dd><p>Topology of this feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mdtraj.Topology</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralDihedrals.indexes">
+<span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#encodermap.loading.features.CentralDihedrals.indexes" title="Permalink to this definition">#</a></dt>
+<dd><p>The numpy array returned from <cite>top.select(‘all’)</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralDihedrals.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selstr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cossin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omega</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generic_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#CentralDihedrals.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.CentralDihedrals.__init__" title="Permalink to this definition">#</a></dt>
+<dd><p>Instantiate this feature class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>topology</strong> (<em>mdtraj.Topology</em>) – A topology to build features from.</p></li>
+<li><p><strong>selstr</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – A string, that limits the selection of dihedral angles.
+Only dihedral angles which atoms are represented by the <cite>selstr</cite> argument
+are considered. This selection string follows MDTraj’s atom selection
+language: <a class="reference external" href="https://mdtraj.org/1.9.3/atom_selection.html">https://mdtraj.org/1.9.3/atom_selection.html</a>. Can also
+be None, in which case all backbone dihedrals (also omega) are
+considered. Defaults to None.</p></li>
+<li><p><strong>deg</strong> (<em>bool</em>) – Whether to return the result in degree (<cite>deg=True</cite>) or in
+radians (<cite>deg=False</cite>). Defaults to radions.</p></li>
+<li><p><strong>cossin</strong> (<em>bool</em>) – If True, each angle will be returned as a pair of
+(sin(x), cos(x)). This is useful, if you calculate the mean
+(e.g TICA/PCA, clustering) in that space. Defaults to False.</p></li>
+<li><p><strong>periodic</strong> (<em>bool</em>) – Whether to recognize periodic boundary conditions and
+work under the minimum image convention. Defaults to True.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralDihedrals.__serialize_fields">
+<span class="sig-name descname"><span class="pre">__serialize_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('selstr',</span> <span class="pre">'_phi_inds',</span> <span class="pre">'_psi_inds',</span> <span class="pre">'_omega_inds')</span></em><a class="headerlink" href="#encodermap.loading.features.CentralDihedrals.__serialize_fields" title="Permalink to this definition">#</a></dt>
+<dd><p>attribute names to serialize</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralDihedrals.__serialize_version">
+<span class="sig-name descname"><span class="pre">__serialize_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#encodermap.loading.features.CentralDihedrals.__serialize_version" title="Permalink to this definition">#</a></dt>
+<dd><p>version of class definition</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralDihedrals.dask_transform">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dask_transform</span></span><a class="headerlink" href="#encodermap.loading.features.CentralDihedrals.dask_transform" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralDihedrals.describe">
+<span class="sig-name descname"><span class="pre">describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#CentralDihedrals.describe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.CentralDihedrals.describe" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a list of labels, that can be used to unambiguously define
+atoms in the protein topology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of labels. This list has as many entries as atoms in <cite>self.top</cite>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralDihedrals.generic_describe">
+<span class="sig-name descname"><span class="pre">generic_describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#CentralDihedrals.generic_describe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.CentralDihedrals.generic_describe" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a list of generic labels, not containing residue names.
+These can be used to stack tops of different topology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of labels.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id9">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#id9" title="Permalink to this definition">#</a></dt>
+<dd><p>A (n_angles, 4) shaped numpy array giving the atom indices
+of the dihedral angles to be calculated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.loading.features.CentralDihedrals.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#encodermap.loading.features.CentralDihedrals.name" title="Permalink to this definition">#</a></dt>
+<dd><p>The name of the class: “CentralDihedrals”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainAngles">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.loading.features.</span></span><span class="sig-name descname"><span class="pre">SideChainAngles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#SideChainAngles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.SideChainAngles" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AngleFeature</span></code></p>
+<p>Feature that collects all angles not in the backbone of a topology.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainAngles.top">
+<span class="sig-name descname"><span class="pre">top</span></span><a class="headerlink" href="#encodermap.loading.features.SideChainAngles.top" title="Permalink to this definition">#</a></dt>
+<dd><p>Topology of this feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mdtraj.Topology</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainAngles.indexes">
+<span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#encodermap.loading.features.SideChainAngles.indexes" title="Permalink to this definition">#</a></dt>
+<dd><p>The numpy array returned from <cite>top.select(‘all’)</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainAngles.prefix_label">
+<span class="sig-name descname"><span class="pre">prefix_label</span></span><a class="headerlink" href="#encodermap.loading.features.SideChainAngles.prefix_label" title="Permalink to this definition">#</a></dt>
+<dd><p>A prefix for the labels. In this case it is ‘SIDECHANGLE’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainAngles.__serialize_fields">
+<span class="sig-name descname"><span class="pre">__serialize_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('angle_indexes',</span> <span class="pre">'deg',</span> <span class="pre">'cossin',</span> <span class="pre">'periodic')</span></em><a class="headerlink" href="#encodermap.loading.features.SideChainAngles.__serialize_fields" title="Permalink to this definition">#</a></dt>
+<dd><p>attribute names to serialize</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainAngles.__serialize_version">
+<span class="sig-name descname"><span class="pre">__serialize_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#encodermap.loading.features.SideChainAngles.__serialize_version" title="Permalink to this definition">#</a></dt>
+<dd><p>version of class definition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainAngles.describe">
+<span class="sig-name descname"><span class="pre">describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#SideChainAngles.describe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.SideChainAngles.describe" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a list of labels, that can be used to unambiguously define
+atoms in the protein topology.</p>
+<dl class="simple">
+<dt>Retruns:</dt><dd><p>list[str]: A list of labels. This list has as many entries as atoms in <cite>self.top</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id10">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#id10" title="Permalink to this definition">#</a></dt>
+<dd><p>A (n_angles, 3) shaped numpy array giving the atom indices
+of the angles to be calculated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainAngles.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#encodermap.loading.features.SideChainAngles.name" title="Permalink to this definition">#</a></dt>
+<dd><p>The name of the class: “SideChainAngles”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">prefix_label</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SIDECHANGLE</span> <span class="pre">'</span></em><a class="headerlink" href="#id11" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainBondDistances">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.loading.features.</span></span><span class="sig-name descname"><span class="pre">SideChainBondDistances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#SideChainBondDistances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.SideChainBondDistances" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="reference/featurization.html#encodermap.loading.features.AllBondDistances" title="encodermap.loading.features.AllBondDistances"><code class="xref py py-class docutils literal notranslate"><span class="pre">AllBondDistances</span></code></a></p>
+<p>Feature that collects all bonds not in the backbone of a topology.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainBondDistances.top">
+<span class="sig-name descname"><span class="pre">top</span></span><a class="headerlink" href="#encodermap.loading.features.SideChainBondDistances.top" title="Permalink to this definition">#</a></dt>
+<dd><p>Topology of this feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mdtraj.Topology</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainBondDistances.indexes">
+<span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#encodermap.loading.features.SideChainBondDistances.indexes" title="Permalink to this definition">#</a></dt>
+<dd><p>The numpy array returned from <cite>top.select(‘all’)</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainBondDistances.prefix_label">
+<span class="sig-name descname"><span class="pre">prefix_label</span></span><a class="headerlink" href="#encodermap.loading.features.SideChainBondDistances.prefix_label" title="Permalink to this definition">#</a></dt>
+<dd><p>A prefix for the labels. In this case it is ‘SIDECHDISTANCE’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainBondDistances.__serialize_fields">
+<span class="sig-name descname"><span class="pre">__serialize_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('distance_indexes',</span> <span class="pre">'periodic')</span></em><a class="headerlink" href="#encodermap.loading.features.SideChainBondDistances.__serialize_fields" title="Permalink to this definition">#</a></dt>
+<dd><p>attribute names to serialize</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainBondDistances.__serialize_version">
+<span class="sig-name descname"><span class="pre">__serialize_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#encodermap.loading.features.SideChainBondDistances.__serialize_version" title="Permalink to this definition">#</a></dt>
+<dd><p>version of class definition</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id12">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#id12" title="Permalink to this definition">#</a></dt>
+<dd><p>A (n_angles, 2) shaped numpy array giving the atom indices
+of the distances to be calculated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainBondDistances.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#encodermap.loading.features.SideChainBondDistances.name" title="Permalink to this definition">#</a></dt>
+<dd><p>The name of the class: “SideChainBondDistances”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">prefix_label</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SIDECHDISTANCE</span>&#160; <span class="pre">'</span></em><a class="headerlink" href="#id13" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainCartesians">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.loading.features.</span></span><span class="sig-name descname"><span class="pre">SideChainCartesians</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#SideChainCartesians"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.SideChainCartesians" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="reference/featurization.html#encodermap.loading.features.AllCartesians" title="encodermap.loading.features.AllCartesians"><code class="xref py py-class docutils literal notranslate"><span class="pre">AllCartesians</span></code></a></p>
+<p>Feature that collects all cartesian position of all non-backbone atoms.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainCartesians.top">
+<span class="sig-name descname"><span class="pre">top</span></span><a class="headerlink" href="#encodermap.loading.features.SideChainCartesians.top" title="Permalink to this definition">#</a></dt>
+<dd><p>Topology of this feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mdtraj.Topology</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainCartesians.indexes">
+<span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#encodermap.loading.features.SideChainCartesians.indexes" title="Permalink to this definition">#</a></dt>
+<dd><p>The numpy array returned from <cite>top.select(‘all’)</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainCartesians.prefix_label">
+<span class="sig-name descname"><span class="pre">prefix_label</span></span><a class="headerlink" href="#encodermap.loading.features.SideChainCartesians.prefix_label" title="Permalink to this definition">#</a></dt>
+<dd><p>A prefix for the labels. In this case it is ‘SIDECHPOS’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainCartesians.__serialize_fields">
+<span class="sig-name descname"><span class="pre">__serialize_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('indexes',)</span></em><a class="headerlink" href="#encodermap.loading.features.SideChainCartesians.__serialize_fields" title="Permalink to this definition">#</a></dt>
+<dd><p>attribute names to serialize</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainCartesians.__serialize_version">
+<span class="sig-name descname"><span class="pre">__serialize_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#encodermap.loading.features.SideChainCartesians.__serialize_version" title="Permalink to this definition">#</a></dt>
+<dd><p>version of class definition</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainCartesians.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#encodermap.loading.features.SideChainCartesians.name" title="Permalink to this definition">#</a></dt>
+<dd><p>The name of the class: “SideChainCartesians”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">prefix_label</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SIDECHPOS'</span></em><a class="headerlink" href="#id14" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainDihedrals">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.loading.features.</span></span><span class="sig-name descname"><span class="pre">SideChainDihedrals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#SideChainDihedrals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.SideChainDihedrals" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">DihedralFeature</span></code></p>
+<p>Feature that collects all dihedrals in the backbone of a topology.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainDihedrals.top">
+<span class="sig-name descname"><span class="pre">top</span></span><a class="headerlink" href="#encodermap.loading.features.SideChainDihedrals.top" title="Permalink to this definition">#</a></dt>
+<dd><p>Topology of this feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mdtraj.Topology</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainDihedrals.indexes">
+<span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#encodermap.loading.features.SideChainDihedrals.indexes" title="Permalink to this definition">#</a></dt>
+<dd><p>The numpy array returned from <cite>top.select(‘all’)</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainDihedrals.options">
+<span class="sig-name descname"><span class="pre">options</span></span><a class="headerlink" href="#encodermap.loading.features.SideChainDihedrals.options" title="Permalink to this definition">#</a></dt>
+<dd><p>A list of possible sidechain angles [‘chi1’ to ‘chi5’].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainDihedrals.__serialize_fields">
+<span class="sig-name descname"><span class="pre">__serialize_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('_prefix_label_lengths',)</span></em><a class="headerlink" href="#encodermap.loading.features.SideChainDihedrals.__serialize_fields" title="Permalink to this definition">#</a></dt>
+<dd><p>attribute names to serialize</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainDihedrals.__serialize_version">
+<span class="sig-name descname"><span class="pre">__serialize_version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#encodermap.loading.features.SideChainDihedrals.__serialize_version" title="Permalink to this definition">#</a></dt>
+<dd><p>version of class definition</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainDihedrals.describe">
+<span class="sig-name descname"><span class="pre">describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#SideChainDihedrals.describe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.SideChainDihedrals.describe" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a list of labels, that can be used to unambiguously define
+atoms in the protein topology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of labels. This list has as many entries as atoms in <cite>self.top</cite>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainDihedrals.generic_describe">
+<span class="sig-name descname"><span class="pre">generic_describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/features.html#SideChainDihedrals.generic_describe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.features.SideChainDihedrals.generic_describe" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id15">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indexes</span></span><a class="headerlink" href="#id15" title="Permalink to this definition">#</a></dt>
+<dd><p>A (n_angles, 4) shaped numpy array giving the atom indices
+of the dihedral angles to be calculated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.loading.features.SideChainDihedrals.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#encodermap.loading.features.SideChainDihedrals.name" title="Permalink to this definition">#</a></dt>
+<dd><p>The name of the class: “SideChainDihedrals”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id16">
+<span class="sig-name descname"><span class="pre">options</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['chi1',</span> <span class="pre">'chi2',</span> <span class="pre">'chi3',</span> <span class="pre">'chi4',</span> <span class="pre">'chi5']</span></em><a class="headerlink" href="#id16" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-encodermap.loading.featurizer">
+<span id="encodermap-loading-featurizer-module"></span><h2>encodermap.loading.featurizer module<a class="headerlink" href="#module-encodermap.loading.featurizer" title="Permalink to this heading">#</a></h2>
+<p>Classes to be used as custom features with pyemma add_custom_feature</p>
+<div class="admonition-todo admonition" id="id17">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>Write Docstrings.</p></li>
+<li><p>Write Examples.</p></li>
+<li><p>Sidechain angles, distances not working correctly.</p></li>
+</ul>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.loading.featurizer.Featurizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">encodermap.loading.featurizer.</span></span><span class="sig-name descname"><span class="pre">Featurizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/featurizer.html#Featurizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.featurizer.Featurizer" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.loading.featurizer._validate_uri">
+<span class="sig-prename descclassname"><span class="pre">encodermap.loading.featurizer.</span></span><span class="sig-name descname"><span class="pre">_validate_uri</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/misc/misc.html#_validate_uri"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.featurizer._validate_uri" title="Permalink to this definition">#</a></dt>
+<dd><p>Checks whether the <a href="#id19"><span class="problematic" id="id20">str_</span></a> is a valid uri.</p>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.loading.pipeline">
+<span id="encodermap-loading-pipeline-module"></span><h2>encodermap.loading.pipeline module<a class="headerlink" href="#module-encodermap.loading.pipeline" title="Permalink to this heading">#</a></h2>
+<div class="admonition-todo admonition" id="id18">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>Make a pyemma pipeline</p></li>
+<li><p>Load feayures save as xarray in HDF5 and close file</p></li>
+<li><p>This way everything will be easy on memory</p></li>
+<li><p>Fix this TypeError, when inheriting from the same class twice. Make an option to change the metaclass of the second one.</p></li>
+<li><p>TypeError: metaclass conflict: the metaclass of a derived class must be a (non-strict) subclass of the metaclasses of all its bases</p></li>
+</ul>
+</div>
+</section>
+<section id="module-encodermap.loading.utils">
+<span id="encodermap-loading-utils-module"></span><h2>encodermap.loading.utils module<a class="headerlink" href="#module-encodermap.loading.utils" title="Permalink to this heading">#</a></h2>
+<p>Utility functions for loading trajectories with different topologies.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.loading.utils.put_nan_back_in">
+<span class="sig-prename descclassname"><span class="pre">encodermap.loading.utils.</span></span><span class="sig-name descname"><span class="pre">put_nan_back_in</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/encodermap/loading/utils.html#put_nan_back_in"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.loading.utils.put_nan_back_in" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-encodermap.loading">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-encodermap.loading" title="Permalink to this heading">#</a></h2>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submodules">
+   Submodules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#encodermap-loading-dask-featurizer-module">
+   encodermap.loading.dask_featurizer module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#encodermap-loading-delayed-module">
+   encodermap.loading.delayed module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.loading.features">
+   encodermap.loading.features module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.loading.features.AllBondDistances">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       AllBondDistances
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.AllBondDistances.top">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllBondDistances.top
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.AllBondDistances.indexes">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllBondDistances.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.AllBondDistances.prefix_label">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllBondDistances.prefix_label
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.AllBondDistances.__serialize_fields">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllBondDistances.__serialize_fields
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.AllBondDistances.__serialize_version">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllBondDistances.__serialize_version
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.AllBondDistances.describe">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllBondDistances.describe()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.AllBondDistances.generic_describe">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllBondDistances.generic_describe()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id0">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllBondDistances.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.AllBondDistances.name">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllBondDistances.name
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllBondDistances.prefix_label
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.loading.features.AllCartesians">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       AllCartesians
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.AllCartesians.top">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllCartesians.top
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.AllCartesians.indexes">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllCartesians.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.AllCartesians.prefix_label">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllCartesians.prefix_label
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.AllCartesians.__init__">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllCartesians.__init__()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.AllCartesians.__serialize_fields">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllCartesians.__serialize_fields
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.AllCartesians.__serialize_version">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllCartesians.__serialize_version
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.AllCartesians.describe">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllCartesians.describe()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.AllCartesians.name">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllCartesians.name
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         AllCartesians.prefix_label
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.loading.features.CentralAngles">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       CentralAngles
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralAngles.top">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralAngles.top
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralAngles.indexes">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralAngles.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralAngles.prefix_label">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralAngles.prefix_label
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralAngles.__serialize_fields">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralAngles.__serialize_fields
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralAngles.__serialize_version">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralAngles.__serialize_version
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralAngles.describe">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralAngles.describe()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralAngles.generic_describe">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralAngles.generic_describe()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralAngles.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralAngles.name">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralAngles.name
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id5">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralAngles.prefix_label
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.loading.features.CentralBondDistances">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       CentralBondDistances
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralBondDistances.top">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralBondDistances.top
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralBondDistances.indexes">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralBondDistances.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralBondDistances.prefix_label">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralBondDistances.prefix_label
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralBondDistances.__serialize_fields">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralBondDistances.__serialize_fields
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralBondDistances.__serialize_version">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralBondDistances.__serialize_version
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralBondDistances.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralBondDistances.name">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralBondDistances.name
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id7">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralBondDistances.prefix_label
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.loading.features.CentralCartesians">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       CentralCartesians
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralCartesians.top">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralCartesians.top
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralCartesians.indexes">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralCartesians.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralCartesians.prefix_label">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralCartesians.prefix_label
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralCartesians.__serialize_fields">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralCartesians.__serialize_fields
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralCartesians.__serialize_version">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralCartesians.__serialize_version
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralCartesians.describe">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralCartesians.describe()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralCartesians.generic_describe">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralCartesians.generic_describe()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralCartesians.name">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralCartesians.name
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id8">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralCartesians.prefix_label
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.loading.features.CentralDihedrals">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       CentralDihedrals
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralDihedrals.top">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralDihedrals.top
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralDihedrals.indexes">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralDihedrals.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralDihedrals.__init__">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralDihedrals.__init__()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralDihedrals.__serialize_fields">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralDihedrals.__serialize_fields
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralDihedrals.__serialize_version">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralDihedrals.__serialize_version
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralDihedrals.dask_transform">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralDihedrals.dask_transform
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralDihedrals.describe">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralDihedrals.describe()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralDihedrals.generic_describe">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralDihedrals.generic_describe()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id9">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralDihedrals.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.CentralDihedrals.name">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         CentralDihedrals.name
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainAngles">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       SideChainAngles
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainAngles.top">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainAngles.top
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainAngles.indexes">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainAngles.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainAngles.prefix_label">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainAngles.prefix_label
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainAngles.__serialize_fields">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainAngles.__serialize_fields
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainAngles.__serialize_version">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainAngles.__serialize_version
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainAngles.describe">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainAngles.describe()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id10">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainAngles.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainAngles.name">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainAngles.name
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id11">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainAngles.prefix_label
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainBondDistances">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       SideChainBondDistances
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainBondDistances.top">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainBondDistances.top
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainBondDistances.indexes">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainBondDistances.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainBondDistances.prefix_label">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainBondDistances.prefix_label
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainBondDistances.__serialize_fields">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainBondDistances.__serialize_fields
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainBondDistances.__serialize_version">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainBondDistances.__serialize_version
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id12">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainBondDistances.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainBondDistances.name">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainBondDistances.name
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id13">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainBondDistances.prefix_label
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainCartesians">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       SideChainCartesians
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainCartesians.top">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainCartesians.top
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainCartesians.indexes">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainCartesians.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainCartesians.prefix_label">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainCartesians.prefix_label
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainCartesians.__serialize_fields">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainCartesians.__serialize_fields
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainCartesians.__serialize_version">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainCartesians.__serialize_version
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainCartesians.name">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainCartesians.name
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id14">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainCartesians.prefix_label
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainDihedrals">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       SideChainDihedrals
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainDihedrals.top">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainDihedrals.top
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainDihedrals.indexes">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainDihedrals.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainDihedrals.options">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainDihedrals.options
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainDihedrals.__serialize_fields">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainDihedrals.__serialize_fields
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainDihedrals.__serialize_version">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainDihedrals.__serialize_version
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainDihedrals.describe">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainDihedrals.describe()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainDihedrals.generic_describe">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainDihedrals.generic_describe()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id15">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainDihedrals.indexes
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encodermap.loading.features.SideChainDihedrals.name">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainDihedrals.name
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id16">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         SideChainDihedrals.options
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.loading.featurizer">
+   encodermap.loading.featurizer module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.loading.featurizer.Featurizer">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Featurizer
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.loading.featurizer._validate_uri">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       _validate_uri()
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.loading.pipeline">
+   encodermap.loading.pipeline module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.loading.utils">
+   encodermap.loading.utils module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encodermap.loading.utils.put_nan_back_in">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       put_nan_back_in()
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-encodermap.loading">
+   Module contents
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="_sources/encodermap.loading.rst.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023, Kevin Sawade, Tobias Lemke.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1312 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>encodermap.loss_functions.loss_functions &#8212; encodermap 3.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/encodermap/loss_functions/loss_functions';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <h1>Source code for encodermap.loss_functions.loss_functions</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># encodermap/loss_functions/loss_functions.py</span>
+<span class="c1">################################################################################</span>
+<span class="c1"># Encodermap: A python library for dimensionality reduction.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2019-2022 University of Konstanz and the Authors</span>
+<span class="c1">#</span>
+<span class="c1"># Authors:</span>
+<span class="c1"># Kevin Sawade, Tobias Lemke</span>
+<span class="c1">#</span>
+<span class="c1"># Encodermap is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as</span>
+<span class="c1"># published by the Free Software Foundation, either version 2.1</span>
+<span class="c1"># of the License, or (at your option) any later version.</span>
+<span class="c1"># This package is distributed in the hope that it will be useful to other</span>
+<span class="c1"># researches. IT DOES NOT COME WITH ANY WARRANTY WHATSOEVER; without even the</span>
+<span class="c1"># implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span>
+<span class="c1"># See the GNU Lesser General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">################################################################################</span>
+<span class="sd">&quot;&quot;&quot;Loss functions for encodermap</span>
+
+<span class="sd">ToDo:</span>
+<span class="sd">    * Debug Autograph for distance cost</span>
+<span class="sd">    * WARNING: AutoGraph could not transform &lt;function sigmoid_loss at 0x00000264AB761040&gt; and will run it as-is.</span>
+<span class="sd">    * Please report this to the TensorFlow team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output.</span>
+<span class="sd">    * Cause: module &#39;gast&#39; has no attribute &#39;Index&#39;</span>
+<span class="sd">    * To silence this warning, decorate the function with @tf.autograph.experimental.do_not_convert</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1">##############################################################################</span>
+<span class="c1"># Imports</span>
+<span class="c1">##############################################################################</span>
+
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow.keras.backend</span> <span class="k">as</span> <span class="nn">K</span>
+
+<span class="kn">from</span> <span class="nn">..encodermap_tf1.misc</span> <span class="kn">import</span> <span class="n">distance_cost</span>
+<span class="kn">from</span> <span class="nn">..misc.distances</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">pairwise_dist</span><span class="p">,</span>
+    <span class="n">pairwise_dist_periodic</span><span class="p">,</span>
+    <span class="n">periodic_distance</span><span class="p">,</span>
+    <span class="n">sigmoid</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">..parameters.parameters</span> <span class="kn">import</span> <span class="n">ADCParameters</span><span class="p">,</span> <span class="n">Parameters</span><span class="p">,</span> <span class="n">ParametersFramework</span>
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Globals</span>
+<span class="c1">##############################################################################</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;reconstruction_loss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;auto_loss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;center_loss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;regularization_loss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;loss_combinator&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;distance_loss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cartesian_loss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cartesian_distance_loss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;angle_loss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dihedral_loss&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Functions for tf.cond</span>
+<span class="c1"># Don&#39;t know if this is really faster than logging every step to tensorboard</span>
+<span class="c1">##############################################################################</span>
+
+
+<div class="viewcode-block" id="_do_nothing"><a class="viewcode-back" href="../../../reference/loss_functions.html#encodermap.loss_functions.loss_functions._do_nothing">[docs]</a><span class="k">def</span> <span class="nf">_do_nothing</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This function does nothing. One of the functions provided to tf.cond.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="_summary_cost"><a class="viewcode-back" href="../../../reference/loss_functions.html#encodermap.loss_functions.loss_functions._summary_cost">[docs]</a><span class="k">def</span> <span class="nf">_summary_cost</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">cost</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This functions logs a scalar to a name. One of the functions provided to tf.cond.&quot;&quot;&quot;</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">cost</span><span class="p">)</span></div>
+
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Legacy Code to make some tests</span>
+<span class="c1">##############################################################################</span>
+
+
+<div class="viewcode-block" id="old_distance_loss"><a class="viewcode-back" href="../../../reference/loss_functions.html#encodermap.loss_functions.loss_functions.old_distance_loss">[docs]</a><span class="k">def</span> <span class="nf">old_distance_loss</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># choose parameters</span>
+    <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">ParametersFramework</span><span class="p">(</span><span class="n">Parameters</span><span class="o">.</span><span class="n">defaults</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">parameters</span>
+    <span class="c1"># check Layers</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1"># sequential API</span>
+        <span class="n">latent</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encoder</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># functional API</span>
+        <span class="n">latent</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encoder</span>
+
+    <span class="c1"># closure</span>
+    <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;distance_loss&quot;</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">latent</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># print(f&#39;For testing: Loss latent of model to test em.encodermap_tf1.misc: {y_pred}&#39;)</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">distance_cost_scale</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dist_cost</span> <span class="o">=</span> <span class="n">distance_cost</span><span class="p">(</span>
+                <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="o">.</span><span class="n">dist_sig_parameters</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">periodicity</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">distance_cost_scale</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">dist_cost</span> <span class="o">*=</span> <span class="n">p</span><span class="o">.</span><span class="n">distance_cost_scale</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dist_cost</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;Distance Cost&quot;</span><span class="p">,</span> <span class="n">dist_cost</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dist_cost</span>
+
+    <span class="k">return</span> <span class="n">loss</span></div>
+
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Public Functions</span>
+<span class="c1">##############################################################################</span>
+
+
+<div class="viewcode-block" id="basic_loss_combinator"><a class="viewcode-back" href="../../../reference/loss_functions.html#encodermap.loss_functions.loss_functions.basic_loss_combinator">[docs]</a><span class="k">def</span> <span class="nf">basic_loss_combinator</span><span class="p">(</span><span class="o">*</span><span class="n">losses</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the sum of a list of losses and returns a combined loss.</span>
+
+<span class="sd">    The basic loss combinator does not write to summary. Can be used for debugging.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span> <span class="k">for</span> <span class="n">loss</span> <span class="ow">in</span> <span class="n">losses</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">loss</span></div>
+
+
+<div class="viewcode-block" id="loss_combinator"><a class="viewcode-back" href="../../../reference/loss_functions.html#encodermap.loss_functions.loss_functions.loss_combinator">[docs]</a><span class="k">def</span> <span class="nf">loss_combinator</span><span class="p">(</span><span class="o">*</span><span class="n">losses</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the sum of a list of losses and returns a combined loss.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        *losses: Variable length argument list of loss functions.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        function: A combined loss function that can be used in custom training or with model.fit()</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; import encodermap as em</span>
+<span class="sd">        &gt;&gt;&gt; from encodermap import loss_functions</span>
+<span class="sd">        &gt;&gt;&gt; import tensorflow as tf</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; tf.random.set_seed(1) # fix random state to pass doctest :)</span>
+
+<span class="sd">        &gt;&gt;&gt; model = tf.keras.Sequential([</span>
+<span class="sd">        ...     tf.keras.layers.Dense(100, kernel_regularizer=tf.keras.regularizers.l2(), activation=&#39;relu&#39;),</span>
+<span class="sd">        ...     tf.keras.layers.Dense(2, kernel_regularizer=tf.keras.regularizers.l2(), activation=&#39;relu&#39;),</span>
+<span class="sd">        ...     tf.keras.layers.Dense(100, kernel_regularizer=tf.keras.regularizers.l2(), activation=&#39;relu&#39;)</span>
+<span class="sd">        ... ])</span>
+
+<span class="sd">        &gt;&gt;&gt; # Set up losses and bundle them using the loss combinator</span>
+<span class="sd">        &gt;&gt;&gt; auto_loss = loss_functions.auto_loss(model)</span>
+<span class="sd">        &gt;&gt;&gt; reg_loss = loss_functions.regularization_loss(model)</span>
+<span class="sd">        &gt;&gt;&gt; loss = loss_functions.loss_combinator(auto_loss, reg_loss)</span>
+
+<span class="sd">        &gt;&gt;&gt; # Compile model, model.fit() usually takes a tuple of (data, classes) but in</span>
+<span class="sd">        &gt;&gt;&gt; # regression learning the data needs to be provided twice. That&#39;s why we use fit(data, data)</span>
+<span class="sd">        &gt;&gt;&gt; model.compile(tf.keras.optimizers.Adam(), loss=loss)</span>
+<span class="sd">        &gt;&gt;&gt; data = np.random.random((100, 100))</span>
+<span class="sd">        &gt;&gt;&gt; history = model.fit(data, data, verbose=0)</span>
+<span class="sd">        &gt;&gt;&gt; tf.random.set_seed(None) # reset seed</span>
+
+<span class="sd">        &gt;&gt;&gt; # This weird contraption is also there to make the output predictable and pass tests</span>
+<span class="sd">        &gt;&gt;&gt; # Somehow the tf.random.seed(1) does not work here. :(</span>
+<span class="sd">        &gt;&gt;&gt; loss = history.history[&#39;loss&#39;][0]</span>
+<span class="sd">        &gt;&gt;&gt; print(loss) # doctest: +SKIP</span>
+<span class="sd">        {&#39;loss&#39;: array([2.6])}</span>
+<span class="sd">        &gt;&gt;&gt; print(type(loss))</span>
+<span class="sd">        &lt;class &#39;float&#39;&gt;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">combined_loss_func</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span> <span class="k">for</span> <span class="n">loss</span> <span class="ow">in</span> <span class="n">losses</span><span class="p">])</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;Combined Cost&quot;</span><span class="p">,</span> <span class="n">cost</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cost</span>
+
+    <span class="k">return</span> <span class="n">combined_loss_func</span></div>
+
+
+<div class="viewcode-block" id="distance_loss"><a class="viewcode-back" href="../../../reference/loss_functions.html#encodermap.loss_functions.loss_functions.distance_loss">[docs]</a><span class="k">def</span> <span class="nf">distance_loss</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encodermap distance_loss</span>
+
+<span class="sd">    Transforms space using sigmoid function first proposed by sketch-map.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (tf.keras.Model): A model you want to use the loss function on.</span>
+<span class="sd">        parameters (Union[encodermap.Parameters, None], optional): The parameters. If None is</span>
+<span class="sd">                provided default values (check them with print(em.Parameters.defaults_description()))</span>
+<span class="sd">                are used. Defaults to None.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        If the model contains two layers. The first layer will be assumed to be the decoder.</span>
+<span class="sd">        If the model contains more layers, one layer needs to be named &#39;latent&#39; (case insensitive).</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        Exception: When no bottleneck/latent layer can be found in the model.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        function: A loss function.</span>
+
+<span class="sd">    References::</span>
+
+<span class="sd">        @article{ceriotti2011simplifying,</span>
+<span class="sd">          title={Simplifying the representation of complex free-energy landscapes using sketch-map},</span>
+<span class="sd">          author={Ceriotti, Michele and Tribello, Gareth A and Parrinello, Michele},</span>
+<span class="sd">          journal={Proceedings of the National Academy of Sciences},</span>
+<span class="sd">          volume={108},</span>
+<span class="sd">          number={32},</span>
+<span class="sd">          pages={13023--13028},</span>
+<span class="sd">          year={2011},</span>
+<span class="sd">          publisher={National Acad Sciences}</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># choose parameters</span>
+    <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">ParametersFramework</span><span class="p">(</span><span class="n">Parameters</span><span class="o">.</span><span class="n">defaults</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">parameters</span>
+
+    <span class="c1"># check Layers</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1"># sequential API</span>
+        <span class="n">latent</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encoder</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># functional API</span>
+        <span class="n">latent</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encoder</span>
+        <span class="c1"># functional API without multiple models to be removed</span>
+        <span class="c1"># layer_index = [layer.name.lower() for layer in model.layers].index(&#39;latent&#39;)</span>
+        <span class="c1"># latent = tf.keras.Model(inputs=model.inputs, outputs=model.layers[layer_index].output)</span>
+
+    <span class="k">if</span> <span class="n">callback</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;log_bool&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">log_bool</span>
+
+    <span class="c1"># define dist loss</span>
+    <span class="n">dist_loss</span> <span class="o">=</span> <span class="n">sigmoid_loss</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+    <span class="c1"># closure</span>
+    <span class="k">def</span> <span class="nf">distance_loss_func</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;y_true can be whatever input you like, dihedrals, angles, pairwise dist, contact maps. That will be</span>
+<span class="sd">        transformed with Sketchmap&#39;s sigmoid function, as will the output of the latent layer of the autoencoder.</span>
+<span class="sd">        the difference of these two will result in a loss function.&quot;&quot;&quot;</span>
+        <span class="n">distance_loss_func</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;distance_loss&quot;</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">latent</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># functional model gives a tuple</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">y_true</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">distance_cost_scale</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dist_cost</span> <span class="o">=</span> <span class="n">dist_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">distance_cost_scale</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">dist_cost</span> <span class="o">*=</span> <span class="n">p</span><span class="o">.</span><span class="n">distance_cost_scale</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dist_cost</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span>
+            <span class="n">write_bool</span><span class="p">,</span>
+            <span class="n">true_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_summary_cost</span><span class="p">(</span><span class="s2">&quot;Distance Cost&quot;</span><span class="p">,</span> <span class="n">dist_cost</span><span class="p">),</span>
+            <span class="n">false_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_do_nothing</span><span class="p">(),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Cost&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">dist_cost</span>
+
+    <span class="k">return</span> <span class="n">distance_loss_func</span></div>
+
+
+<div class="viewcode-block" id="sigmoid_loss"><a class="viewcode-back" href="../../../reference/loss_functions.html#encodermap.loss_functions.loss_functions.sigmoid_loss">[docs]</a><span class="k">def</span> <span class="nf">sigmoid_loss</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">periodicity_overwrite</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sigmoid loss closure for use in distance cost and cartesian distance cost.</span>
+
+<span class="sd">    Outer function prepares callable sigmoid. Sigmoid can then be called with just y_true and y_pred.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        parameters (Union[encodermap.Parameters, None], optional): The parameters. If None is</span>
+<span class="sd">                provided default values (check them with print(em.Parameters.defaults_description()))</span>
+<span class="sd">                are used. Defaults to None.</span>
+<span class="sd">        periodicity overwrite(Union[float, None]), optional): Cartesian distance cost is always non-periodic.</span>
+<span class="sd">            To make sure no periodicity is applied to the data, set periodicity_overwrite to float(&#39;inf&#39;). If</span>
+<span class="sd">            None is provided the periodicity of the parameters class (default 2*pi) will be used.</span>
+<span class="sd">            Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        function: A function that takes y_true and y_pred. Both need to be of the same shape.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">ParametersFramework</span><span class="p">(</span><span class="n">Parameters</span><span class="o">.</span><span class="n">defaults</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">parameters</span>
+
+    <span class="k">if</span> <span class="n">periodicity_overwrite</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">periodicity</span> <span class="o">=</span> <span class="n">periodicity_overwrite</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">periodicity</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">periodicity</span>
+
+    <span class="c1"># @tf.autograph.experimental.do_not_convert</span>
+    <span class="k">def</span> <span class="nf">sigmoid_loss_func</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="n">r_h</span> <span class="o">=</span> <span class="n">y_true</span>
+        <span class="n">r_l</span> <span class="o">=</span> <span class="n">y_pred</span>
+        <span class="k">if</span> <span class="n">periodicity</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">):</span>
+            <span class="n">dist_h</span> <span class="o">=</span> <span class="n">pairwise_dist</span><span class="p">(</span><span class="n">r_h</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dist_h</span> <span class="o">=</span> <span class="n">pairwise_dist_periodic</span><span class="p">(</span><span class="n">r_h</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">)</span>
+        <span class="n">dist_l</span> <span class="o">=</span> <span class="n">pairwise_dist</span><span class="p">(</span><span class="n">r_l</span><span class="p">)</span>
+
+        <span class="n">sig_h</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="o">.</span><span class="n">dist_sig_parameters</span><span class="p">[:</span><span class="mi">3</span><span class="p">])(</span><span class="n">dist_h</span><span class="p">)</span>
+        <span class="n">sig_l</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="o">.</span><span class="n">dist_sig_parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">:])(</span><span class="n">dist_l</span><span class="p">)</span>
+
+        <span class="n">cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">sig_h</span> <span class="o">-</span> <span class="n">sig_l</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">cost</span>
+
+    <span class="k">return</span> <span class="n">sigmoid_loss_func</span></div>
+
+
+<div class="viewcode-block" id="center_loss"><a class="viewcode-back" href="../../../reference/loss_functions.html#encodermap.loss_functions.loss_functions.center_loss">[docs]</a><span class="k">def</span> <span class="nf">center_loss</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encodermap center_loss</span>
+
+<span class="sd">    Use in custom training loops or in model.fit() training.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (tf.keras.Model): A model you want to use the loss function on.</span>
+<span class="sd">        parameters (Union[encodermap.Parameters, None], optional): The parameters. If None is</span>
+<span class="sd">                provided default values (check them with print(em.Parameters.defaults_description()))</span>
+<span class="sd">                are used. Defaults to None.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        If the model contains two layers. The first layer will be assumed to be the decoder.</span>
+<span class="sd">        If the model contains more layers, one layer needs to be named &#39;latent&#39; (case insensitive).</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        Exception: When no bottleneck/latent layer can be found in the model.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        function: A loss function.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># choose parameters</span>
+    <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">ParametersFramework</span><span class="p">(</span><span class="n">Parameters</span><span class="o">.</span><span class="n">defaults</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">parameters</span>
+    <span class="c1"># check Layers</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1"># sequential API</span>
+        <span class="n">latent</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encoder</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># functional API</span>
+        <span class="n">latent</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encoder</span>
+
+    <span class="k">if</span> <span class="n">callback</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;log_bool&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">log_bool</span>
+
+    <span class="c1"># closure</span>
+    <span class="k">def</span> <span class="nf">center_loss_func</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;y_true will not be used in this loss function. y_pred can be supplied, but if None will be taken from the</span>
+<span class="sd">        latent layer. This loss function tries to center the points in the latent layer.&quot;&quot;&quot;</span>
+        <span class="n">center_loss_func</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;center_loss&quot;</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">latent</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># functional model gives a tuple</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">y_true</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># center cost</span>
+        <span class="c1"># this is still a bit finicky</span>
+        <span class="c1"># needs to have tf.GradentTape() context manager to watch a single layer</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">center_cost_scale</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># custom model dep code</span>
+            <span class="c1"># center_cost = tf.reduce_mean(tf.square(model.get_layer(&#39;Encoder&#39;)(y_true)))</span>
+            <span class="c1"># sequential model</span>
+            <span class="c1"># get the output according to https://keras.io/getting_started/faq/#how-can-i-obtain-the-output-of-an-intermediate-layer-feature-extraction</span>
+            <span class="c1"># this can be omitted by implementing a custom metric. Todo.</span>
+            <span class="n">center_cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_pred</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">center_cost_scale</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">center_cost</span> <span class="o">*=</span> <span class="n">p</span><span class="o">.</span><span class="n">center_cost_scale</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">center_cost</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span>
+            <span class="n">write_bool</span><span class="p">,</span>
+            <span class="n">true_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_summary_cost</span><span class="p">(</span><span class="s2">&quot;Center Cost&quot;</span><span class="p">,</span> <span class="n">center_cost</span><span class="p">),</span>
+            <span class="n">false_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_do_nothing</span><span class="p">(),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Cost&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">center_cost</span>
+
+    <span class="k">return</span> <span class="n">center_loss_func</span></div>
+
+
+<div class="viewcode-block" id="regularization_loss"><a class="viewcode-back" href="../../../reference/loss_functions.html#encodermap.loss_functions.loss_functions.regularization_loss">[docs]</a><span class="k">def</span> <span class="nf">regularization_loss</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Regularization loss of arbitrary tf.keras.Model</span>
+
+<span class="sd">    Use in custom training loops or in model.fit() training.</span>
+<span class="sd">    Loss is obtained as tf.math.add_n(model.losses)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (tf.keras.Model): A model you want to use the loss function on.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        function: A loss function.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">ParametersFramework</span><span class="p">(</span><span class="n">Parameters</span><span class="o">.</span><span class="n">defaults</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">parameters</span>
+
+    <span class="k">if</span> <span class="n">callback</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;log_bool&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">log_bool</span>
+
+    <span class="k">def</span> <span class="nf">regularization_loss_func</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;y_true and y_pred will not be considered here, because the regularization loss is accessed via model.losses.&quot;&quot;&quot;</span>
+        <span class="n">regularization_loss</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;regularization_loss&quot;</span>
+        <span class="n">reg_loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">add_n</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">losses</span><span class="p">)</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span>
+            <span class="n">write_bool</span><span class="p">,</span>
+            <span class="n">true_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_summary_cost</span><span class="p">(</span><span class="s2">&quot;Regularization Cost&quot;</span><span class="p">,</span> <span class="n">reg_loss</span><span class="p">),</span>
+            <span class="n">false_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_do_nothing</span><span class="p">(),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Cost&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">reg_loss</span>
+
+    <span class="k">return</span> <span class="n">regularization_loss_func</span></div>
+
+
+<div class="viewcode-block" id="reconstruction_loss"><a class="viewcode-back" href="../../../reference/loss_functions.html#encodermap.loss_functions.loss_functions.reconstruction_loss">[docs]</a><span class="k">def</span> <span class="nf">reconstruction_loss</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simple Autoencoder recosntruction loss.</span>
+
+<span class="sd">    Use in custom training loops or in model.fit training.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (tf.keras.Model): A model you want to use the loss function on.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        function: A loss function to be used in custom training or model.fit.</span>
+<span class="sd">            Function takes the following arguments:</span>
+<span class="sd">            y_true (tf.Tensor): The true tensor.</span>
+<span class="sd">            y_pred (tf.Tensor, optional): The output tensor. If not supplied</span>
+<span class="sd">                the model will be called to get this tensor. Defaults to None.</span>
+<span class="sd">            step (int): A step for tensorboard callbacks. Defaults to None.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; import tensorflow as tf</span>
+<span class="sd">        &gt;&gt;&gt; import encodermap as em</span>
+<span class="sd">        &gt;&gt;&gt; from encodermap import loss_functions</span>
+<span class="sd">        &gt;&gt;&gt; model = tf.keras.Model()</span>
+<span class="sd">        &gt;&gt;&gt; loss = loss_functions.reconstruction_loss(model)</span>
+<span class="sd">        &gt;&gt;&gt; x = tf.random.normal(shape=(10, 10))</span>
+<span class="sd">        &gt;&gt;&gt; loss(x, x).numpy()</span>
+<span class="sd">        0.0</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">reconstruction_loss_func</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># if y_pred is None, this function is used in custom training</span>
+        <span class="c1"># and should use model to get the output</span>
+        <span class="k">if</span> <span class="n">y_pred</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>
+        <span class="c1"># calculate error</span>
+        <span class="n">reconstruction_error</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">reconstruction_error</span>
+
+    <span class="k">return</span> <span class="n">reconstruction_loss_func</span></div>
+
+
+<div class="viewcode-block" id="auto_loss"><a class="viewcode-back" href="../../../reference/loss_functions.html#encodermap.loss_functions.loss_functions.auto_loss">[docs]</a><span class="k">def</span> <span class="nf">auto_loss</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encodermap auto_loss.</span>
+
+<span class="sd">    Use in custom training loops or in model.fit() training.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (tf.keras.Model): A model you want to use the loss function on.</span>
+<span class="sd">        parameters (Union[encodermap.Parameters, None], optional): The parameters. If None is</span>
+<span class="sd">                provided default values (check them with print(em.Parameters.defaults_description()))</span>
+<span class="sd">                are used. Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        function: A loss function.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">ParametersFramework</span><span class="p">(</span><span class="n">Parameters</span><span class="o">.</span><span class="n">defaults</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">parameters</span>
+
+    <span class="k">if</span> <span class="n">callback</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;log_bool&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">log_bool</span>
+
+    <span class="k">def</span> <span class="nf">auto_loss_func</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;y_true is complete model input, y_pred is complete model output. Because here it is not intended to unpack</span>
+<span class="sd">        the output into dihedrals and angles, y_pred can be None and will be directly taken from the model.&quot;&quot;&quot;</span>
+        <span class="n">auto_loss_func</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;auto_loss&quot;</span>
+
+        <span class="k">if</span> <span class="n">y_pred</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">auto_cost_scale</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">auto_cost_variant</span> <span class="o">==</span> <span class="s2">&quot;mean_square&quot;</span><span class="p">:</span>
+                <span class="n">auto_cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">periodic_distance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">periodicity</span><span class="p">))</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">auto_cost_variant</span> <span class="o">==</span> <span class="s2">&quot;mean_abs&quot;</span><span class="p">:</span>
+                <span class="n">auto_cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">periodic_distance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">periodicity</span><span class="p">))</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">auto_cost_variant</span> <span class="o">==</span> <span class="s2">&quot;mean_norm&quot;</span><span class="p">:</span>
+                <span class="n">auto_cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">periodic_distance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">periodicity</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;auto_cost_variant </span><span class="si">{}</span><span class="s2"> not available&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">auto_cost_variant</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">auto_cost_scale</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">auto_cost</span> <span class="o">*=</span> <span class="n">p</span><span class="o">.</span><span class="n">auto_cost_scale</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">auto_cost</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span>
+            <span class="n">write_bool</span><span class="p">,</span>
+            <span class="n">true_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_summary_cost</span><span class="p">(</span><span class="s2">&quot;Auto Cost&quot;</span><span class="p">,</span> <span class="n">auto_cost</span><span class="p">),</span>
+            <span class="n">false_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_do_nothing</span><span class="p">(),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Cost&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">auto_cost</span>
+
+    <span class="k">return</span> <span class="n">auto_loss_func</span></div>
+
+
+<div class="viewcode-block" id="dihedral_loss"><a class="viewcode-back" href="../../../reference/loss_functions.html#encodermap.loss_functions.loss_functions.dihedral_loss">[docs]</a><span class="k">def</span> <span class="nf">dihedral_loss</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encodermap dihedral loss. Calculates distances between true and predicted dihedral angles.</span>
+
+<span class="sd">    Respects periodicity in a [-a, a] interval if the provided parameters have a periodicity of 2 * a.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        The interval should be (-a, a], but due to floating point precision we can&#39;t make this</span>
+<span class="sd">        distinction here.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (tf.keras.Model): The model to use the loss function on.</span>
+<span class="sd">        parameters (Union[encodermap.ADCParameters, None], optional): The parameters. If None is</span>
+<span class="sd">            provided default values (check them with print(em.ADCParameters.defaults_description()))</span>
+<span class="sd">            are used. Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        function: A loss function. Can be used in either custom training or model.fit().</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">ParametersFramework</span><span class="p">(</span><span class="n">ADCParameters</span><span class="o">.</span><span class="n">defaults</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">parameters</span>
+
+    <span class="k">if</span> <span class="n">callback</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;log_bool&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">log_bool</span>
+
+    <span class="c1"># closure</span>
+    <span class="k">def</span> <span class="nf">dihedral_loss_func</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;y_pred should be model input dihedrals, y_true should be model output dihedrals.&quot;&quot;&quot;</span>
+        <span class="n">dihedral_loss_func</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;dihedral_loss&quot;</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">dihedral_cost_scale</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">dihedral_cost_variant</span> <span class="o">==</span> <span class="s2">&quot;mean_square&quot;</span><span class="p">:</span>
+                <span class="n">dihedral_cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">periodic_distance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">periodicity</span><span class="p">))</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">dihedral_cost_variant</span> <span class="o">==</span> <span class="s2">&quot;mean_abs&quot;</span><span class="p">:</span>
+                <span class="n">dihedral_cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">periodic_distance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">periodicity</span><span class="p">))</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">dihedral_cost_variant</span> <span class="o">==</span> <span class="s2">&quot;mean_norm&quot;</span><span class="p">:</span>
+                <span class="n">dihedral_cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">periodic_distance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">periodicity</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;dihedral_cost_variant </span><span class="si">{}</span><span class="s2"> not available&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">auto_cost_variant</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="n">dihedral_cost</span> <span class="o">/=</span> <span class="n">p</span><span class="o">.</span><span class="n">dihedral_cost_reference</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">dihedral_cost_scale</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">dihedral_cost</span> <span class="o">*=</span> <span class="n">p</span><span class="o">.</span><span class="n">dihedral_cost_scale</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dihedral_cost</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span>
+            <span class="n">write_bool</span><span class="p">,</span>
+            <span class="n">true_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_summary_cost</span><span class="p">(</span><span class="s2">&quot;Dihedral Cost&quot;</span><span class="p">,</span> <span class="n">dihedral_cost</span><span class="p">),</span>
+            <span class="n">false_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_do_nothing</span><span class="p">(),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Cost&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">dihedral_cost</span>
+
+    <span class="k">return</span> <span class="n">dihedral_loss_func</span></div>
+
+
+<div class="viewcode-block" id="side_dihedral_loss"><a class="viewcode-back" href="../../../reference/loss_functions.html#encodermap.loss_functions.loss_functions.side_dihedral_loss">[docs]</a><span class="k">def</span> <span class="nf">side_dihedral_loss</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encodermap sidechain dihedral loss. Calculates distances between true and predicted sidechain dihedral angles.</span>
+
+<span class="sd">    Respects periodicity in a [-a, a] interval if the provided parameters have a periodicity of 2 * a.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        The interval should be (-a, a], but due to floating point precision we can&#39;t make this</span>
+<span class="sd">        distinction here.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (tf.keras.Model): The model to use the loss function on.</span>
+<span class="sd">        parameters (Union[encodermap.ADCParameters, None], optional): The parameters. If None is</span>
+<span class="sd">            provided default values (check them with print(em.ADCParameters.defaults_description()))</span>
+<span class="sd">            are used. Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        function: A loss function. Can be used in either custom training or model.fit().</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">ParametersFramework</span><span class="p">(</span><span class="n">ADCParameters</span><span class="o">.</span><span class="n">defaults</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">parameters</span>
+
+    <span class="k">if</span> <span class="n">callback</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;log_bool&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">log_bool</span>
+
+    <span class="c1"># closure</span>
+    <span class="k">def</span> <span class="nf">side_dihedral_loss_func</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;y_pred should be model input side dihedrals, y_true should be model output side dihedrals.&quot;&quot;&quot;</span>
+        <span class="n">side_dihedral_loss_func</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;side_dihedral_loss&quot;</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">side_dihedral_cost_scale</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">side_dihedral_cost_variant</span> <span class="o">==</span> <span class="s2">&quot;mean_square&quot;</span><span class="p">:</span>
+                <span class="n">side_dihedral_cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">periodic_distance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">periodicity</span><span class="p">))</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">side_dihedral_cost_variant</span> <span class="o">==</span> <span class="s2">&quot;mean_abs&quot;</span><span class="p">:</span>
+                <span class="n">side_dihedral_cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">periodic_distance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">periodicity</span><span class="p">))</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">side_dihedral_cost_variant</span> <span class="o">==</span> <span class="s2">&quot;mean_norm&quot;</span><span class="p">:</span>
+                <span class="n">side_dihedral_cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">periodic_distance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">periodicity</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;dihedral_cost_variant </span><span class="si">{}</span><span class="s2"> not available&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">auto_cost_variant</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="n">side_dihedral_cost</span> <span class="o">/=</span> <span class="n">p</span><span class="o">.</span><span class="n">side_dihedral_cost_reference</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">side_dihedral_cost_scale</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">side_dihedral_cost</span> <span class="o">*=</span> <span class="n">p</span><span class="o">.</span><span class="n">side_dihedral_cost_scale</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">side_dihedral_cost</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span>
+            <span class="n">write_bool</span><span class="p">,</span>
+            <span class="n">true_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_summary_cost</span><span class="p">(</span>
+                <span class="s2">&quot;Sidechain Dihedral Cost&quot;</span><span class="p">,</span> <span class="n">side_dihedral_cost</span>
+            <span class="p">),</span>
+            <span class="n">false_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_do_nothing</span><span class="p">(),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Cost&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">side_dihedral_cost</span>
+
+    <span class="k">return</span> <span class="n">side_dihedral_loss_func</span></div>
+
+
+<div class="viewcode-block" id="angle_loss"><a class="viewcode-back" href="../../../reference/loss_functions.html#encodermap.loss_functions.loss_functions.angle_loss">[docs]</a><span class="k">def</span> <span class="nf">angle_loss</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encodermap angle loss. Calculates distances between true and predicted angles.</span>
+
+<span class="sd">    Respects periodicity in a [-a, a] interval if the provided parameters have a periodicity of 2 * a.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        The interval should be (-a, a], but due to floating point precision we can&#39;t make this</span>
+<span class="sd">        distinction here.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (tf.keras.Model): The model to use the loss function on.</span>
+<span class="sd">        parameters (Union[encodermap.ADCParameters, None], optional): The parameters. If None is</span>
+<span class="sd">            provided default values (check them with print(em.ADCParameters.defaults_description()))</span>
+<span class="sd">            are used. Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        function: A loss function. Can be used in either custom training or model.fit().</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">ParametersFramework</span><span class="p">(</span><span class="n">ADCParameters</span><span class="o">.</span><span class="n">defaults</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">parameters</span>
+
+    <span class="k">if</span> <span class="n">callback</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;log_bool&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">log_bool</span>
+
+    <span class="c1"># closure</span>
+    <span class="k">def</span> <span class="nf">angle_loss_func</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;y_true should be input angles. y_pred should be output angles (either from mean input angles or, when</span>
+<span class="sd">        ADCParameters.use_backbone_angles == True, directly from model output).&quot;&quot;&quot;</span>
+        <span class="n">angle_loss_func</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;angle_loss&quot;</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">angle_cost_scale</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">angle_cost_variant</span> <span class="o">==</span> <span class="s2">&quot;mean_square&quot;</span><span class="p">:</span>
+                <span class="n">angle_cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">periodic_distance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">periodicity</span><span class="p">))</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">angle_cost_variant</span> <span class="o">==</span> <span class="s2">&quot;mean_abs&quot;</span><span class="p">:</span>
+                <span class="n">angle_cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">periodic_distance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">periodicity</span><span class="p">))</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">angle_cost_variant</span> <span class="o">==</span> <span class="s2">&quot;mean_norm&quot;</span><span class="p">:</span>
+                <span class="n">angle_cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">periodic_distance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">periodicity</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;angle_cost_variant </span><span class="si">{}</span><span class="s2"> not available&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">auto_cost_variant</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="n">angle_cost</span> <span class="o">/=</span> <span class="n">p</span><span class="o">.</span><span class="n">angle_cost_reference</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">angle_cost_scale</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">angle_cost</span> <span class="o">*=</span> <span class="n">p</span><span class="o">.</span><span class="n">angle_cost_scale</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">angle_cost</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span>
+            <span class="n">write_bool</span><span class="p">,</span>
+            <span class="n">true_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_summary_cost</span><span class="p">(</span><span class="s2">&quot;Angle Cost&quot;</span><span class="p">,</span> <span class="n">angle_cost</span><span class="p">),</span>
+            <span class="n">false_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_do_nothing</span><span class="p">(),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Cost&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">angle_cost</span>
+
+    <span class="k">return</span> <span class="n">angle_loss_func</span></div>
+
+
+<div class="viewcode-block" id="cartesian_distance_loss"><a class="viewcode-back" href="../../../reference/loss_functions.html#encodermap.loss_functions.loss_functions.cartesian_distance_loss">[docs]</a><span class="k">def</span> <span class="nf">cartesian_distance_loss</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encodermap cartesian distance loss. Calculates sigmoid-weighted distances between pairwise cartesians and latent.</span>
+
+<span class="sd">    Uses sketch-map&#39;s sigmoid function to transform the high-dimensional space of the input and the</span>
+<span class="sd">    low-dimensional space of latent.</span>
+
+<span class="sd">    Make sure to provide the pairwise cartesian distances. The output of the latent will be compared to the input.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        If the model contains two layers. The first layer will be assumed to be the decoder.</span>
+<span class="sd">        If the model contains more layers, one layer needs to be named &#39;latent&#39; (case insensitive).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (tf.keras.Model): The model to use the loss function on.</span>
+<span class="sd">        parameters (Union[encodermap.ADCParameters, None], optional): The parameters. If None is</span>
+<span class="sd">            provided default values (check them with print(em.ADCParameters.defaults_description()))</span>
+<span class="sd">            are used. Defaults to None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        function: A loss function. Can be used in either custom training or model.fit().</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">ParametersFramework</span><span class="p">(</span><span class="n">ADCParameters</span><span class="o">.</span><span class="n">defaults</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">parameters</span>
+
+    <span class="k">if</span> <span class="n">callback</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;log_bool&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">log_bool</span>
+
+    <span class="n">dist_loss</span> <span class="o">=</span> <span class="n">sigmoid_loss</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">periodicity_overwrite</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">cartesian_distance_loss_func</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;y_true can be whatever input you like, dihedrals, angles, pairwise dist, contact maps. That will be</span>
+<span class="sd">        transformed with Sketchmap&#39;s sigmoid function, as will the output of the latent layer of the autoencoder.</span>
+<span class="sd">        the difference of these two will result in a loss function.&quot;&quot;&quot;</span>
+        <span class="n">cartesian_distance_loss_func</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;cartesian_distance_loss&quot;</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">cartesian_distance_cost_scale</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dist_cost</span> <span class="o">=</span> <span class="n">dist_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">distance_cost_scale</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">dist_cost</span> <span class="o">*=</span> <span class="n">p</span><span class="o">.</span><span class="n">cartesian_distance_cost_scale</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dist_cost</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span>
+            <span class="n">write_bool</span><span class="p">,</span>
+            <span class="n">true_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_summary_cost</span><span class="p">(</span><span class="s2">&quot;Cartesian Distance Cost&quot;</span><span class="p">,</span> <span class="n">dist_cost</span><span class="p">),</span>
+            <span class="n">false_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_do_nothing</span><span class="p">(),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Cost&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">dist_cost</span>
+
+    <span class="k">return</span> <span class="n">cartesian_distance_loss_func</span></div>
+
+
+<div class="viewcode-block" id="cartesian_loss"><a class="viewcode-back" href="../../../reference/loss_functions.html#encodermap.loss_functions.loss_functions.cartesian_loss">[docs]</a><span class="k">def</span> <span class="nf">cartesian_loss</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">scale_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">print_current_scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encodermap cartesian distance loss. Calculates sigmoid-weighted distances between pairwise cartesians and latent.</span>
+
+<span class="sd">    Uses sketch-map&#39;s sigmoid function to transform the high-dimensional space of the input and the</span>
+<span class="sd">    high-dimensional space of the output.</span>
+
+<span class="sd">    Adjustments to this cost_function via the soft_start parameter need to be made via a callback that re-compiles the</span>
+<span class="sd">    model during training. For this, the soft_start parameters of the outer function will be used.</span>
+<span class="sd">    It must be either 0 or 1, indexing the 1st or 2nd element of the cartesian_cost_scale_soft_start</span>
+<span class="sd">    tuple. The callback should also be provided when model.fit is executed.</span>
+
+<span class="sd">    Three cases are possible:</span>
+<span class="sd">        * Case 1: step &lt; cartesian_cost_scale_soft_start[0]: cost_scale = 0</span>
+<span class="sd">        * Case 2: cartesian_cost_scale_soft_start[0] &lt;= step &lt;= cartesian_cost_scale_soft_start[1]:</span>
+<span class="sd">            cost_scale = p.cartesian_cost_scale / (cartesian_cost_scale_soft_start[1] - cartesian_cost_scale_soft_start[0]) * step</span>
+<span class="sd">        * Case 3: cartesian_cost_scale_soft_start[1] &lt; step: cost_scale = p.cartesian_cost_scale</span>
+
+<span class="sd">    Make sure to provide the pairwise cartesian distances. This function will be adjusted as training increases via a</span>
+<span class="sd">    callback. See encodermap.callbacks.callbacks.IncreaseCartesianCost for more info.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (tf.keras.Model): The model to use the loss function on.</span>
+<span class="sd">        parameters (Union[encodermap.ADCParameters, None], optional): The parameters. If None is</span>
+<span class="sd">            provided default values (check them with print(em.ADCParameters.defaults_description()))</span>
+<span class="sd">            are used. Defaults to None.</span>
+<span class="sd">        soft_start (Union[int, None], optional): How to scale the cartesian loss. The ADCParameters class contains a</span>
+<span class="sd">            two-tuple of integers. These integers can be used to scale this loss function. If soft_start is 0, the</span>
+<span class="sd">            first value of ADCParameters.cartesian_cost_scale_soft_start will be used, if it is 1, the second.</span>
+<span class="sd">            if it is None, or both values of ADCParameters.cartesian_cost_scale_soft_start are None, the cost will</span>
+<span class="sd">            not be scaled. Defaults to None.</span>
+<span class="sd">        print_current_scale (bool, optional): Whether to print the current scale. Is used in unittesting. Defaults to False.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        Exception: When no bottleneck/latent layer can be found in the model.</span>
+<span class="sd">        Exception: When soft_start is greater than 1 and can&#39;t index the two-tuple.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        function: A loss function. Can be used in either custom training or model.fit().</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">ParametersFramework</span><span class="p">(</span><span class="n">ADCParameters</span><span class="o">.</span><span class="n">defaults</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">parameters</span>
+    <span class="k">if</span> <span class="n">scale_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">current_scale_callback</span> <span class="o">=</span> <span class="n">scale_callback</span><span class="o">.</span><span class="n">current_cartesian_cost_scale</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">current_scale_callback</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">cartesian_cost_scale</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;current_cartesian_cost_scale&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">print_current_scale</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">current_scale_callback</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">log_callback</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;bool&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;log_bool&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">write_bool</span> <span class="o">=</span> <span class="n">log_callback</span><span class="o">.</span><span class="n">log_bool</span>
+
+    <span class="k">def</span> <span class="nf">cartesian_loss_func</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;y_true should be pairwise distances of input cartesians,</span>
+<span class="sd">        y_pred should be pairwise distances of back-mapped output cartesians.&quot;&quot;&quot;</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">current_scale_callback</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">cartesian_cost_variant</span> <span class="o">==</span> <span class="s2">&quot;mean_square&quot;</span><span class="p">:</span>
+            <span class="n">cartesian_cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_true</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">cartesian_cost_variant</span> <span class="o">==</span> <span class="s2">&quot;mean_abs&quot;</span><span class="p">:</span>
+            <span class="n">cartesian_cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">y_true</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">cartesian_cost_variant</span> <span class="o">==</span> <span class="s2">&quot;mean_norm&quot;</span><span class="p">:</span>
+            <span class="n">cartesian_cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">y_true</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;cartesian_cost_variant </span><span class="si">{}</span><span class="s2"> not available&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">dihedral_to_cartesian_cost_variant</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">cartesian_cost</span> <span class="o">/=</span> <span class="n">p</span><span class="o">.</span><span class="n">cartesian_cost_reference</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span>
+            <span class="n">write_bool</span><span class="p">,</span>
+            <span class="n">true_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_summary_cost</span><span class="p">(</span>
+                <span class="s2">&quot;Cartesian Cost before scaling&quot;</span><span class="p">,</span> <span class="n">cartesian_cost</span>
+            <span class="p">),</span>
+            <span class="n">false_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_do_nothing</span><span class="p">(),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Cost&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span>
+            <span class="n">write_bool</span><span class="p">,</span>
+            <span class="n">true_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_summary_cost</span><span class="p">(</span><span class="s2">&quot;Cartesian Cost current scaling&quot;</span><span class="p">,</span> <span class="n">scale</span><span class="p">),</span>
+            <span class="n">false_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_do_nothing</span><span class="p">(),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Cost&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">cartesian_cost</span> <span class="o">*=</span> <span class="n">scale</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span>
+            <span class="n">write_bool</span><span class="p">,</span>
+            <span class="n">true_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_summary_cost</span><span class="p">(</span>
+                <span class="s2">&quot;Cartesian Cost after scaling&quot;</span><span class="p">,</span> <span class="n">cartesian_cost</span>
+            <span class="p">),</span>
+            <span class="n">false_fn</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">_do_nothing</span><span class="p">(),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Cost&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">cartesian_cost</span>
+
+    <span class="k">return</span> <span class="n">cartesian_loss_func</span></div>
+</pre></div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023, Kevin Sawade, Tobias Lemke.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

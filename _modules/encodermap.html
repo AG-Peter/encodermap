@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>encodermap &#8212; encodermap 3.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/encodermap';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo_cube_300.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo_cube_300.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <h1>Source code for encodermap</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># encodermap/__init__.py</span>
+<span class="c1">################################################################################</span>
+<span class="c1"># Encodermap: A python library for dimensionality reduction.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2019-2022 University of Konstanz and the Authors</span>
+<span class="c1">#</span>
+<span class="c1"># Authors:</span>
+<span class="c1"># Kevin Sawade, Tobias Lemke</span>
+<span class="c1">#</span>
+<span class="c1"># Encodermap is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as</span>
+<span class="c1"># published by the Free Software Foundation, either version 2.1</span>
+<span class="c1"># of the License, or (at your option) any later version.</span>
+<span class="c1"># This package is distributed in the hope that it will be useful to other</span>
+<span class="c1"># researches. IT DOES NOT COME WITH ANY WARRANTY WHATSOEVER; without even the</span>
+<span class="c1"># implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span>
+<span class="c1"># See the GNU Lesser General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">################################################################################</span>
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Typing</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">mdtraj</span> <span class="k">as</span> <span class="nn">md</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+    <span class="kn">from</span> <span class="nn">.trajinfo.info_all</span> <span class="kn">import</span> <span class="n">TrajEnsemble</span>
+    <span class="kn">from</span> <span class="nn">.trajinfo.info_single</span> <span class="kn">import</span> <span class="n">SingleTraj</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Globals</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;features&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;__version__&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Autoencoder&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;EncoderMap&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AngleDihedralCartesianEncoderMap&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;EncoderMapBaseCallback&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Featurizer&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;function&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MolData&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ADCParameters&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Parameters&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;InteractivePlotting&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Repository&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;load&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;EncoderMap: Dimensionality reduction for molecular dynamics.</span>
+
+<span class="s2">**EncoderMap** provides a framework for using molecular dynamics data with</span>
+<span class="s2">with the tensorflow library. It started as the implementation of a neural</span>
+<span class="s2">network autoencoder to do dimensionality reduction and also create new</span>
+<span class="s2">high-dimensional data from the low-dimensional embedding. The user was still</span>
+<span class="s2">required to create their own dataset and provide the numpy arrays. In the second</span>
+<span class="s2">iteration of EncoderMap, the possibility to provide molecular dynamics data with</span>
+<span class="s2">the `MolData` class was added. A new neural network architecture was implemented</span>
+<span class="s2">to try and rebuild cartesian coordinates from the low-dimensional embedding.</span>
+
+<span class="s2">This iteration of EncoderMap continues this endeavour by porting the old</span>
+<span class="s2">code to the newer tensorflow version (2.x). However, more has been added which</span>
+<span class="s2">should aid computational chemists and also structural biologists:</span>
+
+<span class="s2">* New trajectory classes with lazy loading of coordinates to save disk space.</span>
+<span class="s2">* Featurization which can be parallelized using the distributed computing</span>
+<span class="s2">    library dask.</span>
+<span class="s2">* Interactive matplotlib plots for clustering and structure creation.</span>
+<span class="s2">* Neural network building blocks that allows users to easily build new</span>
+<span class="s2">    nural networks.</span>
+<span class="s2">* Sparse networks allow comparison of proteins with different topologies.</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Imports</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="kn">from</span> <span class="nn">encodermap._version</span> <span class="kn">import</span> <span class="n">__version__</span>
+<span class="kn">from</span> <span class="nn">encodermap.autoencoder.autoencoder</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AngleDihedralCartesianEncoderMap</span><span class="p">,</span>
+    <span class="n">Autoencoder</span><span class="p">,</span>
+    <span class="n">EncoderMap</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">encodermap.callbacks.callbacks</span> <span class="kn">import</span> <span class="n">EncoderMapBaseCallback</span>
+<span class="kn">from</span> <span class="nn">encodermap.loading</span> <span class="kn">import</span> <span class="n">features</span>
+<span class="kn">from</span> <span class="nn">encodermap.loading.featurizer</span> <span class="kn">import</span> <span class="n">Featurizer</span>
+<span class="kn">from</span> <span class="nn">encodermap.misc.function_def</span> <span class="kn">import</span> <span class="n">function</span>
+<span class="kn">from</span> <span class="nn">encodermap.moldata.moldata</span> <span class="kn">import</span> <span class="n">MolData</span>
+<span class="kn">from</span> <span class="nn">encodermap.parameters.parameters</span> <span class="kn">import</span> <span class="n">ADCParameters</span><span class="p">,</span> <span class="n">Parameters</span>
+<span class="kn">from</span> <span class="nn">encodermap.plot.interactive_plotting</span> <span class="kn">import</span> <span class="n">InteractivePlotting</span>
+<span class="kn">from</span> <span class="nn">encodermap.trajinfo.info_all</span> <span class="kn">import</span> <span class="n">TrajEnsemble</span>
+<span class="kn">from</span> <span class="nn">encodermap.trajinfo.info_single</span> <span class="kn">import</span> <span class="n">SingleTraj</span>
+<span class="kn">from</span> <span class="nn">encodermap.trajinfo.repository</span> <span class="kn">import</span> <span class="n">Repository</span>
+
+
+<div class="viewcode-block" id="load"><a class="viewcode-back" href="../encodermap.html#encodermap.load">[docs]</a><span class="k">def</span> <span class="nf">load</span><span class="p">(</span>
+    <span class="n">trajs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">md</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">md</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">]],</span>
+    <span class="n">tops</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">md</span><span class="o">.</span><span class="n">Topology</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">md</span><span class="o">.</span><span class="n">Topology</span><span class="p">]]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">common_str</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;no_load&quot;</span><span class="p">,</span> <span class="s2">&quot;mdtraj&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;no_load&quot;</span><span class="p">,</span>
+    <span class="n">index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">slice</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">traj_num</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">basename_fn</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">SingleTraj</span><span class="p">,</span> <span class="n">TrajEnsemble</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encodermap&#39;s forward facing function to work with MD data of single or more trajectories.</span>
+
+<span class="sd">    Based what&#39;s provided for `trajs`, you either get a `SingleTraj` object, that</span>
+<span class="sd">    collects information about a single traj, or a `TrajEnsemble` object, that</span>
+<span class="sd">    contains information of multiple trajectories (even with different topologies).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        trajs (Union[str, md.Trajectory, Sequence[str], Sequence[md.Trajectory], Sequence[SingleTraj]]):</span>
+<span class="sd">            Here, you can provide a single string pointing to a trajectory on your</span>
+<span class="sd">            computer (`/path/to/traj_file.xtc`) or (`/path/to/protein.pdb`) or</span>
+<span class="sd">            a list of such strings. In the former case, you will get a</span>
+<span class="sd">            `SingleTraj` object which is encodermap&#39;s way of storing data</span>
+<span class="sd">            (positions, CVs, times) of a single trajectory. In</span>
+<span class="sd">            the latter case, you will get a `TrajEnsemble` object, which is</span>
+<span class="sd">            Encodermap&#39;s way of working with mutlipel `SingleTrajs`.</span>
+<span class="sd">        tops (Optional[Union[str, md.Topology, Sequence[str], Sequence[md.Topology]]]):</span>
+<span class="sd">            For this argument, you can provide the topology(ies) of the corresponding traj(s).</span>
+<span class="sd">            Trajectory file formats like `.xtc` and `.dcd` only store atomic positions</span>
+<span class="sd">            and not weights, elements, or bonds. That&#39;s what the `tops` argument is</span>
+<span class="sd">            for. There are some trajectory file formats out there (MDTraj HDF5, AMBER netCDF4)</span>
+<span class="sd">            that store both trajectory and topology in a single file. Also `.pdb`</span>
+<span class="sd">            file can also be used as If you provide</span>
+<span class="sd">            such files for `trajs`, you can leave tops as None. If you provide multiple</span>
+<span class="sd">            files for `trajs`, you can still provide a single `tops` file, if the trajs</span>
+<span class="sd">            in `trajs` share the same topology. If that is not the case, you can either</span>
+<span class="sd">            provide a list of topologies, matched to the trajs in `trajs`, or use the</span>
+<span class="sd">            `common_str` argument to match them. Defaults to None.</span>
+<span class="sd">        common_str (Optional[str, list[str]]): If you provided a different number</span>
+<span class="sd">            of `trajs` and `tops`, this argument is used to match them. Let&#39;s say,</span>
+<span class="sd">            you have 5 trajectories of a wild type protein and 5 trajectories of</span>
+<span class="sd">            a mutant. If the path to these files is somewhat consistent (e.g:</span>
+<span class="sd">                * /path/to/wt/traj1.xtc</span>
+<span class="sd">                * /different/path/to/wt/traj_no_water.xtc</span>
+<span class="sd">                * ...</span>
+<span class="sd">                * /data/path/to/mutant/traj0.xtc</span>
+<span class="sd">                * /data/path/to/mutant/traj0.xtc</span>
+<span class="sd">            ), you can provide `[&#39;wt&#39;, &#39;mutant&#39;]` for the `common_str` argument</span>
+<span class="sd">            and the files are grouped based on the occurence of &#39;wt&#39; and &#39;mutant&#39;</span>
+<span class="sd">            in ther filepaths. Defaults to None.</span>
+<span class="sd">        backend (Literal[&quot;no_load&quot;, &quot;mdtraj&quot;]): Normally, encodermap postpones the</span>
+<span class="sd">            actual loading of the atomic positions until you really need them.</span>
+<span class="sd">            This accelerates the handling of large trajectory ensembles. Choosing</span>
+<span class="sd">            &#39;mdtraj&#39; as the `backend`, all atomic positions are always loaded,</span>
+<span class="sd">            taking up space on your system memory, but accessing positions in</span>
+<span class="sd">            a non-sequential fashion is faster. Defaults to &#39;no_load&#39;.</span>
+<span class="sd">        index (Optional[Union[int, np.ndarray, list[int], slice]]): Only used, if</span>
+<span class="sd">            argument `trajs` is a single trajectory. This argument can be used</span>
+<span class="sd">            to index the trajectory data. If you want to exclude the first 100 frames</span>
+<span class="sd">            of your trajectory, because the protein relaxes from its crystal</span>
+<span class="sd">            structure, you can load it like so:</span>
+<span class="sd">                `em.load(traj_file, top_file, index=slice(100))`</span>
+<span class="sd">            As encodermap lazily evaluates positional data, the `slice(100)` argument</span>
+<span class="sd">            is stored until the data is accessed in which case the first 100 frames are</span>
+<span class="sd">            not accessible. Just like, if you would have deleted them. Besides</span>
+<span class="sd">            a slice, you can also provide int (which returns a single frame at the</span>
+<span class="sd">            requested index) and lists of int (which returns frames at the locations</span>
+<span class="sd">            indexed by the ints in the list). If None is provided the trajectory</span>
+<span class="sd">            data is not sliced/subsampled. Defaults to None.</span>
+<span class="sd">        traj_num (Optional[int]): Only used, if argument `trajs` is a single trajectory.</span>
+<span class="sd">            This argument is meant to organize the `SingleTraj` trajectories in a</span>
+<span class="sd">            `TrajEnsemble` class. Of course you can build your own `TrajEnsemble` from</span>
+<span class="sd">             a list of `SingleTraj`s and provide this list as the `trajs` argument to</span>
+<span class="sd">            `em.load()`. In this case you need to set the `traj_num`s of the `SingleTraj`s</span>
+<span class="sd">            yourself. Defaults to None.</span>
+<span class="sd">        basename_fn (Optional[Callable]): A function to apply to the `traj_file` string to return the</span>
+<span class="sd">            basename of the trajectory. If None is provided, the filename without extension will be used. When</span>
+<span class="sd">            all files are named the same and the folder they&#39;re in defines the name of the trajectory you can supply</span>
+<span class="sd">            `lambda x: split(&#39;/&#39;)[-2]` as this argument. Defaults to None.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; # load a pdb file with 14 frames from rcsb.org</span>
+<span class="sd">        &gt;&gt;&gt; import encodermap as em</span>
+<span class="sd">        &gt;&gt;&gt; traj = em.load(&quot;https://files.rcsb.org/view/1GHC.pdb&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; print(traj)</span>
+<span class="sd">        encodermap.SingleTraj object. Current backend is no_load. Basename is 1GHC. Not containing any CVs.</span>
+<span class="sd">        &gt;&gt;&gt; traj.n_frames</span>
+<span class="sd">        14</span>
+<span class="sd">        &gt;&gt;&gt; # load multiple trajs</span>
+<span class="sd">        &gt;&gt;&gt; trajs = em.load([&#39;https://files.rcsb.org/view/1YUG.pdb&#39;, &#39;https://files.rcsb.org/view/1YUF.pdb&#39;])</span>
+<span class="sd">        &gt;&gt;&gt; # trajs are inernally numbered</span>
+<span class="sd">        &gt;&gt;&gt; print([traj.traj_num for traj in trajs])</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">_np</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">_np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
+        <span class="kn">from</span> <span class="nn">encodermap.trajinfo.info_all</span> <span class="kn">import</span> <span class="n">TrajEnsemble</span>
+
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;The `index` argument is not used when building a trajectory ensemble &quot;</span>
+                <span class="s2">&quot;Use `trajs.subsample()` to reduce the number of frames staged for analysis.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">TrajEnsemble</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">tops</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">common_str</span><span class="p">,</span> <span class="n">basename_fn</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">encodermap.trajinfo.info_single</span> <span class="kn">import</span> <span class="n">SingleTraj</span>
+
+        <span class="k">return</span> <span class="n">SingleTraj</span><span class="p">(</span>
+            <span class="n">trajs</span><span class="p">,</span> <span class="n">tops</span><span class="p">,</span> <span class="n">common_str</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">traj_num</span><span class="p">,</span> <span class="n">basename_fn</span>
+        <span class="p">)</span></div>
+
+
+<span class="c1"># delte unwanted stuff</span>
+<span class="k">del</span> <span class="n">annotations</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
+</pre></div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023, Kevin Sawade, Tobias Lemke.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

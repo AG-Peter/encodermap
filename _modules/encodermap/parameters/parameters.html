@@ -1,0 +1,1158 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>encodermap.parameters.parameters &#8212; encodermap 3.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/encodermap/parameters/parameters';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <h1>Source code for encodermap.parameters.parameters</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># encodermap/parameters/parameters.py</span>
+<span class="c1">################################################################################</span>
+<span class="c1"># Encodermap: A python library for dimensionality reduction.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2019-2022 University of Konstanz and the Authors</span>
+<span class="c1">#</span>
+<span class="c1"># Authors:</span>
+<span class="c1"># Kevin Sawade, Tobias Lemke</span>
+<span class="c1">#</span>
+<span class="c1"># Encodermap is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as</span>
+<span class="c1"># published by the Free Software Foundation, either version 2.1</span>
+<span class="c1"># of the License, or (at your option) any later version.</span>
+<span class="c1"># This package is distributed in the hope that it will be useful to other</span>
+<span class="c1"># researches. IT DOES NOT COME WITH ANY WARRANTY WHATSOEVER; without even the</span>
+<span class="c1"># implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span>
+<span class="c1"># See the GNU Lesser General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">################################################################################</span>
+<span class="sd">&quot;&quot;&quot;Parameter Classes for Encodermap.</span>
+
+<span class="sd">This module contains parameter classes which are used to hold information for</span>
+<span class="sd">the encodermap autoencoder. Parameters can be set from keyworded arguments, by</span>
+<span class="sd">overwriting the class attributes or by reading them from .json, .yaml or ASCII files.</span>
+
+<span class="sd">Features:</span>
+<span class="sd">    * Setting and saving Parameters with the Parameter class.</span>
+<span class="sd">    * Loading parameters from disk and continue where you left off.</span>
+<span class="sd">    * The Parameter and ACDParamter class contains already good default values.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Imports</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+<span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">wrap</span>
+
+<span class="kn">from</span> <span class="nn">.._optional_imports</span> <span class="kn">import</span> <span class="n">_optional_import</span>
+<span class="kn">from</span> <span class="nn">..misc.misc</span> <span class="kn">import</span> <span class="n">_datetime_windows_and_linux_compatible</span><span class="p">,</span> <span class="n">printTable</span>
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Optional Imports</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="n">yaml</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;yaml&quot;</span><span class="p">)</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Typing</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="n">ParametersData</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span>
+    <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="kc">None</span>
+<span class="p">]</span>
+<span class="n">ParametersDict</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ParametersData</span><span class="p">]</span>
+<span class="n">ParametersType</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;Parameters&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;Parent&quot;</span><span class="p">)</span>
+<span class="n">ADCParametersType</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;Parameters&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;Parent&quot;</span><span class="p">)</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Globals</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Parameters&quot;</span><span class="p">,</span> <span class="s2">&quot;ADCParameters&quot;</span><span class="p">]</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Functions</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="k">def</span> <span class="nf">search_and_replace</span><span class="p">(</span>
+    <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">search_pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">replacement</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">out_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">backup</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Searches for a pattern in a text file and replaces it with the replacement</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_path (str): File path of the file to replace the text pattern in.</span>
+<span class="sd">        search_pattern (str): Pattern to search for.</span>
+<span class="sd">        replacement (str): What to replace `search_pattern` with.</span>
+<span class="sd">        out_path (str, optional): path where to write the output file.</span>
+<span class="sd">            If no path is given the original file will be replaced. Defaults to &#39;&#39;.</span>
+<span class="sd">        backup (bool, optional): If backup is true the original file is</span>
+<span class="sd">            renamed to filename.bak before it is overwritten</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; with open(&#39;path/to/file&#39;, &#39;r&#39;) as f:</span>
+<span class="sd">        ...     lines = f.readlines()</span>
+<span class="sd">        &gt;&gt;&gt; print(lines)</span>
+<span class="sd">        This is a Test file.</span>
+<span class="sd">        &gt;&gt;&gt; search_and_replace(&#39;path/to/file&#39;, &#39;Test&#39;, &#39;new Test&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; with open(&#39;path/to/file&#39;, &#39;r&#39;) as f:</span>
+<span class="sd">        ...     lines = f.readlines()</span>
+<span class="sd">        &gt;&gt;&gt; print(lines)</span>
+<span class="sd">        This is a new Test file.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">file_data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="n">file_data</span> <span class="o">=</span> <span class="n">file_data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">search_pattern</span><span class="p">,</span> <span class="n">replacement</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">out_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">out_path</span> <span class="o">=</span> <span class="n">file_path</span>
+        <span class="k">if</span> <span class="n">backup</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">file_path</span> <span class="o">+</span> <span class="s2">&quot;.bak&quot;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file_data</span><span class="p">)</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Classes</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="k">class</span> <span class="nc">ParametersFramework</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to work with Parameters in the form of dict or attributes.</span>
+
+<span class="sd">    Parameters can be set via keyword args in init, set as</span>
+<span class="sd">    instance attributes or read from disk. Can write parameters</span>
+<span class="sd">    to disk in .yaml or .json format.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        main_path (str): The main path of the parameter class.</span>
+<span class="sd">        defaults (dict): The defaults passed into the Parent Class by the child classes</span>
+<span class="sd">            Parameters() and ACDParameters()</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">        save ():</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">n_neurons</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">activation_functions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">defaults</span><span class="p">:</span> <span class="n">ParametersDict</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">ParametersData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate the ParametersFramework class.</span>
+
+<span class="sd">        This class is not meant to be used alone, but as a parent class for</span>
+<span class="sd">        different parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            defaults (dict): A dictionary of default values.</span>
+<span class="sd">            **kwargs: Arbitrary keyword arguments. If these arguments are not</span>
+<span class="sd">                keys of the `defaults` dictionary, they will be ignored.</span>
+<span class="sd">                Otherwise, they will overwrite the keys in the defaults dict.</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span> <span class="o">=</span> <span class="n">defaults</span>
+
+        <span class="c1"># overwrite class defaults with user input **kwargs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;n_epochs&quot;</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span>
+                        <span class="s2">&quot;Parameter `n_epochs` and `n_steps_per_epoch` is deprecated. Use `n_steps` instead.&quot;</span>
+                    <span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dropping unknown dict entry for </span><span class="se">{{</span><span class="s2">&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="se">}}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_neurons</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activation_functions</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Length of `n_neurons` and `activation_functions` (-1) does not match: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_neurons</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">activation_functions</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save parameters in json format or yaml format.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path (str, optional): Path where parameters should be saved. Possible extensions are &#39;.json&#39; and &#39;.yaml&#39;.</span>
+<span class="sd">                If no path is given main_path/parameters.json is used. Defaults to &#39;&#39;.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The path where the parameters were saved.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;parameters.json&quot;</span><span class="p">)</span>
+            <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;json&quot;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">filename</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">time</span> <span class="o">=</span> <span class="n">_datetime_windows_and_linux_compatible</span><span class="p">()</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">filename</span> <span class="o">+</span> <span class="s2">&quot;_back_&quot;</span> <span class="o">+</span> <span class="n">time</span> <span class="o">+</span> <span class="n">extension</span><span class="p">)</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">fmt</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;json&quot;</span><span class="p">,</span> <span class="s2">&quot;yaml&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unrecognized extension .</span><span class="si">{</span><span class="n">fmt</span><span class="si">}</span><span class="s2">. Please provide either &#39;.json&#39; or &#39;.yaml&#39;&quot;</span>
+            <span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span><span class="p">:</span>
+                <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">path</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: A string that contains tabulated parameter values.&quot;&quot;&quot;</span>
+        <span class="n">doc_p</span> <span class="o">=</span> <span class="n">Parameters</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;Attributes:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;Examples:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">doc_p</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;        &quot;</span><span class="p">),</span> <span class="n">doc_p</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()))</span>
+            <span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">ADCParameters</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;Attributes:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;Examples:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;        &quot;</span><span class="p">),</span> <span class="n">doc</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()))</span>
+            <span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">doc_p</span> <span class="o">+</span> <span class="n">doc</span>
+        <span class="n">descr_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">doc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;):&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">descr</span> <span class="o">=</span> <span class="n">doc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;): &quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="k">if</span> <span class="s2">&quot;):&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">descr</span> <span class="o">=</span> <span class="n">descr</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">line</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">descr_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">descr</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;):&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">descr</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;): &quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">descr_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">descr</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="p">:</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;Parameter&quot;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span>
+                        <span class="s2">&quot;Value&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">,</span>
+                        <span class="s2">&quot;Description&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">wrap</span><span class="p">(</span><span class="n">descr_dict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mi">50</span><span class="p">)),</span>
+                    <span class="p">}</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="n">printTable</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">ParametersType</span><span class="p">,</span> <span class="n">ADCParametersType</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alternative constructor for ParameterFramework classes.</span>
+
+<span class="sd">        Reads a file and sets the attributes based on that.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path (str): Path to the parameters.json or parameters.yaml file</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ParametersFramework: A new ParametersFramework class.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span><span class="p">:</span>
+                <span class="n">params</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;yaml&quot;</span><span class="p">:</span>
+                <span class="n">params</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;The extension of the provided file should be `.json`, or `.yaml`. You provided </span><span class="si">{</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;n_epochs&quot;</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Detected old definition `n_epochs` and `n_steps_per_epoch`. I will change that to `n_steps` = `n_epochs` * `n_steps_per_epoch`.&quot;</span>
+            <span class="p">)</span>
+            <span class="n">params</span><span class="p">[</span><span class="s2">&quot;n_steps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;n_epochs&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;n_steps_per_epoch&quot;</span><span class="p">]</span>
+
+            <span class="c1"># also check soft start</span>
+            <span class="k">if</span> <span class="s2">&quot;cartesian_cost_scale_soft_start&quot;</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;cartesian_cost_scale_soft_start&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="n">params</span><span class="p">[</span>
+                    <span class="s2">&quot;cartesian_cost_scale_soft_start&quot;</span>
+                <span class="p">]</span> <span class="o">!=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+                    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;cartesian_cost_scale_soft_start&quot;</span><span class="p">]</span>
+                    <span class="n">a</span> <span class="o">*=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;n_steps_per_epoch&quot;</span><span class="p">]</span>
+                    <span class="n">b</span> <span class="o">*=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;n_steps_per_epoch&quot;</span><span class="p">]</span>
+                    <span class="n">params</span><span class="p">[</span><span class="s2">&quot;cartesian_cost_scale_soft_start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+            <span class="c1"># fix summary step and checkpoint_step</span>
+            <span class="n">params</span><span class="p">[</span><span class="s2">&quot;summary_step&quot;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;n_steps_per_epoch&quot;</span><span class="p">]</span>
+            <span class="n">params</span><span class="p">[</span><span class="s2">&quot;checkpoint_step&quot;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;n_steps_per_epoch&quot;</span><span class="p">]</span>
+
+            <span class="k">del</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;n_epochs&quot;</span><span class="p">]</span>
+            <span class="k">del</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;n_steps_per_epoch&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">ParametersType</span><span class="p">,</span> <span class="n">ADCParametersType</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads the parameters saved in a .json or .yaml file into a new Parameter object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path (str): Path to the parameters.json or parameters.yaml file</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ParametersFramework: A new ParametersFramework class.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span><span class="p">:</span>
+                <span class="n">params</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;yaml&quot;</span><span class="p">:</span>
+                <span class="n">params</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;The extension of the provided file should be `.json`, or `.yaml`. You provided </span><span class="si">{</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;n_epochs&quot;</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Detected old definition `n_epochs` and `n_steps_per_epoch`. I will change that to `n_steps` = `n_epochs` * `n_steps_per_epoch`.&quot;</span>
+            <span class="p">)</span>
+            <span class="n">params</span><span class="p">[</span><span class="s2">&quot;n_steps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;n_epochs&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;n_steps_per_epoch&quot;</span><span class="p">]</span>
+            <span class="k">del</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;n_epochs&quot;</span><span class="p">]</span>
+            <span class="k">del</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;n_steps_per_epoch&quot;</span><span class="p">]</span>
+
+        <span class="c1"># check whether the parameters file has been moved and update it accordingly.</span>
+        <span class="k">if</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;main_path&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;seems like the parameter file was moved to another directory. Parameter file is updated ...&quot;</span>
+            <span class="p">)</span>
+            <span class="n">search_and_replace</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;main_path&quot;</span><span class="p">],</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span><span class="p">:</span>
+                    <span class="n">params</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;yaml&quot;</span><span class="p">:</span>
+                    <span class="n">params</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;The extension of the provided file should be `.json`, or `.yaml`. You provided </span><span class="si">{</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">ParametersData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates the values of `self`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **kwargs: Arbitrary keyword arguments. If these arguments are not</span>
+<span class="sd">                keys of the `self.defaults` dictionary, they will be ignored.</span>
+<span class="sd">                Otherwise, they will overwrite the keys in the defaults dict.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dropping unknown dict entry for </span><span class="se">{{</span><span class="s2">&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="se">}}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">:</span> <span class="n">ParametersDict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates the values of `self.`</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dictionary (dict):</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;cartesian_cost_scale_soft_start&quot;</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;cartesian_cost_scale_soft_start&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">dictionary</span><span class="p">[</span>
+                <span class="s2">&quot;cartesian_cost_scale_soft_start&quot;</span>
+            <span class="p">]</span> <span class="o">!=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;cartesian_cost_scale_soft_start&quot;</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                        <span class="s2">&quot;Parameter cartesian_cost_scale_soft_start only takes a tuple of len 2.&quot;</span>
+                    <span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__setitiem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">ParametersData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Implements the setitem method. Values can be set like so:</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; from encodermap import Parameters</span>
+<span class="sd">            &gt;&gt;&gt; p = Parameters()</span>
+<span class="sd">            &gt;&gt;&gt; p[&quot;center_cost_scale&quot;] = 2.5</span>
+<span class="sd">            &gt;&gt;&gt; p[&quot;center_cost_scale&quot;]</span>
+<span class="sd">            2.5</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;cartesian_cost_scale_soft_start&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">!=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                        <span class="s2">&quot;Parameter cartesian_cost_scale_soft_start only takes a tuple of len 2.&quot;</span>
+                    <span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParametersData</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Implements the getitem method. Get items with instance[key].&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_string_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a short summary of a parameter class. Additionally, adds info about non-standard values.&quot;&quot;&quot;</span>
+        <span class="n">check_defaults</span> <span class="o">=</span> <span class="n">Parameters</span><span class="o">.</span><span class="n">defaults</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;ADCParameters&quot;</span><span class="p">:</span>
+            <span class="n">check_defaults</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ADCParameters</span><span class="o">.</span><span class="n">defaults</span><span class="p">)</span>
+        <span class="n">diff_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+            <span class="nb">filter</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="n">check_defaults</span><span class="p">[</span><span class="n">x</span><span class="p">],</span>
+                <span class="n">check_defaults</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> class with Main path at </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">main_path</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">diff_keys</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Non-standard value of </span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="n">diff_keys</span> <span class="o">==</span> <span class="p">[]:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot; All parameters are set to default values.&quot;</span>
+        <span class="k">return</span> <span class="n">s</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_string_summary</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_string_summary</span><span class="p">()</span><span class="si">}</span><span class="s2"> Object at 0x</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">:</span><span class="s2">02x</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+
+
+<div class="viewcode-block" id="Parameters"><a class="viewcode-back" href="../../../reference/parameter_classes.html#encodermap.Parameters">[docs]</a><span class="k">class</span> <span class="nc">Parameters</span><span class="p">(</span><span class="n">ParametersFramework</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to hold Parameters for the Autoencoder</span>
+
+<span class="sd">    Parameters can be set via keyword args while instantiating the class, set as</span>
+<span class="sd">    instance attributes or read from disk. This class can write parameters</span>
+<span class="sd">    to disk in .yaml or .json format.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        defaults (dict): Classvariable dict that holds the defaults</span>
+<span class="sd">            even when the current values might have changed.</span>
+<span class="sd">        main_path (str): Defines a main path where the parameters and other things might be stored.</span>
+<span class="sd">        n_neurons (list of int): List containing number of neurons for each layer up to the bottleneck layer.</span>
+<span class="sd">            For example [128, 128, 2] stands for an autoencoder with the following architecture</span>
+<span class="sd">            {i, 128, 128, 2, 128, 128, i} where i is the number of dimensions of the input data.</span>
+<span class="sd">            These are Input/Output Layers that are not trained.</span>
+<span class="sd">        activation_functions (list of str): List of activation function names as implemented in TensorFlow.</span>
+<span class="sd">            For example: &quot;relu&quot;, &quot;tanh&quot;, &quot;sigmoid&quot; or &quot;&quot; to use no activation function.</span>
+<span class="sd">            The encoder part of the network takes the activation functions</span>
+<span class="sd">            from the list starting with the second element. The decoder part of</span>
+<span class="sd">            the network takes the activation functions in reversed order starting with</span>
+<span class="sd">            the second element form the back. For example [&quot;&quot;, &quot;relu&quot;, &quot;tanh&quot;, &quot;&quot;] would</span>
+<span class="sd">            result in a autoencoder with {&quot;relu&quot;, &quot;tanh&quot;, &quot;&quot;, &quot;tanh&quot;, &quot;relu&quot;, &quot;&quot;} as</span>
+<span class="sd">            sequence of activation functions.</span>
+<span class="sd">        periodicity (float): Defines the distance between periodic walls for the inputs.</span>
+<span class="sd">            For example 2pi for angular values in radians.</span>
+<span class="sd">            All periodic data processed by EncoderMap must be wrapped to one periodic window.</span>
+<span class="sd">            E.g. data with 2pi periodicity may contain values from -pi to pi or from 0 to 2pi.</span>
+<span class="sd">            Set the periodicity to float(&quot;inf&quot;) for non-periodic inputs.</span>
+<span class="sd">        learning_rate (float): Learning rate used by the optimizer.</span>
+<span class="sd">        n_steps (int): Number of training steps.</span>
+<span class="sd">        batch_size (int): Number of training points used in each training step</span>
+<span class="sd">        summary_step (int): A summary for TensorBoard is writen every summary_step steps.</span>
+<span class="sd">        checkpoint_step (int): A checkpoint is writen every checkpoint_step steps.</span>
+<span class="sd">        dist_sig_parameters (tuple of floats): Parameters for the sigmoid</span>
+<span class="sd">            functions applied to the high- and low-dimensional distances</span>
+<span class="sd">            in the following order (sig_h, a_h, b_h, sig_l, a_l, b_l)</span>
+<span class="sd">        distance_cost_scale (int): Adjusts how much the distance based metric is weighted in the cost function.</span>
+<span class="sd">        auto_cost_scale (int): Adjusts how much the autoencoding cost is weighted in the cost function.</span>
+<span class="sd">        auto_cost_variant (str): defines how the auto cost is calculated. Must be one of:</span>
+<span class="sd">            * `mean_square`</span>
+<span class="sd">            * `mean_abs`</span>
+<span class="sd">            * `mean_norm`</span>
+<span class="sd">        center_cost_scale (float): Adjusts how much the centering cost is weighted in the cost function.</span>
+<span class="sd">        l2_reg_constant (float): Adjusts how much the L2 regularisation is weighted in the cost function.</span>
+<span class="sd">        gpu_memory_fraction (float): Specifies the fraction of gpu memory blocked.</span>
+<span class="sd">            If set to 0, memory is allocated as needed.</span>
+<span class="sd">        analysis_path (str): A path that can be used to store analysis</span>
+<span class="sd">        id (str): Can be any name for the run. Might be useful for example for</span>
+<span class="sd">            specific analysis for different data sets.</span>
+<span class="sd">        model_api (str): A string defining the API to be used to build the keras model.</span>
+<span class="sd">            Defaults to `sequntial`. Possible strings are:</span>
+<span class="sd">            * `functional` will use keras&#39; functional API.</span>
+<span class="sd">            * `sequential` will define a keras Model, containing two other models with the Sequential API.</span>
+<span class="sd">                These two models are encoder and decoder.</span>
+<span class="sd">            * `custom` will create a custom Model where even the layers are custom.</span>
+<span class="sd">        loss (str): A string defining the loss function.</span>
+<span class="sd">                Defaults to `emap_cost`. Possible losses are:</span>
+<span class="sd">                * `reconstruction_loss` will try to train output == input</span>
+<span class="sd">                * `mse`: Returns a mean squared error loss.</span>
+<span class="sd">                * `emap_cost` is the EncoderMap loss function. Depending on the class `Autoencoder`,</span>
+<span class="sd">                    `Encodermap, `ACDAutoencoder`, different contributions are used for a combined loss.</span>
+<span class="sd">                    Autoencoder uses atuo_cost, reg_cost, center_cost.</span>
+<span class="sd">                    EncoderMap class adds sigmoid_loss.</span>
+<span class="sd">        batched (bool): Whether the dataset is batched or not.</span>
+<span class="sd">        training (str): A string defining what kind of training is performed when autoencoder.train() is callsed.</span>
+<span class="sd">            * `auto` does a regular model.compile() and model.fit() procedure.</span>
+<span class="sd">            * `custom` uses gradient tape and calculates losses and gradients manually.</span>
+<span class="sd">        tensorboard (bool): Whether to print tensorboard information. Defaults to False.</span>
+<span class="sd">        seed (Union[int, None]): Fixes the state of all operations using random numbers. Defaults to None.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; import encodermap as em</span>
+<span class="sd">        &gt;&gt;&gt; paramters = em.Parameters()</span>
+<span class="sd">        &gt;&gt;&gt; parameters.auto_cost_variant</span>
+<span class="sd">        mean_abs</span>
+<span class="sd">        &gt;&gt;&gt; parameters.save(path=&#39;/path/to/dir&#39;)</span>
+<span class="sd">        /path/to/dir/parameters.json</span>
+<span class="sd">        &gt;&gt;&gt; # alternative constructor</span>
+<span class="sd">        &gt;&gt;&gt; new_params = em.Parameters.from_file(&#39;/path/to/dir/parameters.json&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; new_params.main_path</span>
+<span class="sd">        /path/to/dir/parameters.json</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">defaults</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">n_neurons</span><span class="o">=</span><span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="n">activation_functions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;tanh&quot;</span><span class="p">,</span> <span class="s2">&quot;tanh&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">],</span>
+        <span class="n">periodicity</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span><span class="p">,</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+        <span class="n">n_steps</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+        <span class="n">summary_step</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">checkpoint_step</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span>
+        <span class="n">dist_sig_parameters</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+        <span class="n">distance_cost_scale</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+        <span class="n">auto_cost_scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">auto_cost_variant</span><span class="o">=</span><span class="s2">&quot;mean_abs&quot;</span><span class="p">,</span>
+        <span class="n">center_cost_scale</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span>
+        <span class="n">l2_reg_constant</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+        <span class="n">gpu_memory_fraction</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">analysis_path</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">model_api</span><span class="o">=</span><span class="s2">&quot;sequential&quot;</span><span class="p">,</span>
+        <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;emap_cost&quot;</span><span class="p">,</span>
+        <span class="n">training</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+        <span class="n">batched</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">tensorboard</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="Parameters.__init__"><a class="viewcode-back" href="../../../reference/parameter_classes.html#encodermap.Parameters.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">ParametersData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate the Parameters class</span>
+
+<span class="sd">        Takes a dict as input and overwrites the class defaults. The dict is directly</span>
+<span class="sd">        stored as an attribute and can be accessed via instance attributes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **kwargs (dcit): Dict containing values. If unknown keys are passed they will be dropped.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># set class variable defaults to be instance variable</span>
+        <span class="k">if</span> <span class="s2">&quot;defaults&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;defaults&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Parameters.defaults_description"><a class="viewcode-back" href="../../../reference/parameter_classes.html#encodermap.Parameters.defaults_description">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">defaults_description</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: A string that contains tabulated default parameter values.&quot;&quot;&quot;</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;Attributes:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;Examples:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;        &quot;</span><span class="p">),</span> <span class="n">doc</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()))</span>
+            <span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="n">descr_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">doc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;):&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">descr</span> <span class="o">=</span> <span class="n">doc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;): &quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="k">if</span> <span class="s2">&quot;):&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">descr</span> <span class="o">=</span> <span class="n">descr</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">line</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">descr_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">descr</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;):&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">descr</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;): &quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">descr_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">descr</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;Parameter&quot;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span>
+                    <span class="s2">&quot;Default Value&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">,</span>
+                    <span class="s2">&quot;Description&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">wrap</span><span class="p">(</span><span class="n">descr_dict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mi">50</span><span class="p">)),</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">printTable</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ADCParameters"><a class="viewcode-back" href="../../../reference/parameter_classes.html#encodermap.ADCParameters">[docs]</a><span class="k">class</span> <span class="nc">ADCParameters</span><span class="p">(</span><span class="n">ParametersFramework</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This is the parameter object for the AngleDihedralCartesianEncoder.</span>
+<span class="sd">    It holds all the parameters that the Parameters object includes, plus the following attributes:</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        cartesian_pwd_start (int): Index of the first atom to use for the pairwise distance calculation.</span>
+<span class="sd">        cartesian_pwd_stop (int): Index of the last atom to use for the pairwise distance calculation.</span>
+<span class="sd">        cartesian_pwd_step (int):  Step for the calculation of paiwise distances. E.g. for a chain of atoms</span>
+<span class="sd">            N-C_a-C-N-C_a-C... cartesian_pwd_start=1 and cartesian_pwd_step=3 will result in using all C-alpha atoms for the</span>
+<span class="sd">            pairwise distance calculation.</span>
+<span class="sd">        use_backbone_angles (bool): Allows to define whether backbone bond angles should be learned (True) or if instead mean</span>
+<span class="sd">            values should be used to generate conformations (False).</span>
+<span class="sd">        use_sidechains (bool): Whether sidechain dihedrals should be passed through the autoencoder.</span>
+<span class="sd">        angle_cost_scale (int): Adjusts how much the angle cost is weighted in the cost function.</span>
+<span class="sd">        angle_cost_variant (str): Defines how the angle cost is calculated. Must be one of:</span>
+<span class="sd">            * &quot;mean_square&quot;</span>
+<span class="sd">            * &quot;mean_abs&quot;</span>
+<span class="sd">            * &quot;mean_norm&quot;.</span>
+<span class="sd">        angle_cost_reference (int): Can be used to normalize the angle cost with the cost of same reference model (dummy).</span>
+<span class="sd">        dihedral_cost_scale (int): Adjusts how much the dihedral cost is weighted in the cost function.</span>
+<span class="sd">        dihedral_cost_variant (str): Defines how the dihedral cost is calculated. Must be one of:</span>
+<span class="sd">            * &quot;mean_square&quot;</span>
+<span class="sd">            * &quot;mean_abs&quot;</span>
+<span class="sd">            * &quot;mean_norm&quot;.</span>
+<span class="sd">        dihedral_cost_reference (int): Can be used to normalize the dihedral cost with the cost of same reference model (dummy).</span>
+<span class="sd">        side_dihedral_cost_scale (int): Adjusts how much the side dihedral cost is weighted in the cost function.</span>
+<span class="sd">        side_dihedral_cost_variant (str): Defines how the side dihedral cost is calculated. Must be one of:</span>
+<span class="sd">            * &quot;mean_square&quot;</span>
+<span class="sd">            * &quot;mean_abs&quot;</span>
+<span class="sd">            * &quot;mean_norm&quot;.</span>
+<span class="sd">        side_dihedral_cost_reference (int): Can be used to normalize the side dihedral cost with the cost of same reference model (dummy).</span>
+<span class="sd">        cartesian_cost_scale (int): Adjusts how much the cartesian cost is weighted in the cost function.</span>
+<span class="sd">        cartesian_cost_scale_soft_start (tuple): Allows to slowly turn on the cartesian cost. Must be a tuple with</span>
+<span class="sd">            (start, end) or (None, None) If begin and end are given, cartesian_cost_scale will be increased linearly in the</span>
+<span class="sd">            given range.</span>
+<span class="sd">        cartesian_cost_variant (str): Defines how the cartesian cost is calculated. Must be one of:</span>
+<span class="sd">            * &quot;mean_square&quot;</span>
+<span class="sd">            * &quot;mean_abs&quot;</span>
+<span class="sd">            * &quot;mean_norm&quot;.</span>
+<span class="sd">        cartesian_cost_reference (int): Can be used to normalize the cartesian cost with the cost of same reference model (dummy).</span>
+<span class="sd">        cartesian_dist_sig_parameters (tuple of floats): Parameters for the sigmoid functions applied to the high- and low-dimensional</span>
+<span class="sd">            distances in the following order (sig_h, a_h, b_h, sig_l, a_l, b_l).</span>
+<span class="sd">        cartesian_distance_cost_scale (int): Adjusts how much the cartesian distance cost is weighted in the cost function.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; import encodermap as em</span>
+<span class="sd">        &gt;&gt;&gt; parameters = em.ADCParameters()</span>
+<span class="sd">        &gt;&gt;&gt; parameters.auto_cost_variant</span>
+<span class="sd">        mean_abs</span>
+<span class="sd">        &gt;&gt;&gt; parameters.save(path=&#39;/path/to/dir&#39;)</span>
+<span class="sd">        /path/to/dir/parameters.json</span>
+<span class="sd">        &gt;&gt;&gt; # alternative constructor</span>
+<span class="sd">        &gt;&gt;&gt; new_params = em.Parameters.from_file(&#39;/path/to/dir/parameters.json&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; new_params.main_path</span>
+<span class="sd">        /path/to/dir/parameters.json</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">defaults</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">Parameters</span><span class="o">.</span><span class="n">defaults</span><span class="p">,</span>
+        <span class="o">**</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">model_api</span><span class="o">=</span><span class="s2">&quot;functional&quot;</span><span class="p">,</span>  <span class="c1"># overwrite main class. Functional allows multiple in and outputs.</span>
+            <span class="n">cartesian_pwd_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">cartesian_pwd_stop</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">cartesian_pwd_step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">use_backbone_angles</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">use_sidechains</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">angle_cost_scale</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">angle_cost_variant</span><span class="o">=</span><span class="s2">&quot;mean_abs&quot;</span><span class="p">,</span>
+            <span class="n">angle_cost_reference</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">dihedral_cost_scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">dihedral_cost_variant</span><span class="o">=</span><span class="s2">&quot;mean_abs&quot;</span><span class="p">,</span>
+            <span class="n">dihedral_cost_reference</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">side_dihedral_cost_scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+            <span class="n">side_dihedral_cost_variant</span><span class="o">=</span><span class="s2">&quot;mean_abs&quot;</span><span class="p">,</span>
+            <span class="n">side_dihedral_cost_reference</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">cartesian_cost_scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">cartesian_cost_scale_soft_start</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>  <span class="c1"># begin, end</span>
+            <span class="n">cartesian_cost_variant</span><span class="o">=</span><span class="s2">&quot;mean_abs&quot;</span><span class="p">,</span>
+            <span class="n">cartesian_cost_reference</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">cartesian_dist_sig_parameters</span><span class="o">=</span><span class="n">Parameters</span><span class="o">.</span><span class="n">defaults</span><span class="p">[</span><span class="s2">&quot;dist_sig_parameters&quot;</span><span class="p">],</span>
+            <span class="n">cartesian_distance_cost_scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">auto_cost_scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">distance_cost_scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="ADCParameters.__init__"><a class="viewcode-back" href="../../../reference/parameter_classes.html#encodermap.ADCParameters.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">ParametersData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate the ADCParameters class</span>
+
+<span class="sd">        Takes a dict as input and overwrites the class defaults. The dict is directly</span>
+<span class="sd">        stored as an attribute and can be accessed via instance attributes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **kwargs (dict): Dict containing values. If unknown values are passed they will be dropped.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;cartesian_cost_scale_soft_start&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;cartesian_cost_scale_soft_start&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">kwargs</span><span class="p">[</span>
+                <span class="s2">&quot;cartesian_cost_scale_soft_start&quot;</span>
+            <span class="p">]</span> <span class="o">!=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;cartesian_cost_scale_soft_start&quot;</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                        <span class="s2">&quot;Parameter cartesian_cost_scale_soft_start only takes a tuple of len 2.&quot;</span>
+                    <span class="p">)</span>
+        <span class="c1"># set class variable defaults to be instance variable</span>
+        <span class="k">if</span> <span class="s2">&quot;defaults&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;defaults&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ADCParameters.defaults_description"><a class="viewcode-back" href="../../../reference/parameter_classes.html#encodermap.ADCParameters.defaults_description">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">defaults_description</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: A string that contains tabulated default parameter values.&quot;&quot;&quot;</span>
+        <span class="n">doc_p</span> <span class="o">=</span> <span class="n">Parameters</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;Attributes:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;Examples:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">doc_p</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;        &quot;</span><span class="p">),</span> <span class="n">doc_p</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()))</span>
+            <span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;Attributes:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;Examples:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;        &quot;</span><span class="p">),</span> <span class="n">doc</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()))</span>
+            <span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">doc_p</span> <span class="o">+</span> <span class="n">doc</span>
+        <span class="n">descr_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">doc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;):&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">descr</span> <span class="o">=</span> <span class="n">doc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;): &quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;):&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">descr</span> <span class="o">=</span> <span class="n">descr</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">line</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">descr_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">descr</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;):&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">descr</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;): &quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">descr_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">descr</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;Parameter&quot;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span>
+                    <span class="s2">&quot;Default Value&quot;</span><span class="p">:</span> <span class="n">value</span><span class="p">,</span>
+                    <span class="s2">&quot;Description&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">wrap</span><span class="p">(</span><span class="n">descr_dict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mi">50</span><span class="p">)),</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">printTable</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div></div>
+</pre></div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023, Kevin Sawade, Tobias Lemke.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1754 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>encodermap.trajinfo.info_single &#8212; encodermap 3.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/encodermap/trajinfo/info_single';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+                        Getting started
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference/index.html">
+                        API reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <h1>Source code for encodermap.trajinfo.info_single</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># encodermap/trajinfo/info_single.py</span>
+<span class="c1">################################################################################</span>
+<span class="c1"># Encodermap: A python library for dimensionality reduction.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2019-2022 University of Konstanz and the Authors</span>
+<span class="c1">#</span>
+<span class="c1"># Authors:</span>
+<span class="c1"># Kevin Sawade</span>
+<span class="c1">#</span>
+<span class="c1"># Encodermap is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as</span>
+<span class="c1"># published by the Free Software Foundation, either version 2.1</span>
+<span class="c1"># of the License, or (at your option) any later version.</span>
+<span class="c1"># This package is distributed in the hope that it will be useful to other</span>
+<span class="c1"># researches. IT DOES NOT COME WITH ANY WARRANTY WHATSOEVER; without even the</span>
+<span class="c1"># implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span>
+<span class="c1"># See the GNU Lesser General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">################################################################################</span>
+<span class="sd">&quot;&quot;&quot;Classes to work with ensembles of trajectories.</span>
+
+<span class="sd">The statistics of a protein can be better described by an ensemble of proteins,</span>
+<span class="sd">rather than a single long trajectory. Treating a protein in such a way opens great</span>
+<span class="sd">possibilities and changes the way one can treat molecular dynamics data.</span>
+<span class="sd">Trajectory ensembles allow:</span>
+<span class="sd">    * Faster convergence via adaptive sampling.</span>
+<span class="sd">    * Better anomaly detection of unique structural states.</span>
+
+
+<span class="sd">This subpackage contains two classes which are containers of trajecotry data.</span>
+<span class="sd">The SingleTraj trajecotry contains information about a single trajecotry.</span>
+<span class="sd">The TrajEnsemble class contains information about multiple trajectories. This adds</span>
+<span class="sd">a new dimension to MD data. The time and atom dimension are already established.</span>
+<span class="sd">Two frames can be appended along the time axis to get a trajectory with multiple</span>
+<span class="sd">frames. If they are appended along the atom axis, the new frame contains the</span>
+<span class="sd">atoms of these two. The trajectory works in a similar fashion. Adding two trajectories</span>
+<span class="sd">along the trajectory axis returns a trajectory ensemble, represented as an TrajEnsemble</span>
+<span class="sd">class in this package.</span>
+
+<span class="sd">See also:</span>
+<span class="sd">    http://statisticalbiophysicsblog.org/?p=92</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Imports</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">errno</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.._optional_imports</span> <span class="kn">import</span> <span class="n">_optional_import</span>
+<span class="kn">from</span> <span class="nn">..misc.errors</span> <span class="kn">import</span> <span class="n">BadError</span>
+<span class="kn">from</span> <span class="nn">..misc.misc</span> <span class="kn">import</span> <span class="n">_TOPOLOGY_EXTS</span>
+<span class="kn">from</span> <span class="nn">..misc.xarray</span> <span class="kn">import</span> <span class="n">construct_xarray_from_numpy</span>
+<span class="kn">from</span> <span class="nn">..misc.xarray_save_wrong_hdf5</span> <span class="kn">import</span> <span class="n">save_netcdf_alongside_mdtraj</span>
+<span class="kn">from</span> <span class="nn">.info_all</span> <span class="kn">import</span> <span class="n">TrajEnsemble</span>
+<span class="kn">from</span> <span class="nn">.load_traj</span> <span class="kn">import</span> <span class="n">_load_traj</span>
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Optional Imports</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="n">md</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">)</span>
+<span class="n">mda</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;MDAnalysis&quot;</span><span class="p">)</span>
+<span class="n">h5</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;h5py&quot;</span><span class="p">)</span>
+<span class="n">xr</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;xarray&quot;</span><span class="p">)</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Typing</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">h5py</span> <span class="k">as</span> <span class="nn">h5</span>
+    <span class="kn">import</span> <span class="nn">MDAnalysis</span> <span class="k">as</span> <span class="nn">mda</span>
+    <span class="kn">import</span> <span class="nn">mdtraj</span> <span class="k">as</span> <span class="nn">md</span>
+    <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+
+    <span class="kn">from</span> <span class="nn">.trajinfo_utils</span> <span class="kn">import</span> <span class="n">SingleTrajFeatureType</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Globals</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SingleTraj&quot;</span><span class="p">]</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Utilities</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="k">def</span> <span class="nf">combine_attrs</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;length_units&quot;</span><span class="p">:</span> <span class="s2">&quot;nm&quot;</span><span class="p">,</span> <span class="s2">&quot;time_units&quot;</span><span class="p">:</span> <span class="s2">&quot;ps&quot;</span><span class="p">,</span> <span class="s2">&quot;angle_units&quot;</span><span class="p">:</span> <span class="s2">&quot;rad&quot;</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">attr</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;full_path&quot;</span><span class="p">,</span> <span class="s2">&quot;topology_file&quot;</span><span class="p">,</span> <span class="s2">&quot;feature_axis&quot;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">out</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                        <span class="n">out</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">out</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">out</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">val</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">out</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">out</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<span class="k">class</span> <span class="nc">Capturing</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to capture print statements from function calls.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; # write a function</span>
+<span class="sd">        &gt;&gt;&gt; def my_func(arg=&#39;argument&#39;):</span>
+<span class="sd">        ...     print(arg)</span>
+<span class="sd">        ...     return(&#39;fin&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; # use capturing context manager</span>
+<span class="sd">        &gt;&gt;&gt; with Capturing() as output:</span>
+<span class="sd">        ...     my_func(&#39;new_argument&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; print(output)</span>
+<span class="sd">        [&#39;new_argument&#39;, &quot;&#39;fin&#39;&quot;]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stringio</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stringio</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stringio</span>  <span class="c1"># free up some memory</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stdout</span>
+
+
+<span class="k">def</span> <span class="nf">_hash_numpy_array</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">hash_value</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">hash_value</span> <span class="o">^=</span> <span class="nb">hash</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">strides</span><span class="p">)</span>
+    <span class="n">hash_value</span> <span class="o">^=</span> <span class="nb">hash</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">tobytes</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">hash_value</span>
+
+
+<span class="c1">##############################################################################</span>
+<span class="c1"># Classes</span>
+<span class="c1">##############################################################################</span>
+
+
+<div class="viewcode-block" id="SingleTraj"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj">[docs]</a><span class="k">class</span> <span class="nc">SingleTraj</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class contains the info about a single trajectory.</span>
+
+<span class="sd">    This class contains many of the attributes and methods of mdtraj&#39;s Trajectory.</span>
+<span class="sd">    It is meant to be used as a single trajectory in a ensemble defined in the</span>
+<span class="sd">    TrajEnsemble class. Other than the standard mdtraj Trajectory this class loads the</span>
+<span class="sd">    MD data only when needed. The location of the file and other attributes like</span>
+<span class="sd">    a single integer index (single frame of trajectory) or a list of integers</span>
+<span class="sd">    (multiple frames of the same traj) are stored until the traj is accessed via the</span>
+<span class="sd">    `SingleTraj.traj` attribute. The returned traj is a mdtraj Trajectory</span>
+<span class="sd">    with the correct number of frames in the correct sequence.</span>
+
+<span class="sd">    Furthermore this class keeps track of your collective variables. Oftentimes</span>
+<span class="sd">    the raw xyz data of a trajectory is not needed and suitable CVs are selected</span>
+<span class="sd">    to represent a protein via internal coordinates (torsions, pairwise distances, etc.).</span>
+<span class="sd">    This class keeps tack of your CVs. Whether you call them `highd` or</span>
+<span class="sd">    `torsions`, this class keeps track of everything and returns the values when</span>
+<span class="sd">    you need them.</span>
+
+<span class="sd">    SingleTraj supports fancy indexing, so you can extract one or more frames</span>
+<span class="sd">    from a Trajectory as a separate trajectory. For example, to form a</span>
+<span class="sd">    trajectory with every other frame, you can slice with `traj[::2]`.</span>
+
+<span class="sd">    SingleTraj uses the nanometer, degree &amp; picosecond unit system.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        backend (str): Current state of loading. If backend == &#39;no_load&#39; xyz data</span>
+<span class="sd">            will be loaded from disk, if accessed. If backend == &#39;mdtraj&#39;, the</span>
+<span class="sd">            data is already in RAM.</span>
+<span class="sd">        common_str (str): Substring of traj_file. Used to group multiple</span>
+<span class="sd">            trajectories together based on common topology files. If traj files</span>
+<span class="sd">            protein1_traj1.xtc and protein1_traj2.xtc share the sameprotein1.pdb</span>
+<span class="sd">            common_str can be set to group them together.</span>
+<span class="sd">        index (Union[int, list, np.array, slice]): Fancy slices of the</span>
+<span class="sd">            trajectory. When file is loaded from disk, the fancy indexes will</span>
+<span class="sd">            be applied.</span>
+<span class="sd">        traj_num (int): Integer to identify a SingleTraj class in a TrajEnsemble class.</span>
+<span class="sd">        traj_file (str): Trajectory file used to create this class.</span>
+<span class="sd">        top_file (str): Topology file used to create this class. If a .h5 trajectory</span>
+<span class="sd">            was used traj_file and top_file are identical. If a mdtraj.Trajectory was</span>
+<span class="sd">            used to create SingleTraj, these strings are empty.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; # load a pdb file with 14 frames from rcsb.org</span>
+<span class="sd">        &gt;&gt;&gt; import encodermap as em</span>
+<span class="sd">        &gt;&gt;&gt; traj = em.SingleTraj(&quot;https://files.rcsb.org/view/1GHC.pdb&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; print(traj)</span>
+<span class="sd">        encodermap.SingleTraj object. Current backend is no_load. Basename is 1GHC. Not containing any CVs.</span>
+<span class="sd">        &gt;&gt;&gt; traj.n_frames</span>
+<span class="sd">        14</span>
+
+<span class="sd">        &gt;&gt;&gt; # advanced slicing</span>
+<span class="sd">        &gt;&gt;&gt; traj = em.SingleTraj(&quot;https://files.rcsb.org/view/1GHC.pdb&quot;)[-1:7:-2]</span>
+<span class="sd">        &gt;&gt;&gt; print([frame.id for frame in traj])</span>
+<span class="sd">        [13, 11, 9]</span>
+
+<span class="sd">        &gt;&gt;&gt; # Build a trajectory ensemble from multiple trajs</span>
+<span class="sd">        &gt;&gt;&gt; traj1 = em.SingleTraj(&quot;https://files.rcsb.org/view/1YUG.pdb&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; traj2 = em.SingleTraj(&quot;https://files.rcsb.org/view/1YUF.pdb&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; trajs = traj1 + traj2</span>
+<span class="sd">        &gt;&gt;&gt; print(trajs.n_trajs, trajs.n_frames, [traj.n_frames for traj in trajs])</span>
+<span class="sd">        2 31 [15, 16]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_mdtraj_attr</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;n_frames&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;n_atoms&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;n_chains&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;n_residues&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;openmm_boxes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;openmm_positions&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;time&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;timestep&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;xyz&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;unitcell_vectors&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;unitcell_lengths&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;unitcell_angles&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;_check_valid_unitcell&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;_distance_unit&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;_have_unitcell&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;_rmsd_traces&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;_savers&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;_string_summary_basic&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;_time&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;_time_default_to_arange&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;_topology&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;_unitcell_angles&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;_unitcell_lengths&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;_xyz&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<div class="viewcode-block" id="SingleTraj.__init__"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">traj</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="n">md</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">],</span>
+        <span class="n">top</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">common_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">backend</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;no_load&quot;</span><span class="p">,</span> <span class="s2">&quot;mdtraj&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;no_load&quot;</span><span class="p">,</span>
+        <span class="n">index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">slice</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">traj_num</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">basename_fn</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initilaize the SingleTraj object with location and reference pdb file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            traj (Union[str, mdtraj.Trajectory]): The trajectory. Can either be teh filename</span>
+<span class="sd">                of a trajectory file (.xtc, .dcd, .h5, .trr) or a mdtraj.Trajectory.</span>
+<span class="sd">            top (Union[str, mdtraj.Topology], optional): The path to the reference pdb file.</span>
+<span class="sd">                Defaults to &#39;&#39;. If an mdtraj.Trajectory or a .h5 traj filename is provided</span>
+<span class="sd">                this option is not needed.</span>
+<span class="sd">            common_str (str, optional): A string to group traj of similar</span>
+<span class="sd">                topology. If multiple trajs are loaded (TrajEnsemble) this common_str is</span>
+<span class="sd">                used to group them together. Defaults to &#39;&#39; and won&#39;t be matched to other trajs.</span>
+<span class="sd">                If traj files protein1_traj1.xtc and protein1_traj2.xtc share the sameprotein1.pdb</span>
+<span class="sd">                and protein2_traj.xtc uses protein2.pdb as its topology this argument</span>
+<span class="sd">                can be [&#39;protein1&#39;, &#39;protein2&#39;].</span>
+<span class="sd">            backend (Literal[&#39;no_load&#39;, &#39;mdtraj&#39;], optional): Chooses the backend to load trajectories.</span>
+<span class="sd">                * &#39;mdtraj&#39; uses mdtraj which loads all trajecoties into RAM.</span>
+<span class="sd">                * &#39;no_load&#39; creates an empty trajectory object.</span>
+<span class="sd">                Defaults to &#39;no_load&#39;</span>
+<span class="sd">            index (): An integer or an array giving the indices.</span>
+<span class="sd">                If an integer is provided only the frame at this position will be loaded once the internal</span>
+<span class="sd">                mdtraj.Trajectory is accessed. If an array or list is provided the corresponding frames will be used.</span>
+<span class="sd">                These indices can have duplicates: [0, 1, 1, 2, 0, 1]. A slice object can also be provided.</span>
+<span class="sd">                Supports fancy slicing like traj[1:50:3]. If None is provided the trajectory is simply loaded as is.</span>
+<span class="sd">                Defaults to None</span>
+<span class="sd">            traj_num (Union[int, None], optional): If working with multiple trajs this is the easiest unique identifier.</span>
+<span class="sd">                If multiple SingleTrajs are instantiated by TrajEnsemble the traj_num is used as unique identifier per traj.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            basename_fn (Optional[Callable]): A function to apply to `traj_file` to give it</span>
+<span class="sd">                a unique identifier. If all your trajs are called traj.xtc and only the directory they&#39;re in</span>
+<span class="sd">                gives them a unique identifier you can provide a function into this argument to split the path.</span>
+<span class="sd">                If None is provided the basename is extracted liek so: `lambda x: x.split(&#39;/&#39;)[0].split(&#39;.&#39;)[-1].</span>
+<span class="sd">                Defaults to None.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># defaults</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">=</span> <span class="n">backend</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">common_str</span> <span class="o">=</span> <span class="n">common_str</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="n">index</span><span class="p">,)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">traj_num</span> <span class="o">=</span> <span class="n">traj_num</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;no_load&quot;</span> <span class="k">else</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">basename_fn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">basename_fn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basename_fn</span> <span class="o">=</span> <span class="n">basename_fn</span>
+
+        <span class="c1"># save the filename</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_uri</span><span class="p">(</span><span class="n">traj</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span> <span class="o">=</span> <span class="n">traj</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span> <span class="o">=</span> <span class="n">traj</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">md</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_top_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">=</span> <span class="s2">&quot;mdtraj&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trajectory</span> <span class="o">=</span> <span class="n">traj</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Argument `traj` takes either str, Path, or &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;mdtraj.Trajectory. You supplied: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">top</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">md</span><span class="o">.</span><span class="n">Topology</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">topology</span> <span class="o">=</span> <span class="n">top</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_top_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_top_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="n">_TOPOLOGY_EXTS</span>
+                        <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_top_file</span>
+                    <span class="p">):</span>
+                        <span class="k">raise</span> <span class="n">BadError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;You probably mixed up the input. Normally you &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;want to instantiate with `SingleTraj(traj, top)`. Based on &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;the files and the  extensions you provided &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;(traj=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> and top=&quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_top_file</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">), you want to change the &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;order of the arguments, or use keyword arguments.&quot;</span>
+                        <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="n">_TOPOLOGY_EXTS</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_top_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_top_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;no_load&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trajectory</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topology</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_uri</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="p">):</span>
+                <span class="n">traj</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">load_pdb</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span> <span class="o">!=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+                <span class="n">traj</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="p">),</span> <span class="n">top</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_top_file</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trajectory</span> <span class="o">=</span> <span class="n">traj</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topology</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajectory</span><span class="o">.</span><span class="n">top</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SingleTraj.from_pdb_id"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.from_pdb_id">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_pdb_id</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pdb_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SingleTraj</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alternate constructor for the TrajEnsemble class.</span>
+
+<span class="sd">        Builds an SingleTraj class from a pdb-id.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pdb_id (str): The 4-letter pdb id.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SingleTraj: An SingleTraj class.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://files.rcsb.org/view/</span><span class="si">{</span><span class="n">pdb_id</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">.pdb&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">url</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_original_frame_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_traj</span><span class="p">()</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">traj_file</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The traj file as a string (rather than a `pathlib.Path`).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">top_file</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The topology file as a string (rather than a `pathlib.Path`).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_top_file</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">traj</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">md</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;mdtraj.Trajectory: This attribute always returns an mdtraj.Trajectory.</span>
+<span class="sd">        if `backend` is &#39;no_load&#39;, the trajectory will be loaded into memory and returned.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;no_load&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_traj</span><span class="p">()</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajectory</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unload</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">out</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajectory</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_traj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Needs to be here to complete setter.</span>
+<span class="sd">        Not returning anything, because setter is also not returning anything.&quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@_traj</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">_traj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">traj_file</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the traj and trajectory attributes. Can be provided str or</span>
+<span class="sd">        mdtraj.Trajectory and sets the attributes based on the chosen backend.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_load_traj</span><span class="p">(</span>
+            <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">traj_file</span><span class="o">=</span><span class="n">traj_file</span><span class="p">,</span> <span class="n">top_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_top_file</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span> <span class="o">=</span> <span class="n">_</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">basename</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: Basename is the filename without path and without extension. If `basename_fn` is not None, it will be</span>
+<span class="sd">        applied to `traj_file`.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;.&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">basename_fn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">extension</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: Extension is the file extension of the trajectory file (self.traj_file).&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="o">.</span><span class="n">suffix</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;np.ndarray: id is an array of unique identifiers which identify the frames in</span>
+<span class="sd">        this SingleTraj object when multiple Trajectories are considered.</span>
+
+<span class="sd">        If the traj was initialized from an TrajEnsemble class, the traj gets a unique</span>
+<span class="sd">        identifier (traj_num) which will also be put into the id array, so that id</span>
+<span class="sd">        can have two shapes ((n_frames, ), (n_frames, 2)) This corresponds to</span>
+<span class="sd">        self.id.ndim = 1 and self.id.ndim = 2. In the latter case self.id[:,1] are the</span>
+<span class="sd">        frames and self.id[:,0] is an array full of traj_num.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_original_frame_indices</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj_num</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">values</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_num</span><span class="p">,</span> <span class="n">values</span><span class="p">]])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">ind</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">values</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+
+            <span class="c1"># if reduced all the way to single frame</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj_num</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">values</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_num</span><span class="p">,</span> <span class="n">values</span><span class="p">]])</span>
+
+            <span class="c1"># else</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj_num</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">values</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj_num</span><span class="p">),</span> <span class="n">values</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;int: Number of frames in traj.</span>
+
+<span class="sd">        Loads the traj into memory if not in HDF5 file format. Be aware.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">))</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">ind</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">))][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span> <span class="o">=</span> <span class="n">ind</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.h5&quot;</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">h5</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="p">(</span><span class="kc">None</span><span class="p">,):</span>
+                    <span class="n">n_frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;coordinates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="n">n_frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;coordinates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="k">if</span> <span class="n">ind</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                                <span class="n">n_frames</span> <span class="o">=</span> <span class="n">n_frames</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">ind</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                                <span class="n">n_frames</span> <span class="o">=</span> <span class="n">n_frames</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;coordinates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="c1"># return single int or length of array</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_frames</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>
+                <span class="k">return</span> <span class="n">n_frames</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">n_frames</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.xtc&quot;</span><span class="p">:</span>
+            <span class="n">reader</span> <span class="o">=</span> <span class="n">mda</span><span class="o">.</span><span class="n">coordinates</span><span class="o">.</span><span class="n">XTC</span><span class="o">.</span><span class="n">XTCReader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="p">(</span><span class="kc">None</span><span class="p">,):</span>
+                <span class="n">n_frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">reader</span><span class="o">.</span><span class="n">n_frames</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">n_frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">reader</span><span class="o">.</span><span class="n">n_frames</span><span class="p">)[</span><span class="n">ind</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">n_frames</span> <span class="o">=</span> <span class="n">n_frames</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">ind</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">n_frames</span> <span class="o">=</span> <span class="n">n_frames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">reader</span><span class="o">.</span><span class="n">n_frames</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_frames</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>
+                <span class="k">return</span> <span class="n">n_frames</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">n_frames</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_traj</span><span class="p">()</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_n_frames_base_h5_file</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;int: Can be used to get n_frames without loading an HDF5 into memory.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">h5</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;coordinates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">CVs_in_file</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;bool: Is True, if `traj_file` has exyension .h5 and contains CVs.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">extension</span> <span class="o">==</span> <span class="s2">&quot;.h5&quot;</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">h5</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;CVs&quot;</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_atoms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;int: Number of atoms in traj.</span>
+
+<span class="sd">        Loads the traj into memory if not in HDF5 file format. Be aware.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">extension</span> <span class="o">==</span> <span class="s2">&quot;.h5&quot;</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">h5</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;coordinates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_traj</span><span class="p">()</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="o">.</span><span class="n">n_atoms</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_residues</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;int: Number of residues in traj.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">n_residues</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_chains</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;int: Number of chains in traj.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">n_chains</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">top</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">md</span><span class="o">.</span><span class="n">Topology</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;mdtraj.Topology: The structure of a Topology object is similar to that of a PDB file.</span>
+
+<span class="sd">        It consists. of a set of Chains (often but not always corresponding to</span>
+<span class="sd">        polymer chains).  Each Chain contains a set of Residues, and each Residue</span>
+<span class="sd">        contains a set of Atoms.  In addition, the Topology stores a list of which</span>
+<span class="sd">        atom pairs are bonded to each other.</span>
+<span class="sd">        Atom and residue names should follow the PDB 3.0 nomenclature for all</span>
+<span class="sd">        molecules for which one exists</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            chains (generator): Iterate over chains.</span>
+<span class="sd">            residues (generator): Iterate over residues.</span>
+<span class="sd">            atoms (generator): Iterate over atoms.</span>
+<span class="sd">            bonds (generator): Iterate over bonds.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_file</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_file</span> <span class="o">!=</span> <span class="s2">&quot;.&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_uri</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">top_file</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">md</span><span class="o">.</span><span class="n">load_pdb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">top_file</span><span class="p">)</span><span class="o">.</span><span class="n">top</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">top_file</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+                        <span class="n">errno</span><span class="o">.</span><span class="n">ENOENT</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="o">.</span><span class="n">ENOENT</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_file</span>
+                    <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;no_load&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">extension</span> <span class="o">==</span> <span class="s2">&quot;.h5&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">md</span><span class="o">.</span><span class="n">load_topology</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">top_file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">extension</span> <span class="o">==</span> <span class="s2">&quot;.h5&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">md</span><span class="o">.</span><span class="n">load_topology</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">top_file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;no_load&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">md</span><span class="o">.</span><span class="n">load_topology</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">top_file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;mdtraj&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">CVs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;dict: Returns a simple dict from the more complicated self._CVs xarray Dataset.</span>
+
+<span class="sd">        If self._CVs is empty and self.traj_file is a HDF5 (.h5) file, the contents</span>
+<span class="sd">        of the HDF5 will be checked, whether CVs have been stored there.</span>
+<span class="sd">        If not and empty dict will be returned.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="n">key</span><span class="p">:</span> <span class="n">val</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;feature_axis&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+                <span class="k">else</span> <span class="n">val</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="o">.</span><span class="n">data_vars</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">extension</span> <span class="o">==</span> <span class="s2">&quot;.h5&quot;</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">h5</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;CVs&quot;</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">,</span>
+                            <span class="n">group</span><span class="o">=</span><span class="s2">&quot;CVs&quot;</span><span class="p">,</span>
+                            <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;h5netcdf&quot;</span><span class="p">,</span>
+                            <span class="n">backend_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;phony_dims&quot;</span><span class="p">:</span> <span class="s2">&quot;access&quot;</span><span class="p">},</span>
+                        <span class="p">)</span>
+                    <span class="c1"># bad formatted h5 file</span>
+                    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                        <span class="n">DAs</span> <span class="o">=</span> <span class="p">{</span>
+                            <span class="n">k</span><span class="p">:</span> <span class="n">construct_xarray_from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">[()],</span> <span class="n">k</span><span class="p">)</span>
+                            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;CVs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                        <span class="p">}</span>
+                        <span class="n">DS</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">DAs</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">DS</span><span class="p">)</span>
+                    <span class="c1"># other exceptions probably due to formatting</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">BadError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;The formatting of the data in the file &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="si">}</span><span class="s2"> is off. Xarray could &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;not load the group &#39;CVs&#39; and failed with </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="p">)</span>
+
+                    <span class="c1"># get the original frame indices from the dataset</span>
+                    <span class="c1"># this is the only case</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="p">[</span><span class="s2">&quot;frame_num&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+                    <span class="c1"># iteratively apply index</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span>
+                    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">ind</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+
+                    <span class="c1"># set the _CVs accordingly</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="o">.</span><span class="n">loc</span><span class="p">[{</span><span class="s2">&quot;frame_num&quot;</span><span class="p">:</span> <span class="n">index</span><span class="p">}]</span>
+
+                    <span class="c1"># return again. Yay recursion</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">CVs</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">{}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="SingleTraj._validate_uri"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj._validate_uri">[docs]</a>    <span class="k">def</span> <span class="nf">_validate_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Checks whether `uri` is a valid uri.&quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">encodermap.misc.misc</span> <span class="kn">import</span> <span class="n">_validate_uri</span>
+
+        <span class="k">return</span> <span class="n">_validate_uri</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">uri</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SingleTraj.load_traj"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.load_traj">[docs]</a>    <span class="k">def</span> <span class="nf">load_traj</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">new_backend</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;no_load&quot;</span><span class="p">,</span> <span class="s2">&quot;mdtraj&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;mdtraj&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads the trajectory, with a new specified backend.</span>
+
+<span class="sd">        After this is called the instance variable self.trajectory</span>
+<span class="sd">        will contain an mdtraj Trajectory object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_backend (str, optional): Can either be:</span>
+<span class="sd">                * `mdtraj` to load the trajectory using mdtraj.</span>
+<span class="sd">                * `no_load` to not load the traj (unload).</span>
+<span class="sd">                Defaults to `mdtraj`.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="n">new_backend</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;mdtraj&quot;</span> <span class="ow">and</span> <span class="n">new_backend</span> <span class="o">==</span> <span class="s2">&quot;no_load&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unload</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;no_load&quot;</span> <span class="ow">and</span> <span class="n">new_backend</span> <span class="o">==</span> <span class="s2">&quot;mdtraj&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">=</span> <span class="n">new_backend</span>
+            <span class="c1"># call the setter again</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_traj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">=</span> <span class="s2">&quot;no_load&quot;</span>
+                <span class="k">raise</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topology</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span></div>
+
+<div class="viewcode-block" id="SingleTraj.select"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.select">[docs]</a>    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">sel_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute a selection against the topology</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            sel_str (str, optional): What to select. Defaults to &#39;all&#39;.</span>
+
+<span class="sd">        See also:</span>
+<span class="sd">            https://mdtraj.org/1.9.4/atom_selection.html</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; import encodermap as em</span>
+<span class="sd">            &gt;&gt;&gt; traj = em.SingleTraj(&quot;https://files.rcsb.org/view/1GHC.pdb&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; select = traj.top.select(&quot;name CA and resSeq 1&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; select</span>
+<span class="sd">            array([1])</span>
+
+<span class="sd">            &gt;&gt;&gt; traj = em.SingleTraj(&quot;https://files.rcsb.org/view/1GHC.pdb&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; select = traj.top.select(&quot;name CA and resSeq 1&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; traj.top.atom(select[0])</span>
+<span class="sd">            MET1-CA</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">sel_str</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SingleTraj.unload"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.unload">[docs]</a>    <span class="k">def</span> <span class="nf">unload</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">CVs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clears up RAM by deleting the trajectory Info and the CV data.</span>
+
+<span class="sd">        If CVs is set to True the loaded CVs will also be deleted.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            CVs (bool, optional): Whether to also delete CVs, defaults to False.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;no_load&quot;</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">=</span> <span class="s2">&quot;no_load&quot;</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mdtraj_attr</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">if</span> <span class="n">CVs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trajectory</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="SingleTraj._gen_ensemble"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj._gen_ensemble">[docs]</a>    <span class="k">def</span> <span class="nf">_gen_ensemble</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TrajEnsemble</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates an TrajEnsemble class with this traj in it.</span>
+
+<span class="sd">        This method is needed to add two SingleTraj objects</span>
+<span class="sd">        along the `trajectory` axis with the method add_new_traj.</span>
+<span class="sd">        This method is also called by the __getitem__ method of the TrajEnsemble class.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span> <span class="o">!=</span> <span class="s2">&quot;.&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info_all</span> <span class="o">=</span> <span class="n">TrajEnsemble</span><span class="p">(</span>
+                <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="p">],</span>
+                <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_top_file</span><span class="p">],</span>
+                <span class="n">backend</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="p">,</span>
+                <span class="n">common_str</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">common_str</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info_all</span> <span class="o">=</span> <span class="n">TrajEnsemble</span><span class="p">(</span>
+                <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="p">],</span>
+                <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">],</span>
+                <span class="n">backend</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="p">,</span>
+                <span class="n">common_str</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">common_str</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info_all</span><span class="o">.</span><span class="n">trajs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_CVs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info_all</span><span class="o">.</span><span class="n">trajs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">traj_num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj_num</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">info_all</span></div>
+
+<div class="viewcode-block" id="SingleTraj._add_along_traj"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj._add_along_traj">[docs]</a>    <span class="k">def</span> <span class="nf">_add_along_traj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">SingleTraj</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TrajEnsemble</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Puts self and y into a TrajEnsemble object.</span>
+
+<span class="sd">        This way the trajectories are not appended along the timed</span>
+<span class="sd">        axis but rather along the `trajectory` axis.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            y (SingleTraj): The other ep.SingleTraj trajectory.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">class_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gen_ensemble</span><span class="p">()</span>
+        <span class="n">class_2</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">_gen_ensemble</span><span class="p">()</span>
+        <span class="n">new_class</span> <span class="o">=</span> <span class="n">class_1</span> <span class="o">+</span> <span class="n">class_2</span>
+        <span class="k">return</span> <span class="n">new_class</span></div>
+
+<div class="viewcode-block" id="SingleTraj.get_single_frame"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.get_single_frame">[docs]</a>    <span class="k">def</span> <span class="nf">get_single_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SingleTraj</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a single frame from the trajectory.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (Union[int, np.int]): Index of the frame.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; # Load traj from pdb</span>
+<span class="sd">            &gt;&gt;&gt; import encodermap as em</span>
+<span class="sd">            &gt;&gt;&gt; traj = em.SingleTraj(&quot;https://files.rcsb.org/view/1GHC.pdb&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; traj.n_frames</span>
+<span class="sd">            14</span>
+
+<span class="sd">            &gt;&gt;&gt; # Load the same traj and give it a number for recognition in a set of multiple trajs</span>
+<span class="sd">            &gt;&gt;&gt; traj = em.SingleTraj(&quot;https://files.rcsb.org/view/1GHC.pdb&quot;, traj_num=5)</span>
+<span class="sd">            &gt;&gt;&gt; frame = traj.get_single_frame(2)</span>
+<span class="sd">            &gt;&gt;&gt; frame.id</span>
+<span class="sd">            array([[5, 2]])</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SingleTraj.show_traj"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.show_traj">[docs]</a>    <span class="k">def</span> <span class="nf">show_traj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gui</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nglview</span><span class="o">.</span><span class="n">view</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns an nglview view object.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            view (nglview.widget): The nglview widget object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">nglview</span>
+
+        <span class="n">view</span> <span class="o">=</span> <span class="n">nglview</span><span class="o">.</span><span class="n">show_mdtraj</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="p">,</span> <span class="n">gui</span><span class="o">=</span><span class="n">gui</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">view</span></div>
+
+<div class="viewcode-block" id="SingleTraj.load_CV"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.load_CV">[docs]</a>    <span class="k">def</span> <span class="nf">load_CV</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">SingleTrajFeatureType</span><span class="p">,</span>
+        <span class="n">attr_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">cols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">labels</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">override</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load CVs into traj. Many options are possible. Provide xarray,</span>
+<span class="sd">        numpy array, em.loading.feature, em.featurizer, and even string!</span>
+
+<span class="sd">        This method loads CVs into the SingleTraj class. Many ways of doing so are available:</span>
+<span class="sd">            * np.ndarray: The easiest way. Provide a np array and a name for the array and the data</span>
+<span class="sd">                will be saved as a instance variable, accesible via instance.name.</span>
+<span class="sd">            * xarray.DataArray: You can load a multidimensional xarray as data into the class. Please</span>
+<span class="sd">                refer to xarrays own documentation if you want to create one yourself.</span>
+<span class="sd">            * xarray.Dataset: You can add another dataset to the existing _CVs.</span>
+<span class="sd">            * em.loading.feature: If you provide one of the features from em.loading.features the resulting</span>
+<span class="sd">                features will be loaded and also placed under the provided name.</span>
+<span class="sd">            * em.Featurizer: If you provide a full featurizer, the data will be generated and put as an</span>
+<span class="sd">                instance variable as the provided name.</span>
+<span class="sd">            * str: If a string is provided, the data will be loaded from a .txt, .npy, or NetCDF / HDF5 .nc file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (Union[str, np.ndarray, xr.DataArray, em.loading.feature, em.Featurizer]):</span>
+<span class="sd">                The CV to load. Either as numpy array, xarray DataArray, encodermap or pyemma feature, or full</span>
+<span class="sd">                encodermap Featurzier.</span>
+<span class="sd">            attr_name (Union[None, str], optional): The name under which the CV should be found in the class.</span>
+<span class="sd">                Is needed, if a raw numpy array is passed, otherwise the name will be generated from the filename</span>
+<span class="sd">                (if data == str), the DataArray.name (if data == xarray.DataArray), or the feature name.</span>
+<span class="sd">            cols (Union[list, None], optional): A list specifying the columns to use for the highD data.</span>
+<span class="sd">                If your highD data contains (x,y,z,...)-errors or has an enumeration</span>
+<span class="sd">                column at col=0 this can be used to remove this unwanted data.</span>
+<span class="sd">            labels (Union[list, str, None], optional): If you want to label the data you provided pass a list of str.</span>
+<span class="sd">                If set to None, the features in this dimension will be labelled as</span>
+<span class="sd">                [f&quot;{attr_name.upper()} FEATURE {i}&quot; for i in range(self.n_frames)]. If a str is provided, the features</span>
+<span class="sd">                will be labelled as [f&quot;{attr_name.upper()} {label.upper()} {i}&quot; for i in range(self.n_frames)]. If a list of str</span>
+<span class="sd">                is provided it needs to have the same length as the traj has frames. Defaults to None.</span>
+<span class="sd">            override (bool): Whether to overwrite existing CVs. The method will also</span>
+<span class="sd">                print a message which CVs have been overwritten.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; # Load the backbone torsions from a time-resolved NMR ensemble from the pdb</span>
+<span class="sd">            &gt;&gt;&gt; import encodermap as em</span>
+<span class="sd">            &gt;&gt;&gt; traj = em.SingleTraj(&quot;https://files.rcsb.org/view/1GHC.pdb&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; central_dihedrals = em.loading.features.CentralDihedrals(traj.top)</span>
+<span class="sd">            &gt;&gt;&gt; traj.load_CV(central_dihedrals)</span>
+<span class="sd">            &gt;&gt;&gt; traj.central_dihedrals.shape</span>
+<span class="sd">            (1, 14, 222)</span>
+<span class="sd">            &gt;&gt;&gt; # The values are stored in an xarray Dataset to track every possible datafield</span>
+<span class="sd">            &gt;&gt;&gt; traj = em.SingleTraj(&quot;https://files.rcsb.org/view/1GHC.pdb&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; traj.load_CV(em.loading.features.CentralDihedrals(traj.top))</span>
+<span class="sd">            &gt;&gt;&gt; print(traj._CVs[&#39;central_dihedrals&#39;][&#39;CENTRALDIHEDRALS&#39;].values[:2])</span>
+<span class="sd">            [&#39;CENTERDIH PSI   RESID  MET:   1 CHAIN 0&#39;</span>
+<span class="sd">             &#39;CENTERDIH OMEGA RESID  MET:   1 CHAIN 0&#39;]</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            FileNotFoundError: When the file given by `data` does not exist.</span>
+<span class="sd">            IOError: When the provided filename does not have .txt, .npy or .nc extension.</span>
+<span class="sd">            TypeError: When `data` does not match the specified input types.</span>
+<span class="sd">            Exception: When a numpy array has been passed as `data` and no `attr_name` has been provided.</span>
+<span class="sd">            BadError: When the provided `attr_name` is str, but can not be a python identifier.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.trajinfo_utils</span> <span class="kn">import</span> <span class="n">load_CVs_singletraj</span>
+
+        <span class="n">new_CVs</span> <span class="o">=</span> <span class="n">load_CVs_singletraj</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj_num</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">new_CVs</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;traj_num&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_num</span><span class="p">]),</span> <span class="nb">print</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj_num</span><span class="p">,</span> <span class="n">new_CVs</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;traj_num&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+
+        <span class="c1"># check the sizes</span>
+        <span class="n">len_CVs</span> <span class="o">=</span> <span class="n">new_CVs</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;frame_num&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="p">:</span>
+            <span class="n">n_frames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;frame_num&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_frames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_frames</span>
+        <span class="k">if</span> <span class="n">n_frames</span> <span class="o">!=</span> <span class="n">len_CVs</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Loading the requested </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2"> CVs is not possible, as &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;they are not aligned with the number of frames in the &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;trajectory. The CVs have </span><span class="si">{</span><span class="n">len_CVs</span><span class="si">}</span><span class="s2"> frames, the trajectory &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="si">}</span><span class="s2"> has </span><span class="si">{</span><span class="n">n_frames</span><span class="si">}</span><span class="s2"> frames.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># check the keys and whether they get overwritten</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">new_CVs</span><span class="p">,</span> <span class="s2">&quot;keys&quot;</span><span class="p">):</span>
+            <span class="n">new_keys</span> <span class="o">=</span> <span class="n">new_CVs</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">new_CVs</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">override</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">overwritten_keys</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">new_keys</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Overwriting the following CVs with new values: &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">overwritten_keys</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">new_CVs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="p">],</span>
+                <span class="n">combine_attrs</span><span class="o">=</span><span class="s2">&quot;override&quot;</span><span class="p">,</span>
+                <span class="n">compat</span><span class="o">=</span><span class="s2">&quot;override&quot;</span><span class="p">,</span>
+                <span class="n">join</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="p">,</span> <span class="n">new_CVs</span><span class="p">],</span> <span class="n">combine_attrs</span><span class="o">=</span><span class="n">combine_attrs</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">xr</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">merge</span><span class="o">.</span><span class="n">MergeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Could not add the CV `</span><span class="si">{</span><span class="n">attr_name</span><span class="si">}</span><span class="s2">` to the CVs of the traj &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;likely due to it being already in the CVs &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CVs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">). Set `override` to True to &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;overwrite these CVs.&quot;</span>
+                <span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span></div>
+
+<div class="viewcode-block" id="SingleTraj.save_CV_as_numpy"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.save_CV_as_numpy">[docs]</a>    <span class="k">def</span> <span class="nf">save_CV_as_numpy</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">attr_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">fname</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Saves the highD data of this traj.</span>
+
+<span class="sd">        This got its own method for parallelization purposes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            attr_name (str): Name of the CV to save.</span>
+<span class="sd">            fname (str, optional): Can be either</span>
+<span class="sd">            overwrite (bool, opt): Whether to overwrite the file. Defaults to False.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            IOError: When the file already exists and overwrite is set to False.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">fname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">basename</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">attr_name</span><span class="si">}</span><span class="s2">.npy&quot;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">basename</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">attr_name</span><span class="si">}</span><span class="s2">.npy&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2"> already exists. Set overwrite=True to overwrite.&quot;</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CVs</span><span class="p">[</span><span class="n">attr_name</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="SingleTraj.atom_slice"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.atom_slice">[docs]</a>    <span class="k">def</span> <span class="nf">atom_slice</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">atom_indices</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">SingleTraj</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a new trajectory from a subset of atoms.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            atom_indices (Union[list, np.array]): The indices of the</span>
+<span class="sd">            atoms to keep.</span>
+<span class="sd">            inplace(bool, optional): Whether to overwrite the current instance,</span>
+<span class="sd">            or return a new instance. Defaults to False.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;Dropping CVs from trajectory. Defining CVs for atom slice is currently not possible.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">SingleTraj</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="o">.</span><span class="n">atom_slice</span><span class="p">(</span><span class="n">atom_indices</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="n">inplace</span><span class="p">),</span>
+            <span class="n">common_str</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">common_str</span><span class="p">,</span>
+            <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">,</span>
+            <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+            <span class="n">traj_num</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_num</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="bp">self</span> <span class="o">=</span> <span class="n">new</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">new</span></div>
+
+<div class="viewcode-block" id="SingleTraj.join"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.join">[docs]</a>    <span class="k">def</span> <span class="nf">join</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">SingleTraj</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">md</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Join two trajectories together along the time/frame axis.</span>
+
+<span class="sd">        Returns a mdtraj.Trajectory and thus loses CVs, filenames, etc.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">md</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">trajectory</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">traj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SingleTraj.stack"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.stack">[docs]</a>    <span class="k">def</span> <span class="nf">stack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">SingleTraj</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">md</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Stack two trajectories along the atom axis</span>
+
+<span class="sd">        Returns a mdtraj.Trajectory and thus loses CVs, filenames, etc.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">md</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">trajectory</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">traj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SingleTraj.superpose"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.superpose">[docs]</a>    <span class="k">def</span> <span class="nf">superpose</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">reference</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">md</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">,</span> <span class="n">SingleTraj</span><span class="p">],</span>
+        <span class="n">frame</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">atom_indices</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">ref_atom_indices</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">parallel</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SingleTraj</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Superpose each conformation in this trajectory upon a reference</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            reference (Union[mdtraj.Trajectory, SingleTraj]): The reference frame to align to.</span>
+<span class="sd">            reame (int, optional): Align to this frame in reference. Defaults to 1.</span>
+<span class="sd">            atom_indices (Union[np.array, None], optional): Indices in self, used to calculate</span>
+<span class="sd">                RMS values. Defaults to None, whcih means all atoms will be used.</span>
+<span class="sd">            ref_atom_indices (Union[np.array, None], optional): Indices in reference, used to calculate</span>
+<span class="sd">                RMS values. Defaults to None, whcih means all atoms will be used.</span>
+<span class="sd">            parallel (bool, optional): Use OpenMP to run the superposition in parallel over multiple cores.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SingleTraj: A new aligned trajectory.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">md</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">trajectory</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">):</span>
+            <span class="n">new</span> <span class="o">=</span> <span class="n">SingleTraj</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="o">.</span><span class="n">superpose</span><span class="p">(</span>
+                    <span class="n">reference</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">atom_indices</span><span class="p">,</span> <span class="n">ref_atom_indices</span><span class="p">,</span> <span class="n">parallel</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">SingleTraj</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="o">.</span><span class="n">superpose</span><span class="p">(</span>
+                <span class="n">reference</span><span class="o">.</span><span class="n">traj</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">atom_indices</span><span class="p">,</span> <span class="n">ref_atom_indices</span><span class="p">,</span> <span class="n">parallel</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">:</span>
+            <span class="n">new</span><span class="o">.</span><span class="n">traj_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_file</span><span class="p">:</span>
+            <span class="n">new</span><span class="o">.</span><span class="n">top_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_file</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;CV inheritance not implemented yet.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new</span></div>
+
+<div class="viewcode-block" id="SingleTraj.save"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">CVs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save the trajectory as HDF5 fileformat to disk,</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fname (str): The filename.</span>
+<span class="sd">            CVs (Union[List, &#39;all&#39;], optional): Either provide a list of strings</span>
+<span class="sd">                of the CVs you would like to save to disk, or set to &#39;all&#39; to save</span>
+<span class="sd">                all CVs. Defaults to [].</span>
+<span class="sd">            overwrite (bool, optional): Whether to force overwrite an existing file.</span>
+<span class="sd">                Defaults to False.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            IOError: When the file already exists and overwrite is False.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2"> already exists. Set overwrite=True to overwrite.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="o">.</span><span class="n">save_hdf5</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">force_overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">CVs</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+            <span class="n">save_netcdf_alongside_mdtraj</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span> <span class="ow">and</span> <span class="n">CVs</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">h5</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;CVs&quot;</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                    <span class="n">grp</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;CVs&quot;</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">grp</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s2">&quot;CVs&quot;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">CVs</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                    <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_frames</span> <span class="o">==</span> <span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">grp</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">value</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+
+        <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="n">memo</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)]</span> <span class="o">=</span> <span class="n">result</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">memo</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">hash_value</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">)</span>
+        <span class="c1"># combine with hashes of arrays</span>
+        <span class="n">hash_value</span> <span class="o">^=</span> <span class="n">_hash_numpy_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xyz</span><span class="p">)</span>
+        <span class="n">hash_value</span> <span class="o">^=</span> <span class="n">_hash_numpy_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unitcell_lengths</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">hash_value</span> <span class="o">^=</span> <span class="n">_hash_numpy_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_unitcell_lengths</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unitcell_angles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">hash_value</span> <span class="o">^=</span> <span class="n">_hash_numpy_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_unitcell_angles</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">hash_value</span>
+
+<div class="viewcode-block" id="SingleTraj.__eq__"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">SingleTraj</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Two SingleTraj objetcs are the same, when the trajectories are the same,</span>
+<span class="sd">        the files are the same and the loaded CVs are the same.&quot;&quot;&quot;</span>
+        <span class="n">trajs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">_CVs</span><span class="p">)</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_traj_file</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">([</span><span class="n">trajs</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">files</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="SingleTraj.__reversed__"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.__reversed__">[docs]</a>    <span class="k">def</span> <span class="fm">__reversed__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SingleTraj</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reverses the frame order of the traj. Same as traj[::-1]&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="SingleTraj.__enter__"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.__enter__">[docs]</a>    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Enters context manager. Inside context manager, the traj stays loaded.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_traj</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="SingleTraj.__exit__"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.__exit__">[docs]</a>    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Exits the context manager and deletes unwanted variables.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unload</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SingleTraj.__iter__"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.__iter__">[docs]</a>    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterate over frames in this class. Returns the correct</span>
+<span class="sd">        CVs along with the frame of the trajectory.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_traj</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_frames</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">StopIteration</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+<div class="viewcode-block" id="SingleTraj.__getitem__"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This method returns another trajectory as an SingleTraj class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (Union[int, list[int], np.ndarray, slice]): Indexing the trajectory</span>
+<span class="sd">                can be done by int (returns a traj with 1 frame), lists of int or</span>
+<span class="sd">                np.ndarray (returns a new traj with len(traj) == len(key)), or</span>
+<span class="sd">                slice ([::3]), which returns a new traj with the correct number of</span>
+<span class="sd">                frames.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Info_Single: An SingleTraj object with this frame in it.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int_</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Indexing of `SingleTraj` requires the index to &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;be one of the following types: (int, np.int, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;list, np.ndarray, slice), you provided </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">])</span> <span class="ow">and</span> <span class="n">key</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">&quot;SingleTraj index out of range for traj with 1 frame.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_frames</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Index </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> out of range for traj with &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_frames</span><span class="si">}</span><span class="s2"> frames.&quot;</span>
+                <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">k</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_frames</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">key</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;At least one index in </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> out of range for&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;traj with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_frames</span><span class="si">}</span><span class="s2"> frames.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="c1"># append the index to the list of &quot;transformations&quot;</span>
+        <span class="n">new_index</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+        <span class="c1"># build a new traj from that</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;no_load&quot;</span><span class="p">:</span>
+            <span class="n">traj_out</span> <span class="o">=</span> <span class="n">SingleTraj</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">top_file</span><span class="p">,</span>
+                <span class="n">backend</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="p">,</span>
+                <span class="n">common_str</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">common_str</span><span class="p">,</span>
+                <span class="n">index</span><span class="o">=</span><span class="n">new_index</span><span class="p">,</span>
+                <span class="n">traj_num</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_num</span><span class="p">,</span>
+                <span class="n">basename_fn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">basename_fn</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">traj_out</span> <span class="o">=</span> <span class="n">SingleTraj</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trajectory</span><span class="p">[</span><span class="n">key</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">topology</span><span class="p">,</span>
+                <span class="n">backend</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="p">,</span>
+                <span class="n">common_str</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">common_str</span><span class="p">,</span>
+                <span class="n">index</span><span class="o">=</span><span class="n">new_index</span><span class="p">,</span>
+                <span class="n">traj_num</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_num</span><span class="p">,</span>
+                <span class="n">basename_fn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">basename_fn</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">traj_out</span><span class="o">.</span><span class="n">_traj_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span>
+            <span class="n">traj_out</span><span class="o">.</span><span class="n">_top_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_top_file</span>
+        <span class="k">assert</span> <span class="n">traj_out</span><span class="o">.</span><span class="n">_traj_file</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span>
+
+        <span class="c1"># the original_frames</span>
+        <span class="n">traj_out</span><span class="o">.</span><span class="n">_orig_frames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span>
+        <span class="n">traj_out</span><span class="o">.</span><span class="n">_loaded_once</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span>
+
+        <span class="c1"># last the CVs</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="p">:</span>
+            <span class="n">traj_out</span><span class="o">.</span><span class="n">_CVs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="o">.</span><span class="n">loc</span><span class="p">[{</span><span class="s2">&quot;frame_num&quot;</span><span class="p">:</span> <span class="n">key</span><span class="p">}]</span>
+
+        <span class="k">return</span> <span class="n">traj_out</span></div>
+
+<div class="viewcode-block" id="SingleTraj.__add__"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.__add__">[docs]</a>    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">SingleTraj</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TrajEnsemble</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Addition of two SingleTraj classes yields TrajEnsemble class. A `trajectory ensemble`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            y (encodermap.SingleTraj): The other traj, that will be added.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            encodermap.TrajEnsemble: The new trajs.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_along_traj</span><span class="p">(</span><span class="n">y</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SingleTraj.__getattr__"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.__getattr__">[docs]</a>    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;What to do when attributes can not be obtained in a normal way?.</span>
+
+<span class="sd">        This method allows access of the self.CVs dictionary&#39;s values as</span>
+<span class="sd">        instance variables. Furthermore, of a mdtraj variable is called,</span>
+<span class="sd">        the traj is loaded and the correct variable is returned.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mdtraj_attr</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_traj</span><span class="p">()</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+            <span class="c1"># if self.index == (None, ):</span>
+            <span class="c1">#     return getattr(self.traj, attr)</span>
+            <span class="c1"># else:</span>
+            <span class="c1">#     if len(self.id) == len(self.traj):</span>
+            <span class="c1">#         return getattr(self.traj, attr)</span>
+            <span class="c1">#     else:</span>
+            <span class="c1">#         return getattr(self.traj[self.index], attr)</span>
+        <span class="k">elif</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="p">:</span>
+            <span class="c1"># if self._already_indexed:</span>
+            <span class="c1">#     return self._CVs[attr].values.squeeze()</span>
+            <span class="c1"># if self._original_frame_indices.size != 0:</span>
+            <span class="c1">#     index = self._original_frame_indices</span>
+            <span class="c1"># elif self._original_frame_indices.size == 0 and self.index is not None:</span>
+            <span class="c1">#     index = self.index</span>
+            <span class="c1"># else:</span>
+            <span class="c1">#     return self._CVs[attr].values.squeeze()</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>  <span class="c1"># [index]</span>
+        <span class="k">elif</span> <span class="n">attr</span> <span class="o">==</span> <span class="s2">&quot;traj&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">attr</span> <span class="o">==</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;SingleTraj&#39; object has no attribute &#39;</span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SingleTraj._string_summary"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj._string_summary">[docs]</a>    <span class="k">def</span> <span class="nf">_string_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a summary about the current instance.</span>
+
+<span class="sd">        Number of frames, index, loaded CVs.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;encodermap.SingleTraj object. Current backend is </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">basename</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; Basename is </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">basename</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">printoptions</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgeitems</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; At indices </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">shape</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">shape</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">shape</span><span class="p">:</span>
+                    <span class="n">shape</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; CV </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> with shape </span><span class="si">{</span><span class="n">shape</span><span class="si">}</span><span class="s2"> loaded.&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot; Not containing any CVs.&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;n_atoms&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; Containing </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_atoms</span><span class="si">}</span><span class="s2"> atoms.&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;n_frames&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; Containing </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_frames</span><span class="si">}</span><span class="s2"> frames.&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">common_str</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; Common string is </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">common_str</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="k">return</span> <span class="n">s</span></div>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_frames</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_string_summary</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_string_summary</span><span class="p">()</span><span class="si">}</span><span class="s2"> Object at 0x</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">:</span><span class="s2">02x</span><span class="si">}</span><span class="s2">&gt;&quot;</span></div>
+</pre></div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023, Kevin Sawade, Tobias Lemke.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>
