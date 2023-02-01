@@ -50,7 +50,7 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Cube Example - Basic Usage" href="01_Basic_Usage-Cube_Example.html" />
+    <link rel="next" title="Cube Example - Basic Usage" href="01_basic.html" />
     <link rel="prev" title="Trp cage" href="trp_cage.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en">
@@ -316,12 +316,24 @@
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Starter notebooks</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="01_Basic_Usage-Cube_Example.html">Cube Example - Basic Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Advanced_Usage-Asp7_Example.html">Asp7 Example - Advanced Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_basic.html">Cube Example - Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_advanced.html">Asp7 Example - Advanced Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Your_Data.html">Your Data</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="intermediate_notebooks.html">Intermediate notebooks</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="customization_notebooks.html">Learn how to Customize EncoderMap</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="learning_rate_schedulers.html">Learning Rate Scheduler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_custom_images_to_tensorboard.html">Logging Custom Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_custom_loss_functions.html">Writing Custom Loss Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_custom_scalars_to_tensorboard.html">Logging Custom Scalars</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="intermediate_notebooks.html">Intermediate notebooks</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="02_training_with_different_topologies.html">Training with different topologies</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="md_notebooks.html">Learn how EncoderMap handles MD data and trajectory ensembles</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_working_with_trajectory_ensembles.html">Working with trajectory ensembles</a></li>
 </ul>
 </li>
 </ul>
@@ -360,13 +372,25 @@
 <p>Some notebooks to get you going with EncoderMap</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="01_Basic_Usage-Cube_Example.html">Cube Example - Basic Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="01_Basic_Usage-Cube_Example.html#For-Google-colab-only:">For Google colab only:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_basic.html">Cube Example - Basic Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_basic.html#For-Google-colab-only:">For Google colab only:</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="02_Advanced_Usage-Asp7_Example.html">Asp7 Example - Advanced Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="02_Advanced_Usage-Asp7_Example.html#For-Google-colab-users:-Install-EncoderMap">For Google colab users: Install EncoderMap</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Advanced_Usage-Asp7_Example.html#Visualize-Learning-with-TensorBoard">Visualize Learning with TensorBoard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_advanced.html">Asp7 Example - Advanced Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02_advanced.html#For-Google-colab-only:">For Google colab only:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_advanced.html#Running-tensorboard-on-Google-colab">Running tensorboard on Google colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_advanced.html#Running-tensorboard-locally">Running tensorboard locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_advanced.html#Save-and-Load">Save and Load</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_advanced.html#Generate-Molecular-Conformations">Generate Molecular Conformations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03_Your_Data.html">Your Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03_Your_Data.html#For-Google-colab-only:">For Google colab only:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Your_Data.html#Load-Libraries">Load Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Your_Data.html#Load-Your-Data">Load Your Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Your_Data.html#Set-Parameters">Set Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Your_Data.html#Run-the-Dimensionality-Reduction">Run the Dimensionality Reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Your_Data.html#Plot-the-Results">Plot the Results</a></li>
 </ul>
 </li>
 </ul>
@@ -388,7 +412,7 @@
           <p class="prev-next-title">Trp cage</p>
       </div>
   </a>
-  <a class='right-next' id="next-link" href="01_Basic_Usage-Cube_Example.html" title="next page">
+  <a class='right-next' id="next-link" href="01_basic.html" title="next page">
   <div class="prev-next-info">
       <p class="prev-next-subtitle">next</p>
       <p class="prev-next-title">Cube Example - Basic Usage</p>

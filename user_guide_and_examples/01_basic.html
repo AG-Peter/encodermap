@@ -48,11 +48,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide_and_examples/01_Basic_Usage-Cube_Example';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide_and_examples/01_basic';</script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Asp7 Example - Advanced Usage" href="02_Advanced_Usage-Asp7_Example.html" />
+    <link rel="next" title="Asp7 Example - Advanced Usage" href="02_advanced.html" />
     <link rel="prev" title="Starter notebooks" href="starter_notebooks.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en">
@@ -319,11 +319,23 @@
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="starter_notebooks.html">Starter notebooks</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Cube Example - Basic Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_Advanced_Usage-Asp7_Example.html">Asp7 Example - Advanced Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_advanced.html">Asp7 Example - Advanced Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Your_Data.html">Your Data</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="intermediate_notebooks.html">Intermediate notebooks</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="customization_notebooks.html">Learn how to Customize EncoderMap</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="learning_rate_schedulers.html">Learning Rate Scheduler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_custom_images_to_tensorboard.html">Logging Custom Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_custom_loss_functions.html">Writing Custom Loss Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_custom_scalars_to_tensorboard.html">Logging Custom Scalars</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="intermediate_notebooks.html">Intermediate notebooks</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="02_training_with_different_topologies.html">Training with different topologies</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="md_notebooks.html">Learn how EncoderMap handles MD data and trajectory ensembles</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_working_with_trajectory_ensembles.html">Working with trajectory ensembles</a></li>
 </ul>
 </li>
 </ul>
@@ -623,12 +635,13 @@ div.rendered_html tbody tr:hover {
 <p><a class="reference external" href="https://ag-peter.github.io/encodermap">https://ag-peter.github.io/encodermap</a></p>
 <section id="For-Google-colab-only:">
 <h2>For Google colab only:<a class="headerlink" href="#For-Google-colab-only:" title="Permalink to this heading">#</a></h2>
-<p>If you’re on Google colab, please uncomment this line and install encodermap.</p>
+<p>If you’re on Google colab, please uncomment these lines and install EncoderMap.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># !pip install &quot;git+https://github.com/AG-Peter/encodermap.git@main&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># !wget https://raw.githubusercontent.com/AG-Peter/encodermap/main/tutorials/install_encodermap_google_colab.sh</span>
+<span class="c1"># !sudo bash install_encodermap_google_colab.sh</span>
 </pre></div>
 </div>
 </div>
@@ -695,13 +708,13 @@ File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/pyth
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2023-02-01 08:03:01.348626: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+2023-02-01 15:27:12.092677: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2023-02-01 08:03:01.468706: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libcudart.so.11.0&#39;; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-01 08:03:01.468727: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
-2023-02-01 08:03:02.191576: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer.so.7&#39;; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-01 08:03:02.191659: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer_plugin.so.7&#39;; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-01 08:03:02.191668: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2023-02-01 15:27:12.239429: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libcudart.so.11.0&#39;; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-01 15:27:12.239458: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2023-02-01 15:27:13.185329: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer.so.7&#39;; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-01 15:27:13.185467: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer_plugin.so.7&#39;; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-01 15:27:13.185484: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
 </pre></div></div>
 </div>
 </section>
@@ -785,7 +798,7 @@ Cell <span class="ansi-green-fg">In[7], line 3</span>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/user_guide_and_examples_01_Basic_Usage-Cube_Example_14_1.png" src="../_images/user_guide_and_examples_01_Basic_Usage-Cube_Example_14_1.png" />
+<img alt="../_images/user_guide_and_examples_01_basic_14_1.png" src="../_images/user_guide_and_examples_01_basic_14_1.png" />
 </div>
 </div>
 </section>
@@ -978,7 +991,7 @@ Cell <span class="ansi-green-fg">In[13], line 2</span>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/user_guide_and_examples_01_Basic_Usage-Cube_Example_27_1.png" src="../_images/user_guide_and_examples_01_Basic_Usage-Cube_Example_27_1.png" />
+<img alt="../_images/user_guide_and_examples_01_basic_27_1.png" src="../_images/user_guide_and_examples_01_basic_27_1.png" />
 </div>
 </div>
 </section>
@@ -1041,7 +1054,7 @@ Cell <span class="ansi-green-fg">In[15], line 3</span>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/user_guide_and_examples_01_Basic_Usage-Cube_Example_31_1.png" src="../_images/user_guide_and_examples_01_Basic_Usage-Cube_Example_31_1.png" />
+<img alt="../_images/user_guide_and_examples_01_basic_31_1.png" src="../_images/user_guide_and_examples_01_basic_31_1.png" />
 </div>
 </div>
 <p>You probable see again a cube like structure. The reconstruction, however, will not be perfect, as information is lost when the data is projected to a lower dimensional space.</p>
@@ -1068,7 +1081,7 @@ Cell <span class="ansi-green-fg">In[15], line 3</span>
           <p class="prev-next-title">Starter notebooks</p>
       </div>
   </a>
-  <a class='right-next' id="next-link" href="02_Advanced_Usage-Asp7_Example.html" title="next page">
+  <a class='right-next' id="next-link" href="02_advanced.html" title="next page">
   <div class="prev-next-info">
       <p class="prev-next-subtitle">next</p>
       <p class="prev-next-title">Asp7 Example - Advanced Usage</p>
@@ -1150,7 +1163,7 @@ Cell <span class="ansi-green-fg">In[15], line 3</span>
 <div class="toc-item">
   
 <div class="tocsection sourcelink">
-    <a href="../_sources/user_guide_and_examples/01_Basic_Usage-Cube_Example.nblink.txt">
+    <a href="../_sources/user_guide_and_examples/01_basic.nblink.txt">
         <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
 </div>

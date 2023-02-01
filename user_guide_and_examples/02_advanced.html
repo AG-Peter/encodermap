@@ -48,12 +48,12 @@
     <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide_and_examples/02_Advanced_Usage-Asp7_Example';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide_and_examples/02_advanced';</script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Intermediate notebooks" href="intermediate_notebooks.html" />
-    <link rel="prev" title="Cube Example - Basic Usage" href="01_Basic_Usage-Cube_Example.html" />
+    <link rel="next" title="Your Data" href="03_Your_Data.html" />
+    <link rel="prev" title="Cube Example - Basic Usage" href="01_basic.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en">
   </head>
@@ -318,12 +318,24 @@
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="starter_notebooks.html">Starter notebooks</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="01_Basic_Usage-Cube_Example.html">Cube Example - Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_basic.html">Cube Example - Basic Usage</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Asp7 Example - Advanced Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Your_Data.html">Your Data</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="intermediate_notebooks.html">Intermediate notebooks</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="customization_notebooks.html">Learn how to Customize EncoderMap</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="learning_rate_schedulers.html">Learning Rate Scheduler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_custom_images_to_tensorboard.html">Logging Custom Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_custom_loss_functions.html">Writing Custom Loss Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_custom_scalars_to_tensorboard.html">Logging Custom Scalars</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="intermediate_notebooks.html">Intermediate notebooks</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="02_training_with_different_topologies.html">Training with different topologies</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="md_notebooks.html">Learn how EncoderMap handles MD data and trajectory ensembles</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_working_with_trajectory_ensembles.html">Working with trajectory ensembles</a></li>
 </ul>
 </li>
 </ul>
@@ -620,21 +632,35 @@ div.rendered_html tbody tr:hover {
 <p><a class="reference external" href="https://colab.research.google.com/github/AG-Peter/encodermap/blob/main/tutorials/notebooks_starter/02_Advanced_Usage-Asp7_Example.ipynb"><img alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <p>Find the documentation of EncoderMap:</p>
 <p><a class="reference external" href="https://ag-peter.github.io/encodermap">https://ag-peter.github.io/encodermap</a></p>
-<section id="For-Google-colab-users:-Install-EncoderMap">
-<h2>For Google colab users: Install EncoderMap<a class="headerlink" href="#For-Google-colab-users:-Install-EncoderMap" title="Permalink to this heading">#</a></h2>
+<section id="For-Google-colab-only:">
+<h2>For Google colab only:<a class="headerlink" href="#For-Google-colab-only:" title="Permalink to this heading">#</a></h2>
+<p>If you’re on Google colab, please uncomment these lines and install EncoderMap.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># !pip install &quot;git+https://github.com/AG-Peter/encodermap.git@main&quot;</span>
-<span class="c1"># !pip install -r https://raw.githubusercontent.com/AG-Peter/encodermap/main/tests/test_requirements.md</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># !wget https://raw.githubusercontent.com/AG-Peter/encodermap/main/tutorials/install_encodermap_google_colab.sh</span>
+<span class="c1"># !sudo bash install_encodermap_google_colab.sh</span>
 </pre></div>
 </div>
 </div>
+<p>If you’re on Google colab, you also want to download the Data we will use in this notebook.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># !wget https://raw.githubusercontent.com/AG-Peter/encodermap/main/tutorials/notebooks_starter/asp7.csv</span>
+<span class="c1"># !wget https://raw.githubusercontent.com/AG-Peter/encodermap/main/tutorials/notebooks_starter/asp7.pdb</span>
+<span class="c1"># !wget https://raw.githubusercontent.com/AG-Peter/encodermap/main/tutorials/notebooks_starter/asp7.xtc</span>
+</pre></div>
+</div>
+</div>
+<section id="Primer">
+<h3>Primer<a class="headerlink" href="#Primer" title="Permalink to this heading">#</a></h3>
 <p>In this tutorial we will use example data from a molecular dynamics simulation and learn more about advanced usage of EncoderMap. Encoder map can create low-dimensional maps of the vast conformational spaces of molecules. This allows easy identification of the most common molecular conformations and helps to understand the relations between these conformations. In this example, we will use data from a simulation of a simple peptide: hepta-aspartic-acid.</p>
 <p>First we need to import some libraries:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
@@ -655,7 +681,7 @@ div.rendered_html tbody tr:hover {
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">ModuleNotFoundError</span>                       Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[2], line 1</span>
+Cell <span class="ansi-green-fg">In[3], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">encodermap</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">em</span>
 <span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">matplotlib</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">mpl</span>
 <span class="ansi-green-intense-fg ansi-bold">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">matplotlib</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">pyplot</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">plt</span>
@@ -678,7 +704,7 @@ File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/pyth
 </div>
 <p>Fix the random state of tensorflow for reproducibility.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
@@ -691,20 +717,20 @@ File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/pyth
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2023-02-01 08:03:10.145725: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+2023-02-01 15:27:34.338251: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2023-02-01 08:03:10.266487: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libcudart.so.11.0&#39;; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-01 08:03:10.266510: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
-2023-02-01 08:03:10.972161: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer.so.7&#39;; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-01 08:03:10.972245: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer_plugin.so.7&#39;; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-01 08:03:10.972254: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2023-02-01 15:27:34.489542: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libcudart.so.11.0&#39;; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-01 15:27:34.489571: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2023-02-01 15:27:35.442706: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer.so.7&#39;; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-01 15:27:35.442843: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer_plugin.so.7&#39;; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-01 15:27:35.442857: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
 </pre></div></div>
 </div>
 <p>Next, we need to load the input data. Different kinds of variables can be used to describe molecular conformations: e.g. Cartesian coordinates, distances, angles, dihedrals… In principle EncoderMap can deal with any of these inputs, however, some are better suited than others. The molecular conformation does not change when the molecule is translated or rotated. The chosen input variables should reflect that and be translationally and rotationally invariant.</p>
 <p>In this example we use the backbone dihedral angles phi and psi as input as they are translationally and rotationally invariant and describe the backbone of a protein/peptide very well.</p>
 <p>The “asp7.csv” file contains one column for each dihedral and one row for each frame of the trajectory. Additionally, the last column contains a cluster_id from a gromos clustering which we can later use for comparison. We can load this data using numpy.loadtxt:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">csv_path</span> <span class="o">=</span> <span class="s2">&quot;asp7.csv&quot;</span>
@@ -721,7 +747,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[4], line 2</span>
+Cell <span class="ansi-green-fg">In[5], line 2</span>
 <span class="ansi-green-intense-fg ansi-bold">      1</span> csv_path <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">asp7.csv</span><span style="color: rgb(175,0,0)">&#34;</span>
 <span class="ansi-green-fg">----&gt; 2</span> data <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">np</span><span style="color: rgb(98,98,98)">.</span>loadtxt(csv_path, skiprows<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">1</span>, delimiter<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">,</span><span style="color: rgb(175,0,0)">&#34;</span>)
 <span class="ansi-green-intense-fg ansi-bold">      3</span> dihedrals <span style="color: rgb(98,98,98)">=</span> data[:, :<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>]
@@ -731,7 +757,7 @@ Cell <span class="ansi-green-fg">In[4], line 2</span>
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nglview</span> <span class="k">as</span> <span class="nn">nv</span>
@@ -750,7 +776,7 @@ Cell <span class="ansi-green-fg">In[4], line 2</span>
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[5], line 1</span>
+Cell <span class="ansi-green-fg">In[6], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">nglview</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">nv</span>
 <span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">mdtraj</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">md</span>
 <span class="ansi-green-intense-fg ansi-bold">      3</span> traj <span style="color: rgb(98,98,98)">=</span> md<span style="color: rgb(98,98,98)">.</span>load(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">asp7.xtc</span><span style="color: rgb(175,0,0)">&#39;</span>, top<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">asp7.pdb</span><span style="color: rgb(175,0,0)">&#39;</span>)
@@ -815,12 +841,12 @@ File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/pyth
 </div>
 <p>Similarly to the previous example, we need to set some parameters. In contrast to the Cube example we now have periodic input data. The dihedral angles are in radians with a 2pi periodicity. We also set some further parameters but don’t bother for now.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">parameters</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">Parameters</span><span class="p">()</span>
 <span class="n">parameters</span><span class="o">.</span><span class="n">main_path</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">run_path</span><span class="p">(</span><span class="s2">&quot;runs/asp7&quot;</span><span class="p">)</span>
-<span class="n">parameters</span><span class="o">.</span><span class="n">n_steps</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">n_steps</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">parameters</span><span class="o">.</span><span class="n">dist_sig_parameters</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
 <span class="n">parameters</span><span class="o">.</span><span class="n">periodicity</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span>
 <span class="n">parameters</span><span class="o">.</span><span class="n">l2_reg_constant</span> <span class="o">=</span> <span class="mf">10.0</span>
@@ -842,17 +868,17 @@ File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/pyth
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[6], line 1</span>
+Cell <span class="ansi-green-fg">In[7], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> parameters <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">em</span><span style="color: rgb(98,98,98)">.</span>Parameters()
 <span class="ansi-green-intense-fg ansi-bold">      2</span> parameters<span style="color: rgb(98,98,98)">.</span>main_path <span style="color: rgb(98,98,98)">=</span> em<span style="color: rgb(98,98,98)">.</span>misc<span style="color: rgb(98,98,98)">.</span>run_path(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">runs/asp7</span><span style="color: rgb(175,0,0)">&#34;</span>)
-<span class="ansi-green-intense-fg ansi-bold">      3</span> parameters<span style="color: rgb(98,98,98)">.</span>n_steps <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">1000</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span> parameters<span style="color: rgb(98,98,98)">.</span>n_steps <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">100</span>
 
 <span class="ansi-red-fg">NameError</span>: name &#39;em&#39; is not defined
 </pre></div></div>
 </div>
 <p>Next we can run the dimensionality reduction:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">e_map</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">EncoderMap</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">dihedrals</span><span class="p">)</span>
@@ -866,7 +892,7 @@ Cell <span class="ansi-green-fg">In[6], line 1</span>
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[7], line 1</span>
+Cell <span class="ansi-green-fg">In[8], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> e_map <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">em</span><span style="color: rgb(98,98,98)">.</span>EncoderMap(parameters, dihedrals)
 
 <span class="ansi-red-fg">NameError</span>: name &#39;em&#39; is not defined
@@ -874,7 +900,7 @@ Cell <span class="ansi-green-fg">In[7], line 1</span>
 </div>
 <p>The new tensorflow 2 version of EncoderMap allows you to also view the output of the latent space during the training. Switch that feature on with <code class="docutils literal notranslate"><span class="pre">e_map.add_images_to_tensorboard()</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">e_map</span><span class="o">.</span><span class="n">add_images_to_tensorboard</span><span class="p">()</span>
@@ -888,14 +914,14 @@ Cell <span class="ansi-green-fg">In[7], line 1</span>
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[8], line 1</span>
+Cell <span class="ansi-green-fg">In[9], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">e_map</span><span style="color: rgb(98,98,98)">.</span>add_images_to_tensorboard()
 
 <span class="ansi-red-fg">NameError</span>: name &#39;e_map&#39; is not defined
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">e_map</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
@@ -909,7 +935,7 @@ Cell <span class="ansi-green-fg">In[8], line 1</span>
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[9], line 1</span>
+Cell <span class="ansi-green-fg">In[10], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">e_map</span><span style="color: rgb(98,98,98)">.</span>train()
 
 <span class="ansi-red-fg">NameError</span>: name &#39;e_map&#39; is not defined
@@ -917,7 +943,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 </div>
 <p>project all dihedrals to the low-dimensional space…</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">low_d_projection</span> <span class="o">=</span> <span class="n">e_map</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">dihedrals</span><span class="p">)</span>
@@ -931,7 +957,7 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[10], line 1</span>
+Cell <span class="ansi-green-fg">In[11], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> low_d_projection <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">e_map</span><span style="color: rgb(98,98,98)">.</span>encode(dihedrals)
 
 <span class="ansi-red-fg">NameError</span>: name &#39;e_map&#39; is not defined
@@ -939,7 +965,7 @@ Cell <span class="ansi-green-fg">In[10], line 1</span>
 </div>
 <p>and plot the result:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -978,7 +1004,7 @@ Cell <span class="ansi-green-fg">In[10], line 1</span>
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[11], line 17</span>
+Cell <span class="ansi-green-fg">In[12], line 17</span>
 <span class="ansi-green-intense-fg ansi-bold">     14</span> max_clusters <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">5</span>
 <span class="ansi-green-intense-fg ansi-bold">     16</span> <span style="color: rgb(95,135,135)"># create figure</span>
 <span class="ansi-green-fg">---&gt; 17</span> fig, ax <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">plt</span><span style="color: rgb(98,98,98)">.</span>subplots()
@@ -991,9 +1017,11 @@ Cell <span class="ansi-green-fg">In[11], line 17</span>
 <p>In the above map points from different clusters (different colors) should be well separated. However, if you didn’t change the parameters, they are probably not. Some of our parameter settings appear to be unsuitable. Let’s see how we can find out what goes wrong.</p>
 </section>
 <section id="Visualize-Learning-with-TensorBoard">
-<h2>Visualize Learning with TensorBoard<a class="headerlink" href="#Visualize-Learning-with-TensorBoard" title="Permalink to this heading">#</a></h2>
+<h3>Visualize Learning with TensorBoard<a class="headerlink" href="#Visualize-Learning-with-TensorBoard" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
 <section id="Running-tensorboard-on-Google-colab">
-<h3>Running tensorboard on Google colab<a class="headerlink" href="#Running-tensorboard-on-Google-colab" title="Permalink to this heading">#</a></h3>
+<h2>Running tensorboard on Google colab<a class="headerlink" href="#Running-tensorboard-on-Google-colab" title="Permalink to this heading">#</a></h2>
 <p>To use tensorboard in google colabs notebooks, you neet to first load the tensorboard extension</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">load_ext</span> <span class="n">tensorboard</span>
 </pre></div>
@@ -1005,7 +1033,7 @@ Cell <span class="ansi-green-fg">In[11], line 17</span>
 <p>The next code cell contains these commands. Uncomment them and then continue.</p>
 </section>
 <section id="Running-tensorboard-locally">
-<h3>Running tensorboard locally<a class="headerlink" href="#Running-tensorboard-locally" title="Permalink to this heading">#</a></h3>
+<h2>Running tensorboard locally<a class="headerlink" href="#Running-tensorboard-locally" title="Permalink to this heading">#</a></h2>
 <p>TensorBoard is a visualization tool from the machine learning library TensorFlow which is used by the EncoderMap package. During the dimensionality reduction step, when the neural network autoencoder is trained, several readings are saved in a TensorBoard format. All output files are saved to the path defined in <code class="docutils literal notranslate"><span class="pre">parameters.main_path</span></code>. Navigate to this location in a shell and start TensorBoard. Change the paramter Tensorboard to <code class="docutils literal notranslate"><span class="pre">True</span></code> to make Encodermap log to Tensorboard.</p>
 <p>In case you run this tutorial in the provided Docker container you can open a new console inside the container by typing the following command in a new system shell.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>emap<span class="w"> </span>bash
@@ -1029,23 +1057,23 @@ Cell <span class="ansi-green-fg">In[11], line 17</span>
 </pre></div>
 </div>
 <p>In your case, probably the overall cost as well as the auto_cost and the distance_cost are still decreasing after all training iterations. This tells us that we can simply improve the result by increasing the number of training steps. The following cell contains the same code as above. Set a larger number of straining steps to improve the result (e.g. 3000).</p>
+<p><strong>For Goole colab, you can load the Tensorboard extension with:</strong></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for Google colab uncomment these lines</span>
-<span class="c1"># %load_ext tensorboard</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load_ext tensorboard</span>
 <span class="c1"># %tensorboard --logdir .</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">parameters</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">Parameters</span><span class="p">(</span>
     <span class="n">main_path</span><span class="o">=</span><span class="n">em</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">run_path</span><span class="p">(</span><span class="s2">&quot;runs/asp7&quot;</span><span class="p">),</span>
-    <span class="n">n_steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="n">n_steps</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
     <span class="n">dist_sig_parameters</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
     <span class="n">periodicity</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">,</span>
     <span class="n">l2_reg_constant</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
@@ -1072,10 +1100,10 @@ Cell <span class="ansi-green-fg">In[11], line 17</span>
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[13], line 1</span>
+Cell <span class="ansi-green-fg">In[14], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> parameters <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">em</span><span style="color: rgb(98,98,98)">.</span>Parameters(
 <span class="ansi-green-intense-fg ansi-bold">      2</span>     main_path<span style="color: rgb(98,98,98)">=</span>em<span style="color: rgb(98,98,98)">.</span>misc<span style="color: rgb(98,98,98)">.</span>run_path(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">runs/asp7</span><span style="color: rgb(175,0,0)">&#34;</span>),
-<span class="ansi-green-intense-fg ansi-bold">      3</span>     n_steps<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">1000</span>,
+<span class="ansi-green-intense-fg ansi-bold">      3</span>     n_steps<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">100</span>,
 <span class="ansi-green-intense-fg ansi-bold">      4</span>     dist_sig_parameters<span style="color: rgb(98,98,98)">=</span>(<span style="color: rgb(98,98,98)">4.5</span>, <span style="color: rgb(98,98,98)">12</span>, <span style="color: rgb(98,98,98)">6</span>, <span style="color: rgb(98,98,98)">1</span>, <span style="color: rgb(98,98,98)">2</span>, <span style="color: rgb(98,98,98)">6</span>),
 <span class="ansi-green-intense-fg ansi-bold">      5</span>     periodicity<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">2</span><span style="color: rgb(98,98,98)">*</span>pi,
 <span class="ansi-green-intense-fg ansi-bold">      6</span>     l2_reg_constant<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">10</span>,
@@ -1093,7 +1121,7 @@ Cell <span class="ansi-green-fg">In[13], line 1</span>
 <p>The resulting low-dimensional projection is probably still not very detailed and clusters are probably not well separated. Currently we use a regularization constant <code class="docutils literal notranslate"><span class="pre">parameters.l2_reg_constant</span> <span class="pre">=</span> <span class="pre">10.0</span></code>. The regularization constant influences the complexity of the network and the map. A high regularization constant will result in a smooth map with little details. A small regularization constant will result in a rougher more detailed map.</p>
 <p>Go back to the previous cell and decrease the regularization constant (e.g. <code class="docutils literal notranslate"><span class="pre">parameters.l2_reg_constant</span> <span class="pre">=</span> <span class="pre">0.001</span></code>). Play with different settings to improve the separation of the clusters in the map. Have a look at TensorBoard to see how the cost changes for different parameters.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -1109,7 +1137,7 @@ Cell <span class="ansi-green-fg">In[13], line 1</span>
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[14], line 2</span>
+Cell <span class="ansi-green-fg">In[15], line 2</span>
 <span class="ansi-green-intense-fg ansi-bold">      1</span> get_ipython()<span style="color: rgb(98,98,98)">.</span>run_line_magic(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">matplotlib</span><span style="color: rgb(175,0,0)">&#39;</span>, <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">inline</span><span style="color: rgb(175,0,0)">&#39;</span>)
 <span class="ansi-green-fg">----&gt; 2</span> <span class="ansi-yellow-bg">plt</span><span style="color: rgb(98,98,98)">.</span>close(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">all</span><span style="color: rgb(175,0,0)">&#39;</span>)
 <span class="ansi-green-intense-fg ansi-bold">      3</span> plt<span style="color: rgb(98,98,98)">.</span>scatter(<span style="color: rgb(98,98,98)">*</span>e_map<span style="color: rgb(98,98,98)">.</span>encode(dihedrals)<span style="color: rgb(98,98,98)">.</span>T)
@@ -1118,15 +1146,18 @@ Cell <span class="ansi-green-fg">In[14], line 2</span>
 </pre></div></div>
 </div>
 <p><strong>Here is what you can see in Tensorboard:</strong></p>
-<p><img alt="f35afdeaa4b5444ba2222d0a58f76989" class="no-scaled-link" src="user_guide_and_examples/Tensorboard_Cost.png" style="width: 800px;" /> <img alt="dfbe67ed56244b2496c3a7cb31bd1e7a" class="no-scaled-link" src="user_guide_and_examples/Tensorboard_Histograms.png" style="width: 800px;" /> <img alt="ac12e79f1f3d4812846312890fcaee9d" class="no-scaled-link" src="user_guide_and_examples/Tensorboard_Parameters.png" style="width: 800px;" /> <img alt="cc38d05d799241b9823f95843850016f" class="no-scaled-link" src="../_images/Tensorboard_Images.png" style="width: 800px;" /></p>
+<p><img alt="d1a36167bf71410ca7533aa1ccebc44f" class="no-scaled-link" src="../_images/Tensorboard_Cost.png" style="width: 800px;" /></p>
+<p><img alt="bcf91f525e8a42e89a15f10a3eebba73" class="no-scaled-link" src="../_images/Tensorboard_Histograms.png" style="width: 800px;" /></p>
+<p><img alt="71bfb00daf3f4b5999d2143c47d8bb80" class="no-scaled-link" src="../_images/Tensorboard_Parameters.png" style="width: 800px;" /></p>
+<p><img alt="b5e83d2057af4c868ea5c8ccc8505a2d" class="no-scaled-link" src="../_images/Tensorboard_Images.png" style="width: 800px;" /></p>
 </section>
 <section id="Save-and-Load">
-<h3>Save and Load<a class="headerlink" href="#Save-and-Load" title="Permalink to this heading">#</a></h3>
+<h2>Save and Load<a class="headerlink" href="#Save-and-Load" title="Permalink to this heading">#</a></h2>
 <p>Once you are satisfied with your EncoderMap, you might want to save the result. The good news is: Encoder map automatically saves checkpoints during the training process in <code class="docutils literal notranslate"><span class="pre">parameters.main_path</span></code>. The frequency of writing checkpoints can be defined with <code class="docutils literal notranslate"><span class="pre">patameters.checkpoint_step</span></code>. Also, your selected parameters are saved in a file called <code class="docutils literal notranslate"><span class="pre">parameters.json</span></code>. Navigate to the driectory of your last run and open this <code class="docutils literal notranslate"><span class="pre">parameters.json</span></code> file in some text editor. You should find all the
 parameters that we have set so far. You also find some parameters which were not set by us specifically and where EncoderMap used its default values.</p>
 <p>Let’s start by looking at the parameters from the last run and printing them in a nicely formatted table with the <code class="docutils literal notranslate"><span class="pre">.parameters</span></code> attribute.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loaded_parameters</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">Parameters</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s1">&#39;runs/asp7/run0/parameters.json&#39;</span><span class="p">)</span>
@@ -1141,7 +1172,7 @@ parameters that we have set so far. You also find some parameters which were not
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[15], line 1</span>
+Cell <span class="ansi-green-fg">In[16], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> loaded_parameters <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">em</span><span style="color: rgb(98,98,98)">.</span>Parameters<span style="color: rgb(98,98,98)">.</span>from_file(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">runs/asp7/run0/parameters.json</span><span style="color: rgb(175,0,0)">&#39;</span>)
 <span class="ansi-green-intense-fg ansi-bold">      2</span> <span style="color: rgb(0,135,0)">print</span>(loaded_parameters<span style="color: rgb(98,98,98)">.</span>parameters)
 
@@ -1150,7 +1181,7 @@ Cell <span class="ansi-green-fg">In[15], line 1</span>
 </div>
 <p>Before we can reload our trained network we need to save it manually, because the checkpoint step was set to 5000 and we did only write a checkpoint at 0 (random initial weights). We call <code class="docutils literal notranslate"><span class="pre">e_map.save()</span></code> to do so.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">e_map</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
@@ -1164,7 +1195,7 @@ Cell <span class="ansi-green-fg">In[15], line 1</span>
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[16], line 1</span>
+Cell <span class="ansi-green-fg">In[17], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">e_map</span><span style="color: rgb(98,98,98)">.</span>save()
 
 <span class="ansi-red-fg">NameError</span>: name &#39;e_map&#39; is not defined
@@ -1172,7 +1203,7 @@ Cell <span class="ansi-green-fg">In[16], line 1</span>
 </div>
 <p>And now we reload it.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the most recent file</span>
@@ -1191,7 +1222,7 @@ Cell <span class="ansi-green-fg">In[16], line 1</span>
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">IndexError</span>                                Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[17], line 4</span>
+Cell <span class="ansi-green-fg">In[18], line 4</span>
 <span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">os</span>
 <span class="ansi-green-intense-fg ansi-bold">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">pathlib</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> Path
 <span class="ansi-green-fg">----&gt; 4</span> latest_checkpoint_file <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">str</span>(<span class="ansi-yellow-bg" style="color: rgb(0,135,0)">list</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">sorted</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">Path</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">runs/asp7</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">rglob</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">*model*</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">key</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">os</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">path</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">getmtime</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">reverse</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg ansi-bold" style="color: rgb(0,135,0)">True</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">0</span><span class="ansi-yellow-bg">]</span>)<span style="color: rgb(98,98,98)">.</span>rstrip(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">_decoder</span><span style="color: rgb(175,0,0)">&#34;</span>)<span style="color: rgb(98,98,98)">.</span>rstrip(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">_encoder</span><span style="color: rgb(175,0,0)">&#34;</span>)
@@ -1203,7 +1234,7 @@ Cell <span class="ansi-green-fg">In[17], line 4</span>
 </div>
 <p>Now we are finished with loading and we can for example use the loaded EncoderMap object to project data to the low_dimensional space and plot the result:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">low_d_projection</span> <span class="o">=</span> <span class="n">e_map</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">dihedrals</span><span class="p">)</span>
@@ -1232,7 +1263,7 @@ Cell <span class="ansi-green-fg">In[17], line 4</span>
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[18], line 1</span>
+Cell <span class="ansi-green-fg">In[19], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> low_d_projection <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">e_map</span><span style="color: rgb(98,98,98)">.</span>encode(dihedrals)
 <span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(95,135,135)"># Plotting:</span>
 <span class="ansi-green-intense-fg ansi-bold">      4</span> get_ipython()<span style="color: rgb(98,98,98)">.</span>run_line_magic(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">matplotlib</span><span style="color: rgb(175,0,0)">&#39;</span>, <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">inline</span><span style="color: rgb(175,0,0)">&#39;</span>)
@@ -1242,23 +1273,27 @@ Cell <span class="ansi-green-fg">In[18], line 1</span>
 </div>
 </section>
 <section id="Generate-Molecular-Conformations">
-<h3>Generate Molecular Conformations<a class="headerlink" href="#Generate-Molecular-Conformations" title="Permalink to this heading">#</a></h3>
+<h2>Generate Molecular Conformations<a class="headerlink" href="#Generate-Molecular-Conformations" title="Permalink to this heading">#</a></h2>
 <p>Already in the cube example, you have seen that with EncoderMap it is not only possible to project points to the low-dimensional space. Also, a projection of low-dimensional points into the high-dimensional space is possible.</p>
 <p>Here, we will use a tool form the EncoderMap library to interactively select a path in the low-dimensional map. We will project points along this path into the high-dimensional dihedral space, and use these dihedrals to reconstruct molecular conformations. This can be very useful to explore the landscape an to see what changes in the molecular conformation going from one cluster to another.</p>
 <p>The next cell instantiates a class with which you can interact with the low-dimensional projection of the Autoencoder. You can select clusters with the <code class="docutils literal notranslate"><span class="pre">Polygon</span></code>, <code class="docutils literal notranslate"><span class="pre">Ellipse,</span></code>, <code class="docutils literal notranslate"><span class="pre">Rectangle</span></code> and <code class="docutils literal notranslate"><span class="pre">Lasso</span></code> tools. The clusters will be selected fron the input conformations in <code class="docutils literal notranslate"><span class="pre">asp7.xtc</span></code>.</p>
 <p>More interesting is the <code class="docutils literal notranslate"><span class="pre">Bezier</span></code> and <code class="docutils literal notranslate"><span class="pre">Path</span></code> tool. With these you can generate molecular conformations from a path in the latent space.</p>
 <p>Click <code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Points</span></code> and then <code class="docutils literal notranslate"><span class="pre">Write</span></code>/<code class="docutils literal notranslate"><span class="pre">Generate</span></code> to make your own clusters/paths. You can have a look at what you selected using the <code class="docutils literal notranslate"><span class="pre">sess.view</span></code> attribute of the InteractivePlotting class. For this you need to have nglview installed.</p>
 <p>Give the InteractivePlotting a try. We would like to hear your feedback at GitHub.</p>
-<p><strong>Note:</strong> Sometime the <code class="docutils literal notranslate"><span class="pre">notebook</span></code> backend of matplotlib does not behave well and will not work with the InteractivePlotting class. Try switching to a different backend with</p>
+<p><strong>Note:</strong> This notebook uses a non-interactive matploltib backend to render for web pages. Switch to an interactive backend by using either:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matploltib</span> <span class="n">qt5</span>
 </pre></div>
 </div>
-<p>Sadly, you need to restart the Kernel before switching. We hope you saved your trained EncoderMap.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<p>or</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matploltib</span> <span class="n">notebook</span>
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sess</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">InteractivePlotting</span><span class="p">(</span><span class="n">e_map</span><span class="p">,</span> <span class="s2">&quot;asp7.xtc&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">low_d_projection</span><span class="p">,</span>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%matploltib notebook</span>
+<span class="n">sess</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">InteractivePlotting</span><span class="p">(</span><span class="n">e_map</span><span class="p">,</span> <span class="s2">&quot;asp7.xtc&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">low_d_projection</span><span class="p">,</span>
                               <span class="n">top</span><span class="o">=</span><span class="s1">&#39;asp7.pdb&#39;</span><span class="p">,</span> <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
 </pre></div>
 </div>
@@ -1270,15 +1305,16 @@ Cell <span class="ansi-green-fg">In[18], line 1</span>
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[19], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> sess <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">em</span><span style="color: rgb(98,98,98)">.</span>InteractivePlotting(e_map, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">asp7.xtc</span><span style="color: rgb(175,0,0)">&#34;</span>, data<span style="color: rgb(98,98,98)">=</span>low_d_projection,
-<span class="ansi-green-intense-fg ansi-bold">      2</span>                               top<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">asp7.pdb</span><span style="color: rgb(175,0,0)">&#39;</span>, scatter_kws<span style="color: rgb(98,98,98)">=</span>{<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">s</span><span style="color: rgb(175,0,0)">&#39;</span>: <span style="color: rgb(98,98,98)">2</span>})
+Cell <span class="ansi-green-fg">In[20], line 2</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span style="color: rgb(95,135,135)">#%matploltib notebook</span>
+<span class="ansi-green-fg">----&gt; 2</span> sess <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">em</span><span style="color: rgb(98,98,98)">.</span>InteractivePlotting(e_map, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">asp7.xtc</span><span style="color: rgb(175,0,0)">&#34;</span>, data<span style="color: rgb(98,98,98)">=</span>low_d_projection,
+<span class="ansi-green-intense-fg ansi-bold">      3</span>                               top<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">asp7.pdb</span><span style="color: rgb(175,0,0)">&#39;</span>, scatter_kws<span style="color: rgb(98,98,98)">=</span>{<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">s</span><span style="color: rgb(175,0,0)">&#39;</span>: <span style="color: rgb(98,98,98)">2</span>})
 
 <span class="ansi-red-fg">NameError</span>: name &#39;em&#39; is not defined
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sess</span><span class="o">.</span><span class="n">view</span>
@@ -1292,19 +1328,18 @@ Cell <span class="ansi-green-fg">In[19], line 1</span>
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[20], line 1</span>
+Cell <span class="ansi-green-fg">In[21], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">sess</span><span style="color: rgb(98,98,98)">.</span>view
 
 <span class="ansi-red-fg">NameError</span>: name &#39;sess&#39; is not defined
 </pre></div></div>
 </div>
 <p>As backbone dihedrals contain no information about the side-chains, only the backbone of the molecule can be reconstructed. In case the generated conformations change very abruptly it might be sensible to increase the regularization constant to obtain a smoother representation. If the generated conformations along a path are not changing at all, the regularization is probably to strong and prevents the network form generating different conformations.</p>
-</section>
 <section id="Conclusion">
 <h3>Conclusion<a class="headerlink" href="#Conclusion" title="Permalink to this heading">#</a></h3>
 <p>In this tutorial we applied EncoderMap to a molecular system. You have learned how to monitor the EncoderMap training procedure with TensorBoard, how to restore previously saved EncoderMaps and how to generate Molecular conformations using the path selection tool.</p>
 <script type="application/vnd.jupyter.widget-state+json">
-{"state": {"d42e4349eec04f61aa3b6a2355a5319a": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "3bf408e0a00b4bdc9719a405b4dbbd9c": {"model_name": "ColormakerRegistryModel", "model_module": "nglview-js-widgets", "model_module_version": "3.0.1", "state": {"_dom_classes": [], "_model_module": "nglview-js-widgets", "_model_module_version": "3.0.1", "_model_name": "ColormakerRegistryModel", "_msg_ar": [], "_msg_q": [], "_ready": false, "_view_count": null, "_view_module": "nglview-js-widgets", "_view_module_version": "3.0.1", "_view_name": "ColormakerRegistryView", "layout": "IPY_MODEL_d42e4349eec04f61aa3b6a2355a5319a", "tabbable": null, "tooltip": null}}}, "version_major": 2, "version_minor": 0}
+{"state": {"7e71330e05d84cbe9308b00ae00c25de": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "cdcffd6696dc455788f42b7645f04759": {"model_name": "ColormakerRegistryModel", "model_module": "nglview-js-widgets", "model_module_version": "3.0.1", "state": {"_dom_classes": [], "_model_module": "nglview-js-widgets", "_model_module_version": "3.0.1", "_model_name": "ColormakerRegistryModel", "_msg_ar": [], "_msg_q": [], "_ready": false, "_view_count": null, "_view_module": "nglview-js-widgets", "_view_module_version": "3.0.1", "_view_name": "ColormakerRegistryView", "layout": "IPY_MODEL_7e71330e05d84cbe9308b00ae00c25de", "tabbable": null, "tooltip": null}}}, "version_major": 2, "version_minor": 0}
 </script></section>
 </section>
 </section>
@@ -1317,17 +1352,17 @@ Cell <span class="ansi-green-fg">In[20], line 1</span>
             <footer class="bd-footer-article">
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-  <a class='left-prev' id="prev-link" href="01_Basic_Usage-Cube_Example.html" title="previous page">
+  <a class='left-prev' id="prev-link" href="01_basic.html" title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
           <p class="prev-next-subtitle">previous</p>
           <p class="prev-next-title">Cube Example - Basic Usage</p>
       </div>
   </a>
-  <a class='right-next' id="next-link" href="intermediate_notebooks.html" title="next page">
+  <a class='right-next' id="next-link" href="03_Your_Data.html" title="next page">
   <div class="prev-next-info">
       <p class="prev-next-subtitle">next</p>
-      <p class="prev-next-title">Intermediate notebooks</p>
+      <p class="prev-next-title">Your Data</p>
   </div>
   <i class="fa-solid fa-angle-right"></i>
   </a>
@@ -1348,35 +1383,42 @@ Cell <span class="ansi-green-fg">In[20], line 1</span>
 <nav id="bd-toc-nav" class="page-toc">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#For-Google-colab-users:-Install-EncoderMap">
-   For Google colab users: Install EncoderMap
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#Visualize-Learning-with-TensorBoard">
-   Visualize Learning with TensorBoard
+  <a class="reference internal nav-link" href="#For-Google-colab-only:">
+   For Google colab only:
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#Running-tensorboard-on-Google-colab">
-     Running tensorboard on Google colab
+    <a class="reference internal nav-link" href="#Primer">
+     Primer
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#Running-tensorboard-locally">
-     Running tensorboard locally
+    <a class="reference internal nav-link" href="#Visualize-Learning-with-TensorBoard">
+     Visualize Learning with TensorBoard
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#Save-and-Load">
-     Save and Load
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#Generate-Molecular-Conformations">
-     Generate Molecular Conformations
-    </a>
-   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Running-tensorboard-on-Google-colab">
+   Running tensorboard on Google colab
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Running-tensorboard-locally">
+   Running tensorboard locally
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Save-and-Load">
+   Save and Load
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#Generate-Molecular-Conformations">
+   Generate Molecular Conformations
+  </a>
+  <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#Conclusion">
      Conclusion
@@ -1401,7 +1443,7 @@ Cell <span class="ansi-green-fg">In[20], line 1</span>
 <div class="toc-item">
   
 <div class="tocsection sourcelink">
-    <a href="../_sources/user_guide_and_examples/02_Advanced_Usage-Asp7_Example.nblink.txt">
+    <a href="../_sources/user_guide_and_examples/02_advanced.nblink.txt">
         <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
 </div>

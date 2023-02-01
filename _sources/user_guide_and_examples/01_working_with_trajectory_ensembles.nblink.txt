@@ -1,0 +1,3 @@
+{
+    "path" : "../../../tutorials/notebooks_MD/01_Working_with_trajectory_ensembles.ipynb"
+}

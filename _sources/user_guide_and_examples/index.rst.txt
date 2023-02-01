@@ -11,4 +11,6 @@ topic and contains examples.
 
     code_examples
     starter_notebooks
+    customization_notebooks
     intermediate_notebooks
+    md_notebooks
