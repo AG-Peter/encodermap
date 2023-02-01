@@ -32,10 +32,10 @@ https://ag-peter.github.io/encoder_map_private/
 pip install git+https://github.com/AG-Peter/encodermap.git
 ```
 
-**Install optional packages for using MD data:
+**Install optional packages for using MD data:**
 
 ```bash
-pip install -r https://raw.githubusercontent.com/AG-Peter/encodermap/main/tests/test_requirements.md
+pip install -r https://raw.githubusercontent.com/AG-Peter/encodermap/main/md_requirements.txt
 ```
 
 EncoderMap requires TensorFlow >=2.9 to be installed. (TensorFlow 2 is not yet supported)
