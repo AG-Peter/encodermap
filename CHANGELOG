@@ -1,5 +1,10 @@
 # Changelog
 
+## 2021-02-01
+
+- Reduced the number of training steps in the example notebooks.
+- Added Google Colab links to the example notebooks.
+
 ## Version 3.0.0 (2021-01-25)
 
 - Updated tests to tensorflow2

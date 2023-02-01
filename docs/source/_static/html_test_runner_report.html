@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>EncoderMap Unittest Report from 2023-01-31T15:12:08+01:00</title>
+    <title>EncoderMap Unittest Report from 2023-01-31T21:17:38+01:00</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -10,10 +10,10 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <h2 class="text-capitalize">EncoderMap Unittest Report from 2023-01-31T15:12:08+01:00</h2>
-                <p class='attribute'><strong>Start Time: </strong>2023-01-31 15:12:08</p>
-                <p class='attribute'><strong>Duration: </strong>1 ms</p>
-                <p class='attribute'><strong>Summary: </strong>Total: 14, Pass: 0, Error: 14</p>
+                <h2 class="text-capitalize">EncoderMap Unittest Report from 2023-01-31T21:17:38+01:00</h2>
+                <p class='attribute'><strong>Start Time: </strong>2023-01-31 21:17:38</p>
+                <p class='attribute'><strong>Duration: </strong>317.82 s</p>
+                <p class='attribute'><strong>Summary: </strong>Total: 112, Pass: 108, Skip: 4</p>
             </div>
         </div>
         <div class="row">
@@ -21,519 +21,1653 @@
                 <table class='table table-hover table-responsive'>
                     <thead>
                         <tr>
-                            <th>unittest.loader._FailedTest</th>
+                            <th>test_losses.TestLossesPeriodic</th>
                             <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class='warning'>
-                            <td class="col-xs-10">test_angles</td>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_losses_periodic</td>
                             <td class="col-xs-1">
-                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 1, Pass: 1 -- Duration: 565 ms
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_losses.TestLossesNonPeriodic</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_losses_not_periodic</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 1, Pass: 1 -- Duration: 416 ms
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_losses.TestLossesADCAutoencoder</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_losses_ADC</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
                             </td>
                             <td class="col-xs-1">
                                 <button class="btn btn-default btn-xs">View</button>
                             </td>
                         </tr>
                         <tr style="display:none;">
-                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_angles
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_angles.py", line 34, in <module>
-    import encodermap as em
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-</p><p style="color:maroon;">ImportError: Failed to import test module: test_angles
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_angles.py", line 34, in <module>
-    import encodermap as em
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-
-</p>
-                            </td>
-                        </tr>
-                        <tr class='warning'>
-                            <td class="col-xs-10">test_autoencoder</td>
-                            <td class="col-xs-1">
-                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
-                            </td>
-                            <td class="col-xs-1">
-                                <button class="btn btn-default btn-xs">View</button>
-                            </td>
-                        </tr>
-                        <tr style="display:none;">
-                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_autoencoder
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_autoencoder.py", line 29, in <module>
-    import encodermap.autoencoder.autoencoder as autoencoder
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-</p><p style="color:maroon;">ImportError: Failed to import test module: test_autoencoder
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_autoencoder.py", line 29, in <module>
-    import encodermap.autoencoder.autoencoder as autoencoder
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-
-</p>
-                            </td>
-                        </tr>
-                        <tr class='warning'>
-                            <td class="col-xs-10">test_backmapping_em1_em2</td>
-                            <td class="col-xs-1">
-                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
-                            </td>
-                            <td class="col-xs-1">
-                                <button class="btn btn-default btn-xs">View</button>
-                            </td>
-                        </tr>
-                        <tr style="display:none;">
-                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_backmapping_em1_em2
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_backmapping_em1_em2.py", line 27, in <module>
-    import encodermap as em
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-</p><p style="color:maroon;">ImportError: Failed to import test module: test_backmapping_em1_em2
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_backmapping_em1_em2.py", line 27, in <module>
-    import encodermap as em
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-
-</p>
-                            </td>
-                        </tr>
-                        <tr class='warning'>
-                            <td class="col-xs-10">test_dihedral_to_cartesian</td>
-                            <td class="col-xs-1">
-                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
-                            </td>
-                            <td class="col-xs-1">
-                                <button class="btn btn-default btn-xs">View</button>
-                            </td>
-                        </tr>
-                        <tr style="display:none;">
-                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_dihedral_to_cartesian
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_dihedral_to_cartesian.py", line 33, in <module>
-    import encodermap.encodermap_tf1 as em_tf1
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-</p><p style="color:maroon;">ImportError: Failed to import test module: test_dihedral_to_cartesian
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_dihedral_to_cartesian.py", line 33, in <module>
-    import encodermap.encodermap_tf1 as em_tf1
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-
-</p>
-                            </td>
-                        </tr>
-                        <tr class='warning'>
-                            <td class="col-xs-10">test_featurizer</td>
-                            <td class="col-xs-1">
-                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
-                            </td>
-                            <td class="col-xs-1">
-                                <button class="btn btn-default btn-xs">View</button>
-                            </td>
-                        </tr>
-                        <tr style="display:none;">
-                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_featurizer
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_featurizer.py", line 56, in <module>
-    import encodermap as em
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-</p><p style="color:maroon;">ImportError: Failed to import test module: test_featurizer
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_featurizer.py", line 56, in <module>
-    import encodermap as em
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-
-</p>
-                            </td>
-                        </tr>
-                        <tr class='warning'>
-                            <td class="col-xs-10">test_interactive_plotting</td>
-                            <td class="col-xs-1">
-                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
-                            </td>
-                            <td class="col-xs-1">
-                                <button class="btn btn-default btn-xs">View</button>
-                            </td>
-                        </tr>
-                        <tr style="display:none;">
-                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_interactive_plotting
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_interactive_plotting.py", line 33, in <module>
-    from encodermap import ADCParameters, AngleDihedralCartesianEncoderMap
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-</p><p style="color:maroon;">ImportError: Failed to import test module: test_interactive_plotting
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_interactive_plotting.py", line 33, in <module>
-    from encodermap import ADCParameters, AngleDihedralCartesianEncoderMap
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-
-</p>
-                            </td>
-                        </tr>
-                        <tr class='warning'>
-                            <td class="col-xs-10">test_losses</td>
-                            <td class="col-xs-1">
-                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
-                            </td>
-                            <td class="col-xs-1">
-                                <button class="btn btn-default btn-xs">View</button>
-                            </td>
-                        </tr>
-                        <tr style="display:none;">
-                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_losses
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_losses.py", line 703, in <module>
-    import encodermap.loss_functions.loss_functions as loss_functions
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-</p><p style="color:maroon;">ImportError: Failed to import test module: test_losses
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_losses.py", line 703, in <module>
-    import encodermap.loss_functions.loss_functions as loss_functions
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-
-</p>
-                            </td>
-                        </tr>
-                        <tr class='warning'>
-                            <td class="col-xs-10">test_moldata</td>
-                            <td class="col-xs-1">
-                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
-                            </td>
-                            <td class="col-xs-1">
-                                <button class="btn btn-default btn-xs">View</button>
-                            </td>
-                        </tr>
-                        <tr style="display:none;">
-                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_moldata
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_moldata.py", line 27, in <module>
-    import encodermap.encodermap_tf1 as em_tf1
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-</p><p style="color:maroon;">ImportError: Failed to import test module: test_moldata
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_moldata.py", line 27, in <module>
-    import encodermap.encodermap_tf1 as em_tf1
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-
-</p>
-                            </td>
-                        </tr>
-                        <tr class='warning'>
-                            <td class="col-xs-10">test_non_backbone_atoms</td>
-                            <td class="col-xs-1">
-                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
-                            </td>
-                            <td class="col-xs-1">
-                                <button class="btn btn-default btn-xs">View</button>
-                            </td>
-                        </tr>
-                        <tr style="display:none;">
-                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_non_backbone_atoms
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_non_backbone_atoms.py", line 33, in <module>
-    import encodermap as em
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-</p><p style="color:maroon;">ImportError: Failed to import test module: test_non_backbone_atoms
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_non_backbone_atoms.py", line 33, in <module>
-    import encodermap as em
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-
-</p>
-                            </td>
-                        </tr>
-                        <tr class='warning'>
-                            <td class="col-xs-10">test_optional_imports</td>
-                            <td class="col-xs-1">
-                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
-                            </td>
-                            <td class="col-xs-1">
-                                <button class="btn btn-default btn-xs">View</button>
-                            </td>
-                        </tr>
-                        <tr style="display:none;">
-                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_optional_imports
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_optional_imports.py", line 57, in <module>
-    import encodermap._optional_imports as _optional_imports
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-</p><p style="color:maroon;">ImportError: Failed to import test module: test_optional_imports
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_optional_imports.py", line 57, in <module>
-    import encodermap._optional_imports as _optional_imports
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-
-</p>
-                            </td>
-                        </tr>
-                        <tr class='warning'>
-                            <td class="col-xs-10">test_pairwise_distances</td>
-                            <td class="col-xs-1">
-                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
-                            </td>
-                            <td class="col-xs-1">
-                                <button class="btn btn-default btn-xs">View</button>
-                            </td>
-                        </tr>
-                        <tr style="display:none;">
-                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_pairwise_distances
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_pairwise_distances.py", line 222, in <module>
-    import encodermap.misc.distances as distances
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-</p><p style="color:maroon;">ImportError: Failed to import test module: test_pairwise_distances
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_pairwise_distances.py", line 222, in <module>
-    import encodermap.misc.distances as distances
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-
-</p>
-                            </td>
-                        </tr>
-                        <tr class='warning'>
-                            <td class="col-xs-10">test_trajinfo</td>
-                            <td class="col-xs-1">
-                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
-                            </td>
-                            <td class="col-xs-1">
-                                <button class="btn btn-default btn-xs">View</button>
-                            </td>
-                        </tr>
-                        <tr style="display:none;">
-                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_trajinfo
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_trajinfo.py", line 59, in <module>
-    from encodermap.loading.features import CentralDihedrals
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-</p><p style="color:maroon;">ImportError: Failed to import test module: test_trajinfo
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_trajinfo.py", line 59, in <module>
-    from encodermap.loading.features import CentralDihedrals
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-
-</p>
-                            </td>
-                        </tr>
-                        <tr class='warning'>
-                            <td class="col-xs-10">test_version</td>
-                            <td class="col-xs-1">
-                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
-                            </td>
-                            <td class="col-xs-1">
-                                <button class="btn btn-default btn-xs">View</button>
-                            </td>
-                        </tr>
-                        <tr style="display:none;">
-                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_version
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_version.py", line 25, in <module>
-    import encodermap as em
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-</p><p style="color:maroon;">ImportError: Failed to import test module: test_version
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_version.py", line 25, in <module>
-    import encodermap as em
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-
-</p>
-                            </td>
-                        </tr>
-                        <tr class='warning'>
-                            <td class="col-xs-10">test_xarray</td>
-                            <td class="col-xs-1">
-                                <span class="label label-warning" style="display:block;width:40px;">Error</span>
-                            </td>
-                            <td class="col-xs-1">
-                                <button class="btn btn-default btn-xs">View</button>
-                            </td>
-                        </tr>
-                        <tr style="display:none;">
-                            <td class="col-xs-9" colspan="3"><p style="color:maroon;">ImportError: Failed to import test module: test_xarray
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_xarray.py", line 30, in <module>
-    import encodermap.misc.xarray as xarray
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-</p><p style="color:maroon;">ImportError: Failed to import test module: test_xarray
-Traceback (most recent call last):
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 436, in _find_test_path
-    module = self._get_module_from_name(name)
-  File "/home/kevin/.conda/envs/py39_tf2/lib/python3.9/unittest/loader.py", line 377, in _get_module_from_name
-    __import__(name)
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/tests/test_xarray.py", line 30, in <module>
-    import encodermap.misc.xarray as xarray
-  File "/home/kevin/git/encodermap_merges_and_rollbacks/squash_tf2_as_new_main/encoder_map_private/encodermap/__init__.py", line 5, in <module>
-    from .backmapping import *
-ModuleNotFoundError: No module named 'encodermap.backmapping'
-
+                            <td class="col-xs-9" colspan="3"><p>using backbone angles
 </p>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="3">
-                                Total: 14, Pass: 0, Error: 14 -- Duration: 1 ms
+                                Total: 1, Pass: 1 -- Duration: 9.58 s
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_losses.TestDistanceLossScipy</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_non_periodic</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_periodic</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 2, Pass: 2 -- Duration: 3.22 s
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>encodermap.loss_functions.loss_functions</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">loss_combinator</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">reconstruction_loss</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 2, Pass: 2 -- Duration: 1.21 s
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_angles.TestAngles</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_ala10_angles</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p>/mnt/data/kevin/encoder_map_private
+Loading Cartesians...
+Calculating dihedrals...
+Calculating sidedihedrals...
+Calculating angles...
+Calculating lengths...
+</p>
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_chain_in_plane</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 2, Pass: 2 -- Duration: 567 ms
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>encodermap.autoencoder.autoencoder</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">AngleDihedralCartesianEncoderMap</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">Autoencoder</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 2, Pass: 2 -- Duration: 68.42 s
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>encodermap.autoencoder.autoencoder.DihedralEncoderMap</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">generate</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 1, Pass: 1 -- Duration: 4.65 s
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_backmapping_em1_em2.TestBackmappingEm1Em2</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_backmapping_wo_angles</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p>ADCParameters class with Main path at /mnt/data/kevin/encoder_map_private.
+Non-standard value of l2_reg_constant: 0
+Non-standard value of use_backbone_angles: True
+using backbone angles
+main_inputs: (256, 943)
+encoded: (256, 2)
+tf.Tensor(True, shape=(), dtype=bool)
+decoded: (256, 943)
+</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 1, Pass: 1 -- Duration: 9.35 s
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_backmapping_em1_em2.TestCompareSplits</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_random_shapes</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 1, Pass: 1 -- Duration: 174 ms
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>encodermap.misc.backmapping</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">split_and_reverse_cartesians</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">split_and_reverse_dihedrals</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 2, Pass: 2 -- Duration: 3 ms
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_dihedral_to_cartesian.TestDihedralToCartesianTf</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_straight_tetrahedral_chain_with_bond_lenght</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_straight_to_helix_array</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_straight_to_helix_v2</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 3, Pass: 3 -- Duration: 1.19 s
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_featurizer.TestFeatures</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_add_all</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_add_angles</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_add_backbone_torsions</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p>158
+</p>
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_add_chi1_torsions</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_add_contacts</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p>Data variables:
+    DistanceFeature  (traj_num, frame_num, DISTANCEFEATURE) float32 1.0 ... 1...
+    ContactFeature   (traj_num, frame_num, CONTACTFEATURE) float32 1.0 ... 0.0
+</p>
+                            </td>
+                        </tr>
+                        <tr class='info'>
+                            <td class="col-xs-10">test_add_custom_feature</td>
+                            <td class="col-xs-1">
+                                <span class="label label-info" style="display:block;width:40px;">Skip</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_add_dihedrals</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_add_distances_ca</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_add_group_COM</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_add_inverse_distances</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_add_minrmsd_to_ref</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_add_residue_COM</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_add_residue_mindist</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_add_selection</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='info'>
+                            <td class="col-xs-10">test_add_sidechain_torsions</td>
+                            <td class="col-xs-1">
+                                <span class="label label-info" style="display:block;width:40px;">Skip</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_ala_dipeptide_correct_number_of_residues</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_encodermap_features_1am7</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p>446
+(51, 446)
+</p>
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_encodermap_features_ala10</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_encodermap_features_cartesians</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p>(6, 4, 3)
+[[[0. 0. 0.]
+  [1. 0. 0.]
+  [1. 1. 0.]]
+
+ [[0. 0. 0.]
+  [1. 0. 0.]
+  [1. 1. 0.]]
+
+ [[0. 0. 0.]
+  [2. 0. 0.]
+  [2. 1. 0.]]
+
+ [[0. 0. 0.]
+  [1. 0. 0.]
+  [1. 1. 0.]]
+
+ [[0. 0. 0.]
+  [1. 0. 0.]
+  [1. 1. 0.]]
+
+ [[0. 0. 0.]
+  [1. 0. 0.]
+  [1. 1. 0.]]]
+</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 19, Pass: 17, Skip: 2 -- Duration: 5.53 s
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_featurizer.TestDaskFeatures</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='info'>
+                            <td class="col-xs-10">test_and_compare_mdtraj_pbc</td>
+                            <td class="col-xs-1">
+                                <span class="label label-info" style="display:block;width:40px;">Skip</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='info'>
+                            <td class="col-xs-10">test_mdanalysis_fixes_pbc</td>
+                            <td class="col-xs-1">
+                                <span class="label label-info" style="display:block;width:40px;">Skip</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_performance_full_featurization</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 3, Pass: 1, Skip: 2 -- Duration: 0 ms
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_featurizer.TestDaskFeatureAndFeaturizerReturnDataSets</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_in_memory_and_dask_featurizer_return_similar_data</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p>Created dask scheduler. Access the dashboard via: http://127.0.0.1:8787/status
+[                                        ] | 0% Completed |  0.1s[                                        ] | 0% Completed |  0.2s[                                        ] | 0% Completed |  0.3s[                                        ] | 0% Completed |  0.4s[                                        ] | 0% Completed |  0.5s[                                        ] | 0% Completed |  0.6s[                                        ] | 0% Completed |  0.7s[                                        ] | 0% Completed |  0.8s[                                        ] | 0% Completed |  0.9s[                                        ] | 0% Completed |  1.0s[                                        ] | 0% Completed |  1.1s[                                        ] | 0% Completed |  1.2s[                                        ] | 0% Completed |  1.3s[                                        ] | 0% Completed |  1.4s[                                        ] | 0% Completed |  1.5s[                                        ] | 0% Completed |  1.6s[                                        ] | 0% Completed |  1.7s[                                        ] | 0% Completed |  1.8s[                                        ] | 0% Completed |  1.9s[                                        ] | 0% Completed |  2.0s[                                        ] | 0% Completed |  2.1s[                                        ] | 0% Completed |  2.2s[                                        ] | 0% Completed |  2.3s[                                        ] | 0% Completed |  2.4s[                                        ] | 0% Completed |  2.5s[                                        ] | 0% Completed |  2.6s[                                        ] | 0% Completed |  2.7s[                                        ] | 0% Completed |  2.8s[                                        ] | 0% Completed |  2.9s[                                        ] | 0% Completed |  3.0s[                                        ] | 0% Completed |  3.1s[                                        ] | 0% Completed |  3.2s[                                        ] | 0% Completed |  3.3s[                                        ] | 0% Completed |  3.4s[                                        ] | 0% Completed |  3.5s[                                        ] | 0% Completed |  3.6s[                                        ] | 0% Completed |  3.7s[                                        ] | 0% Completed |  3.8s[                                        ] | 0% Completed |  3.9s[                                        ] | 0% Completed |  4.0s[                                        ] | 0% Completed |  4.1s[                                        ] | 0% Completed |  4.2s[                                        ] | 0% Completed |  4.3s[                                        ] | 0% Completed |  4.4s[                                        ] | 0% Completed |  4.5s[                                        ] | 0% Completed |  4.6s[                                        ] | 0% Completed |  4.7s[                                        ] | 0% Completed |  4.8s[                                        ] | 0% Completed |  4.9s[                                        ] | 0% Completed |  5.0s[                                        ] | 0% Completed |  5.1s[                                        ] | 0% Completed |  5.2s[                                        ] | 0% Completed |  5.3s[                                        ] | 0% Completed |  5.4s[                                        ] | 0% Completed |  5.5s[                                        ] | 0% Completed |  5.6s[                                        ] | 0% Completed |  5.7s[                                        ] | 0% Completed |  5.8s[                                        ] | 0% Completed |  5.9s[                                        ] | 0% Completed |  6.0s[                                        ] | 0% Completed |  6.1s[                                        ] | 0% Completed |  6.2s[                                        ] | 0% Completed |  6.3s[                                        ] | 0% Completed |  6.4s[                                        ] | 0% Completed |  6.5s[                                        ] | 0% Completed |  6.6s[                                        ] | 0% Completed |  6.7s[                                        ] | 0% Completed |  6.8s[                                        ] | 0% Completed |  6.9s[                                        ] | 0% Completed |  7.0s[                                        ] | 0% Completed |  7.1s[                                        ] | 0% Completed |  7.2s[                                        ] | 0% Completed |  7.3s[                                        ] | 0% Completed |  7.4s[                                        ] | 0% Completed |  7.5s[                                        ] | 0% Completed |  7.6s[                                        ] | 0% Completed |  7.7s[                                        ] | 0% Completed |  7.9s[                                        ] | 0% Completed |  8.0s[                                        ] | 0% Completed |  8.1s[                                        ] | 0% Completed |  8.2s[                                        ] | 0% Completed |  8.3s[                                        ] | 0% Completed |  8.4s[                                        ] | 0% Completed |  8.5s[                                        ] | 0% Completed |  8.6s[                                        ] | 0% Completed |  8.7s[                                        ] | 0% Completed |  8.8s[                                        ] | 0% Completed |  8.9s[                                        ] | 0% Completed |  9.0s[                                        ] | 0% Completed |  9.1s[                                        ] | 0% Completed |  9.2s[                                        ] | 0% Completed |  9.3s[                                        ] | 0% Completed |  9.4s[                                        ] | 0% Completed |  9.5s[                                        ] | 0% Completed |  9.6s[                                        ] | 0% Completed |  9.7s[                                        ] | 0% Completed |  9.8s[                                        ] | 0% Completed |  9.9s[                                        ] | 0% Completed | 10.0s[                                        ] | 0% Completed | 10.1s[                                        ] | 0% Completed | 10.2s[                                        ] | 0% Completed | 10.3s[                                        ] | 0% Completed | 10.4s[                                        ] | 0% Completed | 10.5s[                                        ] | 0% Completed | 10.6s[                                        ] | 0% Completed | 10.7s[                                        ] | 0% Completed | 10.8s[                                        ] | 0% Completed | 10.9s[                                        ] | 0% Completed | 11.0s[                                        ] | 0% Completed | 11.1s[                                        ] | 0% Completed | 11.2s[                                        ] | 0% Completed | 11.3s[                                        ] | 0% Completed | 11.4s[                                        ] | 0% Completed | 11.5s[                                        ] | 0% Completed | 11.6s[                                        ] | 0% Completed | 11.7s[                                        ] | 1% Completed | 11.8s[#########                               ] | 22% Completed | 11.9s[#####################                   ] | 54% Completed | 12.1s[######################################  ] | 95% Completed | 12.2s[####################################### ] | 98% Completed | 12.3s[########################################] | 100% Completed | 12.4s</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 1, Pass: 1 -- Duration: 31.63 s
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_interactive_plotting.TestInteractivePlotting</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_interactive_plotting</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p>Output files are saved to tmp as defined in 'main_path' in the parameters.
+[93mFor the ssupdate function to work encodermap/vmd/sscache.tcl will be sourced within vmd. If no Error is thrown the file is present.[0m
+</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 1, Pass: 1 -- Duration: 99.79 s
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_moldata.TestTrajinfo</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_compare_moldata_tf1_tf2</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_moldata_tf1</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p>Loading Cartesians...
+Calculating dihedrals...
+Calculating sidedihedrals...
+Calculating angles...
+Calculating lengths...
+</p>
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_moldata_tf2</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 3, Pass: 3 -- Duration: 1.04 s
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_non_backbone_atoms.TestNonBackboneAtoms</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_guess_amide_H</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_guess_amide_O</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 2, Pass: 2 -- Duration: 344 ms
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_optional_imports.TestOptionalImport</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_non_working_import</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_working_import</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 2, Pass: 2 -- Duration: 0 ms
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>encodermap</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">_optional_imports</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 1, Pass: 1 -- Duration: 57 ms
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_pairwise_distances.TestSigmoidDists</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_sigmoid</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 1, Pass: 1 -- Duration: 133 ms
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_pairwise_distances.TestPeriodicDistances</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_periodic_distance_np</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_periodic_distance_tf</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_periodic_many_points</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 3, Pass: 3 -- Duration: 142 ms
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_pairwise_distances.TestPairwiseDistances</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_compare_pairwise_dist_and_periodic_pairwise_dist</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_pairwise_dist</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_pairwise_dist_flat</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_pairwise_dist_periodic</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_pairwise_dist_periodic_not_periodic_case</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 5, Pass: 5 -- Duration: 70 ms
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_pairwise_distances.TestDistancesEm1Em2</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_pairwise_dist</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_pairwise_dist_periodic</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_periodic_distance</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_sigmoid</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 4, Pass: 4 -- Duration: 27 ms
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>encodermap.misc.distances</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">periodic_distance</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 1, Pass: 1 -- Duration: 4 ms
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_trajinfo.TestTraj</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_CV_slicing_SingleTraj</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_CVs_for_TrajEnsemble_containing_only_single_frames</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_CVs_in_file</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_CVs_stay_after_subsample</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p><xarray.Dataset>
+Dimensions:         (traj_num: 1, frame_num: 6, CENTRAL_ANGLES: 472)
+Coordinates:
+  * traj_num        (traj_num) object None
+    traj_name       (traj_num) <U14 '1am7_corrected'
+  * frame_num       (frame_num) int64 0 10 20 30 40 50
+  * CENTRAL_ANGLES  (CENTRAL_ANGLES) <U106 'CENTERANGLE ATOM    N:    0 MET: ...
+    time            (traj_num, frame_num) float32 4.5e+04 4.6e+04 ... 5e+04
+Data variables:
+    central_angles  (traj_num, frame_num, CENTRAL_ANGLES) float32 1.86 ... 1.867
+</p>
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_SingleTraj_equality</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_SingleTraj_mdtraj_duplication</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_SingleTraj_raises_error_on_wrong_dtype_for_traj</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_SingleTraj_subsample</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_SingleTraj_subsample_h5</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_SingleTraj_subsample_without_loading</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_SingleTraj_throws_error_on_wrong_way_round</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_adding_mixed_pyemma_features_with_custom_names</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_addition_along_TrajEnsemble</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_atom_slice</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_double_slicing</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p>51 11
+14 3
+100 20
+</p>
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_from_pdbid</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_gen_ensemble</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_gen_ensemble_no_files</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_info_all_load_CVs_from_file</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_info_all_load_CVs_from_numpy</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_info_all_loading</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_join</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_load_CVs_TrajEnsemble</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p>encodermap.TrajEnsemble object. Current backend is no_load. Containing 2 trajs. Not containing any CVs.
+This `TrajEnsemble` object contains mulitple topologies. The output of _CVs can contain nans for some features.
+This `TrajEnsemble` object contains mulitple topologies. The output of _CVs can contain nans for some features.
+This `TrajEnsemble` object contains mulitple topologies. The output of _CVs can contain nans for some features.
+</p>
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_load_CVs_for_single_traj_as_string</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p>Data and traj misaligned. traj_frames: 51, data.shape: (1, 3), attr_name: 1am7_center_of_mass, [[3.81903247 3.93509809 3.85774657]]
+Overwriting the following CVs with new values: {'center_of_mass_x'}.
+Overwriting the following CVs with new values: {'npy_data'}.
+</p>
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_load_CVs_from_other_sources</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p>Overwriting the following CVs with new values: {'ones'}.
+Overwriting the following CVs with new values: {'pos_arr'}.
+Overwriting the following CVs with new values: {'ones2'}.
+Overwriting the following CVs with new values: {'ones3'}.
+</p>
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_load_h5</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_load_h5_with_integer_index</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_load_info_all_with_trajs_and_one_top_does_not_raise_error</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_load_pdb_with_mdtraj_backend</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_load_singletraj_with_traj_and_top</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_load_uri_with_index</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_load_url</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_load_xtc</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_n_frames_in_h5_file</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_pyemma_indexing_and_get_single_frame</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_single_traj_double_index_with_int</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_singletraj_raises_error_on_file_not_found</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_slicing_and_CVs_xtc_and_h5</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_slicing_and_indexing_mixed</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p>[[1 5]]
+[[ 1  0]
+ [ 1  2]
+ [ 1  4]
+ [ 1  6]
+ [ 1  8]
+ [ 1 10]
+ [ 1 12]
+ [ 1 14]
+ [ 1 16]
+ [ 1 18]
+ [ 1 20]
+ [ 1 22]
+ [ 1 24]
+ [ 1 26]
+ [ 1 28]
+ [ 1 30]
+ [ 1 32]
+ [ 1 34]
+ [ 1 36]
+ [ 1 38]
+ [ 1 40]
+ [ 1 42]
+ [ 1 44]
+ [ 1 46]
+ [ 1 48]
+ [ 1 50]]
+[[1 1]
+ [1 4]
+ [1 5]]
+[[1 1]]
+</p>
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_stack</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_traj_ensemble_equality</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_traj_id</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_traj_joined</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_wrong_formatted_CVs</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                                <button class="btn btn-default btn-xs">View</button>
+                            </td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td class="col-xs-9" colspan="3"><p>Data and traj misaligned. traj_frames: 16, data.shape: (1, 49), attr_name: test, [[ 0.59189999  1.31840003  0.91500002 -0.0763      2.08410001 -0.64749998
+  -0.7823      1.91110003  0.66850001  0.51679999  1.04900002  1.03410006
+   0.21349999  1.77909994  1.02849996 -0.1358      2.00769997  0.85170001
+   0.38049999  1.75810003  1.30719995 -0.70069999  1.39890003 -0.2476
+  -0.40360001  2.13050008  0.17399999  1.01880002  1.74220002  0.58289999
+  -0.1991      2.43149996  0.60360003  0.19        1.56169999  1.09739995
+  -0.0785      1.40530002  0.88139999  0.12980001  0.40279999  0.40400001
+  -0.45919999  1.65540004  1.13979995  0.2282      2.30620003  0.83399999
+   5.        ]]
+</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 44, Pass: 44 -- Duration: 75.29 s
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>test_version.TestVersion</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">test_version</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 1, Pass: 1 -- Duration: 1 ms
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10 col-md-10">
+                <table class='table table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th>encodermap.misc.xarray</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='success'>
+                            <td class="col-xs-10">add_one_by_one</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr class='success'>
+                            <td class="col-xs-10">construct_xarray_from_numpy</td>
+                            <td class="col-xs-1">
+                                <span class="label label-success" style="display:block;width:40px;">Pass</span>
+                            </td>
+                            <td class="col-xs-1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                Total: 2, Pass: 2 -- Duration: 4.40 s
                             </td>
                         </tr>
                     </tbody>
