@@ -45,7 +45,7 @@
     <script src="../_static/copybutton.js"></script>
     <script src="../_static/design-tabs.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide_and_examples/03_Your_Data';</script>
@@ -667,201 +667,20 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2023-02-01 18:04:02.245161: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+2023-02-02 11:21:52.123536: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2023-02-01 18:04:02.387448: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libcudart.so.11.0&#39;; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-01 18:04:02.387472: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
-2023-02-01 18:04:03.115191: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer.so.7&#39;; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-01 18:04:03.115285: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer_plugin.so.7&#39;; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-01 18:04:03.115295: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2023-02-02 11:21:52.249654: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libcudart.so.11.0&#39;; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-02 11:21:52.249697: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2023-02-02 11:21:53.000211: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer.so.7&#39;; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-02 11:21:53.000443: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer_plugin.so.7&#39;; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-02 11:21:53.000462: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/_optional_imports.py:77</span>, in <span class="ansi-cyan-fg">_optional_import</span><span class="ansi-blue-fg">(module, name, version)</span>
-<span class="ansi-green-intense-fg ansi-bold">     75</span> <span class="ansi-bold" style="color: rgb(0,135,0)">try</span>:
-<span class="ansi-green-intense-fg ansi-bold">     76</span>     <span style="color: rgb(95,135,135)"># try the import</span>
-<span class="ansi-green-fg">---&gt; 77</span>     module: Any <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">importlib</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">import_module</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">module</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     78</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> name <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/importlib/__init__.py:127</span>, in <span class="ansi-cyan-fg">import_module</span><span class="ansi-blue-fg">(name, package)</span>
-<span class="ansi-green-intense-fg ansi-bold">    126</span>         level <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">1</span>
-<span class="ansi-green-fg">--&gt; 127</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">_bootstrap</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_gcd_import</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">level</span><span class="ansi-yellow-bg">:</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">package</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">level</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:1030</span>, in <span class="ansi-cyan-fg">_gcd_import</span><span class="ansi-blue-fg">(name, package, level)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:1007</span>, in <span class="ansi-cyan-fg">_find_and_load</span><span class="ansi-blue-fg">(name, import_)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:986</span>, in <span class="ansi-cyan-fg">_find_and_load_unlocked</span><span class="ansi-blue-fg">(name, import_)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:680</span>, in <span class="ansi-cyan-fg">_load_unlocked</span><span class="ansi-blue-fg">(spec)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap_external&gt;:850</span>, in <span class="ansi-cyan-fg">exec_module</span><span class="ansi-blue-fg">(self, module)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:228</span>, in <span class="ansi-cyan-fg">_call_with_frames_removed</span><span class="ansi-blue-fg">(f, *args, **kwds)</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/__init__.py:4</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(95,135,135)"># for doc</span>
-<span class="ansi-green-fg">----&gt; 4</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> adaptor, datafiles, show, widget
-<span class="ansi-green-intense-fg ansi-bold">      5</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">_version</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> get_versions
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/show.py:13</span>
-<span class="ansi-green-intense-fg ansi-bold">      4</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">adaptor</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (ASEStructure, ASETrajectory, BiopythonStructure,
-<span class="ansi-green-intense-fg ansi-bold">      5</span>                       FileStructure, HTMDTrajectory, IODataStructure,
-<span class="ansi-green-intense-fg ansi-bold">      6</span>                       IOTBXStructure, MDAnalysisTrajectory, MDTrajTrajectory,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     11</span>                       RdkitStructure,
-<span class="ansi-green-intense-fg ansi-bold">     12</span>                       TextStructure)
-<span class="ansi-green-fg">---&gt; 13</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">widget</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> NGLWidget
-<span class="ansi-green-intense-fg ansi-bold">     15</span> __all__ <span style="color: rgb(98,98,98)">=</span> [
-<span class="ansi-green-intense-fg ansi-bold">     16</span>     <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">demo</span><span style="color: rgb(175,0,0)">&#39;</span>,
-<span class="ansi-green-intense-fg ansi-bold">     17</span>     <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">show_pdbid</span><span style="color: rgb(175,0,0)">&#39;</span>,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     40</span>     <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">show_biopython</span><span style="color: rgb(175,0,0)">&#39;</span>,
-<span class="ansi-green-intense-fg ansi-bold">     41</span> ]
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/widget.py:19</span>
-<span class="ansi-green-intense-fg ansi-bold">     17</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">traitlets</span>
-<span class="ansi-green-fg">---&gt; 19</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> color, interpolate
-<span class="ansi-green-intense-fg ansi-bold">     20</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">adaptor</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> Structure, Trajectory
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/color.py:114</span>
-<span class="ansi-green-intense-fg ansi-bold">    111</span>             <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">ValueError</span>(<span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>obj<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> must be either list of list or string</span><span style="color: rgb(175,0,0)">&#34;</span>)
-<span class="ansi-green-fg">--&gt; 114</span> ColormakerRegistry <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_ColormakerRegistry</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/base.py:10</span>, in <span class="ansi-cyan-fg">_singleton.&lt;locals&gt;.getinstance</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      9</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">cls</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> instances:
-<span class="ansi-green-fg">---&gt; 10</span>     instances[<span style="color: rgb(0,135,0)">cls</span>] <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">cls</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     11</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> instances[<span style="color: rgb(0,135,0)">cls</span>]
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/color.py:47</span>, in <span class="ansi-cyan-fg">_ColormakerRegistry.__init__</span><span class="ansi-blue-fg">(self, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     46</span>     get_ipython() <span style="color: rgb(95,135,135)"># only display in notebook</span>
-<span class="ansi-green-fg">---&gt; 47</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_ipython_display_</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     48</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">NameError</span>:
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/color.py:54</span>, in <span class="ansi-cyan-fg">_ColormakerRegistry._ipython_display_</span><span class="ansi-blue-fg">(self, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     53</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span>
-<span class="ansi-green-fg">---&gt; 54</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">super</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_ipython_display_</span>(<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs)
-
-<span class="ansi-red-fg">AttributeError</span>: &#39;super&#39; object has no attribute &#39;_ipython_display_&#39;
-
-The above exception was the direct cause of the following exception:
-
-<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/_optional_imports.py:98</span>, in <span class="ansi-cyan-fg">_optional_import</span><span class="ansi-blue-fg">(module, name, version)</span>
-<span class="ansi-green-intense-fg ansi-bold">     97</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">AttributeError</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> ae:
-<span class="ansi-green-fg">---&gt; 98</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> ae <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">e</span>
-<span class="ansi-green-intense-fg ansi-bold">     99</span> object_name <span style="color: rgb(98,98,98)">=</span> name<span style="color: rgb(98,98,98)">.</span>split(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span>)[<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>]
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/_optional_imports.py:96</span>, in <span class="ansi-cyan-fg">_optional_import</span><span class="ansi-blue-fg">(module, name, version)</span>
-<span class="ansi-green-intense-fg ansi-bold">     95</span> <span class="ansi-bold" style="color: rgb(0,135,0)">try</span>:
-<span class="ansi-green-fg">---&gt; 96</span>     module_name <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span> <span style="color: rgb(98,98,98)">+</span> <span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">split</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span>)[<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">2</span>]
-<span class="ansi-green-intense-fg ansi-bold">     97</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">AttributeError</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> ae:
-
-<span class="ansi-red-fg">AttributeError</span>: &#39;NoneType&#39; object has no attribute &#39;split&#39;
-
-During handling of the above exception, another exception occurred:
-
-<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[2], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">encodermap</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">em</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">matplotlib</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">pyplot</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">plt</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">numpy</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">np</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/__init__.py:94</span>
-<span class="ansi-green-intense-fg ansi-bold">     88</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     89</span> <span style="color: rgb(95,135,135)"># Imports</span>
-<span class="ansi-green-intense-fg ansi-bold">     90</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     93</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">_version</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> __version__
-<span class="ansi-green-fg">---&gt; 94</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">autoencoder</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">autoencoder</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
-<span class="ansi-green-intense-fg ansi-bold">     95</span>     AngleDihedralCartesianEncoderMap,
-<span class="ansi-green-intense-fg ansi-bold">     96</span>     Autoencoder,
-<span class="ansi-green-intense-fg ansi-bold">     97</span>     EncoderMap,
-<span class="ansi-green-intense-fg ansi-bold">     98</span> )
-<span class="ansi-green-intense-fg ansi-bold">     99</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> EncoderMapBaseCallback
-<span class="ansi-green-intense-fg ansi-bold">    100</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">loading</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> features
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/autoencoder/__init__.py:23</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> <span style="color: rgb(95,135,135)"># -*- coding: utf-8 -*-</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> <span style="color: rgb(95,135,135)"># encodermap/autoencoder/__init__.py</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     20</span> <span style="color: rgb(95,135,135)"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="ansi-green-intense-fg ansi-bold">     21</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     22</span> <span style="color: rgb(175,0,0)">&#34;&#34;&#34;Front-facing autoencoder classes.&#34;&#34;&#34;</span>
-<span class="ansi-green-fg">---&gt; 23</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">autoencoder</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/autoencoder/autoencoder.py:52</span>
-<span class="ansi-green-intense-fg ansi-bold">     48</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">tensorflow</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">keras</span>
-<span class="ansi-green-intense-fg ansi-bold">     50</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">encodermap</span>
-<span class="ansi-green-fg">---&gt; 52</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
-<span class="ansi-green-intense-fg ansi-bold">     53</span>     CheckpointSaver,
-<span class="ansi-green-intense-fg ansi-bold">     54</span>     ImageCallback,
-<span class="ansi-green-intense-fg ansi-bold">     55</span>     IncreaseCartesianCost,
-<span class="ansi-green-intense-fg ansi-bold">     56</span>     ProgressBar,
-<span class="ansi-green-intense-fg ansi-bold">     57</span>     TensorboardWriteBool,
-<span class="ansi-green-intense-fg ansi-bold">     58</span> )
-<span class="ansi-green-intense-fg ansi-bold">     59</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">loss_functions</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">loss_functions</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
-<span class="ansi-green-intense-fg ansi-bold">     60</span>     angle_loss,
-<span class="ansi-green-intense-fg ansi-bold">     61</span>     auto_loss,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     69</span>     side_dihedral_loss,
-<span class="ansi-green-intense-fg ansi-bold">     70</span> )
-<span class="ansi-green-intense-fg ansi-bold">     71</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">misc</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">backmapping</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> dihedral_backmapping, mdtraj_backmapping
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/callbacks/__init__.py:26</span>
-<span class="ansi-green-intense-fg ansi-bold">     22</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">__future__</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> annotations
-<span class="ansi-green-intense-fg ansi-bold">     24</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">typing</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> TYPE_CHECKING
-<span class="ansi-green-fg">---&gt; 26</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/callbacks/callbacks.py:39</span>
-<span class="ansi-green-intense-fg ansi-bold">     36</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">tensorflow</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">keras</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">backend</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">K</span>
-<span class="ansi-green-intense-fg ansi-bold">     37</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">tqdm</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> tqdm
-<span class="ansi-green-fg">---&gt; 39</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">misc</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">saving_loading_models</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> save_model
-<span class="ansi-green-intense-fg ansi-bold">     40</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">misc</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">summaries</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> image_summary
-<span class="ansi-green-intense-fg ansi-bold">     41</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">parameters</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">parameters</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> ADCParameters, Parameters
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/misc/__init__.py:23</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> <span style="color: rgb(95,135,135)"># -*- coding: utf-8 -*-</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> <span style="color: rgb(95,135,135)"># encodermap/misc/__init__.py</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     20</span> <span style="color: rgb(95,135,135)"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="ansi-green-intense-fg ansi-bold">     21</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     22</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">backmapping</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-<span class="ansi-green-fg">---&gt; 23</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">clustering</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-<span class="ansi-green-intense-fg ansi-bold">     24</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">distances</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-<span class="ansi-green-intense-fg ansi-bold">     25</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">errors</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/misc/clustering.py:45</span>
-<span class="ansi-green-intense-fg ansi-bold">     39</span> <span style="color: rgb(95,135,135)">##############################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     40</span> <span style="color: rgb(95,135,135)"># Optional Imports</span>
-<span class="ansi-green-intense-fg ansi-bold">     41</span> <span style="color: rgb(95,135,135)">##############################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     44</span> md <span style="color: rgb(98,98,98)">=</span> _optional_import(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">mdtraj</span><span style="color: rgb(175,0,0)">&#34;</span>)
-<span class="ansi-green-fg">---&gt; 45</span> ngl <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_optional_import</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">nglview</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     48</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     49</span> <span style="color: rgb(95,135,135)"># Globals</span>
-<span class="ansi-green-intense-fg ansi-bold">     50</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     53</span> __all__ <span style="color: rgb(98,98,98)">=</span> [<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">gen_dummy_traj</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">get_cluster_frames</span><span style="color: rgb(175,0,0)">&#34;</span>]
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/_optional_imports.py:110</span>, in <span class="ansi-cyan-fg">_optional_import</span><span class="ansi-blue-fg">(module, name, version)</span>
-<span class="ansi-green-intense-fg ansi-bold">    104</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">Exception</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> e2:
-<span class="ansi-green-intense-fg ansi-bold">    105</span>     msg <span style="color: rgb(98,98,98)">=</span> (
-<span class="ansi-green-intense-fg ansi-bold">    106</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Absolute and relative import of </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>name<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> from module </span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    107</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>_module<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> failed with Exception </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>e2<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">. Either install the </span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    108</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">`</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>_module<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">` package or fix the optional_import.</span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    109</span>     )
-<span class="ansi-green-fg">--&gt; 110</span>     module_name <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span> <span style="color: rgb(98,98,98)">+</span> <span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">split</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span>)[<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">2</span>]
-<span class="ansi-green-intense-fg ansi-bold">    111</span>     object_name <span style="color: rgb(98,98,98)">=</span> name<span style="color: rgb(98,98,98)">.</span>split(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span>)[<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>]
-<span class="ansi-green-intense-fg ansi-bold">    112</span>     path <span style="color: rgb(98,98,98)">=</span> _module <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span> <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(98,98,98)">.</span>join(name<span style="color: rgb(98,98,98)">.</span>split(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span>)[:<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">2</span>])
-
-<span class="ansi-red-fg">AttributeError</span>: &#39;NoneType&#39; object has no attribute &#39;split&#39;
-</pre></div></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "35097b6ade2d4e46923ed05e97fb18e7"}</script></div>
 </div>
 </section>
 <section id="Load-Your-Data">
@@ -881,12 +700,44 @@ File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/pyth
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-red-fg">FileNotFoundError</span>                         Traceback (most recent call last)
 Cell <span class="ansi-green-fg">In[3], line 2</span>
 <span class="ansi-green-intense-fg ansi-bold">      1</span> csv_path <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">path/to/your/data.csv</span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-fg">----&gt; 2</span> high_d_data <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">np</span><span style="color: rgb(98,98,98)">.</span>loadtxt(csv_path, delimiter<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">,</span><span style="color: rgb(175,0,0)">&#34;</span>)
+<span class="ansi-green-fg">----&gt; 2</span> high_d_data <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">np</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">loadtxt</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">csv_path</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">delimiter</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">,</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">)</span>
 
-<span class="ansi-red-fg">NameError</span>: name &#39;np&#39; is not defined
+File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/numpy/lib/npyio.py:1338</span>, in <span class="ansi-cyan-fg">loadtxt</span><span class="ansi-blue-fg">(fname, dtype, comments, delimiter, converters, skiprows, usecols, unpack, ndmin, encoding, max_rows, quotechar, like)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1335</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">isinstance</span>(delimiter, <span style="color: rgb(0,135,0)">bytes</span>):
+<span class="ansi-green-intense-fg ansi-bold">   1336</span>     delimiter <span style="color: rgb(98,98,98)">=</span> delimiter<span style="color: rgb(98,98,98)">.</span>decode(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">latin1</span><span style="color: rgb(175,0,0)">&#39;</span>)
+<span class="ansi-green-fg">-&gt; 1338</span> arr <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_read</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">fname</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">dtype</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">dtype</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">comment</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">comment</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">delimiter</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">delimiter</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">   1339</span> <span class="ansi-yellow-bg">            </span><span class="ansi-yellow-bg">converters</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">converters</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">skiplines</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">skiprows</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">usecols</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">usecols</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">   1340</span> <span class="ansi-yellow-bg">            </span><span class="ansi-yellow-bg">unpack</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">unpack</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">ndmin</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">ndmin</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">encoding</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">encoding</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">   1341</span> <span class="ansi-yellow-bg">            </span><span class="ansi-yellow-bg">max_rows</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">max_rows</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">quote</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">quotechar</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1343</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> arr
+
+File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/numpy/lib/npyio.py:975</span>, in <span class="ansi-cyan-fg">_read</span><span class="ansi-blue-fg">(fname, delimiter, comment, quote, imaginary_unit, usecols, skiplines, max_rows, converters, ndmin, unpack, dtype, encoding)</span>
+<span class="ansi-green-intense-fg ansi-bold">    973</span>     fname <span style="color: rgb(98,98,98)">=</span> os<span style="color: rgb(98,98,98)">.</span>fspath(fname)
+<span class="ansi-green-intense-fg ansi-bold">    974</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">isinstance</span>(fname, <span style="color: rgb(0,135,0)">str</span>):
+<span class="ansi-green-fg">--&gt; 975</span>     fh <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">np</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">lib</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_datasource</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">open</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">fname</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">rt</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">encoding</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">encoding</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    976</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> encoding <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
+<span class="ansi-green-intense-fg ansi-bold">    977</span>         encoding <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">getattr</span>(fh, <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">encoding</span><span style="color: rgb(175,0,0)">&#39;</span>, <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">latin1</span><span style="color: rgb(175,0,0)">&#39;</span>)
+
+File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/numpy/lib/_datasource.py:193</span>, in <span class="ansi-cyan-fg">open</span><span class="ansi-blue-fg">(path, mode, destpath, encoding, newline)</span>
+<span class="ansi-green-intense-fg ansi-bold">    156</span> <span style="color: rgb(175,0,0)">&#34;&#34;&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">    157</span> <span style="color: rgb(175,0,0)">Open `path` with `mode` and return the file object.</span>
+<span class="ansi-green-intense-fg ansi-bold">    158</span>
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-intense-fg ansi-bold">    189</span>
+<span class="ansi-green-intense-fg ansi-bold">    190</span> <span style="color: rgb(175,0,0)">&#34;&#34;&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">    192</span> ds <span style="color: rgb(98,98,98)">=</span> DataSource(destpath)
+<span class="ansi-green-fg">--&gt; 193</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">ds</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">open</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">path</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">mode</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">encoding</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">encoding</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">newline</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">newline</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/numpy/lib/_datasource.py:533</span>, in <span class="ansi-cyan-fg">DataSource.open</span><span class="ansi-blue-fg">(self, path, mode, encoding, newline)</span>
+<span class="ansi-green-intense-fg ansi-bold">    530</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> _file_openers[ext](found, mode<span style="color: rgb(98,98,98)">=</span>mode,
+<span class="ansi-green-intense-fg ansi-bold">    531</span>                               encoding<span style="color: rgb(98,98,98)">=</span>encoding, newline<span style="color: rgb(98,98,98)">=</span>newline)
+<span class="ansi-green-intense-fg ansi-bold">    532</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
+<span class="ansi-green-fg">--&gt; 533</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">FileNotFoundError</span>(<span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>path<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> not found.</span><span style="color: rgb(175,0,0)">&#34;</span>)
+
+<span class="ansi-red-fg">FileNotFoundError</span>: path/to/your/data.csv not found.
 </pre></div></div>
 </div>
 </section>
@@ -917,12 +768,15 @@ Cell <span class="ansi-green-fg">In[3], line 2</span>
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[4], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> parameters <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">em</span><span style="color: rgb(98,98,98)">.</span>Parameters()
-<span class="ansi-green-intense-fg ansi-bold">      2</span> parameters<span style="color: rgb(98,98,98)">.</span>main_path <span style="color: rgb(98,98,98)">=</span> em<span style="color: rgb(98,98,98)">.</span>misc<span style="color: rgb(98,98,98)">.</span>run_path(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">runs/my_data</span><span style="color: rgb(175,0,0)">&#34;</span>)
-<span class="ansi-green-intense-fg ansi-bold">      3</span> parameters<span style="color: rgb(98,98,98)">.</span>n_steps <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">1000</span>
+Cell <span class="ansi-green-fg">In[4], line 9</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span> parameters<span style="color: rgb(98,98,98)">.</span>periodicity <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">2</span><span style="color: rgb(98,98,98)">*</span>pi
+<span class="ansi-green-intense-fg ansi-bold">      7</span> <span style="color: rgb(95,135,135)"># if your data set is large you should not try to calculate </span>
+<span class="ansi-green-intense-fg ansi-bold">      8</span> <span style="color: rgb(95,135,135)"># the pairwise distance histogram with the complete data. </span>
+<span class="ansi-green-fg">----&gt; 9</span> em<span style="color: rgb(98,98,98)">.</span>plot<span style="color: rgb(98,98,98)">.</span>distance_histogram(<span class="ansi-yellow-bg">high_d_data</span>,  <span style="color: rgb(95,135,135)"># e.g. use high_d_data[::10] to use evrey 10th point</span>
+<span class="ansi-green-intense-fg ansi-bold">     10</span>                            parameters<span style="color: rgb(98,98,98)">.</span>periodicity,
+<span class="ansi-green-intense-fg ansi-bold">     11</span>                            parameters<span style="color: rgb(98,98,98)">.</span>dist_sig_parameters)
 
-<span class="ansi-red-fg">NameError</span>: name &#39;em&#39; is not defined
+<span class="ansi-red-fg">NameError</span>: name &#39;high_d_data&#39; is not defined
 </pre></div></div>
 </div>
 </section>
@@ -947,11 +801,11 @@ Cell <span class="ansi-green-fg">In[4], line 1</span>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
 Cell <span class="ansi-green-fg">In[5], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> e_map <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">em</span><span style="color: rgb(98,98,98)">.</span>EncoderMap(parameters, high_d_data)
+<span class="ansi-green-fg">----&gt; 1</span> e_map <span style="color: rgb(98,98,98)">=</span> em<span style="color: rgb(98,98,98)">.</span>EncoderMap(parameters, <span class="ansi-yellow-bg">high_d_data</span>)
 <span class="ansi-green-intense-fg ansi-bold">      2</span> e_map<span style="color: rgb(98,98,98)">.</span>train()
 <span class="ansi-green-intense-fg ansi-bold">      4</span> low_d_projection <span style="color: rgb(98,98,98)">=</span> e_map<span style="color: rgb(98,98,98)">.</span>encode(dihedrals)
 
-<span class="ansi-red-fg">NameError</span>: name &#39;em&#39; is not defined
+<span class="ansi-red-fg">NameError</span>: name &#39;high_d_data&#39; is not defined
 </pre></div></div>
 </div>
 </section>
@@ -967,6 +821,979 @@ Cell <span class="ansi-green-fg">In[5], line 1</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+/* Put everything inside the global mpl namespace */
+/* global mpl */
+window.mpl = {};
+
+mpl.get_websocket_type = function () {
+    if (typeof WebSocket !== 'undefined') {
+        return WebSocket;
+    } else if (typeof MozWebSocket !== 'undefined') {
+        return MozWebSocket;
+    } else {
+        alert(
+            'Your browser does not have WebSocket support. ' +
+                'Please try Chrome, Safari or Firefox ≥ 6. ' +
+                'Firefox 4 and 5 are also supported but you ' +
+                'have to enable WebSockets in about:config.'
+        );
+    }
+};
+
+mpl.figure = function (figure_id, websocket, ondownload, parent_element) {
+    this.id = figure_id;
+
+    this.ws = websocket;
+
+    this.supports_binary = this.ws.binaryType !== undefined;
+
+    if (!this.supports_binary) {
+        var warnings = document.getElementById('mpl-warnings');
+        if (warnings) {
+            warnings.style.display = 'block';
+            warnings.textContent =
+                'This browser does not support binary websocket messages. ' +
+                'Performance may be slow.';
+        }
+    }
+
+    this.imageObj = new Image();
+
+    this.context = undefined;
+    this.message = undefined;
+    this.canvas = undefined;
+    this.rubberband_canvas = undefined;
+    this.rubberband_context = undefined;
+    this.format_dropdown = undefined;
+
+    this.image_mode = 'full';
+
+    this.root = document.createElement('div');
+    this.root.setAttribute('style', 'display: inline-block');
+    this._root_extra_style(this.root);
+
+    parent_element.appendChild(this.root);
+
+    this._init_header(this);
+    this._init_canvas(this);
+    this._init_toolbar(this);
+
+    var fig = this;
+
+    this.waiting = false;
+
+    this.ws.onopen = function () {
+        fig.send_message('supports_binary', { value: fig.supports_binary });
+        fig.send_message('send_image_mode', {});
+        if (fig.ratio !== 1) {
+            fig.send_message('set_device_pixel_ratio', {
+                device_pixel_ratio: fig.ratio,
+            });
+        }
+        fig.send_message('refresh', {});
+    };
+
+    this.imageObj.onload = function () {
+        if (fig.image_mode === 'full') {
+            // Full images could contain transparency (where diff images
+            // almost always do), so we need to clear the canvas so that
+            // there is no ghosting.
+            fig.context.clearRect(0, 0, fig.canvas.width, fig.canvas.height);
+        }
+        fig.context.drawImage(fig.imageObj, 0, 0);
+    };
+
+    this.imageObj.onunload = function () {
+        fig.ws.close();
+    };
+
+    this.ws.onmessage = this._make_on_message_function(this);
+
+    this.ondownload = ondownload;
+};
+
+mpl.figure.prototype._init_header = function () {
+    var titlebar = document.createElement('div');
+    titlebar.classList =
+        'ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix';
+    var titletext = document.createElement('div');
+    titletext.classList = 'ui-dialog-title';
+    titletext.setAttribute(
+        'style',
+        'width: 100%; text-align: center; padding: 3px;'
+    );
+    titlebar.appendChild(titletext);
+    this.root.appendChild(titlebar);
+    this.header = titletext;
+};
+
+mpl.figure.prototype._canvas_extra_style = function (_canvas_div) {};
+
+mpl.figure.prototype._root_extra_style = function (_canvas_div) {};
+
+mpl.figure.prototype._init_canvas = function () {
+    var fig = this;
+
+    var canvas_div = (this.canvas_div = document.createElement('div'));
+    canvas_div.setAttribute('tabindex', '0');
+    canvas_div.setAttribute(
+        'style',
+        'border: 1px solid #ddd;' +
+            'box-sizing: content-box;' +
+            'clear: both;' +
+            'min-height: 1px;' +
+            'min-width: 1px;' +
+            'outline: 0;' +
+            'overflow: hidden;' +
+            'position: relative;' +
+            'resize: both;' +
+            'z-index: 2;'
+    );
+
+    function on_keyboard_event_closure(name) {
+        return function (event) {
+            return fig.key_event(event, name);
+        };
+    }
+
+    canvas_div.addEventListener(
+        'keydown',
+        on_keyboard_event_closure('key_press')
+    );
+    canvas_div.addEventListener(
+        'keyup',
+        on_keyboard_event_closure('key_release')
+    );
+
+    this._canvas_extra_style(canvas_div);
+    this.root.appendChild(canvas_div);
+
+    var canvas = (this.canvas = document.createElement('canvas'));
+    canvas.classList.add('mpl-canvas');
+    canvas.setAttribute(
+        'style',
+        'box-sizing: content-box;' +
+            'pointer-events: none;' +
+            'position: relative;' +
+            'z-index: 0;'
+    );
+
+    this.context = canvas.getContext('2d');
+
+    var backingStore =
+        this.context.backingStorePixelRatio ||
+        this.context.webkitBackingStorePixelRatio ||
+        this.context.mozBackingStorePixelRatio ||
+        this.context.msBackingStorePixelRatio ||
+        this.context.oBackingStorePixelRatio ||
+        this.context.backingStorePixelRatio ||
+        1;
+
+    this.ratio = (window.devicePixelRatio || 1) / backingStore;
+
+    var rubberband_canvas = (this.rubberband_canvas = document.createElement(
+        'canvas'
+    ));
+    rubberband_canvas.setAttribute(
+        'style',
+        'box-sizing: content-box;' +
+            'left: 0;' +
+            'pointer-events: none;' +
+            'position: absolute;' +
+            'top: 0;' +
+            'z-index: 1;'
+    );
+
+    // Apply a ponyfill if ResizeObserver is not implemented by browser.
+    if (this.ResizeObserver === undefined) {
+        if (window.ResizeObserver !== undefined) {
+            this.ResizeObserver = window.ResizeObserver;
+        } else {
+            var obs = _JSXTOOLS_RESIZE_OBSERVER({});
+            this.ResizeObserver = obs.ResizeObserver;
+        }
+    }
+
+    this.resizeObserverInstance = new this.ResizeObserver(function (entries) {
+        var nentries = entries.length;
+        for (var i = 0; i < nentries; i++) {
+            var entry = entries[i];
+            var width, height;
+            if (entry.contentBoxSize) {
+                if (entry.contentBoxSize instanceof Array) {
+                    // Chrome 84 implements new version of spec.
+                    width = entry.contentBoxSize[0].inlineSize;
+                    height = entry.contentBoxSize[0].blockSize;
+                } else {
+                    // Firefox implements old version of spec.
+                    width = entry.contentBoxSize.inlineSize;
+                    height = entry.contentBoxSize.blockSize;
+                }
+            } else {
+                // Chrome <84 implements even older version of spec.
+                width = entry.contentRect.width;
+                height = entry.contentRect.height;
+            }
+
+            // Keep the size of the canvas and rubber band canvas in sync with
+            // the canvas container.
+            if (entry.devicePixelContentBoxSize) {
+                // Chrome 84 implements new version of spec.
+                canvas.setAttribute(
+                    'width',
+                    entry.devicePixelContentBoxSize[0].inlineSize
+                );
+                canvas.setAttribute(
+                    'height',
+                    entry.devicePixelContentBoxSize[0].blockSize
+                );
+            } else {
+                canvas.setAttribute('width', width * fig.ratio);
+                canvas.setAttribute('height', height * fig.ratio);
+            }
+            /* This rescales the canvas back to display pixels, so that it
+             * appears correct on HiDPI screens. */
+            canvas.style.width = width + 'px';
+            canvas.style.height = height + 'px';
+
+            rubberband_canvas.setAttribute('width', width);
+            rubberband_canvas.setAttribute('height', height);
+
+            // And update the size in Python. We ignore the initial 0/0 size
+            // that occurs as the element is placed into the DOM, which should
+            // otherwise not happen due to the minimum size styling.
+            if (fig.ws.readyState == 1 && width != 0 && height != 0) {
+                fig.request_resize(width, height);
+            }
+        }
+    });
+    this.resizeObserverInstance.observe(canvas_div);
+
+    function on_mouse_event_closure(name) {
+        /* User Agent sniffing is bad, but WebKit is busted:
+         * https://bugs.webkit.org/show_bug.cgi?id=144526
+         * https://bugs.webkit.org/show_bug.cgi?id=181818
+         * The worst that happens here is that they get an extra browser
+         * selection when dragging, if this check fails to catch them.
+         */
+        var UA = navigator.userAgent;
+        var isWebKit = /AppleWebKit/.test(UA) && !/Chrome/.test(UA);
+        if(isWebKit) {
+            return function (event) {
+                /* This prevents the web browser from automatically changing to
+                 * the text insertion cursor when the button is pressed. We
+                 * want to control all of the cursor setting manually through
+                 * the 'cursor' event from matplotlib */
+                event.preventDefault()
+                return fig.mouse_event(event, name);
+            };
+        } else {
+            return function (event) {
+                return fig.mouse_event(event, name);
+            };
+        }
+    }
+
+    canvas_div.addEventListener(
+        'mousedown',
+        on_mouse_event_closure('button_press')
+    );
+    canvas_div.addEventListener(
+        'mouseup',
+        on_mouse_event_closure('button_release')
+    );
+    canvas_div.addEventListener(
+        'dblclick',
+        on_mouse_event_closure('dblclick')
+    );
+    // Throttle sequential mouse events to 1 every 20ms.
+    canvas_div.addEventListener(
+        'mousemove',
+        on_mouse_event_closure('motion_notify')
+    );
+
+    canvas_div.addEventListener(
+        'mouseenter',
+        on_mouse_event_closure('figure_enter')
+    );
+    canvas_div.addEventListener(
+        'mouseleave',
+        on_mouse_event_closure('figure_leave')
+    );
+
+    canvas_div.addEventListener('wheel', function (event) {
+        if (event.deltaY < 0) {
+            event.step = 1;
+        } else {
+            event.step = -1;
+        }
+        on_mouse_event_closure('scroll')(event);
+    });
+
+    canvas_div.appendChild(canvas);
+    canvas_div.appendChild(rubberband_canvas);
+
+    this.rubberband_context = rubberband_canvas.getContext('2d');
+    this.rubberband_context.strokeStyle = '#000000';
+
+    this._resize_canvas = function (width, height, forward) {
+        if (forward) {
+            canvas_div.style.width = width + 'px';
+            canvas_div.style.height = height + 'px';
+        }
+    };
+
+    // Disable right mouse context menu.
+    canvas_div.addEventListener('contextmenu', function (_e) {
+        event.preventDefault();
+        return false;
+    });
+
+    function set_focus() {
+        canvas.focus();
+        canvas_div.focus();
+    }
+
+    window.setTimeout(set_focus, 100);
+};
+
+mpl.figure.prototype._init_toolbar = function () {
+    var fig = this;
+
+    var toolbar = document.createElement('div');
+    toolbar.classList = 'mpl-toolbar';
+    this.root.appendChild(toolbar);
+
+    function on_click_closure(name) {
+        return function (_event) {
+            return fig.toolbar_button_onclick(name);
+        };
+    }
+
+    function on_mouseover_closure(tooltip) {
+        return function (event) {
+            if (!event.currentTarget.disabled) {
+                return fig.toolbar_button_onmouseover(tooltip);
+            }
+        };
+    }
+
+    fig.buttons = {};
+    var buttonGroup = document.createElement('div');
+    buttonGroup.classList = 'mpl-button-group';
+    for (var toolbar_ind in mpl.toolbar_items) {
+        var name = mpl.toolbar_items[toolbar_ind][0];
+        var tooltip = mpl.toolbar_items[toolbar_ind][1];
+        var image = mpl.toolbar_items[toolbar_ind][2];
+        var method_name = mpl.toolbar_items[toolbar_ind][3];
+
+        if (!name) {
+            /* Instead of a spacer, we start a new button group. */
+            if (buttonGroup.hasChildNodes()) {
+                toolbar.appendChild(buttonGroup);
+            }
+            buttonGroup = document.createElement('div');
+            buttonGroup.classList = 'mpl-button-group';
+            continue;
+        }
+
+        var button = (fig.buttons[name] = document.createElement('button'));
+        button.classList = 'mpl-widget';
+        button.setAttribute('role', 'button');
+        button.setAttribute('aria-disabled', 'false');
+        button.addEventListener('click', on_click_closure(method_name));
+        button.addEventListener('mouseover', on_mouseover_closure(tooltip));
+
+        var icon_img = document.createElement('img');
+        icon_img.src = '_images/' + image + '.png';
+        icon_img.srcset = '_images/' + image + '_large.png 2x';
+        icon_img.alt = tooltip;
+        button.appendChild(icon_img);
+
+        buttonGroup.appendChild(button);
+    }
+
+    if (buttonGroup.hasChildNodes()) {
+        toolbar.appendChild(buttonGroup);
+    }
+
+    var fmt_picker = document.createElement('select');
+    fmt_picker.classList = 'mpl-widget';
+    toolbar.appendChild(fmt_picker);
+    this.format_dropdown = fmt_picker;
+
+    for (var ind in mpl.extensions) {
+        var fmt = mpl.extensions[ind];
+        var option = document.createElement('option');
+        option.selected = fmt === mpl.default_extension;
+        option.innerHTML = fmt;
+        fmt_picker.appendChild(option);
+    }
+
+    var status_bar = document.createElement('span');
+    status_bar.classList = 'mpl-message';
+    toolbar.appendChild(status_bar);
+    this.message = status_bar;
+};
+
+mpl.figure.prototype.request_resize = function (x_pixels, y_pixels) {
+    // Request matplotlib to resize the figure. Matplotlib will then trigger a resize in the client,
+    // which will in turn request a refresh of the image.
+    this.send_message('resize', { width: x_pixels, height: y_pixels });
+};
+
+mpl.figure.prototype.send_message = function (type, properties) {
+    properties['type'] = type;
+    properties['figure_id'] = this.id;
+    this.ws.send(JSON.stringify(properties));
+};
+
+mpl.figure.prototype.send_draw_message = function () {
+    if (!this.waiting) {
+        this.waiting = true;
+        this.ws.send(JSON.stringify({ type: 'draw', figure_id: this.id }));
+    }
+};
+
+mpl.figure.prototype.handle_save = function (fig, _msg) {
+    var format_dropdown = fig.format_dropdown;
+    var format = format_dropdown.options[format_dropdown.selectedIndex].value;
+    fig.ondownload(fig, format);
+};
+
+mpl.figure.prototype.handle_resize = function (fig, msg) {
+    var size = msg['size'];
+    if (size[0] !== fig.canvas.width || size[1] !== fig.canvas.height) {
+        fig._resize_canvas(size[0], size[1], msg['forward']);
+        fig.send_message('refresh', {});
+    }
+};
+
+mpl.figure.prototype.handle_rubberband = function (fig, msg) {
+    var x0 = msg['x0'] / fig.ratio;
+    var y0 = (fig.canvas.height - msg['y0']) / fig.ratio;
+    var x1 = msg['x1'] / fig.ratio;
+    var y1 = (fig.canvas.height - msg['y1']) / fig.ratio;
+    x0 = Math.floor(x0) + 0.5;
+    y0 = Math.floor(y0) + 0.5;
+    x1 = Math.floor(x1) + 0.5;
+    y1 = Math.floor(y1) + 0.5;
+    var min_x = Math.min(x0, x1);
+    var min_y = Math.min(y0, y1);
+    var width = Math.abs(x1 - x0);
+    var height = Math.abs(y1 - y0);
+
+    fig.rubberband_context.clearRect(
+        0,
+        0,
+        fig.canvas.width / fig.ratio,
+        fig.canvas.height / fig.ratio
+    );
+
+    fig.rubberband_context.strokeRect(min_x, min_y, width, height);
+};
+
+mpl.figure.prototype.handle_figure_label = function (fig, msg) {
+    // Updates the figure title.
+    fig.header.textContent = msg['label'];
+};
+
+mpl.figure.prototype.handle_cursor = function (fig, msg) {
+    fig.canvas_div.style.cursor = msg['cursor'];
+};
+
+mpl.figure.prototype.handle_message = function (fig, msg) {
+    fig.message.textContent = msg['message'];
+};
+
+mpl.figure.prototype.handle_draw = function (fig, _msg) {
+    // Request the server to send over a new figure.
+    fig.send_draw_message();
+};
+
+mpl.figure.prototype.handle_image_mode = function (fig, msg) {
+    fig.image_mode = msg['mode'];
+};
+
+mpl.figure.prototype.handle_history_buttons = function (fig, msg) {
+    for (var key in msg) {
+        if (!(key in fig.buttons)) {
+            continue;
+        }
+        fig.buttons[key].disabled = !msg[key];
+        fig.buttons[key].setAttribute('aria-disabled', !msg[key]);
+    }
+};
+
+mpl.figure.prototype.handle_navigate_mode = function (fig, msg) {
+    if (msg['mode'] === 'PAN') {
+        fig.buttons['Pan'].classList.add('active');
+        fig.buttons['Zoom'].classList.remove('active');
+    } else if (msg['mode'] === 'ZOOM') {
+        fig.buttons['Pan'].classList.remove('active');
+        fig.buttons['Zoom'].classList.add('active');
+    } else {
+        fig.buttons['Pan'].classList.remove('active');
+        fig.buttons['Zoom'].classList.remove('active');
+    }
+};
+
+mpl.figure.prototype.updated_canvas_event = function () {
+    // Called whenever the canvas gets updated.
+    this.send_message('ack', {});
+};
+
+// A function to construct a web socket function for onmessage handling.
+// Called in the figure constructor.
+mpl.figure.prototype._make_on_message_function = function (fig) {
+    return function socket_on_message(evt) {
+        if (evt.data instanceof Blob) {
+            var img = evt.data;
+            if (img.type !== 'image/png') {
+                /* FIXME: We get "Resource interpreted as Image but
+                 * transferred with MIME type text/plain:" errors on
+                 * Chrome.  But how to set the MIME type?  It doesn't seem
+                 * to be part of the websocket stream */
+                img.type = 'image/png';
+            }
+
+            /* Free the memory for the previous frames */
+            if (fig.imageObj.src) {
+                (window.URL || window.webkitURL).revokeObjectURL(
+                    fig.imageObj.src
+                );
+            }
+
+            fig.imageObj.src = (window.URL || window.webkitURL).createObjectURL(
+                img
+            );
+            fig.updated_canvas_event();
+            fig.waiting = false;
+            return;
+        } else if (
+            typeof evt.data === 'string' &&
+            evt.data.slice(0, 21) === 'data:image/png;base64'
+        ) {
+            fig.imageObj.src = evt.data;
+            fig.updated_canvas_event();
+            fig.waiting = false;
+            return;
+        }
+
+        var msg = JSON.parse(evt.data);
+        var msg_type = msg['type'];
+
+        // Call the  "handle_{type}" callback, which takes
+        // the figure and JSON message as its only arguments.
+        try {
+            var callback = fig['handle_' + msg_type];
+        } catch (e) {
+            console.log(
+                "No handler for the '" + msg_type + "' message type: ",
+                msg
+            );
+            return;
+        }
+
+        if (callback) {
+            try {
+                // console.log("Handling '" + msg_type + "' message: ", msg);
+                callback(fig, msg);
+            } catch (e) {
+                console.log(
+                    "Exception inside the 'handler_" + msg_type + "' callback:",
+                    e,
+                    e.stack,
+                    msg
+                );
+            }
+        }
+    };
+};
+
+
+/*
+ * return a copy of an object with only non-object keys
+ * we need this to avoid circular references
+ * https://stackoverflow.com/a/24161582/3208463
+ */
+function simpleKeys(original) {
+    return Object.keys(original).reduce(function (obj, key) {
+        if (typeof original[key] !== 'object') {
+            obj[key] = original[key];
+        }
+        return obj;
+    }, {});
+}
+
+mpl.figure.prototype.mouse_event = function (event, name) {
+    if (name === 'button_press') {
+        this.canvas.focus();
+        this.canvas_div.focus();
+    }
+
+    // from https://stackoverflow.com/q/1114465
+    var boundingRect = this.canvas.getBoundingClientRect();
+    var x = (event.clientX - boundingRect.left) * this.ratio;
+    var y = (event.clientY - boundingRect.top) * this.ratio;
+
+    this.send_message(name, {
+        x: x,
+        y: y,
+        button: event.button,
+        step: event.step,
+        guiEvent: simpleKeys(event),
+    });
+
+    return false;
+};
+
+mpl.figure.prototype._key_event_extra = function (_event, _name) {
+    // Handle any extra behaviour associated with a key event
+};
+
+mpl.figure.prototype.key_event = function (event, name) {
+    // Prevent repeat events
+    if (name === 'key_press') {
+        if (event.key === this._key) {
+            return;
+        } else {
+            this._key = event.key;
+        }
+    }
+    if (name === 'key_release') {
+        this._key = null;
+    }
+
+    var value = '';
+    if (event.ctrlKey && event.key !== 'Control') {
+        value += 'ctrl+';
+    }
+    else if (event.altKey && event.key !== 'Alt') {
+        value += 'alt+';
+    }
+    else if (event.shiftKey && event.key !== 'Shift') {
+        value += 'shift+';
+    }
+
+    value += 'k' + event.key;
+
+    this._key_event_extra(event, name);
+
+    this.send_message(name, { key: value, guiEvent: simpleKeys(event) });
+    return false;
+};
+
+mpl.figure.prototype.toolbar_button_onclick = function (name) {
+    if (name === 'download') {
+        this.handle_save(this, null);
+    } else {
+        this.send_message('toolbar_button', { name: name });
+    }
+};
+
+mpl.figure.prototype.toolbar_button_onmouseover = function (tooltip) {
+    this.message.textContent = tooltip;
+};
+
+///////////////// REMAINING CONTENT GENERATED BY embed_js.py /////////////////
+// prettier-ignore
+var _JSXTOOLS_RESIZE_OBSERVER=function(A){var t,i=new WeakMap,n=new WeakMap,a=new WeakMap,r=new WeakMap,o=new Set;function s(e){if(!(this instanceof s))throw new TypeError("Constructor requires 'new' operator");i.set(this,e)}function h(){throw new TypeError("Function is not a constructor")}function c(e,t,i,n){e=0 in arguments?Number(arguments[0]):0,t=1 in arguments?Number(arguments[1]):0,i=2 in arguments?Number(arguments[2]):0,n=3 in arguments?Number(arguments[3]):0,this.right=(this.x=this.left=e)+(this.width=i),this.bottom=(this.y=this.top=t)+(this.height=n),Object.freeze(this)}function d(){t=requestAnimationFrame(d);var s=new WeakMap,p=new Set;o.forEach((function(t){r.get(t).forEach((function(i){var r=t instanceof window.SVGElement,o=a.get(t),d=r?0:parseFloat(o.paddingTop),f=r?0:parseFloat(o.paddingRight),l=r?0:parseFloat(o.paddingBottom),u=r?0:parseFloat(o.paddingLeft),g=r?0:parseFloat(o.borderTopWidth),m=r?0:parseFloat(o.borderRightWidth),w=r?0:parseFloat(o.borderBottomWidth),b=u+f,F=d+l,v=(r?0:parseFloat(o.borderLeftWidth))+m,W=g+w,y=r?0:t.offsetHeight-W-t.clientHeight,E=r?0:t.offsetWidth-v-t.clientWidth,R=b+v,z=F+W,M=r?t.width:parseFloat(o.width)-R-E,O=r?t.height:parseFloat(o.height)-z-y;if(n.has(t)){var k=n.get(t);if(k[0]===M&&k[1]===O)return}n.set(t,[M,O]);var S=Object.create(h.prototype);S.target=t,S.contentRect=new c(u,d,M,O),s.has(i)||(s.set(i,[]),p.add(i)),s.get(i).push(S)}))})),p.forEach((function(e){i.get(e).call(e,s.get(e),e)}))}return s.prototype.observe=function(i){if(i instanceof window.Element){r.has(i)||(r.set(i,new Set),o.add(i),a.set(i,window.getComputedStyle(i)));var n=r.get(i);n.has(this)||n.add(this),cancelAnimationFrame(t),t=requestAnimationFrame(d)}},s.prototype.unobserve=function(i){if(i instanceof window.Element&&r.has(i)){var n=r.get(i);n.has(this)&&(n.delete(this),n.size||(r.delete(i),o.delete(i))),n.size||r.delete(i),o.size||cancelAnimationFrame(t)}},A.DOMRectReadOnly=c,A.ResizeObserver=s,A.ResizeObserverEntry=h,A}; // eslint-disable-line
+mpl.toolbar_items = [["Home", "Reset original view", "fa fa-home", "home"], ["Back", "Back to previous view", "fa fa-arrow-left", "back"], ["Forward", "Forward to next view", "fa fa-arrow-right", "forward"], ["", "", "", ""], ["Pan", "Left button pans, Right button zooms\nx/y fixes axis, CTRL fixes aspect", "fa fa-arrows", "pan"], ["Zoom", "Zoom to rectangle\nx/y fixes axis", "fa fa-square-o", "zoom"], ["", "", "", ""], ["Download", "Download plot", "fa fa-floppy-o", "download"]];
+
+mpl.extensions = ["eps", "jpeg", "pgf", "pdf", "png", "ps", "raw", "svg", "tif", "webp"];
+
+mpl.default_extension = "png";/* global mpl */
+
+var comm_websocket_adapter = function (comm) {
+    // Create a "websocket"-like object which calls the given IPython comm
+    // object with the appropriate methods. Currently this is a non binary
+    // socket, so there is still some room for performance tuning.
+    var ws = {};
+
+    ws.binaryType = comm.kernel.ws.binaryType;
+    ws.readyState = comm.kernel.ws.readyState;
+    function updateReadyState(_event) {
+        if (comm.kernel.ws) {
+            ws.readyState = comm.kernel.ws.readyState;
+        } else {
+            ws.readyState = 3; // Closed state.
+        }
+    }
+    comm.kernel.ws.addEventListener('open', updateReadyState);
+    comm.kernel.ws.addEventListener('close', updateReadyState);
+    comm.kernel.ws.addEventListener('error', updateReadyState);
+
+    ws.close = function () {
+        comm.close();
+    };
+    ws.send = function (m) {
+        //console.log('sending', m);
+        comm.send(m);
+    };
+    // Register the callback with on_msg.
+    comm.on_msg(function (msg) {
+        //console.log('receiving', msg['content']['data'], msg);
+        var data = msg['content']['data'];
+        if (data['blob'] !== undefined) {
+            data = {
+                data: new Blob(msg['buffers'], { type: data['blob'] }),
+            };
+        }
+        // Pass the mpl event to the overridden (by mpl) onmessage function.
+        ws.onmessage(data);
+    });
+    return ws;
+};
+
+mpl.mpl_figure_comm = function (comm, msg) {
+    // This is the function which gets called when the mpl process
+    // starts-up an IPython Comm through the "matplotlib" channel.
+
+    var id = msg.content.data.id;
+    // Get hold of the div created by the display call when the Comm
+    // socket was opened in Python.
+    var element = document.getElementById(id);
+    var ws_proxy = comm_websocket_adapter(comm);
+
+    function ondownload(figure, _format) {
+        window.open(figure.canvas.toDataURL());
+    }
+
+    var fig = new mpl.figure(id, ws_proxy, ondownload, element);
+
+    // Call onopen now - mpl needs it, as it is assuming we've passed it a real
+    // web socket which is closed, not our websocket->open comm proxy.
+    ws_proxy.onopen();
+
+    fig.parent_element = element;
+    fig.cell_info = mpl.find_output_cell("<div id='" + id + "'></div>");
+    if (!fig.cell_info) {
+        console.error('Failed to find cell for figure', id, fig);
+        return;
+    }
+    fig.cell_info[0].output_area.element.on(
+        'cleared',
+        { fig: fig },
+        fig._remove_fig_handler
+    );
+};
+
+mpl.figure.prototype.handle_close = function (fig, msg) {
+    var width = fig.canvas.width / fig.ratio;
+    fig.cell_info[0].output_area.element.off(
+        'cleared',
+        fig._remove_fig_handler
+    );
+    fig.resizeObserverInstance.unobserve(fig.canvas_div);
+
+    // Update the output cell to use the data from the current canvas.
+    fig.push_to_output();
+    var dataURL = fig.canvas.toDataURL();
+    // Re-enable the keyboard manager in IPython - without this line, in FF,
+    // the notebook keyboard shortcuts fail.
+    IPython.keyboard_manager.enable();
+    fig.parent_element.innerHTML =
+        '<img src="' + dataURL + '" width="' + width + '">';
+    fig.close_ws(fig, msg);
+};
+
+mpl.figure.prototype.close_ws = function (fig, msg) {
+    fig.send_message('closing', msg);
+    // fig.ws.close()
+};
+
+mpl.figure.prototype.push_to_output = function (_remove_interactive) {
+    // Turn the data on the canvas into data in the output cell.
+    var width = this.canvas.width / this.ratio;
+    var dataURL = this.canvas.toDataURL();
+    this.cell_info[1]['text/html'] =
+        '<img src="' + dataURL + '" width="' + width + '">';
+};
+
+mpl.figure.prototype.updated_canvas_event = function () {
+    // Tell IPython that the notebook contents must change.
+    IPython.notebook.set_dirty(true);
+    this.send_message('ack', {});
+    var fig = this;
+    // Wait a second, then push the new image to the DOM so
+    // that it is saved nicely (might be nice to debounce this).
+    setTimeout(function () {
+        fig.push_to_output();
+    }, 1000);
+};
+
+mpl.figure.prototype._init_toolbar = function () {
+    var fig = this;
+
+    var toolbar = document.createElement('div');
+    toolbar.classList = 'btn-toolbar';
+    this.root.appendChild(toolbar);
+
+    function on_click_closure(name) {
+        return function (_event) {
+            return fig.toolbar_button_onclick(name);
+        };
+    }
+
+    function on_mouseover_closure(tooltip) {
+        return function (event) {
+            if (!event.currentTarget.disabled) {
+                return fig.toolbar_button_onmouseover(tooltip);
+            }
+        };
+    }
+
+    fig.buttons = {};
+    var buttonGroup = document.createElement('div');
+    buttonGroup.classList = 'btn-group';
+    var button;
+    for (var toolbar_ind in mpl.toolbar_items) {
+        var name = mpl.toolbar_items[toolbar_ind][0];
+        var tooltip = mpl.toolbar_items[toolbar_ind][1];
+        var image = mpl.toolbar_items[toolbar_ind][2];
+        var method_name = mpl.toolbar_items[toolbar_ind][3];
+
+        if (!name) {
+            /* Instead of a spacer, we start a new button group. */
+            if (buttonGroup.hasChildNodes()) {
+                toolbar.appendChild(buttonGroup);
+            }
+            buttonGroup = document.createElement('div');
+            buttonGroup.classList = 'btn-group';
+            continue;
+        }
+
+        button = fig.buttons[name] = document.createElement('button');
+        button.classList = 'btn btn-default';
+        button.href = '#';
+        button.title = name;
+        button.innerHTML = '<i class="fa ' + image + ' fa-lg"></i>';
+        button.addEventListener('click', on_click_closure(method_name));
+        button.addEventListener('mouseover', on_mouseover_closure(tooltip));
+        buttonGroup.appendChild(button);
+    }
+
+    if (buttonGroup.hasChildNodes()) {
+        toolbar.appendChild(buttonGroup);
+    }
+
+    // Add the status bar.
+    var status_bar = document.createElement('span');
+    status_bar.classList = 'mpl-message pull-right';
+    toolbar.appendChild(status_bar);
+    this.message = status_bar;
+
+    // Add the close button to the window.
+    var buttongrp = document.createElement('div');
+    buttongrp.classList = 'btn-group inline pull-right';
+    button = document.createElement('button');
+    button.classList = 'btn btn-mini btn-primary';
+    button.href = '#';
+    button.title = 'Stop Interaction';
+    button.innerHTML = '<i class="fa fa-power-off icon-remove icon-large"></i>';
+    button.addEventListener('click', function (_evt) {
+        fig.handle_close(fig, {});
+    });
+    button.addEventListener(
+        'mouseover',
+        on_mouseover_closure('Stop Interaction')
+    );
+    buttongrp.appendChild(button);
+    var titlebar = this.root.querySelector('.ui-dialog-titlebar');
+    titlebar.insertBefore(buttongrp, titlebar.firstChild);
+};
+
+mpl.figure.prototype._remove_fig_handler = function (event) {
+    var fig = event.data.fig;
+    if (event.target !== this) {
+        // Ignore bubbled events from children.
+        return;
+    }
+    fig.close_ws(fig, {});
+};
+
+mpl.figure.prototype._root_extra_style = function (el) {
+    el.style.boxSizing = 'content-box'; // override notebook setting of border-box.
+};
+
+mpl.figure.prototype._canvas_extra_style = function (el) {
+    // this is important to make the div 'focusable
+    el.setAttribute('tabindex', 0);
+    // reach out to IPython and tell the keyboard manager to turn it's self
+    // off when our div gets focus
+
+    // location in version 3
+    if (IPython.notebook.keyboard_manager) {
+        IPython.notebook.keyboard_manager.register_events(el);
+    } else {
+        // location in version 2
+        IPython.keyboard_manager.register_events(el);
+    }
+};
+
+mpl.figure.prototype._key_event_extra = function (event, _name) {
+    // Check for shift+enter
+    if (event.shiftKey && event.which === 13) {
+        this.canvas_div.blur();
+        // select the cell after this one
+        var index = IPython.notebook.find_cell_index(this.cell_info[0]);
+        IPython.notebook.select(index + 1);
+    }
+};
+
+mpl.figure.prototype.handle_save = function (fig, _msg) {
+    fig.ondownload(fig, null);
+};
+
+mpl.find_output_cell = function (html_output) {
+    // Return the cell and output element which can be found *uniquely* in the notebook.
+    // Note - this is a bit hacky, but it is done because the "notebook_saving.Notebook"
+    // IPython event is triggered only after the cells have been serialised, which for
+    // our purposes (turning an active figure into a static one), is too late.
+    var cells = IPython.notebook.get_cells();
+    var ncells = cells.length;
+    for (var i = 0; i < ncells; i++) {
+        var cell = cells[i];
+        if (cell.cell_type === 'code') {
+            for (var j = 0; j < cell.output_area.outputs.length; j++) {
+                var data = cell.output_area.outputs[j];
+                if (data.data) {
+                    // IPython >= 3 moved mimebundle to data attribute of output
+                    data = data.data;
+                }
+                if (data['text/html'] === html_output) {
+                    return [cell, data, j];
+                }
+            }
+        }
+    }
+};
+
+// Register the function which deals with the matplotlib target/channel.
+// The kernel may be null if the page has been refreshed.
+if (IPython.notebook.kernel !== null) {
+    IPython.notebook.kernel.comm_manager.register_target(
+        'matplotlib',
+        mpl.mpl_figure_comm
+    );
+}
+
+</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div id='fb4283aa-bfb8-41e0-99f6-9acadf0fbd76'></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
@@ -974,16 +1801,16 @@ Cell <span class="ansi-green-fg">In[5], line 1</span>
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[6], line 2</span>
+Cell <span class="ansi-green-fg">In[6], line 3</span>
 <span class="ansi-green-intense-fg ansi-bold">      1</span> get_ipython()<span style="color: rgb(98,98,98)">.</span>run_line_magic(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">matplotlib</span><span style="color: rgb(175,0,0)">&#39;</span>, <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">notebook</span><span style="color: rgb(175,0,0)">&#39;</span>)
-<span class="ansi-green-fg">----&gt; 2</span> fig, axe <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">plt</span><span style="color: rgb(98,98,98)">.</span>subplots()
-<span class="ansi-green-intense-fg ansi-bold">      3</span> axe<span style="color: rgb(98,98,98)">.</span>scatter(low_d_projection[:, <span style="color: rgb(98,98,98)">0</span>], low_d_projection[:, <span style="color: rgb(98,98,98)">1</span>], s<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">5</span>, marker<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">o</span><span style="color: rgb(175,0,0)">&#34;</span>, linewidths<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0</span>)
+<span class="ansi-green-intense-fg ansi-bold">      2</span> fig, axe <span style="color: rgb(98,98,98)">=</span> plt<span style="color: rgb(98,98,98)">.</span>subplots()
+<span class="ansi-green-fg">----&gt; 3</span> axe<span style="color: rgb(98,98,98)">.</span>scatter(<span class="ansi-yellow-bg">low_d_projection</span>[:, <span style="color: rgb(98,98,98)">0</span>], low_d_projection[:, <span style="color: rgb(98,98,98)">1</span>], s<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">5</span>, marker<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">o</span><span style="color: rgb(175,0,0)">&#34;</span>, linewidths<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0</span>)
 
-<span class="ansi-red-fg">NameError</span>: name &#39;plt&#39; is not defined
+<span class="ansi-red-fg">NameError</span>: name &#39;low_d_projection&#39; is not defined
 </pre></div></div>
 </div>
 <script type="application/vnd.jupyter.widget-state+json">
-{"state": {"2bf4c4d66f7b4098a208db01c2b3ecf2": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "03bf802070ff4cc284860c641acb2d8f": {"model_name": "ColormakerRegistryModel", "model_module": "nglview-js-widgets", "model_module_version": "3.0.1", "state": {"_dom_classes": [], "_model_module": "nglview-js-widgets", "_model_module_version": "3.0.1", "_model_name": "ColormakerRegistryModel", "_msg_ar": [], "_msg_q": [], "_ready": false, "_view_count": null, "_view_module": "nglview-js-widgets", "_view_module_version": "3.0.1", "_view_name": "ColormakerRegistryView", "layout": "IPY_MODEL_2bf4c4d66f7b4098a208db01c2b3ecf2", "tabbable": null, "tooltip": null}}}, "version_major": 2, "version_minor": 0}
+{"state": {"f71339d14d9947d7b72d04c28b72d7e4": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "35097b6ade2d4e46923ed05e97fb18e7": {"model_name": "ColormakerRegistryModel", "model_module": "nglview-js-widgets", "model_module_version": "3.0.1", "state": {"_dom_classes": [], "_model_module": "nglview-js-widgets", "_model_module_version": "3.0.1", "_model_name": "ColormakerRegistryModel", "_msg_ar": [], "_msg_q": [], "_ready": false, "_view_count": null, "_view_module": "nglview-js-widgets", "_view_module_version": "3.0.1", "_view_name": "ColormakerRegistryView", "layout": "IPY_MODEL_f71339d14d9947d7b72d04c28b72d7e4"}}}, "version_major": 2, "version_minor": 0}
 </script></section>
 </section>
 

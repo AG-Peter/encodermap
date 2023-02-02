@@ -45,7 +45,7 @@
     <script src="../_static/copybutton.js"></script>
     <script src="../_static/design-tabs.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide_and_examples/writing_custom_loss_functions';</script>
@@ -662,202 +662,20 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2023-02-01 18:04:30.917238: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+2023-02-02 11:26:47.350702: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2023-02-01 18:04:31.059956: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libcudart.so.11.0&#39;; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-01 18:04:31.059982: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
-2023-02-01 18:04:31.786872: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer.so.7&#39;; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-01 18:04:31.786980: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer_plugin.so.7&#39;; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-01 18:04:31.786990: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2023-02-02 11:26:47.467387: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libcudart.so.11.0&#39;; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-02 11:26:47.467413: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2023-02-02 11:26:48.256340: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer.so.7&#39;; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-02 11:26:48.256455: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer_plugin.so.7&#39;; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-02 11:26:48.256467: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/_optional_imports.py:77</span>, in <span class="ansi-cyan-fg">_optional_import</span><span class="ansi-blue-fg">(module, name, version)</span>
-<span class="ansi-green-intense-fg ansi-bold">     75</span> <span class="ansi-bold" style="color: rgb(0,135,0)">try</span>:
-<span class="ansi-green-intense-fg ansi-bold">     76</span>     <span style="color: rgb(95,135,135)"># try the import</span>
-<span class="ansi-green-fg">---&gt; 77</span>     module: Any <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">importlib</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">import_module</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">module</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     78</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> name <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/importlib/__init__.py:127</span>, in <span class="ansi-cyan-fg">import_module</span><span class="ansi-blue-fg">(name, package)</span>
-<span class="ansi-green-intense-fg ansi-bold">    126</span>         level <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">1</span>
-<span class="ansi-green-fg">--&gt; 127</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">_bootstrap</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_gcd_import</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">level</span><span class="ansi-yellow-bg">:</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">package</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">level</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:1030</span>, in <span class="ansi-cyan-fg">_gcd_import</span><span class="ansi-blue-fg">(name, package, level)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:1007</span>, in <span class="ansi-cyan-fg">_find_and_load</span><span class="ansi-blue-fg">(name, import_)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:986</span>, in <span class="ansi-cyan-fg">_find_and_load_unlocked</span><span class="ansi-blue-fg">(name, import_)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:680</span>, in <span class="ansi-cyan-fg">_load_unlocked</span><span class="ansi-blue-fg">(spec)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap_external&gt;:850</span>, in <span class="ansi-cyan-fg">exec_module</span><span class="ansi-blue-fg">(self, module)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:228</span>, in <span class="ansi-cyan-fg">_call_with_frames_removed</span><span class="ansi-blue-fg">(f, *args, **kwds)</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/__init__.py:4</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(95,135,135)"># for doc</span>
-<span class="ansi-green-fg">----&gt; 4</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> adaptor, datafiles, show, widget
-<span class="ansi-green-intense-fg ansi-bold">      5</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">_version</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> get_versions
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/show.py:13</span>
-<span class="ansi-green-intense-fg ansi-bold">      4</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">adaptor</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (ASEStructure, ASETrajectory, BiopythonStructure,
-<span class="ansi-green-intense-fg ansi-bold">      5</span>                       FileStructure, HTMDTrajectory, IODataStructure,
-<span class="ansi-green-intense-fg ansi-bold">      6</span>                       IOTBXStructure, MDAnalysisTrajectory, MDTrajTrajectory,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     11</span>                       RdkitStructure,
-<span class="ansi-green-intense-fg ansi-bold">     12</span>                       TextStructure)
-<span class="ansi-green-fg">---&gt; 13</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">widget</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> NGLWidget
-<span class="ansi-green-intense-fg ansi-bold">     15</span> __all__ <span style="color: rgb(98,98,98)">=</span> [
-<span class="ansi-green-intense-fg ansi-bold">     16</span>     <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">demo</span><span style="color: rgb(175,0,0)">&#39;</span>,
-<span class="ansi-green-intense-fg ansi-bold">     17</span>     <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">show_pdbid</span><span style="color: rgb(175,0,0)">&#39;</span>,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     40</span>     <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">show_biopython</span><span style="color: rgb(175,0,0)">&#39;</span>,
-<span class="ansi-green-intense-fg ansi-bold">     41</span> ]
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/widget.py:19</span>
-<span class="ansi-green-intense-fg ansi-bold">     17</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">traitlets</span>
-<span class="ansi-green-fg">---&gt; 19</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> color, interpolate
-<span class="ansi-green-intense-fg ansi-bold">     20</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">adaptor</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> Structure, Trajectory
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/color.py:114</span>
-<span class="ansi-green-intense-fg ansi-bold">    111</span>             <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">ValueError</span>(<span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>obj<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> must be either list of list or string</span><span style="color: rgb(175,0,0)">&#34;</span>)
-<span class="ansi-green-fg">--&gt; 114</span> ColormakerRegistry <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_ColormakerRegistry</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/base.py:10</span>, in <span class="ansi-cyan-fg">_singleton.&lt;locals&gt;.getinstance</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      9</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">cls</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> instances:
-<span class="ansi-green-fg">---&gt; 10</span>     instances[<span style="color: rgb(0,135,0)">cls</span>] <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">cls</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     11</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> instances[<span style="color: rgb(0,135,0)">cls</span>]
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/color.py:47</span>, in <span class="ansi-cyan-fg">_ColormakerRegistry.__init__</span><span class="ansi-blue-fg">(self, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     46</span>     get_ipython() <span style="color: rgb(95,135,135)"># only display in notebook</span>
-<span class="ansi-green-fg">---&gt; 47</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_ipython_display_</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     48</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">NameError</span>:
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/color.py:54</span>, in <span class="ansi-cyan-fg">_ColormakerRegistry._ipython_display_</span><span class="ansi-blue-fg">(self, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     53</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span>
-<span class="ansi-green-fg">---&gt; 54</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">super</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_ipython_display_</span>(<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs)
-
-<span class="ansi-red-fg">AttributeError</span>: &#39;super&#39; object has no attribute &#39;_ipython_display_&#39;
-
-The above exception was the direct cause of the following exception:
-
-<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/_optional_imports.py:98</span>, in <span class="ansi-cyan-fg">_optional_import</span><span class="ansi-blue-fg">(module, name, version)</span>
-<span class="ansi-green-intense-fg ansi-bold">     97</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">AttributeError</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> ae:
-<span class="ansi-green-fg">---&gt; 98</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> ae <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">e</span>
-<span class="ansi-green-intense-fg ansi-bold">     99</span> object_name <span style="color: rgb(98,98,98)">=</span> name<span style="color: rgb(98,98,98)">.</span>split(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span>)[<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>]
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/_optional_imports.py:96</span>, in <span class="ansi-cyan-fg">_optional_import</span><span class="ansi-blue-fg">(module, name, version)</span>
-<span class="ansi-green-intense-fg ansi-bold">     95</span> <span class="ansi-bold" style="color: rgb(0,135,0)">try</span>:
-<span class="ansi-green-fg">---&gt; 96</span>     module_name <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span> <span style="color: rgb(98,98,98)">+</span> <span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">split</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span>)[<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">2</span>]
-<span class="ansi-green-intense-fg ansi-bold">     97</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">AttributeError</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> ae:
-
-<span class="ansi-red-fg">AttributeError</span>: &#39;NoneType&#39; object has no attribute &#39;split&#39;
-
-During handling of the above exception, another exception occurred:
-
-<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[2], line 2</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">numpy</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">np</span>
-<span class="ansi-green-fg">----&gt; 2</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">encodermap</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">em</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">pandas</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">pd</span>
-<span class="ansi-green-intense-fg ansi-bold">      4</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">tensorflow</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">tf</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/__init__.py:94</span>
-<span class="ansi-green-intense-fg ansi-bold">     88</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     89</span> <span style="color: rgb(95,135,135)"># Imports</span>
-<span class="ansi-green-intense-fg ansi-bold">     90</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     93</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">_version</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> __version__
-<span class="ansi-green-fg">---&gt; 94</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">autoencoder</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">autoencoder</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
-<span class="ansi-green-intense-fg ansi-bold">     95</span>     AngleDihedralCartesianEncoderMap,
-<span class="ansi-green-intense-fg ansi-bold">     96</span>     Autoencoder,
-<span class="ansi-green-intense-fg ansi-bold">     97</span>     EncoderMap,
-<span class="ansi-green-intense-fg ansi-bold">     98</span> )
-<span class="ansi-green-intense-fg ansi-bold">     99</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> EncoderMapBaseCallback
-<span class="ansi-green-intense-fg ansi-bold">    100</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">loading</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> features
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/autoencoder/__init__.py:23</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> <span style="color: rgb(95,135,135)"># -*- coding: utf-8 -*-</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> <span style="color: rgb(95,135,135)"># encodermap/autoencoder/__init__.py</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     20</span> <span style="color: rgb(95,135,135)"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="ansi-green-intense-fg ansi-bold">     21</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     22</span> <span style="color: rgb(175,0,0)">&#34;&#34;&#34;Front-facing autoencoder classes.&#34;&#34;&#34;</span>
-<span class="ansi-green-fg">---&gt; 23</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">autoencoder</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/autoencoder/autoencoder.py:52</span>
-<span class="ansi-green-intense-fg ansi-bold">     48</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">tensorflow</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">keras</span>
-<span class="ansi-green-intense-fg ansi-bold">     50</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">encodermap</span>
-<span class="ansi-green-fg">---&gt; 52</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
-<span class="ansi-green-intense-fg ansi-bold">     53</span>     CheckpointSaver,
-<span class="ansi-green-intense-fg ansi-bold">     54</span>     ImageCallback,
-<span class="ansi-green-intense-fg ansi-bold">     55</span>     IncreaseCartesianCost,
-<span class="ansi-green-intense-fg ansi-bold">     56</span>     ProgressBar,
-<span class="ansi-green-intense-fg ansi-bold">     57</span>     TensorboardWriteBool,
-<span class="ansi-green-intense-fg ansi-bold">     58</span> )
-<span class="ansi-green-intense-fg ansi-bold">     59</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">loss_functions</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">loss_functions</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
-<span class="ansi-green-intense-fg ansi-bold">     60</span>     angle_loss,
-<span class="ansi-green-intense-fg ansi-bold">     61</span>     auto_loss,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     69</span>     side_dihedral_loss,
-<span class="ansi-green-intense-fg ansi-bold">     70</span> )
-<span class="ansi-green-intense-fg ansi-bold">     71</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">misc</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">backmapping</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> dihedral_backmapping, mdtraj_backmapping
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/callbacks/__init__.py:26</span>
-<span class="ansi-green-intense-fg ansi-bold">     22</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">__future__</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> annotations
-<span class="ansi-green-intense-fg ansi-bold">     24</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">typing</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> TYPE_CHECKING
-<span class="ansi-green-fg">---&gt; 26</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/callbacks/callbacks.py:39</span>
-<span class="ansi-green-intense-fg ansi-bold">     36</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">tensorflow</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">keras</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">backend</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">K</span>
-<span class="ansi-green-intense-fg ansi-bold">     37</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">tqdm</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> tqdm
-<span class="ansi-green-fg">---&gt; 39</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">misc</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">saving_loading_models</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> save_model
-<span class="ansi-green-intense-fg ansi-bold">     40</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">misc</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">summaries</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> image_summary
-<span class="ansi-green-intense-fg ansi-bold">     41</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">parameters</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">parameters</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> ADCParameters, Parameters
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/misc/__init__.py:23</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> <span style="color: rgb(95,135,135)"># -*- coding: utf-8 -*-</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> <span style="color: rgb(95,135,135)"># encodermap/misc/__init__.py</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     20</span> <span style="color: rgb(95,135,135)"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="ansi-green-intense-fg ansi-bold">     21</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     22</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">backmapping</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-<span class="ansi-green-fg">---&gt; 23</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">clustering</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-<span class="ansi-green-intense-fg ansi-bold">     24</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">distances</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-<span class="ansi-green-intense-fg ansi-bold">     25</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">errors</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/misc/clustering.py:45</span>
-<span class="ansi-green-intense-fg ansi-bold">     39</span> <span style="color: rgb(95,135,135)">##############################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     40</span> <span style="color: rgb(95,135,135)"># Optional Imports</span>
-<span class="ansi-green-intense-fg ansi-bold">     41</span> <span style="color: rgb(95,135,135)">##############################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     44</span> md <span style="color: rgb(98,98,98)">=</span> _optional_import(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">mdtraj</span><span style="color: rgb(175,0,0)">&#34;</span>)
-<span class="ansi-green-fg">---&gt; 45</span> ngl <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_optional_import</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">nglview</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     48</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     49</span> <span style="color: rgb(95,135,135)"># Globals</span>
-<span class="ansi-green-intense-fg ansi-bold">     50</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     53</span> __all__ <span style="color: rgb(98,98,98)">=</span> [<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">gen_dummy_traj</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">get_cluster_frames</span><span style="color: rgb(175,0,0)">&#34;</span>]
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/_optional_imports.py:110</span>, in <span class="ansi-cyan-fg">_optional_import</span><span class="ansi-blue-fg">(module, name, version)</span>
-<span class="ansi-green-intense-fg ansi-bold">    104</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">Exception</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> e2:
-<span class="ansi-green-intense-fg ansi-bold">    105</span>     msg <span style="color: rgb(98,98,98)">=</span> (
-<span class="ansi-green-intense-fg ansi-bold">    106</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Absolute and relative import of </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>name<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> from module </span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    107</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>_module<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> failed with Exception </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>e2<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">. Either install the </span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    108</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">`</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>_module<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">` package or fix the optional_import.</span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    109</span>     )
-<span class="ansi-green-fg">--&gt; 110</span>     module_name <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span> <span style="color: rgb(98,98,98)">+</span> <span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">split</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span>)[<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">2</span>]
-<span class="ansi-green-intense-fg ansi-bold">    111</span>     object_name <span style="color: rgb(98,98,98)">=</span> name<span style="color: rgb(98,98,98)">.</span>split(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span>)[<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>]
-<span class="ansi-green-intense-fg ansi-bold">    112</span>     path <span style="color: rgb(98,98,98)">=</span> _module <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span> <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(98,98,98)">.</span>join(name<span style="color: rgb(98,98,98)">.</span>split(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span>)[:<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">2</span>])
-
-<span class="ansi-red-fg">AttributeError</span>: &#39;NoneType&#39; object has no attribute &#39;split&#39;
-</pre></div></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "7001ae64fc754cd3b4fd8795d650a3bd"}</script></div>
 </div>
 </section>
 <section id="Adding-a-unit-circle-loss">
@@ -890,7 +708,7 @@ x^2 + y^2 - 1 &= 0
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[&lt;matplotlib.lines.Line2D at 0x7f73c08cfbe0&gt;]
+[&lt;matplotlib.lines.Line2D at 0x7efcab88a460&gt;]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -934,7 +752,7 @@ x^2 + y^2 - 1 &= 0
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.contour.QuadContourSet at 0x7f73be7e1700&gt;
+&lt;matplotlib.contour.QuadContourSet at 0x7efca9711e50&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1039,16 +857,85 @@ Hello
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-red-fg">FileNotFoundError</span>                         Traceback (most recent call last)
 Cell <span class="ansi-green-fg">In[8], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> df <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">pd</span><span style="color: rgb(98,98,98)">.</span>read_csv(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">/asp7.csv</span><span style="color: rgb(175,0,0)">&#39;</span>)
+<span class="ansi-green-fg">----&gt; 1</span> df <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">pd</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">read_csv</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">/asp7.csv</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">      2</span> dihedrals <span style="color: rgb(98,98,98)">=</span> df<span style="color: rgb(98,98,98)">.</span>iloc[:,:<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>]<span style="color: rgb(98,98,98)">.</span>values<span style="color: rgb(98,98,98)">.</span>astype(np<span style="color: rgb(98,98,98)">.</span>float32)
 <span class="ansi-green-intense-fg ansi-bold">      3</span> cluster_ids <span style="color: rgb(98,98,98)">=</span> df<span style="color: rgb(98,98,98)">.</span>iloc[:,<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>]<span style="color: rgb(98,98,98)">.</span>values
 
-<span class="ansi-red-fg">NameError</span>: name &#39;pd&#39; is not defined
+File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pandas/util/_decorators.py:211</span>, in <span class="ansi-cyan-fg">deprecate_kwarg.&lt;locals&gt;._deprecate_kwarg.&lt;locals&gt;.wrapper</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    209</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
+<span class="ansi-green-intense-fg ansi-bold">    210</span>         kwargs[new_arg_name] <span style="color: rgb(98,98,98)">=</span> new_arg_value
+<span class="ansi-green-fg">--&gt; 211</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">func</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pandas/util/_decorators.py:331</span>, in <span class="ansi-cyan-fg">deprecate_nonkeyword_arguments.&lt;locals&gt;.decorate.&lt;locals&gt;.wrapper</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    325</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">len</span>(args) <span style="color: rgb(98,98,98)">&gt;</span> num_allow_args:
+<span class="ansi-green-intense-fg ansi-bold">    326</span>     warnings<span style="color: rgb(98,98,98)">.</span>warn(
+<span class="ansi-green-intense-fg ansi-bold">    327</span>         msg<span style="color: rgb(98,98,98)">.</span>format(arguments<span style="color: rgb(98,98,98)">=</span>_format_argument_list(allow_args)),
+<span class="ansi-green-intense-fg ansi-bold">    328</span>         <span class="ansi-bold" style="color: rgb(215,95,95)">FutureWarning</span>,
+<span class="ansi-green-intense-fg ansi-bold">    329</span>         stacklevel<span style="color: rgb(98,98,98)">=</span>find_stack_level(),
+<span class="ansi-green-intense-fg ansi-bold">    330</span>     )
+<span class="ansi-green-fg">--&gt; 331</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">func</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pandas/io/parsers/readers.py:950</span>, in <span class="ansi-cyan-fg">read_csv</span><span class="ansi-blue-fg">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, squeeze, prefix, mangle_dupe_cols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, error_bad_lines, warn_bad_lines, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options)</span>
+<span class="ansi-green-intense-fg ansi-bold">    935</span> kwds_defaults <span style="color: rgb(98,98,98)">=</span> _refine_defaults_read(
+<span class="ansi-green-intense-fg ansi-bold">    936</span>     dialect,
+<span class="ansi-green-intense-fg ansi-bold">    937</span>     delimiter,
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-intense-fg ansi-bold">    946</span>     defaults<span style="color: rgb(98,98,98)">=</span>{<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">delimiter</span><span style="color: rgb(175,0,0)">&#34;</span>: <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">,</span><span style="color: rgb(175,0,0)">&#34;</span>},
+<span class="ansi-green-intense-fg ansi-bold">    947</span> )
+<span class="ansi-green-intense-fg ansi-bold">    948</span> kwds<span style="color: rgb(98,98,98)">.</span>update(kwds_defaults)
+<span class="ansi-green-fg">--&gt; 950</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">_read</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">filepath_or_buffer</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">kwds</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pandas/io/parsers/readers.py:605</span>, in <span class="ansi-cyan-fg">_read</span><span class="ansi-blue-fg">(filepath_or_buffer, kwds)</span>
+<span class="ansi-green-intense-fg ansi-bold">    602</span> _validate_names(kwds<span style="color: rgb(98,98,98)">.</span>get(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">names</span><span style="color: rgb(175,0,0)">&#34;</span>, <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>))
+<span class="ansi-green-intense-fg ansi-bold">    604</span> <span style="color: rgb(95,135,135)"># Create the parser.</span>
+<span class="ansi-green-fg">--&gt; 605</span> parser <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">TextFileReader</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">filepath_or_buffer</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwds</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    607</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> chunksize <span class="ansi-bold" style="color: rgb(175,0,255)">or</span> iterator:
+<span class="ansi-green-intense-fg ansi-bold">    608</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> parser
+
+File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pandas/io/parsers/readers.py:1442</span>, in <span class="ansi-cyan-fg">TextFileReader.__init__</span><span class="ansi-blue-fg">(self, f, engine, **kwds)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1439</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>options[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">has_index_names</span><span style="color: rgb(175,0,0)">&#34;</span>] <span style="color: rgb(98,98,98)">=</span> kwds[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">has_index_names</span><span style="color: rgb(175,0,0)">&#34;</span>]
+<span class="ansi-green-intense-fg ansi-bold">   1441</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>handles: IOHandles <span style="color: rgb(98,98,98)">|</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span> <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>
+<span class="ansi-green-fg">-&gt; 1442</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_engine <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_make_engine</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">f</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">engine</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pandas/io/parsers/readers.py:1735</span>, in <span class="ansi-cyan-fg">TextFileReader._make_engine</span><span class="ansi-blue-fg">(self, f, engine)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1733</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">b</span><span style="color: rgb(175,0,0)">&#34;</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> mode:
+<span class="ansi-green-intense-fg ansi-bold">   1734</span>         mode <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">b</span><span style="color: rgb(175,0,0)">&#34;</span>
+<span class="ansi-green-fg">-&gt; 1735</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>handles <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">get_handle</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-intense-fg ansi-bold">   1736</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">f</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">   1737</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">mode</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">   1738</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">encoding</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">options</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">get</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">encoding</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg ansi-bold" style="color: rgb(0,135,0)">None</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">   1739</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">compression</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">options</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">get</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">compression</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg ansi-bold" style="color: rgb(0,135,0)">None</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">   1740</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">memory_map</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">options</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">get</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">memory_map</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg ansi-bold" style="color: rgb(0,135,0)">False</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">   1741</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">is_text</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">is_text</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">   1742</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">errors</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">options</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">get</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">encoding_errors</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">strict</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">   1743</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">storage_options</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">options</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">get</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">storage_options</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg ansi-bold" style="color: rgb(0,135,0)">None</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">   1744</span> <span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1745</span> <span class="ansi-bold" style="color: rgb(0,135,0)">assert</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>handles <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>
+<span class="ansi-green-intense-fg ansi-bold">   1746</span> f <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>handles<span style="color: rgb(98,98,98)">.</span>handle
+
+File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pandas/io/common.py:856</span>, in <span class="ansi-cyan-fg">get_handle</span><span class="ansi-blue-fg">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
+<span class="ansi-green-intense-fg ansi-bold">    851</span> <span class="ansi-bold" style="color: rgb(0,135,0)">elif</span> <span style="color: rgb(0,135,0)">isinstance</span>(handle, <span style="color: rgb(0,135,0)">str</span>):
+<span class="ansi-green-intense-fg ansi-bold">    852</span>     <span style="color: rgb(95,135,135)"># Check whether the filename is to be opened in binary mode.</span>
+<span class="ansi-green-intense-fg ansi-bold">    853</span>     <span style="color: rgb(95,135,135)"># Binary mode does not support &#39;encoding&#39; and &#39;newline&#39;.</span>
+<span class="ansi-green-intense-fg ansi-bold">    854</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> ioargs<span style="color: rgb(98,98,98)">.</span>encoding <span class="ansi-bold" style="color: rgb(175,0,255)">and</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">b</span><span style="color: rgb(175,0,0)">&#34;</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> ioargs<span style="color: rgb(98,98,98)">.</span>mode:
+<span class="ansi-green-intense-fg ansi-bold">    855</span>         <span style="color: rgb(95,135,135)"># Encoding</span>
+<span class="ansi-green-fg">--&gt; 856</span>         handle <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">open</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-intense-fg ansi-bold">    857</span> <span class="ansi-yellow-bg">            </span><span class="ansi-yellow-bg">handle</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    858</span> <span class="ansi-yellow-bg">            </span><span class="ansi-yellow-bg">ioargs</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">mode</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    859</span> <span class="ansi-yellow-bg">            </span><span class="ansi-yellow-bg">encoding</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">ioargs</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">encoding</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    860</span> <span class="ansi-yellow-bg">            </span><span class="ansi-yellow-bg">errors</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">errors</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    861</span> <span class="ansi-yellow-bg">            </span><span class="ansi-yellow-bg">newline</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    862</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    863</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
+<span class="ansi-green-intense-fg ansi-bold">    864</span>         <span style="color: rgb(95,135,135)"># Binary mode</span>
+<span class="ansi-green-intense-fg ansi-bold">    865</span>         handle <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">open</span>(handle, ioargs<span style="color: rgb(98,98,98)">.</span>mode)
+
+<span class="ansi-red-fg">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/asp7.csv&#39;
 </pre></div></div>
 </div>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
@@ -1061,25 +948,6 @@ Cell <span class="ansi-green-fg">In[8], line 1</span>
 <span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[9], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> parameters <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">em</span><span style="color: rgb(98,98,98)">.</span>Parameters(
-<span class="ansi-green-intense-fg ansi-bold">      2</span> tensorboard<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">True</span>,
-<span class="ansi-green-intense-fg ansi-bold">      3</span> center_cost_scale<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0</span>,
-<span class="ansi-green-intense-fg ansi-bold">      4</span> n_steps<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">100</span>,
-<span class="ansi-green-intense-fg ansi-bold">      5</span> periodicity<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">2</span><span style="color: rgb(98,98,98)">*</span>np<span style="color: rgb(98,98,98)">.</span>pi,
-<span class="ansi-green-intense-fg ansi-bold">      6</span> main_path<span style="color: rgb(98,98,98)">=</span>em<span style="color: rgb(98,98,98)">.</span>misc<span style="color: rgb(98,98,98)">.</span>run_path(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">runs/custom_losses</span><span style="color: rgb(175,0,0)">&#39;</span>)
-<span class="ansi-green-intense-fg ansi-bold">      7</span> )
-
-<span class="ansi-red-fg">NameError</span>: name &#39;em&#39; is not defined
-</pre></div></div>
 </div>
 <p>Now we can instaniate the <code class="docutils literal notranslate"><span class="pre">EncoderMap</span></code> class. For visualization purposes we will also make tensorboard write images.</p>
 <div class="nbinput docutils container">
@@ -1099,10 +967,10 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
 Cell <span class="ansi-green-fg">In[10], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> e_map <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">em</span><span style="color: rgb(98,98,98)">.</span>EncoderMap(parameters, dihedrals)
+<span class="ansi-green-fg">----&gt; 1</span> e_map <span style="color: rgb(98,98,98)">=</span> em<span style="color: rgb(98,98,98)">.</span>EncoderMap(parameters, <span class="ansi-yellow-bg">dihedrals</span>)
 <span class="ansi-green-intense-fg ansi-bold">      2</span> e_map<span style="color: rgb(98,98,98)">.</span>add_images_to_tensorboard(dihedrals, image_step<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">1</span>)
 
-<span class="ansi-red-fg">NameError</span>: name &#39;em&#39; is not defined
+<span class="ansi-red-fg">NameError</span>: name &#39;dihedrals&#39; is not defined
 </pre></div></div>
 </div>
 <p>The loss is created by giving it the model and parameters of the parent <code class="docutils literal notranslate"><span class="pre">EncoderMap</span></code> instance. To not clash with the names of function and result we will call it <code class="docutils literal notranslate"><span class="pre">_circle_loss</span></code>.</p>
@@ -1197,12 +1065,12 @@ Cell <span class="ansi-green-fg">In[14], line 1</span>
 <section id="Output">
 <h2>Output<a class="headerlink" href="#Output" title="Permalink to this heading">#</a></h2>
 <p>Here’s what Tensorboard should put out:</p>
-<p><img alt="e07e7a4c208d46d8ab681a2cbbda1074" class="no-scaled-link" src="../_images/custom_loss_functions_1.png" style="width: 800px;" /></p>
+<p><img alt="152d4bbdc85f4ff3905af76194e57fea" class="no-scaled-link" src="../_images/custom_loss_functions_1.png" style="width: 800px;" /></p>
 <section id="Conclusion">
 <h3>Conclusion<a class="headerlink" href="#Conclusion" title="Permalink to this heading">#</a></h3>
 <p>Using the closure method, you can easily add new loss functions to EncoderMap.</p>
 <script type="application/vnd.jupyter.widget-state+json">
-{"state": {"66eeeba43eaa401f8e4ad7c1b1a31f85": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "f8fb12d7f8af4c49b42845843907a55e": {"model_name": "ColormakerRegistryModel", "model_module": "nglview-js-widgets", "model_module_version": "3.0.1", "state": {"_dom_classes": [], "_model_module": "nglview-js-widgets", "_model_module_version": "3.0.1", "_model_name": "ColormakerRegistryModel", "_msg_ar": [], "_msg_q": [], "_ready": false, "_view_count": null, "_view_module": "nglview-js-widgets", "_view_module_version": "3.0.1", "_view_name": "ColormakerRegistryView", "layout": "IPY_MODEL_66eeeba43eaa401f8e4ad7c1b1a31f85", "tabbable": null, "tooltip": null}}}, "version_major": 2, "version_minor": 0}
+{"state": {"14ef3217d2304bbcaa1c5c7113a36978": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "7001ae64fc754cd3b4fd8795d650a3bd": {"model_name": "ColormakerRegistryModel", "model_module": "nglview-js-widgets", "model_module_version": "3.0.1", "state": {"_dom_classes": [], "_model_module": "nglview-js-widgets", "_model_module_version": "3.0.1", "_model_name": "ColormakerRegistryModel", "_msg_ar": [], "_msg_q": [], "_ready": false, "_view_count": null, "_view_module": "nglview-js-widgets", "_view_module_version": "3.0.1", "_view_name": "ColormakerRegistryView", "layout": "IPY_MODEL_14ef3217d2304bbcaa1c5c7113a36978"}}}, "version_major": 2, "version_minor": 0}
 </script></section>
 </section>
 </section>

@@ -44,7 +44,7 @@
     <script src="../../_static/copybutton.js"></script>
     <script src="../../_static/design-tabs.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/encodermap/_optional_imports';</script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -395,6 +395,9 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">importlib</span>
 
+    <span class="kn">import</span> <span class="nn">pkg_resources</span>
+
+    <span class="n">available_modules</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pkg_resources</span><span class="o">.</span><span class="n">working_set</span><span class="p">)</span>
     <span class="n">_module</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">module</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="c1"># try the import</span>
@@ -416,6 +419,13 @@
     <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="c1"># absolute import failed. Try relative import</span>
         <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Absolute and relative import of module </span><span class="si">{</span><span class="n">_module</span><span class="si">}</span><span class="s2"> &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;failed with Exception </span><span class="si">{</span><span class="n">e2</span><span class="si">}</span><span class="s2">. I printed a list of available &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;imports for you to check.&quot;</span>
+                <span class="p">)</span>
+
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">module_name</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
             <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">ae</span><span class="p">:</span>
@@ -426,11 +436,6 @@
             <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">object_name</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e2</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Absolute and relative import of </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> from module &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_module</span><span class="si">}</span><span class="s2"> failed with Exception </span><span class="si">{</span><span class="n">e2</span><span class="si">}</span><span class="s2">. Either install the &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;`</span><span class="si">{</span><span class="n">_module</span><span class="si">}</span><span class="s2">` package or fix the optional_import.&quot;</span>
-            <span class="p">)</span>
             <span class="n">module_name</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
             <span class="n">object_name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">_module</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>

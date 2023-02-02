@@ -45,7 +45,7 @@
     <script src="../_static/copybutton.js"></script>
     <script src="../_static/design-tabs.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide_and_examples/learning_rate_schedulers';</script>
@@ -671,202 +671,20 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2023-02-01 18:04:11.170516: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+2023-02-02 11:21:59.108738: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2023-02-01 18:04:11.305505: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libcudart.so.11.0&#39;; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-01 18:04:11.305530: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
-2023-02-01 18:04:12.032494: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer.so.7&#39;; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-01 18:04:12.032586: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer_plugin.so.7&#39;; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-01 18:04:12.032597: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2023-02-02 11:21:59.239969: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libcudart.so.11.0&#39;; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-02 11:21:59.239995: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2023-02-02 11:21:59.949163: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer.so.7&#39;; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-02 11:21:59.949258: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer_plugin.so.7&#39;; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-02 11:21:59.949270: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/_optional_imports.py:77</span>, in <span class="ansi-cyan-fg">_optional_import</span><span class="ansi-blue-fg">(module, name, version)</span>
-<span class="ansi-green-intense-fg ansi-bold">     75</span> <span class="ansi-bold" style="color: rgb(0,135,0)">try</span>:
-<span class="ansi-green-intense-fg ansi-bold">     76</span>     <span style="color: rgb(95,135,135)"># try the import</span>
-<span class="ansi-green-fg">---&gt; 77</span>     module: Any <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">importlib</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">import_module</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">module</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     78</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> name <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/importlib/__init__.py:127</span>, in <span class="ansi-cyan-fg">import_module</span><span class="ansi-blue-fg">(name, package)</span>
-<span class="ansi-green-intense-fg ansi-bold">    126</span>         level <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">1</span>
-<span class="ansi-green-fg">--&gt; 127</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">_bootstrap</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_gcd_import</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">level</span><span class="ansi-yellow-bg">:</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">package</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">level</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:1030</span>, in <span class="ansi-cyan-fg">_gcd_import</span><span class="ansi-blue-fg">(name, package, level)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:1007</span>, in <span class="ansi-cyan-fg">_find_and_load</span><span class="ansi-blue-fg">(name, import_)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:986</span>, in <span class="ansi-cyan-fg">_find_and_load_unlocked</span><span class="ansi-blue-fg">(name, import_)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:680</span>, in <span class="ansi-cyan-fg">_load_unlocked</span><span class="ansi-blue-fg">(spec)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap_external&gt;:850</span>, in <span class="ansi-cyan-fg">exec_module</span><span class="ansi-blue-fg">(self, module)</span>
-
-File <span class="ansi-green-fg">&lt;frozen importlib._bootstrap&gt;:228</span>, in <span class="ansi-cyan-fg">_call_with_frames_removed</span><span class="ansi-blue-fg">(f, *args, **kwds)</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/__init__.py:4</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(95,135,135)"># for doc</span>
-<span class="ansi-green-fg">----&gt; 4</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> adaptor, datafiles, show, widget
-<span class="ansi-green-intense-fg ansi-bold">      5</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">_version</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> get_versions
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/show.py:13</span>
-<span class="ansi-green-intense-fg ansi-bold">      4</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">adaptor</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (ASEStructure, ASETrajectory, BiopythonStructure,
-<span class="ansi-green-intense-fg ansi-bold">      5</span>                       FileStructure, HTMDTrajectory, IODataStructure,
-<span class="ansi-green-intense-fg ansi-bold">      6</span>                       IOTBXStructure, MDAnalysisTrajectory, MDTrajTrajectory,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     11</span>                       RdkitStructure,
-<span class="ansi-green-intense-fg ansi-bold">     12</span>                       TextStructure)
-<span class="ansi-green-fg">---&gt; 13</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">widget</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> NGLWidget
-<span class="ansi-green-intense-fg ansi-bold">     15</span> __all__ <span style="color: rgb(98,98,98)">=</span> [
-<span class="ansi-green-intense-fg ansi-bold">     16</span>     <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">demo</span><span style="color: rgb(175,0,0)">&#39;</span>,
-<span class="ansi-green-intense-fg ansi-bold">     17</span>     <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">show_pdbid</span><span style="color: rgb(175,0,0)">&#39;</span>,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     40</span>     <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">show_biopython</span><span style="color: rgb(175,0,0)">&#39;</span>,
-<span class="ansi-green-intense-fg ansi-bold">     41</span> ]
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/widget.py:19</span>
-<span class="ansi-green-intense-fg ansi-bold">     17</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">traitlets</span>
-<span class="ansi-green-fg">---&gt; 19</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> color, interpolate
-<span class="ansi-green-intense-fg ansi-bold">     20</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">adaptor</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> Structure, Trajectory
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/color.py:114</span>
-<span class="ansi-green-intense-fg ansi-bold">    111</span>             <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">ValueError</span>(<span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>obj<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> must be either list of list or string</span><span style="color: rgb(175,0,0)">&#34;</span>)
-<span class="ansi-green-fg">--&gt; 114</span> ColormakerRegistry <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_ColormakerRegistry</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/base.py:10</span>, in <span class="ansi-cyan-fg">_singleton.&lt;locals&gt;.getinstance</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      9</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">cls</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> instances:
-<span class="ansi-green-fg">---&gt; 10</span>     instances[<span style="color: rgb(0,135,0)">cls</span>] <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">cls</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     11</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> instances[<span style="color: rgb(0,135,0)">cls</span>]
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/color.py:47</span>, in <span class="ansi-cyan-fg">_ColormakerRegistry.__init__</span><span class="ansi-blue-fg">(self, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     46</span>     get_ipython() <span style="color: rgb(95,135,135)"># only display in notebook</span>
-<span class="ansi-green-fg">---&gt; 47</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_ipython_display_</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     48</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">NameError</span>:
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nglview/color.py:54</span>, in <span class="ansi-cyan-fg">_ColormakerRegistry._ipython_display_</span><span class="ansi-blue-fg">(self, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     53</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span>
-<span class="ansi-green-fg">---&gt; 54</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">super</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_ipython_display_</span>(<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs)
-
-<span class="ansi-red-fg">AttributeError</span>: &#39;super&#39; object has no attribute &#39;_ipython_display_&#39;
-
-The above exception was the direct cause of the following exception:
-
-<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/_optional_imports.py:98</span>, in <span class="ansi-cyan-fg">_optional_import</span><span class="ansi-blue-fg">(module, name, version)</span>
-<span class="ansi-green-intense-fg ansi-bold">     97</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">AttributeError</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> ae:
-<span class="ansi-green-fg">---&gt; 98</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> ae <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">e</span>
-<span class="ansi-green-intense-fg ansi-bold">     99</span> object_name <span style="color: rgb(98,98,98)">=</span> name<span style="color: rgb(98,98,98)">.</span>split(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span>)[<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>]
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/_optional_imports.py:96</span>, in <span class="ansi-cyan-fg">_optional_import</span><span class="ansi-blue-fg">(module, name, version)</span>
-<span class="ansi-green-intense-fg ansi-bold">     95</span> <span class="ansi-bold" style="color: rgb(0,135,0)">try</span>:
-<span class="ansi-green-fg">---&gt; 96</span>     module_name <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span> <span style="color: rgb(98,98,98)">+</span> <span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">split</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span>)[<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">2</span>]
-<span class="ansi-green-intense-fg ansi-bold">     97</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">AttributeError</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> ae:
-
-<span class="ansi-red-fg">AttributeError</span>: &#39;NoneType&#39; object has no attribute &#39;split&#39;
-
-During handling of the above exception, another exception occurred:
-
-<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[3], line 2</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">numpy</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">np</span>
-<span class="ansi-green-fg">----&gt; 2</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">encodermap</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">em</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">tensorflow</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">tf</span>
-<span class="ansi-green-intense-fg ansi-bold">      4</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">pandas</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">pd</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/__init__.py:94</span>
-<span class="ansi-green-intense-fg ansi-bold">     88</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     89</span> <span style="color: rgb(95,135,135)"># Imports</span>
-<span class="ansi-green-intense-fg ansi-bold">     90</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     93</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">_version</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> __version__
-<span class="ansi-green-fg">---&gt; 94</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">autoencoder</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">autoencoder</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
-<span class="ansi-green-intense-fg ansi-bold">     95</span>     AngleDihedralCartesianEncoderMap,
-<span class="ansi-green-intense-fg ansi-bold">     96</span>     Autoencoder,
-<span class="ansi-green-intense-fg ansi-bold">     97</span>     EncoderMap,
-<span class="ansi-green-intense-fg ansi-bold">     98</span> )
-<span class="ansi-green-intense-fg ansi-bold">     99</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> EncoderMapBaseCallback
-<span class="ansi-green-intense-fg ansi-bold">    100</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">loading</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> features
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/autoencoder/__init__.py:23</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> <span style="color: rgb(95,135,135)"># -*- coding: utf-8 -*-</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> <span style="color: rgb(95,135,135)"># encodermap/autoencoder/__init__.py</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     20</span> <span style="color: rgb(95,135,135)"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="ansi-green-intense-fg ansi-bold">     21</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     22</span> <span style="color: rgb(175,0,0)">&#34;&#34;&#34;Front-facing autoencoder classes.&#34;&#34;&#34;</span>
-<span class="ansi-green-fg">---&gt; 23</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">autoencoder</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/autoencoder/autoencoder.py:52</span>
-<span class="ansi-green-intense-fg ansi-bold">     48</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">tensorflow</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">keras</span>
-<span class="ansi-green-intense-fg ansi-bold">     50</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">encodermap</span>
-<span class="ansi-green-fg">---&gt; 52</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
-<span class="ansi-green-intense-fg ansi-bold">     53</span>     CheckpointSaver,
-<span class="ansi-green-intense-fg ansi-bold">     54</span>     ImageCallback,
-<span class="ansi-green-intense-fg ansi-bold">     55</span>     IncreaseCartesianCost,
-<span class="ansi-green-intense-fg ansi-bold">     56</span>     ProgressBar,
-<span class="ansi-green-intense-fg ansi-bold">     57</span>     TensorboardWriteBool,
-<span class="ansi-green-intense-fg ansi-bold">     58</span> )
-<span class="ansi-green-intense-fg ansi-bold">     59</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">loss_functions</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">loss_functions</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
-<span class="ansi-green-intense-fg ansi-bold">     60</span>     angle_loss,
-<span class="ansi-green-intense-fg ansi-bold">     61</span>     auto_loss,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     69</span>     side_dihedral_loss,
-<span class="ansi-green-intense-fg ansi-bold">     70</span> )
-<span class="ansi-green-intense-fg ansi-bold">     71</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">misc</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">backmapping</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> dihedral_backmapping, mdtraj_backmapping
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/callbacks/__init__.py:26</span>
-<span class="ansi-green-intense-fg ansi-bold">     22</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">__future__</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> annotations
-<span class="ansi-green-intense-fg ansi-bold">     24</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">typing</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> TYPE_CHECKING
-<span class="ansi-green-fg">---&gt; 26</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">callbacks</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/callbacks/callbacks.py:39</span>
-<span class="ansi-green-intense-fg ansi-bold">     36</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">tensorflow</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">keras</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">backend</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">K</span>
-<span class="ansi-green-intense-fg ansi-bold">     37</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">tqdm</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> tqdm
-<span class="ansi-green-fg">---&gt; 39</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">misc</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">saving_loading_models</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> save_model
-<span class="ansi-green-intense-fg ansi-bold">     40</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">misc</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">summaries</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> image_summary
-<span class="ansi-green-intense-fg ansi-bold">     41</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">parameters</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">parameters</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> ADCParameters, Parameters
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/misc/__init__.py:23</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> <span style="color: rgb(95,135,135)"># -*- coding: utf-8 -*-</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> <span style="color: rgb(95,135,135)"># encodermap/misc/__init__.py</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     20</span> <span style="color: rgb(95,135,135)"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="ansi-green-intense-fg ansi-bold">     21</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     22</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">backmapping</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-<span class="ansi-green-fg">---&gt; 23</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">clustering</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-<span class="ansi-green-intense-fg ansi-bold">     24</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">distances</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-<span class="ansi-green-intense-fg ansi-bold">     25</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">errors</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span style="color: rgb(98,98,98)">*</span>
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/misc/clustering.py:45</span>
-<span class="ansi-green-intense-fg ansi-bold">     39</span> <span style="color: rgb(95,135,135)">##############################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     40</span> <span style="color: rgb(95,135,135)"># Optional Imports</span>
-<span class="ansi-green-intense-fg ansi-bold">     41</span> <span style="color: rgb(95,135,135)">##############################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     44</span> md <span style="color: rgb(98,98,98)">=</span> _optional_import(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">mdtraj</span><span style="color: rgb(175,0,0)">&#34;</span>)
-<span class="ansi-green-fg">---&gt; 45</span> ngl <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_optional_import</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">nglview</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     48</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     49</span> <span style="color: rgb(95,135,135)"># Globals</span>
-<span class="ansi-green-intense-fg ansi-bold">     50</span> <span style="color: rgb(95,135,135)">################################################################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     53</span> __all__ <span style="color: rgb(98,98,98)">=</span> [<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">gen_dummy_traj</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">get_cluster_frames</span><span style="color: rgb(175,0,0)">&#34;</span>]
-
-File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/encodermap/_optional_imports.py:110</span>, in <span class="ansi-cyan-fg">_optional_import</span><span class="ansi-blue-fg">(module, name, version)</span>
-<span class="ansi-green-intense-fg ansi-bold">    104</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">Exception</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> e2:
-<span class="ansi-green-intense-fg ansi-bold">    105</span>     msg <span style="color: rgb(98,98,98)">=</span> (
-<span class="ansi-green-intense-fg ansi-bold">    106</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Absolute and relative import of </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>name<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> from module </span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    107</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>_module<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> failed with Exception </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>e2<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">. Either install the </span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    108</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">`</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>_module<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">` package or fix the optional_import.</span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    109</span>     )
-<span class="ansi-green-fg">--&gt; 110</span>     module_name <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span> <span style="color: rgb(98,98,98)">+</span> <span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">split</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span>)[<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">2</span>]
-<span class="ansi-green-intense-fg ansi-bold">    111</span>     object_name <span style="color: rgb(98,98,98)">=</span> name<span style="color: rgb(98,98,98)">.</span>split(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span>)[<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>]
-<span class="ansi-green-intense-fg ansi-bold">    112</span>     path <span style="color: rgb(98,98,98)">=</span> _module <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span> <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(98,98,98)">.</span>join(name<span style="color: rgb(98,98,98)">.</span>split(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">.</span><span style="color: rgb(175,0,0)">&#34;</span>)[:<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">2</span>])
-
-<span class="ansi-red-fg">AttributeError</span>: &#39;NoneType&#39; object has no attribute &#39;split&#39;
-</pre></div></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "b4b9add0069c43c8bbd167bae48714ba"}</script></div>
 </div>
 <p>We wil work in the directory <code class="docutils literal notranslate"><span class="pre">runs/lr_scheduler</span></code>. So we will create it and then worry about tensorflow later.</p>
 <div class="nbinput nblast docutils container">
@@ -915,16 +733,113 @@ File <span class="ansi-green-fg">/opt/hostedtoolcache/Python/3.9.16/x64/lib/pyth
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[6], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span style="color: rgb(0,135,0)">print</span>(<span class="ansi-yellow-bg">em</span><span style="color: rgb(98,98,98)">.</span>Parameters<span style="color: rgb(98,98,98)">.</span>defaults_description())
-
-<span class="ansi-red-fg">NameError</span>: name &#39;em&#39; is not defined
+    Parameter            | Default Value            | Description
+    ---------------------+--------------------------+---------------------------------------------------
+    n_neurons            | [128, 128, 2]            | List containing number of neurons for each layer
+                         |                          | up to the bottleneck layer. For example [128, 128,
+                         |                          | 2] stands for an autoencoder with the following
+                         |                          | architecture {i, 128, 128, 2, 128, 128, i} where i
+                         |                          | is the number of dimensions of the input data.
+                         |                          | These are Input/Output Layers that are not
+                         |                          | trained.
+    ---------------------+--------------------------+---------------------------------------------------
+    activation_functions | [&#39;&#39;, &#39;tanh&#39;, &#39;tanh&#39;, &#39;&#39;] | List of activation function names as implemented
+                         |                          | in TensorFlow. For example: &#34;relu&#34;, &#34;tanh&#34;,
+                         |                          | &#34;sigmoid&#34; or &#34;&#34; to use no activation function. The
+                         |                          | encoder part of the network takes the activation
+                         |                          | functions from the list starting with the second
+                         |                          | element. The decoder part of the network takes the
+                         |                          | activation functions in reversed order starting
+                         |                          | with the second element form the back. For example
+                         |                          | [&#34;&#34;, &#34;relu&#34;, &#34;tanh&#34;, &#34;&#34;] would result in a
+                         |                          | autoencoder with {&#34;relu&#34;, &#34;tanh&#34;, &#34;&#34;, &#34;tanh&#34;,
+                         |                          | &#34;relu&#34;, &#34;&#34;} as sequence of activation functions.
+    ---------------------+--------------------------+---------------------------------------------------
+    periodicity          | 6.283185307179586        | Defines the distance between periodic walls for
+                         |                          | the inputs. For example 2pi for angular values in
+                         |                          | radians. All periodic data processed by EncoderMap
+                         |                          | must be wrapped to one periodic window. E.g. data
+                         |                          | with 2pi periodicity may contain values from -pi
+                         |                          | to pi or from 0 to 2pi. Set the periodicity to
+                         |                          | float(&#34;inf&#34;) for non-periodic inputs.
+    ---------------------+--------------------------+---------------------------------------------------
+    learning_rate        | 0.001                    | Learning rate used by the optimizer.
+    ---------------------+--------------------------+---------------------------------------------------
+    n_steps              | 100000                   | Number of training steps.
+    ---------------------+--------------------------+---------------------------------------------------
+    batch_size           | 256                      | Number of training points used in each training
+                         |                          | step
+    ---------------------+--------------------------+---------------------------------------------------
+    summary_step         | 10                       | A summary for TensorBoard is writen every
+                         |                          | summary_step steps.
+    ---------------------+--------------------------+---------------------------------------------------
+    checkpoint_step      | 5000                     | A checkpoint is writen every checkpoint_step
+                         |                          | steps.
+    ---------------------+--------------------------+---------------------------------------------------
+    dist_sig_parameters  | (4.5, 12, 6, 1, 2, 6)    | Parameters for the sigmoid functions applied to
+                         |                          | the high- and low-dimensional distances in the
+                         |                          | following order (sig_h, a_h, b_h, sig_l, a_l, b_l)
+    ---------------------+--------------------------+---------------------------------------------------
+    distance_cost_scale  | 500                      | Adjusts how much the distance based metric is
+                         |                          | weighted in the cost function.
+    ---------------------+--------------------------+---------------------------------------------------
+    auto_cost_scale      | 1                        | Adjusts how much the autoencoding cost is weighted
+                         |                          | in the cost function.
+    ---------------------+--------------------------+---------------------------------------------------
+    auto_cost_variant    | mean_abs                 | defines how the auto cost is calculated. Must be
+                         |                          | one of: * `mean_square` * `mean_abs` * `mean_norm`
+    ---------------------+--------------------------+---------------------------------------------------
+    center_cost_scale    | 0.0001                   | Adjusts how much the centering cost is weighted in
+                         |                          | the cost function.
+    ---------------------+--------------------------+---------------------------------------------------
+    l2_reg_constant      | 0.001                    | Adjusts how much the L2 regularisation is weighted
+                         |                          | in the cost function.
+    ---------------------+--------------------------+---------------------------------------------------
+    gpu_memory_fraction  |                          | Specifies the fraction of gpu memory blocked. If
+                         |                          | set to 0, memory is allocated as needed.
+    ---------------------+--------------------------+---------------------------------------------------
+    analysis_path        |                          | A path that can be used to store analysis
+    ---------------------+--------------------------+---------------------------------------------------
+    id                   |                          | Can be any name for the run. Might be useful for
+                         |                          | example for specific analysis for different data
+                         |                          | sets.
+    ---------------------+--------------------------+---------------------------------------------------
+    model_api            | sequential               | A string defining the API to be used to build the
+                         |                          | keras model. Defaults to `sequntial`. Possible
+                         |                          | strings are: * `functional` will use keras&#39;
+                         |                          | functional API. * `sequential` will define a keras
+                         |                          | Model, containing two other models with the
+                         |                          | Sequential API. These two models are encoder and
+                         |                          | decoder. * `custom` will create a custom Model
+                         |                          | where even the layers are custom.
+    ---------------------+--------------------------+---------------------------------------------------
+    loss                 | emap_cost                | A string defining the loss function. Defaults to
+                         |                          | `emap_cost`. Possible losses are: *
+                         |                          | `reconstruction_loss` will try to train output ==
+                         |                          | input * `mse`: Returns a mean squared error loss.
+                         |                          | * `emap_cost` is the EncoderMap loss function.
+                         |                          | Depending on the class `Autoencoder`, `Encodermap,
+                         |                          | `ACDAutoencoder`, different contributions are used
+                         |                          | for a combined loss. Autoencoder uses atuo_cost,
+                         |                          | reg_cost, center_cost. EncoderMap class adds
+                         |                          | sigmoid_loss.
+    ---------------------+--------------------------+---------------------------------------------------
+    training             | auto                     | A string defining what kind of training is
+                         |                          | performed when autoencoder.train() is callsed. *
+                         |                          | `auto` does a regular model.compile() and
+                         |                          | model.fit() procedure. * `custom` uses gradient
+                         |                          | tape and calculates losses and gradients manually.
+    ---------------------+--------------------------+---------------------------------------------------
+    batched              | True                     | Whether the dataset is batched or not.
+    ---------------------+--------------------------+---------------------------------------------------
+    tensorboard          |                          | Whether to print tensorboard information. Defaults
+                         |                          | to False.
+    ---------------------+--------------------------+---------------------------------------------------
+    seed                 |                          | Fixes the state of all operations using random
 </pre></div></div>
 </div>
 <p>Here’s the Logger:</p>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
@@ -934,21 +849,6 @@ Cell <span class="ansi-green-fg">In[6], line 1</span>
             <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s1">&#39;current learning rate&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">lr</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[7], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">class</span> <span class="ansi-bold" style="color: rgb(0,0,255)">LearningRateLogger</span>(<span class="ansi-yellow-bg">em</span><span style="color: rgb(98,98,98)">.</span>EncoderMapBaseCallback):
-<span class="ansi-green-intense-fg ansi-bold">      2</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">on_summary_step</span>(<span style="color: rgb(0,135,0)">self</span>, step, logs<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">None</span>):
-<span class="ansi-green-intense-fg ansi-bold">      3</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">with</span> tf<span style="color: rgb(98,98,98)">.</span>name_scope(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Learning Rate</span><span style="color: rgb(175,0,0)">&#34;</span>):
-
-<span class="ansi-red-fg">NameError</span>: name &#39;em&#39; is not defined
-</pre></div></div>
 </div>
 <p>We can now create an <code class="docutils literal notranslate"><span class="pre">EncoderMap</span></code> class and add our new callback. Note, how we instantiate our subclass by providing an instance of the <code class="docutils literal notranslate"><span class="pre">Parameters</span></code> class. That’s how the callback knows what <code class="docutils literal notranslate"><span class="pre">summary_step</span></code> is.</p>
 <div class="nbinput docutils container">
@@ -975,19 +875,26 @@ Cell <span class="ansi-green-fg">In[7], line 1</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[8], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> df <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">pd</span><span style="color: rgb(98,98,98)">.</span>read_csv(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">asp7.csv</span><span style="color: rgb(175,0,0)">&#39;</span>)
-<span class="ansi-green-intense-fg ansi-bold">      2</span> dihedrals <span style="color: rgb(98,98,98)">=</span> df<span style="color: rgb(98,98,98)">.</span>iloc[:,:<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>]<span style="color: rgb(98,98,98)">.</span>values<span style="color: rgb(98,98,98)">.</span>astype(np<span style="color: rgb(98,98,98)">.</span>float32)
-<span class="ansi-green-intense-fg ansi-bold">      3</span> cluster_ids <span style="color: rgb(98,98,98)">=</span> df<span style="color: rgb(98,98,98)">.</span>iloc[:,<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>]<span style="color: rgb(98,98,98)">.</span>values
-
-<span class="ansi-red-fg">NameError</span>: name &#39;pd&#39; is not defined
+Output files are saved to runs/lr_scheduler/run0 as defined in &#39;main_path&#39; in the parameters.
+You must install pydot (`pip install pydot`) and install graphviz (see instructions at https://graphviz.gitlab.io/download/) for plot_model to work.
+Saved a text-summary of the model and an image in runs/lr_scheduler/run0, as specified in &#39;main_path&#39; in the parameters.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2023-02-02 11:22:02.528548: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libcuda.so.1&#39;; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-02 11:22:02.528574: W tensorflow/compiler/xla/stream_executor/cuda/cuda_driver.cc:265] failed call to cuInit: UNKNOWN ERROR (303)
+2023-02-02 11:22:02.528612: I tensorflow/compiler/xla/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (fv-az280-76): /proc/driver/nvidia/version does not exist
+2023-02-02 11:22:02.528812: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
 </pre></div></div>
 </div>
 <p><strong>train</strong></p>
@@ -1002,18 +909,15 @@ Cell <span class="ansi-green-fg">In[8], line 1</span>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[9], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">e_map</span><span style="color: rgb(98,98,98)">.</span>train()
-
-<span class="ansi-red-fg">NameError</span>: name &#39;e_map&#39; is not defined
+100%|██████████| 100/100 [00:09&lt;00:00, 10.58it/s, Loss after step 100=34.4]
+WARNING:absl:Function `_wrapped_model` contains input name(s) Encoder_0_input with unsupported characters which will be renamed to encoder_0_input in the SavedModel.
+WARNING:absl:Function `_wrapped_model` contains input name(s) Decoder_0_input with unsupported characters which will be renamed to decoder_0_input in the SavedModel.
 </pre></div></div>
 </div>
 <p>Here’s what Tensorboard should look like:</p>
-<p><img alt="6f7c9b0698454edeb981091571ae42c3" class="no-scaled-link" src="../_images/lr_scheduler_1.png" style="width: 800px;" /></p>
+<p><img alt="0b7082701f714346a66889f9b524b98b" class="no-scaled-link" src="../_images/lr_scheduler_1.png" style="width: 800px;" /></p>
 <p>A constant learning rate of 0.001</p>
 </section>
 <section id="Write-a-learning-rate-scheduler.">
@@ -1060,26 +964,13 @@ Cell <span class="ansi-green-fg">In[9], line 1</span>
 </div>
 </div>
 <p>This scheduler function can simply be provided to the builtin <code class="docutils literal notranslate"><span class="pre">keras.callbacks.LearningRateScheduler</span></code> callback.</p>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">callback</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">LearningRateScheduler</span><span class="p">(</span><span class="n">scheduler</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[11], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> callback <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">tf</span><span style="color: rgb(98,98,98)">.</span>keras<span style="color: rgb(98,98,98)">.</span>callbacks<span style="color: rgb(98,98,98)">.</span>LearningRateScheduler(scheduler)
-
-<span class="ansi-red-fg">NameError</span>: name &#39;tf&#39; is not defined
-</pre></div></div>
 </div>
 <p>And appended to the list of <code class="docutils literal notranslate"><span class="pre">callbacks</span></code> in the EncoderMap class.</p>
 <div class="nbinput docutils container">
@@ -1105,20 +996,9 @@ Cell <span class="ansi-green-fg">In[11], line 1</span>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[12], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> parameters <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">em</span><span style="color: rgb(98,98,98)">.</span>Parameters(
-<span class="ansi-green-intense-fg ansi-bold">      2</span> tensorboard<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">True</span>,
-<span class="ansi-green-intense-fg ansi-bold">      3</span> periodicity<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">2</span><span style="color: rgb(98,98,98)">*</span>np<span style="color: rgb(98,98,98)">.</span>pi,
-<span class="ansi-green-intense-fg ansi-bold">      4</span> main_path<span style="color: rgb(98,98,98)">=</span>em<span style="color: rgb(98,98,98)">.</span>misc<span style="color: rgb(98,98,98)">.</span>run_path(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">runs/lr_scheduler</span><span style="color: rgb(175,0,0)">&#39;</span>),
-<span class="ansi-green-intense-fg ansi-bold">      5</span> n_steps<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">50</span>,
-<span class="ansi-green-intense-fg ansi-bold">      6</span> summary_step<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">5</span>
-<span class="ansi-green-intense-fg ansi-bold">      7</span> )
-<span class="ansi-green-intense-fg ansi-bold">      9</span> e_map <span style="color: rgb(98,98,98)">=</span> em<span style="color: rgb(98,98,98)">.</span>EncoderMap(parameters, dihedrals)
-<span class="ansi-green-intense-fg ansi-bold">     10</span> e_map<span style="color: rgb(98,98,98)">.</span>callbacks<span style="color: rgb(98,98,98)">.</span>append(LearningRateLogger(parameters))
-
-<span class="ansi-red-fg">NameError</span>: name &#39;em&#39; is not defined
+Output files are saved to runs/lr_scheduler/run1 as defined in &#39;main_path&#39; in the parameters.
+You must install pydot (`pip install pydot`) and install graphviz (see instructions at https://graphviz.gitlab.io/download/) for plot_model to work.
+Saved a text-summary of the model and an image in runs/lr_scheduler/run1, as specified in &#39;main_path&#39; in the parameters.
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -1132,24 +1012,21 @@ Cell <span class="ansi-green-fg">In[12], line 1</span>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[13], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">e_map</span><span style="color: rgb(98,98,98)">.</span>train()
-
-<span class="ansi-red-fg">NameError</span>: name &#39;e_map&#39; is not defined
+100%|██████████| 50/50 [00:08&lt;00:00,  5.96it/s, Loss after step 50=42]
+WARNING:absl:Function `_wrapped_model` contains input name(s) Encoder_0_input with unsupported characters which will be renamed to encoder_0_input in the SavedModel.
+WARNING:absl:Function `_wrapped_model` contains input name(s) Decoder_0_input with unsupported characters which will be renamed to decoder_0_input in the SavedModel.
 </pre></div></div>
 </div>
 <p>Here’s what Tensorboard should look like:</p>
-<p><img alt="3a4d694310604406957ea443b305c1af" class="no-scaled-link" src="../_images/lr_scheduler_2.png" style="width: 800px;" /></p>
+<p><img alt="e1b7ae8107e342569e4cd4cb5d3ead82" class="no-scaled-link" src="../_images/lr_scheduler_2.png" style="width: 800px;" /></p>
 </section>
 <section id="Conclusion">
 <h3>Conclusion<a class="headerlink" href="#Conclusion" title="Permalink to this heading">#</a></h3>
 <p>Learning rate schedulers are helpful to prevent overtraining, but still slightly increase the predictive power of your NN model. EncoderMap’s modularity allows for them to be simple Plug-In solutions.</p>
 <script type="application/vnd.jupyter.widget-state+json">
-{"state": {"7d5efbaef1494fd2a7dbbba66d8ebeb4": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "b544d8b1f69c4869a1dced69d1aea27b": {"model_name": "ColormakerRegistryModel", "model_module": "nglview-js-widgets", "model_module_version": "3.0.1", "state": {"_dom_classes": [], "_model_module": "nglview-js-widgets", "_model_module_version": "3.0.1", "_model_name": "ColormakerRegistryModel", "_msg_ar": [], "_msg_q": [], "_ready": false, "_view_count": null, "_view_module": "nglview-js-widgets", "_view_module_version": "3.0.1", "_view_name": "ColormakerRegistryView", "layout": "IPY_MODEL_7d5efbaef1494fd2a7dbbba66d8ebeb4", "tabbable": null, "tooltip": null}}}, "version_major": 2, "version_minor": 0}
+{"state": {"5c0a1e291ccf499090a21e3a1b025f8b": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "b4b9add0069c43c8bbd167bae48714ba": {"model_name": "ColormakerRegistryModel", "model_module": "nglview-js-widgets", "model_module_version": "3.0.1", "state": {"_dom_classes": [], "_model_module": "nglview-js-widgets", "_model_module_version": "3.0.1", "_model_name": "ColormakerRegistryModel", "_msg_ar": [], "_msg_q": [], "_ready": false, "_view_count": null, "_view_module": "nglview-js-widgets", "_view_module_version": "3.0.1", "_view_name": "ColormakerRegistryView", "layout": "IPY_MODEL_5c0a1e291ccf499090a21e3a1b025f8b"}}}, "version_major": 2, "version_minor": 0}
 </script></section>
 </section>
 </section>
