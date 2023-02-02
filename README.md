@@ -22,7 +22,14 @@ You can find more information in these two articles:
 
 Find the documentation at:
 
-https://ag-peter.github.io/encoder_map_private/
+https://ag-peter.github.io/encodermap/
+
+
+## Quick start
+
+To get started right away, you can try out the tutorial notebooks at mybinder.org:
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/AG-Peter/encodermap/HEAD)
 
 
 ## Installation

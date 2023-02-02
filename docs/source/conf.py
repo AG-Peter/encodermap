@@ -138,7 +138,7 @@ html_css_files = ["custom.css"]
 # default: ``['localtoc.html', 'relations.html', 'sourcelink.html',
 # 'searchbox.html']``.
 #
-# html_sidebars = {}
+html_sidebars = {"index": []}
 
 html_logo = "../../pic/logo_cube_300.png"
 html_favicon = "../../pic/favicon.ico"

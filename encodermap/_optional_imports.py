@@ -71,6 +71,9 @@ def _optional_import(
 ) -> Any:
     import importlib
 
+    import pkg_resources
+
+    available_modules = list(pkg_resources.working_set)
     _module: str = module
     try:
         # try the import
@@ -92,6 +95,13 @@ def _optional_import(
     except AttributeError as e:
         # absolute import failed. Try relative import
         try:
+            if name is None:
+                msg = (
+                    f"Absolute and relative import of module {_module} "
+                    f"failed with Exception {e2}. I printed a list of available "
+                    f"imports for you to check."
+                )
+
             try:
                 module_name = "." + name.split(".")[-2]
             except AttributeError as ae:
@@ -102,11 +112,6 @@ def _optional_import(
             module = importlib.import_module(module_name, path)
             return getattr(module, object_name)
         except Exception as e2:
-            msg = (
-                f"Absolute and relative import of {name} from module "
-                f"{_module} failed with Exception {e2}. Either install the "
-                f"`{_module}` package or fix the optional_import."
-            )
             module_name = "." + name.split(".")[-2]
             object_name = name.split(".")[-1]
             path = _module + "." + ".".join(name.split(".")[:-2])
