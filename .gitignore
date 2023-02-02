@@ -140,12 +140,16 @@ encodermap_runs/
 # pytest
 .pytest_cache/
 
-# manual stuff
-/Dockerfile
-/docker-compose.yaml
-*dask-worker-space*
+
+# act.vault for secret env variabls
 /act.vault
 
-# vmd
+# docker compose
+/docker-compose.yaml
+
+# dask stuff
+*dask-worker-space*
+
+# vmd scripts
 *vmd_script.tcl*
 *vmdscene.dat*

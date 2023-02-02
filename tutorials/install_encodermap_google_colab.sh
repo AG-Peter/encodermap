@@ -69,4 +69,6 @@ fi
 echo "Installing pip packages for EncoderMap"
 pip install -r https://raw.githubusercontent.com/AG-Peter/encodermap/main/requirements.txt
 pip install -r https://raw.githubusercontent.com/AG-Peter/encodermap/main/md_requirements.txt
-pip install "git+https://github.com/AG-Peter/encodermap.git@main"
+git clone https://github.com/AG-Peter/encodermap.git@main
+cd encodermap
+pip install .

@@ -9,6 +9,8 @@ COPY setup.py /home/jovyan/encodermap/setup.py
 COPY description.md /home/jovyan/encodermap/description.md
 COPY requirements.txt /home/jovyan/encodermap/requirements.txt
 COPY md_requirements.txt /home/jovyan/encodermap/md_requirements.txt
+RUN if [ -f /home/jovyan/tutorials/notebooks_intermeidate/glu7.xtc ] ; then rm /home/jovyan/tutorials/notebooks_intermeidate/glu7.xtc ; fi
+COPY tests/data/glu7.xtc /home/jovyan/tutorials/notebooks_intermediate/glu7.xtc
 USER root
 RUN chown -R ${NB_UID} /home/jovyan
 
