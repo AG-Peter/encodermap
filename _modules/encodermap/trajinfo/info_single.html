@@ -694,7 +694,54 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">trajectory</span> <span class="o">=</span> <span class="n">traj</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">topology</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajectory</span><span class="o">.</span><span class="n">top</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span><span class="p">)</span>
+
+        <span class="c1"># maybe load CVs from h5 file</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traj_file</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.h5&quot;</span><span class="p">:</span>
+                <span class="n">CVs_in_file</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">with</span> <span class="n">h5</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="s2">&quot;CVs&quot;</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="n">CVs_in_file</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">if</span> <span class="n">CVs_in_file</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">,</span>
+                            <span class="n">group</span><span class="o">=</span><span class="s2">&quot;CVs&quot;</span><span class="p">,</span>
+                            <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;h5netcdf&quot;</span><span class="p">,</span>
+                            <span class="n">backend_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;phony_dims&quot;</span><span class="p">:</span> <span class="s2">&quot;access&quot;</span><span class="p">},</span>
+                        <span class="p">)</span>
+                    <span class="c1"># bad formatted h5 file</span>
+                    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                        <span class="n">DAs</span> <span class="o">=</span> <span class="p">{</span>
+                            <span class="n">k</span><span class="p">:</span> <span class="n">construct_xarray_from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">[()],</span> <span class="n">k</span><span class="p">)</span>
+                            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;CVs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                        <span class="p">}</span>
+                        <span class="n">DS</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">DAs</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">DS</span><span class="p">)</span>
+                    <span class="c1"># other exceptions probably due to formatting</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">BadError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;The formatting of the data in the file &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="si">}</span><span class="s2"> is off. Xarray could &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;not load the group &#39;CVs&#39; and failed with </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="p">)</span>
+
+                    <span class="c1"># get the original frame indices from the dataset</span>
+                    <span class="c1"># this is the only case where we want to overwrite</span>
+                    <span class="c1"># this variable</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="p">[</span><span class="s2">&quot;frame_num&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+                    <span class="c1"># iteratively apply index</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span>
+                    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">ind</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+
+                    <span class="c1"># set the _CVs accordingly</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="o">.</span><span class="n">loc</span><span class="p">[{</span><span class="s2">&quot;frame_num&quot;</span><span class="p">:</span> <span class="n">index</span><span class="p">}]</span></div>
 
 <div class="viewcode-block" id="SingleTraj.from_pdb_id"><a class="viewcode-back" href="../../../reference/trajectory_classes.html#encodermap.trajinfo.info_single.SingleTraj.from_pdb_id">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_pdb_id</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pdb_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SingleTraj</span><span class="p">:</span>
@@ -962,51 +1009,6 @@
                 <span class="k">else</span> <span class="n">val</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="o">.</span><span class="n">data_vars</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
             <span class="p">}</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">extension</span> <span class="o">==</span> <span class="s2">&quot;.h5&quot;</span><span class="p">:</span>
-            <span class="k">with</span> <span class="n">h5</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-                <span class="k">if</span> <span class="s2">&quot;CVs&quot;</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                    <span class="k">try</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="p">,</span>
-                            <span class="n">group</span><span class="o">=</span><span class="s2">&quot;CVs&quot;</span><span class="p">,</span>
-                            <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;h5netcdf&quot;</span><span class="p">,</span>
-                            <span class="n">backend_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;phony_dims&quot;</span><span class="p">:</span> <span class="s2">&quot;access&quot;</span><span class="p">},</span>
-                        <span class="p">)</span>
-                    <span class="c1"># bad formatted h5 file</span>
-                    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-                        <span class="n">DAs</span> <span class="o">=</span> <span class="p">{</span>
-                            <span class="n">k</span><span class="p">:</span> <span class="n">construct_xarray_from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">[()],</span> <span class="n">k</span><span class="p">)</span>
-                            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">file</span><span class="p">[</span><span class="s2">&quot;CVs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-                        <span class="p">}</span>
-                        <span class="n">DS</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">DAs</span><span class="p">)</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">DS</span><span class="p">)</span>
-                    <span class="c1"># other exceptions probably due to formatting</span>
-                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                        <span class="k">raise</span> <span class="n">BadError</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;The formatting of the data in the file &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_file</span><span class="si">}</span><span class="s2"> is off. Xarray could &quot;</span>
-                            <span class="sa">f</span><span class="s2">&quot;not load the group &#39;CVs&#39; and failed with </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
-                        <span class="p">)</span>
-
-                    <span class="c1"># get the original frame indices from the dataset</span>
-                    <span class="c1"># this is the only case</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_once</span> <span class="o">=</span> <span class="kc">True</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="p">[</span><span class="s2">&quot;frame_num&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-
-                    <span class="c1"># iteratively apply index</span>
-                    <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orig_frames</span>
-                    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="n">ind</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                            <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
-
-                    <span class="c1"># set the _CVs accordingly</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CVs</span><span class="o">.</span><span class="n">loc</span><span class="p">[{</span><span class="s2">&quot;frame_num&quot;</span><span class="p">:</span> <span class="n">index</span><span class="p">}]</span>
-
-                    <span class="c1"># return again. Yay recursion</span>
-                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">CVs</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="p">{}</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">{}</span>
 
