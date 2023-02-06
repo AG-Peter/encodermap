@@ -236,6 +236,25 @@ class TestFeatures(unittest.TestCase):
         top_file = (Path(__file__) / "../../tests/data/Ala10_helix.pdb").resolve()
         self.ala10_helix = SingleTraj(traj_file, top_file)
 
+    def test_ensmble_with_diff_length(self):
+        from encodermap.trajinfo import TrajEnsemble
+
+        trajs = TrajEnsemble(
+            [
+                Path(__file__).resolve().parent.parent
+                / "tutorials/notebooks_starter/asp7.xtc",
+                Path(__file__).resolve().parent / "data/glu7.xtc",
+            ],
+            [
+                Path(__file__).resolve().parent.parent
+                / "tutorials/notebooks_starter/asp7.pdb",
+                Path(__file__).resolve().parent / "data/glu7.pdb",
+            ],
+            common_str=["asp7", "glu7"],
+        )
+        self.assertNotEqual(trajs[0].n_frames, trajs[1].n_frames)
+        trajs.load_CVs("all", ensemble=True)
+
     def test_ala_dipeptide_correct_number_of_residues(self):
         self.assertEqual(2, self.md_traj.n_residues)
 

@@ -606,7 +606,9 @@ class TestTraj(unittest.TestCase):
         traj = SingleTraj(Path(__file__).resolve().parent / "data/asp7.h5")
         self.assertIn("ones", traj.CVs.keys())
         self.assertIn("zeros", traj.CVs.keys())
-        self.assertTrue(np.array_equal(traj._orig_frames, np.array([0, 2, 4, 6, 8])))
+        test_arr = np.array([0, 2, 4, 6, 8])
+        msg = f"Checking {traj=}, with {traj._orig_frames=}, and {test_arr=}"
+        self.assertTrue(np.array_equal(traj._orig_frames, test_arr), msg=msg)
         self.assertEqual(traj.index, (None,))
         traj = traj[::2]
         self.assertEqual(traj.CVs["ones"].shape, (3, 5))

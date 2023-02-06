@@ -372,6 +372,53 @@ class SingleTraj:
             self._loaded_once = True
             self._orig_frames = np.arange(traj.n_frames)
 
+        # maybe load CVs from h5 file
+        if isinstance(self._traj_file, Path):
+            if self._traj_file.suffix == ".h5":
+                CVs_in_file = False
+                with h5.File(self.traj_file, "r") as file:
+                    if "CVs" in file.keys():
+                        CVs_in_file = True
+                if CVs_in_file:
+                    try:
+                        self._CVs = xr.open_dataset(
+                            self.traj_file,
+                            group="CVs",
+                            engine="h5netcdf",
+                            backend_kwargs={"phony_dims": "access"},
+                        )
+                    # bad formatted h5 file
+                    except OSError:
+                        DAs = {
+                            k: construct_xarray_from_numpy(self, i[()], k)
+                            for k, i in file["CVs"].items()
+                        }
+                        DS = xr.Dataset(DAs)
+                        self._CVs.update(DS)
+                    # other exceptions probably due to formatting
+                    except Exception as e:
+                        raise BadError(
+                            f"The formatting of the data in the file "
+                            f"{self.traj_file} is off. Xarray could "
+                            f"not load the group 'CVs' and failed with {e}"
+                        )
+
+                    # get the original frame indices from the dataset
+                    # this is the only case where we want to overwrite
+                    # this variable
+                    if not self._loaded_once:
+                        self._loaded_once = True
+                    self._orig_frames = self._CVs["frame_num"].values
+
+                    # iteratively apply index
+                    index = self._orig_frames
+                    for ind in self.index:
+                        if ind is not None:
+                            index = index[ind]
+
+                    # set the _CVs accordingly
+                    self._CVs = self._CVs.loc[{"frame_num": index}]
+
     @classmethod
     def from_pdb_id(cls, pdb_id: str) -> SingleTraj:
         """Alternate constructor for the TrajEnsemble class.
@@ -638,51 +685,6 @@ class SingleTraj:
                 else val.values.squeeze(0)
                 for key, val in self._CVs.data_vars.items()
             }
-        elif self.extension == ".h5":
-            with h5.File(self.traj_file, "r") as file:
-                if "CVs" in file.keys():
-                    try:
-                        self._CVs = xr.open_dataset(
-                            self.traj_file,
-                            group="CVs",
-                            engine="h5netcdf",
-                            backend_kwargs={"phony_dims": "access"},
-                        )
-                    # bad formatted h5 file
-                    except OSError:
-                        DAs = {
-                            k: construct_xarray_from_numpy(self, i[()], k)
-                            for k, i in file["CVs"].items()
-                        }
-                        DS = xr.Dataset(DAs)
-                        self._CVs.update(DS)
-                    # other exceptions probably due to formatting
-                    except Exception as e:
-                        raise BadError(
-                            f"The formatting of the data in the file "
-                            f"{self.traj_file} is off. Xarray could "
-                            f"not load the group 'CVs' and failed with {e}"
-                        )
-
-                    # get the original frame indices from the dataset
-                    # this is the only case
-                    if not self._loaded_once:
-                        self._loaded_once = True
-                    self._orig_frames = self._CVs["frame_num"].values
-
-                    # iteratively apply index
-                    index = self._orig_frames
-                    for ind in self.index:
-                        if ind is not None:
-                            index = index[ind]
-
-                    # set the _CVs accordingly
-                    self._CVs = self._CVs.loc[{"frame_num": index}]
-
-                    # return again. Yay recursion
-                    return self.CVs
-                else:
-                    return {}
         else:
             return {}
 
