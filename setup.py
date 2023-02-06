@@ -39,7 +39,7 @@ setup(
         "tensorflow",
         "nglview>=3.0.1",
         "seaborn>=0.11.1",
-        "pillow==9.0.1",
+        "pillow==9.3.0",
         "ipywidgets>=7.6.0,<8",
     ],
     classifiers=[
