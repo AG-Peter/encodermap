@@ -674,20 +674,20 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2023-02-02 13:01:03.587263: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+2023-02-06 10:08:34.768688: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2023-02-02 13:01:03.721033: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libcudart.so.11.0&#39;; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-02 13:01:03.721051: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
-2023-02-02 13:01:04.377479: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer.so.7&#39;; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-02 13:01:04.377560: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer_plugin.so.7&#39;; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-02 13:01:04.377568: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2023-02-06 10:08:34.904708: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libcudart.so.11.0&#39;; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-06 10:08:34.904731: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2023-02-06 10:08:35.641834: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer.so.7&#39;; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-06 10:08:35.641913: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer_plugin.so.7&#39;; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-06 10:08:35.641921: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "e3e4cbd7ebb545459642db9ba777e497"}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "7af54980419a4c52830e7cc130dc3d78"}</script></div>
 </div>
 <p>We will use <code class="docutils literal notranslate"><span class="pre">io</span></code> to write a png-file to a buffer (not to disk) and provide that puffer to Tensorboard for visualization. But first, let us think about what to plot.</p>
 </section>
@@ -711,7 +711,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.collections.PathCollection at 0x7f8645bb6880&gt;
+&lt;matplotlib.collections.PathCollection at 0x7fb492936490&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -825,10 +825,10 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2023-02-02 13:01:07.754867: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libcuda.so.1&#39;; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
-2023-02-02 13:01:07.754892: W tensorflow/compiler/xla/stream_executor/cuda/cuda_driver.cc:265] failed call to cuInit: UNKNOWN ERROR (303)
-2023-02-02 13:01:07.754915: I tensorflow/compiler/xla/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (fv-az442-794): /proc/driver/nvidia/version does not exist
-2023-02-02 13:01:07.755188: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+2023-02-06 10:08:39.422044: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libcuda.so.1&#39;; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.9.16/x64/lib
+2023-02-06 10:08:39.422094: W tensorflow/compiler/xla/stream_executor/cuda/cuda_driver.cc:265] failed call to cuInit: UNKNOWN ERROR (303)
+2023-02-06 10:08:39.422119: I tensorflow/compiler/xla/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (fv-az175-660): /proc/driver/nvidia/version does not exist
+2023-02-06 10:08:39.422478: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
 </pre></div></div>
 </div>
@@ -963,7 +963,7 @@ Logging images with (10001, 12)-shaped data every 1 epochs to Tensorboard at run
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 100/100 [01:21&lt;00:00,  1.23it/s, Loss after step 100=35.5]
+100%|██████████| 100/100 [01:24&lt;00:00,  1.19it/s, Loss after step 100=34.9]
 WARNING:absl:Function `_wrapped_model` contains input name(s) Encoder_0_input with unsupported characters which will be renamed to encoder_0_input in the SavedModel.
 WARNING:absl:Function `_wrapped_model` contains input name(s) Decoder_0_input with unsupported characters which will be renamed to decoder_0_input in the SavedModel.
 </pre></div></div>
@@ -986,7 +986,7 @@ WARNING:absl:Function `_wrapped_model` contains input name(s) Decoder_0_input wi
 </div>
 </div>
 <p>Here’s what Tensorboard should display:</p>
-<p><img alt="3c7d5f7c11004c749520014ab2e0879b" class="no-scaled-link" src="../_images/custom_images_1.png" style="width: 800px;" /></p>
+<p><img alt="ab81f27f3dfa4e63b843fdde6d1270ef" class="no-scaled-link" src="../_images/custom_images_1.png" style="width: 800px;" /></p>
 <p>After training we can use the <code class="docutils literal notranslate"><span class="pre">to_free_energy()</span></code> to plot the latent space after the training is finished.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
@@ -1994,7 +1994,7 @@ if (IPython.notebook.kernel !== null) {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id='4a74466f-5848-47f7-9011-5871ea0a4a7d'></div></div>
+<div id='ee55cc7a-7f41-42d7-b786-fd7a08f666b3'></div></div>
 </div>
 <section id="Writing-custom-callbacks">
 <h3>Writing custom callbacks<a class="headerlink" href="#Writing-custom-callbacks" title="Permalink to this heading">#</a></h3>
@@ -2995,7 +2995,7 @@ if (IPython.notebook.kernel !== null) {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id='2f9dad74-15c3-45d3-9fb1-f15e3206f460'></div></div>
+<div id='0f098250-5146-4125-a7e9-30eb276004ec'></div></div>
 </div>
 </section>
 <section id="Subclassing-a-keras-callback">
@@ -3131,7 +3131,7 @@ Logging images with (10001, 12)-shaped data every 1 epochs to Tensorboard at run
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 100/100 [01:48&lt;00:00,  1.08s/it, Loss after step 100=36.1]
+100%|██████████| 100/100 [01:53&lt;00:00,  1.14s/it, Loss after step 100=35]
 WARNING:absl:Function `_wrapped_model` contains input name(s) Encoder_0_input with unsupported characters which will be renamed to encoder_0_input in the SavedModel.
 WARNING:absl:Function `_wrapped_model` contains input name(s) Decoder_0_input with unsupported characters which will be renamed to decoder_0_input in the SavedModel.
 </pre></div></div>
@@ -3140,7 +3140,7 @@ WARNING:absl:Function `_wrapped_model` contains input name(s) Decoder_0_input wi
 <section id="id1">
 <h2>Output<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 <p>The output from Tensorboard could look something like this:</p>
-<p><img alt="c574e00fdd0247a195f93ee1fa4e6876" class="no-scaled-link" src="../_images/custom_images_2.png" style="width: 800px;" /></p>
+<p><img alt="02059bdd31e044d8a107432f3ffc4751" class="no-scaled-link" src="../_images/custom_images_2.png" style="width: 800px;" /></p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
@@ -4132,13 +4132,13 @@ if (IPython.notebook.kernel !== null) {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id='4d2a041a-dfe7-42d2-9955-aa3aaa493ed2'></div></div>
+<div id='0bcc4888-bd92-41f9-b6e2-06e5fd3861c5'></div></div>
 </div>
 <section id="Conclusion">
 <h3>Conclusion<a class="headerlink" href="#Conclusion" title="Permalink to this heading">#</a></h3>
 <p>Using the tools provided in this notebook, you will be able to customize EncoderMap to your liking. Using images to visualize the output of the neural network is a much better visual aid, than just looking at graphs of raw data.</p>
 <script type="application/vnd.jupyter.widget-state+json">
-{"state": {"9aade9386fe04551b418ee48d25b36e7": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "e3e4cbd7ebb545459642db9ba777e497": {"model_name": "ColormakerRegistryModel", "model_module": "nglview-js-widgets", "model_module_version": "3.0.1", "state": {"_dom_classes": [], "_model_module": "nglview-js-widgets", "_model_module_version": "3.0.1", "_model_name": "ColormakerRegistryModel", "_msg_ar": [], "_msg_q": [], "_ready": false, "_view_count": null, "_view_module": "nglview-js-widgets", "_view_module_version": "3.0.1", "_view_name": "ColormakerRegistryView", "layout": "IPY_MODEL_9aade9386fe04551b418ee48d25b36e7"}}}, "version_major": 2, "version_minor": 0}
+{"state": {"0ae340045cb2408ea1bdba71c34887d8": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "7af54980419a4c52830e7cc130dc3d78": {"model_name": "ColormakerRegistryModel", "model_module": "nglview-js-widgets", "model_module_version": "3.0.1", "state": {"_dom_classes": [], "_model_module": "nglview-js-widgets", "_model_module_version": "3.0.1", "_model_name": "ColormakerRegistryModel", "_msg_ar": [], "_msg_q": [], "_ready": false, "_view_count": null, "_view_module": "nglview-js-widgets", "_view_module_version": "3.0.1", "_view_name": "ColormakerRegistryView", "layout": "IPY_MODEL_0ae340045cb2408ea1bdba71c34887d8"}}}, "version_major": 2, "version_minor": 0}
 </script></section>
 </section>
 </section>
