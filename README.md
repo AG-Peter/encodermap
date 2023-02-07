@@ -1,7 +1,7 @@
 <img src="pic/new_logo_m.png" width=45% align="right" />
 
-![Test](https://github.com/AG-Peter/encodermap/actions/workflows/workflow.yaml/badge.svg?branch=main)
-![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/kevinsawade/e4969c0b8ce8edeb862af753cff43ad0/raw/test.json)
+[![Test](https://github.com/AG-Peter/encodermap/actions/workflows/workflow.yaml/badge.svg?branch=main)](https://ag-peter.github.io/encodermap/_static/html_test_runner_report.html)
+[![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/kevinsawade/e4969c0b8ce8edeb862af753cff43ad0/raw/test.json)](https://ag-peter.github.io/encodermap/_static/coverage/)
 ![color](https://img.shields.io/badge/color-e77800-e77800)
 [![badge](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 [![badge](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
