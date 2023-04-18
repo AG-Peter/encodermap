@@ -46,7 +46,7 @@ pip install git+https://github.com/AG-Peter/encodermap.git
 pip install -r https://raw.githubusercontent.com/AG-Peter/encodermap/main/md_requirements.txt
 ```
 
-EncoderMap requires TensorFlow >=2.9 to be installed. (TensorFlow 2 is not yet supported)
+EncoderMap requires TensorFlow >=2.9 to be installed.
 Follow the [instructions on the TensorFlow website](https://www.tensorflow.org/install/pip) to install it
 either in the cpu or gpu version.
 Then install EncoderMap with pip.
