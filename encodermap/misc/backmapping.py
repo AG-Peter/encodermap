@@ -441,8 +441,8 @@ def mdtraj_backmapping(
                 s += f"\nFar: {[str(traj.top.atom(x)) for x in dih_far_sides[j][:12]]}..., {dih_far_sides[j][:12]}..."
                 s += f"\nRotation around bond {[str(traj.top.atom(x)) for x in bond]}, {bond}."
                 s += f"\nPositions of near side before rotation are\n{out_traj.xyz[i][near_side]}."
-                s += f"\nPositions of near side after rotation aren\n{new_xyz[i][near_side]}"
-                print(s)
+                s += f"\nPositions of near side after rotation are\n{new_xyz[i][near_side]}"
+                # print(s)
 
             # verify
             if verify_every_rotation:

@@ -451,7 +451,7 @@ class Autoencoder:
         cls,
         checkpoint_path,
         read_only=True,
-        overwrite_tensorboard_bool=False,
+        overwrite_tensorboard_bool=True,
         sparse=False,
     ):
         """Reconstructs the class from a checkpoint.
@@ -755,7 +755,7 @@ class EncoderMap(Autoencoder):
         cls,
         checkpoint_path,
         read_only=True,
-        overwrite_tensorboard_bool=False,
+        overwrite_tensorboard_bool=True,
         sparse=False,
     ):
         """Reconstructs the model from a checkpoint."""
@@ -1185,7 +1185,7 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
 
     @classmethod
     def from_checkpoint(
-        cls, trajs, checkpoint_path, read_only=True, overwrite_tensorboard_bool=False
+        cls, trajs, checkpoint_path, read_only=True, overwrite_tensorboard_bool=True
     ):
         """Reconstructs the model from a checkpoint."""
         # Is this classmethod necessary? We need to make sure the class knows all losses.
@@ -1339,8 +1339,7 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
         out = self.decode(points)
 
         if top is None:
-            top = self.trajs.top_files
-            if len(top) > 1:
+            if len(self.trajs.top) > 1:
                 print(
                     f"Please specify which topology you would like to use for generating "
                     f"conformations. You can either provide a `str` to a topology file "
@@ -1350,21 +1349,18 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
                 )
                 return
             else:
-                top = top[0]
+                top = self.trajs.top_files[0]
                 trajs = self.trajs
-                if top not in self.trajs.top_files:
-                    raise Exception(
-                        "Provided topology was not used to train Encodermap."
-                    )
 
-                # get the output
+                # get the output from sequential
                 if not self.p.use_backbone_angles and not self.p.use_sidechains:
-                    dihedrals = self.decode(points)
+                    dihedrals = out
                 elif self.p.use_backbone_angles and not self.p.use_sidechains:
                     splits = [trajs.CVs["central_angles"].shape[1]]
-                    out = self.decode(points)
                     if isinstance(out, np.ndarray):
                         angles, dihedrals = np.split(out, splits, axis=1)
+                    else:
+                        angles, dihedrals = out
                 elif self.p.use_backbone_angles and self.p.use_sidechains:
                     splits = [
                         trajs.CVs["central_angles"].shape[1],
@@ -1381,7 +1377,6 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
 
             # in this case we can just use any traj from self.trajs
             traj = self.trajs
-
         else:
             if len(self.trajs.top_files) == 1:
                 trajs = self.trajs
@@ -1436,15 +1431,23 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
                     splits[k] = split
 
                 # split the output
-                if not self.p.use_backbone_angles and not self.p.use_sidechains:
-                    dihedrals = out[:, splits["central_dihedrals"]]
-                elif self.p.use_backbone_angles and not self.p.use_sidechains:
-                    dihedrals = out[1][:, splits["central_dihedrals"]]
-                    angles = out[2][:, splits["central_angles"]]
-                elif self.p.use_backbone_angles and self.p.use_sidechains:
-                    dihedrals = out[1][:, splits["central_dihedrals"]]
-                    angles = out[0][:, splits["central_angles"]]
-                    sidechain_dihedrals = out[2][:, splits["side_dihedrals"]]
+                if self.p.model_api == "sequential":
+                    if not self.p.use_backbone_angles and not self.p.use_sidechains:
+                        dihedrals = out[:, splits["central_dihedrals"]]
+                    elif self.p.use_backbone_angles and not self.p.use_sidechains:
+                        dihedrals = out[1][:, splits["central_dihedrals"]]
+                        angles = out[2][:, splits["central_angles"]]
+                    elif self.p.use_backbone_angles and self.p.use_sidechains:
+                        dihedrals = out[1][:, splits["central_dihedrals"]]
+                        angles = out[0][:, splits["central_angles"]]
+                        sidechain_dihedrals = out[2][:, splits["side_dihedrals"]]
+                else:
+                    if not self.p.use_backbone_angles and not self.p.use_sidechains:
+                        dihedrals = out
+                    elif self.p.use_backbone_angles and not self.p.use_sidechains:
+                        angles, dihedrals = out
+                    elif self.p.use_backbone_angles and self.p.use_sidechains:
+                        angles, dihedrals, sidechain_dihedrals = out
 
                 # if the backend is mdanalysis we need to save the pdb
                 if backend == "mdanalysis":
