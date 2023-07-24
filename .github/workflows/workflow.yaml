@@ -65,6 +65,11 @@ jobs:
         env:
             ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: |
+          echo "Fixing HtmlTestRunner"
+          HTML_TEST_RUNNER_FILE=$( pip show html-testRunner | sed -n '8p' | awk '{print $2}' )
+          HTML_TEST_RUNNER_FILE="$HTML_TEST_RUNNER_FILE/HtmlTestRunner/result.py"
+          sed -i "s/length = self._count_relevant_tb_levels(tb)/# length = self._count_relevant_tb_levels(tb)/g" $HTML_TEST_RUNNER_FILE
+          sed -i "s/msg_lines = traceback.format_exception(exctype, value, tb, length)/msg_lines = traceback.format_exception(exctype, value, tb)/g" $HTML_TEST_RUNNER_FILE
           if [ -z ${Req_out} ] ; then
             echo "Tests with required packages ran previously and result is ${{ env.Req_out }}"
           else

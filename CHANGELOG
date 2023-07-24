@@ -1,5 +1,24 @@
 # Changelog
 
+## Version 3.0.1 (2023-07-27)
+
+### Fixes
+
+- Fixed error in `encodermap_tf1/moldata.py`, where sidechain dihedrals are not
+correctly indexed. Now using MDTraj's chi1, ch2, ... indexers (#25)
+- In plot/utils.py fixed `_unpack_cluster_info` to allow pandas versions < 2.0 and >= 2.0.
+- Fixed github workflow to accomodate newer versions of html-testRunner (see: https://stackoverflow.com/questions/71858651/attributeerror-htmltestresult-object-has-no-attribute-count-relevant-tb-lev)
+- Fixed the optional imports for dask.
+- Fixed the loss function for the ADCEncoderMap cartesian dist sig cost.
+- Fixed the unittest for optional imports in tests/test_optional_imports_before_installing_reqs.py.
+- Fixed the unittests in tests/test_moldata.py (#25).
+- Fixed the unittests in tests/test_losses.py
+- Fixed the .gitignore and excluded test files.
+
+### Additions
+
+- Added `del_CVs` to `SingleTraj` and `TrajEnsemble` to easily delete attached CVs.
+
 ## 2021-02-01
 
 - Reduced the number of training steps in the example notebooks.

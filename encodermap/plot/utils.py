@@ -43,6 +43,7 @@ from matplotlib.lines import Line2D
 from matplotlib.patches import Rectangle
 from matplotlib.path import Path
 from matplotlib.widgets import LassoSelector, PolygonSelector, RectangleSelector
+from packaging import version
 from scipy.special import binom
 from tqdm import tqdm
 
@@ -376,19 +377,33 @@ def _unpack_cluster_info(trajs, main_path, selector, dummy_traj, align_string):
             traj_frame = frame.id[0]
         else:
             traj_frame = frame.id[0, 1]
-        df = df.append(
-            {
-                "trajectory file": os.path.abspath(frame.traj_file),
-                "topology file": os.path.abspath(frame.top_file),
-                "frame number": traj_frame,
-                "time": frame.time[0],
-                "cluster id": max_,
-                "trajectory number": frame.traj_num,
-                f"unique id in set of {trajs.n_trajs} trajs": w,
-                **{k: v for k, v in zip(lowd_coords.keys(), frame.lowd)},
-            },
-            ignore_index=True,
-        )
+        if version.parse(pd.__version__) >= version.parse("2.0.0"):
+            df.loc[len(df)] = pd.Series(
+                {
+                    "trajectory file": os.path.abspath(frame.traj_file),
+                    "topology file": os.path.abspath(frame.top_file),
+                    "frame number": traj_frame,
+                    "time": frame.time[0],
+                    "cluster id": max_,
+                    "trajectory number": frame.traj_num,
+                    f"unique id in set of {trajs.n_trajs} trajs": w,
+                    **{k: v for k, v in zip(lowd_coords.keys(), frame.lowd)},
+                }
+            )
+        else:
+            df = df.append(
+                {
+                    "trajectory file": os.path.abspath(frame.traj_file),
+                    "topology file": os.path.abspath(frame.top_file),
+                    "frame number": traj_frame,
+                    "time": frame.time[0],
+                    "cluster id": max_,
+                    "trajectory number": frame.traj_num,
+                    f"unique id in set of {trajs.n_trajs} trajs": w,
+                    **{k: v for k, v in zip(lowd_coords.keys(), frame.lowd)},
+                },
+                ignore_index=True,
+            )
     df = df.astype(
         dtype={
             "trajectory file": str,

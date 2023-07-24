@@ -669,6 +669,9 @@ class SingleTraj:
         else:
             return self.topology
 
+    def del_CVs(self) -> None:
+        self._CVs = xr.Dataset()
+
     @property
     def CVs(self) -> dict[str, np.ndarray]:
         """dict: Returns a simple dict from the more complicated self._CVs xarray Dataset.

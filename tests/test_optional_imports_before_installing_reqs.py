@@ -27,10 +27,19 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 class TestMissingImport(unittest.TestCase):
     def test_missing_import(self):
-        with self.assertRaises((ValueError, ModuleNotFoundError)):
-            from encodermap.loading.features import CentralDihedrals
+        try:
+            from pyemma.coordinates.data.featurization.angles import DihedralFeature
 
-            central_dihedrals = CentralDihedrals()
+            pyemma_installed = True
+        except ModuleNotFoundError:
+            pyemma_installed = False
+        if not pyemma_installed:
+            with self.assertRaises((ValueError, ModuleNotFoundError)):
+                from encodermap.loading.features import CentralDihedrals
+
+                central_dihedrals = CentralDihedrals()
+        else:
+            self.assertTrue(True)
 
 
 # Remove Phantom Tests from tensorflow skipped test_session

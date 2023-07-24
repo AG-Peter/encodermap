@@ -115,6 +115,7 @@ ENV/
 # project files
 data/
 runs/
+tests/data/*actual.png
 tb_callbacks/
 development/
 runs_named/

@@ -273,7 +273,9 @@ def distance_loss(model, parameters=None, callback=None):
     return distance_loss_func
 
 
-def sigmoid_loss(parameters=None, periodicity_overwrite=None):
+def sigmoid_loss(
+    parameters=None, periodicity_overwrite=None, dist_dig_parameters_overwrite=None
+):
     """Sigmoid loss closure for use in distance cost and cartesian distance cost.
 
     Outer function prepares callable sigmoid. Sigmoid can then be called with just y_true and y_pred.
@@ -301,6 +303,11 @@ def sigmoid_loss(parameters=None, periodicity_overwrite=None):
     else:
         periodicity = p.periodicity
 
+    if dist_dig_parameters_overwrite is not None:
+        dist_sig_parameters = dist_dig_parameters_overwrite
+    else:
+        dist_sig_parameters = p.dist_sig_parameters
+
     # @tf.autograph.experimental.do_not_convert
     def sigmoid_loss_func(y_true, y_pred):
         r_h = y_true
@@ -311,8 +318,8 @@ def sigmoid_loss(parameters=None, periodicity_overwrite=None):
             dist_h = pairwise_dist_periodic(r_h, periodicity)
         dist_l = pairwise_dist(r_l)
 
-        sig_h = sigmoid(*p.dist_sig_parameters[:3])(dist_h)
-        sig_l = sigmoid(*p.dist_sig_parameters[3:])(dist_l)
+        sig_h = sigmoid(*dist_sig_parameters[:3])(dist_h)
+        sig_l = sigmoid(*dist_sig_parameters[3:])(dist_l)
 
         cost = tf.reduce_mean(tf.square(sig_h - sig_l))
         return cost
@@ -769,7 +776,11 @@ def cartesian_distance_loss(model, parameters=None, callback=None):
     else:
         write_bool = callback.log_bool
 
-    dist_loss = sigmoid_loss(p, periodicity_overwrite=float("inf"))
+    dist_loss = sigmoid_loss(
+        p,
+        periodicity_overwrite=float("inf"),
+        dist_dig_parameters_overwrite=p.cartesian_dist_sig_parameters,
+    )
 
     def cartesian_distance_loss_func(y_true, y_pred):
         """y_true can be whatever input you like, dihedrals, angles, pairwise dist, contact maps. That will be

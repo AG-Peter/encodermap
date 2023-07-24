@@ -23,6 +23,9 @@ import unittest
 from pathlib import Path
 
 import MDAnalysis as mda
+import mdtraj as md
+import numpy as np
+from mdtraj.geometry import dihedral as md_dihedral
 
 import encodermap.encodermap_tf1 as em_tf1
 
@@ -33,6 +36,9 @@ class TestTrajinfo(unittest.TestCase):
             str(Path(__file__).resolve().parent / "data/1am7_protein.pdb"),
             str(Path(__file__).resolve().parent / "data/1am7_corrected.xtc"),
         )
+        top = md.load(
+            str(Path(__file__).resolve().parent / "data/1am7_protein.pdb")
+        ).top
         group = u.select_atoms("all")
         moldata = em_tf1.MolData(group)
 
@@ -44,7 +50,7 @@ class TestTrajinfo(unittest.TestCase):
             "angles",
             "lengths",
         ]
-        values = [(2504, 3), (474, 3), (471,), (297,), (472,), (473,)]
+        values = [(2504, 3), (474, 3), (471,), (316,), (472,), (473,)]
 
         total_data = 0
         for df, v in zip(datafields, values):
@@ -55,7 +61,7 @@ class TestTrajinfo(unittest.TestCase):
             else:
                 total_data += getattr(moldata, df).shape[1]
             self.assertEqual(getattr(moldata, df).shape[1:], v)
-        self.assertEqual(total_data, 10647)
+        self.assertEqual(total_data, 10666)
 
     def test_moldata_tf2(self):
         pass

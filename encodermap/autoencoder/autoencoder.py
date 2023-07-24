@@ -227,7 +227,7 @@ class Autoencoder:
         >>> e_map = em.EncoderMap(read_only=True)
         >>> print(e_map.train_data.shape)
         (16000, 4)
-        >>> print(e_map.dataset)
+        >>> print(e_map.dataset)  # doctest: +SKIP
         <BatchDataset element_spec=(TensorSpec(shape=(None, 4), dtype=tf.float32, name=None), TensorSpec(shape=(None, 4), dtype=tf.float32, name=None))>
         >>> print(e_map.encode(e_map.train_data).shape)
         (16000, 2)

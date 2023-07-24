@@ -464,6 +464,10 @@ class TrajEnsemble:
         """int: Number of trajectories in this encemble."""
         return len(self.trajs)
 
+    def del_CVs(self) -> None:
+        for traj in self.trajs:
+            traj.del_CVs()
+
     @property
     def _CVs(self) -> xr.Dataset:
         """xarray.Dataset: Returns x-array Dataset of matching CVs. stacked along the trajectory-axis."""
