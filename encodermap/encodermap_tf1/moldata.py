@@ -192,16 +192,16 @@ class MolData:
         # SideDihedrals
         try:
             self.sidedihedrals = np.load(os.path.join(cache_path, "sidedihedrals.npy"))
-            print("Loaded dihedrals from {}".format(cache_path))
+            if np.all(np.isnan(self.sidedihedrals)):
+                raise FileNotFoundError
+            print("Loaded sidedihedrals from {}".format(cache_path))
 
         except FileNotFoundError:
             print("Calculating sidedihedrals...")
             with tempfile.NamedTemporaryFile(suffix=".pdb") as fp:
-                with mda.Writer(
-                    fp.name, multiframe=False, bonds=None, n_atoms=atom_group.n_atoms
-                ) as PDB:
-                    PDB.write(atom_group.atoms)
-                top = md.load_pdb(fp.name)
+                with mda.Writer(fp.name) as PDB:
+                    PDB.write(self.universe)
+                top = md.load_pdb(fp.name).top
 
             sidedihedral_atoms_inds = []
             sidedihedral_atoms = []
@@ -212,8 +212,12 @@ class MolData:
             sidedihedral_atoms_inds = np.vstack(sidedihedral_atoms_inds)
 
             for ind in sidedihedral_atoms_inds:
-                a, b, c, d = ind
-                ag = atom_group[a] + atom_group[b] + atom_group[c] + atom_group[d]
+                atoms = []
+                for i in ind:
+                    atom = self.universe.select_atoms(f"index {i}")
+                    assert len(atom) == 1
+                    atoms.append(atom[0])
+                ag = atoms[0] + atoms[1] + atoms[2] + atoms[3]
                 sidedihedral_atoms.append(ag.dihedral)
             assert all([len(ag.atoms) == 4 for ag in sidedihedral_atoms])
 
