@@ -4,7 +4,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -20,11 +20,13 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+# Standard Library Imports
 import sys
 import unittest
 from datetime import datetime
 from pathlib import Path
 
+# Third Party Imports
 import coverage
 import HtmlTestRunner
 

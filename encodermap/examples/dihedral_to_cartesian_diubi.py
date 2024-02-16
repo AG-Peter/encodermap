@@ -1,13 +1,17 @@
+# Standard Library Imports
 import copy
 import locale
 import os
 
+# Third Party Imports
 import matplotlib.pyplot as plt
 import MDAnalysis as md
 import numpy as np
 import tensorflow as tf
 
+# Encodermap imports
 import encodermap as em
+
 
 molname = "diubi"
 
@@ -102,7 +106,9 @@ costs = em.misc.read_from_log(
     os.path.join(dummy_parameters.main_path, "train"),
     ["cost/angle_cost", "cost/dihedral_cost", "cost/cartesian_cost"],
 )
-means = [np.mean(cost[:, 2]) for cost in costs]
+means = []
+for values in costs:
+    means.append(np.mean([i.value for i in values]))
 parameters.angle_cost_reference = means[0]
 parameters.dihedral_cost_reference = means[1]
 parameters.cartesian_cost_reference = means[2]

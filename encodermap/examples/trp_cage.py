@@ -1,9 +1,13 @@
+# Standard Library Imports
 import os
 
+# Third Party Imports
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Encodermap imports
 import encodermap as em
+
 
 # setting parameters
 data_path = "./data"

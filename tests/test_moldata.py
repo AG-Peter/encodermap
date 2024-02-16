@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -19,12 +19,25 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+
+# Future Imports at the top
+from __future__ import annotations
+
+# Standard Library Imports
 import unittest
 from pathlib import Path
 
+# Third Party Imports
 import MDAnalysis as mda
+import mdtraj as md
+import numpy as np
+from mdtraj.geometry import dihedral as md_dihedral
 
+# Encodermap imports
 import encodermap.encodermap_tf1 as em_tf1
+
+
+import encodermap as em  # isort: skip
 
 
 class TestTrajinfo(unittest.TestCase):
@@ -33,6 +46,9 @@ class TestTrajinfo(unittest.TestCase):
             str(Path(__file__).resolve().parent / "data/1am7_protein.pdb"),
             str(Path(__file__).resolve().parent / "data/1am7_corrected.xtc"),
         )
+        top = md.load(
+            str(Path(__file__).resolve().parent / "data/1am7_protein.pdb")
+        ).top
         group = u.select_atoms("all")
         moldata = em_tf1.MolData(group)
 
@@ -44,7 +60,7 @@ class TestTrajinfo(unittest.TestCase):
             "angles",
             "lengths",
         ]
-        values = [(2504, 3), (474, 3), (471,), (297,), (472,), (473,)]
+        values = [(2504, 3), (474, 3), (471,), (316,), (472,), (473,)]
 
         total_data = 0
         for df, v in zip(datafields, values):
@@ -55,7 +71,7 @@ class TestTrajinfo(unittest.TestCase):
             else:
                 total_data += getattr(moldata, df).shape[1]
             self.assertEqual(getattr(moldata, df).shape[1:], v)
-        self.assertEqual(total_data, 10647)
+        self.assertEqual(total_data, 10666)
 
     def test_moldata_tf2(self):
         pass
@@ -76,3 +92,7 @@ def load_tests(loader, tests, pattern):
         filtered_tests = [t for t in tests if not t.id().endswith(".test_session")]
         suite.addTests(filtered_tests)
     return suite
+
+
+if __name__ == "__main__":
+    unittest.main()

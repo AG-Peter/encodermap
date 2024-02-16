@@ -1,4 +1,6 @@
+# Encodermap imports
 import encodermap as em
+
 
 # generating data:
 high_d_data, ids = em.misc.random_on_cube_edges(10000, sigma=0.05)
@@ -22,10 +24,12 @@ generated = e_map.generate(low_d_projection)
 #########################################################################
 # Plotting:
 
+# Third Party Imports
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import (  # somehow this conflicts with tensorflow if imported earlier
     Axes3D,
 )
+
 
 fig = plt.figure()
 axe = fig.add_subplot(111, projection="3d")

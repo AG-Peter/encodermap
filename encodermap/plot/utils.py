@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade
@@ -28,13 +28,15 @@ Bezier: https://gist.github.com/gavincangan/b88a978e878e9bb1c0f8804e3af8de3c
 
 """
 
-##############################################################################
+################################################################################
 # Imports
-##############################################################################
+################################################################################
 
+# Standard Library Imports
 import os
 import shutil
 
+# Third Party Imports
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
@@ -43,18 +45,21 @@ from matplotlib.lines import Line2D
 from matplotlib.patches import Rectangle
 from matplotlib.path import Path
 from matplotlib.widgets import LassoSelector, PolygonSelector, RectangleSelector
+from optional_imports import _optional_import
+from packaging import version
 from scipy.special import binom
 from tqdm import tqdm
 
-from .._optional_imports import _optional_import
+# Local Folder Imports
 from ..encodermap_tf1.backmapping import dihedral_backmapping
 from ..misc.clustering import gen_dummy_traj, get_cluster_frames
 from ..misc.misc import _datetime_windows_and_linux_compatible
 from .plotting import plot_cluster
 
-##############################################################################
+
+################################################################################
 # Optional Imports
-##############################################################################
+################################################################################
 
 
 jinja2 = _optional_import("jinja2")
@@ -64,9 +69,10 @@ md = _optional_import("mdtraj")
 pd = _optional_import("pandas")
 binom = _optional_import("scipy", "special.binom")
 
-##############################################################################
+
+################################################################################
 # Globals
-##############################################################################
+################################################################################
 
 _all__ = [
     "Props",
@@ -78,9 +84,9 @@ _all__ = [
 ]
 
 
-##############################################################################
+################################################################################
 # Functions (mainly for ternary plotting)
-##############################################################################
+################################################################################
 
 
 def calculate_dssps(trajs, simplified=True):
@@ -97,7 +103,7 @@ def calculate_dssps(trajs, simplified=True):
         np.ndarray: The dssp array of shape (trajs.n_frames, trajs.n_residues);
 
     ToDo:
-        Make it work with different protein legths.
+        Make it work with different protein lengths.
 
     """
     all_dssp = []
@@ -202,12 +208,14 @@ def correct_missing_uniques(uniques, sorted_, progbar=None):
 
 
 def _get_system_info():
+    # Standard Library Imports
     import getpass
     import platform
     import re
     import socket
     import uuid
 
+    # Third Party Imports
     import psutil
 
     info = {}
@@ -228,6 +236,7 @@ def _get_system_info():
 
 
 def _check_all_templates_defined(template, info_dict):
+    # Standard Library Imports
     import re
 
     regex = r"\{(.*?)\}"
@@ -249,8 +258,10 @@ def _check_all_templates_defined(template, info_dict):
 
 
 def _create_readme(main_path, now, info_dict):  # pragma: no cover
+    # Third Party Imports
     from pip._internal.operations import freeze
 
+    # Local Folder Imports
     from .._version import __version__
     from .jinja_template import template
 
@@ -376,19 +387,33 @@ def _unpack_cluster_info(trajs, main_path, selector, dummy_traj, align_string):
             traj_frame = frame.id[0]
         else:
             traj_frame = frame.id[0, 1]
-        df = df.append(
-            {
-                "trajectory file": os.path.abspath(frame.traj_file),
-                "topology file": os.path.abspath(frame.top_file),
-                "frame number": traj_frame,
-                "time": frame.time[0],
-                "cluster id": max_,
-                "trajectory number": frame.traj_num,
-                f"unique id in set of {trajs.n_trajs} trajs": w,
-                **{k: v for k, v in zip(lowd_coords.keys(), frame.lowd)},
-            },
-            ignore_index=True,
-        )
+        if version.parse(pd.__version__) >= version.parse("2.0.0"):
+            df.loc[len(df)] = pd.Series(
+                {
+                    "trajectory file": os.path.abspath(frame.traj_file),
+                    "topology file": os.path.abspath(frame.top_file),
+                    "frame number": traj_frame,
+                    "time": frame.time[0],
+                    "cluster id": max_,
+                    "trajectory number": frame.traj_num,
+                    f"unique id in set of {trajs.n_trajs} trajs": w,
+                    **{k: v for k, v in zip(lowd_coords.keys(), frame.lowd)},
+                }
+            )
+        else:
+            df = df.append(
+                {
+                    "trajectory file": os.path.abspath(frame.traj_file),
+                    "topology file": os.path.abspath(frame.top_file),
+                    "frame number": traj_frame,
+                    "time": frame.time[0],
+                    "cluster id": max_,
+                    "trajectory number": frame.traj_num,
+                    f"unique id in set of {trajs.n_trajs} trajs": w,
+                    **{k: v for k, v in zip(lowd_coords.keys(), frame.lowd)},
+                },
+                ignore_index=True,
+            )
     df = df.astype(
         dtype={
             "trajectory file": str,
@@ -471,9 +496,9 @@ def _unpack_path_info(path):
     pass
 
 
-##############################################################################
+################################################################################
 # Classes
-##############################################################################
+################################################################################
 
 
 class Props:
@@ -482,7 +507,7 @@ class Props:
     Each MenuItem contains two copies of this class.
     One for props when the mouse cursor hovers over them.
     One for the rest of times.
-    Can be used used as class or as dict.
+    Can be used as class or as dict.
 
     Attributes:
         labelcolor (str): The color of the text.
@@ -496,7 +521,7 @@ class Props:
     Examples:
         >>> props = Props()
         >>> props.labelcolor
-        black
+        'black'
 
     """
 
@@ -509,7 +534,7 @@ class Props:
         stored as an attribute and can be accessed via dot-notation.
 
         Args:
-            **kwargs: Dict containing values. If unknonwn values are passed they will be dropped.
+            **kwargs: dict containing values. If unknonwn values are passed they will be dropped.
 
         """
         self._setattr(self.defaults)

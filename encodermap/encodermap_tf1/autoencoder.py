@@ -1,19 +1,25 @@
+# Third Party Imports
 import tensorflow
 
+
 try:
+    # Third Party Imports
     from tensorflow.python.data.ops.readers import TFRecordDatasetV
 except:
     from tensorflow.python.data.ops.readers import TFRecordDatasetV1 as TFRecordDataset
 
+# Standard Library Imports
 import os
 from math import pi
 
+# Third Party Imports
 import numpy as np
 import tensorflow.compat.v1 as tf
 from tensorflow.python.client import timeline
 from tensorflow.python.framework import ops as tf_ops
 from tqdm import tqdm
 
+# Local Folder Imports
 from .backmapping import dihedrals_to_cartesian_tf
 from .misc import (
     add_layer_summaries,
@@ -67,8 +73,8 @@ class Autoencoder:
             "as defined in 'main_path' in the parameters.",
         )
 
-        print("Disabling eager execution")
-        tf.compat.v1.disable_eager_execution()
+        # print("Disabling eager execution")
+        # tf.compat.v1.disable_eager_execution()
 
         self.train_data = train_data
         self.validation_data = validation_data
@@ -90,9 +96,9 @@ class Autoencoder:
 
             # Setup Optimizer:
             self.optimizer = tf.train.AdamOptimizer(self.p.learning_rate)
-            gradients = self.optimizer.compute_gradients(self.cost)
+            self.gradients = self.optimizer.compute_gradients(self.cost)
             self.optimize = self.optimizer.apply_gradients(
-                gradients, global_step=self.global_step
+                self.gradients, global_step=self.global_step
             )
 
             self.merged_summaries = tf.summary.merge_all()
@@ -143,7 +149,7 @@ class Autoencoder:
         else:
             raise ValueError(
                 "{} is not supported as input type for train_data".format(
-                    type(train_data)
+                    type(self.train_data)
                 )
             )
 
@@ -171,7 +177,10 @@ class Autoencoder:
         self.data_set = self.data_set.shuffle(buffer_size=len(self.train_data[0]))
         self.data_set = self.data_set.repeat()
         self.data_set = self.data_set.batch(self.p.batch_size)
-        self.data_iterator = self.data_set.make_initializable_iterator()
+        if not tf.executing_eagerly():
+            self.data_iterator = self.data_set.make_initializable_iterator()
+        else:
+            self.data_iterator = self.data_set
 
     def _encode(self, inputs):
         with tf.name_scope("encoder"):
@@ -283,7 +292,7 @@ class Autoencoder:
     def _l2_reg_cost(self):
         if self.p.l2_reg_constant is not None:
             reg_cost = tf.losses.get_regularization_loss()
-            tf.summary.scalar("reg_cost", reg_cost)
+            tf.summary.scalar("", reg_cost)
             if self.p.l2_reg_constant != 0:
                 self.cost += reg_cost
 
@@ -337,7 +346,7 @@ class Autoencoder:
         Train the autoencoder as specified in the parameters object.
         """
         for i in tqdm(range(self.p.n_steps)):
-            # if fixed seed we need the summmaries at global_step == 1
+            # if fixed seed we need the summaries at global_step == 1
             # to run unittests on them
             if self.seed is not None:
                 # run session and get value summaries

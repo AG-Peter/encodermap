@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -19,14 +19,17 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+# Standard Library Imports
 import os
 import unittest
 from math import pi
 
+# Third Party Imports
 import numpy as np
 import tensorflow as tf
 from scipy.spatial.distance import cdist
 
+# Encodermap imports
 from encodermap.misc import (
     pairwise_dist,
     pairwise_dist_periodic,
@@ -36,13 +39,14 @@ from encodermap.misc import (
 )
 from encodermap.parameters.parameters import Parameters
 
+
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "1"
 
-# Todo: This needs more tests
-
+# Standard Library Imports
 # If scipy was compiled against an older version of numpy these warnings are raised
 # warnings in a testing environment are somewhat worrying
 import warnings
+
 
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
@@ -162,6 +166,7 @@ class TestPairwiseDistances(tf.test.TestCase):
 
 class TestDistancesEm1Em2(tf.test.TestCase):
     def test_periodic_distance(self):
+        # Encodermap imports
         from encodermap.encodermap_tf1.misc import (
             periodic_distance as em1_periodic_distance,
         )
@@ -174,6 +179,7 @@ class TestDistancesEm1Em2(tf.test.TestCase):
         self.assertAllEqual(r1, r2)
 
     def test_sigmoid(self):
+        # Encodermap imports
         from encodermap.encodermap_tf1.misc import sigmoid as em1_sigmoid
         from encodermap.misc.distances import sigmoid as em2_sigmoid
 
@@ -182,6 +188,7 @@ class TestDistancesEm1Em2(tf.test.TestCase):
         self.assertEqual(r1, r2)
 
     def test_pairwise_dist_periodic(self):
+        # Encodermap imports
         from encodermap.encodermap_tf1.misc import (
             pairwise_dist_periodic as em1_pairwise_dist_periodic,
         )
@@ -197,6 +204,7 @@ class TestDistancesEm1Em2(tf.test.TestCase):
         self.assertAllEqual(r1, r2)
 
     def test_pairwise_dist(self):
+        # Encodermap imports
         from encodermap.encodermap_tf1.misc import pairwise_dist as em1_pairwise_dist
         from encodermap.misc.distances import pairwise_dist as em2_pairwise_dist
 
@@ -216,10 +224,13 @@ test_cases = (
     TestDistancesEm1Em2,
 )
 
+# Standard Library Imports
 # doctests
 import doctest
 
+# Encodermap imports
 import encodermap.misc.distances as distances
+
 
 doc_tests = (doctest.DocTestSuite(distances),)
 
@@ -236,6 +247,5 @@ def load_tests(loader, tests, pattern):
 
 # unittest.TextTestRunner(verbosity = 2).run(testSuite)
 
-# if __name__ == '__main__':
-#     print(unittest.__file__)
-#     unittest.main()
+if __name__ == "__main__":
+    unittest.main()

@@ -1,11 +1,15 @@
 sphinx
-sphinxcontrib.yt
+sphinxcontrib-youtube
 nbsphinx
 sphinx-copybutton
 sphinxcontrib-bibtex
 nbsphinx-link
 sphinx-design
 pydata-sphinx-theme
-m2r2
-mistune==0.8.4
+# m2r2  # deprecated: use the myst_parser instead. m2r2 depends on a very old version of mistune
+mistune>=2.0
+livereload
+ipykernel
+nbconvert>=7.0
+myst-parser
 livereload

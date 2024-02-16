@@ -4,7 +4,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade
@@ -21,6 +21,7 @@
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
 
+# Standard Library Imports
 import argparse
 import glob
 import hashlib
@@ -33,7 +34,7 @@ def hash_files(files):
     """Returns a dict of file hashes
 
     Args:
-        files (Union[str, list]) A file or a list of files.
+        files (Union[str, list]): A file or a list of files.
 
     Returns:
         dict: A nested dict, indexed by filenames and sha1 and md5 hashes.

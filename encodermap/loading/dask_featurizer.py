@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade
@@ -28,17 +28,25 @@
 ################################################################################
 
 
+# Future Imports at the top
 from __future__ import annotations
 
+# Standard Library Imports
 import os
+import tempfile
+from pathlib import Path
 from typing import TYPE_CHECKING, Optional, Union
 
+# Third Party Imports
 import numpy as np
 
+# Local Folder Imports
+from .._typing import CustomAAsDict
 from ..loading import delayed, features
 from ..misc.xarray_save_wrong_hdf5 import save_netcdf_alongside_mdtraj
 from .delayed import build_dask_xarray
-from .featurizer import UNDERSOCRE_MAPPING
+from .featurizer import UNDERSCORE_MAPPING
+
 
 ################################################################################
 # Type Checking
@@ -46,6 +54,7 @@ from .featurizer import UNDERSOCRE_MAPPING
 
 
 if TYPE_CHECKING:
+    # Third Party Imports
     import dask
     import xarray as xr
     from dask import dot_graph
@@ -53,7 +62,9 @@ if TYPE_CHECKING:
     from dask.distributed import Client, progress
     from distributed.client import _get_global_client
 
+    # Local Folder Imports
     from ..trajinfo import TrajEnsemble
+    from ..trajinfo.trajinfo_utils import CustomTopology
     from .features import AnyFeature
 
 
@@ -62,7 +73,9 @@ if TYPE_CHECKING:
 ################################################################################
 
 
-from .._optional_imports import _optional_import
+# Third Party Imports
+from optional_imports import _optional_import
+
 
 featurizer = _optional_import("pyemma", "coordinates.featurizer")
 source = _optional_import("pyemma", "coordinates.source")
@@ -71,8 +84,8 @@ CHI2_ATOMS = _optional_import("mdtraj", "geometry.dihedral.CHI2_ATOMS")
 CHI3_ATOMS = _optional_import("mdtraj", "geometry.dihedral.CHI3_ATOMS")
 CHI4_ATOMS = _optional_import("mdtraj", "geometry.dihedral.CHI4_ATOMS")
 CHI5_ATOMS = _optional_import("mdtraj", "geometry.dihedral.CHI5_ATOMS")
-Client = _optional_import("dask", "distributed.Client")
 dask = _optional_import("dask")
+Client = _optional_import("dask", "distributed.Client")
 Callback = _optional_import("dask", "callbacks.Callback")
 dot_graph = _optional_import("dask", "dot.dot_graph")
 progress = _optional_import("dask", "distributed.progress")
@@ -156,7 +169,11 @@ class DaskFeaturizer:
         trajs: TrajEnsemble,
         n_workers: Union[str, int] = "cpu-2",
         client: Optional[Client] = None,
+        custom_aas: Optional[Union["CustomTopology", CustomAAsDict]] = None,
     ) -> None:
+        # Local Folder Imports
+        from ..trajinfo.trajinfo_utils import CustomTopology
+
         self.in_memory = False
         self.trajs = trajs
         if not hasattr(self.trajs, "itertrajs"):
@@ -164,11 +181,16 @@ class DaskFeaturizer:
         self._copy_docstrings_from_pyemma()
         self.active_features = []
 
+        if custom_aas is not None:
+            raise Exception("Devel dask with custom_aas")
+
         if n_workers == "cpu-2":
+            # Standard Library Imports
             from multiprocessing import cpu_count
 
             n_workers = cpu_count() - 2
         if n_workers == "max":
+            # Standard Library Imports
             from multiprocessing import cpu_count
 
             n_workers = cpu_count()
@@ -192,6 +214,7 @@ class DaskFeaturizer:
             )
 
     def _copy_docstrings_from_pyemma(self):
+        # Third Party Imports
         from pyemma.coordinates.data.featurization.featurizer import (
             MDFeaturizer as feat_,
         )
@@ -222,6 +245,7 @@ class DaskFeaturizer:
     def build_graph(
         self,
         with_trajectories: bool = False,
+        streamable: bool = False,
     ) -> None:
         """Prepares the dask graph.
 
@@ -237,9 +261,9 @@ class DaskFeaturizer:
                 self.time,
                 self.unitcell_lengths,
                 self.unitcell_angles,
-            ) = build_dask_xarray(self, True)
+            ) = build_dask_xarray(self, True, streamable=streamable)
         else:
-            self.dataset = build_dask_xarray(self)
+            self.dataset = build_dask_xarray(self, streamable=streamable)
 
     def to_netcdf(
         self,
@@ -269,7 +293,10 @@ class DaskFeaturizer:
             self.build_graph(True)
 
         # allows multiple writes to netcdf4 files
-        os.environ["HDF5_USE_FILE_LOCKING"] = "FALSE"
+        def set_env():
+            os.environ["HDF5_USE_FILE_LOCKING"] = "FALSE"
+
+        self.client.run(set_env)
 
         if with_trajectories:
             e = Exception(
@@ -310,8 +337,20 @@ class DaskFeaturizer:
                 format="NETCDF4",
                 group="CVs",
                 engine="h5netcdf",
-                invalid_netcdf=True,
+                invalid_netcdf=False,
+                compute=True,
             )
+            # try:
+            #     from dask.diagnostics import ProgressBar
+            #     progbar = True
+            # except:
+            #     progbar = False
+
+            # if progbar:
+            #     with ProgressBar():
+            #        results = c.compute()
+            # else:
+            #     c.compute()
         return filename
 
     def get_output(
@@ -328,11 +367,16 @@ class DaskFeaturizer:
             progress(out)
             return out.result()
         else:
+            with tempfile.TemporaryDirectory() as tmpdir:
+                tmpdir = Path(tmpdir)
+                with Track(path=str(tmpdir)):
+                    out = self.client.compute(self.dataset)
+                    progress(out)
+                    return out.result()
+
             raise NotImplementedError(
                 "gifsicle --delay 10 --loop=forever --colors 256 --scale=0.4 -O3 --merge dasks/part_*.png > output.gif"
             )
-            # with Track():
-            #     return self.dataset.compute()
 
     def visualize(self) -> None:
         return dask.visualize(self.dataset)
@@ -374,20 +418,22 @@ class DaskFeaturizer:
             which = [which]
         if self.mode == "single_top":
             for cf in which:
-                if cf in UNDERSOCRE_MAPPING:
-                    cf = UNDERSOCRE_MAPPING[cf]
+                if cf in UNDERSCORE_MAPPING:
+                    cf = UNDERSCORE_MAPPING[cf]
                 feature = getattr(features, cf)(self.trajs.top[0])
                 if hasattr(feature, "dask_transform"):
                     transform = getattr(
-                        delayed, f"delayed_transfrom_{feature.dask_transform}"
+                        delayed, f"delayed_transform_{feature.dask_transform}"
                     )
-                    feature.transform = transform
+                    warnings.warn("Testing experimental in-place decoration.")
+                    # feature.transform = feature.transform
+                    feature.transform = dask.delayed(feature.transform)
                 self.add_custom_feature(feature)
         else:
             raise NotImplementedError
             for cf in which:
-                if cf in UNDERSOCRE_MAPPING:
-                    cf = UNDERSOCRE_MAPPING[cf]
+                if cf in UNDERSCORE_MAPPING:
+                    cf = UNDERSCORE_MAPPING[cf]
                 for top, feat in zip(self.trajs.top[0], self.feat):
                     feature = getattr(features, cf)(top)
                     feat.add_custom_feature(feature)
@@ -414,7 +460,7 @@ class DaskFeaturizer:
             )
             return
 
-        if not hasattr(f.transform, "dask"):
+        if not hasattr(f, "dask_transform"):
             if f not in self.active_features:
                 self.active_features.append(f)
             else:
@@ -431,7 +477,7 @@ class DaskFeaturizer:
     ) -> None:
         """ensure pairs are valid (shapes, all atom indices available?, etc.)"""
 
-        pair_inds = np.array(pair_inds).astype(dtype=np.int, casting="safe")
+        pair_inds = np.array(pair_inds).astype(dtype=int, casting="safe")
 
         if pair_inds.ndim != 2:
             raise ValueError("pair indices has to be a matrix.")
@@ -472,14 +518,17 @@ class DaskFeaturizer:
             raise Exception(
                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
             )
+        # Third Party Imports
         from pyemma.coordinates.data.featurization.misc import SelectionFeature
 
+        # Local Folder Imports
         from .delayed import delayed_transform_selection
 
         if reference is None:
             f = SelectionFeature(self.trajs.top[0], indexes)
             # monkey patch
             f.transform = delayed_transform_selection
+            f.dask_transform = "selection"
         else:
             raise ValueError(
                 "reference is not a mdtraj.Trajectory object, but {}".format(reference)
@@ -493,10 +542,12 @@ class DaskFeaturizer:
             raise Exception(
                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
             )
+        # Third Party Imports
         from pyemma.coordinates.data.featurization.distances import DistanceFeature
         from pyemma.coordinates.data.featurization.util import _parse_pairwise_input
 
-        from .delayed import delayed_transfrom_distance
+        # Local Folder Imports
+        from .delayed import delayed_transform_distance
 
         atom_pairs = _parse_pairwise_input(
             indices, indices2, MDlogger=None, fname="add_distances()"
@@ -505,8 +556,9 @@ class DaskFeaturizer:
         atom_pairs = self._check_indices(atom_pairs)
         f = DistanceFeature(self.trajs.top[0], atom_pairs, periodic=periodic)
         # monkey patch
-        f.transform = delayed_transfrom_distance
+        f.transform = delayed_transform_distance
         f.distance_indexes = np.ascontiguousarray(f.distance_indexes, dtype="int32")
+        f.dask_transform = "distance"
         self.__add_feature(f)
 
     def add_distances_ca(self, *args, **kwargs):
@@ -521,12 +573,14 @@ class DaskFeaturizer:
             raise Exception(
                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
             )
+        # Third Party Imports
         from pyemma.coordinates.data.featurization.distances import (
             InverseDistanceFeature,
         )
         from pyemma.coordinates.data.featurization.util import _parse_pairwise_input
 
-        from .delayed import delayed_transfrom_inverse_distance
+        # Local Folder Imports
+        from .delayed import delayed_transform_inverse_distance
 
         atom_pairs = _parse_pairwise_input(
             indices, indices2, MDlogger=None, fname="add_distances()"
@@ -535,8 +589,9 @@ class DaskFeaturizer:
         atom_pairs = self._check_indices(atom_pairs)
         f = InverseDistanceFeature(self.trajs.top[0], atom_pairs, periodic=periodic)
         # monkey patch
-        f.transform = delayed_transfrom_inverse_distance
+        f.transform = delayed_transform_inverse_distance
         f.distance_indexes = np.ascontiguousarray(f.distance_indexes, dtype="int32")
+        f.dask_transform = "inverse_distance"
         self.__add_feature(f)
 
     def add_contacts(self, *args, **kwargs):
@@ -586,15 +641,17 @@ class DaskFeaturizer:
             raise Exception(
                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
             )
+        # Third Party Imports
         from pyemma.coordinates.data.featurization.angles import DihedralFeature
 
-        from .delayed import delayed_transfrom_dihedral
+        # Local Folder Imports
+        from .delayed import delayed_transform_dihedral
 
         indexes = self._check_indices(indexes, pair_n=4)
         f = DihedralFeature(
             self.trajs.top[0], indexes, deg=deg, cossin=cossin, periodic=periodic
         )
-        f.transform = delayed_transfrom_dihedral
+        f.transform = delayed_transform_dihedral
         f.indexes = np.ascontiguousarray(f.angle_indexes, dtype="int32")
         self.__add_feature(f)
 
@@ -605,14 +662,16 @@ class DaskFeaturizer:
             raise Exception(
                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
             )
+        # Third Party Imports
         from pyemma.coordinates.data.featurization.angles import BackboneTorsionFeature
 
-        from .delayed import delayed_transfrom_dihedral
+        # Local Folder Imports
+        from .delayed import delayed_transform_dihedral
 
         f = BackboneTorsionFeature(
             self.trajs.top[0], selstr=selstr, deg=deg, cossin=cossin, periodic=periodic
         )
-        f.transform = delayed_transfrom_dihedral
+        f.transform = delayed_transform_dihedral
         f.indexes = np.ascontiguousarray(f.angle_indexes, dtype="int32")
         self.__add_feature(f)
 

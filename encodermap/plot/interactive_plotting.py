@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -36,13 +36,16 @@
 # Imports
 ##############################################################################
 
+# Standard Library Imports
 import copy
 import os
 from itertools import groupby
 
+# Third Party Imports
 from matplotlib.path import Path
+from optional_imports import _optional_import
 
-from .._optional_imports import _optional_import
+# Local Folder Imports
 from ..autoencoder.autoencoder import AngleDihedralCartesianEncoderMap
 from ..misc.clustering import gen_dummy_traj, get_cluster_frames
 from ..misc.misc import _datetime_windows_and_linux_compatible, all_equal
@@ -52,12 +55,14 @@ from ..trajinfo.info_single import SingleTraj
 from .utils import *
 from .utils import _unpack_cluster_info, _unpack_path_info
 
+
 ##############################################################################
 # Optional Imports
 ##############################################################################
 
 
 sns = _optional_import("seaborn")
+
 
 ##############################################################################
 # Classes
@@ -67,28 +72,25 @@ sns = _optional_import("seaborn")
 class InteractivePlotting:
     """Class to open up an interactive plotting window.
 
-    Contains sub-classes to handle user-clickable menus and selectors.
+    Contains subclasses to handle user-clickable menus and selectors.
 
     Attributes:
         trajs (encodermap.TrajEnsemble): The trajs passed into this class.
         fig (matplotlib.figure): The figure plotted onto. If ax is passed when
-            this class is instantiated the parent figure will be fetched with
+            this class is instantiated, the parent figure will be fetched with
             self.fig = self.ax.get_figure()
         ax (matplotlib.axes): The axes where the lowd data of the trajs
             is plotted on.
         menu_ax (matplotlib.axes): The axes where the normal menu is plotted on.
         status_menu_ax (matplotlib.axes): The axes on which the status menu is plotted on.
         pts (matplotlib.collections.Collection): The points which are plotted. Based on some
-            other class variables the color of this collection is adjusted.
+            other class variables, the color of this collection is adjusted.
         statusmenu (encodermap.plot.utils.StatusMenu): The menu containing the
             status buttons.
         menu (encodermap.plot.utils.Menu): The menu containing the remaining buttons.
-        tool (encodermap.plot.utils.SelectFromCollection): The currentlty active
+        tool (encodermap.plot.utils.SelectFromCollection): The current active
             tool used to select points. This can be lasso, polygon, etc...
         mode (str): Current mode of the statusmenu.
-
-    Examples:
-        >>> sess = ep.InteractivePlotting(trajs)
 
     """
 
@@ -110,8 +112,8 @@ class InteractivePlotting:
         Args:
             trajs (encodermap.TrajEnsemble): The trajs of which the lowd info
                 should be plotted.
-            ax (matplotlib.axes, optional): On what axes to plot. If no axes is provided
-                a new figure and axes will be created defaults to None.
+            ax (matplotlib.axes, optional): On what axes to plot. If no axis is provided
+                a new figure and axes will be created, defaults to None.
 
         """
         # the align string for the cluster dummy method
@@ -144,6 +146,7 @@ class InteractivePlotting:
             elif isinstance(data, np.ndarray) and hasattr(autoencoder, "encode"):
                 print("Using the `encode` method of `autoencoder` with provided data.")
                 if np.any(np.isnan(data)):
+                    # Third Party Imports
                     import tensorflow as tf
 
                     indices = np.stack(np.where(~np.isnan(data))).T.astype("int64")
@@ -176,7 +179,7 @@ class InteractivePlotting:
 
         if isinstance(trajs, SingleTraj):
             if "lowd" not in self.trajs.CVs:
-                selfself.trajs.load_CV(self.data, attr_name="lowd")
+                self.trajs.load_CV(self.data, attr_name="lowd")
         else:
             if "lowd" not in self.trajs.CVs:
                 self.trajs.load_CVs(self.data, attr_name="lowd")

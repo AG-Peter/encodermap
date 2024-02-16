@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -26,17 +26,26 @@
 ##############################################################################
 
 
+# Future Imports at the top
+from __future__ import annotations
+
+# Standard Library Imports
 import os
 from itertools import groupby
 from pathlib import Path
+from tempfile import NamedTemporaryFile
 
-import matplotlib as mpl
+# Third Party Imports
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
+from optional_imports import _optional_import
+from PIL import Image, ImageDraw, ImageFont
+from PIL.Image import Image as ImageType
 
-from .._optional_imports import _optional_import
+# Local Folder Imports
 from .errors import BadError
+
 
 ################################################################################
 # Optional Imports
@@ -44,6 +53,24 @@ from .errors import BadError
 
 
 nx = _optional_import("networkx")
+
+
+################################################################################
+# Typing
+################################################################################
+
+
+# Standard Library Imports
+from collections.abc import Iterable, Sequence
+from typing import TYPE_CHECKING, Any, Optional, Union, overload
+
+
+if TYPE_CHECKING:
+    # Standard Library Imports
+    from pathlib import Path
+
+    # Local Folder Imports
+    from ..trajinfo.info_all import TrajEnsemble
 
 
 ################################################################################
@@ -91,15 +118,11 @@ _TOPOLOGY_EXTS = [
 ################################################################################
 
 
-def scale_projs(trajs, boundary, cols=None, debug=False):
+def scale_projs(trajs: TrajEnsemble, boundary: float, cols=None, debug=False) -> None:
     """Scales the projections and moves outliers to their closest points.
 
-    Makes sure to not place a new point where there already is a point with a while loop."""
-    import glob
-    import os
-
-    import numpy as np
-
+    Makes sure to not place a new point where there already is a point with a while loop.
+    """
     for traj in trajs:
         data = traj.lowd
         data_scaled = []
@@ -149,7 +172,7 @@ def scale_projs(trajs, boundary, cols=None, debug=False):
             raise
 
 
-def _can_be_feature(inp):
+def _can_be_feature(inp: Union[str, list[str]]) -> bool:
     """Function to decide whether the input can be interpreted by the Featurizer class.
 
     Outputs True, if inp == 'all' or inp is a list of strings contained in FEATURE_NAMES.
@@ -182,31 +205,67 @@ def _can_be_feature(inp):
     return False
 
 
-def match_files(trajs, tops, common_str):
+def match_files(
+    trajs: Union[list[str], list[Path]],
+    tops: Union[list[str], list[Path]],
+    common_str: list[str],
+) -> tuple[list[str], list[str]]:
     tops_out = []
     common_str_out = []
 
     trajs = list(map(str, trajs))
     tops = list(map(str, tops))
 
-    for t in trajs:
-        if not any([cs in t for cs in common_str]):
-            raise BadError(
-                f"The traj file {t} does not match any of the common_str you provided."
-            )
+    if len(trajs) == len(tops):
+        first_cs = common_str[[cs in trajs[0] for cs in common_str].index(True)]
+        if first_cs not in tops[0]:
+            iterator = trajs
         else:
-            t_lcut = max([t.rfind(cs) for cs in common_str])
-            t_lcut = t[t_lcut:]
-            cs = common_str[[cs in t_lcut for cs in common_str].index(True)]
-            if t.split(".")[-1] == "h5":
-                tops_out.append(trajs[[cs in r for r in trajs].index(True)])
+            iterator = zip(trajs, tops)
+    else:
+        iterator = trajs
+
+    for t in iterator:
+        if isinstance(t, tuple):
+            t, top = t
+            if not any([cs in t for cs in common_str]):
+                raise Exception(
+                    f"The traj file {t} does not match any of the common_str you provided."
+                )
             else:
-                tops_out.append(tops[[cs in r for r in tops].index(True)])
-            common_str_out.append(cs)
+                t_lcut = max([t.rfind(cs) for cs in common_str])
+                t_lcut = t[t_lcut:]
+                cs = common_str[[cs in t_lcut for cs in common_str].index(True)]
+                if t.split(".")[-1] == "h5":
+                    tops_out.append(t)
+                    assert cs in t, f"{cs=} {top=} {t=}"
+                else:
+                    tops_out.append(top)
+                    assert cs in top and cs in t
+                common_str_out.append(cs)
+        else:
+            if not any([cs in t for cs in common_str]):
+                raise Exception(
+                    f"The traj file {t} does not match any of the common_str you provided."
+                )
+            else:
+                t_lcut = max([t.rfind(cs) for cs in common_str])
+                t_lcut = t[t_lcut:]
+                cs = common_str[[cs in t_lcut for cs in common_str].index(True)]
+                if t.split(".")[-1] == "h5":
+                    tops_out.append(trajs[[cs in r for r in trajs].index(True)])
+                else:
+                    tops_out.append(tops[[cs in r for r in tops].index(True)])
+                assert cs in t
+                common_str_out.append(cs)
     return tops_out, common_str_out
 
 
-def get_full_common_str_and_ref(trajs, tops, common_str):
+def get_full_common_str_and_ref(
+    trajs: Union[list[str], list[Path]],
+    tops: Union[list[str], list[Path]],
+    common_str: list[str],
+) -> tuple[list[str], list[str], list[str]]:
     """Matches traj_files, top_files and common string and returns lists with the
     same length matching the provided common str.
 
@@ -216,19 +275,42 @@ def get_full_common_str_and_ref(trajs, tops, common_str):
         common_str (list[str]): A list of strings that can be found in
             both trajs and tops (i.e. substrings).
 
+    Args:
+        tuple: A tuple containing the following:
+            list[str]: A list of str with the traj file names.
+            list[str]: A list of str with the top file names.
+            list[str]: A list of str with the common_str's.
+            All lists have the same length.
+
     """
+    assert isinstance(common_str, list)
     if len(trajs) != len(tops) and common_str == [] and len(tops) != 1:
-        raise BadError(
-            "When providing a list of trajs and a list of refs with different length you must provide a list of common_str to match them."
+        raise Exception(
+            "When providing a list of trajs and a list of refs with different "
+            "length you must provide a list of common_str to match them."
         )
 
     # if the length of all objects is the same we just return them
+    # but also we check, whether the common_str appears in the
+    # trajs and tops to make sure its correclty ordered
     if len(trajs) == len(tops) == len(common_str):
+        if not all([i is None for i in common_str]):
+            for traj, top, cs in zip(trajs, tops, common_str):
+                if cs not in str(traj) or cs not in str(top):
+                    return (trajs, *match_files(trajs, tops, common_str))
         return trajs, tops, common_str
 
-    # if trajs and tops is the same length they are expected to match
+    # if trajs and tops are the same length, they are expected to match
     elif len(trajs) == len(tops):
-        return trajs, tops, [None for i in trajs]
+        if len(common_str) == 0:
+            return trajs, tops, [None for i in trajs]
+
+        elif len(common_str) == 1:
+            return trajs, tops, [common_str[0] for i in trajs]
+
+        else:
+            tops_out, common_str_out = match_files(trajs, tops, common_str)
+            return trajs, tops_out, common_str_out
 
     # if only one topology is provided, we hope the user passed a correct one and fill everything else up
     elif len(trajs) > 1 and len(tops) == 1:
@@ -245,7 +327,7 @@ def get_full_common_str_and_ref(trajs, tops, common_str):
 
         return trajs, tops_out, common_str_out
 
-    # in the other cases we need to do something similar
+    # in other cases, we need to do something similar
     else:
         if len(tops) > len(trajs):
             raise Exception(
@@ -269,7 +351,11 @@ def get_full_common_str_and_ref(trajs, tops, common_str):
         return trajs, tops_out, common_str_out
 
 
-def printTable(myDict, colList=None, sep="\uFFFA"):
+def printTable(
+    myDict: dict[str, dict[str, Any]],
+    colList: Optional[list[str]] = None,
+    sep: str = "\uFFFA",
+) -> str:
     """Pretty print a list of dictionaries (myDict) as a dynamically sized table.
     If column names (colList) aren't specified, they will show in random order.
     sep: row separator. Ex: sep='\n' on Linux. Default: dummy to not split line.
@@ -305,7 +391,7 @@ def printTable(myDict, colList=None, sep="\uFFFA"):
 ##############################################################################
 
 
-def _datetime_windows_and_linux_compatible():
+def _datetime_windows_and_linux_compatible() -> str:
     """Portable way to get `now` as either a linux or windows compatible string.
 
     For linux systems strings in this manner will be returned:
@@ -315,6 +401,7 @@ def _datetime_windows_and_linux_compatible():
         2022-07-13_16-04-46
 
     """
+    # Standard Library Imports
     import datetime
     from sys import platform
 
@@ -324,14 +411,15 @@ def _datetime_windows_and_linux_compatible():
         return datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 
-def all_equal(iterable):
-    """Returns True, when all elements in List are equal"""
+def all_equal(iterable: Iterable[Any]) -> bool:
+    """Returns True, when all elements in list are equal"""
     g = groupby(iterable)
     return next(g, True) and not next(g, False)
 
 
-def _validate_uri(str_):
+def _validate_uri(str_: str) -> bool:
     """Checks whether the str_ is a valid uri."""
+    # Standard Library Imports
     from urllib.parse import urlparse
 
     try:
@@ -341,7 +429,29 @@ def _validate_uri(str_):
         return False
 
 
-def _flatten_model(model_nested, input_dim=None, return_model=True):
+@overload
+def _flatten_model(
+    model_nested: tf.keras.Model,
+    input_dim: Optional[Sequence[int]] = None,
+    return_model: bool = True,
+) -> tf.keras.Model:
+    ...
+
+
+@overload
+def _flatten_model(
+    model_nested: tf.keras.Model,
+    input_dim: Optional[Sequence[int]] = None,
+    return_model: bool = False,
+) -> list[tf.keras.layers.Layer]:
+    ...
+
+
+def _flatten_model(
+    model_nested: tf.keras.Model,
+    input_dim: Optional[Sequence[int]] = None,
+    return_model: bool = True,
+) -> Union[tf.keras.Model, list[tf.keras.layers.Layer]]:
     """Flattens a nested tensorflow.keras.models.Model.
 
     Can be useful if a model consists of two sequential models and needs to
@@ -362,30 +472,71 @@ def _flatten_model(model_nested, input_dim=None, return_model=True):
         return layers_flat
 
 
-def plot_model(model, input_dim):
+def plot_model(
+    model: tf.keras.Model,
+    input_dim: Optional[Sequence[int]] = None,
+) -> Optional[ImageType]:
     """Plots keras model using tf.keras.utils.plot_model"""
-    model = _flatten_model(model, input_dim)
-    try:
-        _ = tf.keras.utils.plot_model(
-            model, to_file="tmp.png", show_shapes=True, rankdir="LR", expand_nested=True
-        )
-        plt.show()
-    except:
-        pass
-    img = plt.imread("tmp.png")
-    os.remove("tmp.png")
-    plt.close("all")
-    plt.imshow(img)
-    if mpl.get_backend() == "module://ipykernel.pylab.backend_inline":
-        fig = plt.gcf()
-        fig.set_size_inches(fig.get_size_inches() * 4)
-    ax = plt.gca()
-    ax.axis("off")
-    plt.show()
+    # Encodermap imports
+    from encodermap.models.models import SequentialModel
+
+    if isinstance(model, SequentialModel) and input_dim is not None:
+        model = _flatten_model(model, input_dim)
+        with NamedTemporaryFile(suffix=".png") as f:
+            try:
+                _ = tf.keras.utils.plot_model(
+                    model,
+                    to_file=f.name,
+                    show_shapes=True,
+                    rankdir="TB",
+                    expand_nested=True,
+                )
+            except:
+                return
+            return Image.open(f.name)
+    with NamedTemporaryFile(suffix=".png") as f:
+        try:
+            _ = tf.keras.utils.plot_model(
+                model,
+                to_file=f.name,
+                show_shapes=True,
+                rankdir="TB",
+                expand_nested=True,
+            )
+        except:
+            return
+        img = Image.open(f.name)
+        # img.putalpha(alpha=255)
+        cube_img = Image.open(Path(__file__).resolve().parent / "logo_cube_300.png")
+        img.paste(cube_img, (800, 500), cube_img)
+        try:
+            font = ImageFont.truetype(
+                "/usr/share/fonts/truetype/dejavu/DejaVuMathTeXGyre.ttf", size=40
+            )
+            ImageDraw.Draw(img).text(  # Image
+                (700, 800),  # Coordinates
+                "Made with EncoderMap",  # Text
+                (0, 0, 0),  # Color
+                font=font,
+            )
+        except:
+            pass
+        return img
+
+        # plt.close("all")
+        # plt.imshow(img)
+        # plt.show()
+        # if mpl.get_backend() == "module://ipykernel.pylab.backend_inline":
+        #     fig = plt.gcf()
+        #     fig.set_size_inches(fig.get_size_inches() * 4)
+        # ax = plt.gca()
+        # ax.axis("off")
+        # plt.show()
 
 
-def run_path(path):
-    """Creates a directory at "path/run{i}" where the i is corresponding to the smallest not yet existing path.
+def run_path(path: str) -> str:
+    """Creates a directory at "path/run{i}" where the i is corresponding to the
+    smallest not yet existing path.
 
     Args:
         path (str): Path to the run folder.
@@ -394,13 +545,20 @@ def run_path(path):
         str: The new output path.
 
     Exampples:
-        >>> import os
         >>> import encodermap as em
-        >>> os.makedirs('run1/')
-        >>> em.misc.run_path('run1/')
-        'run2/'
-        >>> os.listdir()
-        ['run1/', 'run2/']
+        >>> import tempfile
+        >>> import os
+        ...
+        >>> with tempfile.TemporaryDirectory() as td:
+        ...     # create some directories
+        ...     os.makedirs(os.path.join(td, "run0"))
+        ...     os.makedirs(os.path.join(td, "run1"))
+        ...     # em.misc.run_path will automatically advance the counter to 'run2'
+        ...     new_path = em.misc.run_path(td)
+        ...     print(new_path)
+        ...     print(os.listdir(td))  # doctest: +ELLIPSIS
+        /tmp/tmp.../run2
+        ['run0', 'run1', 'run2']
 
     """
     i = 0
@@ -416,39 +574,44 @@ def run_path(path):
 
 
 def create_n_cube(
-    n=3, points_along_edge=500, sigma=0.05, same_colored_edges=3, seed=None
-):
+    n: int = 3,
+    points_along_edge: int = 500,
+    sigma: float = 0.05,
+    same_colored_edges: int = 3,
+    seed: Optional[int] = None,
+) -> tuple[np.ndarray, np.ndarray]:
     """Creates points along the edges of an n-dimensional unit hyper-cube.
 
-    The cube is created using networkx.hypercube_graph and points are placed along
-    the edges of the cube. By providing a sigma value the points can be shifted
+    The cube is created using `networkx.hypercube_graph` and points are placed along
+    the edges of the cube. By providing a `sigma` value, the points can be shifted
     by some Gaussian noise.
 
     Args:
-        n (int, optional): The dimension of the Hypercube (can also take 1 or 2).
+        n (int): The dimension of the Hypercube (can also take 1 or 2).
             Defaults to 3.
-        points_along_edge (int, optional): How many points should be placed along any edge.
+        points_along_edge (int): How many points should be placed along any edge.
             By increasing the number of dimensions, the number of edges
             increases, which also increases the total number of points. Defaults to 500.
-        sigma (float, optional): The sigma value for np.random.normal which
+        sigma (float): The sigma value for np.random.normal which
             introduces Gaussian noise to the positions of the points. Defaults to 0.05.
-        same_color_edges (int, optional): How many edges of the Hypercube should
+        same_color_edges (int): How many edges of the Hypercube should
             be colored with the same color. This can be used to later
             better visualize the edges of the cube. Defaults to 3.
-        seed (int, optional): If an int is provided this will be used as a seed
-            for np.random and fix the random state. Defaults to None which produces
+        seed (Optional[int]): If an int is provided, this will be used as a seed
+            for `np.random` and fix the random state. Defaults to None which produces
             random results every time this function is called.
 
     Returns:
         tuple: A tuple containing the following:
-            coordinates (np.ndarray): The coordinates of the points.
-            colors (np.ndarray): Integers that can be used for coloration.
+            np.ndarray: The coordinates of the points.
+            np.ndarray: Integers that can be used for coloration.
 
     Example:
+        >>> from encodermap.misc.misc import create_n_cube
         >>> # A sigma value of zero means no noise at all.
         >>> coords, colors = create_n_cube(2, sigma=0)
         >>> coords[0]
-        [0., 1.]
+        array([0., 0.])
 
     """
     if seed is not None:
@@ -456,7 +619,7 @@ def create_n_cube(
     # create networkx hypercube with given dimensions
     G = nx.hypercube_graph(n)
 
-    # vertices is not really needed
+    # vertices are not really needed
     vertices = np.array([n for n in G.nodes])
     # get edges
     edges = np.array([e for e in G.edges])
@@ -506,7 +669,7 @@ def create_n_cube(
     # replace the corresponding indices
     for i, j in edge_pairs:
         new = coordinates[coordinates[:, -1] == i]
-        new[:, 3] = np.full(points_along_edge, j)
+        new[:, -1] = np.full(points_along_edge, j)
         coordinates[coordinates[:, -1] == i] = new
 
     return coordinates[:, :-1], coordinates[:, -1]

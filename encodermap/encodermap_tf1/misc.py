@@ -1,6 +1,8 @@
+# Standard Library Imports
 import os
 from math import pi
 
+# Third Party Imports
 import numpy as np
 import tensorflow.compat.v1 as tf
 from tensorboard.backend.event_processing.event_accumulator import EventAccumulator

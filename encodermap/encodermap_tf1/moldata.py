@@ -1,17 +1,24 @@
+# Standard Library Imports
 import os
+import shutil
+import tempfile
 import warnings
 from collections import OrderedDict
 from math import pi
 
-import MDAnalysis as md
+# Third Party Imports
+import MDAnalysis as mda
+import mdtraj as md
 import numpy as np
 from MDAnalysis.analysis.align import AlignTraj
 from MDAnalysis.analysis.base import AnalysisBase
 from MDAnalysis.analysis.dihedrals import Dihedral
 from MDAnalysis.coordinates.memory import MemoryReader
 from MDAnalysis.lib.distances import calc_angles
+from mdtraj.geometry import dihedral as md_dihedral
 from tqdm import tqdm
 
+# Local Folder Imports
 from .misc import create_dir
 
 
@@ -38,9 +45,9 @@ class Angles(AnalysisBase):
         if any([len(ag) != 3 for ag in atomgroups]):
             raise ValueError("All AtomGroups must contain 3 atoms")
 
-        self.ag1 = md.AtomGroup([ag[0] for ag in atomgroups])
-        self.ag2 = md.AtomGroup([ag[1] for ag in atomgroups])
-        self.ag3 = md.AtomGroup([ag[2] for ag in atomgroups])
+        self.ag1 = mda.AtomGroup([ag[0] for ag in atomgroups])
+        self.ag2 = mda.AtomGroup([ag[1] for ag in atomgroups])
+        self.ag3 = mda.AtomGroup([ag[2] for ag in atomgroups])
 
     def _prepare(self):
         self.result = []
@@ -187,41 +194,40 @@ class MolData:
                 np.save(os.path.join(cache_path, "dihedrals.npy"), self.dihedrals)
 
         # SideDihedrals
-
         try:
             self.sidedihedrals = np.load(os.path.join(cache_path, "sidedihedrals.npy"))
-            print("Loaded dihedrals from {}".format(cache_path))
+            if np.all(np.isnan(self.sidedihedrals)):
+                raise FileNotFoundError
+            print("Loaded sidedihedrals from {}".format(cache_path))
 
         except FileNotFoundError:
             print("Calculating sidedihedrals...")
-            sidedihedral_atoms = []
+            with tempfile.NamedTemporaryFile(suffix=".pdb") as fp:
+                with mda.Writer(fp.name) as PDB:
+                    PDB.write(self.universe)
+                top = md.load_pdb(fp.name).top
 
-            for i in OrderedDict.fromkeys(self.sorted_atoms.resnums):
-                residue_atoms = self.sorted_atoms.select_atoms("resnum {}".format(i))
-                for n in range(
-                    self.aminoaciddict[
-                        self.universe.select_atoms(
-                            "resnum {} and name CA".format(i)
-                        ).resnames[0]
-                    ]
-                ):
-                    side_atoms = residue_atoms[n : int(n + 4)]
-                    sidedihedral_atoms.append(side_atoms)
+            sidedihedral_atoms_inds = []
+            sidedihedral_atoms = []
+            for i in range(1, 6):
+                indexer = getattr(md_dihedral, f"indices_chi{i}")
+                inds = indexer(top)
+                sidedihedral_atoms_inds.append(inds)
+            sidedihedral_atoms_inds = np.vstack(sidedihedral_atoms_inds)
+
+            for ind in sidedihedral_atoms_inds:
+                atoms = []
+                for i in ind:
+                    atom = self.universe.select_atoms(f"index {i}")
+                    assert len(atom) == 1
+                    atoms.append(atom[0])
+                ag = atoms[0] + atoms[1] + atoms[2] + atoms[3]
+                sidedihedral_atoms.append(ag.dihedral)
+            assert all([len(ag.atoms) == 4 for ag in sidedihedral_atoms])
+
             if sidedihedral_atoms == []:
                 self.sidedihedrals = np.nan
             else:
-                warnings.showwarning(
-                    "\033[1;37;40m This version of the MolData Class does not produce expected results for side-dihedrals.",
-                    category=UserWarning,
-                    filename="",
-                    lineno=-1,
-                )
-                warnings.showwarning(
-                    "\033[1;37;40m To make this class work the 'residue_atoms[n:int(n+4)]' needs to be reworked. It does not index the sidechains.",
-                    category=UserWarning,
-                    filename="",
-                    lineno=-1,
-                )
                 sidedihedrals = Dihedral(sidedihedral_atoms, verbose=True).run(
                     start=start, stop=stop, step=step
                 )
@@ -323,12 +329,12 @@ class MolData:
         if coordinates.ndim == 2:
             coordinates = np.expand_dims(coordinates, 0)
         if only_central:
-            output_universe = md.Merge(self.central_atoms)
+            output_universe = mda.Merge(self.central_atoms)
             self.sorted_atoms[self.central_atom_indices].write(
                 os.path.join(path, "{}.{}".format(name, formats[0]))
             )
         else:
-            output_universe = md.Merge(self.sorted_atoms)
+            output_universe = mda.Merge(self.sorted_atoms)
             self.sorted_atoms.write(
                 os.path.join(path, "{}.{}".format(name, formats[0]))
             )
@@ -340,6 +346,6 @@ class MolData:
             )
             align_traj.run()
 
-        with md.Writer(os.path.join(path, "{}.{}".format(name, formats[1]))) as w:
+        with mda.Writer(os.path.join(path, "{}.{}".format(name, formats[1]))) as w:
             for step in output_universe.trajectory:
                 w.write(output_universe.atoms)

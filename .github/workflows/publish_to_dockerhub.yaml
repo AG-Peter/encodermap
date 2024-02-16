@@ -1,0 +1,23 @@
+name: publish_to_dockerhub
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  push_to_dockerhub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out code
+
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: Build & push Docker image
+        with:
+          image: agpeter/encodermap
+          tags: latest
+          registry: hub.docker.com
+          dockerfile: Dockerfile
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}

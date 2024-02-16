@@ -64,15 +64,6 @@ instance/
 # Scrapy stuff:
 .scrapy
 
-# Sphinx documentation
-docs/_build/
-docs/build/
-./docs/source/user_guide_and_exmaples/asp7.pdb
-./docs/source/user_guide_and_exmaples/*.xtc
-./docs/source/user_guide_and_exmaples/*.csv
-./docs/source/user_guide_and_exmaples/*.png
-
-
 # PyBuilder
 target/
 
@@ -127,6 +118,76 @@ tutorials/notebooks_MD/01_The_new_Info_classes.ipynb
 model/
 test_only_losses
 
+# tests
+tests/data/*actual.png
+tests/data/*
+!/tests/data/1GHC.pdb
+!/tests/data/1UBQ.pdb
+!/tests/data/1YUF.pdb
+!/tests/data/1YUF_numpy.npy
+!/tests/data/1YUF_text.txt
+!/tests/data/1YUG.pdb
+!/tests/data/1YUG_and_1YUF_dataset.nc
+!/tests/data/1YUG_numpy.npy
+!/tests/data/1YUG_text.txt
+!/tests/data/1am7_center_of_mass.npy
+!/tests/data/1am7_center_of_mass.txt
+!/tests/data/1am7_center_of_mass_x.nc
+!/tests/data/1am7_center_of_mass_x.npy
+!/tests/data/1am7_corrected.xtc
+!/tests/data/1am7_corrected_part1.xtc
+!/tests/data/1am7_corrected_part2.xtc
+!/tests/data/1am7_corrected_with_CVs.h5
+!/tests/data/1am7_first_frame_first_atom_xyz.npy
+!/tests/data/1am7_protein.pdb
+!/tests/data/1am7_uncorrected.xtc
+!/tests/data/Ala10_helix.pdb
+!/tests/data/Ala10_helix.xtc
+!/tests/data/Ala10_straight.pdb
+!/tests/data/K48_diUbi.gro
+!/tests/data/K48_diUbi.xtc
+!/tests/data/K63_diUbi.gro
+!/tests/data/K63_diUbi.xtc
+!/tests/data/M1_diUbi.gro
+!/tests/data/M1_diUbi.xtc
+!/tests/data/PFFP_MD_fin_protonly.gro
+!/tests/data/PFFP_MD_fin_protonly.tpr
+!/tests/data/PFFP_MD_fin_protonly_dt_100.xtc
+!/tests/data/PFFP_MD_fin_protonly_dt_100_fixed_pbc.xtc
+!/tests/data/PFFP_vac.top
+!/tests/data/README.md
+!/tests/data/alanine_dipeptide.pdb
+!/tests/data/alanine_dipeptide.xtc
+!/tests/data/asp7.h5
+!/tests/data/asp7.pdb
+!/tests/data/asp7.xtc
+!/tests/data/glu7.pdb
+!/tests/data/glu7.xtc
+!/tests/data/known_angles.h5
+!/tests/data/known_angles.pdb
+!/tests/data/known_angles_1.h5
+!/tests/data/known_angles_1.pdb
+!/tests/data/known_angles_2.h5
+!/tests/data/known_angles_2.pdb
+!/tests/data/known_angles_angles.npy
+!/tests/data/known_angles_dihedrals.npy
+!/tests/data/known_angles_dists.npy
+!/tests/data/known_distances.pdb
+!/tests/data/larger_dataset.nc
+!/tests/data/out.pdb
+!/tests/data/straightened.pdb
+!/tests/data/test_chain_in_plane_actual-failed-diff.png
+!/tests/data/test_chain_in_plane_expected.png
+!/tests/data/test_guess_amide_H_expected.png
+!/tests/data/test_guess_amide_O_expected.png
+!/tests/data/test_straight_to_helix_array_expected.png
+!/tests/data/test_straight_to_helix_v2_expected.png
+!/tests/data/tip3p_300K_1ATM.pdb
+!/tests/data/tip3p_300K_1ATM.xtc
+!/tests/data/traj.h5
+!/tests/data/messy_dataset.nc
+!tests/data/weights_and_biases_m1_diUbq.npz
+
 # MDAnalysis cache
 *.lock
 *.npz
@@ -140,12 +201,52 @@ encodermap_runs/
 # pytest
 .pytest_cache/
 
-# manual stuff
-/Dockerfile
-/docker-compose.yaml
-*dask-worker-space*
+# act.vault for secret env variabls
 /act.vault
+/github.vault
 
-# vmd
+# docker compose
+/docker-compose.yaml
+
+# dask stuff
+*dask-worker-space*
+
+# tensorflow stuff
+*fingerprint.pb*
+*keras_metadata.pb*
+*saved_model.pb*
+*.keras
+variables.index
+variables.data*
+
+# vmd scripts
 *vmd_script.tcl*
 *vmdscene.dat*
+
+# docs
+docs/_build/
+docs/build/
+./docs/source/user_guide_and_exmaples/asp7.pdb
+./docs/source/user_guide_and_exmaples/*.xtc
+./docs/source/user_guide_and_exmaples/*.csv
+./docs/source/user_guide_and_exmaples/*.png
+/docs/source/user_guide_and_examples/asp7.csv
+/docs/source/user_guide_and_examples/asp7.pdb
+/docs/source/user_guide_and_examples/asp7.xtc
+/docs/source/user_guide_and_examples/custom_images_1.png
+/docs/source/user_guide_and_examples/custom_scalars_1.png
+/docs/source/user_guide_and_examples/custom_images_2.png
+/docs/source/user_guide_and_examples/custom_loss_functions_1.png
+/docs/source/user_guide_and_examples/glu7.pdb
+/docs/source/user_guide_and_examples/glu7.xtc
+/docs/source/user_guide_and_examples/lr_scheduler_2.png
+/docs/source/user_guide_and_examples/lr_scheduler_1.png
+/docs/source/user_guide_and_examples/Tensorboard_Cost.png
+/docs/source/user_guide_and_examples/Tensorboard_Histograms.png
+/docs/source/user_guide_and_examples/Tensorboard_Parameters.png
+*.html
+
+# stuff in tutorials
+/tutorials/notebooks_MD/1am7_corrected.h5
+/tutorials/notebooks_MD/1am7_corrected.xtc
+/tutorials/notebooks_MD/1am7_protein.pdb

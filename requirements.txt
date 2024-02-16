@@ -3,6 +3,9 @@ tensorboard
 traitlets
 numpy
 matplotlib
-tensorflow # ==2.4.0 # Fixes __array__() takes 1 positional argument but 2 were given
+tensorflow
 tables
 MDAnalysis
+optional-imports >= 1.0.3
+tensorflow_probability
+tensorflow_graphics

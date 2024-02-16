@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -27,18 +27,24 @@
 ################################################################################
 
 
+# Future Imports at the top
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Callable, Literal, Optional
+# Standard Library Imports
+from collections.abc import Callable
+from typing import TYPE_CHECKING, Literal, Optional
 
+# Third Party Imports
 import numpy as np
 import tensorflow as tf
 import tensorflow.keras.backend as K
 from tqdm import tqdm
 
+# Local Folder Imports
 from ..misc.saving_loading_models import save_model
 from ..misc.summaries import image_summary
 from ..parameters.parameters import ADCParameters, Parameters
+
 
 ################################################################################
 # Typing
@@ -46,6 +52,7 @@ from ..parameters.parameters import ADCParameters, Parameters
 
 
 if TYPE_CHECKING:
+    # Encodermap imports
     from encodermap._typing import AnyParameters
 
 
@@ -79,12 +86,12 @@ class EncoderMapBaseCallback(tf.keras.callbacks.Callback):
     Attributes:
         steps_counter (int): The current step counter. Increases every `on_train_batch_end`.
         p (Union[encodermap.Parameters, encodermap.ADCParameters]: The parameters for this callback.
-            Based on the `summary_step` and `checkpoint_step` of this parameters class different
+            Based on the `summary_step` and `checkpoint_step` of this `Parameters` class different
             class-methods are called.
 
     """
 
-    def __init__(self, parameters: Optional[AnyParameters] = None) -> None:
+    def __init__(self, parameters: Optional["AnyParameters"] = None) -> None:
         """Instantiate the EncoderMapBaseCallback class.
 
         Args:
@@ -104,7 +111,7 @@ class EncoderMapBaseCallback(tf.keras.callbacks.Callback):
     def on_train_batch_end(self, batch: int, logs: Optional[dict] = None) -> None:
         """Called after a batch ends. The number of batch is provided by keras.
 
-        This method is the backbone of all of encodermap's callbacks. After
+        This method is the backbone of all of EncoderMap's callbacks. After
         every batch is method is called by keras. When the number of that
         batch matches either `encodermap.Parameters.summary_step` or `encodermap.Parameters.checkpoint_step`
         the code on `self.on_summary_step`, or `self.on_checkpoint_step` is
@@ -205,10 +212,15 @@ class ProgressBar(EncoderMapBaseCallback):
 
     def on_train_begin(self, logs: Optional[dict] = None) -> None:
         """Simply creates the progressbar once training starts."""
-        self.pbar = tqdm(total=self.p.n_steps, position=0, leave=True)
+        self.pbar = tqdm(
+            total=self.p.n_steps,
+            initial=self.p.current_training_step,
+            position=0,
+            leave=True,
+        )
         postfix = {f"Loss after step ?": "?"}
         if isinstance(self.p, ADCParameters):
-            postfix["Cartesian cost Scale"] = "?"
+            postfix["Cartesian cost scale"] = "?"
         self.pbar.set_postfix(postfix)
 
     def on_train_batch_end(self, batch: int, logs: Optional[dict] = None) -> None:
@@ -227,6 +239,7 @@ class ProgressBar(EncoderMapBaseCallback):
         """
         if logs != {}:
             postfix = {f"Loss after step {epoch}": logs["loss"]}
+        epoch += self.p.current_training_step
         if isinstance(self.p, ADCParameters):
             if self.p.cartesian_cost_scale_soft_start != (None, None):
                 if self.p.cartesian_cost_scale is not None:
@@ -247,7 +260,7 @@ class ProgressBar(EncoderMapBaseCallback):
                     scale = 0
             else:
                 scale = self.p.cartesian_cost_scale
-            postfix["Cartesian cost Scale"] = np.round(scale, 2)
+            postfix["Cartesian cost scale"] = np.round(scale, 2)
         self.pbar.set_postfix(postfix)
 
     def on_train_end(self, logs: Optional[dict] = None) -> None:
@@ -345,8 +358,7 @@ class CheckpointSaver(EncoderMapBaseCallback):
         Luckily, the keras callbacks contain the model as an attribute (self.model).
 
         """
-        save_model(self.model, self.p.main_path, "", step=epoch)
-        # tf.keras.models.save_model(self.model, f'{self.p.main_path}/keras_model_{epoch}_epochs.model')
+        save_model(self.model, self.p.main_path, step=epoch)
 
 
 class IncreaseCartesianCost(tf.keras.callbacks.Callback):
@@ -357,17 +369,18 @@ class IncreaseCartesianCost(tf.keras.callbacks.Callback):
     """
 
     def __init__(
-        self, parameters: Optional[ADCParameters] = None, start_step: int = 0
+        self,
+        parameters: Optional[ADCParameters] = None,
     ) -> None:
         """Instantiate the callback.
 
         Args:
-            parameters (Optional[ACDParameters]: Can be either None, or an instance
-                of `encodermap.parameters.ACDParameters`. These parameters define the
+            parameters (Optional[ADCParameters]: Can be either None, or an instance
+                of `encodermap.parameters.ADCParameters`. These parameters define the
                 steps at which the cartesian cost scaling factor needs to be adjusted.
                 If None is provided, the default values `(None, None)`, i.e. no
-                cartesian cost, will be used. Deafults to None.
-            start_step (int): The current step of the training. This argument
+                cartesian cost, will be used. Defaults to None.
+            start_step (int): The current step of training. This argument
                 is important is training is stopped using the scaling cartesian
                 cost. This argument will usually be loaded from a file in the saved model.
 
@@ -381,7 +394,7 @@ class IncreaseCartesianCost(tf.keras.callbacks.Callback):
         self.last_compilation: bool = False
         self.optimizer = tf.keras.optimizers.Adam(learning_rate=self.p.learning_rate)
         # use a instance variable for the case the model is reloaded and re-trained.
-        self.current_step = start_step
+        self.current_step = self.p.current_training_step
         self.current_cartesian_cost_scale = K.variable(
             0.0, dtype="float32", name="current_cartesian_cost_scale"
         )
@@ -439,12 +452,12 @@ class TensorboardWriteBool(tf.keras.callbacks.Callback):
 
     """
 
-    def __init__(self, parameters: Optional[AnyParameters] = None) -> None:
+    def __init__(self, parameters: Optional["AnyParameters"] = None) -> None:
         """Instantiate the class.
 
         Args:
             parameters (Union[encodermap.Parameters, encodermap.ADCParameters, None], optional):
-                Parameters that will be used check when data should be written to tensorboard. If None is passed
+                Parameters that will be used to check when data should be written to tensorboard. If None is passed
                 default values (check them with print(em.ADCParameters.defaults_description())) will be used.
                 Defaults to None.
 
@@ -461,7 +474,7 @@ class TensorboardWriteBool(tf.keras.callbacks.Callback):
     def on_train_batch_end(self, batch: int, logs: Optional[dict] = None) -> None:
         """Sets the value of the keras backend variable `log_bool`.
 
-        This method does not use the `batch` argument, because, the variable
+        This method does not use the `batch` argument because the variable
         `self.current_training_step` is used.
 
         """

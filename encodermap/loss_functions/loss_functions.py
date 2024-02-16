@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -21,21 +21,24 @@
 ################################################################################
 """Loss functions for encodermap
 
-ToDo:
-    * Debug Autograph for distance cost
-    * WARNING: AutoGraph could not transform <function sigmoid_loss at 0x00000264AB761040> and will run it as-is.
-    * Please report this to the TensorFlow team. When filing the bug, set the verbosity to 10 (on Linux, `export AUTOGRAPH_VERBOSITY=10`) and attach the full output.
-    * Cause: module 'gast' has no attribute 'Index'
-    * To silence this warning, decorate the function with @tf.autograph.experimental.do_not_convert
-
 """
-##############################################################################
+################################################################################
 # Imports
-##############################################################################
+################################################################################
 
+
+# Future Imports at the top
+from __future__ import annotations
+
+# Standard Library Imports
+from collections.abc import Callable
+from typing import TYPE_CHECKING, Any, Optional
+
+# Third Party Imports
 import tensorflow as tf
 import tensorflow.keras.backend as K
 
+# Local Folder Imports
 from ..encodermap_tf1.misc import distance_cost
 from ..misc.distances import (
     pairwise_dist,
@@ -45,9 +48,21 @@ from ..misc.distances import (
 )
 from ..parameters.parameters import ADCParameters, Parameters, ParametersFramework
 
-##############################################################################
+
+################################################################################
+# Typing
+################################################################################
+
+
+if TYPE_CHECKING:
+    # Local Folder Imports
+    from .._typing import AnyParameters
+
+
+################################################################################
 # Globals
-##############################################################################
+################################################################################
+
 
 __all__ = [
     "reconstruction_loss",
@@ -62,18 +77,19 @@ __all__ = [
     "dihedral_loss",
 ]
 
-##############################################################################
+
+################################################################################
 # Functions for tf.cond
 # Don't know if this is really faster than logging every step to tensorboard
-##############################################################################
+################################################################################
 
 
-def _do_nothing(*args):
+def _do_nothing(*args: Any) -> None:
     """This function does nothing. One of the functions provided to tf.cond."""
     pass
 
 
-def _summary_cost(name, cost):
+def _summary_cost(name: str, cost: tf.Tensor) -> None:
     """This functions logs a scalar to a name. One of the functions provided to tf.cond."""
     tf.summary.scalar(name, cost)
 
@@ -101,7 +117,6 @@ def old_distance_loss(model, parameters=None):
     def loss(y_true, y_pred=None, step=None):
         loss.name = "distance_loss"
         y_pred = latent(y_true, training=True)
-        # print(f'For testing: Loss latent of model to test em.encodermap_tf1.misc: {y_pred}')
         if p.distance_cost_scale is not None:
             dist_cost = distance_cost(
                 y_true, y_pred, *p.dist_sig_parameters, p.periodicity
@@ -149,29 +164,29 @@ def loss_combinator(*losses):
         >>> import tensorflow as tf
         >>> import numpy as np
         >>> tf.random.set_seed(1) # fix random state to pass doctest :)
-
+        ...
         >>> model = tf.keras.Sequential([
         ...     tf.keras.layers.Dense(100, kernel_regularizer=tf.keras.regularizers.l2(), activation='relu'),
         ...     tf.keras.layers.Dense(2, kernel_regularizer=tf.keras.regularizers.l2(), activation='relu'),
         ...     tf.keras.layers.Dense(100, kernel_regularizer=tf.keras.regularizers.l2(), activation='relu')
         ... ])
-
+        ...
         >>> # Set up losses and bundle them using the loss combinator
         >>> auto_loss = loss_functions.auto_loss(model)
         >>> reg_loss = loss_functions.regularization_loss(model)
         >>> loss = loss_functions.loss_combinator(auto_loss, reg_loss)
-
+        ...
         >>> # Compile model, model.fit() usually takes a tuple of (data, classes) but in
         >>> # regression learning the data needs to be provided twice. That's why we use fit(data, data)
         >>> model.compile(tf.keras.optimizers.Adam(), loss=loss)
         >>> data = np.random.random((100, 100))
-        >>> history = model.fit(data, data, verbose=0)
+        >>> history = model.fit(x=data, y=data, verbose=0)
         >>> tf.random.set_seed(None) # reset seed
-
+        ...
         >>> # This weird contraption is also there to make the output predictable and pass tests
         >>> # Somehow the tf.random.seed(1) does not work here. :(
         >>> loss = history.history['loss'][0]
-        >>> print(loss) # doctest: +SKIP
+        >>> print(loss)  # doctest: +SKIP
         {'loss': array([2.6])}
         >>> print(type(loss))
         <class 'float'>
@@ -249,13 +264,13 @@ def distance_loss(model, parameters=None, callback=None):
     # closure
     def distance_loss_func(y_true, y_pred=None):
         """y_true can be whatever input you like, dihedrals, angles, pairwise dist, contact maps. That will be
-        transformed with Sketchmap's sigmoid function, as will the output of the latent layer of the autoencoder.
+        transformed with Sketch-map's sigmoid function, as will the output of the latent layer of the autoencoder.
         the difference of these two will result in a loss function."""
         distance_loss_func.name = "distance_loss"
         y_pred = latent(y_true, training=True)
         # functional model gives a tuple
         if isinstance(y_true, tuple):
-            y_true = tf.concat(y_true, axis=1)
+            y_true = tf.concat(y_true[:3], axis=1)
         if p.distance_cost_scale is not None:
             dist_cost = dist_loss(y_true, y_pred)
             if p.distance_cost_scale != 0:
@@ -273,7 +288,9 @@ def distance_loss(model, parameters=None, callback=None):
     return distance_loss_func
 
 
-def sigmoid_loss(parameters=None, periodicity_overwrite=None):
+def sigmoid_loss(
+    parameters=None, periodicity_overwrite=None, dist_dig_parameters_overwrite=None
+):
     """Sigmoid loss closure for use in distance cost and cartesian distance cost.
 
     Outer function prepares callable sigmoid. Sigmoid can then be called with just y_true and y_pred.
@@ -284,7 +301,7 @@ def sigmoid_loss(parameters=None, periodicity_overwrite=None):
                 are used. Defaults to None.
         periodicity overwrite(Union[float, None]), optional): Cartesian distance cost is always non-periodic.
             To make sure no periodicity is applied to the data, set periodicity_overwrite to float('inf'). If
-            None is provided the periodicity of the parameters class (default 2*pi) will be used.
+            None is provided, the periodicity of the parameters class (default 2*pi) will be used.
             Defaults to None.
 
     Returns:
@@ -301,6 +318,11 @@ def sigmoid_loss(parameters=None, periodicity_overwrite=None):
     else:
         periodicity = p.periodicity
 
+    if dist_dig_parameters_overwrite is not None:
+        dist_sig_parameters = dist_dig_parameters_overwrite
+    else:
+        dist_sig_parameters = p.dist_sig_parameters
+
     # @tf.autograph.experimental.do_not_convert
     def sigmoid_loss_func(y_true, y_pred):
         r_h = y_true
@@ -311,8 +333,8 @@ def sigmoid_loss(parameters=None, periodicity_overwrite=None):
             dist_h = pairwise_dist_periodic(r_h, periodicity)
         dist_l = pairwise_dist(r_l)
 
-        sig_h = sigmoid(*p.dist_sig_parameters[:3])(dist_h)
-        sig_l = sigmoid(*p.dist_sig_parameters[3:])(dist_l)
+        sig_h = sigmoid(*dist_sig_parameters[:3])(dist_h)
+        sig_l = sigmoid(*dist_sig_parameters[3:])(dist_l)
 
         cost = tf.reduce_mean(tf.square(sig_h - sig_l))
         return cost
@@ -363,21 +385,14 @@ def center_loss(model, parameters=None, callback=None):
     # closure
     def center_loss_func(y_true, y_pred=None):
         """y_true will not be used in this loss function. y_pred can be supplied, but if None will be taken from the
-        latent layer. This loss function tries to center the points in the latent layer."""
+        latent layer. This loss function tries to center the points in the latent layer.
+        """
         center_loss_func.name = "center_loss"
         y_pred = latent(y_true, training=True)
         # functional model gives a tuple
         if isinstance(y_true, tuple):
-            y_true = tf.concat(y_true, axis=1)
-        # center cost
-        # this is still a bit finicky
-        # needs to have tf.GradentTape() context manager to watch a single layer
+            y_true = tf.concat(y_true[:3], axis=1)
         if p.center_cost_scale is not None:
-            # custom model dep code
-            # center_cost = tf.reduce_mean(tf.square(model.get_layer('Encoder')(y_true)))
-            # sequential model
-            # get the output according to https://keras.io/getting_started/faq/#how-can-i-obtain-the-output-of-an-intermediate-layer-feature-extraction
-            # this can be omitted by implementing a custom metric. Todo.
             center_cost = tf.reduce_mean(tf.square(y_pred))
             if p.center_cost_scale != 0:
                 center_cost *= p.center_cost_scale
@@ -499,7 +514,8 @@ def auto_loss(model, parameters=None, callback=None):
 
     def auto_loss_func(y_true, y_pred=None):
         """y_true is complete model input, y_pred is complete model output. Because here it is not intended to unpack
-        the output into dihedrals and angles, y_pred can be None and will be directly taken from the model."""
+        the output into dihedrals and angles, y_pred can be None and will be directly taken from the model.
+        """
         auto_loss_func.name = "auto_loss"
 
         if y_pred is None:
@@ -769,16 +785,20 @@ def cartesian_distance_loss(model, parameters=None, callback=None):
     else:
         write_bool = callback.log_bool
 
-    dist_loss = sigmoid_loss(p, periodicity_overwrite=float("inf"))
+    dist_loss = sigmoid_loss(
+        p,
+        periodicity_overwrite=float("inf"),
+        dist_dig_parameters_overwrite=p.cartesian_dist_sig_parameters,
+    )
 
     def cartesian_distance_loss_func(y_true, y_pred):
         """y_true can be whatever input you like, dihedrals, angles, pairwise dist, contact maps. That will be
-        transformed with Sketchmap's sigmoid function, as will the output of the latent layer of the autoencoder.
+        transformed with Sketch-map's sigmoid function, as will the output of the latent layer of the autoencoder.
         the difference of these two will result in a loss function."""
         cartesian_distance_loss_func.name = "cartesian_distance_loss"
         if p.cartesian_distance_cost_scale is not None:
             dist_cost = dist_loss(y_true, y_pred)
-            if p.distance_cost_scale != 0:
+            if p.cartesian_distance_cost_scale != 0:
                 dist_cost *= p.cartesian_distance_cost_scale
         else:
             dist_cost = 0
@@ -794,13 +814,13 @@ def cartesian_distance_loss(model, parameters=None, callback=None):
 
 
 def cartesian_loss(
-    model,
-    scale_callback=None,
-    parameters=None,
-    log_callback=None,
-    print_current_scale=False,
-):
-    """Encodermap cartesian distance loss. Calculates sigmoid-weighted distances between pairwise cartesians and latent.
+    model: tf.keras.models.Model,
+    scale_callback: Optional[tf.keras.callbacks.Callback] = None,
+    parameters: Optional["AnyParameters"] = None,
+    log_callback: Optional[tf.keras.callbacks.Callback] = None,
+    print_current_scale: bool = False,
+) -> Callable:
+    """Encodermap cartesian loss. Calculates sigmoid-weighted distances between pairwise cartesians and latent.
 
     Uses sketch-map's sigmoid function to transform the high-dimensional space of the input and the
     high-dimensional space of the output.
@@ -821,6 +841,7 @@ def cartesian_loss(
 
     Args:
         model (tf.keras.Model): The model to use the loss function on.
+        scale_callback: Optional[encoodermap.callbacks.IncreaseCartesianCost]:
         parameters (Union[encodermap.ADCParameters, None], optional): The parameters. If None is
             provided default values (check them with print(em.ADCParameters.defaults_description()))
             are used. Defaults to None.
@@ -843,6 +864,7 @@ def cartesian_loss(
         p = ParametersFramework(ADCParameters.defaults)
     else:
         p = parameters
+
     if scale_callback is not None:
         current_scale_callback = scale_callback.current_cartesian_cost_scale
     else:

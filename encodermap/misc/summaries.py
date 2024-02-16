@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -21,22 +21,49 @@
 ################################################################################
 
 """
-Functions that write stuff to tensorboard. Mainly used for the iumage callbacks.
+Functions that write stuff to tensorboard. Mainly used for the image callbacks.
 """
 
-import io
+################################################################################
+# Imports
+################################################################################
 
+
+# Future Imports at the top
+from __future__ import annotations
+
+# Standard Library Imports
+import io
+from collections.abc import Callable, Sequence
+from typing import Any, Optional, Union
+
+# Third Party Imports
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 
+
 matplotlib.use("Agg")
+
+
+################################################################################
+# Globals
+################################################################################
+
 
 __all__ = ["add_layer_summaries", "image_summary"]
 
 
-def add_layer_summaries(layer, step=None):
+################################################################################
+# Summary Functions
+################################################################################
+
+
+def add_layer_summaries(
+    layer: tf.keras.layers.Layer,
+    step: Optional[int] = None,
+) -> None:
     """Adds summaries for a layer to Tensorboard.
 
     Args:
@@ -59,7 +86,12 @@ def add_layer_summaries(layer, step=None):
     variable_summaries(namescope, layer.name + "/biases", biases, step)
 
 
-def variable_summaries(namescope, name, variables, step=None):
+def variable_summaries(
+    namescope: str,
+    name: str,
+    variables: tf.Tensor,
+    step: Optional[int] = None,
+) -> None:
     """
     Attach several summaries to a Tensor for TensorBoard visualization.
 
@@ -91,30 +123,44 @@ def variable_summaries(namescope, name, variables, step=None):
             tf.summary.scalar("max", tf.reduce_max(var), step=step)
             tf.summary.scalar("min", tf.reduce_min(var), step=step)
             tf.summary.histogram("histogram", var, step=step)
+            tf.compat.v1.summary.tensor_summary("values", var)
 
 
 def image_summary(
-    lowd, step=None, scatter_kws={"s": 20}, hist_kws={"bins": 50}, additional_fns=None
-):
+    lowd: np.ndarray,
+    step: Optional[int] = None,
+    scatter_kws: Optional[dict[str, Any]] = None,
+    hist_kws: Optional[dict[str, Any]] = None,
+    additional_fns: Optional[Sequence[Callable]] = None,
+) -> None:
     """Writes an image to Tensorboard.
 
     Args:
-        lowd (np.ndarray): The data to plot. Usually that will be the output of the latent space of the
-            Autoencoder. This array has to be of dimensionality 2 (rows and columns). The first two points of the
-            rows will be used as xy coordinates in a scatter plot.
-        step (Union[int, None], optional): The training step under which you can find the image
-            in tensorboard. Defaults to None.
-        scatter_kws (dict, optional): A dictionary with keyword arguments to be passed to matpltlib.pyplot.scatter().
-            Defaults to {'s': 20}.
-        hist_kws (dict, optional): A dictionary with keyword arguments to be passed to matpltlib.pyplot.hist2d().
-            Defaults to {'bins': 50}.
-        additional_fns (Union[None, list], optional): A list of functions that take the data of the latent space
-            and return a tf.Tensor that can be logged to tensorboard with tf.summary.image().
+        lowd (np.ndarray): The data to plot. Usually that
+            will be the output of the latent space of the Autoencoder.
+            This array has to be of dimensionality 2 (rows and columns).
+            The first two points of the rows will be used as xy coordinates
+            in a scatter plot.
+        step (Optional[int]): The training step under which you can find the
+            image in tensorboard. Defaults to None.
+        scatter_kws (Optional[dict[str, Any]]): A dictionary with keyword
+            arguments to be passed to matplotlib.pyplot.scatter(). If None is
+            provided, this dict: {'s': 20} will be used. Defaults to None.
+        hist_kws (Optional[dict[str, Any]]): A dictionary with keyword arguments
+            to be passed to matplotlib.pyplot.hist2d(). If None is provided, this
+             dict: {'bins': 50} will be used. Defaults to None.
+        additional_fns (Optional[Sequence[Callable]]): A sequence of functions that
+            take the data of the latent space and return a tf.Tensor that can
+            be logged to tensorboard with tf.summary.image().
 
     Raises:
         AssertionError: When lowd.ndim is not 2 and when len(lowd) != len(ids)
 
     """
+    if scatter_kws is None:
+        scatter_kws = {"s": 20}
+    if hist_kws is None:
+        hist_kws = {"bins": 50}
     if np.any(np.isnan(lowd)):
         image = _gen_nan_image()
         with tf.name_scope("Latent Scatter"):
@@ -135,12 +181,16 @@ def image_summary(
                 )
 
 
-def _gen_hist(data, hist_kws):
-    """Creates matplotlib histogram and returns tensorflow Tensor that represents an image.
+def _gen_hist(
+    data: np.ndarray,
+    hist_kws: dict[str, Any],
+) -> tf.Tensor:
+    """Creates matplotlib histogram and returns tensorflow Tensor that
+    represents an image.
 
     Args:
-        data (Union[np.ndarray, tf.Tensor]): The xy data to be used. data.ndim should be 2.
-            1st dimension the datapoints, 2nd dimension x, y.
+        data (Union[np.ndarray, tf.Tensor]): The xy data to be used.
+            `data.ndim` should be 2. 1st dimension the datapoints, 2nd dimension x, y.
         hist_kws (dict): Additional keywords to be passed to matplotlib.pyplot.hist2d().
 
     Returns:
@@ -159,8 +209,8 @@ def _gen_hist(data, hist_kws):
     return image
 
 
-def _gen_nan_image():
-    """Creates matplotlib image, whith debug info.
+def _gen_nan_image() -> tf.Tensor:
+    """Creates matplotlib image, with debug info.
 
     Returns:
         tf.Tensor: A tensorflow tensor that can be written to Tensorboard with tf.summary.image().
@@ -185,7 +235,10 @@ def _gen_nan_image():
     return image
 
 
-def _gen_scatter(data, scatter_kws):
+def _gen_scatter(
+    data: np.ndarray,
+    scatter_kws: dict[str, Any],
+) -> tf.Tensor:
     """Creates matplotlib scatter plot and returns tensorflow Tensor that represents an image.
 
     Args:

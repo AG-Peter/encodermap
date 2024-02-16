@@ -1,26 +1,52 @@
-[tool.mypy]
-exclude = [
-    "development",
-    "encodermap/models/models_dep",
-    "encodermap/encodermap_tf1",
-    "encodermap/examples"
-]
-namespace_packages = true
-follow_imports = "silent"
-ignore_missing_imports = true
-packages = [
-    "encodermap"
-]
-enable-incomplete-features = true
-plugins = "numpy.typing.mypy_plugin"
+################################################################################
+# Vulture
+################################################################################
+[tool.vulture]
+paths = ['mdb', '.vulture_whitelist.txt']
+exclude = ["tests/", "development/"]
+ignore_decorators = ["@app.route", "@require_*"]
+ignore_names = ["visit_*", "do_*", "__exit__"]
+make_whitelist = false
+min_confidence = 80
+sort_by_size = true
+verbose = false
 
+
+################################################################################
+# Versioneer
+################################################################################
+[tool.versioneer]
+VCS = "git"
+style = "pep440"
+versionfile_source = "encodermap/_version.py"
+versionfile_build = "encodermap/_version.py"
+tag_prefix = ""
+
+
+################################################################################
+# Flake8
+################################################################################
+[tool.flake8]
+paths = ['encodermap']
+excluded_files = []
+excluded_lines = []
+excluded_errors = []
+exclude = ["development", "tests"]
+max-line-length = 90
+verbose = 0
+
+
+################################################################################
+# Coverage
+################################################################################
 [tool.coverage.run]
 branch = true
-command_line = "-m unittest discover -s tests"
+command_line = "-m unittest discover -s tests -p *trajinfo*"
 
 [tool.coverage.html]
-directory = "docs/source/_static"
+directory = "docs/build/htmlcov"
 title = "coverage_report"
+omit = "*/tests*"
 
 [tool.coverage.report]
 exclude_lines = [
@@ -33,6 +59,7 @@ exclude_lines = [
     "raise AssertionError",
     "raise NotImplementedError",
     "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:"
 ]
 show_missing = true
 omit = [
@@ -44,9 +71,13 @@ omit = [
     "*__autograph_generated*"
 ]
 
+
+################################################################################
+# Black
+################################################################################
 [tool.black]
 line-length = 88
-target-version = ['py39']
+target-version = ['py310']
 include = '\.pyi?$'
 exclude = '''
 
@@ -69,16 +100,47 @@ exclude = '''
 )
 '''
 
-[tool.vulture]
-exclude = ["tests/", "development/"]
-# ignore_decorators = ["@app.route", "@require_*"]
-# ignore_names = ["visit_*", "do_*"]
-# make_whitelist = true
-min_confidence = 80
-paths = ["encodermap"]
-sort_by_size = true
-verbose = false
 
+################################################################################
+# MyPy
+################################################################################
+[tool.mypy]
+exclude = [
+    "development",
+    "encodermap/models/models_dep",
+    "encodermap/encodermap_tf1",
+    "encodermap/examples",
+    "tests"
+]
+namespace_packages = true
+follow_imports = "silent"
+ignore_missing_imports = true
+packages = [
+    "encodermap"
+]
+# enable-incomplete-features = true
+# plugins = "numpy.typing.mypy_plugin"
+show_error_codes = true
+warn_return_any = true
+warn_unused_configs = true
+implicit_reexport = true
+pretty = true
+disable_error_code = ['attr-defined', 'import']
+
+
+
+################################################################################
+# Isort
+################################################################################
 [tool.isort]
+skip = ["tests/long_training.py"]
 profile = "black"
 src_paths = ["encodermap", "tests"]
+lines_after_imports = 2
+sections = ["FUTURE", "ENCODERMAP", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+known_encodermap = ["enocodermap"]
+import_heading_future = "Future Imports at the top"
+import_heading_stdlib = "Standard Library Imports"
+import_heading_thirdparty = "Third Party Imports"
+import_heading_firstparty = "Encodermap imports"
+import_heading_localfolder = "Local Folder Imports"

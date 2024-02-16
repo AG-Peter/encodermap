@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -22,13 +22,13 @@
 """Parameter Classes for Encodermap.
 
 This module contains parameter classes which are used to hold information for
-the encodermap autoencoder. Parameters can be set from keyworded arguments, by
+the encodermap autoencoder. Parameters can be set from keyword arguments, by
 overwriting the class attributes or by reading them from .json, .yaml or ASCII files.
 
 Features:
     * Setting and saving Parameters with the Parameter class.
     * Loading parameters from disk and continue where you left off.
-    * The Parameter and ACDParamter class contains already good default values.
+    * The Parameter and ADCParamter class contain already good default values.
 
 """
 
@@ -38,16 +38,22 @@ Features:
 ################################################################################
 
 
+# Future Imports at the top
 from __future__ import annotations
 
+# Standard Library Imports
 import datetime
 import json
 import os
 from math import pi
 from textwrap import wrap
 
-from .._optional_imports import _optional_import
+# Third Party Imports
+from optional_imports import _optional_import
+
+# Local Folder Imports
 from ..misc.misc import _datetime_windows_and_linux_compatible, printTable
+
 
 ################################################################################
 # Optional Imports
@@ -62,12 +68,15 @@ yaml = _optional_import("yaml")
 ################################################################################
 
 
-from typing import TYPE_CHECKING, Dict, Optional, TypeVar, Union
+# Standard Library Imports
+from pathlib import Path
+from typing import TYPE_CHECKING, Any, Optional, TypeVar, Union
+
 
 ParametersData = Union[
     float, int, str, bool, list[int], list[str], list[float], tuple[int, None], None
 ]
-ParametersDict = Dict[str, ParametersData]
+ParametersDict = dict[str, ParametersData]
 ParametersType = TypeVar("Parameters", bound="Parent")
 ADCParametersType = TypeVar("Parameters", bound="Parent")
 
@@ -86,7 +95,7 @@ __all__ = ["Parameters", "ADCParameters"]
 
 
 def search_and_replace(
-    file_path: str,
+    file_path: Union[str, Path],
     search_pattern: str,
     replacement: str,
     out_path: Optional[str] = None,
@@ -99,31 +108,38 @@ def search_and_replace(
         search_pattern (str): Pattern to search for.
         replacement (str): What to replace `search_pattern` with.
         out_path (str, optional): path where to write the output file.
-            If no path is given the original file will be replaced. Defaults to ''.
-        backup (bool, optional): If backup is true the original file is
+            If no path is given, the original file will be replaced. Defaults to ''.
+        backup (bool, optional): If backup is true, the original file is
             renamed to filename.bak before it is overwritten
 
     Examples:
-        >>> with open('path/to/file', 'r') as f:
-        ...     lines = f.readlines()
-        >>> print(lines)
+        >>> import tempfile
+        >>> from encodermap.parameters.parameters import search_and_replace
+        >>> from pathlib import Path
+        >>> with tempfile.TemporaryDirectory() as td:
+        ...     td = Path(td)
+        ...     with open(td / "file.txt", mode="w+") as f:
+        ...         f.write("This is a Test file.")
+        ...         f.seek(0)
+        ...         print(f.read())
+        ...     search_and_replace(td / "file.txt", "Test", "new Test")
+        ...     with open(td / "file.txt", mode="r") as f:
+        ...         print(f.read())  # doctest: +SKIP
         This is a Test file.
-        >>> search_and_replace('path/to/file', 'Test', 'new Test')
-        >>> with open('path/to/file', 'r') as f:
-        ...     lines = f.readlines()
-        >>> print(lines)
         This is a new Test file.
 
     """
+    file_path = Path(file_path)
     with open(file_path, "r") as f:
         file_data = f.read()
 
     file_data = file_data.replace(search_pattern, replacement)
 
-    if out_path is not None:
+    if out_path is None:
         out_path = file_path
         if backup:
-            os.rename(file_path, file_path + ".bak")
+            backup_name = out_path.parent / (out_path.name + ".bak")
+            out_path.rename(backup_name)
 
     with open(out_path, "w") as file:
         file.write(file_data)
@@ -144,7 +160,7 @@ class ParametersFramework:
     Attributes:
         main_path (str): The main path of the parameter class.
         defaults (dict): The defaults passed into the Parent Class by the child classes
-            Parameters() and ACDParameters()
+            Parameters() and ADCParameters()
 
     Methods:
         save ():
@@ -188,7 +204,13 @@ class ParametersFramework:
                 f"Length of `n_neurons` and `activation_functions` (-1) does not match: {self.n_neurons}, {self.activation_functions}"
             )
 
-    def save(self, path: Optional[str] = None) -> str:
+    def to_dict(self) -> ParametersDict:
+        out = {}
+        for k in self.defaults:
+            out[k] = getattr(self, k)
+        return out
+
+    def save(self, path: Optional[Union[str, Path]] = None) -> str:
         """Save parameters in json format or yaml format.
 
         Args:
@@ -199,7 +221,9 @@ class ParametersFramework:
             str: The path where the parameters were saved.
 
         """
-        if path is None:
+        if path is not None:
+            path = str(path)
+        else:
             path = os.path.join(self.main_path, f"parameters.json")
             fmt = "json"
         if os.path.isfile(path):
@@ -209,7 +233,8 @@ class ParametersFramework:
         fmt = path.split(".")[-1]
         if fmt not in ["json", "yaml"]:
             raise OSError(
-                f"Unrecognized extension .{fmt}. Please provide either '.json' or '.yaml'"
+                f"Unrecognized extension .{fmt} in path {path}. "
+                f"Please provide either '.json' or '.yaml'"
             )
         with open(path, "w") as f:
             if fmt == "json":
@@ -251,17 +276,32 @@ class ParametersFramework:
         out = []
         for key, value in self.__dict__.items():
             if key in self.defaults:
-                out.append(
-                    {
-                        "Parameter": key,
-                        "Value": value,
-                        "Description": "\n".join(wrap(descr_dict[key], width=50)),
-                    }
-                )
+                try:
+                    out.append(
+                        {
+                            "Parameter": key,
+                            "Value": value,
+                            "Description": "\n".join(wrap(descr_dict[key], width=50)),
+                        }
+                    )
+                except KeyError as e:
+                    raise Exception(
+                        f"There is no documentation about the parameter {key} in "
+                        f"this class' docstring. Please fix."
+                    ) from e
         return printTable(out, sep="\n")
 
     @classmethod
-    def from_file(cls, path: str) -> Union[ParametersType, ADCParametersType]:
+    def from_dict(
+        cls, params: ParametersDict
+    ) -> Union[ParametersType, ADCParametersType]:
+        """Constructs a parameters class from a dictionary of values."""
+        return cls(**params)
+
+    @classmethod
+    def from_file(
+        cls, path: Union[str, Path]
+    ) -> Union[ParametersType, ADCParametersType]:
         """Alternative constructor for ParameterFramework classes.
 
         Reads a file and sets the attributes based on that.
@@ -273,19 +313,22 @@ class ParametersFramework:
             ParametersFramework: A new ParametersFramework class.
 
         """
+        path = Path(path)
         with open(path, "r") as f:
-            if path.split(".")[-1] == "json":
+            if path.suffix == ".json":
                 params = json.load(f)
-            elif path.split(".")[-1] == "yaml":
+            elif path.suffix == ".yaml":
                 params = yaml.load(f, Loader=yaml.FullLoader)
             else:
                 raise ValueError(
-                    f"The extension of the provided file should be `.json`, or `.yaml`. You provided {path.split('.')[1]}"
+                    f"The extension of the provided file should be `.json`, or "
+                    f"`.yaml`. You provided {path.split('.')[1]}"
                 )
 
         if "n_epochs" in params:
             print(
-                "Detected old definition `n_epochs` and `n_steps_per_epoch`. I will change that to `n_steps` = `n_epochs` * `n_steps_per_epoch`."
+                "Detected old definition `n_epochs` and `n_steps_per_epoch`. "
+                "I will change that to `n_steps` = `n_epochs` * `n_steps_per_epoch`."
             )
             params["n_steps"] = params["n_epochs"] * params["n_steps_per_epoch"]
 
@@ -299,14 +342,23 @@ class ParametersFramework:
                     b *= params["n_steps_per_epoch"]
                     params["cartesian_cost_scale_soft_start"] = (a, b)
 
-            # fix summary step and checkpoint_step
+            # fix the summary step and checkpoint_step
             params["summary_step"] *= params["n_steps_per_epoch"]
             params["checkpoint_step"] *= params["n_steps_per_epoch"]
 
             del params["n_epochs"]
             del params["n_steps_per_epoch"]
 
-        return cls(**params)
+        if Path(params["main_path"]).parent != path.parent:
+            print(
+                "seems like the parameter file was moved to another directory. "
+                "Parameter file is updated ..."
+            )
+            params["main_path"] = str(path.parent)
+
+        newclass = cls(**params)
+        newclass.save()
+        return newclass
 
     @classmethod
     def load(cls, path: str) -> Union[ParametersType, ADCParametersType]:
@@ -326,18 +378,20 @@ class ParametersFramework:
                 params = yaml.load(f, Loader=yaml.FullLoader)
             else:
                 raise ValueError(
-                    f"The extension of the provided file should be `.json`, or `.yaml`. You provided {path.split('.')[1]}"
+                    f"The extension of the provided file should be `.json`, or "
+                    f"`.yaml`. You provided {path.split('.')[1]}"
                 )
 
         if "n_epochs" in params:
             print(
-                "Detected old definition `n_epochs` and `n_steps_per_epoch`. I will change that to `n_steps` = `n_epochs` * `n_steps_per_epoch`."
+                "Detected old definition `n_epochs` and `n_steps_per_epoch`. "
+                "I will change that to `n_steps` = `n_epochs` * `n_steps_per_epoch`."
             )
             params["n_steps"] = params["n_epochs"] * params["n_steps_per_epoch"]
             del params["n_epochs"]
             del params["n_steps_per_epoch"]
 
-        # check whether the parameters file has been moved and update it accordingly.
+        # check whether the parameters file has been moved and update it accordingly.def from
         if params["main_path"] != os.path.dirname(path):
             print(
                 "seems like the parameter file was moved to another directory. Parameter file is updated ..."
@@ -388,7 +442,7 @@ class ParametersFramework:
         for key, value in dictionary.items():
             setattr(self, key, value)
 
-    def __setitiem__(self, key: str, value: ParametersData) -> None:
+    def __setitem__(self, key: str, value: ParametersData) -> None:
         """Implements the setitem method. Values can be set like so:
 
         Examples:
@@ -496,7 +550,7 @@ class Parameters(ParametersFramework):
                 * `reconstruction_loss` will try to train output == input
                 * `mse`: Returns a mean squared error loss.
                 * `emap_cost` is the EncoderMap loss function. Depending on the class `Autoencoder`,
-                    `Encodermap, `ACDAutoencoder`, different contributions are used for a combined loss.
+                    `Encodermap, `ADCAutoencoder`, different contributions are used for a combined loss.
                     Autoencoder uses atuo_cost, reg_cost, center_cost.
                     EncoderMap class adds sigmoid_loss.
         batched (bool): Whether the dataset is batched or not.
@@ -505,18 +559,33 @@ class Parameters(ParametersFramework):
             * `custom` uses gradient tape and calculates losses and gradients manually.
         tensorboard (bool): Whether to print tensorboard information. Defaults to False.
         seed (Union[int, None]): Fixes the state of all operations using random numbers. Defaults to None.
+        current_training_step (int): The current training step. Aids in reloading of models.
+        write_summary (bool): If True writes a summar.txt of the models into main_path
+            if `tensorboard` is True, summaries will also be written.
+        trainable_dense_to_sparse (bool): When using different topologies to train
+            the AngleDihedralCartesianEncoderMap, some inputs might be sparse,
+            which means, they have missing values. Creating a dense input is done
+            by first passing these sparse tensors through `tf.keras.layers.Dense`
+            layers. These layers have trainable weights, and if this parameter
+            is True, these weights will be changed by the optimizer.
 
     Examples:
         >>> import encodermap as em
-        >>> paramters = em.Parameters()
-        >>> parameters.auto_cost_variant
+        >>> import tempfile
+        >>> from pathlib import Path
+        ...
+        >>> with tempfile.TemporaryDirectory() as td:
+        ...     td = Path(td)
+        ...     p = em.Parameters()
+        ...     print(p.auto_cost_variant)
+        ...     savepath = p.save(td / "parameters.json")
+        ...     print(savepath)
+        ...     new_params = em.Parameters.from_file(td / "parameters.json")  # doctest: +ELLIPSIS
+        ...     print(new_params.main_path)
         mean_abs
-        >>> parameters.save(path='/path/to/dir')
-        /path/to/dir/parameters.json
-        >>> # alternative constructor
-        >>> new_params = em.Parameters.from_file('/path/to/dir/parameters.json')
-        >>> new_params.main_path
-        /path/to/dir/parameters.json
+        /tmp/tmp.../parameters.json
+        seems like the parameter file was moved to another directory. Parameter file is updated ...
+        /tmp/tmp...
 
     """
 
@@ -544,6 +613,9 @@ class Parameters(ParametersFramework):
         batched=True,
         tensorboard=False,
         seed=None,
+        current_training_step=0,
+        write_summary=False,
+        trainable_dense_to_sparse=False,
     )
 
     def __init__(self, **kwargs: ParametersData) -> None:
@@ -601,63 +673,109 @@ class ADCParameters(ParametersFramework):
     It holds all the parameters that the Parameters object includes, plus the following attributes:
 
     Attributes:
-        cartesian_pwd_start (int): Index of the first atom to use for the pairwise distance calculation.
-        cartesian_pwd_stop (int): Index of the last atom to use for the pairwise distance calculation.
-        cartesian_pwd_step (int):  Step for the calculation of paiwise distances. E.g. for a chain of atoms
-            N-C_a-C-N-C_a-C... cartesian_pwd_start=1 and cartesian_pwd_step=3 will result in using all C-alpha atoms for the
-            pairwise distance calculation.
-        use_backbone_angles (bool): Allows to define whether backbone bond angles should be learned (True) or if instead mean
+        track_clashes (bool): Whether to track the number of clashes during
+            training. The average number of clashes is the average number of
+            distances in the reconstructed cartesian coordinates with a distance
+            smaller than 1 (nm). Defaults to False.
+        track_RMSD (bool): Whether to track the RMSD of the input and reconstructed
+            cartesians during training. The RMSDs are computed along the batch
+            by minimizing the .. math::
+                \\text{RMSD}(\\mathbf{x}, \\mathbf{x}^{\\text{ref}}) = \\min_{\\mathsf{R}, \\mathbf{t}} %
+                 \\sqrt{\\frac{1}{N} \\sum_{i=1}^{N} \\left[ %
+                     (\\mathsf{R}\\cdot\\mathbf{x}_{i}(t) + \\mathbf{t}) - \\mathbf{x}_{i}^{\\text{ref}} \\right]^{2}}
+            This results in n RMSD values, where n is the size of the batch.
+            A mean RMSD of this batch and the values for this batch will be logged
+            to tensorboard.
+        cartesian_pwd_start (int): Index of the first atom to use for the pairwise
+            distance calculation.
+        cartesian_pwd_stop (int): Index of the last atom to use for the pairwise
+            distance calculation.
+        cartesian_pwd_step (int):  Step for the calculation of paiwise
+            distances. E.g. for a chain of atoms N-C_a-C-N-C_a-C...
+            cartesian_pwd_start=1 and cartesian_pwd_step=3 will result
+            in using all C-alpha atoms for the pairwise distance calculation.
+        use_backbone_angles (bool): Allows to define whether backbone bond
+            angles should be learned (True) or if instead mean
             values should be used to generate conformations (False).
-        use_sidechains (bool): Whether sidechain dihedrals should be passed through the autoencoder.
-        angle_cost_scale (int): Adjusts how much the angle cost is weighted in the cost function.
-        angle_cost_variant (str): Defines how the angle cost is calculated. Must be one of:
-            * "mean_square"
-            * "mean_abs"
-            * "mean_norm".
-        angle_cost_reference (int): Can be used to normalize the angle cost with the cost of same reference model (dummy).
-        dihedral_cost_scale (int): Adjusts how much the dihedral cost is weighted in the cost function.
-        dihedral_cost_variant (str): Defines how the dihedral cost is calculated. Must be one of:
-            * "mean_square"
-            * "mean_abs"
-            * "mean_norm".
-        dihedral_cost_reference (int): Can be used to normalize the dihedral cost with the cost of same reference model (dummy).
-        side_dihedral_cost_scale (int): Adjusts how much the side dihedral cost is weighted in the cost function.
-        side_dihedral_cost_variant (str): Defines how the side dihedral cost is calculated. Must be one of:
-            * "mean_square"
-            * "mean_abs"
-            * "mean_norm".
-        side_dihedral_cost_reference (int): Can be used to normalize the side dihedral cost with the cost of same reference model (dummy).
-        cartesian_cost_scale (int): Adjusts how much the cartesian cost is weighted in the cost function.
-        cartesian_cost_scale_soft_start (tuple): Allows to slowly turn on the cartesian cost. Must be a tuple with
-            (start, end) or (None, None) If begin and end are given, cartesian_cost_scale will be increased linearly in the
+        use_sidechains (bool): Whether sidechain dihedrals should be passed
+            through the autoencoder.
+        angle_cost_scale (int): Adjusts how much the angle cost is weighted
+            in the cost function.
+        angle_cost_variant (str): Defines how the angle cost is calculated.
+            Must be one of:
+                * "mean_square"
+                * "mean_abs"
+                * "mean_norm".
+        angle_cost_reference (int): Can be used to normalize the angle cost with
+            the cost of same reference model (dummy).
+        dihedral_cost_scale (int): Adjusts how much the dihedral cost is weighted
+            in the cost function.
+        dihedral_cost_variant (str): Defines how the dihedral cost is calculated.
+            Must be one of:
+                * "mean_square"
+                * "mean_abs"
+                * "mean_norm".
+        dihedral_cost_reference (int): Can be used to normalize the dihedral
+            cost with the cost of same reference model (dummy).
+        side_dihedral_cost_scale (int): Adjusts how much the side dihedral cost
+            is weighted in the cost function.
+        side_dihedral_cost_variant (str): Defines how the side dihedral cost
+            is calculated. Must be one of:
+                * "mean_square"
+                * "mean_abs"
+                * "mean_norm".
+        side_dihedral_cost_reference (int): Can be used to normalize the side
+            dihedral cost with the cost of same reference model (dummy).
+        cartesian_cost_scale (int): Adjusts how much the cartesian cost is
+            weighted in the cost function.
+        cartesian_cost_scale_soft_start (tuple): Allows to slowly turn on the
+            cartesian cost. Must be a tuple with
+            (start, end) or (None, None) If begin and end are given,
+                cartesian_cost_scale will be increased linearly in the
             given range.
-        cartesian_cost_variant (str): Defines how the cartesian cost is calculated. Must be one of:
-            * "mean_square"
-            * "mean_abs"
-            * "mean_norm".
-        cartesian_cost_reference (int): Can be used to normalize the cartesian cost with the cost of same reference model (dummy).
-        cartesian_dist_sig_parameters (tuple of floats): Parameters for the sigmoid functions applied to the high- and low-dimensional
+        cartesian_cost_variant (str): Defines how the cartesian cost is calculated.
+            Must be one of:
+                * "mean_square"
+                * "mean_abs"
+                * "mean_norm".
+        cartesian_cost_reference (int): Can be used to normalize the cartesian
+            cost with the cost of same reference model (dummy).
+        cartesian_dist_sig_parameters (tuple of floats): Parameters for the
+            sigmoid functions applied to the high- and low-dimensional
             distances in the following order (sig_h, a_h, b_h, sig_l, a_l, b_l).
-        cartesian_distance_cost_scale (int): Adjusts how much the cartesian distance cost is weighted in the cost function.
+        cartesian_distance_cost_scale (int): Adjusts how much the cartesian
+            distance cost is weighted in the cost function.
+        multimer_training (Any): Experimental feature.
+        multimer_topology_classes (Any): Experimental feature.
+        multimer_connection_bridges (Any): Experimental feature.
+        multimer_lengths (Any): Experimental feature.
 
     Examples:
         >>> import encodermap as em
-        >>> parameters = em.ADCParameters()
-        >>> parameters.auto_cost_variant
+        >>> import tempfile
+        >>> from pathlib import Path
+        ...
+        >>> with tempfile.TemporaryDirectory() as td:
+        ...     td = Path(td)
+        ...     p = em.Parameters()
+        ...     print(p.auto_cost_variant)
+        ...     savepath = p.save(td / "parameters.json")
+        ...     print(savepath)
+        ...     new_params = em.Parameters.from_file(td / "parameters.json")  # doctest: +ELLIPSIS
+        ...     print(new_params.main_path)
         mean_abs
-        >>> parameters.save(path='/path/to/dir')
-        /path/to/dir/parameters.json
-        >>> # alternative constructor
-        >>> new_params = em.Parameters.from_file('/path/to/dir/parameters.json')
-        >>> new_params.main_path
-        /path/to/dir/parameters.json
+        /tmp/tmp.../parameters.json
+        seems like the parameter file was moved to another directory. Parameter file is updated ...
+        /tmp/tmp...
 
     """
 
     defaults = dict(
         Parameters.defaults,
         **dict(
-            model_api="functional",  # overwrite main class. Functional allows multiple in and outputs.
+            track_clashes=False,
+            track_RMSD=False,
+            model_api="functional",  # overwrite the main class. Functional allows multiple in and outputs.
             cartesian_pwd_start=None,
             cartesian_pwd_stop=None,
             cartesian_pwd_step=None,
@@ -680,6 +798,10 @@ class ADCParameters(ParametersFramework):
             cartesian_distance_cost_scale=1,
             auto_cost_scale=None,
             distance_cost_scale=None,
+            multimer_training=None,
+            multimer_topology_classes=None,
+            multimer_connection_bridges=None,
+            multimer_lengths=None,
         ),
     )
 

@@ -1,10 +1,14 @@
 <img src="pic/new_logo_m.png" width=45% align="right" />
 
-![Test](https://github.com/AG-Peter/encodermap/actions/workflows/workflow.yaml/badge.svg?branch=main)
-![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/kevinsawade/e4969c0b8ce8edeb862af753cff43ad0/raw/test.json)
-![color](https://img.shields.io/badge/color-e77800-e77800)
+[![Test](https://github.com/AG-Peter/encodermap/actions/workflows/unittests.yaml/badge.svg?branch=main)](https://ag-peter.github.io/encodermap/_static/html_test_runner_report.html)
+[![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/kevinsawade/e4969c0b8ce8edeb862af753cff43ad0/raw/test.json)](https://ag-peter.github.io/encodermap/_static/coverage/)
+[![color](https://img.shields.io/badge/color-e77800-e77800)]()
 [![badge](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 [![badge](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
+
+
 
 
 ## Introduction
@@ -13,6 +17,7 @@ For a quick intro have a look at the following video:
 [<p align="left"> <img src="pic/thumbnail.png" width=50% /> </p>](https://youtu.be/JV59OABhNTY)
 
 You can find more information in these two articles:
+
 [Lemke, Tobias, and Christine Peter. "EncoderMap: Dimensionality Reduction and Generation of Molecule Conformations." Journal of chemical theory and computation 15.2 (2019): 1209-1215.](https://pubs.acs.org/doi/abs/10.1021/acs.jctc.8b00975)
 
 [Lemke, T., Berg, A., Jain, A., & Peter, C. "EncoderMap (II): Visualizing important molecular motions with improved generation of protein conformations" Journal of chemical information and modeling (2019).](https://doi.org/10.1021/acs.jcim.9b00675)
@@ -21,7 +26,16 @@ You can find more information in these two articles:
 
 Find the documentation at:
 
-https://ag-peter.github.io/encoder_map_private/
+https://ag-peter.github.io/encodermap/
+
+
+## Quick start
+
+To get started right away, you can try out the tutorial notebooks at mybinder.org or Google Colab:
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/AG-Peter/encodermap/HEAD)
+
+[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AG-Peter/encodermap)
 
 
 ## Installation
@@ -32,13 +46,13 @@ https://ag-peter.github.io/encoder_map_private/
 pip install git+https://github.com/AG-Peter/encodermap.git
 ```
 
-**Install optional packages for using MD data:
+**Install optional packages for using MD data:**
 
 ```bash
-pip install -r https://raw.githubusercontent.com/AG-Peter/encodermap/main/tests/test_requirements.md
+pip install -r https://raw.githubusercontent.com/AG-Peter/encodermap/main/md_requirements.txt
 ```
 
-EncoderMap requires TensorFlow >=2.9 to be installed. (TensorFlow 2 is not yet supported)
+EncoderMap requires TensorFlow >=2.9 to be installed.
 Follow the [instructions on the TensorFlow website](https://www.tensorflow.org/install/pip) to install it
 either in the cpu or gpu version.
 Then install EncoderMap with pip.

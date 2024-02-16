@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -19,18 +19,31 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+# Standard Library Imports
 import unittest
 import warnings
+
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 
 class TestMissingImport(unittest.TestCase):
     def test_missing_import(self):
-        with self.assertRaises((ValueError, ModuleNotFoundError)):
-            from encodermap.loading.features import CentralDihedrals
+        try:
+            # Third Party Imports
+            from pyemma.coordinates.data.featurization.angles import DihedralFeature
 
-            central_dihedrals = CentralDihedrals()
+            pyemma_installed = True
+        except ModuleNotFoundError:
+            pyemma_installed = False
+        if not pyemma_installed:
+            with self.assertRaises((ValueError, ModuleNotFoundError)):
+                # Encodermap imports
+                from encodermap.loading.features import CentralDihedrals
+
+                central_dihedrals = CentralDihedrals()
+        else:
+            self.assertTrue(True)
 
 
 # Remove Phantom Tests from tensorflow skipped test_session

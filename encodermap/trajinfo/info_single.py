@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade
@@ -28,9 +28,8 @@ Trajectory ensembles allow:
     * Faster convergence via adaptive sampling.
     * Better anomaly detection of unique structural states.
 
-
-This subpackage contains two classes which are containers of trajecotry data.
-The SingleTraj trajecotry contains information about a single trajecotry.
+This subpackage contains two classes which are containers of trajectory data.
+The SingleTraj trajectory contains information about a single trajectory.
 The TrajEnsemble class contains information about multiple trajectories. This adds
 a new dimension to MD data. The time and atom dimension are already established.
 Two frames can be appended along the time axis to get a trajectory with multiple
@@ -49,24 +48,33 @@ See also:
 ################################################################################
 
 
+# Future Imports at the top
 from __future__ import annotations
 
+# Standard Library Imports
 import errno
 import os
 import sys
 import warnings
+from copy import deepcopy
 from io import StringIO
 from pathlib import Path
 
+# Third Party Imports
 import numpy as np
+import pandas as pd
+import tables
+from optional_imports import _optional_import
 
-from .._optional_imports import _optional_import
-from ..misc.errors import BadError
+# Local Folder Imports
+from .._typing import CanBeIndex, CustomAAsDict
+from ..misc.errors import MixedUpInputs
 from ..misc.misc import _TOPOLOGY_EXTS
 from ..misc.xarray import construct_xarray_from_numpy
 from ..misc.xarray_save_wrong_hdf5 import save_netcdf_alongside_mdtraj
 from .info_all import TrajEnsemble
-from .load_traj import _load_traj
+from .load_traj import _load_pdb_from_uri, _load_traj
+
 
 ################################################################################
 # Optional Imports
@@ -84,16 +92,23 @@ xr = _optional_import("xarray")
 ################################################################################
 
 
-from typing import TYPE_CHECKING, Callable, Literal, Optional, Union
+# Standard Library Imports
+from collections.abc import Callable, Iterator, Sequence
+from typing import TYPE_CHECKING, Literal, Optional, Union, overload
 
-if TYPE_CHECKING:
+# Local Folder Imports
+from .trajinfo_utils import CustomTopology
+
+
+if TYPE_CHECKING:  # pragma: no cover
+    # Third Party Imports
     import h5py as h5
     import MDAnalysis as mda
     import mdtraj as md
     import xarray as xr
 
+    # Local Folder Imports
     from .trajinfo_utils import SingleTrajFeatureType
-
 
 ################################################################################
 # Globals
@@ -106,23 +121,6 @@ __all__ = ["SingleTraj"]
 ################################################################################
 # Utilities
 ################################################################################
-
-
-def combine_attrs(attrs, context):
-    out = {"length_units": "nm", "time_units": "ps", "angle_units": "rad"}
-    for attr in attrs:
-        for key, val in attr.items():
-            if key in ["full_path", "topology_file", "feature_axis"]:
-                if key in out:
-                    if isinstance(out[key], list):
-                        out[key].append(val)
-                    else:
-                        out[key] = [out[key], val]
-                else:
-                    out[key] = val
-            else:
-                out[key] = val
-    return out
 
 
 class Capturing(list):
@@ -159,9 +157,46 @@ def _hash_numpy_array(x: np.ndarray) -> int:
     return hash_value
 
 
-##############################################################################
+################################################################################
 # Classes
-##############################################################################
+################################################################################
+
+
+class SingleTrajFsel:
+    def __init__(self, other):
+        self.other = other
+
+    def __getitem__(self, item: CanBeIndex) -> SingleTraj:
+        if self.other.traj_num is None:
+            if isinstance(item, (int, np.int64)):
+                idx = np.where(self.other.id == item)[0]
+            elif isinstance(item, (list, np.ndarray)):
+                idx = np.where(np.in1d(self.other.id, np.asarray(item)))[0]
+            elif isinstance(item, slice):
+                raise NotImplementedError("Currently can't index frames with slice.")
+            else:
+                raise ValueError(
+                    f"The `fsel[]` method of `SingleTraj` takes {CanBeIndex} types, "
+                    f"but {type(item)} was provided."
+                )
+        else:
+            if isinstance(item, (int, np.int64)):
+                idx = np.where(self.other.id[:, 1] == item)[0]
+            elif isinstance(item, (list, np.ndarray)):
+                idx = np.where(np.in1d(self.other.id[:, 1], np.asarray(item)))[0]
+            elif isinstance(item, slice):
+                raise NotImplementedError("Currently can't index frames with slice.")
+            else:
+                raise ValueError(
+                    f"The `fsel[]` method of `SingleTraj` takes {CanBeIndex} types, "
+                    f"but {type(item)} was provided."
+                )
+        if len(idx) == 0:
+            raise ValueError(
+                f"No frames with frame index {item} in trajectory {self.other} "
+                f"with frames: {self.other._frames}"
+            )
+        return self.other[idx]
 
 
 class SingleTraj:
@@ -176,7 +211,7 @@ class SingleTraj:
     `SingleTraj.traj` attribute. The returned traj is a mdtraj Trajectory
     with the correct number of frames in the correct sequence.
 
-    Furthermore this class keeps track of your collective variables. Oftentimes
+    Furthermore, this class keeps track of your collective variables. Oftentimes
     the raw xyz data of a trajectory is not needed and suitable CVs are selected
     to represent a protein via internal coordinates (torsions, pairwise distances, etc.).
     This class keeps tack of your CVs. Whether you call them `highd` or
@@ -211,15 +246,13 @@ class SingleTraj:
         >>> import encodermap as em
         >>> traj = em.SingleTraj("https://files.rcsb.org/view/1GHC.pdb")
         >>> print(traj)
-        encodermap.SingleTraj object. Current backend is no_load. Basename is 1GHC. Not containing any CVs.
+        encodermap.SingleTraj object. Current backend is no_load. Basename is 1GHC. At indices (None,). Not containing any CVs.
         >>> traj.n_frames
         14
-
         >>> # advanced slicing
         >>> traj = em.SingleTraj("https://files.rcsb.org/view/1GHC.pdb")[-1:7:-2]
-        >>> print([frame.id for frame in traj])
+        >>> [frame.id[0] for frame in traj]
         [13, 11, 9]
-
         >>> # Build a trajectory ensemble from multiple trajs
         >>> traj1 = em.SingleTraj("https://files.rcsb.org/view/1YUG.pdb")
         >>> traj2 = em.SingleTraj("https://files.rcsb.org/view/1YUF.pdb")
@@ -259,48 +292,61 @@ class SingleTraj:
     def __init__(
         self,
         traj: Union[str, Path, md.Trajectory],
-        top: Optional[str, Path] = None,
+        top: Optional[Union[str, Path]] = None,
         common_str: str = "",
         backend: Literal["no_load", "mdtraj"] = "no_load",
         index: Optional[Union[int, list[int], np.ndarray, slice]] = None,
         traj_num: Optional[int] = None,
         basename_fn: Optional[Callable] = None,
+        custom_top: Optional[CustomAAsDict] = None,
     ) -> None:
-        """Initilaize the SingleTraj object with location and reference pdb file.
+        """Initialize the SingleTraj object with location and reference pdb file.
 
         Args:
-            traj (Union[str, mdtraj.Trajectory]): The trajectory. Can either be teh filename
-                of a trajectory file (.xtc, .dcd, .h5, .trr) or a mdtraj.Trajectory.
-            top (Union[str, mdtraj.Topology], optional): The path to the reference pdb file.
-                Defaults to ''. If an mdtraj.Trajectory or a .h5 traj filename is provided
-                this option is not needed.
+            traj (Union[str, mdtraj.Trajectory]): The trajectory. It Can either
+                be the filename  of a trajectory file (.xtc, .dcd, .h5, .trr)
+                or a mdtraj.Trajectory.
+            top (Union[str, mdtraj.Topology], optional): The path to the
+                reference pdb file. Defaults to ''. If a mdtraj.Trajectory or
+                a .h5 traj filename is provided, this option is not needed.
             common_str (str, optional): A string to group traj of similar
-                topology. If multiple trajs are loaded (TrajEnsemble) this common_str is
-                used to group them together. Defaults to '' and won't be matched to other trajs.
-                If traj files protein1_traj1.xtc and protein1_traj2.xtc share the sameprotein1.pdb
-                and protein2_traj.xtc uses protein2.pdb as its topology this argument
-                can be ['protein1', 'protein2'].
-            backend (Literal['no_load', 'mdtraj'], optional): Chooses the backend to load trajectories.
-                * 'mdtraj' uses mdtraj which loads all trajecoties into RAM.
-                * 'no_load' creates an empty trajectory object.
+                topology. If multiple trajs are loaded (`TrajEnsemble`), this
+                common_str is used to group them together. Defaults to ''
+                and won't be matched to other trajs. If traj files
+                'protein1_traj1.xtc' and 'protein1_traj2.xtc' share the
+                'sameprotein1.pdb' and 'protein2_traj.xtc' uses 'protein2.pdb' as
+                its topology, this argument can be ['protein1', 'protein2'].
+            backend (Literal['no_load', 'mdtraj'], optional): Chooses the
+                backend to load trajectories.
+                    * 'mdtraj' uses mdtraj, which loads all trajectories into RAM.
+                    * 'no_load' creates an empty trajectory object.
                 Defaults to 'no_load'
-            index (): An integer or an array giving the indices.
-                If an integer is provided only the frame at this position will be loaded once the internal
-                mdtraj.Trajectory is accessed. If an array or list is provided the corresponding frames will be used.
-                These indices can have duplicates: [0, 1, 1, 2, 0, 1]. A slice object can also be provided.
-                Supports fancy slicing like traj[1:50:3]. If None is provided the trajectory is simply loaded as is.
-                Defaults to None
-            traj_num (Union[int, None], optional): If working with multiple trajs this is the easiest unique identifier.
-                If multiple SingleTrajs are instantiated by TrajEnsemble the traj_num is used as unique identifier per traj.
-                Defaults to None.
-            basename_fn (Optional[Callable]): A function to apply to `traj_file` to give it
-                a unique identifier. If all your trajs are called traj.xtc and only the directory they're in
-                gives them a unique identifier you can provide a function into this argument to split the path.
-                If None is provided the basename is extracted liek so: `lambda x: x.split('/')[0].split('.')[-1].
-                Defaults to None.
+            index (Optional[Union[int, list[int], np.ndarray, slice]]): An
+                integer or an array giving the indices. If an integer is provided,
+                only the frame at this position will be loaded once the internal
+                `mdtraj.Trajectory` is accessed. If an array or list is provided,
+                the corresponding frames will be used. These indices can have
+                duplicates: `[0, 1, 1, 2, 0, 1]`. A slice object can also be
+                provided. Supports fancy slicing like traj[1:50:3]. If None is
+                provided, the traj is loaded fully. Defaults to None
+            traj_num (Union[int, None], optional): If working with multiple
+                trajs, this is the easiest unique identifier. If multiple
+                `SingleTrajs` are instantiated by `TrajEnsemble` the `traj_num`
+                is used as a unique identifier per traj. Defaults to None.
+            basename_fn (Optional[Callable]): A function to apply to `traj`
+                to give it another identifier. If all your trajs are called
+                traj.xtc and only the directory they're in gives them an
+                unique identifier, you can provide a function into this
+                argument to split the path. If None is provided, the basename
+                is extracted like so: `lambda x: x.split('/')[0].split('.')[-1].
+                Defaults to None, in which case the filename without
+                extension will be used.
+            custom_top: Optional[CustomAAsDict]: An instance of the
+                `CustomTopology` class or a dictionary that can be made into such.
 
         """
         # defaults
+        self.__traj = traj
         self.backend = backend
         self.common_str = common_str
         self.index = index if isinstance(index, tuple) else (index,)
@@ -308,6 +354,19 @@ class SingleTraj:
         self._loaded_once = False if backend == "no_load" else True
         self._orig_frames = np.array([])
         self._CVs = xr.Dataset()
+
+        # custom topology to load dihedral angles
+        self._custom_top = custom_top
+        if self._custom_top is not None:
+            if isinstance(self._custom_top, dict):
+                self._custom_top = CustomTopology.from_dict(self._custom_top, traj=self)
+        else:
+            self._custom_top = CustomTopology(traj=self)
+
+        # _atom indices are for delayed atom-slicing
+        self._atom_indices = None
+
+        # decide the basename
         if basename_fn is None:
             basename_fn = lambda x: os.path.basename(x).split(".")[0]
         self.basename_fn = basename_fn
@@ -335,19 +394,26 @@ class SingleTraj:
 
         if top is not None:
             if isinstance(top, md.Topology):
-                self.topology = top
+                if custom_top is not None:
+                    raise Exception(
+                        f"Providing an MDTraj Topology as the `top` argument interferes "
+                        f"with the argument `custom_topology`. Use one or the other. "
+                    )
                 self._top_file = Path("")
             else:
-                self._top_file = Path(top)
+                if self._validate_uri(top):
+                    self._top_file = top
+                else:
+                    self._top_file = Path(top)
                 if isinstance(self._traj_file, Path):
                     if (
                         self._traj_file.suffix in _TOPOLOGY_EXTS
                         and self._traj_file != self._top_file
                     ):
-                        raise BadError(
+                        raise MixedUpInputs(
                             f"You probably mixed up the input. Normally you "
-                            f"want to instantiate with `SingleTraj(traj, top)`. Based on "
-                            f"the files and the  extensions you provided "
+                            f"want to instantiate with `SingleTraj(traj, top)`."
+                            f"Based on the files and the  extensions you provided "
                             f"(traj={self._traj_file.name} and top="
                             f"{self._top_file.name}), you want to change the "
                             f"order of the arguments, or use keyword arguments."
@@ -355,7 +421,10 @@ class SingleTraj:
         else:
             if isinstance(self._traj_file, Path):
                 if self._traj_file.suffix in _TOPOLOGY_EXTS:
-                    self._top_file = self._traj_file
+                    if self._validate_uri(traj):
+                        self._top_file = traj
+                    else:
+                        self._top_file = self._traj_file
             else:
                 self._top_file = self._traj_file
 
@@ -366,11 +435,88 @@ class SingleTraj:
             if isinstance(self._traj_file, str) and self._validate_uri(self._traj_file):
                 traj = md.load_pdb(str(self.traj_file))
             elif self._traj_file != Path(""):
-                traj = md.load(str(self._traj_file), top=str(self._top_file))
+                try:
+                    traj = md.load(str(self._traj_file), top=str(self._top_file))
+                except tables.NoSuchNodeError as e:
+                    if self.traj_num is None:
+                        raise
+                    # Local Folder Imports
+                    from .info_all import HDF5GroupWrite
+
+                    with HDF5GroupWrite(self.top_file) as h5file:
+                        traj = h5file.read_traj(self.traj_num)
             self.trajectory = traj
-            self.topology = self.trajectory.top
+            self.topology = False
             self._loaded_once = True
+            self.topology = self._custom_top.top
             self._orig_frames = np.arange(traj.n_frames)
+
+        # maybe load CVs from h5 file
+        if isinstance(self._traj_file, Path):
+            if self._traj_file.suffix == ".h5":
+                CVs_in_file = False
+                with h5.File(self.traj_file, "r") as file:
+                    if "CVs" in file.keys():
+                        CVs_in_file = True
+                if CVs_in_file:
+                    test = xr.open_dataset(
+                        self.traj_file,
+                        group="CVs",
+                        engine="h5netcdf",
+                        backend_kwargs={"phony_dims": "access"},
+                    )
+                    if len(test.data_vars) == 0:
+                        CVs_in_file = False
+                if CVs_in_file:
+                    try:
+                        ds = xr.open_dataset(
+                            self.traj_file,
+                            group="CVs",
+                            engine="h5netcdf",
+                            backend_kwargs={"phony_dims": "access"},
+                        )
+                        if ds.sizes["traj_num"] > 1:
+                            assert self.traj_num in ds.coords["traj_num"], (
+                                f"This trajectory with {self.traj_num=} is not in "
+                                f"the dataset with traj_nums: {ds.coords['traj_num']}."
+                            )
+                            ds = ds.sel(traj_num=self.traj_num)
+                            ds = ds.expand_dims("traj_num")
+                        if str(ds.coords["traj_name"].values) != self.basename:
+                            ds.coords["traj_name"] = [self.basename]
+                        self._CVs = ds
+                    # bad formatted h5 file
+                    except OSError:
+                        DAs = {
+                            k: construct_xarray_from_numpy(self, i[()], k)
+                            for k, i in file["CVs"].items()
+                        }
+                        DS = xr.Dataset(DAs)
+                        self._CVs.update(DS)
+                    # other exceptions probably due to formatting
+                    except Exception as e:
+                        raise Exception(
+                            f"The formatting of the data in the file "
+                            f"{self.traj_file} is off. Xarray could "
+                            f"not load the group 'CVs' and failed with {e}. "
+                            f"Some debug: {CVs_in_file=} and {file.keys()=}."
+                        ) from e
+
+                    # get the original frame indices from the dataset
+                    # this is the only case where we want to overwrite
+                    # this variable
+                    if not self._loaded_once:
+                        self._loaded_once = True
+                    self._orig_frames = self._CVs["frame_num"].values
+
+                    # iteratively apply index
+                    index = self._orig_frames
+                    for ind in self.index:
+                        if ind is not None:
+                            index = index[ind]
+
+                    # set the _CVs accordingly
+                    self._CVs = self._CVs.loc[{"frame_num": index}]
 
     @classmethod
     def from_pdb_id(cls, pdb_id: str) -> SingleTraj:
@@ -389,12 +535,103 @@ class SingleTraj:
         return cls(url)
 
     @property
-    def _original_frame_indices(self):
+    def featurizer(self):
+        # Local Folder Imports
+        from ..loading.featurizer import Featurizer
+
+        if not hasattr(self, "_featurizer"):
+            self._featurizer = Featurizer(self)
+        return self._featurizer
+
+    @property
+    def indices_chi1(self) -> np.ndarray:
+        """np.ndarray: A numpy array with shape (n_dihedrals, 4) indexing the
+        atoms that take part in this dihedral angle. This index is 0-based."""
+        return self._custom_top.indices_chi1()
+
+    @property
+    def indices_chi2(self) -> np.ndarray:
+        """np.ndarray: A numpy array with shape (n_dihedrals, 4) indexing the
+        atoms that take part in this dihedral angle. This index is 0-based."""
+        return self._custom_top.indices_chi2()
+
+    @property
+    def indices_chi3(self) -> np.ndarray:
+        """np.ndarray: A numpy array with shape (n_dihedrals, 4) indexing the
+        atoms that take part in this dihedral angle. This index is 0-based."""
+        return self._custom_top.indices_chi3()
+
+    @property
+    def indices_chi4(self) -> np.ndarray:
+        """np.ndarray: A numpy array with shape (n_dihedrals, 4) indexing the
+        atoms that take part in this dihedral angle. This index is 0-based."""
+        return self._custom_top.indices_chi4()
+
+    @property
+    def indices_chi5(self) -> np.ndarray:
+        """np.ndarray: A numpy array with shape (n_dihedrals, 4) indexing the
+        atoms that take part in this dihedral angle. This index is 0-based."""
+        return self._custom_top.indices_chi5()
+
+    @property
+    def indices_phi(self) -> np.ndarray:
+        """np.ndarray: A numpy array with shape (n_dihedrals, 4) indexing the
+        atoms that take part in this dihedral angle. This index is 0-based."""
+        return self._custom_top.indices_phi()
+
+    @property
+    def indices_omega(self) -> np.ndarray:
+        """np.ndarray: A numpy array with shape (n_dihedrals, 4) indexing the
+        atoms that take part in this dihedral angle. This index is 0-based."""
+        return self._custom_top.indices_omega()
+
+    @property
+    def indices_psi(self) -> np.ndarray:
+        """np.ndarray: A numpy array with shape (n_dihedrals, 4) indexing the
+        atoms that take part in this dihedral angle. This index is 0-based."""
+        return self._custom_top.indices_psi()
+
+    @property
+    def _original_frame_indices(self) -> np.ndarray:
+        """np.ndarray: If trajectory has not been loaded, it is loaded and the
+        frames of the trajectory file on disk are put into a `np.arange()`. If
+        the trajectory is sliced in weird ways, this array tracks the original frames.
+        """
         if self._loaded_once:
             return self._orig_frames
         else:
             self.load_traj()
             return self._orig_frames
+
+    @property
+    def _frames(self) -> np.ndarray:
+        """np.ndarray: Applies self.index over self._orig_frames."""
+        frames = self._orig_frames.copy()
+        for ind in self.index:
+            if ind is not None:
+                frames = frames[ind]
+        return np.asarray(frames)
+
+    def _trace(self, CV: Sequence[str]) -> np.ndarray:
+        """Creates a low-dimensional representation of the loaded CV data by
+        stacking all arguments in `CV` along a single axis.
+
+        If this `SingleTraj` has 100 frames and a CV with shape (100, 50, 3) with
+        the name 'cartesians', then `traj._trace` will return a np.ndarray of shape
+        (100, 150).
+
+        Args:
+            CV (Sequence[str]): The CVs to combine in the trace.
+
+        Returns:
+            np.ndarray: The trace.
+
+        """
+        out = []
+        for i in CV:
+            v = self.CVs[i]
+            out.append(v.reshape(v.shape[0], -1))
+        return np.concatenate(out)
 
     @property
     def traj_file(self) -> str:
@@ -430,12 +667,23 @@ class SingleTraj:
     def _traj(self, traj_file):
         """Sets the traj and trajectory attributes. Can be provided str or
         mdtraj.Trajectory and sets the attributes based on the chosen backend."""
+        if self.topology:
+            reinject_top = deepcopy(self.topology)
+        else:
+            reinject_top = False
         self.trajectory, _ = _load_traj(
-            *self.index, traj_file=traj_file, top_file=self._top_file
+            *self.index,
+            traj_file=traj_file,
+            top_file=self._top_file,
+            traj_num=self.traj_num,
+            atom_indices=self._atom_indices,
         )
         if not self._loaded_once:
             self._loaded_once = True
             self._orig_frames = _
+        if reinject_top:
+            self.trajectory.top = reinject_top
+            self.topology = reinject_top
 
     @property
     def basename(self) -> str:
@@ -505,18 +753,42 @@ class SingleTraj:
         elif self._traj_file.suffix == ".h5":
             with h5.File(self.traj_file, "r") as file:
                 if self.index == (None,):
-                    n_frames = np.arange(file["coordinates"].shape[0])
+                    if (
+                        "coordinates" not in list(file.keys())
+                        and self.traj_num is not None
+                    ):
+                        n_frames = np.arange(
+                            file[f"coordinates_{self.traj_num}"].shape[0]
+                        )
+                    else:
+                        n_frames = np.arange(file["coordinates"].shape[0])
                 else:
                     for i, ind in enumerate(self.index):
                         if i == 0:
-                            n_frames = np.arange(file["coordinates"].shape[0])
+                            if (
+                                "coordinates" not in list(file.keys())
+                                and self.traj_num is not None
+                            ):
+                                n_frames = np.arange(
+                                    file[f"coordinates_{self.traj_num}"].shape[0]
+                                )
+                            else:
+                                n_frames = np.arange(file["coordinates"].shape[0])
                             if ind is not None:
                                 n_frames = n_frames[ind]
                         else:
                             if ind is not None:
                                 n_frames = n_frames[ind]
                 if not self._loaded_once:
-                    self._orig_frames = np.arange(file["coordinates"].shape[0])
+                    if (
+                        "coordinates" not in list(file.keys())
+                        and self.traj_num is not None
+                    ):
+                        self._orig_frames = np.arange(
+                            file[f"coordinates_{self.traj_num}"].shape[0]
+                        )
+                    else:
+                        self._orig_frames = np.arange(file["coordinates"].shape[0])
 
             # return single int or length of array
             if isinstance(n_frames, (int, np.integer)):
@@ -524,24 +796,24 @@ class SingleTraj:
             else:
                 return len(n_frames)
         elif self._traj_file.suffix == ".xtc":
-            reader = mda.coordinates.XTC.XTCReader(self.traj_file)
-            if self.index == (None,):
-                n_frames = np.arange(reader.n_frames)
-            else:
-                for i, ind in enumerate(self.index):
-                    if i == 0:
-                        n_frames = np.arange(reader.n_frames)[ind]
-                    else:
-                        n_frames = n_frames[ind]
-                    if ind is None:
-                        n_frames = n_frames[0]
-            if not self._loaded_once:
-                self._loaded_once = True
-                self._orig_frames = np.arange(reader.n_frames)
-            if isinstance(n_frames, (int, np.integer)):
-                return n_frames
-            else:
-                return len(n_frames)
+            with mda.coordinates.XTC.XTCReader(self.traj_file) as reader:
+                if self.index == (None,):
+                    n_frames = np.arange(reader.n_frames)
+                else:
+                    for i, ind in enumerate(self.index):
+                        if i == 0:
+                            n_frames = np.arange(reader.n_frames)[ind]
+                        else:
+                            n_frames = n_frames[ind]
+                        if ind is None:
+                            n_frames = n_frames[0]
+                if not self._loaded_once:
+                    self._loaded_once = True
+                    self._orig_frames = np.arange(reader.n_frames)
+                if isinstance(n_frames, (int, np.integer)):
+                    return n_frames
+                else:
+                    return len(n_frames)
         else:
             self.load_traj()
             return self.traj.n_frames
@@ -549,8 +821,11 @@ class SingleTraj:
     @property
     def _n_frames_base_h5_file(self) -> int:
         """int: Can be used to get n_frames without loading an HDF5 into memory."""
-        with h5.File(self.traj_file, "r") as file:
-            return file["coordinates"].shape[0]
+        if self.extension == ".h5":
+            with h5.File(self.traj_file, "r") as file:
+                return file["coordinates"].shape[0]
+        else:
+            return -1
 
     @property
     def CVs_in_file(self) -> bool:
@@ -570,10 +845,14 @@ class SingleTraj:
         """
         if self.extension == ".h5":
             with h5.File(self.traj_file, "r") as file:
-                return file["coordinates"].shape[1]
+                try:
+                    return file["coordinates"].shape[1]
+                except KeyError as e:
+                    if self.traj_num is not None:
+                        return file[f"coordinates_{self.traj_num}"].shape[1]
+                    raise e
         else:
-            self.load_traj()
-            return self.traj.n_atoms
+            return self.top.n_atoms
 
     @property
     def n_residues(self) -> int:
@@ -603,91 +882,153 @@ class SingleTraj:
             bonds (generator): Iterate over bonds.
 
         """
+        return self._get_top()
+
+    def _get_raw_top(self) -> md.Topology:
+        """Reads different files and loads md.Topology from them.
+
+        This topology will *NOT* be corrected with `CustomTopology`.
+
+        Returns:
+            mdtraj.Topology: The raw topology.
+
+        """
+        # Third Party Imports
+        import tables
+
+        # Local Folder Imports
+        from .info_all import HDF5GroupWrite
+
         if self.top_file:
             if self.top_file != ".":
                 if self._validate_uri(self.top_file):
-                    return md.load_pdb(self.top_file).top
-                if not os.path.isfile(self.top_file):
+                    assert self.top_file.endswith(".pdb")
+                    top = _load_pdb_from_uri(self.top_file)
+                elif not os.path.isfile(self.top_file):
                     raise FileNotFoundError(
                         errno.ENOENT, os.strerror(errno.ENOENT), self.top_file
                     )
         if self.backend == "no_load" and not self.extension == ".h5" and self.traj_file:
-            return md.load_topology(self.top_file)
+            if self._validate_uri(self.top_file):
+                top = _load_pdb_from_uri(self.top_file)
+            else:
+                top = md.load_topology(self.top_file)
         if self.extension == ".h5":
-            return md.load_topology(self.top_file)
-        if self.backend == "no_load":
-            return md.load_topology(self.top_file)
+            try:
+                top = md.load_topology(self.top_file)
+            except tables.NoSuchNodeError as e:
+                if self.traj_num is None:
+                    raise e
+                with HDF5GroupWrite(self.top_file) as h5file:
+                    top = h5file.read_traj(self.traj_num).top
+        if self.backend == "no_load" and "top" not in locals():
+            try:
+                top = md.load_topology(self.top_file)
+            except tables.NoSuchNodeError as e:
+                if self.traj_num is None:
+                    raise e
+                with HDF5GroupWrite(self.top_file) as h5file:
+                    top = h5file.read_traj(self.traj_num).top
         if self.backend == "mdtraj":
-            return self.traj.top
+            top = self.traj.top
         else:
-            return self.topology
+            if self._validate_uri(self.top_file):
+                top = _load_pdb_from_uri(self.top_file)
+            else:
+                try:
+                    top = md.load_topology(self.top_file)
+                except tables.NoSuchNodeError as e:
+                    if self.traj_num is None:
+                        raise e
+                    with HDF5GroupWrite(self.top_file) as h5file:
+                        top = h5file.read_traj(self.traj_num).top
+        return top
+
+    def _get_top(self) -> md.Topology:
+        """Reads different files and loads md.Topology from them.
+
+        Returns:
+            mdtraj.Topology: The structure of a Topology object is similar to that of a PDB file.
+
+        """
+        if self.topology:
+            top = self.topology
+        else:
+            top = self._custom_top.top
+        return top
+
+    def copy(self) -> SingleTraj:
+        """Returns a copy of `self`."""
+        return deepcopy(self)
+
+    def del_CVs(self) -> None:
+        """Resets the `_CVs` attribute to an empty xr.Dataset()."""
+        del self._CVs
+        self._CVs = xr.Dataset()
+
+    def _calc_CV(self) -> dict[str, np.ndarray]:
+        """Returns the current CVs as a dictionary."""
+        if self._CVs:
+            out = {}
+            for key, val in self._CVs.data_vars.items():
+                if "feature_indices" in key:
+                    if "cartesian" in key:
+                        assert val.shape[0] == 1, (
+                            f"The substring 'feature_indices' is special and can "
+                            f"only contain a (1, n_frames) or (1, n_frames, 4) arrays. "
+                            f"Your value of {key=} has the shape: {val.shape=} "
+                            f"If you have manually "
+                            f"loaded a feature with this substring, use a different "
+                            f"one. These CVs contain integer indices and not values."
+                        )
+                    else:
+                        assert val.shape[-1] <= 4, (
+                            f"The substring 'feature_indices' is special and can "
+                            f"only contain a (1, n_frames) or (1, n_frames, <=4) arrays. "
+                            f"Your value of {key=} has the shape: {val.shape=} "
+                            f"If you have manually "
+                            f"loaded a feature with this substring, use a different "
+                            f"one. These CVs contain integer indices and not values."
+                        )
+                    continue
+                axis_name = (
+                    "feature_axis"
+                    if "feature_axis" in val.attrs
+                    else "feature_axes"
+                    if "feature_axes" in val.attrs
+                    else None
+                )
+                if key == "central_angles_indices":
+                    raise Exception(
+                        f"{val.shape=}. {axis_name=} {val.attrs[axis_name]=}"
+                    )
+                if np.any(np.isnan(val)):
+                    if axis_name is not None:
+                        val = val.dropna(val.attrs[axis_name])
+                    else:
+                        val = val.dropna(key.upper())
+                try:
+                    out[key] = val.values.squeeze(0)
+                except ValueError as e:
+                    raise Exception(f"{key=} {val=}") from e
+            return out
+        else:
+            return {}
 
     @property
     def CVs(self) -> dict[str, np.ndarray]:
-        """dict: Returns a simple dict from the more complicated self._CVs xarray Dataset.
+        """dict[str, np.ndarray]: Returns a simple dict from the more complicated self._CVs xarray Dataset.
 
         If self._CVs is empty and self.traj_file is a HDF5 (.h5) file, the contents
         of the HDF5 will be checked, whether CVs have been stored there.
         If not and empty dict will be returned.
 
         """
-        if self._CVs:
-            return {
-                key: val.dropna(val.attrs["feature_axis"]).values.squeeze(0)
-                if np.any(np.isnan(val))
-                else val.values.squeeze(0)
-                for key, val in self._CVs.data_vars.items()
-            }
-        elif self.extension == ".h5":
-            with h5.File(self.traj_file, "r") as file:
-                if "CVs" in file.keys():
-                    try:
-                        self._CVs = xr.open_dataset(
-                            self.traj_file,
-                            group="CVs",
-                            engine="h5netcdf",
-                            backend_kwargs={"phony_dims": "access"},
-                        )
-                    # bad formatted h5 file
-                    except OSError:
-                        DAs = {
-                            k: construct_xarray_from_numpy(self, i[()], k)
-                            for k, i in file["CVs"].items()
-                        }
-                        DS = xr.Dataset(DAs)
-                        self._CVs.update(DS)
-                    # other exceptions probably due to formatting
-                    except Exception as e:
-                        raise BadError(
-                            f"The formatting of the data in the file "
-                            f"{self.traj_file} is off. Xarray could "
-                            f"not load the group 'CVs' and failed with {e}"
-                        )
-
-                    # get the original frame indices from the dataset
-                    # this is the only case
-                    if not self._loaded_once:
-                        self._loaded_once = True
-                    self._orig_frames = self._CVs["frame_num"].values
-
-                    # iteratively apply index
-                    index = self._orig_frames
-                    for ind in self.index:
-                        if ind is not None:
-                            index = index[ind]
-
-                    # set the _CVs accordingly
-                    self._CVs = self._CVs.loc[{"frame_num": index}]
-
-                    # return again. Yay recursion
-                    return self.CVs
-                else:
-                    return {}
-        else:
-            return {}
+        return self._calc_CV()
 
     def _validate_uri(self, uri: str) -> bool:
         """Checks whether `uri` is a valid uri."""
+        # Encodermap imports
         from encodermap.misc.misc import _validate_uri
 
         return _validate_uri(str(uri))
@@ -699,7 +1040,7 @@ class SingleTraj:
         """Loads the trajectory, with a new specified backend.
 
         After this is called the instance variable self.trajectory
-        will contain an mdtraj Trajectory object.
+        will contain a mdtraj Trajectory object.
 
         Args:
             new_backend (str, optional): Can either be:
@@ -712,6 +1053,7 @@ class SingleTraj:
             return
         if self.backend == "mdtraj" and new_backend == "no_load":
             self.unload()
+            self.topology = False
         if self.backend == "no_load" and new_backend == "mdtraj":
             self.backend = new_backend
             # call the setter again
@@ -774,7 +1116,7 @@ class SingleTraj:
         self.trajectory, self.topology = False, False
 
     def _gen_ensemble(self) -> TrajEnsemble:
-        """Creates an TrajEnsemble class with this traj in it.
+        """Creates a `TrajEnsemble` class with this traj in it.
 
         This method is needed to add two SingleTraj objects
         along the `trajectory` axis with the method add_new_traj.
@@ -782,22 +1124,27 @@ class SingleTraj:
 
         """
         if self.traj_file != ".":
-            self.info_all = TrajEnsemble(
+            info_all = TrajEnsemble(
                 [self._traj_file],
                 [self._top_file],
                 backend=self.backend,
                 common_str=[self.common_str],
+                basename_fn=self.basename_fn,
             )
         else:
-            self.info_all = TrajEnsemble(
+            info_all = TrajEnsemble(
                 [self.traj],
                 [self.top],
                 backend=self.backend,
                 common_str=[self.common_str],
+                basename_fn=self.basename_fn,
             )
-        self.info_all.trajs[0]._CVs = self._CVs
-        self.info_all.trajs[0].traj_num = self.traj_num
-        return self.info_all
+        info_all.trajs[0]._CVs = self._CVs
+        info_all.trajs[0].traj_num = self.traj_num
+        info_all.trajs[0].index = self.index
+        info_all.trajs[0]._custom_top = self._custom_top
+        info_all.trajs[0].topology = self._custom_top.top
+        return info_all
 
     def _add_along_traj(self, y: SingleTraj) -> TrajEnsemble:
         """Puts self and y into a TrajEnsemble object.
@@ -836,71 +1183,145 @@ class SingleTraj:
         """
         return self.__getitem__(key)
 
-    def show_traj(self, gui: bool = True) -> nglview.view:
-        """Returns an nglview view object.
+    def show_traj(self, gui: bool = True) -> Any:
+        """Returns a nglview view object.
 
         Returns:
             view (nglview.widget): The nglview widget object.
 
         """
+        # Third Party Imports
         import nglview
 
         view = nglview.show_mdtraj(self.traj, gui=gui)
         return view
+
+    def dash_summary(self) -> pd.DataFrame:
+        """Returns a pandas dataframe with useful information about this class.
+
+        Returns:
+            pd.DataFrame: The dataframe.
+
+        """
+        dt = self.traj.time
+        dt = np.unique(dt[1:] - dt[:-1])
+        if len(dt) == 1:
+            dt = dt[0]
+        elif len(dt) == 0:
+            dt = "single frame"
+        if self.index == (None,):
+            index = "[::]"
+        else:
+            index = self.index[1:]
+        if len(index) == 1:
+            index = index[0]
+        df = pd.DataFrame(
+            {
+                "field": [
+                    "n_frames",
+                    "n_atoms",
+                    "dt (ps)",
+                    "traj_file",
+                    "top_file",
+                    "index",
+                ],
+                "value": [
+                    self.n_frames,
+                    self.n_atoms,
+                    dt,
+                    self.traj_file,
+                    self.top_file,
+                    index,
+                ],
+            }
+        )
+        return df.astype(str)
+
+    def load_custom_topology(
+        self,
+        custom_top: Optional["CustomTopology", CustomAAsDict] = None,
+    ) -> None:
+        """Loads a custom_topology from a `CustomTopology` class or a dict.
+
+        See Also:
+            `CustomTopology`
+
+        Args:
+            custom_top: Optional[Union[CustomTopology, CustomAAsDict]]: An instance of the
+                `CustomTopology` class or a dictionary that can be made into such.
+
+        """
+        if isinstance(custom_top, CustomTopology):
+            self._custom_top = custom_top
+        else:
+            self._custom_top = CustomTopology.from_dict(custom_top, traj=self)
+        # overwrite the old topology
+        self.topology = self._custom_top.top
 
     def load_CV(
         self,
         data: SingleTrajFeatureType,
         attr_name: Optional[str] = None,
         cols: Optional[list[int]] = None,
+        deg: Optional[bool] = None,
         labels: Optional[list[str]] = None,
         override: bool = False,
     ) -> None:
         """Load CVs into traj. Many options are possible. Provide xarray,
         numpy array, em.loading.feature, em.featurizer, and even string!
 
-        This method loads CVs into the SingleTraj class. Many ways of doing so are available:
-            * np.ndarray: The easiest way. Provide a np array and a name for the array and the data
-                will be saved as a instance variable, accesible via instance.name.
-            * xarray.DataArray: You can load a multidimensional xarray as data into the class. Please
-                refer to xarrays own documentation if you want to create one yourself.
+        This method loads CVs into the SingleTraj class. Many ways of doing so
+        are available:
+            * np.ndarray: The easiest way. Provide a np array and a name for
+                the array, and the data will be saved as an instance variable,
+                accesible via `SingleTraj.name`.
+            * xarray.DataArray: You can load a multidimensional xarray as
+                data into the class. Please refer to xarrays own documentation
+                if you want to create one yourself.
             * xarray.Dataset: You can add another dataset to the existing _CVs.
-            * em.loading.feature: If you provide one of the features from em.loading.features the resulting
-                features will be loaded and also placed under the provided name.
-            * em.Featurizer: If you provide a full featurizer, the data will be generated and put as an
-                instance variable as the provided name.
-            * str: If a string is provided, the data will be loaded from a .txt, .npy, or NetCDF / HDF5 .nc file.
+            * em.loading.feature: If you provide one of the features from
+                `encodermap.loading.features` the resulting features will be
+                loaded and also placed under the provided name.
+            * em.Featurizer: If you provide a full featurizer, the data will
+                be generated and be accessible as an attribute.
+            * str: If a string is provided, the data will be loaded from a
+                .txt, .npy, or NetCDF / HDF5 .nc file.
 
         Args:
-            data (Union[str, np.ndarray, xr.DataArray, em.loading.feature, em.Featurizer]):
-                The CV to load. Either as numpy array, xarray DataArray, encodermap or pyemma feature, or full
-                encodermap Featurzier.
-            attr_name (Union[None, str], optional): The name under which the CV should be found in the class.
-                Is needed, if a raw numpy array is passed, otherwise the name will be generated from the filename
-                (if data == str), the DataArray.name (if data == xarray.DataArray), or the feature name.
-            cols (Union[list, None], optional): A list specifying the columns to use for the highD data.
-                If your highD data contains (x,y,z,...)-errors or has an enumeration
-                column at col=0 this can be used to remove this unwanted data.
-            labels (Union[list, str, None], optional): If you want to label the data you provided pass a list of str.
-                If set to None, the features in this dimension will be labelled as
-                [f"{attr_name.upper()} FEATURE {i}" for i in range(self.n_frames)]. If a str is provided, the features
-                will be labelled as [f"{attr_name.upper()} {label.upper()} {i}" for i in range(self.n_frames)]. If a list of str
-                is provided it needs to have the same length as the traj has frames. Defaults to None.
+            data (Union[str, np.ndarray, xr.DataArray,
+                em.loading.feature, em.Featurizer]): The CV to load. Either as
+                numpy array, xarray DataArray, encodermap or pyemma feature,
+                or fullencodermap Featurizer.
+            attr_name (Optional[str]): The name under which the CV
+                should be found in the class. Is needed, if a raw numpy array
+                is passed, otherwise the name will be generated from the filename
+                (if data == str), the DataArray.name (if data == xarray.DataArray),
+                or the feature name.
+            cols (Optional[list]): A list specifying the columns
+                to use it for the high-dimensional data. If your highD data contains
+                (x,y,z,...)-errors or has an enumeration column at `col=0`
+                this can be used to remove this unwanted data.
+            deg (Optional[bool]): Whether the provided data is in radians (False)
+                or degree (True). It can also be None for non-angular data.
+            labels (Optional[Union[list, str]]): If you want to label
+                the data you provided, pass a list of str. If set to None,
+                the features in this dimension will be labeled as
+                `[f"{attr_name.upper()} FEATURE {i}" for i in range(self.n_frames)]`.
+                If a str is provided, the features will be labeled as
+                `[f"{attr_name.upper()} {label.upper()} {i}" for i in range(self.n_frames)]`.
+                If a list of str is provided, it needs to have the same length
+                as the traj has frames. Defaults to None.
             override (bool): Whether to overwrite existing CVs. The method will also
                 print a message which CVs have been overwritten.
 
         Examples:
-            >>> # Load the backbone torsions from a time-resolved NMR ensemble from the pdb
+            >>> # Load the backbone torsions from a time-resolved NMR ensemble
             >>> import encodermap as em
             >>> traj = em.SingleTraj("https://files.rcsb.org/view/1GHC.pdb")
-            >>> central_dihedrals = em.loading.features.CentralDihedrals(traj.top)
-            >>> traj.load_CV(central_dihedrals)
+            >>> traj.load_CV("central_dihedrals")
             >>> traj.central_dihedrals.shape
-            (1, 14, 222)
-            >>> # The values are stored in an xarray Dataset to track every possible datafield
-            >>> traj = em.SingleTraj("https://files.rcsb.org/view/1GHC.pdb")
-            >>> traj.load_CV(em.loading.features.CentralDihedrals(traj.top))
-            >>> print(traj._CVs['central_dihedrals']['CENTRALDIHEDRALS'].values[:2])
+            (14, 222)
+            >>> print(traj._CVs['central_dihedrals']['CENTRAL_DIHEDRALS'].values[:2])
             ['CENTERDIH PSI   RESID  MET:   1 CHAIN 0'
              'CENTERDIH OMEGA RESID  MET:   1 CHAIN 0']
 
@@ -909,15 +1330,35 @@ class SingleTraj:
             IOError: When the provided filename does not have .txt, .npy or .nc extension.
             TypeError: When `data` does not match the specified input types.
             Exception: When a numpy array has been passed as `data` and no `attr_name` has been provided.
-            BadError: When the provided `attr_name` is str, but can not be a python identifier.
+            Exception: When the provided `attr_name` is str, but cannot be a python identifier.
 
         """
-        from .trajinfo_utils import load_CVs_singletraj
+        # Local Folder Imports
+        from .trajinfo_utils import load_CVs_singletraj, trajs_combine_attrs
 
-        new_CVs = load_CVs_singletraj(data, self, attr_name, cols, labels)
+        if isinstance(attr_name, str):
+            if "feature_indices" in attr_name:
+                raise Exception(
+                    f"The substring 'feature_indices' is a protected attribute. "
+                    f"Your attribute can't contain this substring."
+                )
+
+        new_CVs = load_CVs_singletraj(data, self, attr_name, cols, deg, labels)
+        if self._CVs:
+            assert (
+                len(new_CVs.coords["traj_num"]) == 1
+            ), f"something bad happened: {self._CVs=}"
+        if len(new_CVs.coords["traj_num"]) > 1:
+            raise Exception(
+                f"The provided feature resulted in a dataset with "
+                f"{new_CVs.sizes['traj_num']} trajectories. A `SingleTraj` "
+                f"class can't accept such a feature."
+            )
         if self.traj_num is not None:
-            assert new_CVs.coords["traj_num"] == np.array([self.traj_num]), print(
-                data, self.traj_num, new_CVs.coords["traj_num"]
+            assert new_CVs.coords["traj_num"] == np.array([self.traj_num]), (
+                data,
+                self.traj_num,
+                new_CVs.coords["traj_num"],
             )
 
         # check the sizes
@@ -947,19 +1388,26 @@ class SingleTraj:
                 )
             self._CVs = xr.merge(
                 [new_CVs, self._CVs],
-                combine_attrs="override",
+                combine_attrs=trajs_combine_attrs,
                 compat="override",
                 join="left",
             )
         else:
             try:
-                self._CVs = xr.merge([self._CVs, new_CVs], combine_attrs=combine_attrs)
+                CVs = xr.merge([self._CVs, new_CVs], combine_attrs=trajs_combine_attrs)
+                assert len(CVs.coords["traj_num"]) == 1, (
+                    f"Can't merge\n\n{self._CVs=}\n\nand\n\n{new_CVs=}\n\n, "
+                    f"because they would stack along the traj axis."
+                )
+                self._CVs = CVs
             except xr.core.merge.MergeError as e:
                 msg = (
                     f"Could not add the CV `{attr_name}` to the CVs of the traj "
                     f"likely due to it being already in the CVs "
                     f"({list(self.CVs.keys())}). Set `override` to True to "
-                    f"overwrite these CVs."
+                    f"overwrite these CVs. In case you are faced with "
+                    f"conflicting values on 'traj_name', here they are:\n\n"
+                    f"{self._CVs.coords['traj_name']=}\n\n{new_CVs.coords['traj_name']=}"
                 )
                 raise Exception(msg) from e
 
@@ -982,7 +1430,7 @@ class SingleTraj:
             IOError: When the file already exists and overwrite is set to False.
 
         """
-        if fname is None:
+        if fname is None:  # pragma: no cover
             fname = f"{self.basename}_{attr_name}.npy"
         if os.path.isdir(fname):
             fname = os.path.join(fname, f"{self.basename}_{attr_name}.npy")
@@ -993,32 +1441,34 @@ class SingleTraj:
     def atom_slice(
         self,
         atom_indices: np.ndarray,
-        inplace: bool = False,
-    ) -> Union[None, SingleTraj]:
+        invert: bool = False,
+    ) -> None:
         """Create a new trajectory from a subset of atoms.
 
         Args:
             atom_indices (Union[list, np.array]): The indices of the
-            atoms to keep.
-            inplace(bool, optional): Whether to overwrite the current instance,
-            or return a new instance. Defaults to False.
+                atoms to keep.
+            invert (bool): If False, it is assumed, that the atoms in `atom_indices`
+                are the ones to be kept. If True, the atoms in `atom_indices`
+                are the ones to be removed.
 
         """
+        atom_indices = np.asarray(atom_indices)
+        if invert:
+            atom_indices = np.array(
+                [a.index for a in self.top.atoms if a.index not in atom_indices]
+            )
+        self._atom_indices = atom_indices
         if self._CVs:
             warnings.warn(
-                "Dropping CVs from trajectory. Defining CVs for atom slice is currently not possible."
+                "Dropping CVs from trajectory. Slicing CVs with this method is "
+                "currently not possible. Raise an issue if you want to have this "
+                "feature added."
             )
-        new = SingleTraj(
-            self.traj.atom_slice(atom_indices, inplace=inplace),
-            common_str=self.common_str,
-            backend="mdtraj",
-            index=self.index,
-            traj_num=self.traj_num,
-        )
-        if inplace:
-            self = new
-        else:
-            return new
+            self._CVs = xr.Dataset()
+        self._custom_top._parsed = False
+        self.topology = self._custom_top.top.subset(atom_indices)
+        self._traj = self.traj_file
 
     def join(self, other: SingleTraj) -> md.Trajectory:
         """Join two trajectories together along the time/frame axis.
@@ -1052,11 +1502,11 @@ class SingleTraj:
 
         Args:
             reference (Union[mdtraj.Trajectory, SingleTraj]): The reference frame to align to.
-            reame (int, optional): Align to this frame in reference. Defaults to 1.
+            frame (int, optional): Align to this frame in reference. Default is 1.
             atom_indices (Union[np.array, None], optional): Indices in self, used to calculate
-                RMS values. Defaults to None, whcih means all atoms will be used.
+                RMS values. Defaults to None which means all atoms will be used.
             ref_atom_indices (Union[np.array, None], optional): Indices in reference, used to calculate
-                RMS values. Defaults to None, whcih means all atoms will be used.
+                RMS values. Defaults to None which means all atoms will be used.
             parallel (bool, optional): Use OpenMP to run the superposition in parallel over multiple cores.
 
         Returns:
@@ -1085,10 +1535,10 @@ class SingleTraj:
     def save(
         self,
         fname: str,
-        CVs: Union[str, list[str]] = "all",
+        CVs: Union[Literal["all"], list[str]] = "all",
         overwrite: bool = False,
     ) -> None:
-        """Save the trajectory as HDF5 fileformat to disk,
+        """Save the trajectory as HDF5 file format to disk,
 
         Args:
             fname (str): The filename.
@@ -1102,14 +1552,28 @@ class SingleTraj:
             IOError: When the file already exists and overwrite is False.
 
         """
+        # check and drop inhomogeneous attributes
+        offending_keys = []
+        if self._CVs:
+            for da in self._CVs.data_vars.values():
+                for key, val in da.attrs.items():
+                    if isinstance(val, list):
+                        offending_keys.append(key)
+        for key in offending_keys:
+            for da in self._CVs.data_vars.values():
+                if key in da.attrs:
+                    del da.attrs[key]
+            if key in self._CVs.attrs:
+                del self._CVs.attrs[key]
+        # raise exception if file already exists
         if os.path.isfile(fname) and not overwrite:
             raise IOError(f"{fname} already exists. Set overwrite=True to overwrite.")
         else:
             self.traj.save_hdf5(fname, force_overwrite=overwrite)
-        if CVs == "all":
+        if self._CVs and CVs == "all":
             save_netcdf_alongside_mdtraj(fname, self._CVs)
             return
-        if self._CVs and CVs:
+        if self._CVs and isinstance(CVs, list):
             with h5.File(fname, "a") as file:
                 if "CVs" in list(file.keys()):
                     grp = file["CVs"]
@@ -1120,6 +1584,64 @@ class SingleTraj:
                     assert self.n_frames == value.shape[1]
                     grp.create_dataset(name=key, data=value)
 
+    @overload
+    def iterframes(
+        self,
+        with_traj_num: bool = False,
+    ) -> Iterator[tuple[int, SingleTraj]]:
+        ...
+
+    @overload
+    def iterframes(
+        self,
+        with_traj_num: bool = True,
+    ) -> Iterator[tuple[int, int, SingleTraj]]:
+        ...
+
+    def iterframes(
+        self,
+        with_traj_num: bool = False,
+    ) -> Union[
+        Iterator[tuple[int, SingleTraj]],
+        Iterator[tuple[int, int, SingleTraj]],
+    ]:
+        """Iterator over the frames in this class.
+
+        Args:
+            with_traj_num (bool): Whether to return a three-tuple of traj_num,
+                frame_num, frame (True) or just traj_num, frame (False).
+
+        Yields:
+            tuple: A tuple containing the following:
+                int: The traj_num.
+                int: The frame_num.
+                encodermap.SingleTraj: An SingleTraj object.
+
+        Examples:
+            >>> import encodermap as em
+            >>> traj = em.SingleTraj('https://files.rcsb.org/view/1YUG.pdb')
+            >>> print(traj.n_frames)
+            15
+            >>> traj = traj[::5]
+            >>> print(traj.n_frames)
+            3
+            >>> for frame_num, frame in traj.iterframes():
+            ...     print(frame_num, frame.n_frames)
+            0 1
+            5 1
+            10 1
+
+        """
+        if self.id.ndim == 2:
+            a = self.id[:, 1]
+        else:
+            a = self.id
+        for i, frame in zip(a, self):
+            if with_traj_num:
+                yield self.traj_num, i, frame
+            else:
+                yield i, frame
+
     def __copy__(self):
         cls = self.__class__
         result = cls.__new__(cls)
@@ -1127,6 +1649,7 @@ class SingleTraj:
         return result
 
     def __deepcopy__(self, memo):
+        # Standard Library Imports
         from copy import deepcopy
 
         cls = self.__class__
@@ -1178,15 +1701,15 @@ class SingleTraj:
 
     def __next__(self):
         if len(self.id) == 1:
-            return self
+            raise StopIteration
         if self._index >= self.n_frames:
             raise StopIteration
         else:
             self._index += 1
             return self[self._index - 1]
 
-    def __getitem__(self, key):
-        """This method returns another trajectory as an SingleTraj class.
+    def __getitem__(self, key: CanBeIndex):
+        """This method returns another trajectory as a SingleTraj class.
 
         Args:
             key (Union[int, list[int], np.ndarray, slice]): Indexing the trajectory
@@ -1202,7 +1725,7 @@ class SingleTraj:
         if not isinstance(key, (int, np.int_, list, np.ndarray, slice)):
             raise TypeError(
                 f"Indexing of `SingleTraj` requires the index to "
-                f"be one of the following types: (int, np.int, "
+                f"be one of the following types: (int, "
                 f"list, np.ndarray, slice), you provided {type(key)}."
             )
 
@@ -1218,8 +1741,13 @@ class SingleTraj:
         if isinstance(key, (list, np.ndarray)):
             if any([k > self.n_frames for k in key]):
                 raise IndexError(
-                    f"At least one index in {key} out of range for"
-                    f"traj with {self.n_frames} frames."
+                    f"At least one index in {key} out of range for "
+                    f"traj with {self.n_frames} frames. Normally frames are "
+                    f"selected by current integer index. If you are trying to "
+                    f"access frames by their number as it is in the file {self.traj_file}, "
+                    f"you can use the `fsel[]` locator of this class:\n\n"
+                    f"traj = em.load('traj_file.xtc', 'top_file.xtc')\n"
+                    f"traj.fsel[{key}]."
                 )
 
         # append the index to the list of "transformations"
@@ -1239,7 +1767,7 @@ class SingleTraj:
         else:
             traj_out = SingleTraj(
                 self.trajectory[key],
-                self.topology,
+                self.top_file,
                 backend=self.backend,
                 common_str=self.common_str,
                 index=new_index,
@@ -1256,9 +1784,20 @@ class SingleTraj:
 
         # last the CVs
         if self._CVs:
-            traj_out._CVs = self._CVs.loc[{"frame_num": key}]
+            traj_out._CVs = self._CVs.isel(frame_num=key)
+            if "frame_num" not in traj_out._CVs.dims:
+                traj_out._CVs = traj_out._CVs.expand_dims(
+                    {
+                        "frame_num": [key],
+                    },
+                )
+                traj_out._CVs.assign_coords(time=("frame_num", traj_out.time))
 
         return traj_out
+
+    @property
+    def fsel(self):
+        return SingleTrajFsel(self)
 
     def __add__(self, y: SingleTraj) -> TrajEnsemble:
         """Addition of two SingleTraj classes yields TrajEnsemble class. A `trajectory ensemble`.
@@ -1273,41 +1812,44 @@ class SingleTraj:
         return self._add_along_traj(y)
 
     def __getattr__(self, attr):
-        """What to do when attributes can not be obtained in a normal way?.
+        """What to do when attributes cannot be obtained in a normal way?.
 
-        This method allows access of the self.CVs dictionary's values as
-        instance variables. Furthermore, of a mdtraj variable is called,
-        the traj is loaded and the correct variable is returned.
+        This method allows access to the `self.CVs` dictionary's values as
+        instance variables. Furthermore, if a mdtraj variable is called,
+        the traj is loaded, and the correct variable is returned.
 
         """
         if attr in self._mdtraj_attr:
             self.load_traj()
             return getattr(self.traj, attr)
-            # if self.index == (None, ):
-            #     return getattr(self.traj, attr)
-            # else:
-            #     if len(self.id) == len(self.traj):
-            #         return getattr(self.traj, attr)
-            #     else:
-            #         return getattr(self.traj[self.index], attr)
         elif attr in self._CVs:
-            # if self._already_indexed:
-            #     return self._CVs[attr].values.squeeze()
-            # if self._original_frame_indices.size != 0:
-            #     index = self._original_frame_indices
-            # elif self._original_frame_indices.size == 0 and self.index is not None:
-            #     index = self.index
-            # else:
-            #     return self._CVs[attr].values.squeeze()
-            return self._CVs[attr].values.squeeze()  # [index]
-        elif attr == "traj":
+            val = self._CVs[attr]  # [index]
+            axis_name = (
+                "feature_axis"
+                if "feature_axis" in val.attrs
+                else "feature_axes"
+                if "feature_axes" in val.attrs
+                else None
+            )
+            if np.any(np.isnan(val)):
+                if axis_name is not None:
+                    if "indices" in val.attrs[axis_name].lower():
+                        val = val.dropna("ATOM_NO")
+                    else:
+                        val = val.dropna(val.attrs[axis_name])
+                else:
+                    val = val.dropna(attr.upper())
+            return val.values.squeeze(0)
+        elif attr == "traj":  # pragma: no cover
             self.__getattribute__(attr)
-        elif attr == "id":
+        elif attr == "id":  # pragma: no cover
             self.__getattribute__(attr)
+        elif attr == "top":
+            return self._get_top()
         else:
             raise AttributeError(f"'SingleTraj' object has no attribute '{attr}'")
 
-    def _string_summary(self) -> str:
+    def _string_summary(self) -> str:  # pragma: no cover
         """Returns a summary about the current instance.
 
         Number of frames, index, loaded CVs.
@@ -1321,6 +1863,8 @@ class SingleTraj:
                 s += f" At indices {self.index}."
         if self._CVs:
             for key, value in self._CVs.items():
+                if "feature_indices" in key:
+                    continue
                 shape = value.shape
                 if not shape:
                     shape = 1

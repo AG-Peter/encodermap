@@ -13,3 +13,10 @@ mdshare
 dask
 numba
 distributed
+dash
+plotly
+dash_bio
+dash-bootstrap-components
+dash-bootstrap-templates
+pydot
+graphviz

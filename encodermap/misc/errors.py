@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -39,6 +39,10 @@ class BadError(Error):
     def __init__(self, message):
         self.message = "VERY BAD ERROR: " + message
         super().__init__(self.message)
+
+
+class MixedUpInputs(Exception):
+    pass
 
 
 class NotImplementedError(Error):

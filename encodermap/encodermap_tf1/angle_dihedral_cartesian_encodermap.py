@@ -1,8 +1,11 @@
+# Standard Library Imports
 from math import pi
 
+# Third Party Imports
 import numpy as np
 import tensorflow.compat.v1 as tf
 
+# Local Folder Imports
 from .autoencoder import Autoencoder
 from .backmapping import (
     chain_in_plane,
@@ -29,7 +32,7 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
 
     def __init__(self, *args, **kwargs):
         """
-        :param parameters: ADCParameters object as defined in :class:`encodermap.encodermap_tf1.parameters.ADCParameters`
+        :param parameters: ADCParameters object as defined in :class:`.ADCParameters`
 
         :param train_data: the training data as a :class:`.MolData` object
 
@@ -40,9 +43,7 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
 
         :param read_only: if True, no output is writen
         """
-        print("calling_super")
-        super(AngleDihedralCartesianEncoderMap, self).__init__(*args, **kwargs)
-        print("super ended")
+        super().__init__(*args, **kwargs)
         assert isinstance(self.p, ADCParameters)
         assert isinstance(self.train_moldata, MolData)
 
@@ -71,7 +72,6 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
 
     def _setup_network(self):
         self.inputs = self.data_iterator.get_next()
-        print("self.inputs:", self.inputs)
         if self.p.use_backbone_angles:
             self.main_inputs = tf.concat([self.inputs[0], self.inputs[1]], axis=1)
         else:
@@ -85,10 +85,6 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
         variable_summaries("latent", self.latent)
         self.generated = self._generate(self.latent)
 
-        print("self.main_inputs:", self.main_inputs)
-        print("self.latent:", self.latent)
-        print("self.generated:", self.generated)
-
         if self.p.use_backbone_angles:
             self.generated_angles = self.generated[:, : self.inputs[0].shape[1]]
             self.generated_dihedrals = self.generated[:, self.inputs[0].shape[1] :]
@@ -99,26 +95,28 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
                 [tf.shape(self.generated_dihedrals)[0], 1],
             )
 
-        print("self.generated_angles:", self.generated_angles)
-        print("self.generated_dihedrals:", self.generated_dihedrals)
-
         mean_lengths = np.expand_dims(
             np.mean(self.train_moldata.lengths, axis=0), axis=0
         )
-        print("mean_lengths.shape:", mean_lengths.shape)
         self.chain_in_plane = chain_in_plane(mean_lengths, self.generated_angles)
-        print("self.chain_in_plane:", self.chain_in_plane)
         self.cartesian = dihedrals_to_cartesian_tf(
             self.generated_dihedrals + pi, self.chain_in_plane
         )
-        print("self.cartesian:", self.cartesian)
-        # self.amide_H_cartesian = guess_amide_H(self.cartesian, self.train_moldata.central_atoms.names)
-        # print('self.amide_H_cartesian:', self.amide_H_cartesian)
-        # self.amide_O_cartesian = guess_amide_O(self.cartesian, self.train_moldata.central_atoms.names)
-        # print('self.amide_O_cartesian:', self.amide_O_cartesian)
-        # self.cartesian_with_guessed_atoms = merge_cartesians(self.cartesian, self.train_moldata.central_atoms.names,
-        #                                                      self.amide_H_cartesian, self.amide_O_cartesian)
-        # print('self.cartesian_with_guessed_atoms:', self.cartesian_with_guessed_atoms)
+
+        self.amide_H_cartesian = guess_amide_H(
+            self.cartesian, self.train_moldata.central_atoms.names
+        )
+        self.amide_O_cartesian = guess_amide_O(
+            self.cartesian, self.train_moldata.central_atoms.names
+        )
+
+        self.cartesian_with_guessed_atoms = merge_cartesians(
+            self.cartesian,
+            self.train_moldata.central_atoms.names,
+            self.amide_H_cartesian,
+            self.amide_O_cartesian,
+        )
+
         self.input_cartesian_pairwise_dist = pairwise_dist(
             self.inputs[2][
                 :,
@@ -126,7 +124,7 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
             ],
             flat=True,
         )
-        print("self.input_cartesian_pairwise_dist:", self.input_cartesian_pairwise_dist)
+
         self.gen_cartesian_pairwise_dist = pairwise_dist(
             self.cartesian[
                 :,
@@ -134,17 +132,11 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
             ],
             flat=True,
         )
-        self.cost = 0
-        print("cartesian_cost:", self._cartesian_cost().eval())
-        raise Exception("STOP")
-        print("self.gen_cartesian_pairwise_dist:", self.gen_cartesian_pairwise_dist)
+
         self.clashes = tf.count_nonzero(
             pairwise_dist(self.cartesian, flat=True) < 1, axis=1, dtype=tf.float32
         )
-        print("self.clashes:", self.clashes)
         tf.summary.scalar("clashes", tf.reduce_mean(self.clashes))
-
-        raise Exception("STOP")
 
     def _setup_cost(self):
         self._dihedral_cost()
@@ -240,7 +232,7 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
                 *self.p.dist_sig_parameters,
                 self.p.periodicity,
             )
-            tf.summary.scalar("sigmoid_loss", dist_cost)
+            tf.summary.scalar("distance_cost", dist_cost)
             if self.p.distance_cost_scale != 0:
                 self.cost += self.p.distance_cost_scale * dist_cost
 
@@ -299,7 +291,7 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
                             (
                                 tf.less(self.global_step, a),
                                 lambda: tf.constant(0, tf.float32),
-                            ),  # if global step is less than a
+                            ),
                             (
                                 tf.greater(self.global_step, b),
                                 lambda: tf.constant(
@@ -355,9 +347,7 @@ class AngleDihedralCartesianEncoderMapDummy(AngleDihedralCartesianEncoderMap):
         self.main_inputs = tf.placeholder_with_default(
             self.main_inputs, self.main_inputs.shape
         )
-        self.regularizer = tf.contrib.layers.l2_regularizer(
-            scale=self.p.l2_reg_constant
-        )
+        self.regularizer = tf.keras.regularizers.l2(self.p.l2_reg_constant)
         encoded = self._encode(self.main_inputs)
         self.latent = tf.placeholder_with_default(encoded, encoded.shape)
         variable_summaries("latent", self.latent)

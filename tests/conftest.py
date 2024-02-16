@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -19,6 +19,11 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+# Standard Library Imports
+import os
+from functools import wraps
+
+
 def sort_tests(x):
     if x.name == "test_losses":
         print("test losses. Returning 1")
@@ -37,3 +42,20 @@ def pytest_collection_modifyitems(session, config, items):
     # but fail, when pytest is called on complete directory. This is used to order
     # them correctly.
     items[:] = list(sorted(items, key=sort_tests))
+
+
+def expensive_test(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if os.getenv("RUN_EXPENSIVE_TESTS", "False").lower() == "true":
+            print(f"I will now run the expensive test " f"`{func.__name__}`.")
+            return func(*args, **kwargs)
+        else:
+            print(
+                "I will not run the expensive test "
+                f"`{func.__name__}`. Set the "
+                "environment variable `RUN_EXPENSIVE_TESTS=True` to run this test."
+            )
+            return
+
+    return wrapper

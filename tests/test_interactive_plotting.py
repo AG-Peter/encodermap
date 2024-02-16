@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -19,17 +19,25 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+
+
+# Future Imports at the top
+from __future__ import annotations
+
+# Standard Library Imports
 import glob
 import os
 import shutil
 import unittest
 from pathlib import Path
 
+# Third Party Imports
 import matplotlib.pyplot as plt
 import mdtraj as md
 import numpy as np
 import pandas as pd
 
+# Encodermap imports
 from encodermap import ADCParameters, AngleDihedralCartesianEncoderMap
 from encodermap.plot.utils import (
     PolygonSelector,
@@ -37,6 +45,9 @@ from encodermap.plot.utils import (
     get_cluster_frames,
 )
 from encodermap.trajinfo import SingleTraj, TrajEnsemble
+
+
+import encodermap as em  # isort: skip
 
 
 class TestInteractivePlotting(unittest.TestCase):
@@ -116,8 +127,10 @@ class TestInteractivePlotting(unittest.TestCase):
 # https://stackoverflow.com/questions/55417214/phantom-tests-after-switching-from-unittest-testcase-to-tf-test-testcase
 test_cases = (TestInteractivePlotting,)
 
+# Standard Library Imports
 # doctests
 import doctest
+
 
 doc_tests = ()
 

@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -22,14 +22,49 @@
 """Typing for the encodermap package"""
 
 
+# Standard Library Imports
 import typing
-from typing import Union
+from collections.abc import Sequence
+from typing import Literal, Union
+
+# Third Party Imports
+import numpy as np
+
+
+CanBeIndex = Union[int, Sequence[int], np.ndarray, slice]
+
+CustomAAsDict = dict[
+    Union[str, tuple[str, str]],
+    tuple[
+        str,
+        dict[
+            Literal[
+                "bonds",
+                "optional_bonds",
+                "delete_bonds",
+                "optional_delete_bonds",
+                "PHI",
+                "PSI",
+                "OMEGA",
+                "CHI1",
+                "CHI2",
+                "CHI3",
+                "CHI4",
+                "ChI5",
+            ],
+            Union[list[str], list[tuple[Union[str, int], Union[str, int]]]],
+        ],
+    ],
+]
+
 
 if typing.TYPE_CHECKING:
+    # Local Folder Imports
     from .parameters import ADCParameters, Parameters
 
     AnyParameters = Union[Parameters, ADCParameters]
 
+    # Local Folder Imports
     from .loading.features import (
         AllBondDistances,
         AllCartesians,
@@ -56,10 +91,11 @@ if typing.TYPE_CHECKING:
         SideChainDihedrals,
     ]
 
+    # Local Folder Imports
     from .autoencoder.autoencoder import (
         AngleDihedralCartesianEncoderMap,
         Autoencoder,
         EncoderMap,
     )
 
-    AutoencoderClass = Union[Autoencoder, EnocderMap, AngleDihedralCartesianEncoderMap]
+    AutoencoderClass = Union[Autoencoder, EncoderMap, AngleDihedralCartesianEncoderMap]

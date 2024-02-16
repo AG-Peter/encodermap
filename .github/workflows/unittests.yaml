@@ -1,0 +1,78 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Unittests
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  tests:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9]
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies 🔧
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install .
+
+      - name: Test optional imports without all packages
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+        run: |
+          required_packages_test=$( python -m unittest tests/test_optional_imports_before_installing_reqs.py )
+          echo "::set-env name=Req_out::$required_packages_test"
+
+      - name: Fail on non-working optional imports
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+        uses: actions/github-script@v3
+        if: ${{ env.Req_out }}
+        with:
+          script: |
+            core.setFailed('Optional Packages cause test_optional_imports_before_installing_reqs.py to fail.')
+
+      - name: Install MD dependencies 🔧
+        run: |
+          if [ -f md_requirements.txt ]; then pip install -r md_requirements.txt ; fi
+          if [ -f tests/test_requirements.txt ]; then pip install -r tests/test_requirements.txt ; fi
+
+      - name: Run Unittests 🧪 and Coverage 🐍
+        env:
+            ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+        run: |
+          echo "Fixing HtmlTestRunner"
+          HTML_TEST_RUNNER_FILE=$( pip show html-testRunner | sed -n '8p' | awk '{print $2}' )
+          HTML_TEST_RUNNER_FILE="$HTML_TEST_RUNNER_FILE/HtmlTestRunner/result.py"
+          sed -i "s/length = self._count_relevant_tb_levels(tb)/# length = self._count_relevant_tb_levels(tb)/g" $HTML_TEST_RUNNER_FILE
+          sed -i "s/msg_lines = traceback.format_exception(exctype, value, tb, length)/msg_lines = traceback.format_exception(exctype, value, tb)/g" $HTML_TEST_RUNNER_FILE
+          if [ -z ${Req_out} ] ; then
+            echo "Tests with required packages ran previously and result is ${{ env.Req_out }}"
+          else
+            echo "No previous Test results to compare this one with"
+          fi
+          out=$( python tests/run_unittests_and_coverage.py )

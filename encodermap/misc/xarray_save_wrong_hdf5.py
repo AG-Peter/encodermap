@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -22,7 +22,7 @@
 """Allows the combined storing of CVs and trajectories in single HDF5/NetCDF4 files.
 
 These files represent collated and completed trajectory ensembles, which can be
-lazy-loaded (memory efficient) and used as training input for encodermap's NNs.
+lazy-loaded (memory efficient) and used as training input for EncoderMap's NNs.
 
 """
 
@@ -31,18 +31,20 @@ lazy-loaded (memory efficient) and used as training input for encodermap's NNs.
 ################################################################################
 
 
+# Future Imports at the top
 from __future__ import annotations
 
+# Standard Library Imports
 import os
 import re
-from math import pi
+from io import BytesIO
 from numbers import Number
 from pathlib import Path
 
+# Third Party Imports
 import numpy as np
+from optional_imports import _optional_import
 
-from .._optional_imports import _optional_import
-from .errors import BadError
 
 ################################################################################
 # Optional Imports
@@ -60,6 +62,7 @@ _get_default_engine = _optional_import("xarray", "backends.api._get_default_engi
 
 
 try:
+    # Third Party Imports
     from dask.delayed import Delayed
 except ImportError:
     Delayed = None
@@ -70,28 +73,24 @@ except ImportError:
 ################################################################################
 
 
-from typing import (
-    TYPE_CHECKING,
-    Callable,
-    Dict,
-    Hashable,
-    Iterable,
-    Mapping,
-    Optional,
-    Tuple,
-    Union,
-)
+# Standard Library Imports
+from collections.abc import Callable, Hashable, Iterable, Mapping
+from typing import TYPE_CHECKING, Optional, Union
+
+
+WritableStoresType = dict[str, Callable]
 
 try:
-    WRITEABLE_STORES: Dict[str, Callable] = {
+    WRITEABLE_STORES: dict[str, Callable] = {
         "netcdf4": backends.NetCDF4DataStore.open,
         "scipy": backends.ScipyDataStore,
         "h5netcdf": backends.H5NetCDFStore.open,
     }
 except (ImportError, ValueError, AttributeError):
-    WRITEABLE_STORES = {}
+    WRITEABLE_STORES: dict[str, Callable] = {}
 
 if TYPE_CHECKING:
+    # Third Party Imports
     from dask.delayed import Delayed
     from xarray import Dataset, backends, conventions
     from xarray.backends.api import _get_default_engine
@@ -124,16 +123,16 @@ def save_netcdf_alongside_mdtraj(fname: str, dataset: Dataset) -> None:
     )
 
 
-##############################################################################
+################################################################################
 # xarray duplication to allow saving dataset alongside mdtraj
-##############################################################################
+################################################################################
 
 
 def dump_to_store(
     dataset: Dataset,
-    store: WRITEABLE_STORES,
-    writer: Optional[ArrayWriter] = None,
-    encoder=None,
+    store: WritableStoresType = WRITEABLE_STORES,
+    writer: Optional[Callable] = None,
+    encoder: Optional[Callable] = None,
     encoding: Optional[str] = None,
     unlimited_dims: Optional[Iterable[Hashable]] = None,
 ):
@@ -240,7 +239,7 @@ def _to_netcdf(
     compute: bool = True,
     multifile: bool = False,
     invalid_netcdf: bool = False,
-) -> Union[None, Delayed]:
+) -> Optional[Delayed]:
     """This function creates an appropriate datastore for writing a dataset to
     disk as a netCDF file
 
@@ -347,6 +346,7 @@ def _to_netcdf(
             store.close()
 
     if not compute:
+        # Third Party Imports
         import dask
 
         return dask.delayed(_finalize_store)(writes, store)

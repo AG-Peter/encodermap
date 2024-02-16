@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -19,15 +19,20 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+# Standard Library Imports
 import unittest
+
 
 # unittests
 test_cases = ()
 
+# Standard Library Imports
 # doctests
 import doctest
 
+# Encodermap imports
 import encodermap.misc.xarray as xarray
+
 
 doc_tests = (doctest.DocTestSuite(xarray),)
 

@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -19,12 +19,14 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+# Standard Library Imports
 import unittest
 
 
 class TestOptionalImport(unittest.TestCase):
     def test_working_import(self):
-        from encodermap._optional_imports import _optional_import
+        # Third Party Imports
+        from optional_imports import _optional_import
 
         np = _optional_import("numpy")
         try:
@@ -40,7 +42,8 @@ class TestOptionalImport(unittest.TestCase):
             )
 
     def test_non_working_import(self):
-        from encodermap._optional_imports import _optional_import
+        # Third Party Imports
+        from optional_imports import _optional_import
 
         non_existent_package = _optional_import("non_existent_package")
         with self.assertRaises(ValueError):
@@ -51,13 +54,6 @@ class TestOptionalImport(unittest.TestCase):
 
 test_cases = (TestOptionalImport,)
 
-# doctests
-import doctest
-
-import encodermap._optional_imports as _optional_imports
-
-doc_tests = (doctest.DocTestSuite(_optional_imports),)
-
 
 def load_tests(loader, tests, pattern):
     suite = unittest.TestSuite()
@@ -65,5 +61,8 @@ def load_tests(loader, tests, pattern):
         tests = loader.loadTestsFromTestCase(test_class)
         filtered_tests = [t for t in tests if not t.id().endswith(".test_session")]
         suite.addTests(filtered_tests)
-    suite.addTests(doc_tests)
     return suite
+
+
+if __name__ == "__main__":
+    unittest.main()

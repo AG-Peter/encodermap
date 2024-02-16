@@ -1,5 +1,7 @@
+# Third Party Imports
 import tensorflow.compat.v1 as tf
 
+# Local Folder Imports
 from .autoencoder import Autoencoder
 from .misc import distance_cost
 

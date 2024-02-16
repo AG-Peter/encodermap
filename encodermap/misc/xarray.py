@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -24,13 +24,21 @@
 ################################################################################
 
 
+# Future Imports at the top
 from __future__ import annotations
 
-import numpy as np
+# Standard Library Imports
+import itertools
+import warnings
 
-from .._optional_imports import _optional_import
+# Third Party Imports
+import numpy as np
+from optional_imports import _optional_import
+
+# Local Folder Imports
 from .errors import BadError
 from .misc import FEATURE_NAMES, _validate_uri
+
 
 ################################################################################
 # Optional Imports
@@ -45,11 +53,17 @@ xr = _optional_import("xarray")
 ################################################################################
 
 
-from typing import TYPE_CHECKING, Optional
+# Standard Library Imports
+from numbers import Number
+from typing import TYPE_CHECKING, Optional, Union, overload
+
 
 if TYPE_CHECKING:
+    # Third Party Imports
     import xarray as xr
 
+    # Local Folder Imports
+    from .._typing import AnyFeature
     from ..loading.featurizer import Featurizer
     from ..trajinfo import SingleTraj
 
@@ -70,10 +84,61 @@ __all__ = [
 ################################################################################
 
 
+def _get_indexes_from_feat(f: "AnyFeature", traj: "SingleTraj") -> np.ndarray:
+    # the indices/indexes used to create this dataarray.
+    # This can be useful for later. To redo some analysis
+    # or use tensorflow for the geometric computations of these values.
+    # some PyEMMA features give the indexes different names e.g 'group_definitions'
+    try:
+        return f.indexes  # .tolist()
+    except AttributeError as e:
+        for key in f.__dir__():
+            if "inde" in key:
+                return np.asarray(f.__dict__[key])
+        if (
+            f.__class__.__name__ == "GroupCOMFeature"
+            or f.__class__.__name__ == "ResidueCOMFeature"
+        ):
+            return f.group_definitions
+        if f.__class__.__name__ == "MinRmsdFeature":
+            if f.atom_indices is None:
+                return np.arange(traj.n_atoms)
+            else:
+                return f.atom_indices
+        if "custom" in f.__class__.__name__.lower():
+            descr = f.describe()
+            if any(["CustomFeature" in i for i in descr]):
+                return np.asarray(
+                    [f"{d.split()[0]} INDEX {i}" for i, d in enumerate(descr)]
+                )
+            else:
+                raise Exception(
+                    f"Can't decide on indexes for this custom feature:, "
+                    f"{f.__class__.__name__=} {f.describe()[:2]=}"
+                ) from e
+        else:
+            raise e
+
+
+def _cast_to_int_maybe(a: np.ndarray) -> np.ndarray:
+    """Casts a np.array to int, if possible.
+
+    Args:
+        a (np.ndarray): The array.
+
+    Returns:
+        np.ndarray: The output, which can be int.
+    """
+    if not np.any(np.mod(a, 1)):
+        return a.astype(np.int32)
+    return a
+
+
 def construct_xarray_from_numpy(
     traj: SingleTraj,
     data: np.ndarray,
     name: str,
+    deg: bool = False,
     labels: Optional[list[str]] = None,
     check_n_frames: bool = False,
 ) -> xr.DataArray:
@@ -100,6 +165,7 @@ def construct_xarray_from_numpy(
             containing the trajectories of a trajectory ensemble.
         name (str): The name of the feature. This can be choosen freely. Names like 'central_angles', 'backbone_torsions'
             would make the most sense.
+        deg (bool): Whether provided data is in deg or radians.
         labels (Optional[list]): If you have specific labels for your CVs in mind, you can overwrite the
             generic 'CUSTOM_FEATURE FEATURE 0' labels with providing a list for this argument. If None is provided,
             generic names will be given to the features. Defaults to None.
@@ -111,10 +177,11 @@ def construct_xarray_from_numpy(
 
     Examples:
         >>> import encodermap as em
+        >>> import numpy as np
         >>> from encodermap.misc.xarray import construct_xarray_from_numpy
         >>> # load file from RCSB and give it traj num to represent it in a potential trajectory ensemble
         >>> traj = em.load('https://files.rcsb.org/view/1GHC.pdb', traj_num=1)
-        >>> # single trajectory needs to be expaneded into 'trajectory' axis
+        >>> # single trajectory needs to be expanded into 'trajectory' axis
         >>> z_coordinate = np.expand_dims(traj.xyz[:,:,0], 0)
         >>> da = construct_xarray_from_numpy(traj, z_coordinate, 'z_coordinate')
         >>> print(da.coords['Z_COORDINATE'].values[:2])
@@ -126,9 +193,9 @@ def construct_xarray_from_numpy(
 
     """
     if check_n_frames:
-        assert any(s == traj.n_frames for s in data.shape), print(
-            f"Data and traj misaligned. traj_frames: {traj.n_frames}, data.shape: {data.shape}, attr_name: {name}, {data}"
-        )
+        assert any(
+            s == traj.n_frames for s in data.shape
+        ), f"Data and traj misaligned. traj_frames: {traj.n_frames}, data.shape: {data.shape}, attr_name: {name}, {data}"
     if traj.backend == "no_load":
         with_time = False
     else:
@@ -136,16 +203,23 @@ def construct_xarray_from_numpy(
     if data.ndim == 2:
         if labels is None:
             labels = [f"{name.upper()} FEATURE {i}" for i in range(data.shape[-1])]
-        da = make_frame_CV_dataarray(labels, traj, name, data, with_time=with_time)
+        da, _ = make_frame_CV_dataarray(
+            labels, traj, name, data, deg=deg, with_time=with_time
+        )
     elif data.ndim == 3:
         if labels is None:
             labels = [f"{name.upper()} FEATURE {i}" for i in range(data.shape[-1])]
-        da = make_dataarray(labels, traj, name, data, with_time=with_time)
+        da, _ = make_dataarray(labels, traj, name, data, deg=deg, with_time=with_time)
     elif data.ndim == 4:
         if labels is None:
             labels = [f"{name.upper()} FEATURE {i}" for i in range(data.shape[-2])]
         da = make_position_dataarray_from_numpy(
-            labels, traj, name, data, with_time=with_time
+            labels,
+            traj,
+            name,
+            data,
+            deg=deg,
+            with_time=with_time,
         )
     else:
         raise Exception(
@@ -158,7 +232,6 @@ def unpack_data_and_feature(
     feat: Featurizer,
     traj: SingleTraj,
     input_data: np.ndarray,
-    put_indices_into_attrs: bool = True,
 ) -> xr.Dataset:
     """Makes a `xarray.Dataset` from data and a featurizer.
 
@@ -175,14 +248,14 @@ def unpack_data_and_feature(
         traj (em.SingleTraj): An instance of `encodermap.SingleTraj`, that the data
             in `input_data` was computed from
         input_data (np.ndarray): The data, as returned from PyEMMA.
-        put_indices_into_attrs (bool): Whether to put the indices into the attrs.
-            This needs to be False, when Ensembles are loaded because the Features
-            of the ensemble load function do not match the real indices that should be there.
 
     Returns:
         xarray.Dataset: An `xarray.Dataset` with all features in a nice format.
 
     """
+    # Local Folder Imports
+    from ..trajinfo.trajinfo_utils import trajs_combine_attrs
+
     # this needs to be done, because pyemma concatenates the data
     # along the feature axis
     indices = get_indices_by_feature_dim(feat, traj, input_data.shape)
@@ -191,68 +264,97 @@ def unpack_data_and_feature(
     indexes = {}
     for f, ind in zip(feat.features, indices):
         data = input_data[:, ind]
+        if data.shape[-1] == 1 and f._dim != 1:
+            data = data.squeeze(-1)
+
+        # decide on the name
         try:
             name = FEATURE_NAMES[f.name]
         except (KeyError, AttributeError):
-            name = f.__class__.__name__
-            f.name = name
+            if hasattr(f, "name"):
+                if isinstance(f.name, str):
+                    name = f.name
+                    if "mdtraj.trajectory" in f.name.lower():
+                        f.name = f.__class__.__name__
+                        name = f.__class__.__name__
+                else:
+                    name = f.__class__.__name__
+                    f.name = name
+            else:
+                name = f.__class__.__name__
+                if name == "CustomFeature":
+                    name = f.describe()[0].split()[0]
+                f.name = name
         assert data.shape[1] == f._dim
+
         if data.shape[0] != len(traj):
-            if traj.index is None:
+            if traj.index == (None,):
                 raise Exception(
                     "Shape of provided data does not fit traj. Traj "
                     f"has {traj.n_frames=} {len(traj)=}. Data has shape {data.shape}"
                 )
             else:
-                data = data[traj.index]
-                assert data.shape[0] == len(traj)
+                data = data[traj.index].squeeze()
+                assert data.shape[0] == len(traj), f"{data.shape=}, {len(traj)=}"
         if name in DAs:
             name = (
                 name
                 + f"_{len(list(filter(lambda x: True if name in x else False, list(DAs.keys()))))}"
             )
+        if hasattr(f, "deg"):
+            deg = f.deg
+        else:
+            deg = None
+
         if f.name in ["AllCartesians", "CentralCartesians", "SideChainCartesians"]:
             data = data.reshape(len(traj), -1, 3)
             data = np.expand_dims(data, axis=0)
-            DAs[name] = make_position_dataarray(f.describe(), traj, name, data)
+            if hasattr(feat, "indices_by_top"):
+                f.indexes = feat.indices_by_top[traj.top][f.name]
+            DAs[name], indexes[name + "_feature_indices"] = make_position_dataarray(
+                f.describe(), traj, name, data, deg=deg, feat=f
+            )
         else:
             data = np.expand_dims(data, axis=0)
-            DAs[name] = make_dataarray(f.describe(), traj, name, data)
-
-        # the indices/indexes used to create this dataarray.
-        # This can be useful for later. To redo some analysis
-        # or use tensorflow for the geometric computations of these values.
-        # some PyEMMA features give the indexes different names e.g 'group_definitions'
-        try:
-            indexes[name] = f.indexes.tolist()
-        except AttributeError as e:
-            for key in f.__dir__():
-                if "inde" in key:
-                    indexes[name] = f.__dict__[key]
-            if (
-                f.__class__.__name__ == "GroupCOMFeature"
-                or f.__class__.__name__ == "ResidueCOMFeature"
-            ):
-                indexes[name] = f.group_definitions
-            if f.__class__.__name__ == "MinRmsdFeature":
-                indexes[name] = f.atom_indices
-            if name not in indexes:
-                raise e
-    ds = xr.Dataset(DAs)
-    if put_indices_into_attrs:
-        ds = ds.assign_attrs(indexes)
+            if f._dim == 1:
+                DAs[name], indexes[name + "_feature_indices"] = make_frame_CV_dataarray(
+                    f.describe(),
+                    traj,
+                    name,
+                    data,
+                    deg=deg,
+                    feat=f,
+                )
+            else:
+                if hasattr(feat, "indices_by_top"):
+                    f.indexes = feat.indices_by_top[traj.top][f.name]
+                DAs[name], indexes[name + "_feature_indices"] = make_dataarray(
+                    f.describe(), traj, name, data, deg=deg, feat=f
+                )
+        if indexes[name + "_feature_indices"] is None:
+            del indexes[name + "_feature_indices"]
+    DAs_and_indxes = DAs | indexes
+    attrs = []
+    for i in DAs_and_indxes.values():
+        attrs.append(i.attrs)
+    try:
+        ds = xr.Dataset(DAs_and_indxes, attrs=trajs_combine_attrs(attrs))
+    except ValueError as e:
+        raise Exception(f"{DAs_and_indxes.keys()=}") from e
     return ds
 
 
-def construct_xarray_from_feat(feat, input_data=None):
-    raise Exception(
-        "Marked for deprecation, because featurizer returns its own dataset."
-    )
-
-
 def make_frame_CV_dataarray(
-    labels, traj, name, data, with_time=True, frame_indices=None, labels2=None
-):
+    labels: list[str],
+    traj: SingleTraj,
+    name: str,
+    data: np.ndarray,
+    deg: Union[None, bool],
+    with_time: bool = True,
+    frame_indices: Optional[np.ndarray] = None,
+    labels2: Optional[list[str]] = None,
+    feat: Optional["AnyFeature"] = None,
+) -> tuple[xr.DataArray, Union[None, xr.DataArray]]:
     """Make a dataarray from a frame CV feature.
 
     A normal features yields multiple values per trajectory frame (e.g. the
@@ -300,9 +402,9 @@ def make_frame_CV_dataarray(
             will be used. Otherwise, the `np.ndarray` provided here, will be used.
         labels2 (Optional[list[str]]): Optional labels to supersede the labels in `labels`.
             This can be especially useful for trajectory ensembles, which might differ
-            in a lot of places (i.e. single amino acid exchange). If the labels are
+            in a lot of places (i.e., single amino acid exchange). If the labels are
             too strict (LYS1 ATOM1 C), the data of two slightly different proteins
-            can not be concatenated. If the labels are generic (AA1 ATOM1), this can
+            cannot be concatenated. If the labels are generic (AA1 ATOM1), this can
             be done. Defaults to None.
 
     Returns:
@@ -313,49 +415,90 @@ def make_frame_CV_dataarray(
         pass
     elif data.ndim == 2:
         data = np.expand_dims(data, -1)
+    # data = _cast_to_int_maybe(data)
+
     return make_dataarray(
-        labels,
-        traj,
-        name,
-        data,
-        with_time,
-        frame_indices,
-        labels2,
+        labels, traj, name, data, deg, with_time, frame_indices, labels2, feat
     )
 
 
-def make_position_dataarray_from_numpy(atoms, traj, name, data, with_time=True):
+def make_position_dataarray_from_numpy(
+    atoms, traj, name, data, deg=None, with_time=True
+):
+    attrs = {
+        "length_units": "nm",
+        "time_units": "ps",
+        "full_path": traj.traj_file,
+        "topology_file": traj.top_file,
+        "feature_axis": "ATOM",
+    }
+    if deg is not None:
+        if deg:
+            attrs["angle_units"] = "deg"
+        else:
+            attrs["angle_units"] = "rad"
     frame_indices = traj.id
     if frame_indices.ndim > 1:
         frame_indices = frame_indices[:, 1]
     da = xr.DataArray(
         data,
         coords={
-            "traj_num": ("traj_num", [traj.traj_num]),
-            "traj_name": ("traj_num", [traj.basename]),
+            "traj_num": ("traj_num", np.asarray([traj.traj_num])),
+            "traj_name": ("traj_num", np.asarray([traj.basename])),
             "frame_num": ("frame_num", frame_indices),
-            "ATOM": ("ATOM", atoms),
-            "COORDS": ["POSITION X", "POSITION Y", "POSITION Z"],
+            "ATOM": ("ATOM", np.asarray(atoms)),
+            "COORDS": np.array(["POSITION X", "POSITION Y", "POSITION Z"]),
         },
         dims=["traj_num", "frame_num", "ATOM", "COORDS"],
         name=name,
-        attrs={
-            "length_units": "nm",
-            "time_units": "ps",
-            "angle_units": "rad",
-            "full_path": traj.traj_file,
-            "topology_file": traj.top_file,
-            "feature_axis": "ATOM",
-        },
+        attrs=attrs,
     )
     if with_time:
         da = da.assign_coords(time=("frame_num", traj.time))
     return da
 
 
+@overload
 def make_position_dataarray(
-    labels, traj, name, data, with_time=True, frame_indices=None, labels2=None
-):
+    labels: list[str],
+    traj: SingleTraj,
+    name: str,
+    data: np.ndarray,
+    deg: Union[None, bool] = None,
+    with_time: bool = True,
+    frame_indices: Optional[np.ndarray] = None,
+    labels2: Optional[list[str]] = None,
+    feat: Optional["AnyFeature"] = None,
+) -> tuple[xr.DataArray, None]:
+    ...
+
+
+@overload
+def make_position_dataarray(
+    labels: list[str],
+    traj: SingleTraj,
+    name: str,
+    data: np.ndarray,
+    deg: Union[None, bool] = None,
+    with_time: bool = True,
+    frame_indices: Optional[np.ndarray] = None,
+    labels2: Optional[list[str]] = None,
+    feat: Optional["AnyFeature"] = "AnyFeature",
+) -> tuple[xr.DataArray, xr.DataArray]:
+    ...
+
+
+def make_position_dataarray(
+    labels: list[str],
+    traj: SingleTraj,
+    name: str,
+    data: np.ndarray,
+    deg: Union[None, bool] = None,
+    with_time: bool = True,
+    frame_indices: Optional[np.ndarray] = None,
+    labels2: Optional[list[str]] = None,
+    feat: Optional["AnyFeature"] = None,
+) -> tuple[xr.DataArray, Union[None, xr.DataArray]]:
     """Creates dataarray belonging to cartesian positions.
 
     Similar to `make_datarray`, but the shapes are even larger. As every atom
@@ -363,7 +506,7 @@ def make_position_dataarray(
     dataarray is (1, no_of_frames, no_of_atoms_considered, 3).
 
     Note:
-        Please make sure, that the input data conforms to the nm, ps, rad coordinates.
+        Please make sure that the input data conforms to the nm, ps, rad coordinates.
 
     Args:
         labels (list[str]): The labels, that specify the `CV_num` dimension. This
@@ -383,6 +526,8 @@ def make_position_dataarray(
             construct this dataarray from a feature, you can either use `feature.name`,
             or `feature.__class__.__name__`.
         data (Union[np.ndarray, dask.array]): The data to fill the dataarray with.
+        deg (Optional[bool]): Whether the provided data is in deg or radians.
+            If None is porovided, it will not be included in the attrs. Defaults to None.
         with_time (Union[bool, np.ndarray]): Whether to add the time of
             the frames to the `frame_num` axis. Can be either True, or False, or a
             `np.ndarray`, in which case the data in this array will be used. Defaults to True.
@@ -396,64 +541,124 @@ def make_position_dataarray(
             will be used. Otherwise, the `np.ndarray` provided here, will be used.
         labels2 (Optional[list[str]]): Optional labels to supersede the labels in `labels`.
             This can be especially useful for trajectory ensembles, which might differ
-            in a lot of places (i.e. single amino acid exchange). If the labels are
+            in a lot of places (i.e., single amino acid exchange). If the labels are
             too strict (LYS1 ATOM1 C), the data of two slightly different proteins
-            can not be concatenated. If the labels are generic (AA1 ATOM1), this can
+            cannot be concatenated. If the labels are generic (AA1 ATOM1), this can
             be done. Defaults to None.
 
     Returns:
-        xarray.Dataarray: The resulting dataarray.
+        xarray.DataArra: The resulting dataarray.
 
     """
+    attrs = {
+        "length_units": "nm",
+        "time_units": "ps",
+        "full_path": traj.traj_file,
+        "topology_file": traj.top_file,
+        "feature_axis": "ATOM",
+    }
+    if feat is not None:
+        indices = _get_indexes_from_feat(feat, traj)
+    else:
+        indices = None
+    if deg is not None:
+        if deg:
+            attrs["angle_units"] = "deg"
+        else:
+            attrs["angle_units"] = "rad"
     if frame_indices is None:
         frame_indices = traj.id
         if frame_indices.ndim > 1:
             frame_indices = frame_indices[:, 1]
-        # frame_indices = traj._original_frame_indices
-        # if not np.any(frame_indices):
-        #     frame_indices = traj.id
-        # if frame_indices.ndim > 1:
-        #     frame_indices = frame_indices[:, 1]
 
     if labels2 is not None:
         labels = labels2
     else:
         labels = [_[11:].lstrip(" ") for _ in labels[::3]]
-
     da = xr.DataArray(
         data,
         coords={
-            "traj_num": ("traj_num", [traj.traj_num]),
-            "traj_name": ("traj_num", [traj.basename]),
+            "traj_num": ("traj_num", np.asarray([traj.traj_num])),
+            "traj_name": ("traj_num", np.asarray([traj.basename])),
             "frame_num": ("frame_num", frame_indices),
-            "ATOM": ("ATOM", labels),
-            "COORDS": ["POSITION X", "POSITION Y", "POSITION Z"],
+            "ATOM": ("ATOM", np.asarray(labels)),
+            "COORDS": np.array(["POSITION X", "POSITION Y", "POSITION Z"]),
         },
         dims=["traj_num", "frame_num", "ATOM", "COORDS"],
         name=name.upper(),
-        attrs={
-            "length_units": "nm",
-            "time_units": "ps",
-            "angle_units": "rad",
-            "full_path": traj.traj_file,
-            "topology_file": traj.top_file,
-            "feature_axis": "ATOM",
-        },
+        attrs=attrs,
     )
+    if indices is not None:
+        if len(indices) != data.shape[-2]:
+            indices_copy = indices.copy()
+            indices = np.full((len(labels),), np.nan, float)
+            indices[: len(indices_copy)] = indices_copy
+        ind_da = xr.DataArray(
+            np.expand_dims(indices, 0),
+            coords={
+                "traj_num": ("traj_num", np.asarray([traj.traj_num])),
+                "traj_name": ("traj_num", np.asarray([traj.basename])),
+                # "ATOM_INDICES": ("ATOM_INDICES", np.asarray(labels)),
+                "ATOM": ("ATOM", np.asarray(labels)),
+            },
+            dims=["traj_num", "ATOM"],  # _INDICES"],
+            name=name.upper(),  # + "_INDICES",
+            attrs=attrs | {"feature_axis": "ATOM"},  # _INDICES"},
+        )
+    else:
+        ind_da = None
     if isinstance(with_time, bool):
         if with_time:
             da = da.assign_coords(time=("frame_num", traj.time))
     else:
         da = da.assign_coords(time=("frame_num", with_time))
-    return da
+    return da, ind_da
+
+
+@overload
+def make_dataarray(
+    labels: list[str],
+    traj: SingleTraj,
+    name: str,
+    data: np.ndarray,
+    deg: Union[None, bool],
+    with_time: bool = True,
+    frame_indices: Optional[np.ndarray] = None,
+    labels2: Optional[list[str]] = None,
+    feat: Optional["AnyFeature"] = None,
+) -> tuple[xr.DataArray, None]:
+    ...
+
+
+@overload
+def make_dataarray(
+    labels: list[str],
+    traj: SingleTraj,
+    name: str,
+    data: np.ndarray,
+    deg: Union[None, bool],
+    with_time: bool = True,
+    frame_indices: Optional[np.ndarray] = None,
+    labels2: Optional[list[str]] = None,
+    feat: Optional["AnyFeature"] = "AnyFeature",
+) -> tuple[xr.DataArray, xr.DataArray]:
+    ...
 
 
 def make_dataarray(
-    labels, traj, name, data, with_time=True, frame_indices=None, labels2=None
-):
+    labels: list[str],
+    traj: SingleTraj,
+    name: str,
+    data: np.ndarray,
+    deg: Union[None, bool],
+    with_time: bool = True,
+    frame_indices: Optional[np.ndarray] = None,
+    labels2: Optional[list[str]] = None,
+    feat: Optional["AnyFeature"] = None,
+) -> tuple[xr.DataArray, Union[None, xr.DataArray]]:
     """Creates a dataarray belonging to a feature.
 
-    The shapes are a bit different that what most people might be used to. As
+    The shapes are a bit different from what most people might be used to. As
     EncoderMap was meant to work with ensembles of trajectories, the data is usually
     shaped as (traj_num, frame_num, CV_num), or even (traj_num, frame_num, atom_num, 3).
 
@@ -464,7 +669,7 @@ def make_dataarray(
     can increase.
 
     Note:
-        Please make sure, that the input data conforms to the nm, ps, rad coordinates.
+        Please make sure that the input data conforms to the nm, ps, rad coordinates.
 
     Args:
         labels (list[str]): The labels, that specify the `CV_num` dimension. This
@@ -484,11 +689,14 @@ def make_dataarray(
             construct this dataarray from a feature, you can either use `feature.name`,
             or `feature.__class__.__name__`.
         data (Union[np.ndarray, dask.array]): The data to fill the dataarray with.
+        deg (Optional[bool]): Whether provided data is in deg or radians. If None
+            is provided, the angle_units will not appear in the attributes.
+            Defaults to None.
         with_time (Optional[Union[bool, np.ndarray]]): Whether to add the time of
             the frames to the `frame_num` axis. Can be either True, or False, or a
             `np.ndarray`, in which case the data in this array will be used. Defaults to True.
         frame_indices (Optional[np.ndarray]) The indices of the trajectory on disk.
-            This can come in handy, if the trajectory is loaded out of-memory and
+            This can come in handy if the trajectory is loaded out of-memory and
             distributed, in which case, MDAnalysis is used to load data.
             MDTraj does never load the trajectory coordinates. This the attribute
             `_original_frame_indices` in the trajectory will be empty. However, as
@@ -497,24 +705,37 @@ def make_dataarray(
             will be used. Otherwise, the `np.ndarray` provided here, will be used.
         labels2 (Optional[list[str]]): Optional labels to supersede the labels in `labels`.
             This can be especially useful for trajectory ensembles, which might differ
-            in a lot of places (i.e. single amino acid exchange). If the labels are
+            in a lot of places (i.e., single amino acid exchange). If the labels are
             too strict (LYS1 ATOM1 C), the data of two slightly different proteins
-            can not be concatenated. If the labels are generic (AA1 ATOM1), this can
+            cannot be concatenated. If the labels are generic (AA1 ATOM1), this can
             be done. Defaults to None.
 
     Returns:
         xarray.Dataarray: The resulting dataarray.
 
     """
+    # data = _cast_to_int_maybe(data)
+    if feat is not None:
+        indices = _get_indexes_from_feat(feat, traj)
+    else:
+        indices = None
+    attrs = {
+        "length_units": "nm",
+        "time_units": "ps",
+        "full_path": traj.traj_file,
+        "topology_file": traj.top_file,
+        "feature_axis": name.upper(),
+    }
+    if deg is not None:
+        if deg:
+            attrs["angle_units"] = "deg"
+        else:
+            attrs["angle_units"] = "rad"
+
     if frame_indices is None:
         frame_indices = traj.id
         if frame_indices.ndim > 1:
             frame_indices = frame_indices[:, 1]
-        # frame_indices = traj._original_frame_indices
-        # if not np.any(frame_indices):
-        #     frame_indices = traj.id
-        # if frame_indices.ndim > 1:
-        #     frame_indices = frame_indices[:, 1]
 
     if labels2 is not None:
         labels = labels2
@@ -524,64 +745,170 @@ def make_dataarray(
     else:
         if len(labels) > data.shape[-1]:
             labels = np.arange(data.shape[-1])
-
     da = xr.DataArray(
         data,
         coords={
-            "traj_num": ("traj_num", [traj.traj_num]),
-            "traj_name": ("traj_num", [traj.basename]),
+            "traj_num": ("traj_num", np.asarray([traj.traj_num])),
+            "traj_name": ("traj_num", np.asarray([traj.basename])),
             "frame_num": ("frame_num", frame_indices),
-            name.upper(): labels,
+            name.upper(): np.asarray(labels),
         },
         dims=["traj_num", "frame_num", name.upper()],
         name=name,
-        attrs={
-            "length_units": "nm",
-            "time_units": "ps",
-            "angle_units": "rad",
-            "full_path": traj.traj_file,
-            "topology_file": traj.top_file,
-            "feature_axis": name.upper(),
-        },
+        attrs=attrs,
     )
+    if indices is not None:
+        index_labels = np.asarray(labels)
+        if len(indices) == data.shape[-1] // 3 and "selection" in feat.name.lower():
+            data = np.vstack([indices for i in range(3)]).flatten(order="F")
+            ind_da = xr.DataArray(
+                np.expand_dims(np.expand_dims(data, 0), -1),
+                coords={
+                    "traj_num": ("traj_num", np.asarray([traj.traj_num])),
+                    "traj_name": ("traj_num", np.asarray([traj.basename])),
+                    name.upper(): index_labels,
+                    "ATOM_NO": [0],
+                },
+                dims=["traj_num", name.upper(), "ATOM_NO"],
+                name=name.upper(),
+                attrs=attrs | {"feature_axis": name.upper()},
+            )
+        else:
+            ind_da = xr.DataArray()
+            if "rmsd" in feat.__class__.__name__.lower():
+                ind_da = xr.DataArray(
+                    np.expand_dims(np.expand_dims(indices, 0), 0),
+                    coords={
+                        "traj_num": ("traj_num", np.asarray([traj.traj_num])),
+                        "traj_name": ("traj_num", np.asarray([traj.basename])),
+                        name.upper(): index_labels,
+                        "RMSD_ATOM_NO": indices,
+                    },
+                    dims=["traj_num", name.upper(), "RMSD_ATOM_NO"],
+                    name=name.upper(),
+                    attrs=attrs | {"feature_axis": name.upper()},
+                )
+            elif len(indices) != data.shape[-1]:
+                # if inhomogeneous shape, we won't return an index array.
+                # we have some weird feature at our hands
+                if isinstance(indices, list):
+                    if np.asarray(indices[0]).shape != np.asarray(indices[1]).shape:
+                        warnings.warn(
+                            f"The feature {name} will not produce a {name}_feature_indices "
+                            f"xr.Dataarray. It's indices contain inhomogeneous shapes: "
+                            f"{indices}. I will put the indices of this feature into the "
+                            f"`attrs` attribute of this Dataarray. However, due to "
+                            f"the inhomogeneity of these indices, they can't be "
+                            f"saved to disk. Make sure to note from which atoms this "
+                            f"feature arises."
+                        )
+                        da.attrs |= {"GroupCOMFeature": indices}
+                    elif all([isinstance(i, np.ndarray) for i in indices]):
+                        if any(["RES" in i for i in index_labels]):
+                            indices = np.hstack(indices)
+                            data = np.vstack([indices for i in range(3)]).flatten(
+                                order="F"
+                            )
+                            ind_da = xr.DataArray(
+                                np.expand_dims(np.expand_dims(data, 0), -1),
+                                coords={
+                                    "traj_num": (
+                                        "traj_num",
+                                        np.asarray([traj.traj_num]),
+                                    ),
+                                    "traj_name": (
+                                        "traj_num",
+                                        np.asarray([traj.basename]),
+                                    ),
+                                    name.upper(): index_labels,
+                                    "RES_NO": [0],
+                                },
+                                dims=["traj_num", name.upper(), "RES_NO"],
+                                name=name.upper(),
+                                attrs=attrs | {"feature_axis": name.upper()},
+                            )
+                        else:
+                            raise Exception(f"This is new.")
+                else:
+                    indices_copy = np.asarray(indices.copy())
+                    indices = np.full(
+                        (len(labels), indices_copy.shape[-1]), np.nan, float
+                    )
+                    indices[: len(indices_copy)] = indices_copy
+                    raise Exception(
+                        f"This is new since dropping the _INDICES\n\n"
+                        f"{len(indices_copy)=}\n\n"
+                        f"{data.shape=}\n\n"
+                        f"{indices=}\n\n"
+                        f"{data=}\n\n"
+                        f"{index_labels=}\n\n"
+                        f"{feat=}"
+                    )
+            else:
+                indices = np.expand_dims(indices, 0)
+                if indices.ndim != data.ndim:
+                    indices = np.expand_dims(indices, -1)
+                ind_da = xr.DataArray(
+                    indices,
+                    coords={
+                        "traj_num": ("traj_num", np.asarray([traj.traj_num])),
+                        "traj_name": ("traj_num", np.asarray([traj.basename])),
+                        name.upper(): index_labels,
+                        "ATOM_NO": np.arange(indices.shape[-1]),
+                    },
+                    dims=["traj_num", name.upper(), "ATOM_NO"],
+                    name=name.upper(),
+                    attrs=attrs | {"feature_axis": name.upper()},
+                )
+        if ind_da.size > 1:
+            assert len(ind_da.coords[name.upper()]) == len(da.coords[name.upper()])
+    else:
+        ind_da = None
     if isinstance(with_time, bool):
         if with_time:
             da = da.assign_coords(time=("frame_num", traj.time))
     else:
         da = da.assign_coords(time=("frame_num", with_time))
-    return da
+    if ind_da.size == 1:
+        ind_da = None
+    return da, ind_da
 
 
 def make_ensemble_xarray(name, data):
-    attrs = {"length_units": "nm", "time_units": "ps", "angle_units": "rad"}
+    # attrs = {"length_units": "nm", "time_units": "ps", "angle_units": "rad"}
     if data.ndim == 2:
         coords = {
-            "traj_num": ("traj_num", range(data.shape[0])),
-            "frame_num": ("frame_num", range(data.shape[1])),
+            "traj_num": ("traj_num", np.arange(data.shape[0])),
+            "frame_num": ("frame_num", np.arange(data.shape[1])),
             name.upper(): (
                 "frame_num",
-                [f"{name.upper()} Frame Feature {i}" for i in range(data.shape[1])],
+                np.asarray(
+                    [f"{name.upper()} Frame Feature {i}" for i in range(data.shape[1])]
+                ),
             ),
         }
         dims = ["traj_num", "frame_num"]
     elif data.ndim == 3:
         coords = {
-            "traj_num": ("traj_num", range(data.shape[0])),
-            "frame_num": ("frame_num", range(data.shape[1])),
-            name.upper(): [f"{name.upper()} Feature {i}" for i in range(data.shape[2])],
+            "traj_num": ("traj_num", np.arange(data.shape[0])),
+            "frame_num": ("frame_num", np.arange(data.shape[1])),
+            name.upper(): np.asarray(
+                [f"{name.upper()} Feature {i}" for i in range(data.shape[2])]
+            ),
         }
         dims = ["traj_num", "frame_num", name.upper()]
     elif data.ndim == 4:
         coords = {
-            "traj_num": ("traj_num", range(data.shape[0])),
-            "frame_num": ("frame_num", range(data.shape[1])),
-            "ATOM": ("ATOM", [f"ATOM {i}" for i in range(data.shape[2])]),
-            "COORDS": ["POSITION X", "POSITION Y", "POSITION Z"],
+            "traj_num": ("traj_num", np.arange(data.shape[0])),
+            "frame_num": ("frame_num", np.arange(data.shape[1])),
+            "ATOM": ("ATOM", np.asarray([f"ATOM {i}" for i in range(data.shape[2])])),
+            "COORDS": np.array(["POSITION X", "POSITION Y", "POSITION Z"]),
         }
         dims = ["traj_num", "frame_num", "ATOM", "COORDS"]
     else:
         raise Exception("Too high dimensional data for ensemble.")
-    da = xr.DataArray(data, coords=coords, dims=dims, name=name, attrs=attrs)
+    raise Exception("Add indices:)")
+    da = xr.DataArray(data, coords=coords, dims=dims, name=name)
     return da
 
 
@@ -615,10 +942,12 @@ def get_indices_by_feature_dim(feat, traj, input_data_shape):
         indices = [0] + add_one_by_one([f._dim for f in feat.features])
         if traj.extension == ".pdb" and _validate_uri(traj.traj_file):
             # for internet pdb files we need to slice the data. this negates the next assert but meh.
-            raise BadError(
-                "For some reason pyemma.coordinates.source does not like working with internet pdb files."
+            raise Exception(
+                "For some reason `pyemma.coordinates.source` does not like working with internet pdb files."
             )
         else:
+            if len(input_data_shape) <= 1:
+                raise Exception(f"{feat=}, {traj=}, {input_data_shape=}")
             if not indices[-1] == input_data_shape[1]:
                 for f in feat.features:
                     print(f.__class__)
@@ -633,7 +962,7 @@ def get_indices_by_feature_dim(feat, traj, input_data_shape):
     return indices
 
 
-def add_one_by_one(l):
+def add_one_by_one(l: list[Number]) -> list[Number]:
     """Creates a new list from l with elements added one after another.
 
     Args:

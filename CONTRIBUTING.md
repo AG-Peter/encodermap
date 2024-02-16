@@ -99,7 +99,9 @@ class PublicClass:
 
 EncoderMap tries to implement type hints where possible to make the code more reliable by using the static-type checker MyPy. Although python is a dynamically typed language declaring types can be beneficial for code robustness and documentation reasons.
 
-## Unittests and Coverage
+## Tests
+
+Find the documentation about tests in the [Test README](tests/README.md).
 
 ## Building the documentation and Sphinx
 

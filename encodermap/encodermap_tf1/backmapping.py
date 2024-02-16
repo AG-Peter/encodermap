@@ -1,11 +1,14 @@
+# Standard Library Imports
 from math import cos, pi, sin
 
+# Third Party Imports
 import MDAnalysis as md
 import numpy as np
 import tensorflow.compat.v1 as tf
 from MDAnalysis.analysis.base import AnalysisFromFunction
 from MDAnalysis.coordinates.memory import MemoryReader
 
+# Local Folder Imports
 from .misc import rotation_matrix
 
 
@@ -14,7 +17,7 @@ def _expand_universe(universe, length):
         AnalysisFromFunction(lambda ag: ag.positions.copy(), universe.atoms)
         .run()
         .results
-    )
+    )["timeseries"]
     coordinates = np.tile(coordinates, (length, 1, 1))
     universe.load_new(coordinates, format=MemoryReader)
 
@@ -119,7 +122,6 @@ def chain_in_plane(lengths, angles):
 def dihedrals_to_cartesian_tf_old(
     dihedrals, cartesian=None, central_atom_indices=None, no_omega=False
 ):
-
     if not tf.is_numeric_tensor(dihedrals):
         dihedrals = tf.convert_to_tensor(dihedrals)
     if len(dihedrals.get_shape()) == 1:
@@ -160,7 +162,6 @@ def dihedrals_to_cartesian_tf_old(
 
 
 def dihedrals_to_cartesian_tf(dihedrals, cartesian):
-
     if not tf.is_numeric_tensor(dihedrals):
         dihedrals = tf.convert_to_tensor(dihedrals)
 
@@ -185,6 +186,7 @@ def dihedrals_to_cartesian_tf(dihedrals, cartesian):
     new_cartesian_left = dihedral_to_cartesian_tf_one_way(
         dihedrals_left, cartesian_left
     )
+    # return new_cartesian_left
 
     new_cartesian = tf.concat(
         [new_cartesian_left[:, ::-1], new_cartesian_right[:, 3:]], axis=1
@@ -254,14 +256,16 @@ def dihedral_to_cartesian_tf_one_way(dihedrals, cartesian):
 def guess_sp2_atom(
     cartesians, atom_names, bond_partner, angle_to_previous, bond_length
 ):
-    assert cartesians.shape[1] == len(atom_names)
+    assert cartesians.shape[1] == len(
+        atom_names
+    ), f"{cartesians.shape=} {len(atom_names)=}"
     added_cartesians = []
     for i in range(1, len(atom_names)):
         if atom_names[i] == bond_partner:
             prev_vec = cartesians[:, i - 1] - cartesians[:, i]
             try:
                 next_vec = cartesians[:, i + 1] - cartesians[:, i]
-            except tf.errors.InvalidArgumentError:
+            except (tf.errors.InvalidArgumentError, ValueError):
                 next_vec = cartesians[:, i - 2] - cartesians[:, i]
 
             perpendicular_axis = tf.cross(prev_vec, next_vec)

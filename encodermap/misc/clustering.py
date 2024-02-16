@@ -3,7 +3,7 @@
 ################################################################################
 # Encodermap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade
@@ -27,22 +27,43 @@
 ################################################################################
 
 
+# Future Imports at the top
+from __future__ import annotations
+
+# Standard Library Imports
 import copy
 import warnings
 
+# Third Party Imports
 import matplotlib as mpl
 import numpy as np
+from optional_imports import _optional_import
 
-from .._optional_imports import _optional_import
+# Local Folder Imports
 from .errors import BadError
 
-##############################################################################
+
+################################################################################
 # Optional Imports
-##############################################################################
+################################################################################
 
 
 md = _optional_import("mdtraj")
 ngl = _optional_import("nglview")
+
+
+################################################################################
+# Typing
+################################################################################
+
+
+# Standard Library Imports
+from typing import TYPE_CHECKING, Any, Optional
+
+
+if TYPE_CHECKING:
+    # Local Folder Imports
+    from ..trajinfo import SingleTraj, TrajEnsemble
 
 
 ################################################################################
@@ -59,8 +80,12 @@ __all__ = ["gen_dummy_traj", "get_cluster_frames"]
 
 
 def _get_joined_trajs(
-    trajs, cluster_no, shorten=True, max_frames=-1, col="cluster_membership"
-):
+    trajs: TrajEnsemble,
+    cluster_no: int,
+    shorten: bool = True,
+    max_frames: int = -1,
+    col: str = "cluster_membership",
+) -> md.Trajectory:
     # where can be int or np.ndarray
     if isinstance(cluster_no, (int, np.int_)):
         where = np.where(trajs.CVs[col] == cluster_no)[0]
@@ -136,7 +161,7 @@ def get_cluster_frames(
                     ref_atom_indices=aligns[0],
                 )
         except AttributeError as e:
-            raise BadError(
+            raise Exception(
                 f"You provided some wrong datatype or a misformatted string into the argument align_string. Here's the original error: {e}"
             )
 
@@ -217,26 +242,26 @@ def gen_dummy_traj(
             Can be:
             * int or int: The cluster will be found by using the trajs own cluster_membership in the trajs pandas dataframe.
             * np.array or list: If list or np.array is provided multiple clusters are returned and colored according to clsuter_no.
-        align_string (str, optional): Use this mdtraj atom selection string to align the frames
+        align_string (Optional[str]): Use this mdtraj atom selection string to align the frames
             of the dummy traj. Defaults to 'name CA'.
-        nglview (bool, optional): Whether to return a tuple of an nglview.view object and the traj
+        nglview (bool): Whether to return a tuple of an nglview.view object and the traj
             or not. Defaults to False.
-        stack_atoms (bool, optional): Whether to stack all frames into a single frame with
+        stack_atoms (bool): Whether to stack all frames into a single frame with
             mutliple structures in it. This option is useful, if you want to
             generate a picture of interpenetrating structures. Defaults to False.
-        shorten (bool, optional): Whether to return all structures or just a subset of
+        shorten (bool): Whether to return all structures or just a subset of
             roughly ten structures. Defaults to False.
-        max_frames (int, optional): Only return so many frames. If set to -1 all frames will
+        max_frames (int): Only return so many frames. If set to -1 all frames will
             be returned. Defaults to -1.
-        superpose (Union(bool, mdtraj.Trajectory), optional): Whether the frames of the returned traj should be superposed
+        superpose (Union[bool, mdtraj.Trajectory]): Whether the frames of the returned traj should be superposed
             to frame 0 of the traj. If an mdtraj Trajectory is provided this trajectory is used to superpose. Defaults to True.
-        subunit (str, optional): When you want to only visualize an ensemble of certain parts of your protein but keep some
+        subunit (str): When you want to only visualize an ensemble of certain parts of your protein but keep some
             part stationary (see `align_str`), you can provide a mdtraj selection string. This part of the
             protein will only be rendered from the first frame. The other parts will be rendered as an ensemble
             of structures (either along atom (`stack_atoms` = True) or time (`stack_atoms` = False)). Defaults to ''.
-        ref_align_string (str, optional): When the type of `superpose` is mdtraj.Trajectory with a different topology
+        ref_align_string (str): When the type of `superpose` is mdtraj.Trajectory with a different topology
             than `trajs`, you can give a different align string into this argument. Defaults to 'name CA'.
-        base_traj (Union[None, mdtraj.Trajectory], optional): An mdtraj.Trajectory that will be set to the coordinates from
+        base_traj (Optional[Union[mdtraj.Trajectory]]): An mdtraj.Trajectory that will be set to the coordinates from
             trajs, instead of trajs[0]. Normally, the first traj in `trajs` (trajs[0]) will be used as a base traj.
             It will be extended into the time-direction until it has the desired number of frames (shorten=True; 10,
             max_frames=N, N; etc.). If you don't want to use this traj but something else, you can feed this option
@@ -390,7 +415,7 @@ def _gen_dummy_traj_single(
                 ref_atom_indices=ref_frame.top.select(ref_align_string),
             )
         except AttributeError as e:
-            raise BadError(
+            raise Exception(
                 f"You provided some wrong datatype or a misformatted string into the argument align_string. Here's the original error: {e}"
             )
 
@@ -469,3 +494,108 @@ def rmsd_centroid_of_cluster(traj, parallel=True, atom_indices=None):
     index = np.exp(-beta * distances / distances.std()).sum(axis=1).argmax()
     centroid = traj[index]
     return index, distances, centroid
+
+
+def cluster_to_dict(
+    trajs: TrajEnsemble,
+    align_string: str = "name CA",
+    ref_align_string: str = "name CA",
+    base_traj: Optional[md.Trajectory] = None,
+) -> dict[str, Any]:
+    ds = trajs._CVs
+    y = None
+    if len(ds) == 1:
+        col = list(ds.keys())[0]
+        cluster_id = ds[col].values
+        cluster_id = cluster_id[~np.isnan(cluster_id)]
+        cluster_id = np.unique(cluster_id.astype(int))
+        assert (
+            len(cluster_id) == 1
+        ), f"The CV '{col}' has ambiguous cluster_ids: {cluster_id}."
+        cluster_id = cluster_id[0]
+    else:
+        for name, data_var in ds.items():
+            x = data_var.values
+            x = x[~np.isnan(x)]
+            x = np.mod(x, 1)
+            if np.all(x == 0):
+                col = name
+                y = x.copy()
+            if np.all(x == 0) and len(np.unique(x)) == 1:
+                col = name
+                cluster_id = np.unique(x)[0]
+                break
+        else:
+            if y is None:
+                raise Exception(
+                    f"Could not find a CV with integer values that defines a cluster "
+                    f"membership. Make sure to `trajs.load_CVs()` a numpy array with "
+                    f"cluster memberships."
+                )
+            else:
+                raise Exception(f"The CV '{col}' has ambiguous cluster_ids: {y}.")
+
+    series = (
+        ds.stack({"frame": ("traj_num", "frame_num")})
+        .transpose("frame", ...)
+        .dropna("frame", "all")[col]
+        .to_pandas()[0]
+    )
+    out = {
+        "stacked": None,
+        "joined_per_top": {t: None for t in trajs.top},
+        "ensemble": trajs,
+        "series": series[series == cluster_id],
+    }
+
+    # if frames have the same xyz, we can join them
+    all_trajs = [None for i in trajs]
+    if all([t.n_atoms == trajs[0].n_atoms for t in trajs]):
+        # superpose all
+        for i, traj in enumerate(trajs):
+            all_trajs[i] = traj.superpose(
+                all_trajs[0],
+                frame=0,
+                atom_indices=traj.top.select(align_string),
+                ref_atom_indices=all_trajs[0].top.select(align_string),
+            )
+
+        parent_traj = base_traj
+        if parent_traj is None:
+            parent_traj = all_trajs[0]
+
+        # divmod
+        try:
+            no_of_iters, rest = divmod(
+                sum([t.n_frames for t in all_trajs]), parent_traj.n_frames
+            )
+        except Exception as e:
+            raise Exception(
+                f"Can not build a dummy trajectory. Maybe you selected the "
+                f"wrong cluster num. Here's the original Error: {e}"
+            )
+        for i in range(no_of_iters + 1):
+            if i == 0:
+                dummy_traj = copy.deepcopy(parent_traj)
+            elif i == no_of_iters:
+                dummy_traj = dummy_traj.join(copy.deepcopy(parent_traj)[:rest])
+            else:
+                dummy_traj = dummy_traj.join(copy.deepcopy(parent_traj))
+
+        # set the xyz
+        i = 0
+        for traj in all_trajs:
+            for frame in traj:
+                dummy_traj[0].xyz = frame.xyz
+
+        out["joined"] = dummy_traj
+
+    # stack
+    for i, traj in enumerate(trajs):
+        for j, frame in enumerate(traj):
+            if i == 0 and j == 0:
+                stacked = copy.deepcopy(frame.traj)
+            else:
+                stacked = stacked.stack(frame.traj)
+    out["stacked"] = stacked
+    return out
