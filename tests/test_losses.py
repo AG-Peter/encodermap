@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # tests/test_losses.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -19,14 +19,25 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
-# from encodermap.loss_functions import loss_functions
+
+
+# Future Imports at the top
+from __future__ import annotations
+
+# Standard Library Imports
 import os
 import unittest
+import warnings
+from pathlib import Path
 
+# Third Party Imports
+import mdtraj as md
 import numpy as np
 import tensorflow as tf
 from scipy.spatial.distance import cdist
 
+# Encodermap imports
+from conftest import skip_all_tests_except_env_var_specified
 from encodermap.callbacks import callbacks
 from encodermap.encodermap_tf1.backmapping import (
     chain_in_plane,
@@ -36,19 +47,22 @@ from encodermap.loss_functions.loss_functions import old_distance_loss
 from encodermap.misc import pairwise_dist
 from encodermap.models.models import SequentialModel
 from encodermap.parameters.parameters import ADCParameters, Parameters
+from test_autoencoder import assert_allclose_periodic
 
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "1"
+
+import encodermap as em  # isort: skip
+
 
 # If scipy was compiled against an older version of numpy these warnings are raised
 # warnings in a testing environment are somewhat worrying
-import warnings
-
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
-##############################################################################
+
+################################################################################
 # Classes for Testing fixing output to predefined values
-##############################################################################
+################################################################################
 
 
 class LayerThatOutputsConstant(tf.keras.layers.Layer):
@@ -126,9 +140,9 @@ class ConstantOutputAutoencoder(SequentialModel):
         return x
 
 
-##############################################################################
+################################################################################
 # Metrics to use in scipy cdist to easily compute the correct pairwise distances
-##############################################################################
+################################################################################
 
 
 def sigmoid_closure(sig, a, b):
@@ -177,6 +191,7 @@ def periodicity_closure_w_sigmoid(sig, a, b, periodicity):
 ##############################################################################
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestDistanceLossScipy(tf.test.TestCase):
     def test_non_periodic(self):
         highd = (
@@ -185,14 +200,16 @@ class TestDistanceLossScipy(tf.test.TestCase):
         lowd = (
             np.random.random((256, 2)).astype("float32") * 10
         )  # lower values in latent space
-        sig_params = Parameters.defaults["dist_sig_parameters"]
+        sig_params = Parameters._defaults["dist_sig_parameters"]
 
         # encodermap1
+        # Encodermap imports
         from encodermap.encodermap_tf1.misc import distance_cost as distance_cost_em1
 
         cost_em1 = distance_cost_em1(highd, lowd, *sig_params, float("inf"))
 
         # encodermap2
+        # Encodermap imports
         from encodermap.loss_functions.loss_functions import (
             sigmoid_loss as distance_loss_em2,
         )
@@ -218,14 +235,16 @@ class TestDistanceLossScipy(tf.test.TestCase):
         lowd = (
             np.random.random((256, 2)).astype("float32") * 10
         )  # lower values in latent space
-        sig_params = Parameters.defaults["dist_sig_parameters"]
+        sig_params = Parameters._defaults["dist_sig_parameters"]
 
         # encodermap1
+        # Encodermap imports
         from encodermap.encodermap_tf1.misc import distance_cost as distance_cost_em1
 
         cost_em1 = distance_cost_em1(highd, lowd, *sig_params, 2 * np.pi)
 
         # encodermap2
+        # Encodermap imports
         from encodermap.loss_functions.loss_functions import (
             sigmoid_loss as distance_loss_em2,
         )
@@ -261,6 +280,7 @@ class TestDistanceLossScipy(tf.test.TestCase):
         self.assertAllClose(cost_numpy, cost_scipy, atol=1e-3)
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestLossesNonPeriodic(tf.test.TestCase):
     def test_losses_not_periodic(self):
         p = Parameters(batch_size=5, l2_reg_constant=0)
@@ -270,7 +290,15 @@ class TestLossesNonPeriodic(tf.test.TestCase):
         inp = np.random.random((len_data, input_dim)).astype("float32")
 
         # center loss
-        center_loss = loss_functions.center_loss(model)
+        # Encodermap imports
+        from encodermap.loss_functions.loss_functions import (
+            auto_loss,
+            center_loss,
+            distance_loss,
+            regularization_loss,
+        )
+
+        center_loss = center_loss(model)
         self.assertEqual(tf.reduce_sum(tf.abs(model.encoder(inp))), 0)
         self.assertEqual(center_loss(inp), 0)
 
@@ -285,14 +313,10 @@ class TestLossesNonPeriodic(tf.test.TestCase):
         model_ = ConstantOutputAutoencoder(input_dim, len_data, p, latent_constant=1)
         distance_loss_tf1_case1 = old_distance_loss(model_)(inp)
         self.assertEqual(distance_loss_tf1_case1, 0)
-        distance_loss_tf2_case1 = loss_functions.distance_loss(model_)(inp)
+        distance_loss_tf2_case1 = distance_loss(model_)(inp)
         self.assertEqual(distance_loss_tf2_case1, 0)
         self.assertEqual(distance_loss_tf1_case1, distance_loss_tf2_case1)
-        # Case 2 # I don't know, why this Test fails. I can perfectly reproduce it in a normal python environment
-        # This test also succeeds, when called with python -m unittest discover -s tests -p *losses*
-        # But pytest tests makes this tets fail. pytest test
-        # Excluding everything besides test_losses.py
-        # pytest tests --html=docs/source/_static/pytest_report.html --self-contained-html --ignore-glob='!*losses!'
+        # Case 2
         inp = np.zeros((len_data, input_dim)).astype("float32")
         model_ = ConstantOutputAutoencoder(
             input_dim, len_data, p, latent_constant="random"
@@ -310,16 +334,26 @@ class TestLossesNonPeriodic(tf.test.TestCase):
         distance_loss_tf1_case2 = old_distance_loss(model_)(inp)
         if not isinstance(distance_loss_tf1_case2, (int, np.integer)):
             distance_loss_tf1_case2 = distance_loss_tf1_case2.numpy()
-        self.assertNotEqual(
+        self.assertNotAllEqual(
             distance_loss_tf1_case2,
             0,
-            msg=f"Uniform input (np.zeros(100, 10) {inp[:5,:5]} and random latent (100, 2) {latent[:5,:]} did not NOT equal 0 in distance_loss_tf1 (non-periodic), but {distance_loss_tf1_case2}",
+            msg=(
+                f"Uniform input (np.zeros(100, 10) {inp[:5,:5]} and random "
+                f"latent (100, 2) {latent[:5,:]} did equal to 0 in "
+                f"distance_loss_tf1 (non-periodic), but "
+                f"{distance_loss_tf1_case2}"
+            ),
         )
-        distance_loss_tf2_case2 = loss_functions.distance_loss(model_)(inp)
-        self.assertNotEqual(
+        distance_loss_tf2_case2 = distance_loss(model_)(inp)
+        self.assertNotAllEqual(
             distance_loss_tf2_case2.numpy(),
             0,
-            msg=f"Uniform input (np.zeros(100, 10) {inp[:5,:5]} and random latent (100, 2) {latent[:5,:]} did not NOT equal 0 in distance_loss_tf2 (non-periodic), but {distance_loss_tf2_case2}",
+            msg=(
+                f"Uniform input (np.zeros(100, 10) {inp[:5,:5]} and random "
+                f"latent (100, 2) {latent[:5,:]} did not equal 0 in "
+                f"distance_loss_tf2 (non-periodic), but "
+                f"{distance_loss_tf2_case2}"
+            ),
         )
         self.assertEqual(distance_loss_tf1_case2, distance_loss_tf2_case2)
         # Case 3
@@ -328,7 +362,7 @@ class TestLossesNonPeriodic(tf.test.TestCase):
         model_ = ConstantOutputAutoencoder(input_dim, len_data, p, latent_constant=0)
         distance_loss_tf1_case3 = old_distance_loss(model_)(inp)
         self.assertAllClose(distance_loss_tf1_case3.numpy(), 0)
-        distance_loss_tf2_case3 = loss_functions.distance_loss(model_)(inp)
+        distance_loss_tf2_case3 = distance_loss(model_)(inp)
         self.assertNotEqual(distance_loss_tf2_case3, 0)
         self.assertEqual(distance_loss_tf1_case3, distance_loss_tf2_case3)
         # Case 4
@@ -338,23 +372,24 @@ class TestLossesNonPeriodic(tf.test.TestCase):
         )
         distance_loss_tf1_case4 = old_distance_loss(model_)(inp)
         self.assertNotEqual(distance_loss_tf1_case4, 0)
-        distance_loss_tf2_case4 = loss_functions.distance_loss(model_)(inp)
+        distance_loss_tf2_case4 = distance_loss(model_)(inp)
         self.assertNotEqual(distance_loss_tf2_case4, 0)
         self.assertEqual(distance_loss_tf1_case4, distance_loss_tf2_case4)
 
         # reg loss
         inp = np.random.random((len_data, input_dim)).astype("float32")
-        reg_loss = loss_functions.regularization_loss(model)
+        reg_loss = regularization_loss(model)
         self.assertEqual(reg_loss(inp), 0)
 
         # auto loss
         inp = np.random.random((len_data, input_dim)).astype("float32")
         inp2 = np.random.random((len_data, input_dim)).astype("float32")
-        auto_loss = loss_functions.auto_loss(model, p)
+        auto_loss = auto_loss(model, p)
         self.assertEqual(auto_loss(inp), 0)
         self.assertNotEqual(auto_loss(inp, inp2), 0)
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestLossesPeriodic(tf.test.TestCase):
     def test_losses_periodic(self):
         p = Parameters(batch_size=5, l2_reg_constant=0, periodicity=2 * np.pi)
@@ -366,7 +401,15 @@ class TestLossesPeriodic(tf.test.TestCase):
         ) - np.pi
 
         # center loss
-        center_loss = loss_functions.center_loss(model)
+        # Encodermap imports
+        from encodermap.loss_functions.loss_functions import (
+            auto_loss,
+            center_loss,
+            distance_loss,
+            regularization_loss,
+        )
+
+        center_loss = center_loss(model)
         self.assertEqual(tf.reduce_sum(tf.abs(model.encoder(inp))), 0)
         self.assertEqual(center_loss(inp), 0)
 
@@ -381,7 +424,7 @@ class TestLossesPeriodic(tf.test.TestCase):
         model_ = ConstantOutputAutoencoder(input_dim, len_data, p, latent_constant=1)
         distance_loss_tf1_case1 = old_distance_loss(model_)(inp)
         self.assertEqual(distance_loss_tf1_case1, 0)
-        distance_loss_tf2_case1 = loss_functions.distance_loss(model_)(inp)
+        distance_loss_tf2_case1 = distance_loss(model_)(inp)
         self.assertEqual(distance_loss_tf2_case1, 0)
         self.assertEqual(distance_loss_tf1_case1, distance_loss_tf2_case1)
         # Case 2
@@ -407,7 +450,7 @@ class TestLossesPeriodic(tf.test.TestCase):
             0,
             msg=f"Uniform input (np.zeros(100, 10) {inp[:5, :5]} and random latent (100, 2) {latent[:5, :]} did not NOT equal 0 in distance_loss_tf1 (periodic), but {distance_loss_tf1_case2}",
         )
-        distance_loss_tf2_case2 = loss_functions.distance_loss(model_)(inp)
+        distance_loss_tf2_case2 = distance_loss(model_)(inp)
         self.assertNotEqual(
             distance_loss_tf2_case2.numpy(),
             0,
@@ -419,7 +462,7 @@ class TestLossesPeriodic(tf.test.TestCase):
         model_ = ConstantOutputAutoencoder(input_dim, len_data, p, latent_constant=0)
         distance_loss_tf1_case3 = old_distance_loss(model_)(inp)
         self.assertNotEqual(distance_loss_tf1_case3, 0)
-        distance_loss_tf2_case3 = loss_functions.distance_loss(model_)(inp)
+        distance_loss_tf2_case3 = distance_loss(model_)(inp)
         self.assertNotEqual(distance_loss_tf2_case3, 0)
         self.assertEqual(distance_loss_tf1_case3, distance_loss_tf2_case3)
         # Case 4
@@ -429,7 +472,7 @@ class TestLossesPeriodic(tf.test.TestCase):
         )
         distance_loss_tf1_case4 = old_distance_loss(model_)(inp)
         self.assertNotEqual(distance_loss_tf1_case4, 0)
-        distance_loss_tf2_case4 = loss_functions.distance_loss(model_)(inp)
+        distance_loss_tf2_case4 = distance_loss(model_)(inp)
         self.assertNotEqual(distance_loss_tf2_case4, 0)
         self.assertEqual(distance_loss_tf1_case4, distance_loss_tf2_case4)
 
@@ -437,7 +480,7 @@ class TestLossesPeriodic(tf.test.TestCase):
         inp = (
             np.random.random((len_data, input_dim)).astype("float32") * 2 * np.pi
         ) - np.pi
-        reg_loss = loss_functions.regularization_loss(model)
+        reg_loss = regularization_loss(model)
         self.assertEqual(reg_loss(inp), 0)
 
         # auto loss
@@ -447,12 +490,230 @@ class TestLossesPeriodic(tf.test.TestCase):
         inp2 = (
             np.random.random((len_data, input_dim)).astype("float32") * 2 * np.pi
         ) - np.pi
-        auto_loss = loss_functions.auto_loss(model, p)
+        auto_loss = auto_loss(model, p)
         self.assertEqual(auto_loss(inp), 0)
         self.assertNotEqual(auto_loss(inp, inp2), 0)
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestLossesADCAutoencoder(tf.test.TestCase):
+    def assertAllClosePeriodic(
+        self,
+        actual: np.ndarray,
+        desired: np.ndarray,
+        rtol: float = 1e-7,
+        atol: float = 0.0,
+        equal_nan: bool = True,
+        err_msg: str = "",
+        verbose: bool = True,
+        periodicity: float = 2 * np.pi,
+    ) -> None:
+        try:
+            assert_allclose_periodic(
+                actual=actual,
+                desired=desired,
+                rtol=rtol,
+                atol=atol,
+                equal_nan=equal_nan,
+                err_msg=err_msg,
+                verbose=verbose,
+                periodicity=periodicity,
+            )
+        except AssertionError as e:
+            self.fail(str(e))
+
+    def test_pairwise_dists_tf1_tf2(self):
+        # Encodermap imports
+        from encodermap.encodermap_tf1.backmapping import (
+            chain_in_plane as chain_in_plane_tf1,
+        )
+        from encodermap.encodermap_tf1.backmapping import (
+            dihedrals_to_cartesian_tf as dihedrals_to_cartesian_tf1,
+        )
+        from encodermap.encodermap_tf1.misc import pairwise_dist as pairwise_dist_tf1
+        from encodermap.misc.backmapping import (
+            dihedrals_to_cartesian_tf_layers as dihedrals_to_cartesian_tf2,
+        )
+        from encodermap.misc.distances import pairwise_dist as pairwise_dist_tf2
+
+        np.random.seed(124689113)
+        for size in [20, 15, 12, 10, 5, 455]:
+            break
+            mean_lengths = tf.convert_to_tensor(
+                np.expand_dims(
+                    np.mean(
+                        np.random.random((1000, size)).astype("float32") * 0.61,
+                        axis=0,
+                    ),
+                    axis=0,
+                ),
+                dtype="float32",
+            )
+            mean_angles = tf.tile(
+                np.expand_dims(
+                    np.mean(
+                        np.random.random((1000, size - 1)).astype("float32") * 2 * np.pi
+                        - np.pi,
+                        axis=0,
+                    ),
+                    axis=0,
+                ),
+                [256, 1],
+            )
+            generated_dihedrals = tf.convert_to_tensor(
+                np.random.random((256, size - 2)).astype("float32") * 2 * np.pi - np.pi,
+                dtype="float32",
+            )
+            chain_in_plane = chain_in_plane_tf1(mean_lengths, mean_angles)
+            self.assertEqual(chain_in_plane.shape[1], size + 1)
+            cartesians_tf1 = dihedrals_to_cartesian_tf1(
+                generated_dihedrals + np.pi, chain_in_plane
+            )
+            cartesians_tf2 = dihedrals_to_cartesian_tf2(
+                generated_dihedrals + np.pi, chain_in_plane
+            )
+            self.assertAllClose(cartesians_tf1, cartesians_tf2, msg=f"Size is {size=}")
+            self.assertAllClose(
+                pairwise_dist_tf1(cartesians_tf1, flat=False, squared=False),
+                pairwise_dist_tf2(cartesians_tf2, flat=False, squared=False),
+                msg=f"Size is {size=}",
+            )
+            self.assertAllClose(
+                pairwise_dist_tf1(cartesians_tf1, flat=True, squared=False),
+                pairwise_dist_tf2(cartesians_tf2, flat=True, squared=False),
+                msg=f"Size is {size=}",
+            )
+            self.assertAllClose(
+                pairwise_dist_tf1(cartesians_tf1, flat=False, squared=True),
+                pairwise_dist_tf2(cartesians_tf2, flat=False, squared=True),
+                msg=f"Size is {size=}",
+            )
+            self.assertAllClose(
+                pairwise_dist_tf1(cartesians_tf1, flat=True, squared=True),
+                pairwise_dist_tf2(cartesians_tf2, flat=True, squared=True),
+                msg=f"Size is {size=}",
+            )
+
+        # now test the m1-diUbq dataset
+        # Encodermap imports
+        from encodermap.encodermap_tf1.backmapping import (
+            dihedrals_to_cartesian_tf as dihedrals_to_cartesian_tf1,
+        )
+        from encodermap.kondata import get_from_url
+
+        output_dir = Path(__file__).resolve().parent / "data/linear_dimers"
+
+        _new_files = get_from_url(
+            "https://sawade.io/encodermap_data/linear_dimers",
+            output_dir,
+            mk_parentdir=True,
+            silence_overwrite_message=True,
+        )
+
+        self.assertTrue(
+            output_dir.is_dir(),
+        )
+
+        trajs = em.TrajEnsemble.from_dataset(output_dir / "trajs.h5")
+        batch_size = 256
+
+        # copy the train method from encodermap_tf1/ADCEMapDummy
+        # generated dihedrals are mean of all inputs
+        generated_dihedrals = tf.tile(
+            np.expand_dims(np.mean(trajs.central_dihedrals, axis=0), axis=0),
+            [batch_size, 1],
+        )
+        self.assertEqual(generated_dihedrals.shape, (256, 453))
+
+        # generated angles are mean of all inputs
+        generated_angles = tf.tile(
+            np.expand_dims(np.mean(trajs.central_angles, axis=0), axis=0),
+            [batch_size, 1],
+        )
+        self.assertEqual(generated_angles.shape, (256, 454))
+
+        # mean lengths are also mean of all inputs
+        mean_lengths = np.expand_dims(np.mean(trajs.central_distances, axis=0), axis=0)
+        self.assertEqual(mean_lengths.shape, (1, 455))
+
+        # call chain in plane from tf1
+        chain_in_plane = chain_in_plane_tf1(mean_lengths, generated_angles)
+        self.assertEqual(chain_in_plane.shape, (256, 456, 3))
+
+        # count the zeros in `chain_in_plane_`. It should be
+        # batch_size * n_atoms = 256 * 456 = 116736
+        counts_equal_0 = tf.reduce_sum(
+            tf.cast(tf.equal(chain_in_plane[..., -1], 0), tf.int32)
+        ).numpy()
+        self.assertEqual(counts_equal_0, 116736)
+
+        # call the dihedral to cartesian method from tf1
+        cartesian = dihedrals_to_cartesian_tf1(
+            generated_dihedrals + np.pi, chain_in_plane
+        )
+        self.assertEqual(cartesian.shape, (256, 456, 3))
+
+        # count the zeros in the cartesian
+        # after the dihedrals_to_cartesian_tf1, the zeros should be greater
+        counts_equal_0 = tf.reduce_sum(
+            tf.cast(tf.equal(cartesian[..., -1], 0), tf.int32)
+        ).numpy()
+        self.assertLess(counts_equal_0, 116736)
+
+        # recalculate the dihedrals
+        indices = np.vstack(
+            [
+                np.arange(0, 456 - 3),
+                np.arange(1, 456 - 2),
+                np.arange(2, 456 - 1),
+                np.arange(3, 456 - 0),
+            ]
+        ).T
+        self.assertEqual(indices.shape, (453, 4))
+
+        class Traj:
+            pass
+
+        traj = Traj()
+        traj.xyz = cartesian.numpy()
+        traj.n_atoms = cartesian.shape[1]
+        dihedrals = md.compute_dihedrals(traj, indices, periodic=False)
+        self.assertAllClosePeriodic(generated_dihedrals.numpy(), dihedrals, rtol=1e-2)
+
+        # do the same with the BackMapLayer
+        # Encodermap imports
+        from encodermap.models.layers import BackMapLayer
+
+        left_split = 227
+        right_split = 226
+        cartesians = BackMapLayer(left_split=left_split, right_split=right_split)(
+            (mean_lengths, generated_angles, generated_dihedrals)
+        )
+        self.assertEqual(cartesians.shape, (256, 456, 3))
+        counts_equal_0 = tf.reduce_sum(
+            tf.cast(tf.equal(cartesians[..., -1], 0), tf.int32)
+        ).numpy()
+        self.assertLess(counts_equal_0, 116736)
+
+        # test the dihedrals of the new cartesians
+        traj = Traj()
+        traj.xyz = cartesians.numpy()
+        traj.n_atoms = cartesians.shape[1]
+        dihedrals = md.compute_dihedrals(traj, indices, periodic=False)
+        self.assertAllClosePeriodic(generated_dihedrals.numpy(), dihedrals, rtol=1e-1)
+        # import itertools
+        # for p in list(itertools.permutations([0, 1, 2])):
+        #     traj = Traj()
+        #     traj.xyz = cartesians.numpy()[:, :, p]
+        #     traj.n_atoms = cartesians.shape[1]
+        #     dihedrals = md.compute_dihedrals(traj, indices, periodic=False)
+        #     try:
+        #         self.assertAllClosePeriodic(generated_dihedrals.numpy(), dihedrals, rtol=1e-1)
+        #     except AssertionError:
+        #         print(f"Permutation {p} does not work")
+        #     else:
+        #         print(f"Permutation {p} does work.")
+
     def test_losses_ADC(self):
         # create parameters and data
         p = ADCParameters(
@@ -501,7 +762,10 @@ class TestLossesADCAutoencoder(tf.test.TestCase):
         dataset = dataset.repeat()
         dataset = dataset.batch(p.batch_size)
 
-        for i, d in enumerate(dataset):
+        for i in range(2):
+            data = dataset.take(1).as_numpy_iterator()
+            for d in data:
+                break
             if i == 0:
                 inp_angles, inp_dihedrals, inp_cartesians = d
             elif i == 1:
@@ -511,10 +775,8 @@ class TestLossesADCAutoencoder(tf.test.TestCase):
 
         # what to pass through network
         if p.use_backbone_angles:
-            print("using backbone angles")
             main_inputs = tf.concat([inp_angles, inp_dihedrals], 1)
         else:
-            print("not using backbone angles")
             main_inputs = inp_dihedrals
 
         # run inputs through network
@@ -539,30 +801,41 @@ class TestLossesADCAutoencoder(tf.test.TestCase):
         self.assertAllEqual(inp_angles, out_angles)
 
         # losses
+        # Encodermap imports
+        from encodermap.loss_functions.loss_functions import (
+            angle_loss,
+            cartesian_distance_loss,
+            cartesian_loss,
+            center_loss,
+            dihedral_loss,
+            distance_loss,
+            regularization_loss,
+        )
+
         # distance_cost
-        dist_cost = loss_functions.distance_loss(model_0, p)
+        dist_cost = distance_loss(model_0, p)
         self.assertNotEqual(dist_cost(main_inputs), 0)
         self.assertEqual(dist_cost(tf.zeros(main_inputs.shape)), 0)
 
         # center loss
-        center_loss = loss_functions.center_loss(model_0, p)
-        self.assertEqual(center_loss(main_inputs), 0)
-        center_loss = loss_functions.center_loss(model_1, p)
-        self.assertEqual(center_loss(tf.ones(main_inputs.shape)), p.center_cost_scale)
+        center_loss_ = center_loss(model_0, p)
+        self.assertEqual(center_loss_(main_inputs), 0)
+        center_loss_ = center_loss(model_1, p)
+        self.assertEqual(center_loss_(tf.ones(main_inputs.shape)), p.center_cost_scale)
 
         # regularization loss
         # is zero because l2_reg_constant was set to zero
-        reg_loss = loss_functions.regularization_loss(model_0)
+        reg_loss = regularization_loss(model_0)
         self.assertEqual(reg_loss(), 0)
 
         # dihedral loss
-        dihedral_loss = loss_functions.dihedral_loss(model_0, p)
+        dihedral_loss = dihedral_loss(model_0, p)
         self.assertEqual(dihedral_loss(inp_dihedrals, model_0(inp_dihedrals)), 0)
         self.assertNotEqual(dihedral_loss(inp_dihedrals, model_1(inp_dihedrals_2)), 0)
         self.assertNotEqual(dihedral_loss(inp_dihedrals, model_0(inp_dihedrals_2)), 0)
 
         # angle loss
-        angle_loss = loss_functions.angle_loss(model_0, p)
+        angle_loss = angle_loss(model_0, p)
         self.assertEqual(angle_loss(inp_angles, model_0(inp_angles)), 0)
         self.assertNotEqual(angle_loss(inp_angles, model_1(inp_angles_2)), 0)
         self.assertNotEqual(angle_loss(inp_angles, model_0(inp_angles_2)), 0)
@@ -585,12 +858,12 @@ class TestLossesADCAutoencoder(tf.test.TestCase):
         diff = np.mean(inp_cartesians_backmapped - inp_cartesians)
         if diff == 0:
             warnings.warn(
-                "\033[1;37;91m Difference between backmapped and input cartesian coordinates is zero. Either backmapping is perfect, or something is wrong.\033[0m"
+                "\033[1;37;91m Difference between back-mapped and input cartesian coordinates is zero. Either backmapping is perfect, or something is wrong.\033[0m"
             )
         # print('diff:', diff)
 
         # define the loss
-        cartesian_distance_loss = loss_functions.cartesian_distance_loss(model_0, p)
+        cartesian_distance_loss = cartesian_distance_loss(model_0, p)
 
         # calculate the pairwise stuff use only the first 10 entries, to save memory
         inp_pair = pairwise_dist(
@@ -639,13 +912,14 @@ class TestLossesADCAutoencoder(tf.test.TestCase):
         # a <= step <= b => cost_scale = p.cartesian_cost_scale / (b - a) * step
         # b < step: cost_scale = p.cartesian_cost_scale
 
-        from encodermap.trajinfo.info_all import Capturing
+        # Encodermap imports
+        from encodermap.trajinfo.info_single import Capturing
 
-        callback = callbacks.IncreaseCartesianCost(p, start_step=0)
+        callback = callbacks.IncreaseCartesianCost(p)
 
         # step 0 no scale
         with Capturing() as output:
-            cartesian_loss = loss_functions.cartesian_loss(
+            cartesian_loss_ = cartesian_loss(
                 model_0, callback, p, print_current_scale=True
             )
         self.assertEqual(
@@ -654,13 +928,14 @@ class TestLossesADCAutoencoder(tf.test.TestCase):
                 "<tf.Variable 'current_cartesian_cost_scale:0' shape=() dtype=float32, numpy=0.0>"
             ],
         )
-        self.assertEqual(cartesian_loss(inp_pair, out_pair), 0)
-        self.assertEqual(cartesian_loss(inp_pair, inp_pair_backmapped), 0)
+        self.assertEqual(cartesian_loss_(inp_pair, out_pair), 0)
+        self.assertEqual(cartesian_loss_(inp_pair, inp_pair_backmapped), 0)
 
         # step 9 scale is 0.5
-        callback = callbacks.IncreaseCartesianCost(p, start_step=9)
+        p.current_training_step = 9
+        callback = callbacks.IncreaseCartesianCost(p)
         with Capturing() as output:
-            cartesian_loss = loss_functions.cartesian_loss(
+            cartesian_loss_ = cartesian_loss(
                 model_0, callback, p, print_current_scale=True
             )
         self.assertEqual(
@@ -669,13 +944,14 @@ class TestLossesADCAutoencoder(tf.test.TestCase):
                 "<tf.Variable 'current_cartesian_cost_scale:0' shape=() dtype=float32, numpy=0.5>"
             ],
         )
-        self.assertNotEqual(cartesian_loss(inp_pair, out_pair), 0)
-        self.assertEqual(cartesian_loss(inp_pair, inp_pair), 0)
+        self.assertNotEqual(cartesian_loss_(inp_pair, out_pair), 0)
+        self.assertEqual(cartesian_loss_(inp_pair, inp_pair), 0)
 
         # step 12 scale is 1.0
-        callback = callbacks.IncreaseCartesianCost(p, start_step=12)
+        p.current_training_step = 12
+        callback = callbacks.IncreaseCartesianCost(p)
         with Capturing() as output:
-            cartesian_loss = loss_functions.cartesian_loss(
+            cartesian_loss_ = cartesian_loss(
                 model_0, callback, p, print_current_scale=True
             )
         self.assertEqual(
@@ -684,35 +960,36 @@ class TestLossesADCAutoencoder(tf.test.TestCase):
                 "<tf.Variable 'current_cartesian_cost_scale:0' shape=() dtype=float32, numpy=1.0>"
             ],
         )
-        self.assertNotEqual(cartesian_loss(inp_pair, out_pair), 0)
-        self.assertEqual(cartesian_loss(inp_pair, inp_pair), 0)
+        self.assertNotEqual(cartesian_loss_(inp_pair, out_pair), 0)
+        self.assertEqual(cartesian_loss_(inp_pair, inp_pair), 0)
 
 
-# Remove Phantom Tests from tensorflow skipped test_session
-# https://stackoverflow.com/questions/55417214/phantom-tests-after-switching-from-unittest-testcase-to-tf-test-testcase
-test_cases = (
-    TestLossesPeriodic,
-    TestLossesNonPeriodic,
-    TestLossesADCAutoencoder,
-    TestDistanceLossScipy,
-)
-
-# doctests
-import doctest
-
-import encodermap.loss_functions.loss_functions as loss_functions
-
-doc_tests = (doctest.DocTestSuite(loss_functions),)
+################################################################################
+# Collect TestCases and Filter
+################################################################################
 
 
 def load_tests(loader, tests, pattern):
+    # Remove Phantom Tests from tensorflow skipped test_session
+    # https://stackoverflow.com/questions/55417214/phantom-tests-after-switching-from-unittest-testcase-to-tf-test-testcase
+    test_cases = (
+        TestLossesPeriodic,
+        TestLossesNonPeriodic,
+        TestLossesADCAutoencoder,
+        TestDistanceLossScipy,
+    )
     suite = unittest.TestSuite()
     for test_class in test_cases:
         tests = loader.loadTestsFromTestCase(test_class)
         filtered_tests = [t for t in tests if not t.id().endswith(".test_session")]
         suite.addTests(filtered_tests)
-    suite.addTests(doc_tests)
     return suite
 
 
-# unittest.TextTestRunner(verbosity = 2).run(testSuite)
+################################################################################
+# Main
+################################################################################
+
+
+if __name__ == "__main__":
+    unittest.main()

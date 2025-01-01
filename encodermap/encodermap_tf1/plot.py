@@ -1,8 +1,10 @@
+# Standard Library Imports
 import datetime
 import os
 import subprocess
 from itertools import cycle
 
+# Third Party Imports
 import matplotlib.pyplot as plt
 import MDAnalysis as md
 import numpy as np
@@ -11,6 +13,7 @@ from matplotlib.path import Path
 from matplotlib.widgets import Lasso
 from scipy.interpolate import interp1d
 
+# Local Folder Imports
 from .backmapping import dihedral_backmapping
 from .misc import create_dir, periodic_distance_np, sigmoid
 

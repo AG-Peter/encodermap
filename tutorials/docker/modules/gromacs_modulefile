@@ -1,0 +1,30 @@
+#%Module
+set     name           "GROMACS"
+set     version        "GMX_VERSION"
+set     arch           "x86_64"
+set     comp           "gcc/5.5.0"
+set     desc           "$name ($version, $arch, $comp)"
+set     url            "http://www.gromacs.org/"
+set     GMXPREFIX      "/usr/local/gromacs"
+
+proc ModulesHelp { } {
+        global name
+        global desc
+        global url
+        puts stderr "This module provides $desc\n"
+        puts stderr "More information about $name can be found at:"
+        puts stderr "    $url\n"
+}
+
+module-whatis   "Sets the environment for $desc"
+
+set             GROMACS_DIR     ${GMXPREFIX}
+setenv          GMXBIN          ${GROMACS_DIR}/bin
+prepend-path    PATH            ${GROMACS_DIR}/bin
+setenv          GMXLDLIB        ${GROMACS_DIR}/lib
+prepend-path    LD_LIBRARY_PATH ${GROMACS_DIR}/lib64
+prepend-path    PKG_CONFIG_PATH ${GROMACS_DIR}/lib64/pkgconfig
+setenv          GMXMAN          ${GROMACS_DIR}/share/man
+prepend-path    MANPATH         ${GROMACS_DIR}/share/man
+setenv          GMXDATA         ${GROMACS_DIR}/share/gromacs
+setenv          GMX_FONT        10x20

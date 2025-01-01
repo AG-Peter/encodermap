@@ -1,9 +1,12 @@
+# Standard Library Imports
 import os
+import shutil
 import tempfile
 import warnings
 from collections import OrderedDict
 from math import pi
 
+# Third Party Imports
 import MDAnalysis as mda
 import mdtraj as md
 import numpy as np
@@ -15,6 +18,7 @@ from MDAnalysis.lib.distances import calc_angles
 from mdtraj.geometry import dihedral as md_dihedral
 from tqdm import tqdm
 
+# Local Folder Imports
 from .misc import create_dir
 
 

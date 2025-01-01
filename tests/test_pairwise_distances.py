@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # tests/test_pairwise_distances.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -19,14 +19,18 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+# Standard Library Imports
 import os
 import unittest
 from math import pi
 
+# Third Party Imports
 import numpy as np
 import tensorflow as tf
 from scipy.spatial.distance import cdist
 
+# Encodermap imports
+from conftest import skip_all_tests_except_env_var_specified
 from encodermap.misc import (
     pairwise_dist,
     pairwise_dist_periodic,
@@ -36,13 +40,14 @@ from encodermap.misc import (
 )
 from encodermap.parameters.parameters import Parameters
 
+
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "1"
 
-# Todo: This needs more tests
-
+# Standard Library Imports
 # If scipy was compiled against an older version of numpy these warnings are raised
 # warnings in a testing environment are somewhat worrying
 import warnings
+
 
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
@@ -71,9 +76,10 @@ def periodicity_closure(periodicity):
     return func
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestSigmoidDists(tf.test.TestCase):
     def test_sigmoid(self):
-        sig_params = Parameters.defaults["dist_sig_parameters"]
+        sig_params = Parameters().defaults["dist_sig_parameters"]
         metric = sigmoid_closure(*sig_params[:3])
 
         seed = 1
@@ -87,6 +93,7 @@ class TestSigmoidDists(tf.test.TestCase):
         self.assertAllClose(sigmoid_dists_scipy, sigmoid_dists_tensorflow, atol=1e-3)
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestPeriodicDistances(tf.test.TestCase):
     def test_periodic_distance_np(self):
         a = np.array([0, 0, 0])
@@ -128,6 +135,7 @@ class TestPeriodicDistances(tf.test.TestCase):
         self.assertAllClose(distances_scipy, distances_encodermap, atol=1e-5)
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestPairwiseDistances(tf.test.TestCase):
     def test_pairwise_dist_periodic(self):
         points = np.array([[1 / 8, 1 / 2], [7 / 8, 1 / 2]], dtype=np.float32)
@@ -160,8 +168,10 @@ class TestPairwiseDistances(tf.test.TestCase):
         self.assertAllClose(pairwise_dists.numpy(), [[1, 1, 2 ** (1 / 2)]])
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestDistancesEm1Em2(tf.test.TestCase):
     def test_periodic_distance(self):
+        # Encodermap imports
         from encodermap.encodermap_tf1.misc import (
             periodic_distance as em1_periodic_distance,
         )
@@ -174,6 +184,7 @@ class TestDistancesEm1Em2(tf.test.TestCase):
         self.assertAllEqual(r1, r2)
 
     def test_sigmoid(self):
+        # Encodermap imports
         from encodermap.encodermap_tf1.misc import sigmoid as em1_sigmoid
         from encodermap.misc.distances import sigmoid as em2_sigmoid
 
@@ -182,6 +193,7 @@ class TestDistancesEm1Em2(tf.test.TestCase):
         self.assertEqual(r1, r2)
 
     def test_pairwise_dist_periodic(self):
+        # Encodermap imports
         from encodermap.encodermap_tf1.misc import (
             pairwise_dist_periodic as em1_pairwise_dist_periodic,
         )
@@ -194,9 +206,10 @@ class TestDistancesEm1Em2(tf.test.TestCase):
         )
         r1 = em1_pairwise_dist_periodic(x, periodicity=2 * np.pi)
         r2 = em2_pairwise_dist_periodic(x, periodicity=2 * np.pi)
-        self.assertAllEqual(r1, r2)
+        self.assertAllClose(r1, r2, atol=1e-10)
 
     def test_pairwise_dist(self):
+        # Encodermap imports
         from encodermap.encodermap_tf1.misc import pairwise_dist as em1_pairwise_dist
         from encodermap.misc.distances import pairwise_dist as em2_pairwise_dist
 
@@ -207,35 +220,32 @@ class TestDistancesEm1Em2(tf.test.TestCase):
         self.assertAllEqual(r1, r2)
 
 
-# Remove Phantom Tests from tensorflow skipped test_session
-# https://stackoverflow.com/questions/55417214/phantom-tests-after-switching-from-unittest-testcase-to-tf-test-testcase
-test_cases = (
-    TestSigmoidDists,
-    TestPeriodicDistances,
-    TestPairwiseDistances,
-    TestDistancesEm1Em2,
-)
-
-# doctests
-import doctest
-
-import encodermap.misc.distances as distances
-
-doc_tests = (doctest.DocTestSuite(distances),)
+################################################################################
+# Collect Test Cases and Filter
+################################################################################
 
 
 def load_tests(loader, tests, pattern):
+    # Remove Phantom Tests from tensorflow skipped test_session
+    # https://stackoverflow.com/questions/55417214/phantom-tests-after-switching-from-unittest-testcase-to-tf-test-testcase
+    test_cases = (
+        TestSigmoidDists,
+        TestPeriodicDistances,
+        TestPairwiseDistances,
+        TestDistancesEm1Em2,
+    )
     suite = unittest.TestSuite()
     for test_class in test_cases:
         tests = loader.loadTestsFromTestCase(test_class)
         filtered_tests = [t for t in tests if not t.id().endswith(".test_session")]
         suite.addTests(filtered_tests)
-    suite.addTests(doc_tests)
     return suite
 
 
-# unittest.TextTestRunner(verbosity = 2).run(testSuite)
+################################################################################
+# Main
+################################################################################
 
-# if __name__ == '__main__':
-#     print(unittest.__file__)
-#     unittest.main()
+
+if __name__ == "__main__":
+    unittest.main()

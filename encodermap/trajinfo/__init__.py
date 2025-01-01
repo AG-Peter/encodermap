@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # encodermap/trajinfo/__init__.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade
@@ -19,5 +19,7 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+# Local Folder Imports
 from .info_all import *
 from .info_single import *
+from .trajinfo_utils import CustomTopology

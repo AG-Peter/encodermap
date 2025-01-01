@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # encodermap/misc/distances.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -19,20 +19,38 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+"""EncoderMap's implements different distance computations.
+
+* Normal: Euclidean distance between two points.
+* Periodic: Euclidean distance between two points lying in a periodic space.
+* Pairwise: Euclidean distance between sets of points. Either with or without periodicity.
+
+"""
 ################################################################################
 # Imports
 ################################################################################
 
+# Standard Library Imports
+from collections.abc import Callable
 from math import pi
+from numbers import Number
+from typing import Union, overload
 
+# Third Party Imports
 import numpy as np
 import tensorflow as tf
+
+
+################################################################################
+# Typing
+################################################################################
+
 
 ################################################################################
 # Globals
 ################################################################################
 
-__all__ = [
+__all__: list[str] = [
     "sigmoid",
     "periodic_distance",
     "periodic_distance_np",
@@ -45,7 +63,7 @@ __all__ = [
 ################################################################################
 
 
-def sigmoid(sig, a, b):
+def sigmoid(sig: float, a: float, b: float) -> Callable:
     """Returns a sigmoid function with specified parameters.
 
     Args:
@@ -58,13 +76,21 @@ def sigmoid(sig, a, b):
             specified parameters.
     """
 
-    def func(r):
+    @overload
+    def func(r: Number) -> Number: ...
+
+    @overload
+    def func(r: np.ndarray) -> np.ndarray: ...
+
+    def func(r: Union[Number, np.ndarray]) -> Union[Number, np.ndarray]:
         return 1 - (1 + (2 ** (a / b) - 1) * (r / sig) ** a) ** (-b / a)
 
     return func
 
 
-def periodic_distance_np(a, b, periodicity=2 * pi):
+def periodic_distance_np(
+    a: np.ndarray, b: np.ndarray, periodicity: float = 2 * pi
+) -> np.ndarray:
     """Calculates distance between two points and respects periodicity.
 
     If the provided dataset is periodic (i.e. angles and torsion angles), the returned
@@ -73,15 +99,20 @@ def periodic_distance_np(a, b, periodicity=2 * pi):
     Args:
         a (np.ndarray): Coordinate of point a.
         b (np.ndarray): Coordinate of point b.
-        periodicity (float, optional): The periodicity (i.e. the box length/ maximum angle)
+        periodicity (float): The periodicity (i.e. the box length/ maximum angle)
             of your data. Defaults to 2*pi. Provide float('inf') for no periodicity.
+
+    Returns:
+        np.ndarray: The distances accounting for periodicity.
 
     """
     d = np.abs(b - a)
     return np.minimum(d, periodicity - d)
 
 
-def periodic_distance(a, b, periodicity=2 * pi):
+def periodic_distance(
+    a: tf.Tensor, b: tf.Tensor, periodicity: float = 2 * pi
+) -> tf.Tensor:
     """Calculates distance between two points and respects periodicity.
 
     If the provided dataset is periodic (i.e. angles and torsion angles), the returned
@@ -90,8 +121,11 @@ def periodic_distance(a, b, periodicity=2 * pi):
     Args:
         a (tf.Tensor): Coordinate of point a.
         b (tf.Tensor): Coordinate of point b.
-        periodicity (float, optional): The periodicity (i.e. the box length/ maximum angle)
+        periodicity (float): The periodicity (i.e. the box length/ maximum angle)
             of your data. Defaults to 2*pi. Provide float('inf') for no periodicity.
+
+    Returns:
+        tf.Tensor: The distances accounting for periodicity.
 
     Example:
         >>> import encodermap as em
@@ -107,15 +141,21 @@ def periodic_distance(a, b, periodicity=2 * pi):
     return tf.minimum(d, periodicity - d)
 
 
-def pairwise_dist_periodic(positions, periodicity):
+def pairwise_dist_periodic(
+    positions: tf.Tensor,
+    periodicity: float,
+) -> tf.Tensor:
     """Pairwise distances using periodicity.
 
     Args:
-        positions (Union[np.ndarray, tf.Tensor]): The positions of the points.
+        positions (tf.Tensor): The positions of the points.
             Currently only 2D arrays with positions.shape[0] == n_points
             and positions.shape[1] == 1 (rotational values) is supported.
         periodicity (float): The periodicity of the data. Most often
             you will use either 2*pi or 360.
+
+    Returns:
+        tf.Tensor: The dists.
 
     """
     assert len(positions.shape) == 2
@@ -127,32 +167,45 @@ def pairwise_dist_periodic(positions, periodicity):
         periodicity,
     )
     mask = tf.cast(tf.equal(vecs, 0.0), "float32")
-    vecs = vecs + mask * 1e-16  # gradient infinite for 0
-    dists = tf.norm(vecs, axis=2)
+    vecs = vecs + mask * 1e-12  # gradient infinite for 0
+    # dists = tf.norm(vecs, axis=2)  # gradient still becomes infinite
+    # might be a problem with tf.norm()
+    # see here:
+    # https://datascience.stackexchange.com/q/80898
+    dists = tf.sqrt(tf.reduce_sum(tf.square(vecs), axis=2)) + 1.0e-12
     return dists
 
 
-def pairwise_dist(positions, squared=False, flat=False):
+def pairwise_dist(
+    positions: tf.Tensor,
+    squared: bool = False,
+    flat: bool = False,
+) -> tf.Tensor:
     """Tensorflow implementation of `scipy.spatial.distances.cdist`.
 
     Returns a tensor with shape (positions.shape[1], positions.shape[1]).
     This tensor is the distance matrix of the provided positions. The
-    matrix is hollow, i.e. the diagonal elements are zero.
+    matrix is hollow, i.e., the diagonal elements are zero.
+
+    Thanks to https://omoindrot.github.io/triplet-loss
+    for this implementation. Find an archived link here:
+    https://archive.is/lNT2L
 
     Args:
         positions (Union[np.ndarray, tf.Tensor]): Collection of
-            n-dimensional points. positions.shape[0] are points.
-            positions.shape[1] are dimensions.
-        squared (bool, optional): Whether to return the pairwise squared
-            euclidean distance matrix or normal euclidean distance matrix.
+            n-dimensional points. `positions[0]` are points.
+            `positions[1]` are dimensions.
+        squared (bool): Whether to return the pairwise squared
+            Euclidean distance matrix or normal Euclidean distance matrix.
             Defaults to False.
-        flat (bool, otpional): Whether to return only the lower triangle of
+        flat (bool): Whether to return only the lower triangle of
             the hollow matrix. Setting this to true mimics the behavior
             of `scipy.spatial.distance.pdist`. Defaults to False.
 
-    """
-    # thanks to https://omoindrot.github.io/triplet-loss
+    Returns:
+        tf.Tensor: The distances.
 
+    """
     if not tf.debugging.is_numeric_tensor(positions):
         positions = tf.convert_to_tensor(positions)
     if len(positions.get_shape()) == 2:
@@ -180,7 +233,10 @@ def pairwise_dist(positions, squared=False, flat=False):
     distances = tf.maximum(distances, 0.0)
 
     if flat:
-        n = int(positions.shape[1])
+        try:
+            n = int(positions.shape[1])
+        except TypeError as e:
+            n = 3
         mask = np.ones((n, n), dtype=bool)
         mask[np.tril_indices(n)] = False
         distances = tf.boolean_mask(distances, mask, axis=1)

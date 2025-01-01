@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # encodermap/loading/delayed.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade
@@ -29,14 +29,17 @@
 ################################################################################
 
 
+# Future Imports at the top
 from __future__ import annotations
 
-import MDAnalysis as mda
-import numpy as np
-import xarray as xr
+# Standard Library Imports
+from pathlib import Path
 
-from .._optional_imports import _optional_import
-from ..misc.xarray import FEATURE_NAMES, make_dataarray, make_frame_CV_dataarray
+# Third Party Imports
+import numpy as np
+from MDAnalysis.coordinates.XTC import XTCReader
+from optional_imports import _optional_import
+
 
 ################################################################################
 # Optional Imports
@@ -45,7 +48,7 @@ from ..misc.xarray import FEATURE_NAMES, make_dataarray, make_frame_CV_dataarray
 
 dask = _optional_import("dask")
 da = _optional_import("dask", "array")
-source = _optional_import("pyemma", "coordinates.source")
+dd = _optional_import("dask", "dataframe")
 box_vectors_to_lengths_and_angles = _optional_import(
     "mdtraj", "utils.unitcell.box_vectors_to_lengths_and_angles"
 )
@@ -53,8 +56,13 @@ _dist_mic = _optional_import("mdtraj", "geometry._geometry._dist_mic")
 _dist = _optional_import("mdtraj", "geometry._geometry._dist")
 _dihedral_mic = _optional_import("mdtraj", "geometry._geometry._dihedral_mic")
 _dihedral = _optional_import("mdtraj", "geometry._geometry._dihedral")
+_angle_mic = _optional_import("mdtraj", "geometry._geometry._angle_mic")
+_angle = _optional_import("mdtraj", "geometry._geometry._angle")
 jit = _optional_import("numba", "jit")
 prange = _optional_import("numba", "prange")
+xr = _optional_import("xarray")
+md = _optional_import("mdtraj")
+h5py = _optional_import("h5py")
 
 
 ################################################################################
@@ -62,204 +70,38 @@ prange = _optional_import("numba", "prange")
 ################################################################################
 
 
-import typing
-
-if typing.TYPE_CHECKING:
-    from .._typing import AnyFeature
-
-from typing import Optional, Union
-
-################################################################################
-# Numba compiled functions
-################################################################################
+# Standard Library Imports
+from typing import TYPE_CHECKING, Literal, Optional, Union, overload
 
 
-# @njit(fastmath=True)
-def calc_distances(xyz, indices):
-    points_a = xyz[:, indices[:, 0]]
-    points_b = xyz[:, indices[:, 1]]
-    diffs = points_b - points_a
-    data = diffs.reshape((-1, 3))
-    a = np.sqrt((data * data).sum(axis=1))
-    a = a.reshape(diffs.shape[:2])
-    return a
+if TYPE_CHECKING:
+    # Third Party Imports
+    from dask.delayed import Delayed
+
+    # Encodermap imports
+    from encodermap.loading.featurizer import DaskFeaturizer
+    from encodermap.trajinfo.info_single import SingleTraj
 
 
 ################################################################################
-# Delayed functions
+# Utils
 ################################################################################
 
 
-@dask.delayed
-def delayed_transform_selection(
-    self: AnyFeature,
-    xyz: np.ndarray,
-    unitcell_vectors: None = None,
-    unitcell_infos: Optional[np.ndarray] = None,
-) -> np.ndarray:
-    """Returns the cooordinates of the selected atoms..
-
-    Args:
-        self (AnyFeature): A feature. Can be PyEMMA feature, or encomderap feature.
-        xyz (np.ndarray): The positions.
-        unitcell_vectors (np.ndarray): Info about the unitcell in shape (n_frames, 3, 3)
-        unitcell_infos (np.ndarray): Info about the unitcell in shape (n_frames, 6).
-
-    Returns:
-        np.ndarray: Positions of the atoms with ndim=2.
-
-    """
-    newshape = (xyz.shape[0], 3 * self.indexes.shape[0])
-    return np.expand_dims(np.reshape(xyz[:, self.indexes, :], newshape), 0)
-
-
-@dask.delayed
-def delayed_transfrom_dihedral(
-    self: AnyFeature,
-    xyz: np.ndarray,
-    unitcell_vectors: np.ndarray = None,
-    unitcell_infos: Optional[np.ndarray] = None,
-) -> np.ndarray:
-    """Mimics MDTraj's compute_dihedral, but delayed and without loading the complete trajectory.
-
-    Args:
-        self (AnyFeature): A feature. Can be PyEMMA feature, or encomderap feature.
-        xyz (np.ndarray): The positions.
-        unitcell_vectors (np.ndarray): Info about the unitcell in shape (n_frames, 3, 3)
-        unitcell_infos (np.ndarray): Info about the unitcell in shape (n_frames, 6).
-
-    Returns:
-        np.ndarray: The result of the dihedral calculation.
-
-    """
-    try:
-        indexes = self.indexes.astype("int32")
-    except AttributeError:
-        indexes = self.angle_indexes.astype("int32")
-
-    if len(indexes) == 0:
-        return np.zeros((len(xyz), 0), dtype="float32")
-
-    if self.periodic:
-        assert unitcell_vectors is not None
-
-        # convert to angles
-        unitcell_angles = []
-        for fr_unitcell_vectors in unitcell_vectors:
-            _, _, _, alpha, beta, gamma = box_vectors_to_lengths_and_angles(
-                fr_unitcell_vectors[0],
-                fr_unitcell_vectors[1],
-                fr_unitcell_vectors[2],
-            )
-            unitcell_angles.append(np.array([alpha, beta, gamma]))
-
-        # check for an orthogonal box
-        orthogonal = np.allclose(unitcell_angles, 90)
-
-        out = np.empty((xyz.shape[0], indexes.shape[0]), dtype="float32", order="C")
-        _dihedral_mic(
-            xyz, indexes, unitcell_vectors.transpose(0, 2, 1).copy(), out, orthogonal
-        )
-        return np.expand_dims(out, 0)
-    else:
-        out = np.empty((xyz.shape[0], indexes.shape[0]), dtype="float32", order="C")
-        _dihedral(xyz, indexes, out)
-
-    if self.cossin:
-        out = np.dstack((np.cos(out), np.sin(out)))
-        out = rad.reshape(out.shape[0], out.shape[1] * out.shape[2])
-        # convert to degrees
-    if self.deg and not self.cossin:
-        out = np.rad2deg(out)
-
-    return np.expand_dims(out, 0)
-
-
-@dask.delayed
-def delayed_transfrom_distance(
-    self: AnyFeature,
-    xyz: np.ndarray,
-    unitcell_vectors: np.ndarray = None,
-    unitcell_infos: Optional[np.ndarray] = None,
-) -> np.ndarray:
-    """Mimics MDTraj's compute_distance, but delayed and without loading the complete trajectory.
-
-    Args:
-        self (AnyFeature): A feature. Can be PyEMMA feature, or encomderap feature.
-        xyz (np.ndarray): The positions.
-        unitcell_vectors (np.ndarray): Info about the unitcell in shape (n_frames, 3, 3)
-        unitcell_infos (np.ndarray): Info about the unitcell in shape (n_frames, 6).
-
-    Returns:
-        np.ndarray: The result of the distance calculation.
-
-    """
-    if len(self.distance_indexes) == 0:
-        return np.zeros((len(xyz), 0), dtype="float32")
-
-    if self.periodic:
-        assert unitcell_vectors is not None
-
-        # convert to angles
-        unitcell_angles = []
-        for fr_unitcell_vectors in unitcell_vectors:
-            _, _, _, alpha, beta, gamma = box_vectors_to_lengths_and_angles(
-                fr_unitcell_vectors[0],
-                fr_unitcell_vectors[1],
-                fr_unitcell_vectors[2],
-            )
-            unitcell_angles.append(np.array([alpha, beta, gamma]))
-
-        # check for an orthogonal box
-        orthogonal = np.allclose(unitcell_angles, 90)
-
-        out = np.empty(
-            (xyz.shape[0], self.distance_indexes.shape[0]), dtype="float32", order="C"
-        )
-        _dist_mic(
-            xyz,
-            self.distance_indexes,
-            unitcell_vectors.transpose(0, 2, 1).copy(),
-            out,
-            orthogonal,
-        )
-        return np.expand_dims(out, 0)
-    else:
-        out = np.empty(
-            (xyz.shape[0], self.distance_indexes.shape[0]), dtype="float32", order="C"
-        )
-        _dist(xyz, self.distance_indexes, out)
-        return np.expand_dims(out, 0)
-
-
-@dask.delayed
-def delayed_transfrom_inverse_distance(
-    self: AnyFeature,
-    xyz: np.ndarray,
-    unitcell_vectors: Optional[np.ndarray] = None,
-    unitcell_infos: Optional[np.ndarray] = None,
-) -> np.ndarray:
-    """Mimics MDTraj's compute_distance but returns inverse distances.
-
-    Args:
-        self (AnyFeature): A feature. Can be PyEMMA feature, or encomderap feature.
-        xyz (np.ndarray): The positions.
-        unitcell_vectors (np.ndarray): Info about the unitcell.
-
-    Returns:
-        np.ndarray: The result of the distance calculation.
-
-    """
-    return 1 / delayed_transfrom_distance(self, xyz, unitcell_vectors)
-
-
-@jit(parallel=True)
-def calc_bravais_box(box_info):
+# @jit(parallel=True, nopython=True)
+def calc_bravais_box(box_info: np.ndarray) -> np.ndarray:
     """Calculates the Bravais vectors from lengths and angles (in degrees).
 
     Note:
         This code is adapted from gyroid, which is licensed under the BSD
         http://pythonhosted.org/gyroid/_modules/gyroid/unitcell.html
+
+    Args:
+        box_info (np.ndarray): The box info, where the columns are ordered as
+            follows: a, b, c, alpha, beta. gamma in degree.
+
+    Returns:
+        np.ndarray: The bravais vectors as a shape (n_frames, 3, 3) array.
 
     """
     a_length, b_length, c_length = box_info[:, :3].T
@@ -288,16 +130,16 @@ def calc_bravais_box(box_info):
     # Make sure that all vector components that are _almost_ 0 are set exactly
     # to 0
     tol = 1e-6
-    for i in prange(a.shape[0]):
-        for j in prange(a.shape[1]):
+    for i in range(a.shape[0]):
+        for j in range(a.shape[1]):
             if a[i, j] > -tol and a[i, j] < tol:
                 a[i, j] = 0.0
-    for i in prange(b.shape[0]):
-        for j in prange(b.shape[1]):
+    for i in range(b.shape[0]):
+        for j in range(b.shape[1]):
             if b[i, j] > -tol and b[i, j] < tol:
                 b[i, j] = 0.0
-    for i in prange(c.shape[0]):
-        for j in prange(c.shape[1]):
+    for i in range(c.shape[0]):
+        for j in range(c.shape[1]):
             if c[i, j] > -tol and c[i, j] < tol:
                 c[i, j] = 0.0
 
@@ -308,17 +150,16 @@ def calc_bravais_box(box_info):
     return unitcell_vectors
 
 
-@dask.delayed(nout=4, name="load_traj_data")
-def load_xyz(traj_file, frame_indices, top_file=None):
-    u = mda.Universe(top_file, traj_file)
-    ag = u.atoms
+@dask.delayed(nout=4)
+def _load_xyz(traj, frame_indices):
+    """Distances in nm. Angles in degree."""
     positions = np.empty(
-        shape=(len(frame_indices), len(ag), 3), dtype="float32", order="C"
+        shape=(len(frame_indices), traj.n_atoms, 3), dtype="float32", order="C"
     )
     time = np.empty(shape=(len(frame_indices)), dtype="float32", order="C")
     unitcell_info = np.empty(shape=(len(frame_indices), 6), dtype="float32", order="C")
-    for i, ts in enumerate(u.trajectory[frame_indices]):
-        positions[i] = ag.positions
+    for i, ts in enumerate(traj[frame_indices]):
+        positions[i] = ts.positions
         time[i] = ts.time
         unitcell_info[i] = ts._unitcell
     positions /= 10  # for some heretical reason, MDAnalysis uses angstrom
@@ -328,219 +169,476 @@ def load_xyz(traj_file, frame_indices, top_file=None):
     return positions, time, unitcell_vectors, unitcell_info
 
 
+def load_xyz(
+    traj_file: str,
+    frame_indices: np.ndarray,
+    traj_num: Optional[int] = None,
+) -> tuple[da.array, da.array, da.array, da.array]:
+    if Path(traj_file).suffix == ".h5":
+        return load_xyz_from_h5(traj_file, frame_indices, traj_num)
+    if Path(traj_file).suffix != ".xtc":
+        raise Exception(
+            f"Currently only .xtc and .h5 trajectory files are supported. "
+            f"But adding more formats is easy. Raise an issue, if you want "
+            f"to have them added."
+        )
+    traj = XTCReader(traj_file)
+    n_atoms = traj.n_atoms
+    n_frames = len(frame_indices)
+    p, t, uv, ui = _load_xyz(traj, frame_indices)
+    p = da.from_delayed(
+        p,
+        shape=(n_frames, n_atoms, 3),
+        dtype="float32",
+    )
+    t = da.from_delayed(
+        t,
+        shape=(n_frames,),
+        dtype="float32",
+    )
+    uv = da.from_delayed(
+        uv,
+        shape=(n_frames, 3, 3),
+        dtype="float32",
+    )
+    ui = da.from_delayed(
+        ui,
+        shape=(n_frames, 6),
+        dtype="float32",
+    )
+    return p, t, uv, ui
+
+
+@dask.delayed(nout=4)
+def _load_xyz_from_h5(
+    traj_file: str,
+    frame_indices: np.ndarray,
+    traj_num: int,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Distances in nm. Angles in degree.
+
+    Args:
+        traj_file (str): The file to load.
+        frame_indices (np.ndarray): An int array giving the positions to load.
+        traj_num (int): Which traj num the output should be put to.
+
+    Returns:
+        tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray: A four-tuple of np
+            arrays. The order of these arrays is:
+                * positions: Shape (len(frame_indices), 3): The xyz coordinates in nm.
+                * time: shape (len(frame_indices), ): The time in ps.
+                * unitcell_vectors: Shape (len(frame_indices), 3, 3): The unitcell vectors.
+                * unitcell_info: Shape (len(frame_indices), 6), where [:, :3] are
+                    the unitcell lengths in nm and [:, 3:] are the unitcell angles
+                    in degree.
+
+    """
+    keys = ["coordinates", "time", "cell_lengths", "cell_angles"]
+    if traj_num is not None:
+        keys_with_num = [f"{k}_{traj_num}" for k in keys]
+    else:
+        keys_with_num = keys
+    data = {}
+    with h5py.File(traj_file, "r") as f:
+        for k, out in zip(keys_with_num, keys):
+            if k not in f and out not in f:
+                data[out] = None
+            elif k in f:
+                data[out] = f[k][frame_indices]
+            elif out in f:
+                data[out] = f[out][frame_indices]
+    unitcell_info = np.empty(shape=(len(frame_indices), 6), dtype="float32", order="C")
+    unitcell_info[:, :3] = data["cell_lengths"]
+    unitcell_info[:, 3:] = data["cell_angles"]
+    unitcell_vectors = calc_bravais_box(unitcell_info)
+    return data["coordinates"], data["time"], unitcell_vectors, unitcell_info
+
+
+def load_xyz_from_h5(
+    traj_file: str,
+    frame_indices: np.ndarray,
+    traj_num: Optional[int] = None,
+) -> tuple[da.array, da.array, da.array, da.array]:
+    """Loads xyz coordinates and unitcell info from a block in a .h5 file.
+
+    Standard MDTraj h5 keys are:
+        ['cell_angles', 'cell_lengths', 'coordinates', 'time', 'topology']
+
+    Args:
+        traj_file (str): The file to load.
+        frame_indices (np.ndarray): An int array giving the positions to load.
+        traj_num (int): Which traj num the output should be put to.
+
+    Returns:
+        tuple[da.array, da.array, da.array, da.array]: A four-tuple of dask
+            arrays that contain dask delayeds. The order of these arrays is:
+                * positions: Shape (len(frame_indices), 3): The xyz coordinates in nm.
+                * time: shape (len(frame_indices), ): The time in ps.
+                * unitcell_vectors: Shape (len(frame_indices), 3, 3): The unitcell vectors.
+                * unitcell_info: Shape (len(frame_indices), 6), where [:, :3] are
+                    the unitcell lengths in nm and [:, 3:] are the unitcell angles
+                    in degree.
+
+    """
+    # Encodermap imports
+    from encodermap.trajinfo.info_all import HDF5GroupWrite
+
+    n_frames = len(frame_indices)
+    with HDF5GroupWrite(traj_file) as f:
+        if "topology" not in f.keys() and traj_num is not None:
+            top = f.read_topology(f"topology_{traj_num}")
+        else:
+            top = f.read_topology("topology")
+    n_atoms = top.n_atoms
+    p, t, uv, ui = _load_xyz_from_h5(traj_file, frame_indices, traj_num)
+    p = da.from_delayed(p, shape=(n_frames, n_atoms, 3), dtype="float32")
+    t = da.from_delayed(t, shape=(n_frames,), dtype="float32")
+    uv = da.from_delayed(uv, shape=(n_frames, 3, 3), dtype="float32")
+    ui = da.from_delayed(ui, shape=(n_frames, 6), dtype="float32")
+    return p, t, uv, ui
+
+
 ################################################################################
 # Dask graph creation
 ################################################################################
 
 
-def build_dask_xarray(featurizer, return_coordinates=False):
-    """Builds a large dask xarray, which will be distributively evaluated."""
+@overload
+def build_dask_xarray(
+    featurizer: DaskFeaturizer,
+    traj: Optional[SingleTraj],
+    streamable: bool,
+    return_delayeds: Literal[True],
+) -> tuple[xr.Dataset, dict[str, xr.Variable]]: ...
+
+
+@overload
+def build_dask_xarray(
+    featurizer: DaskFeaturizer,
+    traj: Optional[SingleTraj],
+    streamable: bool,
+    return_delayeds: Literal[False],
+) -> tuple[xr.Dataset, None]: ...
+
+
+def build_dask_xarray(
+    featurizer: DaskFeaturizer,
+    traj: Optional[SingleTraj] = None,
+    streamable: bool = False,
+    return_delayeds: bool = False,
+) -> tuple[xr.Dataset, Union[None, dict[str, xr.Variable]]]:
+    """Builds a large dask xarray, which will be distributively evaluated.
+
+    This class takes a `DaskFeaturizer` class, which contains a list of features.
+    Every feature in this list contains enough information for the delayed functions
+    to calculate the requested quantities when provided the xyz coordinates of the
+    atoms, the unitcell vectors, and the unitcell infos as a Bravais matrix.
+
+    Args:
+        featurizer (DaskFeaturizer): An instance of the DaskFeaturizer.
+        return_coordinates (bool): Whether to add this information:
+            all_xyz, all_time, all_cell_lengths, all_cell_angles
+            to the returned values. Defaults to False.
+        streamable (bool): Whether to divide the calculations into one-frame
+            blocks, which can then only be calculated when requested.
+
+    Returns:
+        Union[xr.Dataset, tuple[xr.Dataset, list[dask.delayed]]:
+            When `return_coordinates` is False, only a xr.Dataset is returned.
+            Otherwise, a tuple with a xr.Dataset and a sequence of dask.Delayed
+            objects is returned.
+
+
+    """
+    # Imports
+    # Encodermap imports
+    from encodermap.loading.features import CustomFeature
+    from encodermap.misc.xarray import (
+        FEATURE_NAMES,
+        make_dataarray,
+        make_frame_CV_dataarray,
+        make_position_dataarray,
+    )
+    from encodermap.trajinfo.trajinfo_utils import trajs_combine_attrs
+
+    # definitions
+    coordinates = {
+        "coordinates": ["md_frame", "md_atom", "md_cart"],
+        "time": ["md_frame"],
+        "cell_lengths": ["md_frame", "md_length"],
+        "cell_angles": ["md_frame", "md_angle"],
+    }
+
     # pre-define blocks from the trajectories
     n_blocks = 10
-    all_DAs = []
 
-    if return_coordinates:
-        all_xyz = []
-        all_time = []
-        all_cell_lengths = []
-        all_cell_angles = []
+    # append delayeds here:
+    if return_delayeds:
+        delayeds = {}
+    else:
+        delayeds = None
 
-    assert len(featurizer.active_features) > 0
+    assert len(featurizer.feat.active_features) > 0
 
-    # collect the Datasets in this dict
+    # collect the Datasets in this list
     DSs = []
 
-    for i, traj in featurizer.trajs.itertrajs():
-        n_frames_per_block = len(traj.id) // n_blocks
-        blocks = [
-            np.arange(i * n_frames_per_block, (i + 1) * n_frames_per_block)
-            for i in range(n_blocks - 1)
-        ]
-        blocks.append(np.arange((n_blocks - 1) * n_frames_per_block, len(traj.id)))
+    # if the dask featurizer contains an `EnsembleFeaturizer`, we can use `itertrajs()`
+    if traj is None:
+        if hasattr(featurizer.feat, "trajs"):
+            iterable = featurizer.feat.trajs.itertrajs()
+        else:
+            iterable = enumerate([featurizer.feat.traj])
+    else:
+        iterable = enumerate([traj])
 
-        # collect multiple Dataarrays here
+    # iter over trajs or just the one
+    for i, traj in iterable:
+        n_frames = len(traj.id)
+        if not streamable:
+            n_frames_per_block = n_frames // n_blocks
+            blocks = [
+                np.arange(i * n_frames_per_block, (i + 1) * n_frames_per_block)
+                for i in range(n_blocks - 1)
+            ]
+            blocks.append(np.arange((n_blocks - 1) * n_frames_per_block, n_frames))
+            # remove empty blocks
+            blocks = list(filter(lambda x: x.size > 0, blocks))
+        else:
+            n_frames_per_block = 1
+            blocks = [[i] for i in range(n_frames)]
+
+        # collect multiple DataArrays here
         DAs = {}
         indexes = {}
 
-        # these lists collect the data from distributed loading tasks
-        xyzs = []
-        times = []
-        unitcell_vectors = []
-        unitcell_infos = []
+        if delayeds is not None:
+            xyz_traj = []
+            time_traj = []
+            lengths_traj = []
+            angles_traj = []
 
         # distribute the loading to multiple workers
-        for j, frame_indices in enumerate(blocks):
+        for j, block in enumerate(blocks):
+            # get the actual frame indices if the traj was sliced
+            if traj.id.ndim == 2:
+                frame_indices = traj.id[block, 1]
+            else:
+                frame_indices = traj.id[block]
+
+            assert len(frame_indices) > 0, f"{frame_indices=}"
             xyz, time, unitcell_vector, unitcell_info = load_xyz(
-                traj.traj_file, frame_indices, traj.top_file
+                traj.traj_file, frame_indices, traj.traj_num
             )
-            xyzs.append(
-                da.from_delayed(
-                    xyz,
-                    shape=(len(frame_indices), traj.top.n_atoms, 3),
-                    dtype="float32",
-                    name="append_xyz",
-                )
-            )
-            times.append(
-                da.from_delayed(
-                    time,
-                    shape=(len(frame_indices),),
-                    dtype="float32",
-                    name="append_time",
-                )
-            )
-            unitcell_vectors.append(
-                da.from_delayed(
-                    unitcell_vector,
-                    shape=(len(frame_indices), 3, 3),
-                    dtype="float32",
-                    name="append_bravais",
-                )
-            )
-            unitcell_infos.append(
-                da.from_delayed(
-                    unitcell_info,
-                    shape=(len(frame_indices), 6),
-                    dtype="float32",
-                    name="append_cell_length_and_angle",
-                )
-            )
+
+            if delayeds is not None:
+                unitcell_lengths = unitcell_info[:, :3]
+                unitcell_angles = unitcell_info[:, 3:]
+                xyz_traj.append(xyz)
+                time_traj.append(time)
+                lengths_traj.append(unitcell_lengths)
+                angles_traj.append(unitcell_angles)
 
             # iterate over the features and let them use the traj information
-            for k, feat in enumerate(featurizer.active_features):
+            if hasattr(featurizer.feat, "trajs"):
+                features = featurizer.feat.active_features[traj.top]
+            else:
+                features = featurizer.feat.active_features
+
+            for k, feat in enumerate(features):
                 # the name of the feature will be used for traceability
-                if hasattr(feat, "name"):
-                    name = feat.name
-                else:
-                    try:
-                        name = FEATURE_NAMES[feat.name]
-                    except (KeyError, AttributeError):
+                if not isinstance(feat, CustomFeature) or not issubclass(
+                    feat.__class__, CustomFeature
+                ):
+                    assert hasattr(feat, "dask_indices") and hasattr(
+                        feat, "dask_transform"
+                    ), (
+                        f"For `feature.transform()` to be acceptable as delayed, "
+                        f"the feature needs to implement the `dask_indices` property "
+                        f"and `dask_transform` staticmethod. The feature {feat} has "
+                        f"this these methods and attributes "
+                        f"{[a for a in feat.__dir__() if not a.startswith('_')]}"
+                    )
+                assert feat.delayed, (
+                    f"The feature {feat} was not altered to return a delayed "
+                    f"transform. Please read up in `encodermap.DaskFeaturizer` how "
+                    f"to make features work with dask delayed."
+                )
+
+                # decide on the name
+                try:
+                    name = FEATURE_NAMES[feat.name]
+                except (KeyError, AttributeError):
+                    if hasattr(feat, "name"):
+                        if isinstance(feat.name, str):
+                            name = feat.name
+                            if "mdtraj.trajectory" in feat.name.lower():
+                                feat.name = feat.__class__.__name__
+                                name = feat.__class__.__name__
+                        else:
+                            name = feat.__class__.__name__
+                            feat.name = name
+                    else:
                         name = feat.__class__.__name__
+                        if name == "CustomFeature":
+                            name = feat.describe()[0].split()[0]
                         feat.name = name
 
-                # add the indices used to create this dataarray
-                if name not in indexes:
-                    try:
-                        indexes[name] = feat.indexes.tolist()
-                    except AttributeError as e:
-                        for key in feat.__dir__():
-                            if "ind" in key:
-                                indexes[name] = feat.__dict__[key]
-                        if name not in indexes:
-                            indexes[name] = []
-
-                # create the key if not already existent
-                if name not in DAs:
-                    DAs[name] = []
-
-                # create a da.dataarray using the delayed feature
+                # the feature length is given by the describe() of the feature
                 if callable(feat.describe()):
                     feat_length = len([i for i in feat.describe()(traj.top)])
                 else:
                     feat_length = len(feat.describe())
+
+                # dynamically populate kwargs with feature settings
+                kwargs = {"indexes": getattr(feat, feat.dask_indices)}
+                if feat._use_periodic:
+                    kwargs["periodic"] = feat.periodic
+                if feat._use_angle:
+                    kwargs["deg"] = feat.deg
+                    kwargs["cossin"] = feat.cossin
+                # if feat._use_omega:
+                #     kwargs["omega"] = feat.omega
+                if hasattr(feat, "_nonstandard_transform_args"):
+                    for k in feat._nonstandard_transform_args:
+                        if not hasattr(feat, k):
+                            kwargs[k] = None
+                        else:
+                            kwargs[k] = getattr(feat, k)
                 a = da.from_delayed(
-                    feat.transform(
-                        feat,
-                        xyz,
-                        unitcell_vector,
-                        unitcell_info,
+                    feat.dask_transform(
+                        **kwargs,
+                        xyz=xyz,
+                        unitcell_vectors=unitcell_vector,
+                        unitcell_info=unitcell_info,
                     ),
-                    shape=(1, len(frame_indices), feat_length),
+                    shape=(len(frame_indices), feat_length),
                     dtype="float32",
                 )
-                # a.compute_chunk_sizes()
-                # make a xarray out of that
-                if traj.id.ndim == 2:
-                    traj_id = traj.id[frame_indices, 1]
-                else:
-                    traj_id = traj.id[frame_indices]
 
-                if feat_length > 1:
-                    dataarray = make_dataarray(
+                if hasattr(feat, "deg"):
+                    deg = feat.deg
+                else:
+                    deg = None
+
+                if (
+                    feat.name
+                    in ["AllCartesians", "CentralCartesians", "SideChainCartesians"]
+                    or feat.atom_feature
+                ):
+                    a = da.reshape(a, (len(frame_indices), -1, 3))
+                    a = da.expand_dims(a, axis=0)
+                    if hasattr(featurizer, "indices_by_top"):
+                        feat.indexes = featurizer.indices_by_top[traj.top][feat.name]
+                    dataarray, ind_dataarray = make_position_dataarray(
                         feat.describe(),
-                        traj,
+                        traj[block],
                         name,
                         a,
-                        with_time=False,
-                        frame_indices=traj_id,
+                        deg=deg,
+                        feat=feat,
                     )
                 else:
-                    dataarray = make_frame_CV_dataarray(
-                        feat.describe(),
-                        traj,
-                        name,
-                        a,
-                        with_time=False,
-                        frame_indices=traj_id,
+                    a = da.expand_dims(a, axis=0)
+                    if feat._dim == 1:
+                        dataarray, ind_dataarray = make_frame_CV_dataarray(
+                            feat.describe(),
+                            traj[block],
+                            name,
+                            a,
+                            deg=deg,
+                            feat=feat,
+                        )
+                    else:
+                        if hasattr(featurizer, "indices_by_top"):
+                            feat.indexes = featurizer.indices_by_top[traj.top][
+                                feat.name
+                            ]
+                        dataarray, ind_dataarray = make_dataarray(
+                            feat.describe(),
+                            traj[block],
+                            name,
+                            a,
+                            deg=deg,
+                            feat=feat,
+                        )
+
+                assert dataarray.size > 0, (
+                    f"Dataarray created for feature {feat} provided with "
+                    f"traj {traj} at frame indices {block} did not contain "
+                    f"any data."
+                )
+
+                # append the DataArray to the DAs dictionary
+                DAs.setdefault(name, []).append(dataarray)
+                if ind_dataarray is not None:
+                    indexes.setdefault(name + "_feature_indices", []).append(
+                        ind_dataarray
                     )
+                else:
+                    indexes[name + "_feature_indices"] = [None]
 
-                # append the dataarray to the DAs dictionary
-                DAs[name].append(dataarray)
-
-                # concatenate the data. Xarray should then know where to write the
-                # data on disk, if the hdf5 (netcdf4) file is opened in non-blocking mode
-                # set this env variable: HDF5_USE_FILE_LOCKING=FALSE
-
-        # if raw coordinates are wanted we concatenate them after the blocks
-        # are finished and append them to lists, these lists have the length of
-        # trajs in feat.trajs
-        if return_coordinates:
-            concatenated_xyzs = da.concatenate(xyzs, axis=0)
-            concatenated_time = da.concatenate(times)
-            concatenated_unitcell_vectors = da.concatenate(unitcell_vectors, 0)
-            concatenated_unitcell_infos = da.concatenate(unitcell_infos, 0)
-            all_xyz.append(concatenated_xyzs)
-            all_time.append(concatenated_time)
-            all_cell_lengths.append(concatenated_unitcell_infos[:, :3])
-            all_cell_angles.append(concatenated_unitcell_infos[:, 3:])
-
-        # after the features have been iterated over for this traj, the DAs are
-        # merged along the time axis and a Dataset is created from them
+        # after every traj, we combine the datasets
         for key, value in DAs.items():
-            DAs[key] = xr.concat(DAs[key], "frame_num")
-        ds = xr.Dataset(DAs)
+            DAs[key] = xr.concat(
+                DAs[key],
+                "frame_num",
+                combine_attrs=trajs_combine_attrs,
+            )
+            # we only need any component from the indexes but make sure that
+            # they are homogeneous. Every block of a traj should return
+            # the same index array, as they don't depend on frame data
+            if indexes[key + "_feature_indices"][0] is None:
+                assert all(
+                    [i is None for i in indexes[key + "_feature_indices"][1:]]
+                ), (
+                    f"Got an inhomogeneous result for indexes for feature {feat=} "
+                    f"at {frame_indices=} {indexes=}"
+                )
+            indexes[key + "_feature_indices"] = indexes.pop(key + "_feature_indices")[0]
+
+        # combine data per traj
+        DAs_and_indexes = DAs | indexes
+        DAs_and_indexes = {k: v for k, v in DAs_and_indexes.items() if v is not None}
+        try:
+            ds = xr.Dataset(
+                DAs_and_indexes,
+                attrs=trajs_combine_attrs(
+                    [v.attrs if v.size > 0 else {} for v in DAs_and_indexes.values()]
+                ),
+            )
+        except xr.core.merge.MergeError as e:
+            raise Exception(f"{indexes=}") from e
         DSs.append(ds)
 
-    # make the large dataset out of this
-    ds = xr.concat(DSs, dim="traj_num")
-    ds = ds.assign_attrs(indexes)
+        # and add to the delayeds if needed
+        if delayeds is not None:
+            for (coord, dims), data, unit in zip(
+                coordinates.items(),
+                [xyz_traj, time_traj, lengths_traj, angles_traj],
+                ["nanometers", "picoseconds", "nanometers", "degrees"],
+            ):
+                name = f"{coord}_{traj.traj_num}"
+                delayeds[name] = xr.Variable(
+                    dims=[f"{d}_{traj.traj_num}" for d in dims],
+                    data=da.concatenate(data),
+                    attrs={"units": unit.encode("utf-8")},
+                )
 
-    if return_coordinates:
-        return all_DAs, all_xyz, all_time, all_cell_lengths, all_cell_angles
+    # make a large dataset out of this
+    ds = xr.concat(
+        DSs,
+        data_vars="all",
+        # compat="broadcast_equals",
+        # coords="all",
+        # join="outer",
+        dim="traj_num",
+        fill_value=np.nan,
+        combine_attrs=trajs_combine_attrs,
+    )
+    assert ds, (
+        f"Concatenation of chunked datasets yielded empty dataset.\n"
+        f"{DSs=}\n\n{DAs_and_indexes=}"
+    )
 
-    return ds
-
-
-def analyze_block(frame_indices, universe, atomgroup, indices, unwrap=True):
-    # get all positions
-    positions = np.empty(shape=(len(frame_indices), len(atomgroup), 3), dtype="float32")
-    # unitcell_info = np.empty(shape=(len(frame_indices), 6), dtype='float32')
-    for i, ts in enumerate(universe.trajectory[frame_indices]):
-        if unwrap:
-            positions[i] = atomgroup.unwrap(compound="fragments")
-        else:
-            positions[i] = atomgroup.positions
-
-    positions /= 10  # for some heretical reason, MDAnalysis uses angstrom
-    # unitcell_info[:, :3] /= 10
-    # unitcell_angles = unitcell_info[:, 3:]
-    # unitcell_vectors = calc_bravais_box(unitcell_info)
-
-    # do stuff with the positions
-    if indices.ndim == 1:
-        return positions[:, indices]
-    elif indices.shape[1] == 2:
-        func = calc_distances
-    elif indices.shape[1] == 3:
-        func = calc_angles
-    elif indices.shape[1] == 4:
-        func = calc_dihedrals
-    else:
-        raise Exception(
-            f"Indices of shape {indices.shape} not supported. Normally "
-            f"you want `indices.ndim` == 1 for cartesian coordinates. "
-            f"`indices.shape[1] == 2` for distances, `indices.shape[1] == 3` "
-            f"for angles, and `indices.shape[1] == 4` for dihedrals."
-        )
-    result = func(positions, indices)
-    return result
+    return ds, delayeds

@@ -1,3 +1,4 @@
+# Local Folder Imports
 from . import misc, plot
 from .angle_dihedral_cartesian_encodermap import (
     AngleDihedralCartesianEncoderMap,
@@ -9,7 +10,9 @@ from .encodermap import EncoderMap
 from .moldata import MolData
 from .parameters import ADCParameters, Parameters
 
+
 try:
+    # Third Party Imports
     import tensorflow as tf
 
     tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)

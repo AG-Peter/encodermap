@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # tests/test_angles.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -19,11 +19,18 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+
+
+# Future Imports at the top
+from __future__ import annotations
+
+# Standard Library Imports
 import os
 import unittest
 from math import pi
 from pathlib import Path
 
+# Third Party Imports
 import matplotlib
 import matplotlib.pyplot as plt
 import MDAnalysis as md
@@ -31,20 +38,28 @@ import numpy as np
 import tensorflow as tf
 from matplotlib.testing.compare import compare_images
 
-import encodermap as em
+# Encodermap imports
 import encodermap.encodermap_tf1 as em_tf1
+from conftest import skip_all_tests_except_env_var_specified
+
+
+import encodermap as em  # isort: skip
+
 
 matplotlib.use("Agg")
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "1"
 
+# Standard Library Imports
 # If scipy was compiled against an older version of numpy these warnings are raised
 # warnings in a testing environment are somewhat worrying
 import warnings
+
 
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestAngles(unittest.TestCase):
     def test_ala10_angles(self):
         uni = md.Universe(str(Path(__file__).resolve().parent / "data/Ala10_helix.pdb"))
@@ -133,3 +148,7 @@ def load_tests(loader, tests, pattern):
         filtered_tests = [t for t in tests if not t.id().endswith(".test_session")]
         suite.addTests(filtered_tests)
     return suite
+
+
+if __name__ == "__main__":
+    unittest.main()

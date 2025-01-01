@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # encodermap/loss_functions/__init__.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -19,4 +19,6 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+"""EncoderMap's loss functions."""
+# Local Folder Imports
 from .loss_functions import *

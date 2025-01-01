@@ -1,0 +1,8 @@
+{
+    "path" : "../../../../tutorials/notebooks_customization/04_learning_rate_schedulers.ipynb",
+    "extra-media": [
+        "../../../../tutorials/notebooks_customization/lr_scheduler_1.png",
+        "../../../../tutorials/notebooks_customization/lr_scheduler_2.png",
+        "../../../../tutorials/notebooks_starter/asp7.csv"
+    ]
+}

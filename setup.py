@@ -1,16 +1,22 @@
+# Third Party Imports
+import versioneer
 from setuptools import setup
+
 
 with open("description.md", "r") as fh:
     long_description = fh.read()
 
 # read _version.py to have a single source file for version.
-exec(open("encodermap/_version.py").read())
+# deprecated on 2023-08-25 and replaced with versioneer
+# exec(open("encodermap/_version.py").read())
 
 # setup
 setup(
     name="encodermap",
-    version=__version__,
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
     python_requires=">=3.9",
+    include_package_data=True,
     description="python library for dimensionality reduction",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -31,16 +37,22 @@ setup(
         "encodermap.trajinfo",
     ],
     install_requires=[
+        "transformations",
+        "tomli",
+        "versioneer",
         "numpy",
         "matplotlib",
         "scipy",
         "MDAnalysis",
         "tqdm>=4.4.0",
-        "tensorflow",
+        "tensorflow>=2.15.0",
         "nglview>=3.0.1",
         "seaborn>=0.11.1",
-        "pillow==9.3.0",
-        "ipywidgets>=7.6.0,<8",
+        "pillow>=10.0.1",
+        "ipywidgets>=8.0",
+        "optional_imports>=1.0.4",
+        "tensorflow_probability",
+        "rich",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

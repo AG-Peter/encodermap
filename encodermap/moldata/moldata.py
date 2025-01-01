@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # encodermap/moldata/moldata.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -28,48 +28,52 @@ Allows creation of tfrecord files to pass large datasets to tensorflow that norm
 
 Is Backwards-compatible to the old MolData class.
 
-ToDo:
-    * Add tfrecord capabilities
 
 
 """
 
-##############################################################################
+################################################################################
 # Imports
-##############################################################################
+################################################################################
 
+# Third Party Imports
 import numpy as np
+from optional_imports import _optional_import
 
-from .._optional_imports import _optional_import
-from ..encodermap_tf1.moldata import MolData
-from ..loading import Featurizer
-from ..trajinfo.info_all import TrajEnsemble
-from ..trajinfo.info_single import SingleTraj
+# Encodermap imports
+from encodermap.encodermap_tf1.moldata import MolData as MolDatav1
+from encodermap.loading.featurizer import Featurizer
+from encodermap.trajinfo.info_all import TrajEnsemble
+from encodermap.trajinfo.info_single import SingleTraj
 
-##############################################################################
+
+################################################################################
 # Optional Imports
-##############################################################################
+################################################################################
 
 
 mda = _optional_import("MDAnalysis")
 md = _optional_import("mdtraj")
 
-##############################################################################
+
+################################################################################
 # Globals
-##############################################################################
+################################################################################
 
-__all__ = ["NewMolData"]
 
-##############################################################################
+__all__: list[str] = ["NewMolData"]
+
+
+################################################################################
 # Public Classes
-##############################################################################
+################################################################################
 
 
 class NewMolData:
     """MolData version 2. Extracts and holds conformational information of trajectories.
 
     In version 2. You can either use MDAnalysis or the out-of memory option using
-    encodermap's new TrajEnsemble and SingleTraj classes.
+    EncoderMap's new TrajEnsemble and SingleTraj classes.
 
     Collective Variables is a term used for data of some dimension matching the dimension of your trajectory.
         Collective variables of dimensionality 1 assign a single (float) value to every frame of a simulation or
@@ -135,10 +139,6 @@ class NewMolData:
                 feature is dropped in the newer TrajEnsemble pipeline.
             step (Union[int, None], optional): Step provided to old MolData class. Is there for backwards-compatibility.
                 This feature is dropped in the newer TrajEnsemble pipeline.
-
-        Examples:
-            >>> import encodermap as em
-            >>> traj =
 
         """
         if isinstance(trajs, mda.AtomGroup):

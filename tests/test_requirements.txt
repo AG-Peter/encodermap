@@ -8,3 +8,15 @@ tensor_annotations_tensorflow_stubs
 tensor_annotations
 data-science-types
 progress-reporter
+beartype
+pydoctest
+kaggle
+transformations
+docstring_parser
+pre-commit
+GitPython
+flake8
+pyproject-flake8
+nbconvert
+docker
+nbval

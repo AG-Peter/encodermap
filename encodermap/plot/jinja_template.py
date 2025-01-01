@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # encodermap/plot/jinja_template.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
-# Kevin Sawade, Tobias Lemke
+# Kevin Sawade
 #
 # Encodermap is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as
@@ -21,37 +21,7 @@
 ################################################################################
 """This is a template for a README.md generated when a user writes a cluster to disk."""
 
-template = """#  Cluster {{cluster_id}} generated at {{now}}
-
-## What just happened?
-
-You either selected a cluster with the `InteractivePlotting` class of `encodermap` our you called the `_unpack_cluster_info()` function from `encodermap.plot.utils`. Many files have been put into a directory at {{cluster_abspath}} which can be used to rebuild the cluster. The cluster you selected has been assigned the number {{cluster_id}}. If your cluster number is 0, your cluster is the first selected cluster of these MD trajectories (outliers are assigned -1). If your cluster has a number different than 0, you have selected another cluster and the cluster_membership is given by this unique identifier.
-
-Here is a general rundown of the files created:
-
-## {{parents_trajs}}
-
-This plain text document contains the absolute paths to all trajectory files, their corresponding topology files and their corresponding `common_str`, that were considered during the clustering. Some of the trajectory files here might not take part in the actual cluster, but they are here in this file nonetheless. You can reload the trajectories with the `from_textfile()` alternative constructor of the `TrajEnsemble` class.
-
-```python
-import encodermap as em
-trajs = em.TrajEnsemble.from_textfile('{{parents_trajs}}')
-```
-
-## {{pdb_name}}
-
-This file contains ca. 10 frames. These 10 frames were selected from the original {{cluster_n_points}} points inside the cluster. By evenly slicing it (That's why it is only roughly 10 structures. Sometimes its more). You can load this pdb whichever way you like and render a nice image of the cluster.
-
-## Other pdb and xtc files
-
-The other pdb and xtc files contain data to rebuild not only the ca. 10 frames from the pdb, but the whole cluster. They are enumerated the same way they are enumerated in {{parents_trajs}}. The fille `cluster_id_{{cluster_id}}_traj_0.xtc` corresponds to `cluster_id_{{cluster_id}}_start_traj_0_from_{{basename}}.pdb`, `cluster_id_{{cluster_id}}_traj_1.xtc` corresponds to `cluster_id_{{cluster_id}}_start_traj_1_from_{{basename}}.pdb` and so on.
-
-## {{lowd_npy_name}}
-
-A 2D numpy array with the same number of points, as there are frames in the `cluster_id_{{cluster_id}}_traj_X.xtc` files combined. This is the low-dimensional representation of this whole cluster.
-
-## {{indices_npy_name}}
-
+xtc_rebuild = """\
 This file can be used to rebuild the clustering of the trajectories like so:
 
 ```python
@@ -65,6 +35,71 @@ This file can be used to rebuild the clustering of the trajectories like so:
 >>> traj_indices = trajs.id[indices] 					   # more on this line in a separate section
 >>> cluster_trajs = trajs[traj_indices]
 ```
+"""
+
+h5_rebuild = """\
+This file can be used to rebuild the clustering of the trajectories like so:
+
+```python
+>>> import encodermap as em
+>>> import numpy as np
+>>> trajs = em.TrajEnsemble.from_dataset('{{h5_file}}')
+>>> cluster_membership = np.full(trajs.n_frames, -1) 		# fill array with -1, meaning outliers
+>>> indices = np.load('{{indices_npy_name}}')				    # load the indices
+>>> cluster_membership[indices] = {{cluster_id}}			# set the cluster number of the indices
+>>> trajs.load_CVs(cluster_membership, 'cluster_membership') # load the cluster membership as collectvie variables
+>>> traj_indices = trajs.id[indices] 					   # more on this line in a separate section
+>>> cluster_trajs = trajs[traj_indices]
+```
+"""
+
+xtc_parents = """\
+## {{parents_trajs}}
+
+This plain text document contains the absolute paths to all trajectory files, their corresponding topology files and their corresponding `common_str`, that were considered during the clustering. Some of the trajectory files here might not take part in the actual cluster, but they are here in this file nonetheless. You can reload the trajectories with the `from_textfile()` alternative constructor of the `TrajEnsemble` class.
+
+```python
+import encodermap as em
+trajs = em.TrajEnsemble.from_textfile('{{parents_trajs}}')
+```
+"""
+
+h5_parents = """\
+## Parents Trajs
+
+The parent trajectories are all saved in a single h5 file.
+
+```python
+import encodermap as em
+trajs = em.TrajEnsemble.from_dataset('{{h5_file}}')
+```
+"""
+
+template = """#  Cluster {{cluster_id}} generated at {{now}}
+
+## What just happened?
+
+You either selected a cluster with the `InteractivePlotting` class of `encodermap` our you called the `_unpack_cluster_info()` function from `encodermap.plot.utils`. Many files have been put into a directory at {{cluster_abspath}} which can be used to rebuild the cluster. The cluster you selected has been assigned the number {{cluster_id}}. If your cluster number is 0, your cluster is the first selected cluster of these MD trajectories (outliers are assigned -1). If your cluster has a number different than 0, you have selected another cluster and the cluster_membership is given by this unique identifier.
+
+Here is a general rundown of the files created:
+
+
+
+## {{h5_name}}
+
+This file contains 10 frames. These 10 frames were selected from the original {{cluster_n_points}} points inside the cluster. By evenly slicing it (That's why it is only roughly 10 structures. Sometimes its more). You can load this pdb whichever way you like and render a nice image of the cluster.
+
+## Other pdb and xtc files
+
+The other pdb and xtc files contain data to rebuild not only the ca. 10 frames from the pdb, but the whole cluster. They are enumerated the same way they are enumerated in {{parents_trajs}}. The fille `cluster_id_{{cluster_id}}_traj_0.xtc` corresponds to `cluster_id_{{cluster_id}}_start_traj_0_from_{{basename}}.pdb`, `cluster_id_{{cluster_id}}_traj_1.xtc` corresponds to `cluster_id_{{cluster_id}}_start_traj_1_from_{{basename}}.pdb` and so on.
+
+## {{lowd_npy_name}}
+
+A 2D numpy array with the same number of points, as there are frames in the `cluster_id_{{cluster_id}}_traj_X.xtc` files combined. This is the low-dimensional representation of this whole cluster.
+
+## {{indices_npy_name}}
+
+{{rebuild_clustering_info}}
 
 ## {{pdb_origin_names}}
 
@@ -81,7 +116,6 @@ This .csv table contains Info about every point inside the cluster. Its columns 
 | time                                  | The time of the frame. This can be used for time-based indexing of trajectories. `gmx trjconv -f $traj_file -s $top_file -dump $time` |
 | cluster id                            | The id of the cluster. This column is identical in the whole csv file but can be used to merge multiple csv files to analyye multiple clusters at once. |
 | trajectory number                     | The number of the trajectory in the full dataset. This corresponds to the line number in the file {{parents_trajs}}. If many trajectories have been loaded, the first trajectory is 0, and so on. If only one trajectory is loaded, its `trajectory number` might also be `None`. |
-| unique id in set of {{n_trajs}} trajs | This is an integer number with a unique identifier of every frame of every trajectory given in {{parents_trajs}}. The frames of trajectory number 0 are enumerated starting from 0, 1, ... n. The frames of the next trajectory (trajectory number 1) are enumerated n + 1, n + 2, ... n + m. The frames of traj 3 are enumerated as n + m + 1, n + m + 2, and so on. This way every frame gets a unique integer identifier. |
 
 ## {{selector_npy_name}}
 

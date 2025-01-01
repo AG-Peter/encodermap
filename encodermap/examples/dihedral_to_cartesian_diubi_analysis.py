@@ -1,10 +1,14 @@
+# Standard Library Imports
 import os
 
+# Third Party Imports
 import matplotlib.pyplot as plt
 import MDAnalysis as md
 import numpy as np
 
+# Encodermap imports
 import encodermap as em
+
 
 molname = "diubi"
 run_id = 3

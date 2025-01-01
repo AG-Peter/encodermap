@@ -1,0 +1,12 @@
+{
+    "path" : "../../../../tutorials/notebooks_starter/02_Advanced_Usage-Asp7_Example.ipynb",
+    "extra-media": [
+        "../../../../tutorials/notebooks_starter/asp7.csv",
+        "../../../../tutorials/notebooks_starter/asp7.pdb",
+        "../../../../tutorials/notebooks_starter/asp7.xtc",
+        "../../../../tutorials/notebooks_starter/Tensorboard_Cost.png",
+        "../../../../tutorials/notebooks_starter/Tensorboard_Histograms.png",
+        "../../../../tutorials/notebooks_starter/Tensorboard_Parameters.png",
+        "../../../../tutorials/notebooks_starter/Tensorboard_Images.png"
+    ]
+}

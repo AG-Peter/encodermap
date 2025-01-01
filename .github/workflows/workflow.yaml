@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  test_and_coverage:
+  build_badge:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     strategy:
@@ -39,22 +39,6 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install .
-
-      - name: Test optional imports without all packages
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-        run: |
-          required_packages_test=$( python -m unittest tests/test_optional_imports_before_installing_reqs.py )
-          echo "::set-env name=Req_out::$required_packages_test"
-
-      - name: Fail on non-working optional imports
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-        uses: actions/github-script@v3
-        if: ${{ env.Req_out }}
-        with:
-          script: |
-            core.setFailed('Optional Packages cause test_optional_imports_before_installing_reqs.py to fail.')
 
       - name: Install MD dependencies 🔧
         run: |

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # encodermap/misc/__init__.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -19,10 +19,12 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+# Encodermap imports
+import encodermap.misc.clustering
+
+# Local Folder Imports
 from .backmapping import *
-from .clustering import *
 from .distances import *
-from .errors import *
 from .misc import *
 from .summaries import *
 from .xarray import *

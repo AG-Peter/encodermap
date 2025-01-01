@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # encodermap/_typing.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -22,44 +22,53 @@
 """Typing for the encodermap package"""
 
 
+# Standard Library Imports
 import typing
-from typing import Union
+from collections.abc import Sequence
+from typing import Literal, Union
 
-if typing.TYPE_CHECKING:
-    from .parameters import ADCParameters, Parameters
+# Third Party Imports
+import numpy as np
 
-    AnyParameters = Union[Parameters, ADCParameters]
 
-    from .loading.features import (
-        AllBondDistances,
-        AllCartesians,
-        CentralAngles,
-        CentralBondDistances,
-        CentralCartesians,
-        CentralDihedrals,
-        SideChainAngles,
-        SideChainBondDistances,
-        SideChainCartesians,
-        SideChainDihedrals,
-    )
+################################################################################
+# Type Defs
+################################################################################
 
-    AnyFeature = Union[
-        AllCartesians,
-        AllBondDistances,
-        CentralCartesians,
-        CentralBondDistances,
-        CentralAngles,
-        CentralDihedrals,
-        SideChainCartesians,
-        SideChainBondDistances,
-        SideChainAngles,
-        SideChainDihedrals,
-    ]
 
-    from .autoencoder.autoencoder import (
-        AngleDihedralCartesianEncoderMap,
-        Autoencoder,
-        EncoderMap,
-    )
+CanBeIndex = Union[int, Sequence[int], Sequence[np.ndarray], slice]
 
-    AutoencoderClass = Union[Autoencoder, EnocderMap, AngleDihedralCartesianEncoderMap]
+
+DihedralOrBondDict = dict[
+    Literal[
+        "bonds",
+        "optional_bonds",
+        "delete_bonds",
+        "optional_delete_bonds",
+        "PHI",
+        "PSI",
+        "OMEGA",
+        "not_PHI",
+        "not_PSI",
+        "not_OMEGA",
+        "CHI1",
+        "CHI2",
+        "CHI3",
+        "CHI4",
+        "CHI5",
+    ],
+    Union[list[str], list[tuple[Union[str, int], Union[str, int]]]],
+]
+
+
+CustomAAsDict = dict[
+    Union[str, tuple[str, str]],
+    Union[
+        None,
+        tuple[str, None],
+        tuple[
+            str,
+            DihedralOrBondDict,
+        ],
+    ],
+]

@@ -10,7 +10,6 @@ __pycache__/
 .Python
 env/
 build/
-_static/
 develop-eggs/
 dist/
 downloads/
@@ -41,6 +40,7 @@ htmlcov/
 .tox/
 .coverage
 docs/build/html/coverage/
+docs/source/_static/*.html
 .coverage/
 .coverage.*
 .cache
@@ -63,15 +63,6 @@ instance/
 
 # Scrapy stuff:
 .scrapy
-
-# Sphinx documentation
-docs/_build/
-docs/build/
-./docs/source/user_guide_and_exmaples/asp7.pdb
-./docs/source/user_guide_and_exmaples/*.xtc
-./docs/source/user_guide_and_exmaples/*.csv
-./docs/source/user_guide_and_exmaples/*.png
-
 
 # PyBuilder
 target/
@@ -113,20 +104,123 @@ ENV/
 .idea/
 
 # project files
-data/
 runs/
-tests/data/*actual.png
 tb_callbacks/
 development/
 runs_named/
 tutorials/notebooks_MD/01_The_new_Info_classes.ipynb
 *.json
 *.yaml
+docs/source/notebooks/full_CV_dataset.nc
 !.pre-commit-config.yaml
 !.github/workflows/*.yaml
+!docker-compose.yaml
 *deprecated*
 model/
 test_only_losses
+
+# docker
+tutorials/docker/openldap_data
+tutorials/docker/work
+tutorials/docker/certs
+tutorials/docker/certs_backup
+tutorials/docker/munge/munge.key
+tutorials/docker/work/
+tutorials/docker/nfs_mount/
+
+
+# tests
+tests/data/*actual.png
+tests/data/runs
+tests/data/1am7
+tests/data/cube
+tests/data/FAT10
+tests/data/legacy
+tests/data/linear_dimers
+tests/data/messy_dataset_large_feature_space
+tests/data/OTU11
+tests/data/OTU11_preequilibrated
+tests/data/pASP_pGLU
+tests/data/sparse
+tests/data/topological_examples
+tests/data/two_state
+tests/data/Ub_dimers
+tests/data/Ub_K11_mutants
+tests/data/H1Ub
+tests/data/linear_dimers_with_FAT10
+tests/data/mono_Ub_Ac
+tests/data/*offsets*
+tests/data/*.json
+tests/data/*.model
+tests/.em_ci_cache
+!tests/data/1GHC.pdb
+!tests/data/1UBQ.pdb
+!tests/data/1YUF.pdb
+!tests/data/1YUF_numpy.npy
+!tests/data/1YUF_text.txt
+!tests/data/1YUG.pdb
+!tests/data/1YUG_and_1YUF_dataset.nc
+!tests/data/1YUG_numpy.npy
+!tests/data/1YUG_text.txt
+!tests/data/1am7_center_of_mass.npy
+!tests/data/1am7_center_of_mass.txt
+!tests/data/1am7_center_of_mass_x.nc
+!tests/data/1am7_center_of_mass_x.npy
+!tests/data/1am7_corrected.xtc
+!tests/data/1am7_corrected_part1.xtc
+!tests/data/1am7_corrected_part2.xtc
+!tests/data/1am7_corrected_with_CVs.h5
+!tests/data/1am7_first_frame_first_atom_xyz.npy
+!tests/data/1am7_protein.pdb
+!tests/data/1am7_uncorrected.xtc
+!tests/data/Ala10_helix.pdb
+!tests/data/Ala10_helix.xtc
+!tests/data/Ala10_straight.pdb
+!tests/data/K48_diUbi.gro
+!tests/data/K48_diUbi.xtc
+!tests/data/K63_diUbi.gro
+!tests/data/K63_diUbi.xtc
+!tests/data/M1_diUbi.gro
+!tests/data/M1_diUbi.xtc
+!tests/data/PFFP_MD_fin_protonly.gro
+!tests/data/PFFP_MD_fin_protonly.tpr
+!tests/data/PFFP_MD_fin_protonly_dt_100.xtc
+!tests/data/PFFP_MD_fin_protonly_dt_100_fixed_pbc.xtc
+!tests/data/PFFP_vac.top
+!tests/data/README.md
+!tests/data/alanine_dipeptide.pdb
+!tests/data/alanine_dipeptide.xtc
+!tests/data/unnatural_aminoacids.pdb
+!tests/data/asp7.h5
+!tests/data/asp7.pdb
+!tests/data/asp7.xtc
+!tests/data/glu7.pdb
+!tests/data/glu7.xtc
+!tests/data/known_angles.h5
+!tests/data/known_angles.pdb
+!tests/data/known_angles_1.h5
+!tests/data/known_angles_1.pdb
+!tests/data/known_angles_2.h5
+!tests/data/known_angles_2.pdb
+!tests/data/known_angles_angles.npy
+!tests/data/known_angles_dihedrals.npy
+!tests/data/known_angles_dists.npy
+!tests/data/known_distances.pdb
+!tests/data/larger_dataset.nc
+!tests/data/out.pdb
+!tests/data/straightened.pdb
+!tests/data/test_chain_in_plane_actual-failed-diff.png
+!tests/data/test_chain_in_plane_expected.png
+!tests/data/test_guess_amide_H_expected.png
+!tests/data/test_guess_amide_O_expected.png
+!tests/data/test_straight_to_helix_array_expected.png
+!tests/data/test_straight_to_helix_v2_expected.png
+!tests/data/trace_image_expected.png
+!tests/data/tip3p_300K_1ATM.pdb
+!tests/data/tip3p_300K_1ATM.xtc
+!tests/data/traj.h5
+!tests/data/messy_dataset.nc
+!tests/data/weights_and_biases_m1_diUbq.npz
 
 # MDAnalysis cache
 *.lock
@@ -137,20 +231,66 @@ System\ Volume\ Information
 
 # Encodermap stuff
 encodermap_runs/
+model_summary.txt
+network.png
+parameters.json
 
 # pytest
 .pytest_cache/
 
-
 # act.vault for secret env variabls
 /act.vault
-
-# docker compose
-/docker-compose.yaml
+/github.vault
 
 # dask stuff
 *dask-worker-space*
 
+# tensorflow stuff
+*fingerprint.pb*
+*keras_metadata.pb*
+*saved_model.pb*
+*.keras
+*tfevents*
+variables.index
+variables.data*
+
 # vmd scripts
 *vmd_script.tcl*
 *vmdscene.dat*
+
+# docs
+docs/_build/
+docs/build/
+docs/**/*.ipynb
+*.html
+docs/source/_static/test_badge.json
+docs/source/_static/docbuild_badge.json
+docs/source/notebooks/*/*.png
+docs/source/notebooks/*/*.txt
+docs/source/notebooks/*/*.csv
+docs/source/notebooks/*/*.pdb
+docs/source/notebooks/*/*.xtc
+docs/source/notebooks/*/*.rst
+docs/source/notebooks/*/*.ipynb
+docs/source/notebooks/*/*.h5
+docs/source/notebooks/*/*.npy
+docs/source/notebooks/*/*.npz
+docs/source/notebooks/*/*.nc
+docs/source/_static/coverage
+!docs/source/notebooks/index.rst
+!docs/source/notebooks/static_code.rst
+!docs/source/notebooks/*/*.nblink
+
+# stuff in tutorials
+/tutorials/notebooks_MD/1am7_corrected.h5
+/tutorials/notebooks_MD/1am7_corrected.xtc
+/tutorials/notebooks_MD/1am7_protein.pdb
+/tutorials/docker/*requirements*
+/tutorials/docker/encodermap_dist
+!/tutorials/docker/slurm_node_w_prometheus/running.json
+!/tutorials/docker/slurm_node_w_prometheus/queued.json
+!/tutorials/docker/slurm_node_w_prometheus/nodes.json
+/tests/data/test.h5
+/Test Results - ALL_TESTS.xml
+/tutorials/docker/slurm-old/docker-compose.yaml
+/tests/debug_tests/

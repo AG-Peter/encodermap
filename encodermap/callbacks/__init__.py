@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # encodermap/callbacks/__init__.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -19,8 +19,17 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+# Future Imports at the top
 from __future__ import annotations
 
+# Standard Library Imports
 from typing import TYPE_CHECKING
 
+# Local Folder Imports
 from .callbacks import *
+from .metrics import (
+    ADCClashMetric,
+    ADCRMSDMetric,
+    AngleDihedralCartesianEncoderMapBaseMetric,
+    EncoderMapBaseMetric,
+)

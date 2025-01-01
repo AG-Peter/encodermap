@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # tests/test_moldata.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
-# Copyright 2019-2022 University of Konstanz and the Authors
+# Copyright 2019-2024 University of Konstanz and the Authors
 #
 # Authors:
 # Kevin Sawade, Tobias Lemke
@@ -19,17 +19,29 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+
+# Future Imports at the top
+from __future__ import annotations
+
+# Standard Library Imports
 import unittest
 from pathlib import Path
 
+# Third Party Imports
 import MDAnalysis as mda
 import mdtraj as md
 import numpy as np
 from mdtraj.geometry import dihedral as md_dihedral
 
+# Encodermap imports
 import encodermap.encodermap_tf1 as em_tf1
+from conftest import skip_all_tests_except_env_var_specified
 
 
+import encodermap as em  # isort: skip
+
+
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestTrajinfo(unittest.TestCase):
     def test_moldata_tf1(self):
         u = mda.Universe(
@@ -82,3 +94,7 @@ def load_tests(loader, tests, pattern):
         filtered_tests = [t for t in tests if not t.id().endswith(".test_session")]
         suite.addTests(filtered_tests)
     return suite
+
+
+if __name__ == "__main__":
+    unittest.main()
