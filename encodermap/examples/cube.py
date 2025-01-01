@@ -23,6 +23,7 @@ generated = e_map.generate(low_d_projection)
 
 #########################################################################
 # Plotting:
+#########################################################################
 
 # Third Party Imports
 import matplotlib.pyplot as plt

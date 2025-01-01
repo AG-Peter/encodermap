@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # tests/test_moldata.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -35,11 +35,13 @@ from mdtraj.geometry import dihedral as md_dihedral
 
 # Encodermap imports
 import encodermap.encodermap_tf1 as em_tf1
+from conftest import skip_all_tests_except_env_var_specified
 
 
 import encodermap as em  # isort: skip
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestTrajinfo(unittest.TestCase):
     def test_moldata_tf1(self):
         u = mda.Universe(

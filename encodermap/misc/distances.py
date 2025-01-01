@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/misc/distances.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -19,6 +19,13 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+"""EncoderMap's implements different distance computations.
+
+* Normal: Euclidean distance between two points.
+* Periodic: Euclidean distance between two points lying in a periodic space.
+* Pairwise: Euclidean distance between sets of points. Either with or without periodicity.
+
+"""
 ################################################################################
 # Imports
 ################################################################################
@@ -43,7 +50,7 @@ import tensorflow as tf
 # Globals
 ################################################################################
 
-__all__ = [
+__all__: list[str] = [
     "sigmoid",
     "periodic_distance",
     "periodic_distance_np",
@@ -70,12 +77,10 @@ def sigmoid(sig: float, a: float, b: float) -> Callable:
     """
 
     @overload
-    def func(r: Number) -> Number:
-        ...
+    def func(r: Number) -> Number: ...
 
     @overload
-    def func(r: np.ndarray) -> np.ndarray:
-        ...
+    def func(r: np.ndarray) -> np.ndarray: ...
 
     def func(r: Union[Number, np.ndarray]) -> Union[Number, np.ndarray]:
         return 1 - (1 + (2 ** (a / b) - 1) * (r / sig) ** a) ** (-b / a)
@@ -162,8 +167,12 @@ def pairwise_dist_periodic(
         periodicity,
     )
     mask = tf.cast(tf.equal(vecs, 0.0), "float32")
-    vecs = vecs + mask * 1e-16  # gradient infinite for 0
-    dists = tf.norm(vecs, axis=2)
+    vecs = vecs + mask * 1e-12  # gradient infinite for 0
+    # dists = tf.norm(vecs, axis=2)  # gradient still becomes infinite
+    # might be a problem with tf.norm()
+    # see here:
+    # https://datascience.stackexchange.com/q/80898
+    dists = tf.sqrt(tf.reduce_sum(tf.square(vecs), axis=2)) + 1.0e-12
     return dists
 
 
@@ -178,10 +187,14 @@ def pairwise_dist(
     This tensor is the distance matrix of the provided positions. The
     matrix is hollow, i.e., the diagonal elements are zero.
 
+    Thanks to https://omoindrot.github.io/triplet-loss
+    for this implementation. Find an archived link here:
+    https://archive.is/lNT2L
+
     Args:
         positions (Union[np.ndarray, tf.Tensor]): Collection of
-            n-dimensional points. positions.shape[0] are points.
-            positions.shape[1] are dimensions.
+            n-dimensional points. `positions[0]` are points.
+            `positions[1]` are dimensions.
         squared (bool): Whether to return the pairwise squared
             Euclidean distance matrix or normal Euclidean distance matrix.
             Defaults to False.
@@ -193,8 +206,6 @@ def pairwise_dist(
         tf.Tensor: The distances.
 
     """
-    # thanks to https://omoindrot.github.io/triplet-loss
-
     if not tf.debugging.is_numeric_tensor(positions):
         positions = tf.convert_to_tensor(positions)
     if len(positions.get_shape()) == 2:
@@ -222,7 +233,10 @@ def pairwise_dist(
     distances = tf.maximum(distances, 0.0)
 
     if flat:
-        n = int(positions.shape[1])
+        try:
+            n = int(positions.shape[1])
+        except TypeError as e:
+            n = 3
         mask = np.ones((n, n), dtype=bool)
         mask[np.tril_indices(n)] = False
         distances = tf.boolean_mask(distances, mask, axis=1)

@@ -6,6 +6,14 @@ matplotlib
 tensorflow
 tables
 MDAnalysis
-optional-imports >= 1.0.3
+optional-imports >= 1.0.4
 tensorflow_probability
 tensorflow_graphics
+rich
+versioneer
+requests
+packaging
+pillow
+transformations
+scipy
+ipywidgets

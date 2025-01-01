@@ -5,6 +5,9 @@
 ### Additions
 
 - More Tests.
+  - A lot more tests have been implemented. The software is pretty stable for general use.
+- Reference training.
+  - The `AngleDihedralCartesianEncoderMap` class now runs a short reference training before the actual neural network training. The idea behind this training is to get typical values for the cartesian cost contributions (dihedral_cost, angle_cost, cartesian_cost). And adjust them to roughly the same values.
 - Plotting:
   - Added plotly interactive distance histogram, in which the sigmoid parameters can be adjusted interactively. This function is accessible as the `distance_histogram_interactive` function in `encodermap.plot`:
 
@@ -31,7 +34,7 @@ distance_histogram_interactive(
   - "VarianceScaling": For the normal variance scaling initializer. This is the default.
   - "deterministic": This will use the old `tf.compat.v1.variance_scaling_initizlier` wiht a seed, so that the starting weights are deterministic.
   - "ones": For a weight matrix full of ones.
-  - You can also provide a dict following tensorflow's naming convention for unnamed dense layers: ["dense/kernel", "dense_1/kernel", "dense_2/kerne", etc.] as the keys and np.ndarrays as the values and these arrays will be used. This can also be used to rebuilt a model from bare numpy weight arrays.
+  - You can also provide a dict following TensorFlow's naming convention for unnamed dense layers: ["dense/kernel", "dense_1/kernel", "dense_2/kerne", etc.] as the keys and np.ndarrays as the values and these arrays will be used. This can also be used to rebuilt a model from bare numpy weight arrays.
 - The BiasInitializer doesn't recognize the standard "VarianceScaling" keyword, but uses the "RandomNormal" keyword as a default. It also recognizes "deterministic", "ones" and can use a dict with these keys: ["dense/bias", "dense_1/bias", "dense_2/bias", etc.]
 
 ### Fixes
@@ -78,10 +81,10 @@ correctly indexed. Now using MDTraj's chi1, ch2, ... indexers (#25)
 
 ## Version 3.0.0 (2021-01-25)
 
-- Updated tests to tensorflow2
+- Updated tests to TensorFlow2
 - Added trajinfo classes.
 - Autoencoder model and high-level training available.
 
 - Started tracking changes via this changelog.
 - Started semantic versioning.
-- Features from tensorflow 1 version are all ported to tf2.
+- Features from Tensorflow 1 version are all ported to tf2.

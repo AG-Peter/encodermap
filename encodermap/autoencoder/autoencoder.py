@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/autoencoder/autoencoder.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -40,28 +40,31 @@ from __future__ import annotations
 
 # Standard Library Imports
 import copy
+import os
 import warnings
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 
 # Third Party Imports
-import matplotlib
 import numpy as np
 import tensorflow as tf
 from optional_imports import _optional_import
 from tqdm import tqdm
 
-# Local Folder Imports
-from ..callbacks import ADCClashMetric, ADCRMSDMetric
-from ..callbacks.callbacks import (
+# Encodermap imports
+from encodermap.callbacks.callbacks import (
     CheckpointSaver,
     ImageCallback,
     IncreaseCartesianCost,
     ProgressBar,
     TensorboardWriteBool,
 )
-from ..encodermap_tf1.backmapping import chain_in_plane, dihedrals_to_cartesian_tf
-from ..loss_functions.loss_functions import (
+from encodermap.callbacks.metrics import ADCClashMetric, ADCRMSDMetric
+from encodermap.encodermap_tf1.backmapping import (
+    chain_in_plane,
+    dihedrals_to_cartesian_tf,
+)
+from encodermap.loss_functions.loss_functions import (
     angle_loss,
     auto_loss,
     cartesian_distance_loss,
@@ -73,13 +76,14 @@ from ..loss_functions.loss_functions import (
     regularization_loss,
     side_dihedral_loss,
 )
-from ..misc.backmapping import dihedral_backmapping, mdtraj_backmapping
-from ..misc.distances import pairwise_dist
-from ..misc.misc import create_n_cube, plot_model
-from ..misc.saving_loading_models import load_model, save_model
-from ..models.models import gen_functional_model, gen_sequential_model
-from ..parameters.parameters import ADCParameters, Parameters
-from ..trajinfo.info_single import Capturing, TrajEnsemble
+from encodermap.misc.backmapping import dihedral_backmapping, mdtraj_backmapping
+from encodermap.misc.distances import pairwise_dist
+from encodermap.misc.misc import create_n_cube, plot_model
+from encodermap.misc.saving_loading_models import load_model, save_model
+from encodermap.models.models import gen_functional_model, gen_sequential_model
+from encodermap.parameters.parameters import ADCParameters, Parameters
+from encodermap.trajinfo.info_all import TrajEnsemble
+from encodermap.trajinfo.info_single import Capturing, SingleTraj
 
 
 ################################################################################
@@ -100,6 +104,7 @@ mda = _optional_import("MDAnalysis")
 from collections.abc import Callable
 from typing import (
     TYPE_CHECKING,
+    Any,
     Literal,
     Optional,
     Sequence,
@@ -116,12 +121,18 @@ DihedralEncoderMapType = TypeVar("DihedralEncoderMapType", bound="Parent")
 AngleDihedralCartesianEncoderMapType = TypeVar(
     "AngleDihedralCartesianEncoderMapType", bound="Parent"
 )
+AutoencoderClass = Union[
+    AutoencoderType,
+    EncoderMapType,
+    DihedralEncoderMapType,
+    AngleDihedralCartesianEncoderMapType,
+]
 
 
 if TYPE_CHECKING:
     # Third Party Imports
-    import MDAnalysis as mda
-    import mdtraj as md
+    from MDAnalysis import Universe
+    from mdtraj import Topology, Trajectory
 
 
 ################################################################################
@@ -129,7 +140,7 @@ if TYPE_CHECKING:
 ################################################################################
 
 
-__all__ = [
+__all__: list[str] = [
     "Autoencoder",
     "EncoderMap",
     "AngleDihedralCartesianEncoderMap",
@@ -137,11 +148,365 @@ __all__ = [
 ]
 
 
+################################################################################
+# Utils
+################################################################################
+
+
+def np_to_sparse_tensor(a: np.ndarray) -> tf.sparse.SparseTensor:
+    """Converts a numpy array with nans to a SparseTensor.
+
+    Args:
+        a (np.ndarray): The input array.
+
+    Returns:
+        tf.sparse.SparseTensor: The corresponding SparseTensor.
+
+    """
+    orig_shape = a.shape
+    indices = np.stack(np.where(~np.isnan(a))).T.astype("int64")
+    dense_shape = a.shape
+    a = a[~np.isnan(a)].flatten()
+    if np.any(np.isnan(a)):
+        raise Exception(
+            f"NaN values in array with shape {orig_shape} could not be removed "
+            f"by indexing with {indices=}. This will result in the SparseTensor "
+            f"containing NaN values."
+        )
+    return tf.sparse.SparseTensor(indices, a, dense_shape)
+
+
+def _add_images_to_tensorboard(
+    autoencoder: AutoencoderClass,
+    data: Optional[Union[np.ndarray, Sequence[np.ndarray]]] = None,
+    backend: Literal["matplotlib", "plotly"] = "matplotlib",
+    image_step: Optional[int] = None,
+    max_size: int = 10_000,
+    mpl_scatter_kws: Optional[dict] = None,
+    mpl_hist_kws: Optional[dict] = None,
+    plotly_scatter_kws: Optional[dict] = None,
+    plotly_hist_kws: Optional[dict] = None,
+    additional_fns: Optional[Sequence[Callable]] = None,
+    when: Literal["epoch", "batch"] = "epoch",
+    save_to_disk: bool = False,
+) -> None:
+    """Adds images to Tensorboard using the data in data and the ids in ids.
+
+    Args:
+        data (Optional[Union[np.ndarray, Sequence[np.ndarray]]): The input-data will
+            be passed through the encoder part of the autoencoder. If None
+            is provided, a set of 10_000 points from `self.train_data` will
+            be taken. A list[np.ndarray] is needed for the functional API of the
+            `AngleDihedralCartesianEncoderMap`, that takes a list of
+            [angles, dihedrals, side_dihedrals]. Defaults to None.
+        backend (Literal["matplotlib", "plotly"]: Which backend to use for
+            plotting. Defaults to 'matplotlib'.
+        mpl_scatter_kws (Optional[dict]): A dictionary, that `matplotlib.pyplot.scatter`
+            takes as keyword args. If None is provided, the default dict
+            is {"s": 20}. Defaults to None.
+        mpl_hist_kws (Optional[dict]): A dictionary, that `matplotlib.pyplot.histogram`
+            takes as keyword args. If None is provided, the default dict
+            is {"bins": 50}. Defaults to None.
+        plotly_scatter_kws (Optional[dict[str, Any]]): A dict with items that
+            `plotly.express.scatter()` will accept. If None is provided,
+            a dict with size 20 will be passed to
+            `px.scatter(**{'size_max': 10, 'opacity': 0.2})`,
+            which sets an appropriate size of scatter points for the size of
+            datasets encodermap is usually used for.
+        plotly_hist_kws (Optional[dict[str, Any]]): A dict with items that
+            `encodermap.plot.plotting._plot_free_energy()` will accept. If None is provided a
+            dict with bins 50 will be passed to
+            `encodermap.plot.plotting._plot_free_energy(**{'bins': 50})`.
+            You can choose a colormap here by providing `{'bins': 50, 'cmap':
+            'plasma'}` for this argument.
+        image_step (Optional[int]): The interval in which to plot
+            images to tensorboard. If None is provided, the `image_step`
+            will be the same as `Parameters.summary_step`. Defaults to None.
+        max_size (int): The maximum size of the high-dimensional data, that is
+            projected. Prevents excessively large-datasets from being projected
+            at every `image_step`. Defaults to 10_000.
+        additional_fns (Optional[Sequence[Callable]]): A list of functions
+            that will accept the low-dimensional output of the `Autoencoder`
+            latent/bottleneck layer and return a tf.Tensor that can be logged
+            by `tf.summary.image()`. See the notebook
+            'writing_custom_images_to_tensorboard.ipynb' in
+            tutorials/notebooks_customization for more info. If None is
+            provided, no additional functions will be used to plot to
+            tensorboard. Defaults to None.
+        when (Literal["epoch", "batch"]): When to log the images can be
+            either 'batch', then the images will be logged after every step
+            during training, or 'epoch', then only after every image_step
+            epoch the images will be written. Defaults to 'epoch'.
+        save_to_disk (bool): Whether to also write the images to disk.
+
+    """
+    if not autoencoder.p.tensorboard:
+        warnings.warn(
+            "Nothing is written to Tensorboard for this model. "
+            "Please change parameters.tensorboard to True."
+        )
+        return
+    if any([isinstance(i, ImageCallback) for i in autoencoder.callbacks]):
+        warnings.warn(
+            f"This instance of {autoencoder.__class__.__name__} already has an "
+            f"`ImageCallback`. While it's allowed to have multiple ImageCallbacks, "
+            f"training performance suffers by adding more."
+        )
+    if image_step is None:
+        image_step = autoencoder.p.summary_step
+
+    if mpl_scatter_kws is None:
+        mpl_scatter_kws = {"s": 20}
+    if mpl_hist_kws is None:
+        mpl_hist_kws = {"bins": 50}
+    if plotly_scatter_kws is None:
+        plotly_scatter_kws = {"size_max": 1, "opacity": 0.2}
+    if plotly_hist_kws is None:
+        plotly_hist_kws = {"bins": 50}
+    if backend not in ["matplotlib", "plotly"]:
+        raise Exception(f"Argument `backend` must be either 'plotly' or 'matplotlib'.")
+
+    autoencoder._log_images = True
+    if data is None:
+        if hasattr(autoencoder, "train_data"):
+            data = autoencoder.train_data
+        else:
+            if hasattr(autoencoder, "trajs"):
+                data = autoencoder.get_train_data_from_trajs(
+                    autoencoder.trajs, autoencoder.p, max_size=max_size
+                )[1]
+            else:
+                if (
+                    not autoencoder.p.use_backbone_angles
+                    and not autoencoder.p.use_sidechains
+                ):
+                    data = [[]]
+                elif (
+                    autoencoder.p.use_backbone_angles
+                    and not autoencoder.p.use_sidechains
+                ):
+                    data = [[], []]
+                elif autoencoder.p.use_sidechains and autoencoder.p.use_backbone_angles:
+                    data = [[], [], []]
+                else:
+                    raise Exception(
+                        "Only allowed combinations are:\n"
+                        "   * No sidechains, no backbone angles\n"
+                        "   * No sidechains, yes backbone angles\n"
+                        "   * Yes Sidechains, yes backbone angles\n"
+                        f"Your parameters are: {autoencoder.p.use_sidechains=}. {autoencoder.p.use_backbone_angles=}"
+                    )
+                length = 0
+                for d in autoencoder.dataset:
+                    if len(data) == 1:
+                        data[0].append(d[1])
+                    elif len(data) == 2:
+                        data[0].append(d[0])
+                        data[1].append(d[1])
+                    elif len(data) == 3:
+                        data[0].append(d[0])
+                        data[1].append(d[1])
+                        data[2].append(d[-1])
+                    length += autoencoder.p.batch_size
+                    if length > max_size:
+                        break
+                for i, o in enumerate(data):
+                    if any([isinstance(d, tf.sparse.SparseTensor) for d in o]):
+                        o = [
+                            tf.sparse.to_dense(_, default_value=np.nan).numpy()
+                            for _ in o
+                        ]
+                        o = np.concatenate(o)
+                        data[i] = np_to_sparse_tensor(o)
+                    else:
+                        data[i] = np.concatenate(o)
+    else:
+        max_size = -1
+
+    if isinstance(data, (np.ndarray, tf.sparse.SparseTensor)):
+        if hasattr(autoencoder, "_tensorboard_data_req_shape"):
+            assert np.array_equal(
+                tf.shape(data).numpy()[1:], autoencoder._tensorboard_data_req_shape[1:]
+            ), (
+                f"The provided `data` has the wrong shape. The provided data has "
+                f"shape {tf.shape(data).numpy()}, whereas {autoencoder._tensorboard_data_req_shape} "
+                f"was expected."
+            )
+        else:
+            for d in autoencoder.dataset:
+                break
+            if isinstance(data, (tuple, list)):
+                assert data[0].shape[1:] == d[1].shape[1:], (
+                    f"The provided `data` has the wrong shape. The provided data has "
+                    f"shape {data[0].shape[1:]}, whereas {d[1].shape[1:]} "
+                    f"was expected."
+                )
+            else:
+                assert data.shape[1:] == d[1].shape[1:], (
+                    f"The provided `data` has the wrong shape. The provided data has "
+                    f"shape {data[0].shape[1:]}, whereas {d[1].shape[1:]} "
+                    f"was expected."
+                )
+        if data.shape[0] > max_size and max_size >= 0:
+            idx = np.unique(
+                np.round(np.linspace(0, data.shape[0] - 1, max_size)).astype(int)
+            )
+            if isinstance(data, tf.sparse.SparseTensor):
+                data = tf.sparse.to_dense(data, default_value=np.nan).numpy()[idx]
+                data = np_to_sparse_tensor(data)
+            else:
+                data = data[idx]
+        if isinstance(data, np.ndarray):
+            if np.any(np.isnan(data)):
+                data = np_to_sparse_tensor(data)
+    elif isinstance(data, (tuple, list)):
+        for d in autoencoder.dataset:
+            break
+        if len(data) == 1:
+            assert data[0].shape[1:] == d[1].shape[1:], (
+                f"The provided `data` has the wrong shape. The provided data has "
+                f"shape {data[0].shape[1:]}, whereas {d[1].shape[1:]} "
+                f"was expected."
+            )
+            data = data[0]
+        elif len(data) == 2:
+            assert (
+                data[0].shape[1:] == d[0].shape[1:]
+                and data[1].shape[1:] == d[1].shape[1:]
+            ), (
+                f"The provided `data` has the wrong shape. The provided data has "
+                f"shape {[_.shape[1:] for _ in data]}, whereas {[d[0].shape[1:], d[1].shape[1:]]} "
+                f"was expected."
+            )
+        elif len(data) == 3:
+            assert (
+                data[0].shape[1:] == d[0].shape[1:]
+                and data[1].shape[1:] == d[1].shape[1:]
+                and data[2].shape[1:] == d[-1].shape[1:]
+            ), (
+                f"The provided `data` has the wrong shape. The provided data has "
+                f"shape {[_.shape[1:] for _ in data]}, whereas {[d[0].shape[1:], d[1].shape[1:], d[-1].shape[1:]]} "
+                f"was expected."
+            )
+    else:
+        raise TypeError(
+            f"Argument `data` should be of type None, np.ndarray, tuple, or "
+            f"list, you provided {type(data)}."
+        )
+
+    # add the callback
+    if save_to_disk:
+        save_dir = Path(autoencoder.p.main_path) / "train_images"
+        save_dir.mkdir(exist_ok=True)
+    else:
+        save_dir = None
+
+    autoencoder.callbacks.append(
+        ImageCallback(
+            parameters=autoencoder.p,
+            highd_data=data,
+            image_step=image_step,
+            backend=backend,
+            mpl_scatter_kws=mpl_scatter_kws,
+            mpl_hist_kws=mpl_hist_kws,
+            plotly_scatter_kws=plotly_scatter_kws,
+            plotly_hist_kws=plotly_hist_kws,
+            additional_fns=additional_fns,
+            when=when,
+            save_dir=save_dir,
+        )
+    )
+    autoencoder.callbacks[-1].model = autoencoder.model
+    if isinstance(data, (np.ndarray, tf.sparse.SparseTensor)):
+        print(
+            f"Logging images with {data.shape}-shaped data every "
+            f"{image_step} epochs to Tensorboard at {autoencoder.p.main_path}"
+        )
+    else:
+        print(
+            f"Logging images with {[i.shape for i in data]}-shaped data "
+            f"every {image_step} epochs to Tensorboard at {autoencoder.p.main_path}"
+        )
+
+
+def _print_save_message(autoencoder: AutoencoderClass) -> None:
+    if autoencoder.p.main_path == Path(os.getcwd()):
+        print(
+            f"Output files are saved to {autoencoder.p.main_path}, which is the "
+            f"current working trajectory."
+        )
+    else:
+        print(
+            f"Output files are saved to {autoencoder.p.main_path} as defined "
+            f"in 'main_path' in the parameters.",
+        )
+
+
+def _get_model(autoencoder: AutoencoderClass) -> tf.keras.Model:
+    """sets self.model according to `model_api` argument in self.parameters."""
+    model = autoencoder.p.model_api
+    if model == "functional":
+        assert isinstance(autoencoder, AngleDihedralCartesianEncoderMap)
+        d = autoencoder.dataset.take(1)
+        if any(isinstance(_, tf.SparseTensorSpec) for _ in d.element_spec):
+            autoencoder.sparse = True
+        if hasattr(autoencoder.p, "reconstruct_sidechains"):
+            if autoencoder.p.reconstruct_sidechains:
+                assert len(d.element_spec) == 7
+        model = gen_functional_model(
+            autoencoder.dataset,
+            autoencoder.p,
+            sparse=autoencoder.sparse,
+        )
+    elif model == "sequential":
+        assert (
+            isinstance(autoencoder, (Autoencoder, EncoderMap, DihedralEncoderMap))
+            or autoencoder.__class__.__name__ == "EncoderMap"
+        )
+        if isinstance(autoencoder.train_data, tf.sparse.SparseTensor):
+            autoencoder.sparse = True
+        try:
+            model = gen_sequential_model(
+                autoencoder.train_data.shape[1],
+                autoencoder.p,
+                sparse=autoencoder.sparse,
+            )
+        except AttributeError:
+            if autoencoder.p.training == "custom":
+                for d in autoencoder.train_data:
+                    break
+                model = gen_sequential_model(
+                    d[0].get_shape().as_list()[1],
+                    autoencoder.p,
+                    sparse=autoencoder.sparse,
+                )
+            elif autoencoder.p.training == "auto":
+                for d, _ in autoencoder.train_data:
+                    break
+                model = gen_sequential_model(
+                    d.get_shape().as_list()[1],
+                    autoencoder.p,
+                    sparse=autoencoder.sparse,
+                )
+            else:
+                raise Exception(
+                    f"Parameter `training` has to be one of 'custom', 'auto'. "
+                    f"You supplied '{autoencoder.p.training}'."
+                )
+
+    elif model == "custom":
+        raise NotImplementedError("No custom API currently supported")
+    else:
+        raise ValueError(
+            f"API argument needs to be one of `functional`, `sequential`, "
+            f"`custom`. You provided '{model}'."
+        )
+    assert not isinstance(model, str)
+    return model
+
+
 ##############################################################################
 # Function definition which allows self.p.tensorboard to be passed
-# @function(self.p.tensorboard)
-# def train(self):
-#     # some training
 ##############################################################################
 
 
@@ -150,9 +515,9 @@ def function(f, tensorboard=False):
     parameter.
 
 
-    To understand the necessity of this function, we need to have a look how
+    To understand the necessity of this function, we need to have a look at how
     tensorflow executes computations. There are two modes of execution:
-    * eager mode: In eager mode, the computations are handles by python.
+    * eager mode: In eager mode, the computations are handled by python.
         The input types are python objects, and the output is a python object.
         This eager execution allows you to directly execute a calculation of
         two tensors (e.g. multiplication).
@@ -243,8 +608,16 @@ class Autoencoder:
                     `read_only` is False and `parameters.tensorboard` is True.
             You can append your own callbacks to this list before executing
             `self.train()`.
-        encoder (tf.keras.Model): The encoder (sub)model of `self.model`.
-        decoder (tf.keras.Model): The decoder (sub)model of `self.model`.
+        encoder (tf.keras.Model): The encoder submodel of `self.model`.
+        decoder (tf.keras.Model): The decoder submodel of `self.model`.
+        loss (Sequence[Callable]): A list of loss functions passed to the model
+            when it is compiled. When the main `Autoencoder` class is used and
+            `parameters.loss` is 'emap_cost', this list comprises center_cost,
+            regularization_cost, auto_cost. When the `EncoderMap` sub-class is
+            used and `parameters.loss` is 'emap_cost', distance_cost is added to
+            the list. When `parameters.loss` is not 'emap_cost', the loss can either
+            be a string ('mse'), or a function, that both are acceptable
+            arguments for loss, when a keras model is compiled.
 
     Methods:
         from_checkpoint: Rebuild the model from a checkpoint.
@@ -298,27 +671,32 @@ class Autoencoder:
         """Instantiate the Autoencoder class.
 
         Args:
-            parameters (Union[encodermap.Parameters, None], optional): The parameters to be used. If None is
-                provided default values (check them with print(em.Parameters.defaults_description()))
+            parameters (Union[encodermap.Parameters, None], optional): The
+                parameters to be used. If None is provided default values
+                (check them with `print(em.Parameters.defaults_description()`))
                 are used. Defaults to None.
-            train_data (Union[np.ndarray, tf.data.Dataset, None], optional): The train data. Can be one of the following:
-                * None: If None is provided points on the edges of a 4-dimensional hypercube will be used as train data.
-                * np.ndarray: If a numpy array is provided, it will be transformed into a batched tf.data.Dataset by
-                    first making it an infinitely repeating dataset, shuffling it and the batching it with a batch
-                    size specified by parameters.batch_size.
-                * tf.data.Dataset: If a dataset is provided it will be used without making any adjustments. Make
-                    sure, that the dataset uses `float32` as its type.
+            train_data (Union[np.ndarray, tf.data.Dataset, None], optional):
+                The train data. Can be one of the following:
+                    * None: If None is provided points on the edges of a
+                        4-dimensional hypercube will be used as train data.
+                    * np.ndarray: If a numpy array is provided, it will be
+                        transformed into a batched tf.data.Dataset by first
+                        making it an infinitely repeating dataset, shuffling
+                        it and the batching it with a batch size specified
+                        by parameters.batch_size.
+                    * tf.data.Dataset: If a dataset is provided it will be
+                        used without making any adjustments. Make sure, that the
+                        dataset uses `float32` as its type.
                 Defaults to None.
-            model (Union[tf.keras.models.Model, None], optional): Providing a keras model to this argument will make
-                the Autoencoder/EncoderMap class use this model instead of the predefined ones. Make sure the model
-                can accept EncoderMap's loss functions. If None is provided the model will be built using
-                the specifications in parameters. Defaults to None.
-            read_only (bool, optional): Whether the class is allowed to write to disk (False) or not (True). Defaults
-                to False and will allow the class to write to disk.
-
-        Raises:
-            BadError: When read_only is `True` and `parameters.tensorboard` is `True`, this Exception will be raised,
-                because they are mutually exclusive.
+            model (Union[tf.keras.models.Model, None], optional): Providing
+                a keras model to this argument will make the Autoencoder/EncoderMap
+                class use this model instead of the predefined ones. Make sure
+                the model can accept EncoderMap's loss functions. If None is
+                provided the model will be built using the specifications in
+                parameters. Defaults to None.
+            read_only (bool, optional): Whether the class is allowed to write
+                to disk (False) or not (True). Defaults to False and will allow
+                the class to write to disk.
 
         """
         # parameters
@@ -334,10 +712,7 @@ class Autoencoder:
         if not self.read_only:
             self.p.write_summary = True
             self.p.save()
-            print(
-                "Output files are saved to {}".format(self.p.main_path),
-                "as defined in 'main_path' in the parameters.",
-            )
+            self._print_save_message()
 
         # check whether Tensorboard and Read-Only makes Sense
         if self.read_only and self.p.tensorboard:
@@ -352,24 +727,24 @@ class Autoencoder:
 
         # create model based on user input
         if model is None:
-            self.model = self.p.model_api
+            self.model = self._get_model()
         else:
-            self._model = model
+            self.model = model
 
         # setup callbacks for nice progress bars and saving every now and then
         self._setup_callbacks()
 
         # create loss based on user input
-        self.loss = self.p.loss
+        self.loss = self._get_loss()
 
         # choose optimizer
-        self.optimizer = tf.keras.optimizers.Adam(learning_rate=self.p.learning_rate)
+        self.optimizer = tf.keras.optimizers.Adam(
+            learning_rate=self.p.learning_rate, clipvalue=1.0
+        )
 
         # compile model
         self.model.compile(
-            optimizer=self.optimizer,
-            loss=self.loss,
-            metrics=self.metrics,
+            optimizer=self.optimizer, loss=self.loss, metrics=self.metrics
         )
 
         # do this if tensorboard is true.
@@ -392,22 +767,37 @@ class Autoencoder:
             )
             self.tb_callback.set_model(self.model)
 
+    def _print_save_message(self) -> None:
+        """Prints a save message to inform the user where the model is saved."""
+        _print_save_message(self)
+
+    def _print_missing_data(self) -> None:
+        print(
+            f"This model was reloaded from disk, but not yet provided with train "
+            f"data. Use the `set_train_data()` method to provide the train "
+            f"data and call `train()` again to train the model. Alternatively, "
+            f"you could directly provide the train data, when reloading by "
+            f"calling the `{self.__class__.__name__}.from_checkpoint()` "
+            f"constructor with the `train_data` argument. Expected shape = "
+            f"{self.model.encoder_model.input_shape[1]}, received shape = "
+            f"{self._tensorboard_data_req_shape} {self._using_hypercube=} "
+            f"{self.p.using_hypercube=} {self.dataset.element_spec=}"
+        )
+        return
+
     def set_train_data(self, data: Union[np.ndarray, tf.data.Dataset]) -> None:
         """Resets the train data for reloaded models."""
         self._using_hypercube = False
         if data is None:
             self._using_hypercube = True
+            self.p.using_hypercube = True
             self.train_data = create_n_cube(4, seed=self.p.seed)[0].astype("float32")
             self.p.periodicity = float("inf")
         elif isinstance(data, np.ndarray):
             if np.any(np.isnan(data)):
                 self.sparse = True
                 print("Input contains nans. Using sparse network.")
-                indices = np.stack(np.where(~np.isnan(data))).T.astype("int64")
-                dense_shape = data.shape
-                values = data[~np.isnan(data)].flatten().astype("float32")
-                sparse_tensor = tf.sparse.SparseTensor(indices, values, dense_shape)
-                self.train_data = sparse_tensor
+                self.train_data = np_to_sparse_tensor(data)
             else:
                 self.train_data = data.astype("float32")
         elif isinstance(data, tf.data.Dataset):
@@ -416,19 +806,23 @@ class Autoencoder:
                 _, __ = self.dataset.take(1)
             except ValueError:
                 if self.p.training == "auto":
-                    print(
-                        f"It seems like your dataset only yields tensors and not "
-                        f"tuples of tensors. TensorFlow is optimized for classification "
-                        f"tasks, where datasets yield tuples of (data, classes). EncoderMap,"
-                        f"however is a regression task, but uses the same code as the "
-                        f"classification tasks. I will transform your dataset using "
-                        f"the `tf.data.Dataset.zip()` function of `tf.data`. You can "
-                        f"set the `training` parameter in the parameter class to "
-                        f"'custom' to not alter your dataset."
-                    )
+                    if self.p.model_api == "custom":
+                        print(
+                            f"It seems like your dataset only yields tensors and not "
+                            f"tuples of tensors. TensorFlow is optimized for classification "
+                            f"tasks, where datasets yield tuples of (data, classes). EncoderMap,"
+                            f"however is a regression task, but uses the same code as the "
+                            f"classification tasks. This requires the dataset provided "
+                            f"for a tensorflow model.fit() method to return tuples "
+                            f"of (data, classes). Your dataset does not do this. "
+                            f"I will transform your dataset using "
+                            f"the `tf.data.Dataset.zip()` function of `tf.data`. "
+                            f"This might break your custom model. You can "
+                            f"set the `training` parameter in the parameter class to "
+                            f"'custom' to not alter your dataset."
+                        )
                     self.dataset = tf.data.Dataset.zip((self.dataset, self.dataset))
-                    for _, __ in self.dataset:
-                        break
+                    _ = self.dataset.take(1)
                 else:
                     _ = self.dataset.take(1)
             self.train_data = _
@@ -460,21 +854,16 @@ class Autoencoder:
             )
             dataset = dataset.repeat()
             self.dataset = dataset.batch(self.p.batch_size)
+            self._tensorboard_data_req_shape = tf.shape(self.train_data).numpy()
         else:
-            pass
+            d = self.train_data.element_spec[0]
+            if isinstance(d, tuple):
+                self._tensorboard_data_req_shape = d[0].shape.as_list()
+            else:
+                self._tensorboard_data_req_shape = d.shape.as_list()
 
-        # ToDo: Make training faster with Autotune, XLA (jit) compilation, DataRecords
-        # self.dataset = self.dataset.prefetch(self.p.batch_size * 4)
-        # self.dataset = self.dataset.interleave(num_parallel_calls=tf.data.experimental.AUTOTUNE)
-        # num_batches = 20
-        # num_threads = 8
-        # if self.p.training == 'auto':
-        #     ds = tf.data.Dataset.from_tensors((self.train_data, self.train_data)).repeat(self.p.batch_size * num_batches)
-        # else:
-        #     ds = tf.data.Dataset.from_tensors(self.train_data).repeat(self.p.batch_size * num_batches)
-        # # ds = tf.data.Dataset.from_tensors(self.train_data).repeat(self.p.batch_size * num_batches)
-        # ds = ds.batch(self.p.batch_size)
-        # self.dataset = ds.interleave(lambda *args:tf.data.Dataset.from_tensor_slices(args), num_threads, 1, num_threads)
+        if isinstance(data, np.ndarray):
+            assert data.shape[1] == self._tensorboard_data_req_shape[1]
 
     def _setup_callbacks(self) -> None:
         """Sets up a list with callbacks to be passed to self.model.fit()"""
@@ -540,66 +929,24 @@ class Autoencoder:
             compat=compat,
         )
 
-    @property
-    def model(self) -> tf.keras.Model:
-        """tf.keras.Model: The tf.keras.Model model used for training."""
-        return self._model
-
-    @model.setter
-    def model(self, model: str):
-        """sets self.model according to `model_api` argument in self.parameters."""
-        if model == "functional":
-            d = self.dataset.take(1)
-            if any([isinstance(_, tf.SparseTensorSpec) for _ in d.element_spec]):
-                self.sparse = True
-            self._model = gen_functional_model(
-                self.dataset,
-                self.p,
-                sparse=self.sparse,
-            )
-        elif model == "sequential":
-            if isinstance(self.train_data, tf.sparse.SparseTensor):
-                self.sparse = True
-            self._model = gen_sequential_model(
-                self.train_data.shape[1], self.p, sparse=self.sparse
-            )
-        elif model == "custom":
-            raise NotImplementedError("No custom API currently supported")
-        else:
-            raise ValueError(
-                f"API argument needs to be one of `functional`, `sequential`, "
-                f"`custom`. You provided '{model}'."
-            )
+    def _get_model(self) -> tf.keras.Model:
+        return _get_model(self)
 
     @property
     def encoder(self) -> tf.keras.Model:
         """tf.keras.Model: Encoder part of the model."""
-        return self._model.encoder
+        return self.model.encoder
 
     @property
     def decoder(self) -> tf.keras.Model:
         """tf.keras.Model: Decoder part of the model."""
-        return self._model.decoder
+        return self.model.decoder
 
-    @property
-    def loss(self) -> Sequence[Callable]:
-        """(Sequence[Callable]): A list of loss functions passed to the model
-        when it is compiled. When the main `Autoencoder` class is used and
-        `parameters.loss` is 'emap_cost', this list comprises center_cost,
-        regularization_cost, auto_cost. When the `EncoderMap` sub-class is
-        used and `parameters.loss` is 'emap_cost', distance_cost is added to
-        the list. When `parameters.loss` is not 'emap_cost', the loss can either
-        be a string ('mse'), or a function, that both are acceptable
-        arguments for loss, when a keras model is compiled.
-
-        """
-        return self._loss
-
-    @loss.setter
-    def loss(self, loss: str):
+    def _get_loss(self):
         """sets self.loss according to `loss` in self.parameters."""
+        loss = self.p.loss
         if loss == "reconstruction_loss":
-            self._loss = reconstruction_loss(self.model)
+            loss = reconstruction_loss(self.model)
         elif loss == "emap_cost":
             self.auto_loss = auto_loss(self.model, self.p, self.tensorboard_write_bool)
             self.regularization_loss = regularization_loss(
@@ -608,13 +955,14 @@ class Autoencoder:
             self.center_loss = center_loss(
                 self.model, self.p, self.tensorboard_write_bool
             )
-            self._loss = [self.auto_loss, self.regularization_loss, self.center_loss]
+            loss = [self.auto_loss, self.regularization_loss, self.center_loss]
         elif loss == "mse":
-            self._loss = "mse"
+            loss = "mse"
         else:
             raise ValueError(
                 f"loss argument needs to be `reconstruction_loss`, `mse` or `emap_cost`. You provided '{loss}'."
             )
+        return loss
 
     def train(self) -> Optional[tf.keras.callbacks.History]:
         """Starts the training of the model.
@@ -634,35 +982,42 @@ class Autoencoder:
             )
             return
 
-        if self._using_hypercube and self.train_data.shape[1] != self.model.input_shape:
-            print(
-                "This reloaded model was not yet provided with train data. Please "
-                "use the `set_train_data()` method to provide new train data and "
-                "continue training. You could also provide the training data when "
-                f"reloading the model by calling `{self.__class__.__name__}.from"
-                "_checkpoint()` constructor with the `train_data` argument."
-            )
-            return
+        if self._using_hypercube == self.p.using_hypercube:
+            if self.p.periodicity == float("inf"):
+                if (
+                    self._tensorboard_data_req_shape[1]
+                    != self.model.encoder_model.input_shape[1]
+                ):
+                    return self._print_missing_data()
+            else:
+                if (
+                    self._tensorboard_data_req_shape[1]
+                    != self.model.encoder_model.input_shape[1] // 2
+                ):
+                    return self._print_missing_data()
+        else:
+            return self._print_missing_data()
 
         if self.p.training == "custom" and self.p.batched:
             raise NotImplementedError()
         elif self.p.training == "custom" and not self.p.batched:
             raise NotImplementedError()
         elif self.p.training == "auto":
-            if self.p.tensorboard and self._log_images:
-                # get the old backend because the Tensorboard Images callback will set 'Agg'
-                # and without re-setting the old backend the user won't get
-                # output when calling fig.show() in a notebook.
-                old_backend = matplotlib.get_backend()
             epochs = self.p.n_steps - self.p.current_training_step
-            history = self.model.fit(
-                self.dataset,
-                batch_size=self.p.batch_size,
-                epochs=epochs,
-                steps_per_epoch=1,
-                verbose=0,
-                callbacks=self.callbacks,
-            )
+            try:
+                history = self.model.fit(
+                    self.dataset,
+                    batch_size=self.p.batch_size,
+                    epochs=epochs,
+                    steps_per_epoch=1,
+                    verbose=0,
+                    callbacks=self.callbacks,
+                )
+            except ValueError:
+                raise Exception(
+                    f"{self.model.encoder_model.input_shape=} {self._tensorboard_data_req_shape=} "
+                    f"{self.train_data.shape=} {self.dataset.element_spec=} {self.p.using_hypercube=} {self._using_hypercube=}"
+                )
         else:
             raise ValueError(
                 f"training argument needs to be `auto` or `custom`. You provided '{self.training}'."
@@ -671,23 +1026,28 @@ class Autoencoder:
         self.p.save()
         self.save()
 
-        # reset the backend.
-        if self.p.tensorboard and self._log_images:
-            matplotlib.use(old_backend)
-
         return history
 
-    def add_images_to_tensorboard(
-        self,
-        data: Optional[Union[np.ndarray, list[float]]] = None,
-        image_step: Optional[int] = None,
-        max_size: int = 10_000,
-        scatter_kws: Optional[dict] = None,
-        hist_kws: Optional[dict] = None,
-        additional_fns: Optional[Sequence[Callable]] = None,
-        when: Literal["epoch", "batch"] = "epoch",
-    ) -> None:
-        """Adds images to Tensorboard using the data in data and the ids in ids.
+    def add_loss(self, loss):
+        """Adds a new loss to the existing losses."""
+        try:
+            self.loss.append(loss(self.model, self.p))
+        except TypeError:
+            self.loss.append(loss(self.model))
+
+    def add_callback(self, callback):
+        """Adds a new callback to the existing callbacks."""
+        try:
+            self.callbacks.append(callback(self.p))
+        except TypeError:
+            self.callbacks.append(callback)
+
+    def add_metric(self, metric):
+        """Adds a new metric to the existing metrics."""
+        self.metrics.append(metric(self.p))
+
+    def add_images_to_tensorboard(self, *args: Any, **kwargs: Any) -> None:
+        """Adds images of the latent space to tensorboard.
 
         Args:
             data (Optional[Union[np.ndarray, Sequence[np.ndarray]]): The input-data will
@@ -702,15 +1062,17 @@ class Autoencoder:
             max_size (int): The maximum size of the high-dimensional data, that is
                 projected. Prevents excessively large-datasets from being projected
                 at every `image_step`. Defaults to 10_000.
-            scatter_kws (Optional[dict]): A dict with items that
-                `matplotlib.pyplot.scatter()` will accept. If None is provided,
-                a dict with size 20 will be passed to `plt.scatter(**{'s': 20})`,
+            scatter_kws (Optional[dict[str, Any]]): A dict with items that
+                `plotly.express.scatter()` will accept. If None is provided,
+                a dict with size 20 will be passed to
+                `px.scatter(**{'size_max': 10, 'opacity': 0.2})`,
                 which sets an appropriate size of scatter points for the size of
                 datasets encodermap is usually used for.
-            hist_kws ( Optional[dict]): A dict with items that
-                `matplotlib.pyplot.scatter()` will accept. If None is provided a
-                dict with bins 50 will be passed to `plt.hist2D(**{'bins': 50})`.
-                You can choose a colormap here by providing `{'bins": 50, 'cmap':
+            hist_kws (Optional[dict[str, Any]]): A dict with items that
+                `encodermap.plot.plotting._plot_free_energy()` will accept. If None is provided a
+                dict with bins 50 will be passed to
+                `encodermap.plot.plotting._plot_free_energy(**{'bins': 50})`.
+                You can choose a colormap here by providing `{'bins': 50, 'cmap':
                 'plasma'}` for this argument.
             additional_fns (Optional[Sequence[Callable]]): A list of functions
                 that will accept the low-dimensional output of the `Autoencoder`
@@ -724,112 +1086,10 @@ class Autoencoder:
                 either 'batch', then the images will be logged after every step
                 during training, or 'epoch', then only after every image_step
                 epoch the images will be written. Defaults to 'epoch'.
+            save_to_disk (bool): Whether to also write the images to disk.
 
         """
-        if not self.p.tensorboard:
-            print(
-                "Nothing is written to Tensorboard for this Model. "
-                "Please change parameters.tensorboard to True."
-            )
-            return
-        if image_step is None:
-            image_step = self.p.summary_step
-
-        if scatter_kws is None:
-            scatter_kws = {"s": 20}
-
-        if hist_kws is None:
-            hist_kws = {"bins": 50}
-
-        self._log_images = True
-
-        # make a dataset for images
-        if data is None:
-            if hasattr(self, "train_data"):
-                if isinstance(self.train_data, np.ndarray):
-                    data = self.train_data
-                elif isinstance(self.train_data, list) or self.sparse:
-                    data = self.train_data
-                else:
-                    data = list(self.dataset.take(int(10000 / self.p.batch_size)))
-                    data = np.stack(data)[:, 0, :].reshape(-1, self.train_data.shape[1])
-            else:
-                if hasattr(self, "trajs"):
-                    _data = (
-                        self.trajs._CVs.stack({"frame": ("traj_num", "frame_num")})
-                        .transpose("frame", ...)
-                        .dropna("frame", how="all")
-                    )
-                    _data_size = _data.dims["frame"]
-                    idx = np.unique(
-                        np.round(np.linspace(0, _data_size - 1, max_size)).astype(int)
-                    )
-                    data = [_data.central_dihedrals.values[idx]]
-                    if self.p.use_backbone_angles:
-                        data.insert(0, _data.central_angles.values[idx])
-                    if self.p.use_sidechains:
-                        data.append(_data.side_dihedrals.values[idx])
-                    if len(data) == 1:
-                        data = data[0]
-                else:
-                    raise Exception(f"Please provide `data` to plot.")
-        else:
-            if hasattr(self, "train_data"):
-                if type(data) != type(self.train_data):
-                    raise Exception(
-                        f"Provided data has wrong type. Train data in this class is "
-                        f"{type(self.train_data)}, provided data is {type(data)}"
-                    )
-
-        # select a subset
-        if isinstance(data, (tuple, list)):
-            _data = []
-            _lengths = set()
-            for i, d in enumerate(data):
-                if i == 0:
-                    idx = np.unique(
-                        np.round(np.linspace(0, len(d) - 1, max_size)).astype(int)
-                    )
-                assert isinstance(d, np.ndarray)
-                _lengths.add(len(data))
-                assert len(_lengths) == 1, (
-                    f"The tuple of numpy arrays you provided as data has uneven "
-                    f"lengths: {_lengths}."
-                )
-                _data.append(d[idx])
-            else:
-                data = tuple(_data)
-        elif isinstance(data, np.ndarray):
-            idx = np.unique(
-                np.round(np.linspace(0, len(data) - 1, max_size)).astype(int)
-            )
-            data = data[idx]
-        else:
-            raise ValueError(
-                f"Argument `data` must be np.ndarray of sequence thereof. You "
-                f"provided: {type(data)=}."
-            )
-
-        self.callbacks.append(
-            ImageCallback(
-                data,
-                image_step,
-                scatter_kws=scatter_kws,
-                hist_kws=hist_kws,
-                additional_fns=additional_fns,
-                when=when,
-            )
-        )
-        if isinstance(data, (np.ndarray, tf.sparse.SparseTensor)):
-            print(
-                f"Logging images with {data.shape}-shaped data every "
-                f"{image_step} epochs to Tensorboard at {self.p.main_path}"
-            )
-        else:
-            print(
-                f"Logging images with {[i.shape for i in data]}-shaped data "
-                f"every {image_step} epochs to Tensorboard at {self.p.main_path}"
-            )
+        _add_images_to_tensorboard(self, *args, **kwargs)
 
     def plot_network(self) -> None:
         """Tries to plot the network using pydot, pydotplus and graphviz.
@@ -840,15 +1100,14 @@ class Autoencoder:
             https://stackoverflow.com/questions/47605558/importerror-failed-to-import-pydot-you-must-install-pydot-and-graphviz-for-py
 
         """
-        out = plot_model(self.model, self.train_data.shape[1])
-        if out is not None:
-            out.save(Path(self.p.main_path) / "network.png")
+        try:
+            out = plot_model(self.model, self.train_data.shape[1])
+            if out is not None:
+                out.save(Path(self.p.main_path) / "network.png")
+        except:
+            pass
 
-    @overload
-    def encode(self, data: Optional[Sequence[np.ndarray]] = None) -> list[np.ndarray]:
-        ...
-
-    def encode(self, data: Optional[np.ndarray] = None) -> np.ndarray:
+    def encode(self, data: Optional[Sequence[np.ndarray]] = None) -> np.ndarray:
         """Calls encoder part of `self.model`.
 
         Args:
@@ -911,14 +1170,14 @@ class Autoencoder:
         """
         return self.model.decoder(data)
 
-    def decode(self, data: np.ndarray) -> Union[list[np.ndarray], np.ndarray]:
+    def decode(self, data: np.ndarray) -> Sequence[np.ndarray]:
         """Calls the decoder part of the model.
 
         `AngleDihedralCartesianAutoencoder` will, like the other two classes'
         output a list of np.ndarray.
 
         Args:
-            data (np.ndarray):  The data to be passed to the decoder part of
+            data (np.ndarray): The data to be passed to the decoder part of
                 the model. Make sure that the shape of the data matches the
                 number of neurons in the latent space.
 
@@ -928,30 +1187,35 @@ class Autoencoder:
                 np.ndarray.
 
         """
-        out = self.decoder(data)
+        out = self.model.decoder(data)
         if isinstance(out, (list, tuple)):
             out = [o.numpy() for o in out]
         else:
             out = out.numpy()
         return out
 
-    def save(self, step: Optional[int] = None) -> None:
+    def save(self, step: Optional[int] = None) -> None | Path:
         """Saves the model to the current path defined in `parameters.main_path`.
 
         Args:
-            step (Optional[int]): Does not actually save the model at the given
+            step (Optional[int]): Does not save the model at the given
                 training step, but rather changes the string used for saving
                 the model from a datetime format to another.
 
+        Returns:
+            Union[None, Path]: When the model has been saved, the Path will
+                be returned. If the model could not be saved. None will be
+                returned.
+
         """
         if not self.read_only:
-            save_model(
+            return save_model(
                 self.model,
                 self.p.main_path,
                 inp_class_name=self.__class__.__name__,
                 step=step,
                 print_message=True,
-            )
+            ).parent
         else:
             print(
                 f"This {self.__class__.__name__} is set to read_only. Set "
@@ -1012,10 +1276,10 @@ class EncoderMap(Autoencoder):
             use_previous_model=use_previous_model,
         )
 
-    @Autoencoder.loss.setter
-    def loss(self, loss: str):
+    def _get_loss(self):
+        loss = self.p.loss
         if loss == "reconstruction_loss":
-            self._loss = reconstruction_loss(self.model)
+            loss = reconstruction_loss(self.model)
         elif loss == "emap_cost":
             self.auto_loss = auto_loss(self.model, self.p, self.tensorboard_write_bool)
             self.regularization_loss = regularization_loss(
@@ -1028,18 +1292,19 @@ class EncoderMap(Autoencoder):
             self.distance_loss = distance_loss(
                 self.model, self.p, self.tensorboard_write_bool
             )
-            self._loss = [
+            loss = [
                 self.auto_loss,
                 self.regularization_loss,
                 self.center_loss,
                 self.distance_loss,
             ]
         elif loss == "mse":
-            self._loss = "mse"
+            loss = "mse"
         else:
             raise ValueError(
                 f"loss argument needs to be `reconstruction_loss`, `mse` or `emap_cost`. You provided '{loss}'."
             )
+        return loss
 
 
 class DihedralEncoderMap(EncoderMap):
@@ -1056,7 +1321,7 @@ class DihedralEncoderMap(EncoderMap):
         self,
         data: np.ndarray,
         top: Union[Path, str],
-    ) -> mda.Universe:
+    ) -> Universe:
         """Overwrites `EncoderMap`'s generate method and actually does
         backmapping if a list of dihedrals is provided.
 
@@ -1135,7 +1400,7 @@ class DihedralEncoderMap(EncoderMap):
         return uni
 
 
-class AngleDihedralCartesianEncoderMap(Autoencoder):
+class AngleDihedralCartesianEncoderMap:
     """Different `__init__` method, than Autoencoder Class. Uses callbacks to tune-in cartesian cost.
 
     Overwritten methods: `_set_up_callbacks` and `generate`.
@@ -1151,7 +1416,7 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
         >>> tops = [test_data / "1am7_protein.pdb", test_data  /"1am7_protein.pdb"]
         >>> trajs = em.load(xtcs, tops)
         >>> print(trajs)
-        encodermap.TrajEnsemble object. Current backend is no_load. Containing 2 trajs. Not containing any CVs.
+        encodermap.TrajEnsemble object. Current backend is no_load. Containing 2 trajectories. Not containing any CVs.
         >>> # load CVs
         >>> # This step can be omitted. The AngleDihedralCartesianEncoderMap class automatically loads CVs
         >>> trajs.load_CVs('all')
@@ -1198,31 +1463,65 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
         parameters: Optional[ADCParameters] = None,
         model: Optional[tf.keras.Model] = None,
         read_only: bool = False,
-        top: Optional[md.Topology] = None,
         dataset: Optional[tf.data.Dataset] = None,
+        ensemble: bool = False,
+        use_dataset_when_possible: bool = True,
+        deterministic: bool = False,
     ) -> None:
         """Instantiate the `AngleDihedralCartesianEncoderMap` class.
 
         Args:
-            trajs (em.TrajEnsemble): The trajectories to be used as input. If trajs contain no CVs, correct CVs will be loaded.
-            parameters (Optional[em.ADCParameters]): The parameters for the current run. Can be set to None and the
-                default parameters will be used. Defaults to None.
-            model (Optional[tf.keras.models.Model]): The keras model to use. You can provide your own model
-                with this argument. If set to None, the model will be built to the specifications of parameters using
-                either the functional or sequential API. Defaults to None
-            read_only (bool): Whether to write anything to disk (False) or not (True). Defaults to False.
+            trajs (Optional[TrajEnsemble]): The trajectories to be used as input.
+                If trajs contain no CVs, correct CVs will be loaded. can be None,
+                in which case the argument `dataset` should be provided.
+                Defaults to None.
+            parameters (Optional[em.ADCParameters]): The parameters for the
+                current run. Can be set to None and the default parameters will
+                be used. Defaults to None.
+            model (Optional[tf.keras.models.Model]): The keras model to use. You
+                can provide your own model with this argument. If set to None,
+                the model will be built to the specifications of parameters using
+                either the functional API. Defaults to None,
+            read_only (bool): Whether to write anything to disk
+                (False) or not (True). Defaults to False.
+            dataset (Optional[tf.data.Dataset]): The `dataset` argument takes
+                precedent over the `trajs` argument. If None, the dataset will
+                be constructed from the `trajs` argument (see
+                `em.trajinfo.TrajEnsemble.tf_dataset` for more info). Defaults
+                to None.
+            ensemble (bool): Whether to allow non-defined features when
+                featurizing the provided `trajs`. Only takes effect, when
+                the `trajs` don't already have the features (central_cartesians,
+                central_distances, central_angles, central_dihedrals, side_dihedrals)
+                loaded. Defaults to False.
+            use_dataset_when_possible (bool): Whether to use the `trajs` method
+                `tf_dataset()` to get a dataset for training or constructy a
+                dataset from the `trajs` CVs numpy arrays. For large datasets the
+                first method can be advantageous as not all data will end up in
+                memory and the dataset can be larger than the memory allows. For
+                small datasets the second method is faster, as all data is in
+                memory. Defaults to True.
 
         """
         # parameters
-        self._using_hypercube = False
         if parameters is None:
             self.p = ADCParameters()
         else:
+            assert isinstance(parameters, ADCParameters), (
+                f"Please provide an instance of `ADCParameters` for the argument "
+                f"'parameters' and not {type(parameters)}."
+            )
             self.p = parameters
 
         # seed
         if self.p.seed is not None:
             tf.random.set_seed(self.p.seed)
+
+        # check some sidechain
+        if self.p.reconstruct_sidechains:
+            assert (
+                self.p.use_sidechains
+            ), "If you want to reconstruct sidechains, you should also set `use_sidechains` to True."
 
         # read_only
         self.read_only = read_only
@@ -1231,12 +1530,9 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
         if not self.read_only:
             self.p.write_summary = True
             self.p.save()
-            print(
-                "Output files are saved to {}".format(self.p.main_path),
-                "as defined in 'main_path' in the parameters.",
-            )
+            self._print_save_message()
 
-        # check whether Tensorboard and Read-Only makes Sense
+        # check whether Tensorboard and read_only make sense
         if self.read_only and self.p.tensorboard:
             raise Exception("Can't use tensorboard, when `read_only` is set to True.")
 
@@ -1245,40 +1541,65 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
 
         # get the CVs:
         if trajs is not None:
-            if isinstance(trajs, str):
-                self.trajs = TrajEnsemble([trajs], [top])
-            else:
-                self.trajs = trajs
+            if trajs.__class__.__name__ == "SingleTraj":
+                trajs = trajs._gen_ensemble()
+            self.trajs = trajs
 
+            # add the sidechain_info if sidechains need to be reconstructed
+            if self.p.reconstruct_sidechains:
+                self.p.sidechain_info = self.trajs.sidechain_info()
+
+            # decide on the dataset
             if (
                 all([traj._traj_file.suffix in [".h5", ".nc"] for traj in trajs])
                 and trajs.CVs_in_file
+                and use_dataset_when_possible
             ):
-                dataset = trajs.tf_dataset(batch_size=self.p.batch_size)
+                # if all CVs in a h5 file, we can load get batches from there
+                dataset = trajs.tf_dataset(
+                    batch_size=self.p.batch_size,
+                    sidechains=self.p.use_sidechains,
+                    reconstruct_sidechains=self.p.reconstruct_sidechains,
+                    deterministic=deterministic,
+                )
                 self.inp_CV_data = trajs.CVs
+
             else:
-                # load missing values
-                should_be = {
-                    "central_angles",
-                    "central_cartesians",
-                    "central_dihedrals",
-                    "central_distances",
-                    "side_dihedrals",
-                }
+                # if not, we need to load them
+                if not self.p.reconstruct_sidechains:
+                    should_be = {
+                        "central_angles",
+                        "central_cartesians",
+                        "central_dihedrals",
+                        "central_distances",
+                        "side_dihedrals",
+                    }
+                else:
+                    raise NotImplementedError(
+                        f"Loading CVs with reconstruct_sidechains is currently not implemented."
+                    )
                 if dataset is None:
                     if not self.trajs.CVs:
                         missing = list(should_be - set(trajs.CVs.keys()))
                         if missing != []:
                             print("loading missing values: ", missing)
-                            self.trajs.load_CVs(missing, ensemble=False)
+                            self.trajs.load_CVs(missing, ensemble=ensemble)
                     else:
                         if not should_be.issubset(set(self.trajs.CVs.keys())):
-                            self.trajs.load_CVs(list(should_be), ensemble=False)
+                            self.trajs.load_CVs(list(should_be), ensemble=ensemble)
 
                     if not should_be.issubset(set(self.trajs.CVs.keys())):
+                        if not ensemble:
+                            msg = (
+                                f" You can try to set `ensemble=True` to load "
+                                f"these trajectories into an ensemble, which "
+                                f"allows features with different feature length."
+                            )
+                        else:
+                            msg = ""
                         raise Exception(
                             f"Could not load CVs. Should be {should_be}, but "
-                            f"currently only {set(trajs.CVs.keys())} are loaded."
+                            f"currently only {set(trajs.CVs.keys())} are loaded.{msg}"
                         )
 
         # create dataset
@@ -1288,19 +1609,37 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
                 self.train_data,
                 self.inp_CV_data,
             ) = self.get_train_data_from_trajs(self.trajs, self.p)
-            dataset = tf.data.Dataset.from_tensor_slices(
-                (
-                    self.inp_CV_data["central_angles"],
-                    self.inp_CV_data["central_dihedrals"],
-                    self.inp_CV_data["central_cartesians"],
-                    self.inp_CV_data["central_distances"],
-                    self.inp_CV_data["side_dihedrals"],
+            if not self.p.reconstruct_sidechains:
+                dataset = tf.data.Dataset.from_tensor_slices(
+                    (
+                        self.inp_CV_data["central_angles"],
+                        self.inp_CV_data["central_dihedrals"],
+                        self.inp_CV_data["central_cartesians"],
+                        self.inp_CV_data["central_distances"],
+                        self.inp_CV_data["side_dihedrals"],
+                    )
                 )
-            )
-            dataset = dataset.shuffle(
-                buffer_size=self.inp_CV_data["central_cartesians"].shape[0],
-                reshuffle_each_iteration=True,
-            )
+                dataset = dataset.shuffle(
+                    buffer_size=self.inp_CV_data["central_cartesians"].shape[0],
+                    reshuffle_each_iteration=True,
+                )
+            else:
+                dataset = tf.data.Dataset.from_tensor_slices(
+                    (
+                        self.inp_CV_data["central_angles"],
+                        self.inp_CV_data["central_dihedrals"],
+                        self.inp_CV_data["all_cartesians"],
+                        self.inp_CV_data["central_distances"],
+                        self.inp_CV_data["side_dihedrals"],
+                        self.inp_CV_data["side_angles"],
+                        self.inp_CV_data["side_dihedrals"],
+                        self.inp_CV_data["side_distances_"],
+                    )
+                )
+                dataset = dataset.shuffle(
+                    buffer_size=self.inp_CV_data["all_cartesians"].shape[0],
+                    reshuffle_each_iteration=True,
+                )
             dataset = dataset.repeat()
             self.dataset = dataset.batch(self.p.batch_size)
         else:
@@ -1309,29 +1648,22 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
                 [isinstance(t, tf.SparseTensorSpec) for t in self.dataset.element_spec]
             )
 
-        # ToDo: Make training faster with Autotune, XLA (jit) compilation, DataRecords
-        # self.dataset = self.dataset.prefetch(self.p.batch_size * 4)
-        # self.dataset = self.dataset.interleave(num_parallel_calls=tf.data.experimental.AUTOTUNE)
-        # num_batches = 20
-        # num_threads = 8
-        # ds = tf.data.Dataset.from_tensors(self.train_data).repeat(self.p.batch_size * num_batches)
-        # ds = ds.batch(self.p.batch_size)
-        # self.dataset = ds.interleave(lambda *args:tf.data.Dataset.from_tensor_slices(args), num_threads, 1, num_threads)
-
         # create model based on user input
         if model is None:
-            self.model = self.p.model_api
+            self.model = self._get_model()
         else:
-            self._model = model
+            self.model = model
 
         # setup callbacks
         self._setup_callbacks()
 
         # create loss based on user input
-        self.loss = self.p.loss
+        self.loss = self._get_loss()
 
         # choose optimizer
-        self.optimizer = tf.keras.optimizers.Adam(learning_rate=self.p.learning_rate)
+        self.optimizer = tf.keras.optimizers.Adam(
+            learning_rate=self.p.learning_rate, clipvalue=1.0
+        )
 
         # compile model
         self.model.compile(
@@ -1370,17 +1702,118 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
             )
             self.tb_callback.set_model(self.model)
 
-    def train(self):
+    def _print_save_message(self) -> None:
+        """Prints a message, to inform user where model is saved."""
+        _print_save_message(self)
+
+    def _get_model(self) -> tf.keras.Model:
+        """Constructs a model from an instance of this class."""
+        return _get_model(self)
+
+    def add_loss(self, loss):
+        """Adds a new loss to the existing losses."""
+        try:
+            self.loss.append(loss(self.model, self.p))
+        except TypeError:
+            self.loss.append(loss(self.model))
+
+    def add_callback(self, callback):
+        """Adds a new callback to the existing callbacks."""
+        try:
+            self.callbacks.append(callback(self.p))
+        except TypeError:
+            self.callbacks.append(callback)
+
+    def add_metric(self, metric):
+        """Adds a new metric to the existing metrics."""
+        self.metrics.append(metric(self.p))
+
+    def add_images_to_tensorboard(self, *args: Any, **kwargs: Any) -> None:
+        """Adds images of the latent space to tensorboard.
+
+        Args:
+            data (Optional[Union[np.ndarray, Sequence[np.ndarray]]): The input-data will
+                be passed through the encoder part of the autoencoder. If None
+                is provided, a set of 10_000 points from `self.train_data` will
+                be taken. A list[np.ndarray] is needed for the functional API of the
+                `AngleDihedralCartesianEncoderMap`, that takes a list of
+                [angles, dihedrals, side_dihedrals]. Defaults to None.
+            image_step (Optional[int]): The interval in which to plot
+                images to tensorboard. If None is provided, the `image_step`
+                will be the same as `Parameters.summary_step`. Defaults to None.
+            max_size (int): The maximum size of the high-dimensional data, that is
+                projected. Prevents excessively large-datasets from being projected
+                at every `image_step`. Defaults to 10_000.
+            scatter_kws (Optional[dict[str, Any]]): A dict with items that
+                `plotly.express.scatter()` will accept. If None is provided,
+                a dict with size 20 will be passed to
+                `px.scatter(**{'size_max': 10, 'opacity': 0.2})`,
+                which sets an appropriate size of scatter points for the size of
+                datasets encodermap is usually used for.
+            hist_kws (Optional[dict[str, Any]]): A dict with items that
+                `encodermap.plot.plotting._plot_free_energy()` will accept. If None is provided a
+                dict with bins 50 will be passed to
+                `encodermap.plot.plotting._plot_free_energy(**{'bins': 50})`.
+                You can choose a colormap here by providing `{'bins': 50, 'cmap':
+                'plasma'}` for this argument.
+            additional_fns (Optional[Sequence[Callable]]): A list of functions
+                that will accept the low-dimensional output of the `Autoencoder`
+                latent/bottleneck layer and return a tf.Tensor that can be logged
+                by `tf.summary.image()`. See the notebook
+                'writing_custom_images_to_tensorboard.ipynb' in
+                tutorials/notebooks_customization for more info. If None is
+                provided, no additional functions will be used to plot to
+                tensorboard. Defaults to None.
+            when (Literal["epoch", "batch"]): When to log the images can be
+                either 'batch', then the images will be logged after every step
+                during training, or 'epoch', then only after every image_step
+                epoch the images will be written. Defaults to 'epoch'.
+            save_to_disk (bool): Whether to also write the images to disk.
+
+        """
+        _add_images_to_tensorboard(self, *args, **kwargs)
+
+    def train(self) -> Optional[tf.keras.callbacks.History]:
         """Overwrites the parent class' `train()` method to implement references."""
         if all([v == 1 for k, v in self.p.__dict__.items() if "reference" in k]):
             self.train_for_references()
         else:
             print("References are already provided. Skipping reference training.")
-        super().train()
+        if self.p.current_training_step >= self.p.n_steps:
+            print(
+                f"This {self.__class__.__name__} instance has already been trained "
+                f"for {self.p.current_training_step} steps. Increase the training "
+                f"steps by calling `{self.__class__.__name__}.p.n_steps += new_steps` "
+                f"and then call `{self.__class__.__name__}.train()` again."
+            )
+            return
 
-    def train_for_references(
-        self,
-    ) -> None:
+        if self.p.training == "custom" and self.p.batched:
+            raise NotImplementedError()
+        elif self.p.training == "custom" and not self.p.batched:
+            raise NotImplementedError()
+        elif self.p.training == "auto":
+            epochs = self.p.n_steps - self.p.current_training_step
+            history = self.model.fit(
+                self.dataset,
+                batch_size=self.p.batch_size,
+                epochs=epochs,
+                steps_per_epoch=1,
+                verbose=0,
+                callbacks=self.callbacks,
+            )
+        else:
+            raise ValueError(
+                f"training argument needs to be `auto` or `custom`. You provided '{self.training}'."
+            )
+        self.p.current_training_step += self.p.n_steps - self.p.current_training_step
+        if not self.read_only:
+            self.p.save()
+            self.save()
+
+        return history
+
+    def train_for_references(self, subsample: int = 100, maxiter: int = 500) -> None:
         """Calculates the angle, dihedral, and cartesian costs to so-called
         references, which can be used to bring these costs to a similar
         magnitude.
@@ -1392,7 +1825,7 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
             dihedral_cost_scale=1,
         )
         if hasattr(self, "trajs"):
-            nsteps = int(self.trajs.n_frames / self.p.batch_size)
+            nsteps = min(maxiter, max(1, int(self.trajs.n_frames / self.p.batch_size)))
         else:
             return
         # fmt: off
@@ -1402,13 +1835,26 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
             "cartesian_cost": ["central_cartesians", 2, cartesian_loss(self.model, parameters=p)],
         }
         # fmt: on
+        # Local Folder Imports
+        from ..models.models import ADCSparseFunctionalModel
+
+        if isinstance(self.model, ADCSparseFunctionalModel):
+            to_dense_models = {
+                "dihedral_cost": self.model.get_dense_model_central_dihedrals,
+                "angle_cost": self.model.get_dense_model_central_angles,
+                "cartesian_cost": self.model.get_dense_model_distances,
+            }
 
         cost_references = {key: [] for key in costs.keys()}
         for key, val in costs.items():
             if key in ["dihedral_cost", "angle_cost"]:
+                inp = self.trajs.CVs[val[0]]
+                if np.any(np.isnan(inp)):
+                    inp = np_to_sparse_tensor(inp[::subsample])
+                    inp = to_dense_models[key](inp).numpy()
                 means = np.repeat(
                     np.expand_dims(
-                        np.mean(self.trajs.CVs[val[0]], 0),
+                        np.mean(inp, 0),
                         axis=0,
                     ),
                     repeats=self.p.batch_size,
@@ -1416,9 +1862,11 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
                 )
                 costs[key].append(means)
             else:
-                mean_lengths = np.expand_dims(
-                    np.mean(self.trajs.CVs["central_distances"], axis=0), axis=0
-                )
+                inp = self.trajs.CVs["central_distances"]
+                if np.any(np.isnan(inp)):
+                    inp = np_to_sparse_tensor(inp[::subsample])
+                    inp = to_dense_models[key](inp).numpy()
+                mean_lengths = np.expand_dims(np.mean(inp, axis=0), axis=0)
                 chain = chain_in_plane(mean_lengths, costs["angle_cost"][3])
                 gen_cartesians = dihedrals_to_cartesian_tf(
                     costs["dihedral_cost"][3] + np.pi, chain
@@ -1439,15 +1887,34 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
             leave=True,
         ) as pbar:
             for i, data in zip(range(nsteps), self.dataset):
-                angles, dihedrals, cartesians = data[:3]
+                for d in data:
+                    if not isinstance(d, tf.sparse.SparseTensor):
+                        if np.any(np.isnan(d)) and not self.sparse:
+                            raise Exception(
+                                f"Received data containing nans from `self.dataset` ({d=}),"
+                                f"while `self.sparse` is set to True ({self.sparse=}). "
+                                f"This training won't work as nans compromise the weights "
+                                f"of the whole model. Try to explicitly set `sparse=True`, "
+                                f"when instantiating the {self.__class__.__name__} class."
+                            )
                 for key, val in costs.items():
                     if key in ["dihedral_cost", "angle_cost"]:
-                        cost_references[key].append(
-                            val[2](data[val[1]], val[3]).numpy()
-                        )
+                        if isinstance(data[val[1]], tf.sparse.SparseTensor):
+                            d = to_dense_models[key](data[val[1]]).numpy()
+                        else:
+                            d = data[val[1]]
+                        cost_references[key].append(val[2](d, val[3]).numpy())
                     if key == "cartesian_cost":
+                        if isinstance(data[val[1]], tf.sparse.SparseTensor):
+                            d = self.model.get_dense_model_cartesians(
+                                data[val[1]]
+                            ).numpy()
+                            # un-flatten the cartesian coordinates
+                            d = d.reshape(len(d), -1, 3)
+                        else:
+                            d = data[val[1]]
                         pd = pairwise_dist(
-                            data[val[1]][
+                            d[
                                 :,
                                 self.p.cartesian_pwd_start : self.p.cartesian_pwd_stop : self.p.cartesian_pwd_step,
                             ],
@@ -1457,7 +1924,7 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
                         cost_references["cartesian_cost"].append(c)
                 pbar.update()
         s = {k: np.mean(v) for k, v in cost_references.items()}
-        print(f"Setting cost references: {s} to parameters.")
+        print(f"After {i} steps setting cost references: {s} to parameters.")
         self.p.angle_cost_reference = float(np.mean(cost_references["angle_cost"]))
         self.p.dihedral_cost_reference = float(
             np.mean(cost_references["dihedral_cost"])
@@ -1469,28 +1936,75 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
             self.p.save()
         return cost_references
 
+    def save(self, step: Optional[int] = None) -> None | Path:
+        """Saves the model to the current path defined in `parameters.main_path`.
+
+        Args:
+            step (Optional[int]): Does not save the model at the given
+                training step, but rather changes the string used for saving
+                the model from a datetime format to another.
+
+        Returns:
+            Union[None, Path]: When the model has been saved, the Path will
+                be returned. If the model could not be saved. None will be
+                returned.
+
+        """
+        if not self.read_only:
+            return save_model(
+                self.model,
+                self.p.main_path,
+                inp_class_name=self.__class__.__name__,
+                step=step,
+                print_message=True,
+            ).parent
+        else:
+            print(
+                f"This {self.__class__.__name__} is set to read_only. Set "
+                f"`{self.__class__.__name__}.read_only=False` to save the "
+                f"current state of the model."
+            )
+
+    def close(self) -> None:
+        """Clears the current keras backend and frees up resources."""
+        # clear old sessions
+        tf.keras.backend.clear_session()
+
     def set_train_data(self, data: TrajEnsemble) -> None:
         """Resets the train data for reloaded models."""
         (
             sparse,
             self.train_data,
             self.inp_CV_data,
-        ) = self.get_train_data_from_trajs(self.trajs, self.p)
+        ) = self.get_train_data_from_trajs(data, self.p)
+        self._using_hypercube = False
+        self.p.using_hypercube = False
         if not self.sparse and sparse:
             print(
                 f"The provided data contains nan's, but the model was trained "
                 f"on dense input data."
             )
             return
-        dataset = tf.data.Dataset.from_tensor_slices(
-            (
+        if not self.parameters.reconstruct_sidechains:
+            data = [
                 self.inp_CV_data["central_angles"],
                 self.inp_CV_data["central_dihedrals"],
                 self.inp_CV_data["central_cartesians"],
                 self.inp_CV_data["central_distances"],
                 self.inp_CV_data["side_dihedrals"],
-            )
-        )
+            ]
+        else:
+            data = [
+                self.inp_CV_data["central_angles"],
+                self.inp_CV_data["central_dihedrals"],
+                self.inp_CV_data["all_cartesians"],
+                self.inp_CV_data["central_distances"],
+                self.inp_CV_data["side_dihedrals"],
+                self.inp_CV_data["side_angles"],
+                self.inp_CV_data["side_dihedrals"],
+                self.inp_CV_data["side_distances_"],
+            ]
+        dataset = tf.data.Dataset.from_tensor_slices(tuple(data))
         dataset = dataset.shuffle(
             buffer_size=self.inp_CV_data["central_cartesians"].shape[0],
             reshuffle_each_iteration=True,
@@ -1507,49 +2021,67 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
             https://stackoverflow.com/questions/47605558/importerror-failed-to-import-pydot-you-must-install-pydot-and-graphviz-for-py
 
         """
-        out = plot_model(self.model, None)
-        if out is not None:
-            out.save(Path(self.p.main_path) / "network.png")
+        try:
+            out = plot_model(self.model, None)
+            if out is not None:
+                out.save(Path(self.p.main_path) / "network.png")
+        except:
+            pass
 
     @staticmethod
     def get_train_data_from_trajs(
-        trajs: TrajEnsemble,
+        trajs: Union[TrajEnsemble, SingleTraj],
         p: ADCParameters,
         attr: str = "CVs",
-    ) -> tuple[bool, np.ndarray, dict[str, np.ndarray]]:
+        max_size: int = -1,
+    ) -> tuple[bool, list[np.ndarray], dict[str, np.ndarray]]:
         """Builds train data from a `TrajEnsemble`.
 
         Args:
             trajs (TrajEnsemble): A `TrajEnsemble` instance.
-            p (ADCParameters): An instance of `ADCParameters`.
+            p (encodermap.parameters.ADCParameters): An instance of `encodermap.parameters.ADCParameters`.
             attr (str): Which attribute to get from `TrajEnsemble`. This defaults
                 to 'CVs', because 'CVs' is usually a dict containing the CV data.
                 However, you can build the train data from any dict in the `TrajEnsemble`.
+            max_size (int): When you only want a subset of the CV data. Set this
+                to the desired size.
 
         Returns:
             tuple: A tuple containing the following:
-                bool: A bool that shows whether some 'CV' values are `np.nan` (True),
+                - bool: A bool that shows whether some 'CV' values are `np.nan` (True),
                     which will be used to decide whether the sparse training
                     will be used.
-                np.ndarray: An array of features fed into the autoencoder,
+                - list[np.ndarray]: An array of features fed into the autoencoder,
                     concatenated along the feature axis. The order of the
                     features is: central_angles, central_dihedral, (side_dihedrals
                     if p.use_sidechain_dihedrals is True).
-                dict[str, np.ndarray]: The training data as a dict. Containing
+                - dict[str, np.ndarray]: The training data as a dict. Containing
                     all values in `trajs.CVs`.
 
         """
+        # Local Folder Imports
+        from ..misc.misc import FEATURE_NAMES
+
+        assert hasattr(trajs, attr), (
+            f"Can't load train data from the attribute {attr}. "
+            f"{trajs.__class__.__name__} has no attribute '{attr}'"
+        )
         if not any([np.isnan(x).any() for x in getattr(trajs, attr).values()]):
             inp_CV_data = {
                 key: val.astype("float32") for key, val in getattr(trajs, attr).items()
             }
+
+            # squeeze, if xarray is provided
+            if all([hasattr(v, "values") for v in inp_CV_data.values()]):
+                inp_CV_data = {k: v.values.squeeze() for k, v in inp_CV_data.items()}
             sparse = False
         else:
             sparse = True
-            print("Input contains nans. Using sparse network.")
 
             # check whether the nans are correctly distributed
             for k, v in trajs.CVs.items():
+                if k not in list(FEATURE_NAMES.values()):
+                    continue
                 if v.ndim == 3:
                     v = np.any(np.all(np.isnan(v), (1, 2)))
                 else:
@@ -1569,49 +2101,71 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
             if all([hasattr(v, "values") for v in inp_CV_data.values()]):
                 inp_CV_data = {k: v.values.squeeze() for k, v in inp_CV_data.items()}
 
+            # subsample if required
+            if max_size > -1:
+                for k, v in inp_CV_data.items():
+                    idx = np.unique(
+                        np.round(np.linspace(0, v.shape[0] - 1, max_size)).astype(int)
+                    )
+                    inp_CV_data[k] = v[idx]
+
             for k, v in inp_CV_data.items():
                 if np.any(np.isnan(v)):
                     values = v
                     if k == "central_cartesians":
                         values = values.reshape(len(values), -1)
-                    indices = np.stack(np.where(~np.isnan(values))).T.astype("int64")
-                    dense_shape = values.shape
-                    values = values[~np.isnan(values)].flatten()
-                    sparse_tensor = tf.sparse.SparseTensor(indices, values, dense_shape)
+                    sparse_tensor = np_to_sparse_tensor(values)
                     inp_CV_data[k] = sparse_tensor
 
-        if not p.use_backbone_angles and not p.use_sidechains:
-            train_data = inp_CV_data["central_dihedrals"]
-        elif p.use_backbone_angles and not p.use_sidechains:
+        if not p.reconstruct_sidechains:
+            if not p.use_backbone_angles and not p.use_sidechains:
+                train_data = inp_CV_data["central_dihedrals"]
+            elif p.use_backbone_angles and not p.use_sidechains:
+                train_data = [
+                    inp_CV_data["central_angles"],
+                    inp_CV_data["central_dihedrals"],
+                ]
+                if p.model_api == "sequential" and not sparse:
+                    train_data = np.hstack(train_data)
+            elif p.use_backbone_angles and p.use_sidechains:
+                train_data = [
+                    inp_CV_data["central_angles"],
+                    inp_CV_data["central_dihedrals"],
+                    inp_CV_data["side_dihedrals"],
+                ]
+                if p.model_api == "sequential" and not sparse:
+                    train_data = np.hstack(train_data)
+            else:
+                raise Exception(
+                    "Cannot train model with central dihedrals and side "
+                    "dihedrals only. Backbone angles are required."
+                )
+            # some checks for the length of the train data
+            if p.model_api == "functional":
+                if not p.use_backbone_angles and not p.use_sidechains:
+                    pass
+                elif p.use_backbone_angles and not p.use_sidechains:
+                    assert len(train_data) == 2
+                else:
+                    assert len(train_data) == 3
+        else:
             train_data = [
                 inp_CV_data["central_angles"],
                 inp_CV_data["central_dihedrals"],
-            ]
-            if p.model_api == "sequential" and not sparse:
-                train_data = np.hstack(train_data)
-        elif p.use_backbone_angles and p.use_sidechains:
-            train_data = [
-                inp_CV_data["central_angles"],
-                inp_CV_data["central_dihedrals"],
+                inp_CV_data["side_angles"],
                 inp_CV_data["side_dihedrals"],
             ]
-            if p.model_api == "sequential" and not sparse:
-                train_data = np.hstack(train_data)
-        else:
-            raise Exception(
-                "Cannot train model with central dihedrals and side dihedrals only. Backbone angles are required."
-            )
-
-        # some checks for the length of the train data
-        if p.model_api == "functional":
-            if not p.use_backbone_angles and not p.use_sidechains:
-                pass
-            elif p.use_backbone_angles and not p.use_sidechains:
-                assert len(train_data) == 2
-            else:
-                assert len(train_data) == 3
-
         return sparse, train_data, inp_CV_data
+
+    @property
+    def encoder(self) -> tf.keras.Model:
+        """tf.keras.Model: The encoder Model."""
+        return self.model.encoder_model
+
+    @property
+    def decoder(self) -> tf.keras.Model:
+        """tf.keras.Model: The decoder Model."""
+        return self.model.decoder_model
 
     @classmethod
     def from_checkpoint(
@@ -1676,21 +2230,37 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
         needs to be added to the list of callbacks.
 
         """
-        super(self.__class__, self)._setup_callbacks()
+        self.metrics = []
+        self.callbacks = []
+        self.callbacks.append(ProgressBar(parameters=self.p))
+        if not self.read_only:
+            self.callbacks.append(CheckpointSaver(self.p))
+        if self.p.tensorboard:
+            self.tensorboard_write_bool: Union[TensorboardWriteBool, None] = (
+                TensorboardWriteBool(self.p)
+            )
+            self.callbacks.append(self.tensorboard_write_bool)
+            file_writer = tf.summary.create_file_writer(self.p.main_path + "/train")
+            file_writer.set_as_default()
+            tf.summary.text(
+                name=f"Parameters Summary for {self.p.main_path}",
+                data=self.p.parameters,
+                step=0,
+            )
+        else:
+            self.tensorboard_write_bool = None
         if self.p.cartesian_cost_scale_soft_start != (None, None):
             self.cartesian_increase_callback = IncreaseCartesianCost(self.p)
             self.callbacks.append(self.cartesian_increase_callback)
         if self.p.track_clashes:
-            print("Clash metric not yet implemented.")
-            # self.metrics.append(ADCClashMetric(parameters=self.p))
+            self.metrics.append(ADCClashMetric(parameters=self.p, distance_unit="nm"))
         if self.p.track_RMSD:
-            print("RMSD metric not yet implemented.")
-            # self.metrics.append(ADCRMSDMetric(parameters=self.p))
+            self.metrics.append(ADCRMSDMetric(parameters=self.p))
 
-    @Autoencoder.loss.setter
-    def loss(self, loss):
+    def _get_loss(self):
+        loss = self.p.loss
         if loss == "reconstruction_loss":
-            self._loss = reconstruction_loss(self.model)
+            loss = reconstruction_loss(self.model)
         elif loss == "emap_cost":
             self.dihedral_loss = dihedral_loss(
                 self.model, self.p, self.tensorboard_write_bool
@@ -1723,7 +2293,7 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
             self.regularization_loss = regularization_loss(
                 self.model, self.p, self.tensorboard_write_bool
             )
-            self._loss = [
+            loss = [
                 self.dihedral_loss,
                 self.angle_loss,
                 self.cartesian_loss,
@@ -1736,17 +2306,18 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
                 self.side_dihedral_loss = side_dihedral_loss(
                     self.model, self.p, self.tensorboard_write_bool
                 )
-                self._loss.append(self.side_dihedral_loss)
+                loss.append(self.side_dihedral_loss)
         elif loss == "mse":
-            self._loss = "mse"
+            loss = "mse"
         else:
             raise ValueError(
                 f"loss argument needs to be `reconstruction_loss`, `mse` or `emap_cost`. You provided '{loss}'."
             )
+        return loss
 
     def encode(
         self,
-        data: Sequence[np.ndarray],
+        data: Optional[Union[TrajEnsemble, SingleTraj, Sequence[np.ndarray]]] = None,
     ) -> np.ndarray:
         """Runs the central_angles, central_dihedrals, (side_dihedrals) through the
         autoencoder. Make sure that `data` has the correct shape.
@@ -1760,36 +2331,146 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
             np.ndarray: The latent space representation of the provided `data`.
 
         """
-        if hasattr(data, "_traj_file"):
-            _, data, __ = self.get_train_data_from_trajs(data, self.p, attr="_CVs")
-        elif hasattr(data, "traj_files"):
-            _, data, __ = self.get_train_data_from_trajs(data, self.p)
-        return super().encode(data)
+        if data is None:
+            if hasattr(self, "trajs"):
+                data = self.trajs
+            else:
+                for data in self.dataset:
+                    break
+                if not self.p.use_sidechains and not self.p.use_backbone_angles:
+                    data: np.ndarray = data[1]  # type: ignore[no-redef]
+                elif self.p.use_backbone_angles and not self.p.use_sidechains:
+                    data: list[np.ndarray] = [data[0], data[1]]  # type: ignore[no-redef]
+                else:
+                    data: list[np.ndarray] = [data[0], data[1], data[-1]]  # type: ignore[no-redef]
+
+        if not hasattr(data, "trajs") and hasattr(data, "_CVs") and data is not None:
+            traj: SingleTraj = data  # type: ignore[assignment]
+            _, data, __ = self.get_train_data_from_trajs(traj, self.p, attr="_CVs")
+            if isinstance(data, (tf.SparseTensor)):
+                shape = data.dense_shape[0] * data.dense_shape[1]
+            elif isinstance(data, np.ndarray):
+                shape = data.size
+                data = np.expand_dims(data, 0)
+            elif isinstance(data[0], (np.ndarray, tf.Tensor)):
+                shape = data[0].size
+            elif isinstance(data[0], tf.sparse.SparseTensor):
+                shape = data[0].values.shape[0]
+            else:
+                raise Exception(f"Unexpected datatype {data=}")
+            if shape > 100_000:
+                print(
+                    f"Due to the size of the provided data {shape}, I "
+                    f"need to chunk it, which takes longer. Sit back, grab a coffee..."
+                )
+                indices = np.split(
+                    np.arange(traj.n_frames), np.arange(100, traj.n_frames, 100)
+                )
+                # single frame encoding does not work, because the frame axis is dropped
+                if len(indices[-1]) == 1:
+                    indices = np.split(
+                        np.arange(traj.n_frames), np.arange(100, traj.n_frames, 101)
+                    )
+                lowd = []
+                for i, ind in enumerate(indices):
+                    _, data, __ = self.get_train_data_from_trajs(
+                        traj[ind], self.p, attr="_CVs"
+                    )
+                    try:
+                        lowd.append(self.model.encoder_model(data))
+                    except IndexError as e:
+                        raise Exception(f"{i=} {ind=} {data=}") from e
+                return np.vstack(lowd)
+            else:
+                return self.encode(data)
+        elif hasattr(data, "trajs"):
+            lowd = []
+            for traj in data.trajs:  # type: ignore[union-attr]
+                lowd.append(self.encode(traj))
+            return np.vstack(lowd)
+        elif isinstance(data, Sequence):
+            # Standard Library Imports
+            from functools import reduce
+            from operator import mul
+
+            size = reduce(mul, data[0].shape)
+            if size > 100_000:
+                indices = np.split(
+                    np.arange(data[0].shape[0]),
+                    np.arange(100, data[0].shape[0], 100),
+                )
+                if len(indices[-1]) == 1:
+                    indices = np.split(
+                        np.arange(data[0].shape[0]),
+                        np.arange(100, data[0].shape[0], 101),
+                    )
+                lowd = []
+                for i, ind in enumerate(indices):
+                    datum = []
+                    for d in data:
+                        if isinstance(d, tf.sparse.SparseTensor):
+                            d = tf.sparse.to_dense(d, default_value=np.nan).numpy()[ind]
+                            datum.append(np_to_sparse_tensor(d))
+                        else:
+                            datum.append(d[ind])
+                    lowd.append(self.model.encoder_model(datum))
+                return np.vstack(lowd)
+            else:
+                return self.model.encoder_model(data).numpy()  # type: ignore[no-any-return]
+        elif hasattr(data, "shape") or hasattr(data, "dense_shape"):
+            return self.model.encoder_model(data).numpy()  # type: ignore[no-any-return]
+        else:
+            raise TypeError(f"Wrong type for argument `data`: {type(data)=} {data=}.")
+
+    def decode(self, data: np.ndarray) -> Sequence[np.ndarray]:
+        """Calls the decoder part of the model.
+
+        `AngleDihedralCartesianAutoencoder` will, like the other two classes'
+        output a list of np.ndarray.
+
+        Args:
+            data (np.ndarray): The data to be passed to the decoder part of
+                the model. Make sure that the shape of the data matches the
+                number of neurons in the latent space.
+
+        Returns:
+            Union[list[np.ndarray], np.ndarray]: Outputs from the decoder part.
+                For `AngleDihedralCartesianEncoderMap`, this will be a list of
+                np.ndarray.
+
+        """
+        out = self.model.decoder(data)
+        if isinstance(out, (list, tuple)):
+            out = [o.numpy() for o in out]
+        else:
+            out = out.numpy()
+        return out  # type: ignore[no-any-return]
 
     @overload
     def generate(
         self,
         points: np.ndarray,
-        top: Optional[Union[str, int, md.Topology]] = None,
-        backend: Literal["mdtraj"] = "mdtraj",
-    ) -> Union[md.Trajectory]:
-        ...
+        top: Optional[Union[str, int, Topology]],
+        backend: Literal["mdtraj"],
+        progbar: Optional[Any],
+    ) -> Trajectory: ...
 
     @overload
     def generate(
         self,
         points: np.ndarray,
-        top: Optional[Union[str, int, md.Topology]] = None,
-        backend: Literal["mdanalysis"] = "mdanalysis",
-    ) -> Union[mda.Universe]:
-        ...
+        top: Optional[Union[str, int, Topology]],
+        backend: Literal["mdanalysis"],
+        progbar: Optional[Any],
+    ) -> Universe: ...
 
     def generate(
         self,
         points: np.ndarray,
-        top: Optional[Union[str, int, md.Topology]] = None,
+        top: Optional[Union[str, int, Topology]] = None,
         backend: Literal["mdtraj", "mdanalysis"] = "mdtraj",
-    ) -> Union[mda.Universe, md.Trajectory]:
+        progbar: Optional[Any] = None,
+    ) -> Union[Universe, Trajectory]:
         """Overrides the parent class' `generate` method and builds a trajectory.
 
         Instead of just providing data to `decode` using the decoder part of the
@@ -1819,7 +2500,33 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
         """
         # get the output this can be done regardless
         out = self.decode(points)
-        angles, dihedrals, sidechain_dihedrals = out
+        if isinstance(out, np.ndarray):
+            dihedrals = out
+            sidechain_dihedrals = None
+        elif (
+            isinstance(out, (list, tuple))
+            and len(out) == 2
+            and all([isinstance(a, np.ndarray) for a in out])
+        ):
+            angles, dihedrals = out
+            sidechain_dihedrals = None
+        elif (
+            isinstance(out, (list, tuple))
+            and len(out) == 3
+            and all([isinstance(a, np.ndarray) for a in out])
+        ):
+            angles, dihedrals, sidechain_dihedrals = out
+        else:
+            raise Exception(
+                f"Unexpected length of out detected: ({len(out)}=). Maybe also "
+                f"unexpected dtypes: ({[type(a) for a in out]=})."
+            )
+
+        assert isinstance(self.trajs, TrajEnsemble), (
+            f"`generate()` can only work, when the Autoencoder was built with a "
+            f"`TrajEnsemble` and not just a dataset. You can set the `TrajEnsemble` "
+            f"of this object with `AngleDihedralCartesianEncoderMap.trajs = TrajEnsemble`."
+        )
 
         if top is None:
             if len(self.trajs.top) > 1:
@@ -1827,17 +2534,18 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
                     f"Please specify which topology you would like to use for generating "
                     f"conformations. You can either provide a `str` to a topology file "
                     f"(file extension .pdb, .h5, .gro) on disk, or a `int` specifying the "
-                    f"`SingleTraj` object in this class' {self.trajs.n_trajs} trajs, or "
+                    f"one of the ensembles {len(self.trajs.top)} topologies "
+                    f"(see `AngleDihedralCartesianEncoderMap.trajs.top` for available "
+                    f"topologies). You can also directly supply a "
                     f"you can also specify a `mdtraj.Topology` object."
                 )
-                return
-            else:
-                traj = self.trajs[0]
-                mdanalysis_traj = self.trajs[0][0]
+                return  # type: ignore[return-value]
         elif isinstance(top, int):
-            mdanalysis_traj = self.trajs[top][0]
-        elif isinstance(top, str):
+            mdanalysis_traj = self.trajs[top][0].traj
+        elif isinstance(top, str) and top not in self.trajs.common_str:
             mdanalysis_traj = md.load(top)
+        elif isinstance(top, str) and top in self.trajs.common_str:
+            mdanalysis_traj = self.trajs.trajs_by_common_str[top][0].traj
         elif isinstance(top, md.Topology):
             mdanalysis_traj = top
         else:
@@ -1854,7 +2562,13 @@ class AngleDihedralCartesianEncoderMap(Autoencoder):
                 )
             return uni
         elif backend == "mdtraj":
-            traj = mdtraj_backmapping(top, dihedrals, sidechain_dihedrals, self.trajs)
+            traj = mdtraj_backmapping(
+                top=top,
+                dihedrals=dihedrals,
+                sidechain_dihedrals=sidechain_dihedrals,
+                trajs=self.trajs,
+                progbar=progbar,
+            )  # type: ignore[call-overload]
             return traj
         else:
             raise TypeError(

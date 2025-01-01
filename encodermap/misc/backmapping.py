@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/misc/backmapping.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -33,23 +33,27 @@ coordinates.
 from __future__ import annotations
 
 # Standard Library Imports
+import os.path
 from contextlib import contextmanager
 from copy import deepcopy
 from math import pi
 from pathlib import Path
 
 # Third Party Imports
-import networkx as nx
 import numpy as np
 import tensorflow as tf
+import transformations
 from optional_imports import _optional_import
-from tqdm import tqdm
+from tqdm import tqdm as normal_tqdm
+from tqdm.notebook import tqdm as notebook_tqdm
 from transformations import rotation_matrix as transformations_rotation_matrix
 
-# Local Folder Imports
-from ..loading import features
-from ..trajinfo import SingleTraj, TrajEnsemble
-from .rotate import _dihedral, _get_near_and_far_networkx
+# Encodermap imports
+from encodermap.loading import features
+from encodermap.misc.misc import _is_notebook
+from encodermap.misc.rotate import _dihedral, _get_near_and_far_networkx
+from encodermap.trajinfo.info_all import TrajEnsemble
+from encodermap.trajinfo.info_single import SingleTraj
 
 
 # numba to accelerate
@@ -57,9 +61,9 @@ try:
     # Third Party Imports
     from numba import jit
 
-    _NUMBA_AVAILABLE = True
+    _NUMBA_AVAILABLE: bool = True
 except ImportError:
-    _NUMBA_AVAILABLE = False
+    _NUMBA_AVAILABLE: bool = False
 
 
 ################################################################################
@@ -76,6 +80,7 @@ AnalysisFromFunction = _optional_import(
 MemoryReader = _optional_import("MDAnalysis", "coordinates.memory.MemoryReader")
 jit = _optional_import("numba", "jit")
 nb = _optional_import("numba")
+nx = _optional_import("networkx")
 
 
 ################################################################################
@@ -84,11 +89,14 @@ nb = _optional_import("numba")
 
 
 # Standard Library Imports
-from collections.abc import Sequence
-from typing import TYPE_CHECKING, Literal, Optional, Union, overload
+from collections.abc import Iterator, Sequence
+from typing import TYPE_CHECKING, Any, Literal, Optional, Union, overload
 
 
 if TYPE_CHECKING:
+    # Standard Library Imports
+    from io import BytesIO
+
     # Third Party Imports
     import MDAnalysis as mda
     import mdtraj as md
@@ -105,7 +113,7 @@ if TYPE_CHECKING:
 ################################################################################
 
 
-__all__ = ["backbone_hydrogen_oxygen_crossproduct", "mdtraj_backmapping"]
+__all__: list[str] = ["backbone_hydrogen_oxygen_crossproduct", "mdtraj_backmapping"]
 
 
 ################################################################################
@@ -115,6 +123,7 @@ __all__ = ["backbone_hydrogen_oxygen_crossproduct", "mdtraj_backmapping"]
 
 @contextmanager
 def temp_seed(seed):
+    """Within this context manager, the random state of NumPy is fixed."""
     state = np.random.get_state()
     np.random.seed(seed)
     try:
@@ -123,26 +132,14 @@ def temp_seed(seed):
         np.random.set_state(state)
 
 
-def _is_notebook():
-    try:
-        # Third Party Imports
-        from IPython import get_ipython
-
-        if "IPKernelApp" not in get_ipython().config:  # pragma: no cover
-            return False
-    except ImportError:
-        return False
-    except AttributeError:
-        return False
-    return True
-
-
 def _raise_components_exception(
     components: Sequence[nx.Graph],
     trajs: TrajEnsemble,
     top: Optional[md.Topology] = None,
     remove_component_size: int = 0,
 ) -> None:
+    """Raises a descriptive error message for the components upon breaking the
+    connection graph of a protein topology."""
     smallest_component = sorted(components, key=lambda x: len(x))[0]
     largest_component = sorted(components, key=lambda x: len(x))[1]
     if top is None:
@@ -153,7 +150,9 @@ def _raise_components_exception(
         _str = f"from the provided {top} file"
     msg = (
         f"The protein {_str} is disconnected. Changing dihedrals "
-        f"in multiple disconnected chains is currently not possible. If you are sure "
+        f"in multiple disconnected chains is currently not possible. You can also "
+        f"use `em.plot.plot_ball_and_stick(traj highlight='bonds')` to see which "
+        f"bonds are present in the topology. If you are sure "
         f"your protein is just one chain you can try to load a custom topology "
         f"or provide a topology with manually fixed bonds. I got {len(components)} "
         f"disconnected components. The smallest component contains these atoms: "
@@ -312,6 +311,17 @@ def dihedrals_to_cartesian_tf_layers(
 
 @jit(nopython=True)
 def _displacement_jit(xyz: np.ndarray, index: np.ndarray) -> np.ndarray:
+    """Faster nopython numba-jit compiled version of calculating displacements.
+
+    Args:
+        xyz (np.ndarray): Numpy array with shape (n_atoms, 3).
+        index (np.ndarray): Numpy array with shape (n_pairs, 2) and of type int,
+            indexing the displacements calculated between two atoms.
+
+    Returns:
+        np.ndarray: The displacements of shape (n_pairs, 1).
+
+    """
     return xyz[index[1]] - xyz[index[0]]
 
 
@@ -320,6 +330,17 @@ def _dihedral_jit(
     xyz: np.ndarray,
     indices: np.ndarray,
 ) -> np.ndarray:
+    """Faster nopython numba-jit compiled implementation of calculating a dihedral.
+
+    Args:
+        xyz (np.ndarray): Numpy array with shape (n_atoms, 3).
+        indices (np.ndarray): Numpy array with shape (n_dihedrals, 4) and of type int,
+            indexing the dihedrals defined between four atoms.
+
+    Returns:
+        np.ndarray: The displacements of shape (n_dihedrals, 1).
+
+    """
     b1 = _displacement_jit(xyz, indices[0:2])
     b2 = _displacement_jit(xyz, indices[1:3])
     b3 = _displacement_jit(xyz, indices[2:4])
@@ -337,6 +358,7 @@ def _rotmat_jit(
     direction: np.ndarray,
     pivot_point: np.ndarray,
 ) -> np.ndarray:
+    """Same as :func:`rotation_matrix`, but jit compiled."""
     sina = np.sin(angle)
     cosa = np.cos(angle)
     direction_unit = direction / (direction**2).sum() ** 0.5
@@ -384,35 +406,655 @@ def parallel_rotation_application(
 
 
 @overload
-def mdtraj_backmapping(
-    top: Optional[Union[Path, str, int, md.Topology]] = None,
-    dihedrals: Optional[np.ndarray] = None,
-    sidechain_dihedrals: Optional[np.ndarray] = None,
-    trajs: Optional[Union[TrajEnsemble, SingleTraj]] = None,
-    remove_component_size: int = 0,
-    verify_every_rotation: bool = False,
-    angle_type: Literal["degree", "radian"] = "radian",
-    omega: bool = True,
+def _full_backmapping_np(
+    feature_description: dict[int, dict[int, Sequence[int]]],
+    *inputs: np.ndarray,
+    return_indices: Literal[False],
+) -> tuple[np.ndarray, BytesIO]: ...
+
+
+@overload
+def _full_backmapping_np(
+    feature_description: dict[int, dict[int, Sequence[int]]],
+    *inputs: np.ndarray,
+    return_indices: Literal[True],
+) -> tuple[np.ndarray, BytesIO, dict[str, np.ndarray]]: ...
+
+
+def _full_backmapping_np(
+    feature_description: dict[int, dict[int, Sequence[int]]],
+    *inputs: np.ndarray,
     return_indices: bool = False,
-    parallel: bool = True,
-) -> md.Trajectory:
-    ...
+) -> Union[
+    tuple[np.ndarray, BytesIO], tuple[np.ndarray, BytesIO, dict[str, np.ndarray]]
+]:
+    """Also BackMaps sidechains. For that, we need a way to know which
+    distances, angles, dihedrals belong to the backbone, and which belong to
+    a sidechain. In contrast to how cartesians are normally represented in
+    MD trajectories, the cartesians in this class are ordered by first all
+    central cartesians, then all sidechain cartesians. Consider a theoretical
+    protein with three residues: MET-LYS-GLY. The protein's backbone has
+    9 cartesian coordiantes, 8 distances, 7 angles, and 6 dihedrals.
+    Methionine has 3 sidechain angles (ch1, chi2, chi3), Lysine has 4 sidechain
+    angles (chi1, ..., chi4), and Glycine has no sidechain angles. The
+    feature_description dict for this protein should be:
+    {-1: {1: 3, 2: 4, 3: 0}.
+
+    * Cartesians:
+        The cartesian coordinates of the sidechain atoms is an array with shape
+        `(sum([v + 1 for v in feature_description[-1].values() if v > 0])`. So for
+        this theoretical protein, we have 4 sidechain coordinates for MET and 5 for LYS.
+        The combined cartesians array first contains all backbones, and then follows
+        up with the sidechain positions as defined in the feature_description dict.
+    * Distances:
+        The distances between the sidechain atoms include the CA of the backbone,
+        thus we have `(sum([v + 1 for v in feature_description[-1].values() if v > 0])`
+        sidechain distances. MET has 4 sidechain distances, LYS has 5.
+    * Angles:
+        The angles between the sidechain atoms include the CA and N of the backbone.
+        We have `(sum([v + 1 for v in feature_description[-1].values() if v > 0])`
+        angles. MET has 4 sidechain angles (N-CA-CB, CA-CB-CG, CB-CG-SD, CG-SD-CE)
+        and LYS has 5 sidechain angles.
+    * Dihedrals:
+        The dihedrals between the sidechain atoms include the CA and N of the
+        backbone, so that we have `(sum(list(feature_description[-1].values()))`
+        sidechain dihedrals.
+
+    Indexing these features is done via boolean arrays. True values are kept
+    stationary. False values are allowed to move. Indexing the central distances
+    can be done with a triangular matrix with 8 rows, corresponding to the
+    8 distances in our example protein: ::
+
+          METN,  METCA, METC,  LYSN,  LYSCA, LYSC,  GLYN,  GLYCA, GLYC
+        0 True,  False, False, False, False, False, False, False, False
+        1 True,  True,  False, False, False, False, False, False, False
+        2 True,  True,  True,  False, False, False, False, False, False
+        3 True,  True,  True,  True,  False, False, False, False, False
+        4 True,  True,  True,  True,  True,  False, False, False, False
+        5 True,  True,  True,  True,  True,  True,  False, False, False
+        6 True,  True,  True,  True,  True,  True,  True,  False, False
+        7 True,  True,  True,  True,  True,  True,  True,  True,  False
+
+    Indexing the sidechain distances can be done with a matrix with small
+    triangular matrices like this. For our example protein we have 9 such
+    indices for the 9 sidechain distances ::
+
+           METCA, METCB, METCG, METSD, METCE, LYSCA, LYSCB, LYSCG, LYSCD, LYSCE, LYSNZ
+        0  True,  False, False, False, False, False, False, False, False, False, False
+        1  True,  True,  False, False, False, False, False, False, False, False, False
+        2  True,  True,  True,  False, False, False, False, False, False, False, False
+        3  True,  True,  True,  False, False, False, False, False, False, False, False
+        4  True,  True,  True,  True,  False, False, False, False, False, False, False
+        5  False, False, False, False, False, True,  False, False, False, False, False
+        6  False, False, False, False, False, True,  True,  False, False, False, False
+        7  False, False, False, False, False, True,  True,  True,  False, False, False
+        8  False, False, False, False, False, True,  True,  True,  True,  False, False
+        9  False, False, False, False, False, True,  True,  True,  True,  True,  False
+        10 False, False, False, False, False, True,  True,  True,  True,  True,  True
+
+    However, to keep the CA-atoms from appearing twice, the resulting array needs to
+    ditch the CA columns of the side_distances and add True, where needed. The algorithm
+    for the right side of the central_distances is row 0: all false, every three rows
+    add True for the number of sidechain atoms. The last row is just True. The left
+    side for the sidechain distances (without CA) are just True. We keep the
+    chain immovable for adjusting these lengths. For
+    our protein the resulting array looks like this: ::
+
+          0,     1,     2,     3,     4,     5,     6,     7,     8,     9,     10,    11,    12,    13,    14,    15,    16,    17
+          METN,  METCA, METC,  LYSN,  LYSCA, LYSC,  GLYN,  GLYCA, GLYC,  METCB, METCG, METSD, METCE, LYSCB, LYSCG, LYSCD, LYSCE, LYSNZ
+        0 True,  False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False
+        1 True,  True,  False, False, False, False, False, False, False, True,  True,  True,  True,  False, False, False, False, False
+        2 True,  True,  True,  False, False, False, False, False, False, True,  True,  True,  True,  False, False, False, False, False
+        3 True,  True,  True,  True,  False, False, False, False, False, True,  True,  True,  True,  False, False, False, False, False
+        4 True,  True,  True,  True,  True,  False, False, False, False, True,  True,  True,  True,  True,  True,  True,  True,  True
+        5 True,  True,  True,  True,  True,  True,  False, False, False, True,  True,  True,  True,  True,  True,  True,  True,  True
+        6 True,  True,  True,  True,  True,  True,  True,  False, False, True,  True,  True,  True,  True,  True,  True,  True,  True
+        7 True,  True,  True,  True,  True,  True,  True,  True,  False, True,  True,  True,  True,  True,  True,  True,  True,  True
+        -----------------------
+        8 True,  True,  True,  True,  True,  True,  True,  True,  True,  False, False, False, False, True,  True,  True,  True,  True
+        9 True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  False, False, False, True,  True,  True,  True,  True
+       10 True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  False, False, True,  True,  True,  True,  True
+       11 True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  False, True,  True,  True,  True,  True
+       12 True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True, False, False, False, False, False
+       13 True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True, True,  False, False, False, False
+       14 True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True, True,  True,  False, False, False
+       15 True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True, True,  True,  True,  False, False
+       16 True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True, True,  True,  True,  True,  False
+
+    Indexing the angles is similar to the distances. For an angle, we need
+    to index the left side (including pivot point) and the right side
+    (excluding the pivot point). For the central chain, this can be done by
+    omitting the first row of the distance indices. The sidechain indices can
+    be left as is. They contain the correct indices for rotation. Take the angle
+    METN-METCA-METCB as an example. We need the whole central chain to stay still,
+    while METCB, METCG, METSD, METCE are moving. That is exactly row 8 of
+    the array above. The rotation axis for this chain, which is currently just
+    in 2D is the z-axis: (0, 0, 1).
+
+    Indexing the dihedrals is similar to the angles. For a dihedral, we need to
+    define a pivot point: The first atom of the bond (the second atom of the four-tuple
+    defining the dihedral). Also, we need a rotation axis, which is the vector
+    connecting the two atoms. Whether the second atom is part of the movable
+    group is trivial, as it won't be rotated because it lies within the rotation axis.
+    The indices for the central dihedrals are just the same indices as the
+    distances omitting the first and last rows of the distance indices. This
+    coincides with the indices for the sidechain atoms. The first dihedral
+    angle of any protein is the psi1 angle between the N-terminal nitrogen
+    N-CA-C-N. In this case, the rotational axis is between CA-C and thus, the
+    sidechain (CB, etc.) needs to stay still for this dihedral. This is exactly
+    what row 1 of our index array describes. The next dihedrals, omega1, and phi1,
+    keep these indices of the sidechains, while the indices increase in the
+    central part of the indices (rows 2 and 3). The next dihedral, psi2 will keep
+    the sidechain dihedrals of the next residue stationary, as now the CA is on
+    the far side of the rotation. The sidechain dihedral rotations are similar,
+    however, the last row for every residue's sidechain must be omitted.
+
+    Args:
+        feature_description (dict[int, dict[int, Sequence[int]]]): A dictrionary
+            that defines the topological hull of the proteins.
+        *inputs (np.ndarray): The inputs in the order central_distances,
+            central_angles, central_dihedrals, side_distances, side_angles,
+            side_dihedrals.
+        return_indices (bool): Whether to also return a dict of np.ndarray, to be
+            used as indices.
+
+    Returns:
+        Union[tuple[np.ndarray, BytesIO], tuple[np.ndarray, BytesIO, dict[str, np.ndarray]]]:
+            Either a tuple of the reconstructed coordinates in a numpy array and
+            a BytesIO object containing png data. Or a tuple of the former two,
+            with a index dictionary.
+
+    """
+    ############################################################################
+    # Init
+    ############################################################################
+
+    # Imports
+    # Standard Library Imports
+    import itertools
+    from io import BytesIO
+
+    # Third Party Imports
+    import matplotlib.pyplot as plt
+    from scipy.linalg import block_diag
+    from transformations import rotation_matrix
+
+    # Encodermap imports
+    from encodermap.misc.rotate import _dihedral
+
+    # Definitions and Tests
+    n_residues: int = max(list(feature_description[-1].keys()))
+    assert np.array_equal(
+        np.arange(1, n_residues + 1),
+        np.sort(np.asarray(list(feature_description[-1].keys()))),
+    ), (
+        f"Currently the `feature_indices[-1]` dict needs to contain monotonous "
+        f"increasing keys. Starting from 1 {feature_description[-1].keys()=}"
+    )
+    n_sidechains: int = sum([v + 1 for v in feature_description[-1].values() if v > 0])
+    sum_sidechains = sum(list(feature_description[-1].values()))
+
+    # this can be defined beforehand and then stacked as often, as a batch needs it
+    init_xyz: np.ndarray = np.zeros(
+        shape=(1, n_residues * 3 + n_sidechains, 3),
+        dtype="float32",
+    )
+
+    # first we create the central_distance indices
+    central_distance_indices = np.tri(
+        N=n_residues * 3 - 1,
+        M=n_residues * 3,
+        k=0,
+    ).astype(bool)
+    right_side_central_distance_indices = [
+        np.full(shape=(1, n_sidechains), fill_value=False, dtype=bool)
+    ]
+    count = 0  # starts at the first atom of the central chan
+    count2 = n_residues * 3 + 1  # starts at the first atom of the sidechain
+    sidechain_cartesians_ind = []
+    sidechain_positions_indices = []
+    central_distance_index_duplets = np.vstack(
+        [
+            np.arange(0, n_residues * 3)[:-1],
+            np.arange(0, n_residues * 3)[1:],
+        ]
+    ).T.tolist()
+    sidechain_distance_index_duplets = []
+    central_angle_index_triplets = np.vstack(
+        [
+            np.arange(0, n_residues * 3)[:-2],
+            np.arange(0, n_residues * 3)[1:-1],
+            np.arange(0, n_residues * 3)[2:],
+        ]
+    ).T.tolist()
+    sidechain_angle_index_triplets = []
+    central_dihedral_index_quadruplets = np.vstack(
+        [
+            np.arange(0, n_residues * 3)[:-3],
+            np.arange(0, n_residues * 3)[1:-2],
+            np.arange(0, n_residues * 3)[2:-1],
+            np.arange(0, n_residues * 3)[3:],
+        ]
+    ).T.tolist()
+    sidechain_dihedral_index_quadruplets = []
+
+    # iterate over feature_description[-1] to get all indices and the right side
+    # of the central cartesians
+    for i, (residue, n_sidechains_in_residue) in zip(
+        itertools.count(1, 3), feature_description[-1].items()
+    ):
+        if n_sidechains_in_residue == 0:
+            if residue == 1 or residue == n_residues:
+                continue
+            else:
+                right_side_central_distance_indices.append(t)
+        else:
+            sidechain_cartesians_ind.append(
+                np.arange(count, count + n_sidechains_in_residue)
+            )
+            sidechain_positions_indices.append(
+                [i] + np.arange(count2 - 1, count2 + n_sidechains_in_residue).tolist()
+            )
+            for sidechain_i in range(n_sidechains_in_residue + 1):
+                if sidechain_i == 0:
+                    # adds CA-CB
+                    sidechain_distance_index_duplets.append(
+                        [(residue - 1) * 3 + 1, count2 - 1]
+                    )
+                    # adds N-CA-CB
+                    sidechain_angle_index_triplets.append(
+                        [(residue - 1) * 3, (residue - 1) * 3 + 1, count2 - 1]
+                    )
+                    # adds N-CA-CB-CG
+                    sidechain_dihedral_index_quadruplets.append(
+                        [(residue - 1) * 3, (residue - 1) * 3 + 1, count2 - 1, count2]
+                    )
+                elif sidechain_i == 1:
+                    # adds CB-CG
+                    sidechain_distance_index_duplets.append([count2 - 1, count2])
+                    # adds CA-CB-CG
+                    sidechain_angle_index_triplets.append(
+                        [(residue - 1) * 3 + 1, count2 - 1, count2]
+                    )
+                    # adds CA-CB-CG-CD
+                    if sidechain_i < n_sidechains_in_residue:
+                        sidechain_dihedral_index_quadruplets.append(
+                            [(residue - 1) * 3 + 1, count2 - 1, count2, count2 + 1]
+                        )
+                else:
+                    # adds CG-CD and so on
+                    sidechain_distance_index_duplets.append(
+                        [count2 + sidechain_i - 2, count2 + sidechain_i - 1]
+                    )
+                    # adds CB-CG-CD and so on
+                    sidechain_angle_index_triplets.append(
+                        [
+                            count2 + sidechain_i - 3,
+                            count2 + sidechain_i - 2,
+                            count2 + sidechain_i - 1,
+                        ]
+                    )
+                    if sidechain_i < n_sidechains_in_residue:
+                        sidechain_dihedral_index_quadruplets.append(
+                            [
+                                count2 + sidechain_i - 3,
+                                count2 + sidechain_i - 2,
+                                count2 + sidechain_i - 1,
+                                count2 + sidechain_i,
+                            ]
+                        )
+            count += n_sidechains_in_residue + 1
+            count2 += n_sidechains_in_residue + 1
+            t = np.zeros(
+                shape=(3, n_sidechains),
+                dtype=bool,
+            )
+            t[:, :count] = True
+            right_side_central_distance_indices.append(t)
+    assert len(sidechain_angle_index_triplets) == n_sidechains
+    assert len(sidechain_dihedral_index_quadruplets) == sum_sidechains, (
+        f"I could not reconstruct the correct number of sidechain dihedral "
+        f"quadruplets. The number of sidechain dihedrals requires the list "
+        f"to have length {sum_sidechains}, but I created a list with "
+        f"{len(sidechain_dihedral_index_quadruplets)}. The input has shape "
+        f"{inputs[5].shape}."
+    )
+    right_side_central_distance_indices.append(
+        np.full(shape=(1, n_sidechains), fill_value=True, dtype=bool)
+    )
+    right_side_central_distance_indices = np.vstack(right_side_central_distance_indices)
+    angle_index_triplets = np.vstack(
+        central_angle_index_triplets + sidechain_angle_index_triplets
+    )
+    dihedral_index_quadruplets = np.vstack(
+        central_dihedral_index_quadruplets + sidechain_dihedral_index_quadruplets
+    )
+    if sidechain_cartesians_ind != []:  # if sidechains
+        _use_sidechains = True
+        sidechain_cartesians_ind = np.concatenate(sidechain_cartesians_ind)
+        central_distance_indices = np.hstack(
+            [central_distance_indices, right_side_central_distance_indices]
+        )
+        side_distance_indices = [
+            (np.tri(N=i + 1, M=i + 2, k=0) + 1)[:, 1:]
+            for i in feature_description[-1].values()
+            if i > 0
+        ]
+        side_distance_indices = (block_diag(*side_distance_indices) % 2) == 0
+        left_side_side_distance_indices = (
+            np.full(  # all atoms in the central chain are True
+                shape=(len(side_distance_indices), n_residues * 3),
+                fill_value=True,
+                dtype=bool,
+            )
+        )
+        side_distance_indices = np.hstack(
+            [left_side_side_distance_indices, side_distance_indices]
+        )
+        distance_indices = np.vstack([central_distance_indices, side_distance_indices])
+    else:  # if no sidechains
+        _use_sidechains = False
+        distance_indices = central_distance_indices
+    assert distance_indices.shape == (
+        n_residues * 3 - 1 + n_sidechains,
+        init_xyz.shape[1],
+    ), (
+        f"The shape of the distance index after stacking is unexpected.\n"
+        f"Expected: {(n_residues * 3 - 1 + n_sidechains, init_xyz.shape[1])}\n"
+        f"Actual: {distance_indices.shape}"
+    )
+
+    # now the angles
+    central_angle_indices = central_distance_indices[1:]
+    if _use_sidechains:  # if sidechains
+        angle_indices = np.vstack([central_distance_indices[1:], side_distance_indices])
+        side_angle_indices = side_distance_indices
+    else:  # no sidechains
+        angle_indices = central_distance_indices[1:]
+    assert len(angle_indices) == len(distance_indices) - 1
+
+    # and the dihedrals
+    if _use_sidechains:  # if sidechains
+        dihedral_indices = np.vstack(
+            [
+                central_distance_indices[1:-1],
+                side_distance_indices[sidechain_cartesians_ind],
+            ]
+        )
+        corrector = np.count_nonzero(
+            list(feature_description[-1].values())
+        )  # per reisude with sidechain dihedrals one less
+    else:
+        dihedral_indices = central_distance_indices[1:-1]
+        corrector = 0
+    assert len(dihedral_indices) == len(distance_indices) - 2 - corrector
+    assert angle_index_triplets.shape[0] == angle_indices.shape[0]
+    assert dihedral_index_quadruplets.shape[0] == dihedral_indices.shape[0], (
+        f"The number of dihedral indices ({len(distance_indices)}) and quadruplets "
+        f"does not match ({len(dihedral_index_quadruplets)}). I get "
+        f"{inputs[2].shape[1] + inputs[5].shape[1]} in inputs."
+    )
+
+    ############################################################################
+    # Call
+    ############################################################################
+
+    (
+        central_distances,
+        central_angles,
+        central_dihedrals,
+        side_distances,
+        side_angles,
+        side_dihedrals,
+    ) = inputs
+
+    assert all(
+        len(i) == len(inputs[0]) for i in inputs[1:]
+    ), f"Inhomogeneous input lengths: {[len(i) for i in inputs]}"
+    distances = np.hstack([central_distances, side_distances])
+    angles = np.hstack([central_angles, side_angles])
+    dihedrals = np.hstack([central_dihedrals, side_dihedrals])
+    assert distance_indices.shape[0] == distances.shape[1]
+    assert angle_indices.shape[0] == angles.shape[1]
+    assert dihedral_indices.shape[0] == dihedrals.shape[1]
+
+    # for debug
+    fig, (ax1, ax2, ax3) = plt.subplots(
+        nrows=1, ncols=3, subplot_kw={"projection": "3d"}, figsize=(20, 8)
+    )
+    buf = BytesIO()
+
+    # copy the predefined array and make an array of quarternions
+    if len(angles) > 1:
+        xyz_out = np.repeat(init_xyz, len(angles), axis=0)
+    else:
+        xyz_out = init_xyz.copy()
+    xyz_out = np.pad(
+        xyz_out, ((0, 0), (0, 0), (0, 1)), mode="constant", constant_values=1
+    )
+
+    # distances in more tensor-flow-friendly implementation
+    # by creating a list and concatenating we can forego assignments whicha are
+    # not supported for symbolic tensors
+    xs_central = [np.zeros((len(angles),))]
+    ys_central = [np.zeros((len(angles),))]
+    xs_side = []
+    ys_side = []
+
+    residue = 0  # residue here is again, 0-based
+    idx = 0
+    j = 0
+    n_sidechains_in_residue = np.array(
+        [feature_description[-1][k] for k in sorted(feature_description[-1].keys())]
+    ).astype(np.int32)
+    for i in range(len(central_distance_indices)):
+        assert np.all(central_distances[:, i] > 0)
+        xs_central.append(xs_central[-1] + central_distances[:, i])
+        ys_central.append(np.zeros((len(angles),)))
+        if idx == 0 and _use_sidechains:
+            n_sidechains = n_sidechains_in_residue[residue]
+            if n_sidechains > 0:
+                for n in range(n_sidechains + 1):
+                    xs_side.append(xs_central[-1])
+                    dists = side_distances[:, j - n : j + 1]
+                    assert np.all(dists > 0), (
+                        f"Side distances at (0-based) residue {residue} are smaller than 0. "
+                        f"This is the {n} sidechain distance of a total of "
+                        f"{n_sidechains +  1} sidechain distances. For that, I index "
+                        f"the sidechain dists array for all frames from {j-n=} to "
+                        f"{j+1=}, which gives {side_distances[:, j-n:j+1]} for the "
+                        f"first 5 frames.."
+                    )
+                    _ = np.sum(dists, axis=1)
+                    if np.any(np.isnan(_)):
+                        raise Exception(
+                            f"At index {i=} of the central distances and {j=} of "
+                            f"the sidechain distances, the value of the y coordinate "
+                            f"became NaN. The shapes of the arrays are:"
+                            f"{central_distances.shape=} {side_distances.shape=} "
+                            f"{np.any(np.isnan(central_distances))=} "
+                            f"{np.any(np.isnan(side_distances))=}"
+                        )
+                    ys_side.append(_)
+                    j += 1
+        idx += 1
+        if idx >= 3:
+            residue += 1
+            idx = 0
+    xs = np.stack(xs_central + xs_side, axis=1)
+    ys = np.stack(ys_central + ys_side, axis=1)
+    xyz_out = np.stack([xs, ys, np.zeros(xs.shape), np.ones(xs.shape)], axis=2)
+    assert not np.any(
+        np.isnan(xyz_out)
+    ), f"After fixing dists, some values in `xyz_out` are NaN."
+
+    for frame, (
+        central_frame_dists,
+        side_frame_dists,
+        central_frame_angles,
+        side_frame_angles,
+        frame_dihedrals,
+    ) in enumerate(
+        zip(central_distances, side_distances, central_angles, side_angles, dihedrals)
+    ):
+        # plot
+        if frame == 0:
+            ax1.plot(*xyz_out[0, : n_residues * 3, :3].T, "bo-")
+            for ind in sidechain_positions_indices:
+                ax1.plot(*xyz_out[0, ind, :3].T, "bo-")
+
+        # angles
+        for i, (ang, ind, angle_index) in enumerate(
+            zip(
+                central_frame_angles,
+                central_angle_indices,
+                central_angle_index_triplets,
+            )
+        ):
+            direction = np.array([0, 0, 1]).astype("float32")
+            pivot_point = xyz_out[frame, angle_index[1], :3]
+            a, b, c = xyz_out[frame, angle_index, :3]
+            ba = a - b
+            bc = c - b
+            prod = np.linalg.norm(ba) * np.linalg.norm(bc)
+            cosine_angle = np.clip(np.dot(ba, bc) / prod, -1, 1)
+            current_angle = np.arccos(cosine_angle)
+            angle = np.abs(ang - current_angle)
+            rotmat = rotation_matrix(
+                angle=angle, direction=direction, point=pivot_point
+            )
+            rotated = rotmat.dot(xyz_out[frame, ~ind].T).T[:, :3]
+            xyz_out[frame, ~ind, :3] = rotated
+
+        if _use_sidechains:
+            for i, (ang, ind, angle_index) in enumerate(
+                zip(
+                    side_frame_angles,
+                    side_angle_indices,
+                    sidechain_angle_index_triplets,
+                )
+            ):
+                direction = np.array([0, 0, -1]).astype("float32")
+                pivot_point = xyz_out[frame, angle_index[1], :3]
+                a, b, c = xyz_out[frame, angle_index, :3]
+                ba = a - b
+                bc = c - b
+                cosine_angle = np.clip(
+                    np.dot(ba, bc) / (np.linalg.norm(ba) * np.linalg.norm(bc)), -1, 1
+                )
+                current_angle = np.arccos(cosine_angle)
+                angle = np.abs(ang - current_angle)
+                rotmat = rotation_matrix(
+                    angle=angle, direction=direction, point=pivot_point
+                )
+                rotated = rotmat.dot(xyz_out[frame, ~ind].T).T[:, :3]
+                xyz_out[frame, ~ind, :3] = rotated
+
+        # plot
+        if frame == 0:
+            ax2.plot(*xyz_out[0, : n_residues * 3, :3].T, "bo-")
+            for ind in sidechain_positions_indices:
+                ax2.plot(*xyz_out[0, ind, :3].T, "bo-")
+
+        # dihedrals
+        for i, (d_ang, ind, dihedral_index) in enumerate(
+            zip(frame_dihedrals, dihedral_indices, dihedral_index_quadruplets)
+        ):
+            bond = dihedral_index[[1, 2]]
+            a, b, c, d = xyz_out[frame, dihedral_index, :3]
+            direction = np.diff(xyz_out[frame, bond, :3], axis=0).flatten()
+            pivot_point = xyz_out[frame, bond[0], :3]
+            current_dihedral = _dihedral(xyz_out[frame, :, :3], dihedral_index)[0][0]
+            if np.any(np.isnan(current_dihedral)):
+                current_dihedral = 0.0
+            dihedral = d_ang - current_dihedral
+            rotmat = rotation_matrix(
+                angle=dihedral, direction=direction, point=pivot_point
+            )
+            xyz_out[frame, ~ind, :3] = rotmat.dot(xyz_out[frame, ~ind].T).T[:, :3]
+
+        # plot
+        if frame == 0:
+            ax3.plot(*xyz_out[0, : n_residues * 3, :3].T, "bo-")
+            for ind in sidechain_positions_indices:
+                ax3.plot(*xyz_out[0, ind, :3].T, "bo-")
+
+    fig.savefig(buf, format="png")
+    buf.seek(0)
+    if not return_indices:
+        return xyz_out[..., :3], buf
+    else:
+        return (
+            xyz_out[..., :3],
+            buf,
+            {
+                "central_distance_indices": np.asarray(central_distance_index_duplets),
+                "side_distance_indices": np.asarray(sidechain_distance_index_duplets),
+                "central_angles_indices": np.asarray(central_angle_index_triplets),
+                "side_angles_indices": np.asarray(sidechain_angle_index_triplets),
+                "central_dihedrals_indices": np.asarray(
+                    central_dihedral_index_quadruplets
+                ),
+                "side_dihedrals_indices": np.asarray(
+                    sidechain_dihedral_index_quadruplets
+                ),
+            },
+        )
+
+
+def _residue_number() -> Iterator[int]:
+    i = 0
+    atoms = 0
+    while True:
+        yield i
+        atoms += 1
+        if atoms > 2:
+            atoms = 0
+            i += 1
+
+
+def _alternating() -> Iterator[int]:
+    i = 0
+    while True:
+        if i % 2 == 0:
+            yield 1
+        else:
+            yield -1
+        i += 1
 
 
 @overload
 def mdtraj_backmapping(
-    top: Optional[Union[Path, str, int, md.Topology]] = None,
-    dihedrals: Optional[np.ndarray] = None,
-    sidechain_dihedrals: Optional[np.ndarray] = None,
-    trajs: Optional[Union[TrajEnsemble, SingleTraj]] = None,
-    remove_component_size: int = 0,
-    verify_every_rotation: bool = False,
-    angle_type: Literal["degree", "radian"] = "radian",
-    omega: bool = True,
-    return_indices: bool = True,
-    parallel: bool = True,
-) -> tuple[md.Trajectory, dict[str, np.ndarray]]:
-    ...
+    top: Optional[Union[Path, str, int, md.Topology]],
+    dihedrals: Optional[np.ndarray],
+    sidechain_dihedrals: Optional[np.ndarray],
+    trajs: Optional[Union[TrajEnsemble, SingleTraj]],
+    remove_component_size: int,
+    verify_every_rotation: bool,
+    angle_type: Literal["degree", "radian"],
+    omega: bool,
+    guess_amid_atoms: bool,
+    return_indices: Literal[False],
+    parallel: bool,
+    progbar: Optional[Any],
+) -> md.Trajectory: ...
+
+
+@overload
+def mdtraj_backmapping(
+    top: Optional[Union[Path, str, int, md.Topology]],
+    dihedrals: Optional[np.ndarray],
+    sidechain_dihedrals: Optional[np.ndarray],
+    trajs: Optional[Union[TrajEnsemble, SingleTraj]],
+    remove_component_size: int,
+    verify_every_rotation: bool,
+    angle_type: Literal["degree", "radian"],
+    omega: bool,
+    guess_amid_atoms: bool,
+    return_indices: Literal[True],
+    parallel: bool,
+    progbar: Optional[Any],
+) -> tuple[md.Trajectory, dict[str, np.ndarray]]: ...
 
 
 def mdtraj_backmapping(
@@ -424,14 +1066,16 @@ def mdtraj_backmapping(
     verify_every_rotation: bool = False,
     angle_type: Literal["degree", "radian"] = "radian",
     omega: bool = True,
+    guess_sp2_atoms: bool = True,
     return_indices: bool = False,
     parallel: bool = False,
+    progbar: Optional[Any] = None,
 ) -> Union[md.Trajectory, tuple[md.Trajectory, dict[str, np.ndarray]]]:
     """Uses MDTraj and Christoph Gohlke's transformations.py to rotate the
     bonds in the provided topology.
 
     Todo:
-        * Make this faster. Maybe write a C implementation.
+        * Make this faster. Maybe write a C or FORTRAN implementation.
 
     General procedure:
         * Decide on which topology to use (if different topologies are in the
@@ -656,7 +1300,7 @@ def mdtraj_backmapping(
                 f"Argument `top` must be of type str, int, or None, "
                 f"you provided: {type(top)}."
             )
-    elif isinstance(trajs, SingleTraj):
+    elif isinstance(trajs, SingleTraj) or trajs.__class__.__name__ == "SingleTraj":
         if isinstance(top, (int, Path, str)):
             print(
                 "When providing `em.SingleTraj` for argument `trajs`, the argument "
@@ -672,7 +1316,7 @@ def mdtraj_backmapping(
                 f"loaded. Please load them by calling: `traj.load_CVs('all')."
             )
         inp_trajs = trajs._gen_ensemble()
-    elif isinstance(trajs, TrajEnsemble):
+    elif isinstance(trajs, TrajEnsemble) or trajs.__class__.__name__ == "TrajEnsemble":
         assert "central_dihedrals" in trajs._CVs, (
             f"The provided traj, doesn't have the collective variable 'central_dihedrals' "
             f"loaded. Please load them by calling: `traj.load_CVs('all')."
@@ -682,21 +1326,24 @@ def mdtraj_backmapping(
                 f"The provided traj, doesn't have the collective variable 'central_dihedrals' "
                 f"loaded. Please load them by calling: `traj.load_CVs('all')."
             )
-        if isinstance(top, (str, Path)):
+        if isinstance(top, (str, Path)) and os.path.isfile(top):
             print(
                 "When providing `em.TrajEnsemble` for argument `trajs`, the argument "
-                "`top` will be ignored."
+                "`top` will be ignored if it points to a file."
             )
-        if top is None:
+        elif isinstance(top, str) and top in trajs.common_str:
+            _trajs_index = trajs.trajs_by_common_str[top][0].traj_num
+        elif top is None:
             _trajs_index = 0
         elif isinstance(top, (int, np.int64)):
-            _trajs_index = top
+            # _trajs_index = top
+            _trajs_index = trajs.trajs_by_top[trajs.top[top]][0].traj_num
         else:
             raise ValueError(
                 f"Argument `top` must be of type str, int, md.Topology or None, "
                 f"you provided: {type(top)}."
             )
-        inp_trajs = trajs[_trajs_index]._gen_ensemble()
+        inp_trajs = trajs.tsel[_trajs_index]._gen_ensemble()
     else:
         raise ValueError(
             f"Argument `trajs` must be of type `em.SingleTraj`, `em.TrajEnsemble`, or None, "
@@ -779,7 +1426,8 @@ def mdtraj_backmapping(
         else:
             raise Exception(
                 f"The shape of the provided `dihedrals` is wrong, either provide "
-                f"an array with shape[1] = {len(central_indices)}, or {len(all_central_indices)}, "
+                f"an array with shape[1] = {len(central_indices)}, or "
+                f"{len(all_central_indices)}, "
                 f"your array has the shape {dihedrals.shape[1]}."
             )
     else:
@@ -902,7 +1550,10 @@ def mdtraj_backmapping(
             side_bond_indices.shape[0]
             == _side_indices.shape[0]
             == sidechain_dihedrals.shape[1]
-        ), f"{side_bond_indices.shape=}, {_side_indices.shape=}, {sidechain_dihedrals.shape=}"
+        ), (
+            f"{side_bond_indices.shape=}, {_side_indices.shape=}, "
+            f"{sidechain_dihedrals.shape=}"
+        )
         # filter out the proline angles
         side_bond_atoms = np.dstack(
             [
@@ -973,141 +1624,250 @@ def mdtraj_backmapping(
             out_traj = deepcopy(inp_trajs[0][0].traj)
         else:
             out_traj = out_traj.join(inp_trajs[0][0].traj)
+    out_traj.top = inp_trajs[0].top
 
     # adjust the torsions
     new_xyz = np.ascontiguousarray(out_traj.xyz.copy().astype("float32"))
+    new_xyz = np.pad(
+        new_xyz, ((0, 0), (0, 0), (0, 1)), mode="constant", constant_values=1
+    )
     dihedrals = dihedrals.astype("float32")
     dih_indices = dih_indices.astype("int32")
     total_counts = dihedrals.shape[0] * dihedrals.shape[1]
     if sidechain_dihedrals is not None:
         total_counts += dihedrals.shape[0] * sidechain_dihedrals.shape[1]
-        dihedrals = dihedrals.astype("float32")
+        sidechain_dihedrals = sidechain_dihedrals.astype("float32")
+    if guess_sp2_atoms:
+        total_counts += _countprog(out_traj)
     if parallel:
+        raise Exception(f"Parallel has not yet been tested.")
         parallel_rotation_application(
             new_xyz,
             dih_indices,
             dihedrals,
             dih_near_sides,
         )
-        raise Exception(f"Parallel has not yet been tested.")
     else:
-        with tqdm(
-            desc="Backmapping", total=total_counts, position=0, leave=True
-        ) as pbar:
-            for i in range(dihedrals.shape[0]):
-                for j in range(dihedrals.shape[1]):
+        pbar = progbar
+        if pbar is None:
+            if _is_notebook():
+                pbar = notebook_tqdm(
+                    total=total_counts,
+                    leave=False,
+                    position=0,
+                    desc="Backmapping...",
+                )
+            else:
+                pbar = normal_tqdm(
+                    total=total_counts,
+                    leave=False,
+                    position=0,
+                    desc="Backmapping...",
+                )
+        else:
+            if not isinstance(pbar, bool):
+                pbar.reset(pbar.total + total_counts - 1)
+            else:
+                pbar = None
+
+        for i in range(dihedrals.shape[0]):
+            for j in range(dihedrals.shape[1]):
+                # central_dihedrals
+                near_side = dih_near_sides[j]
+                far_side = dih_far_sides[j]
+                dihedral = dih_indices[j]
+                bond = dih_bond_indices[j]
+
+                # define inputs
+                target_angle = dihedrals[i, j]
+                current_angle = _dihedral(new_xyz[i, :, :3], dihedral)[0][0]
+                angle = target_angle - current_angle
+                direction = np.diff(new_xyz[i, bond, :3], axis=0).flatten()
+                pivot_point = new_xyz[i, bond[0], :3]
+
+                # perform rotation
+                rotmat = transformations_rotation_matrix(angle, direction, pivot_point)
+                new_xyz[i, far_side, :3] = rotmat.dot(new_xyz[i, far_side].T).T[:, :3]
+
+                # verify
+                if verify_every_rotation:
+                    _ = _dihedral(new_xyz[i, :, :3], dihedral)[0][0]
+                    if not np.isclose(_, target_angle, atol=1e-3):
+                        _resids = [
+                            str(inp_trajs[0].top.atom(x).residue.index)
+                            for x in dihedral
+                        ]
+                        s = (
+                            f"Adjusting dihedral angle for atoms "
+                            f"{[str(inp_trajs[0].top.atom(x)) for x in dihedral]} "
+                            f"failed with an absolute tolerance of 1e-3. "
+                            f"Residue indices are: "
+                            f"{_resids}"
+                            f"\nTarget angle was {target_angle} {angle_type}, "
+                            f"but rotation yielded angle with {_} {angle_type}."
+                            f"\nCurrent angle was {current_angle}. To reach "
+                            f"target angle is a rotation of {angle} {angle_type} "
+                            f"was carried out."
+                            f"\nRotation axis was vector from "
+                            f"{inp_trajs[0].top.atom(bond[0])} to "
+                            f"{inp_trajs[0].top.atom(bond[1])}"
+                            f"\nOnly these atoms should have been affected by "
+                            f"rotation: {far_side}"
+                            "\nBut somehow this method still crashed. Maybe "
+                            "these prints will help."
+                        )
+                        raise Exception(s)
+                if pbar is not None:
+                    pbar.update()
+
+            if sidechain_dihedrals is not None:
+                for j in range(sidechain_dihedrals.shape[1]):
                     # central_dihedrals
-                    near_side = dih_near_sides[j]
-                    far_side = dih_far_sides[j]
-                    dihedral = dih_indices[j]
-                    bond = dih_bond_indices[j]
+                    near_side = side_near_sides[j]
+                    far_side = side_far_sides[j]
+                    dihedral = side_indices[j]
+                    bond = side_bond_indices[j]
 
                     # define inputs
-                    target_angle = dihedrals[i, j]
-                    current_angle = _dihedral(new_xyz[i], dihedral)[0][0]
+                    target_angle = sidechain_dihedrals[i, j]
+                    current_angle = _dihedral(new_xyz[i, :, :3], dihedral)
                     angle = target_angle - current_angle
-                    direction = np.diff(new_xyz[i, bond], axis=0).flatten()
-                    pivot_point = new_xyz[i, bond[0]]
+                    direction = np.diff(new_xyz[i, bond, :3], axis=0).flatten()
+                    pivot_point = new_xyz[i, bond[0], :3]
 
                     # perform rotation
                     rotmat = transformations_rotation_matrix(
                         angle, direction, pivot_point
                     )
-                    padded = np.pad(
-                        new_xyz[i][far_side],
-                        ((0, 0), (0, 1)),
-                        mode="constant",
-                        constant_values=1,
+                    rotmat = transformations_rotation_matrix(
+                        angle, direction, pivot_point
                     )
-                    new_xyz[i][far_side] = rotmat.dot(padded.T).T[:, :3]
+                    new_xyz[i, far_side, :3] = rotmat.dot(new_xyz[i, far_side].T).T[
+                        :, :3
+                    ]
 
-                    if i == 0 and j == 0 and verify_every_rotation:
-                        dih_indexes = _dih_indices[j]
-                        s = (
-                            f"Near and far side for dihedral "
-                            f"{[str(inp_trajs[0].top.atom(x)) for x in dih_indexes]} "
-                            f"are:\nNear: {[str(inp_trajs[0].top.atom(x)) for x in near_side]}, "
-                            f"{near_side}\nFar: {[str(inp_trajs[0].top.atom(x)) for x in dih_far_sides[j][:12]]}"
-                            f"..., {dih_far_sides[j][:12]}...\nRotation around bond "
-                            f"{[str(inp_trajs[0].top.atom(x)) for x in bond]}, "
-                            f"{bond}.\nPositions of near side before rotation "
-                            f"are\n{out_traj.xyz[i][near_side]}.\nPositions of "
-                            f"near side after rotation are\n{new_xyz[i][near_side]}"
-                        )
-                        # print(s)
-
-                    # verify
                     if verify_every_rotation:
-                        _ = _dihedral(new_xyz[i], dihedral)[0][0]
+                        _ = _dihedral(new_xyz[i, :, :3], dihedral)[0][0]
                         if not np.isclose(_, target_angle, atol=1e-3):
+                            _resids = [
+                                str(inp_trajs[0].top.atom(x).residue.index)
+                                for x in dihedral
+                            ]
                             s = (
-                                f"Adjusting dihedral angle for atoms {[str(inp_trajs[0].top.atom(x)) for x in dihedral]} failed with a tolerance of 1e-4. "
-                                f"Residue indices are: {[str(inp_trajs[0].top.atom(x).residue.index) for x in dihedral]}"
-                                f"\nTarget angle was {target_angle} {angle_type}, but rotation yielded angle with {_} {angle_type}."
-                                f"\nCurrent angle was {current_angle}. To reach target angle is a rotation of {angle} {angle_type} was carried out."
-                                f"\nRotation axis was vector from {inp_trajs[0].top.atom(bond[0])} to {inp_trajs[0].top.atom(bond[1])}"
-                                f"\nOnly these atoms should have been affected by rotation: {far_side}"
-                                "\nBut somehow this method still crashed. Maybe these prints will help."
+                                f"Adjusting dihedral angle for atoms "
+                                f"{[str(inp_trajs[0].top.atom(x)) for x in dihedral]} "
+                                f"failed with an absolute tolerance of 1e-3. "
+                                f"Residue indices are: "
+                                f"{_resids}"
+                                f"\nTarget angle was {target_angle} {angle_type}, "
+                                f"but rotation yielded angle with {_} {angle_type}."
+                                f"\nCurrent angle was {current_angle}. To reach target "
+                                f"angle is a rotation of {angle} {angle_type} was "
+                                f"carried out.\nRotation axis was vector from "
+                                f"{inp_trajs[0].top.atom(bond[0])} to "
+                                f"{inp_trajs[0].top.atom(bond[1])}"
+                                f"\nOnly these atoms should have been affected by "
+                                f"rotation: {far_side}\nBut somehow this method "
+                                f"still crashed. Maybe these prints will help."
                             )
                             raise Exception(s)
-                    pbar.update()
-
-                if sidechain_dihedrals is not None:
-                    for j in range(sidechain_dihedrals.shape[1]):
-                        # central_dihedrals
-                        near_side = side_near_sides[j]
-                        far_side = side_far_sides[j]
-                        dihedral = side_indices[j]
-                        bond = side_bond_indices[j]
-
-                        # define inputs
-                        target_angle = sidechain_dihedrals[i, j]
-                        current_angle = _dihedral(new_xyz[i], dihedral)
-                        angle = target_angle - current_angle
-                        direction = np.diff(new_xyz[i, bond], axis=0).flatten()
-                        pivot_point = new_xyz[i, bond[0]]
-
-                        # perform rotation
-                        rotmat = transformations_rotation_matrix(
-                            angle, direction, pivot_point
-                        )
-                        padded = np.pad(
-                            new_xyz[i][far_side],
-                            ((0, 0), (0, 1)),
-                            mode="constant",
-                            constant_values=1,
-                        )
-                        new_xyz[i][far_side] = rotmat.dot(padded.T).T[:, :3]
-
-                        if verify_every_rotation:
-                            _ = _dihedral(new_xyz[i], dihedral)[0][0]
-                            if not np.isclose(_, target_angle, atol=1e-3):
-                                s = (
-                                    f"Adjusting dihedral angle for atoms "
-                                    f"{[str(inp_trajs[0].top.atom(x)) for x in dihedral]} "
-                                    f"failed with a tolerance of 1e-4. "
-                                    f"Residue indices are: "
-                                    f"{[str(inp_trajs[0].top.atom(x).residue.index) for x in dihedral]}"
-                                    f"\nTarget angle was {target_angle} {angle_type}, "
-                                    f"but rotation yielded angle with {_} {angle_type}."
-                                    f"\nCurrent angle was {current_angle}. To reach target "
-                                    f"angle is a rotation of {angle} {angle_type} was "
-                                    f"carried out.\nRotation axis was vector from "
-                                    f"{inp_trajs[0].top.atom(bond[0])} to {inp_trajs[0].top.atom(bond[1])}"
-                                    f"\nOnly these atoms should have been affected by "
-                                    f"rotation: {far_side}\nBut somehow this method "
-                                    f"still crashed. Maybe these prints will help."
-                                )
-                                raise Exception(s)
+                    if pbar is not None:
                         pbar.update()
 
     # overwrite traj and return
-    out_traj.xyz = new_xyz
+    out_traj.xyz = new_xyz[..., :3]
+
+    # fix the amide atoms
+    if guess_sp2_atoms:
+        _guess_sp2_atoms(out_traj, pbar)
 
     if not return_indices:
         return out_traj
     if return_indices:
         return out_traj, _back_labels
+
+
+def _countprog(traj):
+    total = 0
+    for i, r in enumerate(traj.top.residues):
+        for j in range(traj.n_frames):
+            if r:
+                continue
+            if i > 0:
+                total += 1
+            if i < traj.n_residues - 2:
+                total += 1
+    return total
+
+
+def _guess_sp2_atoms(
+    traj: md.Trajectory,
+    pbar: Optional[Any] = None,
+) -> None:
+    # Third Party Imports
+    from scipy.spatial.transform import Rotation as R
+
+    Ns = traj.top.select("name N")
+    CAs = traj.top.select("name CA")
+    Cs = traj.top.select("name C")
+    assert len(Ns) == len(CAs) == len(Cs) == traj.n_residues, (
+        f"I could not determine the correct number of backbone atoms for this "
+        f"protein of {traj.n_residues} residues. I expected {traj.n_residues} "
+        f"nitrogen atoms, but got {len(Ns)}. I expected {traj.n_residues} "
+        f"alpha carbon atoms, but got {len(CAs)}. I expected {traj.n_residues} "
+        f"carboxylic carbons, but got {len(Cs)}. Maybe your protein contains "
+        f"non-standard residues."
+    )
+    for i, (r, N, CA, C) in enumerate(zip(traj.top.residues, Ns, CAs, Cs)):
+        for j, frame in enumerate(traj):
+            if r.name == "PRO":
+                continue
+            N_pos = frame.xyz[0, N]
+            CA_pos = frame.xyz[0, CA]
+            C_pos = frame.xyz[0, C]
+            if i > 0:
+                H = next(r.atoms_by_name("H")).index
+                C_prev_pos = frame.xyz[0, Cs[i - 1]]
+                v1 = CA_pos - N_pos
+                v2 = C_prev_pos - N_pos
+                n = np.cross(v1, v2)
+                n /= np.linalg.norm(n)
+                n *= 123 / 180 * np.pi
+                M = R.from_rotvec(n)
+                new_H_pos = v1 @ M.as_matrix()
+                new_H_pos /= np.linalg.norm(new_H_pos)
+                new_H_pos *= 0.11
+                new_H_pos += N_pos
+                traj.xyz[j, H] = new_H_pos
+                if pbar is not None:
+                    pbar.update()
+            if i < traj.n_residues - 2:
+                O = next(r.atoms_by_name("O")).index
+                N_next_pos = frame.xyz[0, Ns[i + 1]]
+                v1 = CA_pos - C_pos
+                v2 = N_next_pos - C_pos
+                n = np.cross(v1, v2)
+                n /= np.linalg.norm(n)
+                n *= 121 / 180 * np.pi
+                M = R.from_rotvec(n)
+                new_O_pos = v1 @ M.as_matrix()
+                new_O_pos /= np.linalg.norm(new_O_pos)
+                new_O_pos *= 0.124
+                new_O_pos += C_pos
+                traj.xyz[j, O] = new_O_pos
+                # actual_distance = np.linalg.norm(frame.xyz[0, C] - frame.xyz[0, O])
+                # u = CA_pos - C_pos
+                # v = frame.xyz[0, O] - C_pos
+                # actual_angle = np.arccos(np.dot(u, v) / (np.linalg.norm(u) * np.linalg.norm(v)))
+                # print(
+                #     f"In the protein, the atoms {traj.top.atom(C)} and {traj.top.atom(O)} are "
+                #     f"{actual_distance:.3f} nm apart with a CA-C-O angle of {actual_angle:.3f} rad. "
+                #     f"Setting the angle to {121 / 180 * np.pi:.3f} and the distance "
+                #     f"to 0.124 nm, I get the position of to be {new_O_pos=}, instead "
+                #     f"of {frame.xyz[0, O]}."
+                # )
+                if pbar is not None:
+                    pbar.update()
 
 
 def dihedral_to_cartesian_tf_one_way_layers(
@@ -1138,7 +1898,11 @@ def dihedral_to_cartesian_tf_one_way_layers(
     for i in range(n):
         collected_cartesians.append(rotated[:, 0:1])
         axis = rotated[:, 1] - rotated[:, 0]
-        axis /= tf.norm(axis, axis=1, keepdims=True)
+        # axis /= tf.norm(axis, axis=1, keepdims=True)
+        # numeric problems with tf.norm
+        # see here:
+        # https://datascience.stackexchange.com/q/80898
+        axis /= tf.expand_dims(tf.sqrt(tf.reduce_sum(tf.square(axis), axis=1)), axis=-1)
         offset = rotated[:, 1:2]
         rotated = offset + tf.matmul(
             rotated[:, 1:] - offset, rotation_matrix(axis, dihedrals[:, i])

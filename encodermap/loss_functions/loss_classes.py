@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/loss_functions/loss_classes.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -44,14 +44,14 @@ from typing import Any, Optional, Union
 import tensorflow as tf
 import tensorflow.keras.backend as K
 
-# Local Folder Imports
-from ..misc.distances import (
+# Encodermap imports
+from encodermap.misc.distances import (
     pairwise_dist,
     pairwise_dist_periodic,
     periodic_distance,
     sigmoid,
 )
-from ..parameters import ADCParameters, Parameters
+from encodermap.parameters.parameters import ADCParameters, Parameters
 
 
 ################################################################################
@@ -64,7 +64,7 @@ from ..parameters import ADCParameters, Parameters
 ################################################################################
 
 
-__all__ = ["DihedralLoss", "AngleLoss"]
+__all__: list[str] = ["DihedralLoss", "AngleLoss"]
 
 
 ################################################################################
@@ -78,7 +78,7 @@ def testing(cls_or_func):
 
         @functools.wraps(cls_or_func)
         def __init__(self, *args, **kwargs):
-            if os.getenv("EM_TESTING", "False") != "True":
+            if os.getenv("ENCODERMAP_TESTING", "False") != "True":
                 raise Exception(
                     f"You are instantiating a em.testing class ({cls_or_func.__name__}). "
                     f"These classes are actively developed and not stable. If you "
@@ -93,7 +93,7 @@ def testing(cls_or_func):
 
         @functools.wraps(cls_or_func)
         def newfunc(*args, **kwargs):
-            if os.getenv("EM_TESTING", "False") != "True":
+            if os.getenv("ENCODERMAP_TESTING", "False") != "True":
                 raise Exception(
                     f"You are calling an em.testing function: ({cls_or_func.__name__}). "
                     f"These functions are actively developed and not stable. If you "
@@ -130,7 +130,7 @@ def _summary_cost(
 
 
 @testing
-@tf.keras.saving.register_keras_serializable()
+@tf.keras.utils.register_keras_serializable()
 class EncoderMapBaseLoss(tf.keras.losses.Loss):
     """EncoderMap's base loss. Serializes parameters and `self._train_counter`.
 
@@ -150,7 +150,7 @@ class EncoderMapBaseLoss(tf.keras.losses.Loss):
         Most subclassed losses, don't need to overwrite this `__init__()`.
 
         Args:
-            parameters (Optional[Union[Parameters, ADCParameters]]): The parameters
+            parameters (Optional[Union[encodermap.parameters.Parameters, encodermap.parameters.ADCParameters]]): The parameters
                 this class will use to decide hwo to compute losses.
 
         """
@@ -212,7 +212,7 @@ class EncoderMapBaseLoss(tf.keras.losses.Loss):
 
 
 @testing
-@tf.keras.saving.register_keras_serializable()
+@tf.keras.utils.register_keras_serializable()
 class ADCBaseLoss(EncoderMapBaseLoss):
     """Base class for all Losses of the `AngleDihedralCartesianEncoderMap`.
 
@@ -232,7 +232,7 @@ class ADCBaseLoss(EncoderMapBaseLoss):
 
 
 @testing
-@tf.keras.saving.register_keras_serializable()
+@tf.keras.utils.register_keras_serializable()
 class DihedralLoss(ADCBaseLoss):
     """EncoderMap's `DihedralLoss` for `AngleDihedralCartesianEncoderMap`.
 
@@ -295,7 +295,7 @@ class DihedralLoss(ADCBaseLoss):
 
 
 @testing
-@tf.keras.saving.register_keras_serializable()
+@tf.keras.utils.register_keras_serializable()
 class AngleLoss(ADCBaseLoss):
     """EncoderMap's `AngleLoss` for `AngleDihedralCartesianEncoderMap`.
 

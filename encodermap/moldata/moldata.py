@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/moldata/moldata.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -40,11 +40,11 @@ Is Backwards-compatible to the old MolData class.
 import numpy as np
 from optional_imports import _optional_import
 
-# Local Folder Imports
-from ..encodermap_tf1.moldata import MolData as MolDatav1
-from ..loading import Featurizer
-from ..trajinfo.info_all import TrajEnsemble
-from ..trajinfo.info_single import SingleTraj
+# Encodermap imports
+from encodermap.encodermap_tf1.moldata import MolData as MolDatav1
+from encodermap.loading.featurizer import Featurizer
+from encodermap.trajinfo.info_all import TrajEnsemble
+from encodermap.trajinfo.info_single import SingleTraj
 
 
 ################################################################################
@@ -61,7 +61,7 @@ md = _optional_import("mdtraj")
 ################################################################################
 
 
-__all__ = ["NewMolData"]
+__all__: list[str] = ["NewMolData"]
 
 
 ################################################################################

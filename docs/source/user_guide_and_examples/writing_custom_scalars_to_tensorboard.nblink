@@ -1,7 +1,0 @@
-{
-    "path" : "../../../tutorials/notebooks_customization/writing_custom_scalars_to_tensorboard.ipynb",
-    "extra-media": [
-        "../../../tutorials/notebooks_customization/custom_scalars_1.png",
-        "../../../tutorials/notebooks_starter/asp7.csv"
-    ]
-}

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # tests/test_autoencoder.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -30,56 +30,41 @@
 from __future__ import annotations
 
 # Standard Library Imports
-import copy
 import functools
-import os
+import inspect
+import json
 import platform
+import shutil
 import struct
-import sys
+import tempfile
 import unittest
-from collections.abc import Generator, Sequence
+from collections.abc import Generator
 from copy import deepcopy
 from pathlib import Path
 from typing import Any, Literal, Optional, Union
+from unittest.mock import patch
 
 # Third Party Imports
-import kaggle
+import h5py
 import MDAnalysis as mda
+import mdtraj
 import numpy as np
 import scipy
 import tensorflow as tf
-import tensorflow as tf2
 import transformations
 import xarray as xr
 from rich.console import Console
-from tensorflow.python.framework.errors_impl import DataLossError
-from tensorflow.python.summary.summary_iterator import summary_iterator
-from tqdm import tqdm
 
 # Encodermap imports
-from encodermap.encodermap_tf1.backmapping import chain_in_plane as chain_in_plane_tf1
-from encodermap.encodermap_tf1.backmapping import (
-    dihedrals_to_cartesian_tf as dihedral_to_cartesian_tf1,
-)
-from encodermap.encodermap_tf1.backmapping import (
-    guess_amide_H,
-    guess_amide_O,
-    merge_cartesians,
-)
-from encodermap.encodermap_tf1.misc import pairwise_dist
-from encodermap.encodermap_tf1.misc import variable_summaries as variable_summaries_tf1
+import encodermap.models.models
+from conftest import skip_all_tests_except_env_var_specified
 from encodermap.misc.saving_loading_models import load_model, save_model
-from encodermap.models.models import (
-    MyBiasInitializer,
-    MyKernelInitializer,
-    gen_functional_model,
-)
+from encodermap.models.models import gen_functional_model
 from encodermap.trajinfo.info_single import Capturing
 from encodermap.trajinfo.trajinfo_utils import load_CVs_ensembletraj
 
 
 import encodermap as em  # isort: skip
-
 
 try:
     # Local Folder Imports
@@ -96,6 +81,42 @@ except ImportError:
 ################################################################################
 
 
+class MockSingleTraj:
+    index = (None,)
+    _calc_CV = em.SingleTraj.__dict__["_calc_CV"]
+    load_CV = em.SingleTraj.__dict__["load_CV"]
+
+    def __init__(self, traj_num):
+        self._CVs = xr.Dataset()
+        self.traj_num = traj_num
+
+    @property
+    def CVs(self):
+        return self._calc_CV()
+
+
+class MockTrajEnsemble:
+    _calc_CV = em.TrajEnsemble.__dict__["_calc_CV"]
+
+    def __iter__(self):
+        self._index = 0
+        return self
+
+    def __next__(self):
+        self._index += 1
+        try:
+            return self.trajs[self._index - 1]
+        except IndexError:
+            raise StopIteration
+
+    def __getitem__(self, key):
+        return self.trajs[key]
+
+    @property
+    def CVs(self):
+        return self._calc_CV()
+
+
 @functools.cache
 def is_wsl() -> bool:
     """
@@ -109,59 +130,26 @@ def test_trajs_with_dataset(
     path: Optional[str],
 ) -> bool:
     if isinstance(dataset, str):
-        kaggle.api.dataset_download_files(
+        em.kondata.get_from_kondata(
             dataset,
-            path=path,
-            unzip=True,
+            output=path,
+            mk_parentdir=True,
+            silence_overwrite_message=True,
         )
         nc_files = list(Path(path).glob("*.nc"))
-        assert len(nc_files) == 1
+        assert len(nc_files) == 1, f"{nc_files=} {path=} {dataset=}"
         dataset = xr.load_dataset(nc_files[0], engine="h5netcdf")
 
-    class Traj:
-        index = (None,)
-        _calc_CV = em.SingleTraj.__dict__["_calc_CV"]
+    MockTrajEnsemble.CVs = em.TrajEnsemble.CVs
 
-        def __init__(self, traj_num):
-            self.traj_num = traj_num
-
-        def load_CV(self, CVs):
-            self._CVs = CVs
-
-        def __getitem__(self, key):
-            return self.trajs[key]
-
-        @property
-        def CVs(self):
-            return self._calc_CV()
-
-    class Trajs:
-        _calc_CV = em.TrajEnsemble.__dict__["_calc_CV"]
-
-        def __iter__(self):
-            """Iterate over frames in this class. Returns the correct
-            CVs along with the frame of the trajectory."""
-            self._index = 0
-            return self
-
-        def __next__(self):
-            self._index += 1
-            try:
-                return self.trajs[self._index - 1]
-            except IndexError:
-                raise StopIteration
-
-        def __getitem__(self, key):
-            return self.trajs[key]
-
-        @property
-        def CVs(self):
-            return self._calc_CV()
-
-    Trajs.CVs = em.TrajEnsemble.CVs
-
-    trajs = Trajs()
-    trajs.trajs = [Traj(i) for i in dataset.coords["traj_num"]]
+    trajs = MockTrajEnsemble()
+    trajs.trajs = [MockSingleTraj(i) for i in dataset.coords["traj_num"]]
+    for traj in trajs:
+        test = dataset.sel(traj_num=traj.traj_num).dropna("frame_num", how="all")
+        print(test)
+        traj.n_frames = len(test.coords["frame_num"])
+        traj._traj_file = Path(f"/tmp/traj_{traj.traj_num:02d}.xtc")
+        traj.traj_file = f"/tmp/traj_{traj.traj_num:02d}.xtc"
     load_CVs_ensembletraj(trajs, dataset)
     side_dihedrals = trajs.CVs["side_dihedrals"]
 
@@ -184,6 +172,7 @@ def test_trajs_with_dataset(
         multimer_topology_classes = None
         multimer_connection_bridges = None
         multimer_lengths = None
+        reconstruct_sidechains = False
 
     full_dataset = em.AngleDihedralCartesianEncoderMap.get_train_data_from_trajs(
         trajs, P
@@ -249,6 +238,27 @@ def test_trajs_with_dataset(
     return one and not two and not three and not four
 
 
+def custom_get_loss_dense(self, inp: Any) -> tuple[tf.Tensor, tf.Tensor, tf.Tensor]:
+    tf.ensure_shape(
+        inp[2],
+        (None, 30, 3),
+    )
+    return (
+        tf.constant(0.0, dtype=tf.float32),
+        inp[2],
+        inp[2],
+    )
+
+
+def custom_get_loss_sparse(self, inp: Any) -> tf.Tensor:
+    assert inp[2].shape.as_list() == [None, 90]
+    return (
+        tf.constant(0.0, dtype=tf.float32),
+        inp[2],
+        inp[2],
+    )
+
+
 ################################################################################
 # TestSuites
 ################################################################################
@@ -280,11 +290,92 @@ def for_all_test_methods(decorator):
     return decorate
 
 
+def nan_after_100_iter_generator(
+    shapes: list[Union[tuple[int, int], tuple[int, int, int]]],
+    sparse_indices: Any,
+) -> Generator:
+    # we will do a theoretical protein with 10 residues.
+    # that means, we need 30 coordinates, 29 distances, 28 angles and 27 dihedrals
+    # we will do 35 sidechain dihedrals
+    # the dataset will be sparse, so that the first topology provides a full, dense
+    # dataset, the second topology will be from a protein with 9 residues, so that
+    # 3 coordinates, 3 distances, 3 angles, 3 dihedrals are missing
+    # furthermore, the second topology will be sparse in the sidechains at indices
+    # [[0, ..., 20, 27, ..., 32]]
+    # the dense and not dense inputs will always present 5 samples, but along
+    # the sample dimension they will be mixed
+
+    # Encodermap imports
+    from encodermap.autoencoder.autoencoder import np_to_sparse_tensor
+
+    i = 0
+    while True:
+        data = []
+        for k, (s, ss) in enumerate(zip(shapes, sparse_indices)):
+            datum = np.random.random(s).astype("float32")
+            sparse_rows = np.random.choice(np.arange(10), 5)
+            if isinstance(ss, np.ndarray):
+                rows = sparse_rows.astype(np.intp)
+                columns = ss.astype(np.intp)
+                datum[rows[:, np.newaxis], columns] = np.nan
+            else:
+                datum[sparse_rows, ss] = np.nan
+
+            # reshape cartesians to rank 2
+            if datum.ndim == 3:
+                datum = datum.reshape(10, -1)
+
+            # add a cheeky nan to iteration 8
+            if i == 200:
+                indices = np.stack(np.where(~np.isnan(datum))).T.astype("int64")
+                dense_shape = datum.shape
+                datum[0, 0] = np.nan
+                inde = ~np.isnan(datum)
+                inde[0, 0] = True
+                datum = datum[inde].flatten()
+                datum = tf.sparse.SparseTensor(indices, datum, dense_shape)
+            else:
+                datum = np_to_sparse_tensor(datum)
+            data.append(datum)
+        if i <= 300:
+            yield tuple(data)
+        else:
+            break
+        i += 1
+
+
+class TestParameters(tf.test.TestCase):
+    def test_parameter_can_load_arbitrary_files(self):
+        # Standard Library Imports
+        import json
+
+        with tempfile.TemporaryDirectory() as td:
+            tempdir = Path(td)
+            params = em.Parameters()
+            as_dict = params.to_dict()
+            as_dict["bad_param"] = 2
+            self.assertIn("main_path", as_dict)
+            with open(tempdir / "tmp.json", "w+") as f:
+                json.dump(as_dict, f)
+            with Capturing() as output:
+                new_params = em.Parameters.from_file(tempdir / "tmp.json")
+            self.assertTrue(any("Dropping" in o and "bad_param" in o for o in output))
+
+
 @for_all_test_methods(log_successful_test)
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestAutoencoder(tf.test.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.console = Console(width=150)
+        return cls
+
+    def assertHasAttr(self, obj, intendedAttr):
+        """Helper to check whether an attr is present."""
+        testBool = hasattr(obj, intendedAttr)
+        self.assertTrue(
+            testBool, msg=f"obj lacking an attribute. {obj=}, {intendedAttr=}"
+        )
 
     def assertAllClosePeriodic(
         self,
@@ -296,6 +387,8 @@ class TestAutoencoder(tf.test.TestCase):
         err_msg: str = "",
         verbose: bool = True,
         periodicity: float = 2 * np.pi,
+        max_percentage_mismatched: float = 0.0,
+        indices: Optional[np.ndarray] = None,
     ) -> None:
         (a, b) = self.evaluate_if_both_tensors(a, b)
         a = self._GetNdArray(a)
@@ -310,28 +403,1093 @@ class TestAutoencoder(tf.test.TestCase):
                 err_msg=err_msg,
                 verbose=verbose,
                 periodicity=periodicity,
+                max_percentage_mismatched=max_percentage_mismatched,
+                indices=indices,
             )
         except AssertionError as e:
             self.fail(str(e))
+
+    def test_metrics(self):
+        # Encodermap imports
+        from encodermap.callbacks.metrics import (
+            ADCClashMetric,
+            ADCRMSDMetric,
+            rmsd_numpy,
+        )
+
+        parameters = em.Parameters(batch_size=128)
+        metric = em.callbacks.ADCClashMetric(
+            distance_unit="nm",
+            parameters=parameters,
+        )
+
+        cartesians = np.array(
+            [
+                [
+                    [0.0, 0.0, 0.0],
+                    [0.01, 0.0, 0.0],
+                    [2.0, 0.0, 0.0],
+                ],
+                [
+                    [3.0, 0.0, 0.0],
+                    [3.01, 0.0, 0.0],
+                    [5.0, 0.0, 0.0],
+                ],
+            ]
+        ).astype("float32")
+        cartesians2 = np.array(
+            [
+                [
+                    [0.0, 0.0, 0.0],
+                    [0.01, 0.0, 0.0],
+                    [0.02, 0.0, 0.0],
+                ],
+                [
+                    [1.0, 0.0, 0.0],
+                    [0.99, 0.0, 0.0],
+                    [5.0, 0.0, 0.0],
+                ],
+            ]
+        ).astype("float32")
+        # metric.update_state(tf.constant(0.0), cartesians)
+        # self.assertAllEqual(
+        #     metric.result(),
+        #     1.0,
+        # )
+        # metric.update_state(tf.constant(0.0), cartesians2)
+        # self.assertAllEqual(
+        #     metric.result(),
+        #     2.0,
+        # )
+
+        rmsd = rmsd_numpy(cartesians, cartesians)
+        self.assertAllClose(
+            rmsd,
+            np.array([0.0, 0.0]),
+            atol=1e-3,
+        )
+        rmsd = rmsd_numpy(cartesians, cartesians2)
+        self.assertNotAllClose(
+            rmsd,
+            np.array([0.0, 0.0]),
+            atol=1e-3,
+        )
+        rmsd_metric = ADCRMSDMetric(parameters=em.Parameters(batch_size=2))
+        rmsd_metric.update_state(cartesians, cartesians)
+        self.assertAllClose(
+            rmsd_metric.result(),
+            np.array([0.0, 0.0]),
+            atol=1e-2,
+        )
+        rmsd_metric.update_state(cartesians, cartesians2)
+        self.assertNotAllClose(
+            rmsd_metric.result(),
+            np.array([0.0, 0.0]),
+            atol=1e-3,
+        )
+        cartesians = np.random.random((parameters.batch_size, 100, 3)).astype("float32")
+        dataset = tf.data.Dataset.from_tensor_slices((cartesians, cartesians))
+        dataset = dataset.shuffle(buffer_size=256)
+        dataset = dataset.repeat()
+        dataset = dataset.batch(parameters.batch_size)
+
+        for d in dataset:
+            break
+        self.assertEqual(d[0].shape[0], 128, msg=f"{parameters.batch_size=}")
+
+        model = tf.keras.models.Sequential(
+            [
+                tf.keras.layers.Reshape(
+                    target_shape=(100 * 3,),
+                    input_shape=(100, 3),
+                ),
+                tf.keras.layers.Reshape(
+                    target_shape=(100, 3),
+                    input_shape=(100 * 3,),
+                ),
+            ]
+        )
+
+        # ensure input equals output
+        test = model.predict(cartesians)
+        self.assertAllClose(test, cartesians)
+
+        @tf.function
+        def reconstruction_loss(y_true, y_pred):
+            return tf.reduce_mean(tf.square(tf.subtract(y_pred, y_true)))
+
+        model.compile(
+            optimizer="Adam",
+            loss=[reconstruction_loss],
+            metrics=[metric],
+        )
+
+        history = model.fit(dataset, epochs=3, steps_per_epoch=10, verbose=0)
+        self.assertIsNotNone(history)
+        self.assertIn(
+            "ADCClashMetric",
+            history.history,
+        )
+
+        output_dir = Path(
+            em.get_from_kondata(
+                "linear_dimers",
+                mk_parentdir=True,
+                silence_overwrite_message=True,
+            )
+        )
+        trajs = em.load(output_dir / "trajs.h5")
+        total_steps = 150
+        main_path = em.misc.run_path(output_dir / "runs")
+        parameters = dict(
+            n_steps=total_steps,
+            main_path=main_path,
+            cartesian_cost_scale=1,
+            cartesian_cost_variant="mean_abs",
+            cartesian_cost_scale_soft_start=(
+                int(total_steps / 10 * 9),
+                int(total_steps / 10 * 9) + total_steps // 50,
+            ),
+            cartesian_pwd_start=1,
+            cartesian_pwd_step=3,
+            dihedral_cost_scale=1,
+            dihedral_cost_variant="mean_abs",
+            distance_cost_scale=0,
+            cartesian_distance_cost_scale=100,
+            cartesian_dist_sig_parameters=[40, 10, 5, 1, 2, 5],
+            checkpoint_step=max(1, int(total_steps / 10)),
+            l2_reg_constant=0.001,
+            center_cost_scale=0,
+            tensorboard=True,
+            use_sidechains=False,
+            use_backbone_angles=True,
+            batch_size=10,
+            summary_step=10,
+            learning_rate=0.0001,
+            track_clashes=True,
+            track_RMSD=True,
+            angle_cost_reference=0.046751507,
+            cartesian_cost_reference=0.62146354,
+            dihedral_cost_reference=0.89925313,
+        )
+        parameters = em.ADCParameters(**parameters)
+        emap = em.AngleDihedralCartesianEncoderMap(
+            parameters=parameters,
+            trajs=trajs,
+            read_only=False,
+        )
+        self.assertTrue(
+            any(
+                [
+                    isinstance(i, em.callbacks.metrics.ADCClashMetric)
+                    for i in emap.metrics
+                ]
+            ),
+            msg=f"Metric not in {emap.metrics=}",
+        )
+        self.assertGreater(
+            len(emap.loss),
+            0,
+        )
+        history = emap.train()
+        self.assertIn(
+            "ADCClashMetric", history.history.keys(), msg=(f"{history.history.keys()=}")
+        )
+
+        # Third Party Imports
+        from tensorflow.python.summary.summary_iterator import summary_iterator
+
+        # Encodermap imports
+        from test_tf1_tf2_deterministic import data_loss_iterator
+
+        tfevents_files = list(Path(parameters.main_path).rglob("*tfevents*"))
+        all_tags = set()
+        for records_file in tfevents_files:
+            records = summary_iterator(str(records_file))
+            for i, summary in enumerate(data_loss_iterator(records)):
+                for j, v in enumerate(summary.summary.value):
+                    if "clash" in v.tag.lower():
+                        break
+                    else:
+                        all_tags.add(v.tag)
+                else:
+                    continue
+                break
+            else:
+                continue
+            break
+        else:
+            self.fail(
+                f"Did not encounter the clash metric in the tfevents files. Here "
+                f"are all the tags, I've encountered:\n{all_tags}"
+            )
+
+    @unittest.skip("This test needs too much memory.")
+    def test_sidechain_reconstruction(self):
+        # Standard Library Imports
+        from types import SimpleNamespace
+
+        # Third Party Imports
+        from mdtraj.geometry.angle import _angle
+        from mdtraj.geometry.dihedral import _dihedral
+        from mdtraj.geometry.distance import _distance
+
+        # Encodermap imports
+        from encodermap.misc.backmapping import _full_backmapping_np
+
+        # test the values
+        output_dir = Path(
+            em.get_from_kondata(
+                "Ub_K11_mutants",
+                mk_parentdir=True,
+                silence_overwrite_message=True,
+            )
+        )
+        h5_file = output_dir / "subset_full_features.h5"
+        overwrite = False
+
+        custom_aas = {
+            "KAC": (
+                "K",
+                {
+                    "optional_bonds": [
+                        ("-C", "N"),  # the peptide bond to the previous aa
+                        ("N", "CA"),
+                        ("N", "H"),
+                        ("CA", "C"),
+                        ("C", "O"),
+                        ("CA", "CB"),
+                        ("CB", "CG"),
+                        ("CG", "CD"),
+                        ("CD", "CE"),
+                        ("CE", "NZ"),
+                        ("NZ", "HZ"),
+                        ("NZ", "CH"),
+                        ("CH", "OI2"),
+                        ("CH", "CI1"),
+                        ("C", "+N"),  # the peptide bond to the next aa
+                    ],
+                    "CHI1": ["N", "CA", "CB", "CG"],
+                    "CHI2": ["CA", "CB", "CG", "CD"],
+                    "CHI3": ["CB", "CG", "CD", "CE"],
+                    "CHI4": ["CG", "CD", "CE", "NZ"],
+                    "CHI5": ["CD", "CE", "NZ", "CH"],
+                },
+            )
+        }
+
+        traj = em.load(
+            trajs=output_dir / "Ub_K11Ac_I/traj.xtc",
+            tops=output_dir / "Ub_K11Ac_I/start.pdb",
+        )
+        traj.load_custom_topology(custom_aas)
+        traj.load_CV(["all_cartesians"])
+
+        labels = traj._CVs.all_cartesians.coords["ALLATOM"]
+        self.assertIn("ATOM    CH:  111 KAC:  11 CHAIN 0", labels)
+        for l in labels.values[1::3].tolist()[:10]:
+            self.assertIn("CA", l)
+            print(l)
+        sidechain_info = traj.sidechain_info()
+        n_residues = max(list(sidechain_info.keys()))
+        atom = n_residues * 3
+        indices = []
+        for residue, n_sidechains_in_residue in sidechain_info.items():
+            if n_sidechains_in_residue == 0:
+                continue
+            if residue == 1:
+                atom += n_sidechains_in_residue
+            else:
+                atom += n_sidechains_in_residue + 1
+            indices.append(atom)
+        labels = labels.values[indices]
+        self.assertIn("CE:    8 MET", labels[0])
+        self.assertEqual("ATOM    CH:  111 KAC:  11 CHAIN 0", labels[9])
+
+        if not h5_file.is_file() or overwrite:
+            h5_file.unlink(missing_ok=True)
+            trajs = em.load(
+                [
+                    output_dir / "Ub_K11Ac_I/traj.xtc",
+                    output_dir / "Ub_K11C_I/traj.xtc",
+                    output_dir / "Ub_K11Q_I/traj.xtc",
+                    output_dir / "Ub_K11R_I/traj.xtc",
+                    output_dir / "Ub_wt_I/traj.xtc",
+                ],
+                [
+                    output_dir / "Ub_K11Ac_I/start.pdb",
+                    output_dir / "Ub_K11C_I/start.pdb",
+                    output_dir / "Ub_K11Q_I/start.pdb",
+                    output_dir / "Ub_K11R_I/start.pdb",
+                    output_dir / "Ub_wt_I/start.pdb",
+                ],
+                common_str=[
+                    "Ac",
+                    "C",
+                    "Q",
+                    "R",
+                    "wt",
+                ],
+            )
+            trajs.load_custom_topology(custom_aas)
+            trajs.load_CVs(
+                data=[
+                    "CentralCartesians",
+                    "CentralBondDistances",
+                    "CentralAngles",
+                    "CentralDihedrals",
+                    "SideChainDihedrals",
+                    "SideChainCartesians",
+                    "AllCartesians",
+                    "SideChainBondDistances",
+                    "SideChainAngles",
+                ],
+                ensemble=True,
+            )
+            trajs.save(h5_file)
+        else:
+            trajs = em.load(h5_file)
+
+        trajs_subset = em.TrajEnsemble([t[:5] for t in trajs])
+        self.assertEqual(
+            trajs_subset.n_frames,
+            trajs_subset.n_trajs * 5,
+        )
+
+        data = trajs._CVs.side_distances.sel(traj_num=1)
+        index = (
+            data.coords["SIDE_DISTANCES"]
+            .str.split(dim="splitted")
+            .values[:, 2]
+            .astype(int)
+            == 11
+        )
+        data = np.nan_to_num(data.sel(SIDE_DISTANCES=index).values, False, 1)
+        self.assertAllGreater(data, 0.0)
+
+        input = (
+            trajs_subset._CVs.stack({"frame": ("traj_num", "frame_num")})
+            .transpose("frame", ...)
+            .dropna("frame", how="all")
+        )
+        input = [
+            np.nan_to_num(input.central_distances.values, copy=False, nan=1.0),
+            np.nan_to_num(input.central_angles.values, copy=False, nan=np.pi / 2),
+            np.nan_to_num(input.central_dihedrals.values, copy=False, nan=np.pi / 2),
+            np.nan_to_num(input.side_distances.values, copy=False, nan=1.0),
+            np.nan_to_num(input.side_angles.values, copy=False, nan=np.pi / 2),
+            np.nan_to_num(input.side_dihedrals.values, copy=False, nan=np.pi / 2),
+        ]
+        self.assertAllGreater(input[3], 0.0)
+
+        for i in input:
+            self.assertTrue(not np.any(np.isnan(i)))
+
+        out, buf, indices = _full_backmapping_np(
+            trajs.sidechain_info(),
+            *input,
+            return_indices=True,
+        )
+        with open(
+            Path(__file__).resolve().parent
+            / "data/sidechain_reconstruction_UbAc_expected.png",
+            "bw",
+        ) as f:
+            f.write(buf.read())
+        self.assertEqual(
+            out.shape[-1],
+            3,
+        )
+
+        # a dummy traj for MDTRaj
+        # Here's to duck typing
+        dummy_traj = SimpleNamespace(
+            xyz=out,
+            n_atoms=out.shape[1],
+            n_frames=out.shape[0],
+        )
+
+        # distances
+        self.assertEqual(indices["central_distance_indices"].shape, (227, 2))
+        out_central_distances = _distance(
+            xyz=out, pairs=indices["central_distance_indices"]
+        )
+        self.assertEqual(out_central_distances.shape, (25, 227))
+        self.assertAllClose(out_central_distances, input[0], rtol=1e-3)
+        out_side_distances = _distance(xyz=out, pairs=indices["side_distance_indices"])
+        self.assertAllClose(out_side_distances, input[3], rtol=1e-3)
+
+        # angles
+        # Encodermap imports
+        from encodermap.loading.features import CentralAngles
+
+        out_central_angles = np.empty(
+            shape=(25, indices["central_angles_indices"].shape[0]), dtype="float32"
+        )
+        index_arr = []
+        labels = CentralAngles(trajs_subset[0]).describe()
+        for i in range(5):
+            index_arr.append([f"{i} {l}" for l in labels])
+        index_arr = np.array(index_arr)
+        _angle(
+            traj=dummy_traj,
+            angle_indices=indices["central_angles_indices"],
+            out=out_central_angles,
+            periodic=False,
+        )
+        self.assertAllClosePeriodic(
+            out_central_angles,
+            input[1],
+            atol=0.03,
+            indices=index_arr,
+        )
+
+        # Encodermap imports
+        from encodermap.loading.features import SideChainAngles
+
+        out_side_angles = np.empty(
+            shape=(25, indices["side_angles_indices"].shape[0]), dtype="float32"
+        )
+        index_arr = []
+        labels = SideChainAngles(trajs_subset[0]).describe()
+        for i in range(5):
+            index_arr.append([f"{i} {l}" for l in labels])
+        index_arr = np.array(index_arr)
+        _angle(
+            traj=dummy_traj,
+            angle_indices=indices["side_angles_indices"],
+            out=out_side_angles,
+            periodic=False,
+        )
+        self.assertTrue(
+            not np.any(np.isnan(out_side_angles)),
+            msg=(f"Detected NaN in the out_side_angles"),
+        )
+        self.assertAllClosePeriodic(
+            out_side_angles, input[4], atol=0.03, indices=index_arr
+        )
+
+        # dihedrals
+        out_central_dihedrals = np.empty(
+            shape=(25, indices["central_dihedrals_indices"].shape[0]), dtype="float32"
+        )
+        _dihedral(
+            traj=dummy_traj,
+            indices=indices["central_dihedrals_indices"],
+            out=out_central_dihedrals,
+            periodic=False,
+        )
+        self.assertAllClosePeriodic(
+            out_central_dihedrals,
+            input[2],
+            atol=0.03,
+        )
+        out_side_dihedrals = np.empty(
+            shape=(25, indices["side_dihedrals_indices"].shape[0]), dtype="float32"
+        )
+        _dihedral(
+            traj=dummy_traj,
+            indices=indices["side_dihedrals_indices"],
+            out=out_side_dihedrals,
+            periodic=False,
+        )
+        self.assertAllClosePeriodic(
+            out_side_dihedrals,
+            input[5],
+            atol=0.03,
+        )
+
+        # continue with some other tests
+        self.assertEqual(
+            trajs._CVs.side_cartesians.coords["SIDEATOM"].shape,
+            (230,),
+            msg=(f"{trajs._CVs.side_cartesians.coords['SIDEATOM']=}"),
+        )
+        self.assertTrue(
+            trajs._CVs.side_cartesians.coords["SIDEATOM"][-1].str.endswith("74")
+        )
+        self.assertTrue(
+            trajs._CVs.all_cartesians.coords["ALLATOM"][-1].str.endswith("74 s")
+        )
+        index1 = trajs._CVs.side_cartesians_feature_indices.values[
+            0, trajs._CVs.side_cartesians.coords["SIDEATOM"].str.endswith("11")
+        ]
+        index2 = trajs._CVs.side_distances_feature_indices.values[
+            0, trajs._CVs.side_distances.coords["SIDE_DISTANCES"].str.endswith("11"), :2
+        ]
+        index3 = trajs._CVs.side_angles_feature_indices.values[
+            0, trajs._CVs.side_angles.coords["SIDE_ANGLES"].str.endswith("11"), :3
+        ]
+        index4 = trajs._CVs.side_dihedrals_feature_indices.values[
+            0, trajs._CVs.side_dihedrals.coords["SIDE_DIHEDRALS"].str.endswith("11")
+        ]
+        for a in index1:
+            print("ATOM", trajs.tsel[0].top.atom(int(a)))
+        print(index2)
+        for a, b in index2:
+            print(
+                "DIST", trajs.tsel[0].top.atom(int(a)), trajs.tsel[0].top.atom(int(b))
+            )
+        for a, b, c in index3:
+            print(
+                "ANGL",
+                trajs.tsel[0].top.atom(int(a)),
+                trajs.tsel[0].top.atom(int(b)),
+                trajs.tsel[0].top.atom(int(c)),
+            )
+        for a, b, c, d in index4:
+            print(
+                "DIHE",
+                trajs.tsel[0].top.atom(int(a)),
+                trajs.tsel[0].top.atom(int(b)),
+                trajs.tsel[0].top.atom(int(c)),
+                trajs.tsel[0].top.atom(int(d)),
+            )
+        self.assertEqual(len(index1), len(index2))
+        self.assertEqual(len(index1), len(index3))
+        self.assertEqual(len(index1), len(index4) + 1)
+
+        # this dict is presented by TrajEnsemble to make the new layer work
+        sidechain_info = trajs.sidechain_info()
+
+        # this checks the residue K11, which should have 5 sidechains for KAC
+        self.assertEqual(
+            sidechain_info[-1][11],
+            5,
+        )
+        # check that for C, the number of sidechain dihedrals is 1
+        self.assertEqual(
+            sidechain_info[1][11],
+            1,
+        )
+
+        # instantiate the layer
+        # Encodermap imports
+        from encodermap.models.layers import BackMapLayerWithSidechains
+
+        input = tuple(tf.convert_to_tensor(i, dtype="float32") for i in input)
+        layer = BackMapLayerWithSidechains(
+            feature_description=trajs_subset.sidechain_info()
+        )
+
+        # Test saving the layer
+        model = tf.keras.models.Sequential([layer])
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            model.save(td / "tmp.keras")
+            new_model = tf.keras.models.load_model(td / "tmp.keras")
+            self.assertIsNotNone(new_model)
+
+        # call the layer
+        out = layer(input).numpy()
+        self.assertNotIn(np.nan, out)
+        self.assertNotIn(float("inf"), out)
+        dummy_traj = SimpleNamespace(
+            xyz=out,
+            n_atoms=out.shape[1],
+            n_frames=out.shape[0],
+        )
+        self.assertEqual(
+            out.shape[-1],
+            3,
+        )
+        self.assertFalse(
+            np.any(np.isnan(out)),
+            msg=(f"There are nan's in the layer output:\n\n{out}"),
+        )
+
+        # distances
+        out_central_distances = _distance(
+            xyz=out, pairs=indices["central_distance_indices"]
+        )
+        self.assertEqual(out_central_distances.shape, (25, 227))
+        self.assertAllClose(out_central_distances, input[0], rtol=1e-3)
+        out_side_distances = _distance(xyz=out, pairs=indices["side_distance_indices"])
+        self.assertAllClose(out_side_distances, input[3], rtol=1e-3)
+
+        # angles
+        # Encodermap imports
+        from encodermap.loading.features import CentralAngles
+
+        out_central_angles = np.empty(
+            shape=(25, indices["central_angles_indices"].shape[0]), dtype="float32"
+        )
+        index_arr = []
+        labels = CentralAngles(trajs_subset[0]).describe()
+        for i in range(5):
+            index_arr.append([f"{i} {l}" for l in labels])
+        index_arr = np.array(index_arr)
+        _angle(
+            traj=dummy_traj,
+            angle_indices=indices["central_angles_indices"],
+            out=out_central_angles,
+            periodic=False,
+        )
+        self.assertAllClosePeriodic(
+            out_central_angles,
+            input[1],
+            atol=0.03,
+            indices=index_arr,
+        )
+
+        # Encodermap imports
+        from encodermap.loading.features import SideChainAngles
+
+        out_side_angles = np.empty(
+            shape=(25, indices["side_angles_indices"].shape[0]), dtype="float32"
+        )
+        index_arr = []
+        labels = SideChainAngles(trajs_subset[0]).describe()
+        for i in range(5):
+            index_arr.append([f"{i} {l}" for l in labels])
+        index_arr = np.array(index_arr)
+        _angle(
+            traj=dummy_traj,
+            angle_indices=indices["side_angles_indices"],
+            out=out_side_angles,
+            periodic=False,
+        )
+        self.assertAllClosePeriodic(
+            out_side_angles, input[4], atol=0.03, indices=index_arr
+        )
+
+        # dihedrals
+        out_central_dihedrals = np.empty(
+            shape=(25, indices["central_dihedrals_indices"].shape[0]), dtype="float32"
+        )
+        _dihedral(
+            traj=dummy_traj,
+            indices=indices["central_dihedrals_indices"],
+            out=out_central_dihedrals,
+            periodic=False,
+        )
+        self.assertAllClosePeriodic(
+            out_central_dihedrals,
+            input[2],
+            atol=0.03,
+        )
+        out_side_dihedrals = np.empty(
+            shape=(25, indices["side_dihedrals_indices"].shape[0]), dtype="float32"
+        )
+        _dihedral(
+            traj=dummy_traj,
+            indices=indices["side_dihedrals_indices"],
+            out=out_side_dihedrals,
+            periodic=False,
+        )
+        self.assertAllClosePeriodic(
+            out_side_dihedrals,
+            input[5],
+            atol=0.03,
+        )
+
+        main_path = em.misc.run_path(output_dir / "runs")
+        total_steps = 10
+        parameters = em.ADCParameters(
+            n_steps=total_steps,
+            main_path=main_path,
+            cartesian_cost_scale=1,
+            cartesian_cost_variant="mean_abs",
+            cartesian_cost_scale_soft_start=(
+                int(total_steps / 10 * 9),
+                int(total_steps / 10 * 9) + total_steps // 50,
+            ),
+            cartesian_pwd_start=1,
+            cartesian_pwd_step=3,
+            dihedral_cost_scale=1,
+            dihedral_cost_variant="mean_abs",
+            distance_cost_scale=0,
+            cartesian_distance_cost_scale=100,
+            cartesian_dist_sig_parameters=[40, 10, 5, 1, 2, 5],
+            checkpoint_step=max(1, int(total_steps / 10)),
+            l2_reg_constant=0.001,
+            center_cost_scale=0,
+            tensorboard=True,
+            use_sidechains=True,
+            use_backbone_angles=True,
+            batch_size=10,
+            summary_step=10,
+            learning_rate=0.0001,
+            track_clashes=True,
+            angle_cost_reference=0.046751507,
+            cartesian_cost_reference=0.62146354,
+            dihedral_cost_reference=0.89925313,
+            reconstruct_sidechains=True,
+        )
+        self.assertTrue(parameters.reconstruct_sidechains)
+        e_map = em.AngleDihedralCartesianEncoderMap(
+            trajs=trajs,
+            parameters=parameters,
+        )
+
+        # test the pairwise distance layer
+        # Encodermap imports
+        from encodermap.models.layers import PairwiseDistances
+
+        pairwise_distances = PairwiseDistances(
+            parameters=parameters,
+            print_name="pairwise_distances_of_reconstructed_sidechains",
+        )
+        indices = trajs_subset._CVs.all_cartesians.coords["ALLATOM"][
+            pairwise_distances.indices
+        ].values.tolist()
+        central_coords = [i for i in indices if i.endswith("c")]
+        side_coords = [i for i in indices if i.endswith("s")]
+        self.assertTrue(all([i.startswith("2 ") for i in central_coords]))
+        residx = np.array([int(i.split()[1]) for i in central_coords])
+        self.assertAllEqual(residx, np.arange(1, 77))
+        test = pairwise_distances(out)
+        self.assertEqual(
+            test.shape, (25, 10296)  # 10296 is nCr(144, 2) and 144 is len(indices)
+        )
+
+        # get dense values and then pass them to the instantiated layer
+        for batch in e_map.dataset:
+            break
+        (
+            sparse_inp_central_angles,
+            sparse_inp_central_dihedrals,
+            sparse_inp_all_cartesians,
+            sparse_inp_central_distances,
+            sparse_inp_side_angles,
+            sparse_inp_side_dihedrals,
+            sparse_inp_side_distances,
+        ) = batch
+        out = e_map.model(batch)
+
+        inp_central_angles = e_map.model.get_dense_model_central_angles(
+            sparse_inp_central_angles, training=True
+        )
+        self.assertTrue(not tf.math.reduce_any(tf.math.is_nan(inp_central_angles)))
+        inp_central_dihedrals = e_map.model.get_dense_model_central_dihedrals(
+            sparse_inp_central_dihedrals, training=True
+        )
+        self.assertTrue(not tf.math.reduce_any(tf.math.is_nan(inp_central_dihedrals)))
+        inp_central_distances = e_map.model.get_dense_model_distances(
+            sparse_inp_central_distances, training=True
+        )
+        self.assertTrue(not tf.math.reduce_any(tf.math.is_nan(inp_central_distances)))
+        inp_side_angles = e_map.model.get_dense_model_side_angles(
+            sparse_inp_side_angles, training=True
+        )
+        self.assertTrue(not tf.math.reduce_any(tf.math.is_nan(inp_side_angles)))
+        inp_side_dihedrals = e_map.model.get_dense_model_side_dihedrals(
+            sparse_inp_side_dihedrals, training=True
+        )
+        self.assertTrue(not tf.math.reduce_any(tf.math.is_nan(inp_side_dihedrals)))
+        inp_side_distances = e_map.model.get_dense_model_side_distances(
+            sparse_inp_side_distances, training=True
+        )
+        self.assertTrue(not tf.math.reduce_any(tf.math.is_nan(inp_side_distances)))
+
+        out = layer(
+            (
+                inp_central_distances,
+                inp_central_angles,
+                inp_central_dihedrals,
+                inp_side_distances,
+                inp_side_angles,
+                inp_side_dihedrals,
+            )
+        )
+        self.assertTrue(not tf.math.reduce_any(tf.math.is_nan(out)))
+        out = e_map.encode(trajs_subset[0])
+        self.assertTrue(not tf.math.reduce_any(tf.math.is_nan(out)))
+        e_map.train()
+        out = e_map.encode(trajs[0], top="KAc")
+        self.assertIsInstance(
+            out,
+            mdtraj.Trajectory,
+        )
+
+    def test_none_interrupt_callback(self):
+        """Test a callback, that stops training, when a part of the weights
+        becomes np.nan value is encountered."""
+
+        shapes = [
+            (10, 28),
+            (10, 27),
+            (10, 30, 3),
+            (10, 29),
+            (10, 35),
+        ]
+        sparse_indices = [
+            slice(25, None),
+            slice(24, None),
+            slice(27, None),
+            slice(26, None),
+            np.array([20, 21, 22, 23, 24, 25, 26, 32, 33, 34]),
+        ]
+        tensor_specs = []
+        for s in shapes:
+            if len(s) == 2:
+                tensor_specs.append(tf.SparseTensorSpec(shape=s, dtype="float32"))
+            else:
+                tensor_specs.append(
+                    tf.SparseTensorSpec(shape=(s[0], s[1] * s[2]), dtype="float32")
+                )
+
+        gen = lambda: nan_after_100_iter_generator(
+            shapes=shapes, sparse_indices=sparse_indices
+        )
+        ds = tf.data.Dataset.from_generator(
+            gen,
+            output_signature=tuple(tensor_specs),
+        )
+        p = em.ADCParameters(
+            use_backbone_angles=True,
+            use_sidechains=True,
+        )
+        e_map = em.AngleDihedralCartesianEncoderMap(
+            parameters=p,
+            read_only=True,
+            dataset=ds,
+        )
+        e_map.callbacks.append(em.callbacks.NoneInterruptCallback())
+        with self.assertRaises(Exception):
+            e_map.train()
+        print("Test was a success.")
+
+    @expensive_test
+    def test_fat10_training(self):
+        total_steps = 10_000
+        main_path = Path(__file__).resolve().parent / "data/FAT10/long_training_test"
+        if main_path.is_dir():
+            shutil.rmtree(main_path)
+        main_path.mkdir(parents=True)
+        fat10_output_dir = Path(
+            em.get_from_kondata(
+                "FAT10",
+                mk_parentdir=True,
+                silence_overwrite_message=True,
+            )
+        )
+        trajs_file = fat10_output_dir / "linear_dimers_and_fat10.h5"
+        self.assertTrue(trajs_file.is_file())
+        trajs = em.load(trajs_file)
+
+        # alignment and distance histogram
+        # Third Party Imports
+        import matplotlib.pyplot as plt
+
+        # Encodermap imports
+        from encodermap.plot.plotting import distance_histogram
+        from test_featurizer import ALIGNMENT
+
+        trajs.parse_clustal_w_alignment(ALIGNMENT)
+
+        CA_pos = trajs.CVs["central_cartesians"][::1000, 1::3]
+        fig, axes = plt.subplots(ncols=1, nrows=3)
+        distance_histogram(
+            CA_pos,
+            periodicity=float("inf"),
+            sigmoid_parameters=[40, 10, 5, 1, 2, 5],
+            axes=axes,
+        )
+        plt.savefig("/home/kevin/tmp_FAT10.png")
+
+        _ = em.load(
+            "/home/kevin/git/encoder_map_private/tests/data/linear_dimers/trajs.h5"
+        )
+        CA_pos = _.CVs["central_cartesians"][::1000, 1::3]
+        plt.close("all")
+        fig, axes = plt.subplots(ncols=1, nrows=3)
+        distance_histogram(
+            CA_pos,
+            periodicity=float("inf"),
+            sigmoid_parameters=[40, 10, 5, 1, 2, 5],
+            axes=axes,
+        )
+        plt.savefig("/home/kevin/tmp_M1diUb.png")
+
+        raise Exception
+
+        # test that at least some random choices select linear_dimers
+        visited_common_strs = set()
+        ids = trajs.id
+        total = len(ids)
+        for i in range(10_000):
+            ind = ids[np.random.randint(0, total, 1)[0]]
+            frame = trajs[ind[0]][ind[1]]
+            visited_common_strs.add(frame.common_str)
+            if len(visited_common_strs) == 2:
+                break
+        else:
+            self.fail(
+                "Was not able to get a sample from the linear_dimers part of "
+                "the dataset after 10,000 steps."
+            )
+
+        parameters = dict(
+            n_steps=total_steps,
+            main_path=main_path,
+            cartesian_cost_scale=1,
+            cartesian_cost_variant="mean_abs",
+            cartesian_cost_scale_soft_start=(
+                int(total_steps / 10 * 9),
+                int(total_steps / 10 * 9) + total_steps // 50,
+            ),
+            cartesian_pwd_start=1,
+            cartesian_pwd_step=3,
+            dihedral_cost_scale=1,
+            dihedral_cost_variant="mean_abs",
+            distance_cost_scale=0,
+            cartesian_distance_cost_scale=100,
+            cartesian_dist_sig_parameters=[40, 10, 5, 1, 2, 5],
+            checkpoint_step=max(1, int(total_steps / 10)),
+            l2_reg_constant=0.001,
+            center_cost_scale=0,
+            tensorboard=False,
+            use_sidechains=True,
+            use_backbone_angles=True,
+            batch_size=10,
+            learning_rate=0.0001,
+            angle_cost_reference=18.746202,
+            cartesian_cost_reference=25.0,
+            dihedral_cost_reference=25.323647,
+        )
+        parameters = em.ADCParameters(**parameters)
+
+        # test the gen separately
+        ds = trajs.batch_iterator(
+            batch_size=parameters.batch_size,
+            deterministic=True,
+            yield_index=True,
+        )
+        for i, (index, batch) in enumerate(
+            ds,
+        ):
+            self.assertTrue(all([isinstance(i, tf.SparseTensor) for i in batch]))
+            # fill sparse tensor with zeros and check whether nans exist
+            # nans cannot exist in sparse tensor, otherwise they would
+            # propagate
+            # make sure all distances are greater than 0
+            self.assertAllGreater(batch[3].values, 0.0)
+            for t in batch:
+                t = tf.sparse.to_dense(t, default_value=0).numpy()
+                self.assertTrue(np.all(~np.isnan(t)))
+            if i in [1, 5, 10, 20]:
+                cartesians = tf.sparse.to_dense(batch[2], np.nan).numpy()
+                self.assertEqual(cartesians.shape[1], 495 * 3)
+                cartesians = tf.keras.layers.Reshape(
+                    target_shape=(cartesians.shape[1] // 3, 3),
+                    input_shape=(cartesians.shape[1],),
+                    name="reshape_cartesians_test",
+                )(cartesians).numpy()
+                for ind, cart in zip(index, cartesians):
+                    frame = trajs[ind[0]][ind[1]]
+                    xyz = frame.central_cartesians[0]
+                    cart = cart[~np.isnan(cart).all(-1)]
+                    self.assertAllClose(
+                        xyz, cart, msg=(f"Cartesians differ at {frame=}")
+                    )
+            if i == 100:
+                break
+        ds = trajs.tf_dataset(
+            batch_size=parameters.batch_size,
+            deterministic=True,
+            prefetch=False,
+        )
+
+        for i, datum in enumerate(ds):
+            for d in datum:
+                self.assertTrue(
+                    np.all(~np.isnan(tf.sparse.to_dense(d, default_value=0).numpy()))
+                )
+            if i == 100:
+                break
+
+    def test_image_callback_saving(self):
+        """The image callback should also be able to save images to a directory."""
+        ubi_output_dir = Path(
+            em.get_from_kondata(
+                "linear_dimers", mk_parentdir=True, silence_overwrite_message=True
+            )
+        )
+        fat10_output_dir = Path(
+            em.get_from_kondata(
+                "FAT10", mk_parentdir=True, silence_overwrite_message=True
+            )
+        )
+
+        ubi_trajs = [ubi_output_dir / "01.xtc", ubi_output_dir / "02.xtc"]
+        ubi_tops = [f.with_suffix(".pdb") for f in ubi_trajs]
+        ubi_trajs = em.TrajEnsemble(
+            trajs=ubi_trajs,
+            tops=ubi_tops,
+            traj_nums=[0, 1],
+            common_str=["linear_dimer", "linear_dimer"],
+        )
+        fat10_trajs = [fat10_output_dir / "01.xtc", fat10_output_dir / "02.xtc"]
+        fat10_tops = [f.with_suffix(".pdb") for f in fat10_trajs]
+        fat10_trajs = em.TrajEnsemble(
+            trajs=fat10_trajs,
+            tops=fat10_tops,
+            traj_nums=[12, 13],
+            common_str=["FAT10", "FAT10"],
+        )
+
+        self.assertEqual(ubi_trajs[0].traj_num, 0)
+        self.assertEqual(ubi_trajs[1].traj_num, 1)
+        self.assertEqual(fat10_trajs[0].traj_num, 12)
+        self.assertEqual(fat10_trajs[1].traj_num, 13)
+
+        tmp = fat10_trajs.copy()
+        tmp[0].traj_num = 0
+        self.assertEqual(tmp[0].traj_num, 0)
+
+        with self.assertRaisesRegex(Exception, r".*overlapping traj_nums.*"):
+            _ = ubi_trajs + tmp
+
+        # xr.open_dataset does not tax the system memory at all
+        file = fat10_output_dir / "linear_dimers_and_fat10.h5"
+        with h5py.File(file, "r") as f:
+            self.assertIn("CVs", f.keys())
+        self.assertTrue(file.is_file())
+        ds = xr.open_dataset(file, group="CVs")
+        trajs = ubi_trajs + fat10_trajs
+        sub_trajs = trajs[[0, 2]]
+
+        # load the dataset
+        sub_trajs.load_CVs(
+            ds.sel(traj_num=[0, 12]),
+        )
+        self.assertIsInstance(sub_trajs, em.TrajEnsemble)
+        parameters = em.ADCParameters.load(
+            fat10_output_dir / "checkpoints/finished_training/tf2_15/parameters.json"
+        )
+        parameters.main_path = em.misc.run_path(fat10_output_dir / "runs")
+        parameters.summary_step = 1
+
+        emap = em.AngleDihedralCartesianEncoderMap(
+            trajs=sub_trajs,
+            parameters=parameters,
+        )
+        emap.add_images_to_tensorboard(save_to_disk=True)
+        self.assertIsNotNone(emap.callbacks[-1].save_dir)
+        emap.callbacks[-1].on_epoch_end(1)
+
+        file = Path(parameters.main_path) / "train_images/epoch_1.png"
+        self.assertTrue(
+            file.is_file(),
+            msg=(
+                f"The add_images_to_tensorboard with save_to_disk=True did not "
+                f"produce an image at {file}"
+            ),
+        )
 
     def test_sparse_training(self):
         """Piece by piece, build a sparse network and try to find weak points."""
         names = [
             "glu7_asp7_sparse",
-            "messy_dataset",
-            "messy-dataset-large-feature-space",
+            "messy_dataset_large_feature_space",
         ]
         datasets = [
-            "kevinsawade/glu7-asp7-sparse",
-            xr.load_dataset(
-                Path(__file__).resolve().parent / "data/messy_dataset.nc",
-                engine="h5netcdf",
-            ),
-            "kevinsawade/messy-dataset-large-feature-space",
+            "glu7_asp7_sparse",
+            "messy_dataset_large_feature_space",
         ]
         outdirs = [
             str(Path(__file__).resolve().parent / "data/sparse"),
-            None,
             str(
                 Path(__file__).resolve().parent
                 / "data/messy_dataset_large_feature_space"
@@ -386,16 +1544,11 @@ class TestAutoencoder(tf.test.TestCase):
     def test_omega_angles_are_trained_correctly(self):
         """Omega angles should stay within their natural ranges for EncoderMap
         and AngleDihedralCartesianEncoderMap"""
-        dataset = "kevinsawade/encodermap-tutorial-asp7-tmp"
-        path = Path(__file__).resolve().parent / "data/asp7"
-        kaggle.api.dataset_download_files(
-            dataset,
-            path=path,
-            unzip=True,
-        )
+        traj_file = Path(__file__).resolve().parent / "data/asp7.xtc"
+        self.assertTrue(traj_file.is_file(), msg=f"{traj_file=} is missing.")
         traj = em.load(
-            Path(__file__).resolve().parent / "data/asp7/asp7.xtc",
-            Path(__file__).resolve().parent / "data/asp7/asp7.pdb",
+            traj_file,
+            Path(__file__).resolve().parent / "data/asp7.pdb",
         )
         self.traj_omega_angles(traj)
 
@@ -452,8 +1605,10 @@ class TestAutoencoder(tf.test.TestCase):
         mu = np.mean(omegas)
         sigma = np.std(omegas)
 
-        self.assertTrue(np.isclose(mu, 0, atol=0.1))
-        self.assertTrue(np.isclose(sigma, 0.6, atol=0.2))
+        self.assertAlmostEqual(mu, 0, places=1)
+        self.assertAlmostEqual(
+            sigma, 0.06, places=1, msg=f"{sigma=} is not close enough to 0.6"
+        )
 
     def test_normal_autoencoder_has_correct_activations(self):
         """Test, whether the bog-standard EncoderMap Autoencoder has the
@@ -495,7 +1650,14 @@ class TestAutoencoder(tf.test.TestCase):
         necessary to describe cartesians with shape (batch_size, n_atoms, 3), the
         sparse training flattening the input cartesians, before constructing a sparse
         tensor. This makes it necessary to reshape the dense output of the model
-        to make sure, flattening and reshaping produces the same arrays."""
+        to make sure, flattening and reshaping produces the same arrays.
+
+        Note:
+            Newer tensorflow versions allow for higher rank sparse
+                tensors. However, adjusting EncoderMap's sparse code
+                is not a priority.
+
+        """
         cartesians = np.random.random((256, 30, 3)).astype("float32")
 
         pairwise_dists = np.empty(
@@ -529,52 +1691,63 @@ class TestAutoencoder(tf.test.TestCase):
         show two clusters.
 
         """
-        output_dir = Path(
-            em.get_from_kondata(
-                "two_state",
-                mk_parentdir=True,
-                silence_overwrite_message=True,
-            )
-        )
-        # from test_tf1_tf2_deterministic import _create_artificial_two_state_system
-        # _create_artificial_two_state_system(
-        #     Path("/home/kevin/git/encoder_map_private/tests/data/two_state"),
-        # )
         # Third Party Imports
         from sklearn.cluster import HDBSCAN
 
         output_dir = Path(em.get_from_kondata("two_state"))
-        # trajs = em.load(
-        #     [
-        #         output_dir / "state1.xtc",
-        #         output_dir / "state2.xtc",
-        #     ],
-        #     [
-        #         output_dir / "state1.pdb",
-        #         output_dir / "state2.pdb",
-        #     ],
-        #     common_str=["state1", "state2"],
-        # )
-        # trajs.load_CVs("all")
-        # trajs.save(output_dir / "trajs.h5", overwrite=True)
         trajs = em.TrajEnsemble.from_dataset(output_dir / "trajs.h5")
         p = em.ADCParameters(
             main_path=em.misc.run_path(Path(__file__).parent / "data/runs")
         )
         e_map = em.AngleDihedralCartesianEncoderMap(trajs=trajs, parameters=p)
-        e_map.p.n_steps = 10
+        e_map.p.n_steps = 50
         e_map.train()
         lowd = e_map.encode(trajs.central_dihedrals)
         clusterer = HDBSCAN(min_cluster_size=250).fit(lowd)
-        self.assertEqual(
-            len(np.unique(clusterer.labels_)),
-            2,
+        self.assertTrue(
+            0 in clusterer.labels_ and 1 in clusterer.labels_,
             msg=(
                 f"The artificial two-state system is expected to produce three "
-                f"cluster labels: (0 and 1), "
-                f"but {np.unique(clusterer.labels_)}"
+                f"cluster labels: (-1, 0, and 1), "
+                f"but {np.unique(clusterer.labels_)=} were produced."
             ),
         )
+
+    @expensive_test
+    def test_m1_diubi_state_decoding(self):
+        """Uses the decoder to make sure, that a path from one minimum of the
+        M1-diUbq projection (which correspond to the start of the non-diverging
+        simulations) correctly rebuilds the states. We can use the already trained
+        M1-diUbi EncoderMap. See also `run_long_training` in the `tests` directroy."""
+        trajs, emap = em.load_project("linear_dimers", load_autoencoder=True)
+        # Third Party Imports
+        import plotly.express as px
+
+        # quick check, whether the lowd and the highd still fit somewhat
+        test_frame = trajs.get_single_frame(0)
+        test_lowd = emap.encode(test_frame)
+        self.assertAllClose(test_lowd, test_frame.lowd)
+
+        # decode this point for fun
+        generated = emap.generate(test_lowd)
+        traj = em.SingleTraj(generated)
+        traj.load_CV("all")
+        rmsd = mdtraj.rmsd(test_frame, generated)
+        raise Exception(
+            f"{traj.central_dihedrals[0, :5]=}\n\n"
+            f"{test_frame.central_dihedrals[0, :5]=}\n\n"
+            f"{rmsd=}"
+        )
+
+        # now we will decode the lowd point and check
+        start = np.array([[-1.718504, -0.1113482]])
+        end = np.array([[1.380024, 2.347491]])
+        path = np.linspace(start, end, num=100, endpoint=True)
+
+        # Now we will decode a path connecting two regions of high density
+        # fig = px.scatter(x=trajs.lowd[::100, 0], y=trajs.lowd[::100, 1])
+        # fig.show(renderer="browser")
+        raise Exception(f"{trajs._CVs.coords=}")
 
     @expensive_test
     def test_encodermap_with_dataset(self):
@@ -755,7 +1928,7 @@ class TestAutoencoder(tf.test.TestCase):
                     self._called_decoder_layers[f"decoder_{i}"] = current_layer
                     return current_layer
 
-        # define the aprameters
+        # define the parameters
         # Encodermap imports
         from encodermap.encodermap_tf1.parameters import ADCParameters
 
@@ -1638,6 +2811,7 @@ class TestAutoencoder(tf.test.TestCase):
         parameters.multimer_topology_classes = None
         parameters.multimer_connection_bridges = None
         parameters.multimer_lengths = None
+        parameters.reconstruct_sidechains = False
 
         input_shapes = (
             trajs.central_angles.shape[1:],
@@ -1869,45 +3043,364 @@ class TestAutoencoder(tf.test.TestCase):
             f"The cartesian_cost is identical within rtol=1e-6 between tf2, manual, and tf1."
         )
 
+    @patch(
+        "encodermap.models.models.ADCFunctionalModel.get_loss", custom_get_loss_dense
+    )
+    @patch(
+        "encodermap.models.models.ADCSparseFunctionalModel.get_loss",
+        custom_get_loss_sparse,
+    )
+    def examine_dense_and_sparse_cartesians(self):
+        with self.assertRaisesRegex(
+            ValueError,
+            expected_regex=r".*gradients provided.*",
+            msg=(
+                f"This call is expected to fail with a ValueError, because the "
+                f"method get_loss in ADCFunctionalModel was patched, giving a loss "
+                f"of 0 and thus no "
+                f"gradients can be computed. However, this method is meant to "
+                f"check the difference between sparse training with sparse central_"
+                f"cartesians and dense central_cartesians."
+            ),
+        ):
+            self.ADC_autoencoder_with_dataset(
+                sparse=False,
+                use_sidechains=True,
+                use_backbone_angles=True,
+                trainable_sparse_to_dense=False,
+                sidechain_only_sparse=False,
+            )
+        with self.assertRaisesRegex(
+            ValueError,
+            expected_regex=r".*gradients provided.*",
+            msg=(
+                f"This call is expected to fail with a ValueError, because the "
+                f"method get_loss in ADCFunctionalModel was patched, giving a loss "
+                f"of 0 and thus no "
+                f"gradients can be computed. However, this method is meant to "
+                f"check the difference between sparse training with sparse central_"
+                f"cartesians and dense central_cartesians."
+            ),
+        ):
+            self.ADC_autoencoder_with_dataset(
+                sparse=True,
+                use_sidechains=True,
+                use_backbone_angles=True,
+                trainable_sparse_to_dense=False,
+                sidechain_only_sparse=False,
+            )
+
+    @patch(
+        "encodermap.trajinfo.info_single.SingleTraj", MockSingleTraj, spec=em.SingleTraj
+    )
+    @patch(
+        "encodermap.trajinfo.info_all.TrajEnsemble",
+        MockTrajEnsemble,
+        spec=em.TrajEnsemble,
+    )
+    def test_sparse_to_dense_produces_not_zeros_and_trains(self):
+        emap, dataset, parameters = self.ADC_autoencoder_with_dataset(
+            sparse=True,
+            use_sidechains=True,
+            use_backbone_angles=True,
+            trainable_sparse_to_dense=False,
+            sidechain_only_sparse=False,
+            return_dataset_and_model=True,
+        )
+
+        for batch in dataset:
+            self.assertLen(batch, 5)
+            dihedrals = batch[1]
+            cartesians = batch[2]
+            side_dihedrals = batch[4]
+            break
+
+        dense_dihedrals_before = (
+            emap.model.get_dense_model_central_dihedrals(dihedrals).numpy().copy()
+        )
+        dense_cartesians_before = (
+            emap.model.get_dense_model_cartesians(cartesians).numpy().copy()
+        )
+        dense_side_dihedrals_before = (
+            emap.model.get_dense_model_side_dihedrals(side_dihedrals).numpy().copy()
+        )
+
+        self.assertNotIn(
+            0.0,
+            dense_cartesians_before,
+        )
+        self.assertNotIn(
+            0.0,
+            dense_cartesians_before,
+        )
+        self.assertNotIn(
+            0.0,
+            dense_side_dihedrals_before,
+        )
+
+        emap.train()
+
+        dense_dihedrals_after = (
+            emap.model.get_dense_model_central_dihedrals(dihedrals).numpy().copy()
+        )
+        dense_cartesians_after = (
+            emap.model.get_dense_model_cartesians(cartesians).numpy().copy()
+        )
+        dense_side_dihedrals_after = (
+            emap.model.get_dense_model_side_dihedrals(side_dihedrals).numpy().copy()
+        )
+
+        self.assertAllClose(
+            dense_dihedrals_before,
+            dense_dihedrals_after,
+        )
+        self.assertAllClose(
+            dense_cartesians_before,
+            dense_cartesians_after,
+        )
+        self.assertAllClose(
+            dense_side_dihedrals_before,
+            dense_side_dihedrals_after,
+        )
+
+        emap, dataset, parameters = self.ADC_autoencoder_with_dataset(
+            sparse=True,
+            use_sidechains=True,
+            use_backbone_angles=True,
+            trainable_sparse_to_dense=True,
+            sidechain_only_sparse=False,
+            return_dataset_and_model=True,
+        )
+
+        for batch in dataset:
+            self.assertLen(batch, 5)
+            dihedrals = batch[1]
+            cartesians = batch[2]
+            side_dihedrals = batch[4]
+            break
+
+        dense_dihedrals_before = (
+            emap.model.get_dense_model_central_dihedrals(dihedrals).numpy().copy()
+        )
+        dense_cartesians_before = (
+            emap.model.get_dense_model_cartesians(cartesians).numpy().copy()
+        )
+        dense_side_dihedrals_before = (
+            emap.model.get_dense_model_side_dihedrals(side_dihedrals).numpy().copy()
+        )
+
+        self.assertNotIn(
+            0.0,
+            dense_cartesians_before,
+        )
+        self.assertNotIn(
+            0.0,
+            dense_cartesians_before,
+        )
+        self.assertNotIn(
+            0.0,
+            dense_side_dihedrals_before,
+        )
+
+        emap.train()
+
+        dense_dihedrals_after = (
+            emap.model.get_dense_model_central_dihedrals(dihedrals).numpy().copy()
+        )
+        dense_cartesians_after = (
+            emap.model.get_dense_model_cartesians(cartesians).numpy().copy()
+        )
+        dense_side_dihedrals_after = (
+            emap.model.get_dense_model_side_dihedrals(side_dihedrals).numpy().copy()
+        )
+
+        self.assertNotAllClose(
+            dense_dihedrals_before,
+            dense_dihedrals_after,
+        )
+        self.assertNotAllClose(
+            dense_cartesians_before,
+            dense_cartesians_after,
+        )
+        self.assertNotAllClose(
+            dense_side_dihedrals_before,
+            dense_side_dihedrals_after,
+        )
+
+    def test_reload_model_without_data_raises_descriptive_error(self):
+        """Reloading a model without the correct data should be possible.
+        However, when the input_data is set and we're not using the hypercube,
+        we should get a good warning.
+
+        """
+        train_data1 = np.random.random((1000, 20)).astype("float32")
+        train_data2 = np.random.random((1000, 4)).astype("float32")
+        for desc, train_data in zip(
+            ["20-shaped", "4-shaped (same as hypercube)"], [train_data1, train_data2]
+        ):
+            with tempfile.TemporaryDirectory() as td:
+                p = em.Parameters(n_steps=10, periodicity=float("inf"), main_path=td)
+                emap = em.EncoderMap(train_data=train_data, parameters=p)
+                self.assertFalse(emap.p.using_hypercube)
+                emap.train()
+                file = emap.save()
+                parameter_file = Path(td) / "parameters.json"
+                self.assertTrue(parameter_file.is_file())
+                with open(parameter_file, "r") as f:
+                    json_data = json.load(f)
+                self.assertEqual(json_data["using_hypercube"], False)
+                self.assertIsNotNone(file)
+                loaded_emap = em.EncoderMap.from_checkpoint(file)
+                self.assertFalse(
+                    loaded_emap.p.using_hypercube,
+                    msg=f"{loaded_emap.p.main_path=} {file=}",
+                )
+                loaded_emap.p.n_steps += 10
+                with Capturing() as output:
+                    out = loaded_emap.train()
+                self.assertTrue(
+                    any("was reloaded from disk" in l for l in output),
+                    msg="The model does train with the hypercube data, which it shouldn't.",
+                )
+                self.assertIsNone(out)
+                loaded_emap.set_train_data(train_data)
+                self.assertEqual(loaded_emap.train_data.shape[1], train_data.shape[1])
+                out = loaded_emap.train()
+                self.assertIsNotNone(
+                    out,
+                    msg=(
+                        f"The reloaded emap using {desc} did not train, even when "
+                        f"the correct data was provided."
+                    ),
+                )
+
+    @unittest.skip
+    @patch(
+        "encodermap.trajinfo.info_single.SingleTraj", MockSingleTraj, spec=em.SingleTraj
+    )
+    @patch(
+        "encodermap.trajinfo.info_all.TrajEnsemble",
+        MockTrajEnsemble,
+        spec=em.TrajEnsemble,
+    )
     def test_save_train_load(self):
         """Permutes all different parameters and checks whether the networks train,
         save, load, and retrain.
 
-        Parameters:
+        Parameters: n
             * Encodermap class: `EncoderMap` or `AngleDihedralCartesianEncoderMap`
             * sparse: True or False
             * For `AngleDihedralCartesianEncoderMap`: Use sidechains True or False
             * For `AngleDihedralCartesianEncoderMap`: Use backbone angles True or False
+            * For `AngleDihedralCartesianEncoderMap`: only sidechains are sparse True or False
             * For `EncoderMap` use periodicity float("inf") or 2 * np.pi
 
         """
-        self.autoencoder_with_dataset(
-            "AngleDihedralCartesianEncoderMap", False, True, True
-        )
-        with self.assertRaises(Exception) as exc:
-            self.autoencoder_with_dataset(
-                "AngleDihedralCartesianEncoderMap", False, True, False
-            )
-        self.assertIn("Only allowed combinations", str(exc.exception))
-        self.autoencoder_with_dataset(
-            "AngleDihedralCartesianEncoderMap", False, False, True
-        )
-        self.autoencoder_with_dataset(
-            "AngleDihedralCartesianEncoderMap", False, False, False
-        )
-        self.autoencoder_with_dataset(
-            "AngleDihedralCartesianEncoderMap", True, True, True
-        )
-        self.autoencoder_with_dataset(
-            "AngleDihedralCartesianEncoderMap", True, False, True
-        )
-        self.autoencoder_with_dataset(
-            "AngleDihedralCartesianEncoderMap", True, False, False
-        )
+        ########################################################################
+        # Test how sparse cartesians are routed through the model
+        ########################################################################
+        self.examine_dense_and_sparse_cartesians()
+
+        ########################################################################
+        # Autoencoder, DihedralEncoderMap, EncoderMap
+        ########################################################################
+        self.autoencoder_with_dataset("Autoencoder", False, False, False)
+        self.autoencoder_with_dataset("Autoencoder", True, False, False)
+        self.autoencoder_with_dataset("DihedralEncoderMap", False, False, False)
+        self.autoencoder_with_dataset("DihedralEncoderMap", True, False, False)
         self.autoencoder_with_dataset("EncoderMap", False, False, False, float("inf"))
         self.autoencoder_with_dataset("EncoderMap", True, False, False, float("inf"))
         self.autoencoder_with_dataset("EncoderMap", False, False, False, 2 * np.pi)
         self.autoencoder_with_dataset("EncoderMap", True, False, False, 2 * np.pi)
+        self.autoencoder_with_dataset(
+            "AngleDihedralCartesianEncoderMap", False, True, True
+        )
+
+        # Wrong combination of use_sidechains and use_backbone_angles
+        with self.assertRaisesRegex(
+            Exception,
+            expected_regex=r".*allowed combinations.*",
+        ) as exc:
+            self.autoencoder_with_dataset(
+                "AngleDihedralCartesianEncoderMap",
+                False,
+                True,
+                False,
+            )
+
+        ########################################################################
+        # AngleDihedralCartesianEncoderMap
+        ########################################################################
+        self.autoencoder_with_dataset(
+            "AngleDihedralCartesianEncoderMap",
+            False,
+            False,
+            True,
+        )
+        self.autoencoder_with_dataset(
+            "AngleDihedralCartesianEncoderMap",
+            False,
+            False,
+            False,
+        )
+        self.autoencoder_with_dataset(
+            "AngleDihedralCartesianEncoderMap",
+            False,
+            True,
+            True,
+            trainable_sparse_to_dense=True,
+            sidechain_only_sparse=True,
+        )
+        self.autoencoder_with_dataset(
+            "AngleDihedralCartesianEncoderMap",
+            False,
+            True,
+            True,
+            trainable_sparse_to_dense=False,
+            sidechain_only_sparse=True,
+        )
+        self.autoencoder_with_dataset(
+            "AngleDihedralCartesianEncoderMap",
+            True,
+            True,
+            True,
+            trainable_sparse_to_dense=True,
+        )
+        self.autoencoder_with_dataset(
+            "AngleDihedralCartesianEncoderMap",
+            True,
+            False,
+            True,
+            trainable_sparse_to_dense=True,
+        )
+        self.autoencoder_with_dataset(
+            "AngleDihedralCartesianEncoderMap",
+            True,
+            False,
+            False,
+            trainable_sparse_to_dense=True,
+        )
+        self.autoencoder_with_dataset(
+            "AngleDihedralCartesianEncoderMap",
+            True,
+            True,
+            True,
+            trainable_sparse_to_dense=False,
+        )
+        self.autoencoder_with_dataset(
+            "AngleDihedralCartesianEncoderMap",
+            True,
+            False,
+            True,
+            trainable_sparse_to_dense=False,
+        )
+        self.autoencoder_with_dataset(
+            "AngleDihedralCartesianEncoderMap",
+            True,
+            False,
+            False,
+            trainable_sparse_to_dense=False,
+        )
 
     def autoencoder_with_dataset(
         self,
@@ -1916,14 +3409,23 @@ class TestAutoencoder(tf.test.TestCase):
         use_sidechains: bool,
         use_backbone_angles: bool,
         periodicity: float = float("inf"),
-    ):
+        trainable_sparse_to_dense: bool = False,
+        sidechain_only_sparse: bool = False,
+    ) -> Any:
+        print(
+            f"Testing {use_class} with dataset. {sparse=} {use_sidechains=} "
+            f"{use_backbone_angles=} {periodicity=} {trainable_sparse_to_dense=} "
+            f"{sidechain_only_sparse=}"
+        )
         if use_class == "AngleDihedralCartesianEncoderMap":
             self.ADC_autoencoder_with_dataset(
                 sparse=sparse,
                 use_sidechains=use_sidechains,
                 use_backbone_angles=use_backbone_angles,
+                trainable_sparse_to_dense=trainable_sparse_to_dense,
+                sidechain_only_sparse=sidechain_only_sparse,
             )
-        elif use_class == "EncoderMap":
+        elif use_class in ["EncoderMap", "Autoencoder"]:
             self.encodermap_with_dataset(sparse=sparse, periodicity=periodicity)
 
     def ADC_autoencoder_with_dataset(
@@ -1931,26 +3433,60 @@ class TestAutoencoder(tf.test.TestCase):
         sparse,
         use_sidechains,
         use_backbone_angles,
+        trainable_sparse_to_dense,
+        sidechain_only_sparse,
+        return_dataset_and_model: bool = False,
     ):
+        # Encodermap imports
+        from encodermap.trajinfo.info_all import TrajEnsemble
+        from encodermap.trajinfo.info_single import SingleTraj
+
         # create a dense dataset
         dataset_length = 512
         shapes = {
-            "cartesians": (30, 3),
-            "distances": (29,),
-            "angles": (28,),
-            "dihedrals": (27,),
-            "sidechain_dihedrals": (22,),
+            "central_cartesians": (30, 3),
+            "central_distances": (29,),
+            "central_angles": (28,),
+            "central_dihedrals": (27,),
+            "side_dihedrals": (22,),
         }
+
+        # create mock trajs
+        trajs = TrajEnsemble()
+        trajs.CVs_in_file = False
+        trajs.traj_files = ["/tmp.json/traj_0.xtc", "/tmp.json/traj_1.xtc"]
+        trajs.trajs = [SingleTraj(traj_num=0), SingleTraj(traj_num=1)]
+        for i, traj in enumerate(trajs):
+            traj._traj_file = Path(f"/tmp/traj_{i}.xtc")
+            traj.traj_file = f"/tmp/traj_{i}.xtc"
+            traj.top_file = f"/tmp/traj_{i}.pdb"
+            traj.n_frames = dataset_length
+            traj.backend = "mdtraj"
+            traj.id = np.vstack(
+                [np.full((dataset_length,), i), np.arange(dataset_length)]
+            ).T
+            traj.basename = f"{i:02d}"
+            traj.time = np.arange(dataset_length) * 10
+            for k, s in shapes.items():
+                traj.load_CV(np.ones((dataset_length, *s), dtype="float32"), k)
 
         if use_sidechains:
             dense_dataset = tf.data.Dataset.from_tensor_slices(
                 (
-                    np.ones((dataset_length, *shapes["angles"]), dtype="float32"),
-                    np.ones((dataset_length, *shapes["dihedrals"]), dtype="float32"),
-                    np.ones((dataset_length, *shapes["cartesians"]), dtype="float32"),
-                    np.ones((dataset_length, *shapes["distances"]), dtype="float32"),
                     np.ones(
-                        (dataset_length, *shapes["sidechain_dihedrals"]),
+                        (dataset_length, *shapes["central_angles"]), dtype="float32"
+                    ),
+                    np.ones(
+                        (dataset_length, *shapes["central_dihedrals"]), dtype="float32"
+                    ),
+                    np.ones(
+                        (dataset_length, *shapes["central_cartesians"]), dtype="float32"
+                    ),
+                    np.ones(
+                        (dataset_length, *shapes["central_distances"]), dtype="float32"
+                    ),
+                    np.ones(
+                        (dataset_length, *shapes["side_dihedrals"]),
                         dtype="float32",
                     ),
                 )
@@ -1958,14 +3494,22 @@ class TestAutoencoder(tf.test.TestCase):
         else:
             dense_dataset = tf.data.Dataset.from_tensor_slices(
                 (
-                    np.ones((dataset_length, *shapes["angles"]), dtype="float32"),
-                    np.ones((dataset_length, *shapes["dihedrals"]), dtype="float32"),
-                    np.ones((dataset_length, *shapes["cartesians"]), dtype="float32"),
-                    np.ones((dataset_length, *shapes["distances"]), dtype="float32"),
+                    np.ones(
+                        (dataset_length, *shapes["central_angles"]), dtype="float32"
+                    ),
+                    np.ones(
+                        (dataset_length, *shapes["central_dihedrals"]), dtype="float32"
+                    ),
+                    np.ones(
+                        (dataset_length, *shapes["central_cartesians"]), dtype="float32"
+                    ),
+                    np.ones(
+                        (dataset_length, *shapes["central_distances"]), dtype="float32"
+                    ),
                 )
             )
         dense_dataset = dense_dataset.shuffle(
-            buffer_size=shapes["cartesians"][0],
+            buffer_size=shapes["central_cartesians"][0],
             reshuffle_each_iteration=True,
         )
         dense_dataset = dense_dataset.repeat()
@@ -1980,42 +3524,13 @@ class TestAutoencoder(tf.test.TestCase):
             cartesian_distance_cost_scale=1,
             center_cost_scale=1,
             l2_reg_constant=0.001,
-            auto_cost_scale=1,  # Wondering, why ADCParameters implements an auto_cost_scale
+            auto_cost_scale=1,
             main_path=em.misc.run_path(
                 str(Path(__file__).resolve().parent / "data/runs")
             ),
             n_steps=50,
             cartesian_cost_variant="mean_abs",
-            cartesian_cost_scale_soft_start=(
-                int(50 / 10 * 9),
-                int(50 / 10 * 9) + 25,
-            ),
-            cartesian_pwd_start=1,
-            cartesian_pwd_step=3,
-            dihedral_cost_variant="mean_abs",
-            cartesian_dist_sig_parameters=[400, 10, 5, 1, 2, 5],
-            checkpoint_step=25,
-            use_backbone_angles=use_backbone_angles,
-            use_sidechains=use_sidechains,
-        )
-        p2 = em.ADCParameters(
-            dihedral_cost_scale=1,
-            angle_cost_scale=1,
-            cartesian_cost_scale=1,
-            distance_cost_scale=1,
-            cartesian_distance_cost_scale=1,
-            center_cost_scale=1,
-            l2_reg_constant=0.001,
-            auto_cost_scale=1,  # Wondering, why ADCParameters implements an auto_cost_scale
-            main_path=em.misc.run_path(
-                str(Path(__file__).resolve().parent / "data/runs")
-            ),
-            n_steps=50,
-            cartesian_cost_variant="mean_abs",
-            cartesian_cost_scale_soft_start=(
-                5,
-                25,
-            ),
+            cartesian_cost_scale_soft_start=(5, 75),
             cartesian_pwd_start=1,
             cartesian_pwd_step=3,
             dihedral_cost_variant="mean_abs",
@@ -2027,21 +3542,26 @@ class TestAutoencoder(tf.test.TestCase):
             summary_step=1,
         )
 
+        if trainable_sparse_to_dense:
+            with Capturing() as output:
+                p.trainable_dense_to_sparse = True
+            self.assertLen(output, 0)
+
         # create a sparse dataset
         # here; we also compute the pairwise distances of the dense dataset to make sure
         # that reshape(len(data), -1, order="C") can be undone by stack
         sparse_shapes = {
-            "cartesians": (27, 3),
-            "distances": (26,),
-            "angles": (25,),
-            "dihedrals": (24,),
-            "sidechain_dihedrals": (20,),
+            "central_cartesians": (27, 3),
+            "central_distances": (26,),
+            "central_angles": (25,),
+            "central_dihedrals": (24,),
+            "side_dihedrals": (20,),
         }
 
         sparse_dataset_tensors = {}
         for name, dense_shape in shapes.items():
             sparse_shape = sparse_shapes[name]
-            values = np.random.random((dataset_length, *dense_shape)).astype("float32")
+            values = np.ones((dataset_length, *dense_shape)).astype("float32")
             if "cartesians" in name:
                 values = values.reshape(len(values), -1)
                 values[:] = np.nan
@@ -2058,24 +3578,24 @@ class TestAutoencoder(tf.test.TestCase):
         if use_sidechains:
             sparse_dataset = tf.data.Dataset.from_tensor_slices(
                 (
-                    sparse_dataset_tensors["angles"],
-                    sparse_dataset_tensors["dihedrals"],
-                    sparse_dataset_tensors["cartesians"],
-                    sparse_dataset_tensors["distances"],
-                    sparse_dataset_tensors["sidechain_dihedrals"],
+                    sparse_dataset_tensors["central_angles"],
+                    sparse_dataset_tensors["central_dihedrals"],
+                    sparse_dataset_tensors["central_cartesians"],
+                    sparse_dataset_tensors["central_distances"],
+                    sparse_dataset_tensors["side_dihedrals"],
                 ),
             )
         else:
             sparse_dataset = tf.data.Dataset.from_tensor_slices(
                 (
-                    sparse_dataset_tensors["angles"],
-                    sparse_dataset_tensors["dihedrals"],
-                    sparse_dataset_tensors["cartesians"],
-                    sparse_dataset_tensors["distances"],
+                    sparse_dataset_tensors["central_angles"],
+                    sparse_dataset_tensors["central_dihedrals"],
+                    sparse_dataset_tensors["central_cartesians"],
+                    sparse_dataset_tensors["central_distances"],
                 ),
             )
         sparse_dataset = sparse_dataset.shuffle(
-            buffer_size=shapes["cartesians"][0],
+            buffer_size=shapes["central_cartesians"][0],
             reshuffle_each_iteration=True,
         )
         sparse_dataset = sparse_dataset.repeat()
@@ -2083,16 +3603,98 @@ class TestAutoencoder(tf.test.TestCase):
 
         # define the dataset
         if sparse:
+            assert (
+                not sidechain_only_sparse
+            ), "Sidechain_only sparse and sparse are mutually exclusive."
+        if sidechain_only_sparse:
+            assert (
+                use_sidechains and use_backbone_angles
+            ), "Sidechain only sparse only works when use_sidechains and use-Backbone_angles are true"
+        if sparse:
+            sig = inspect.signature(trajs[0].load_CV)
+            self.assertIn(
+                "override",
+                sig.parameters,
+            )
             dataset = sparse_dataset
+            for traj in trajs:
+                for k, s in sparse_shapes.items():
+                    traj._CVs[k][:, :, s[0] :] = np.nan
+            self.assertTrue(np.any(np.isnan(trajs.CVs["central_cartesians"])))
+            self.assertTrue(np.any(np.isnan(trajs.CVs["central_angles"])))
+            self.assertTrue(np.any(np.isnan(trajs.CVs["central_dihedrals"])))
+            self.assertTrue(np.any(np.isnan(trajs.CVs["central_distances"])))
+        elif sidechain_only_sparse:
+            dataset = tf.data.Dataset.from_tensor_slices(
+                (
+                    np.ones(
+                        (dataset_length, *shapes["central_angles"]), dtype="float32"
+                    ),
+                    np.ones(
+                        (dataset_length, *shapes["central_dihedrals"]), dtype="float32"
+                    ),
+                    np.ones(
+                        (dataset_length, *shapes["central_cartesians"]), dtype="float32"
+                    ),
+                    np.ones(
+                        (dataset_length, *shapes["central_distances"]), dtype="float32"
+                    ),
+                    sparse_dataset_tensors["side_dihedrals"],
+                ),
+            )
+            dataset = dataset.repeat()
+            dataset = dataset.batch(256)
+            for datum in dataset:
+                break
+            for d, test in zip(datum, [True, True, True, True, False]):
+                if test:
+                    self.assertNotIsInstance(d, tf.SparseTensor)
+                else:
+                    self.assertIsInstance(d, tf.SparseTensor)
+                    d = tf.sparse.to_dense(d, default_value=np.nan).numpy()
+                    self.assertTrue(np.any(np.isnan(d)))
         else:
             dataset = dense_dataset
+
+        if sidechain_only_sparse:
+            for i, batch in enumerate(dataset):
+                self.assertTrue(
+                    not tf.reduce_any(
+                        tf.math.is_nan(
+                            tf.sparse.to_dense(
+                                batch[-1],
+                                default_value=0.0,
+                            )
+                        )
+                    ).numpy()
+                )
+                if i > 100:
+                    break
 
         model = gen_functional_model(
             dataset,
             p,
             write_summary=False,
             sparse=sparse,
+            sidechain_only_sparse=sidechain_only_sparse,
         )
+
+        if sidechain_only_sparse:
+            self.assertIsNone(
+                model.get_dense_model_distances,
+            )
+            self.assertIsNone(
+                model.get_dense_model_cartesians,
+            )
+            self.assertIsNone(
+                model.get_dense_model_central_dihedrals,
+            )
+            self.assertIsNone(
+                model.get_dense_model_central_angles,
+            )
+            self.assertIsNotNone(
+                model.get_dense_model_side_dihedrals,
+            )
 
         # make a forward pass
         for d in dataset:
@@ -2116,6 +3718,7 @@ class TestAutoencoder(tf.test.TestCase):
         ):
             self.assertAllEqual(w1, w1)
 
+        # test the encoder with dataset and with trajs
         emap = em.AngleDihedralCartesianEncoderMap(
             trajs=None,
             parameters=p,
@@ -2123,13 +3726,58 @@ class TestAutoencoder(tf.test.TestCase):
             read_only=False,
         )
 
+        if return_dataset_and_model:
+            return emap, dataset, p
+
+        emap.callbacks.append(em.callbacks.NoneInterruptCallback())
+
+        if sidechain_only_sparse:
+            self.assertIsNone(emap.model.get_dense_model_central_angles)
+            self.assertIsNone(emap.model.get_dense_model_central_dihedrals)
+            self.assertIsNone(emap.model.get_dense_model_distances)
+            self.assertIsNone(emap.model.get_dense_model_cartesians)
+            self.assertIsNotNone(emap.model.get_dense_model_side_dihedrals)
+
+        lowd = emap.encode()
+        self.assertEqual(
+            lowd.shape[1],
+            2,
+        )
+        lowd = emap.encode(trajs[0])
+        self.assertIsNotNone(lowd)
+        self.assertEqual(
+            lowd.shape[1],
+            2,
+        )
         emap2 = em.AngleDihedralCartesianEncoderMap(
-            trajs=None,
-            parameters=p2,
+            trajs=trajs,
+            parameters=p,
             dataset=dataset,
             read_only=False,
         )
-        self.assertEqual(emap2.p.current_training_step, 0)
+        self.assertHasAttr(
+            emap2,
+            "trajs",
+        )
+        self.assertEqual(
+            emap2.trajs.__class__.__name__,
+            "MockTrajEnsemble",
+        )
+        self.assertEqual(
+            trajs[0].CVs["central_dihedrals"].shape[0],
+            dataset_length,
+            msg=f"{trajs[0].CVs['central_dihedrals'].shape=}",
+        )
+        lowd = emap2.encode()
+        self.assertEqual(
+            lowd.shape[1],
+            2,
+        )
+        lowd = emap2.encode(trajs[0])
+        self.assertEqual(
+            lowd.shape[1],
+            2,
+        )
 
         # call the model
         if use_sidechains:
@@ -2155,21 +3803,91 @@ class TestAutoencoder(tf.test.TestCase):
                 o.shape, (d[0].shape[0], *sh), msg=f"{o.shape=}, {d[0].shape=}, {sh=}"
             )
 
+        # make sure images are not none
+        with Capturing() as output:
+            emap.add_images_to_tensorboard(max_size=100)
+        if use_backbone_angles and use_sidechains:
+            self.assertEqual(
+                output[0].count("("),
+                3,
+                msg=(
+                    f"Add images to tensorboard will log with wrong data: {output=} "
+                    f"{emap.p.use_backbone_angles=} {emap.p.use_sidechains=}"
+                ),
+            )
+        if not use_backbone_angles and not use_sidechains:
+            image_callback_data = (
+                np.ones((200, *shapes["central_dihedrals"]), dtype="float32"),
+            )
+        elif use_backbone_angles and not use_sidechains:
+            image_callback_data = [
+                np.ones((200, *shapes["central_angles"]), dtype="float32"),
+                np.ones((200, *shapes["central_dihedrals"]), dtype="float32"),
+            ]
+        else:
+            image_callback_data = [
+                np.ones((200, *shapes["central_angles"]), dtype="float32"),
+                np.ones((200, *shapes["central_dihedrals"]), dtype="float32"),
+                np.ones(
+                    (200, *shapes["side_dihedrals"]),
+                    dtype="float32",
+                ),
+            ]
+        with self.assertWarnsRegex(
+            expected_warning=UserWarning,
+            expected_regex=r".*allowed to have multiple ImageCallbacks.*",
+            msg=(
+                "Overwriting existing CVs should issue a warning to the user, but "
+                "it does not."
+            ),
+        ):
+            emap.add_images_to_tensorboard(image_callback_data, max_size=100)
+        with self.assertRaises(AssertionError):
+            emap.add_images_to_tensorboard(np.random.random((100, 5)))
+
         # train and assert prints
         with Capturing() as output:
-            emap.train()
-            emap2.train()
+            history = emap.train()
+        self.assertIsNotNone(
+            history,
+            msg=(f"Training did not succeed. Here's the output: {output}"),
+        )
         self.assertEqual(emap.p.current_training_step, 50)
-        self.assertEqual(emap.callbacks[-1].current_step, 50)
+        self.assertEqual(
+            emap.callbacks[-4].current_step,
+            50,
+            msg=(f"{output=}\n\n" f"{history=}"),
+        )
         self.assertTrue(any(["Saving the model" in line for line in output]))
         self.assertTrue((Path(p.main_path) / "saved_model_25.keras").is_file())
+
+        # check that images are not nan
+        auto_image_callback = emap.callbacks[-1]
+        self.assertIsNotNone(auto_image_callback.model)
+        self.assertIsInstance(
+            auto_image_callback, em.callbacks.ImageCallback, msg=f"{emap.callbacks=}"
+        )
+        lowd = auto_image_callback.model.encoder(auto_image_callback.highd_data).numpy()
+        self.assertTrue(
+            not np.any(np.isnan(lowd)),
+            msg=f"The image callbacks (added with data=None) lowd projection contains np.nans: {lowd=}",
+        )
+        manual_image_callback = emap.callbacks[-2]
+        self.assertIsNotNone(manual_image_callback.model)
+        lowd = manual_image_callback.model.encoder(
+            manual_image_callback.highd_data
+        ).numpy()
+        self.assertTrue(
+            not np.any(np.isnan(lowd)),
+            msg=f"The image callbacks (added with data=np.ndarray) lowd projection contains np.nans: {lowd=}",
+        )
 
         # Third Party Imports
         from tensorflow.python.summary.summary_iterator import summary_iterator
 
         scaling = []
         after_scaling = []
-        train_dir = Path(p2.main_path) / "train"
+        train_dir = Path(p.main_path) / "train"
         records_files = train_dir.glob("*")
         for records_file in records_files:
             records = summary_iterator(str(records_file))
@@ -2188,8 +3906,8 @@ class TestAutoencoder(tf.test.TestCase):
         for i in range(50):
             if i < 5:
                 scaling_should_be.append(0)
-            elif 5 <= i <= 25:
-                scaling_should_be.append(1 / (25 - 5) * (i - 5))
+            elif 5 <= i <= 75:
+                scaling_should_be.append(1 / (75 - 5) * (i - 5))
             else:
                 scaling_should_be.append(1)
         scaling_should_be = np.array(scaling_should_be)[1:]
@@ -2210,7 +3928,7 @@ class TestAutoencoder(tf.test.TestCase):
                 f"from 0, ramping up at step {p.cartesian_cost_scale_soft_start[0]=} to step "
                 f"{p.cartesian_cost_scale_soft_start[1]=} where it should stay at 1, however,"
                 f"these are the scales every 5 steps:\n{scaling[::5]}\n\nAnd here are the "
-                f"callbacks:\n{emap.callbacks[-1].current_cartesian_cost_scale=}"
+                f"callbacks:\n{emap.callbacks[-4].current_cartesian_cost_scale=}"
                 f"\n\nand the loss functions:\n{emap.loss[2]=}\n\n{output}"
             ),
         )
@@ -2219,16 +3937,18 @@ class TestAutoencoder(tf.test.TestCase):
         )
 
         # test encode
-        highd_data = np.random.random((100, shapes["dihedrals"][0])) * 2 * np.pi - np.pi
+        highd_data = (
+            np.random.random((100, shapes["central_dihedrals"][0])) * 2 * np.pi - np.pi
+        )
         if use_backbone_angles:
             highd_data = [
-                np.random.random((100, shapes["angles"][0])) * 2 * np.pi - np.pi,
+                np.random.random((100, shapes["central_angles"][0])) * 2 * np.pi
+                - np.pi,
                 highd_data,
             ]
         if use_sidechains:
             highd_data.append(
-                np.random.random((100, shapes["sidechain_dihedrals"][0])) * 2 * np.pi
-                - np.pi
+                np.random.random((100, shapes["side_dihedrals"][0])) * 2 * np.pi - np.pi
             )
 
         lowd = emap.encode(highd_data)
@@ -2280,10 +4000,15 @@ class TestAutoencoder(tf.test.TestCase):
             self.assertNotAllEqual(w1, w3)
 
         # retrain
-        cartesian_cost_scale = loaded_emap.callbacks[
-            -1
-        ].current_cartesian_cost_scale.numpy()
-        self.assertAllClose(cartesian_cost_scale, 0.2, msg=f"{cartesian_cost_scale=}")
+        try:
+            cartesian_cost_scale = loaded_emap.callbacks[
+                -1
+            ].current_cartesian_cost_scale.numpy()
+        except AttributeError as e:
+            raise Exception(f"{loaded_emap.callbacks=}") from e
+        self.assertAllClose(
+            cartesian_cost_scale, 0.64285713434, msg=f"{cartesian_cost_scale=}"
+        )
         with Capturing() as output:
             loaded_emap.train()
         self.assertTrue(any(["has already been trained" in line for line in output]))
@@ -2317,17 +4042,46 @@ class TestAutoencoder(tf.test.TestCase):
             ),
             n_steps=50,
             checkpoint_step=25,
+            tensorboard=True,
         )
 
         # current_step = 0
         emap = em.EncoderMap(p, data)
+        self.assertIsNotNone(emap.model)
+
+        # make sure images are not none
+        emap.add_images_to_tensorboard(max_size=100)
+        emap.add_images_to_tensorboard(data[::2], max_size=100)
+        with self.assertRaises(AssertionError):
+            emap.add_images_to_tensorboard(np.random.random((100, 5)))
+
+        # train
         with Capturing() as output:
             emap.train()
-        # current_step = 49
-        self.assertTrue(any(["Saving the model" in line for line in output]))
+        output = "\n".join(output)
+        self.assertIn("Saving the model", output)
         self.assertTrue((Path(p.main_path) / "saved_model_25.keras").is_file())
         self.assertEqual(emap.p.current_training_step, 50)
 
+        # check that images are not nan
+        auto_image_callback = emap.callbacks[-2]
+        self.assertIsNotNone(auto_image_callback.model)
+        lowd = auto_image_callback.model.encoder(auto_image_callback.highd_data).numpy()
+        self.assertTrue(
+            not np.any(np.isnan(lowd)),
+            msg=f"The image callbacks (added with data=None) lowd projection contains np.nans: {lowd=}",
+        )
+        manual_image_callback = emap.callbacks[-1]
+        self.assertIsNotNone(manual_image_callback.model)
+        lowd = manual_image_callback.model.encoder(
+            manual_image_callback.highd_data
+        ).numpy()
+        self.assertTrue(
+            not np.any(np.isnan(lowd)),
+            msg=f"The image callbacks (added with data=np.ndarray) lowd projection contains np.nans: {lowd=}",
+        )
+
+        # provide manual data if sparse it should be transformed
         with self.assertRaises(Exception) as exc:
             loaded_emap = em.EncoderMap.from_checkpoint(
                 checkpoint_path=Path(p.main_path) / "saved_model_25.keras",
@@ -2338,6 +4092,7 @@ class TestAutoencoder(tf.test.TestCase):
         loaded_emap = em.EncoderMap.from_checkpoint(
             checkpoint_path=p.main_path, sparse=sparse
         )
+        self.assertTrue(loaded_emap._using_hypercube)
         self.assertEqual(
             loaded_emap.p.current_training_step,
             50,
@@ -2354,6 +4109,8 @@ class TestAutoencoder(tf.test.TestCase):
             self.assertAllEqual(w1, w2)
 
         loaded_emap.p.n_steps += 50
+        self.assertEqual(loaded_emap.p.n_steps, 100)
+        self.assertTrue(loaded_emap._using_hypercube)
         with Capturing() as output:
             loaded_emap.train()
         self.assertTrue(
@@ -2396,13 +4153,13 @@ class TestAutoencoder(tf.test.TestCase):
         )
 
     def test_load_legacy_model(self):
-        dataset_name = "kevinsawade/encodermap-legacy-data"
+        dataset_name = "encodermap_legacy_data"
         output_dir = Path(__file__).resolve().parent / "data/legacy"
-        kaggle.api.dataset_download_files(
-            dataset_name,
-            path=output_dir,
-            unzip=True,
-            force=True,
+        em.kondata.get_from_kondata(
+            dataset_name=dataset_name,
+            output=output_dir,
+            silence_overwrite_message=True,
+            mk_parentdir=True,
         )
 
         dataset_length = 512
@@ -2411,7 +4168,7 @@ class TestAutoencoder(tf.test.TestCase):
             "distances": (368,),
             "angles": (367,),
             "dihedrals": (366,),
-            "sidechain_dihedrals": (272,),
+            "side_dihedrals": (272,),
         }
         dataset = tf.data.Dataset.from_tensor_slices(
             (
@@ -2419,9 +4176,7 @@ class TestAutoencoder(tf.test.TestCase):
                 np.ones((dataset_length, *shapes["dihedrals"]), dtype="float32"),
                 np.ones((dataset_length, *shapes["cartesians"]), dtype="float32"),
                 np.ones((dataset_length, *shapes["distances"]), dtype="float32"),
-                np.ones(
-                    (dataset_length, *shapes["sidechain_dihedrals"]), dtype="float32"
-                ),
+                np.ones((dataset_length, *shapes["side_dihedrals"]), dtype="float32"),
             )
         )
         dataset = dataset.shuffle(
@@ -2444,7 +4199,7 @@ class TestAutoencoder(tf.test.TestCase):
                 [
                     np.ones((dataset_length, *shapes["angles"]), dtype="float32"),
                     np.ones((dataset_length, *shapes["dihedrals"]), dtype="float32"),
-                    np.ones((dataset_length, *shapes["sidechain_dihedrals"]), dtype="float32"),
+                    np.ones((dataset_length, *shapes["side_dihedrals"]), dtype="float32"),
                 ]
             )
         )
@@ -2495,41 +4250,17 @@ class TestAutoencoder(tf.test.TestCase):
 
 
 ################################################################################
-# Collect Test Cases
+# Collect Test Cases and Filter
 ################################################################################
-
-
-test_cases = (TestAutoencoder,)
-
-
-################################################################################
-# Doctests
-################################################################################
-
-
-# Standard Library Imports
-import doctest
-
-# Encodermap imports
-import encodermap.autoencoder.autoencoder as autoencoder
-
-
-################################################################################
-# Create and filter suite
-################################################################################
-
-
-testSuite = unittest.TestSuite()
-doctests = (doctest.DocTestSuite(autoencoder),)
 
 
 def load_tests(loader, tests, pattern):
+    test_cases = (TestAutoencoder, TestParameters)
     suite = unittest.TestSuite()
     for test_class in test_cases:
         tests = loader.loadTestsFromTestCase(test_class)
         filtered_tests = [t for t in tests if not t.id().endswith(".test_session")]
         suite.addTests(filtered_tests)
-    suite.addTests(doctests)
     return suite
 
 

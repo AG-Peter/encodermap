@@ -13,3 +13,10 @@ pydoctest
 kaggle
 transformations
 docstring_parser
+pre-commit
+GitPython
+flake8
+pyproject-flake8
+nbconvert
+docker
+nbval

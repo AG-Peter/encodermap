@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # tests/test_losses.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -37,6 +37,7 @@ import tensorflow as tf
 from scipy.spatial.distance import cdist
 
 # Encodermap imports
+from conftest import skip_all_tests_except_env_var_specified
 from encodermap.callbacks import callbacks
 from encodermap.encodermap_tf1.backmapping import (
     chain_in_plane,
@@ -139,9 +140,9 @@ class ConstantOutputAutoencoder(SequentialModel):
         return x
 
 
-##############################################################################
+################################################################################
 # Metrics to use in scipy cdist to easily compute the correct pairwise distances
-##############################################################################
+################################################################################
 
 
 def sigmoid_closure(sig, a, b):
@@ -190,6 +191,7 @@ def periodicity_closure_w_sigmoid(sig, a, b, periodicity):
 ##############################################################################
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestDistanceLossScipy(tf.test.TestCase):
     def test_non_periodic(self):
         highd = (
@@ -198,7 +200,7 @@ class TestDistanceLossScipy(tf.test.TestCase):
         lowd = (
             np.random.random((256, 2)).astype("float32") * 10
         )  # lower values in latent space
-        sig_params = Parameters.defaults["dist_sig_parameters"]
+        sig_params = Parameters._defaults["dist_sig_parameters"]
 
         # encodermap1
         # Encodermap imports
@@ -233,7 +235,7 @@ class TestDistanceLossScipy(tf.test.TestCase):
         lowd = (
             np.random.random((256, 2)).astype("float32") * 10
         )  # lower values in latent space
-        sig_params = Parameters.defaults["dist_sig_parameters"]
+        sig_params = Parameters._defaults["dist_sig_parameters"]
 
         # encodermap1
         # Encodermap imports
@@ -278,6 +280,7 @@ class TestDistanceLossScipy(tf.test.TestCase):
         self.assertAllClose(cost_numpy, cost_scipy, atol=1e-3)
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestLossesNonPeriodic(tf.test.TestCase):
     def test_losses_not_periodic(self):
         p = Parameters(batch_size=5, l2_reg_constant=0)
@@ -287,7 +290,15 @@ class TestLossesNonPeriodic(tf.test.TestCase):
         inp = np.random.random((len_data, input_dim)).astype("float32")
 
         # center loss
-        center_loss = loss_functions.center_loss(model)
+        # Encodermap imports
+        from encodermap.loss_functions.loss_functions import (
+            auto_loss,
+            center_loss,
+            distance_loss,
+            regularization_loss,
+        )
+
+        center_loss = center_loss(model)
         self.assertEqual(tf.reduce_sum(tf.abs(model.encoder(inp))), 0)
         self.assertEqual(center_loss(inp), 0)
 
@@ -302,14 +313,10 @@ class TestLossesNonPeriodic(tf.test.TestCase):
         model_ = ConstantOutputAutoencoder(input_dim, len_data, p, latent_constant=1)
         distance_loss_tf1_case1 = old_distance_loss(model_)(inp)
         self.assertEqual(distance_loss_tf1_case1, 0)
-        distance_loss_tf2_case1 = loss_functions.distance_loss(model_)(inp)
+        distance_loss_tf2_case1 = distance_loss(model_)(inp)
         self.assertEqual(distance_loss_tf2_case1, 0)
         self.assertEqual(distance_loss_tf1_case1, distance_loss_tf2_case1)
-        # Case 2 # I don't know, why this Test fails. I can perfectly reproduce it in a normal python environment
-        # This test also succeeds, when called with python -m unittest discover -s tests -p *losses*
-        # But pytest tests makes this tets fail. pytest test
-        # Excluding everything besides test_losses.py
-        # pytest tests --html=docs/source/_static/pytest_report.html --self-contained-html --ignore-glob='!*losses!'
+        # Case 2
         inp = np.zeros((len_data, input_dim)).astype("float32")
         model_ = ConstantOutputAutoencoder(
             input_dim, len_data, p, latent_constant="random"
@@ -327,16 +334,26 @@ class TestLossesNonPeriodic(tf.test.TestCase):
         distance_loss_tf1_case2 = old_distance_loss(model_)(inp)
         if not isinstance(distance_loss_tf1_case2, (int, np.integer)):
             distance_loss_tf1_case2 = distance_loss_tf1_case2.numpy()
-        self.assertNotEqual(
+        self.assertNotAllEqual(
             distance_loss_tf1_case2,
             0,
-            msg=f"Uniform input (np.zeros(100, 10) {inp[:5,:5]} and random latent (100, 2) {latent[:5,:]} did not NOT equal 0 in distance_loss_tf1 (non-periodic), but {distance_loss_tf1_case2}",
+            msg=(
+                f"Uniform input (np.zeros(100, 10) {inp[:5,:5]} and random "
+                f"latent (100, 2) {latent[:5,:]} did equal to 0 in "
+                f"distance_loss_tf1 (non-periodic), but "
+                f"{distance_loss_tf1_case2}"
+            ),
         )
-        distance_loss_tf2_case2 = loss_functions.distance_loss(model_)(inp)
-        self.assertNotEqual(
+        distance_loss_tf2_case2 = distance_loss(model_)(inp)
+        self.assertNotAllEqual(
             distance_loss_tf2_case2.numpy(),
             0,
-            msg=f"Uniform input (np.zeros(100, 10) {inp[:5,:5]} and random latent (100, 2) {latent[:5,:]} did not NOT equal 0 in distance_loss_tf2 (non-periodic), but {distance_loss_tf2_case2}",
+            msg=(
+                f"Uniform input (np.zeros(100, 10) {inp[:5,:5]} and random "
+                f"latent (100, 2) {latent[:5,:]} did not equal 0 in "
+                f"distance_loss_tf2 (non-periodic), but "
+                f"{distance_loss_tf2_case2}"
+            ),
         )
         self.assertEqual(distance_loss_tf1_case2, distance_loss_tf2_case2)
         # Case 3
@@ -345,7 +362,7 @@ class TestLossesNonPeriodic(tf.test.TestCase):
         model_ = ConstantOutputAutoencoder(input_dim, len_data, p, latent_constant=0)
         distance_loss_tf1_case3 = old_distance_loss(model_)(inp)
         self.assertAllClose(distance_loss_tf1_case3.numpy(), 0)
-        distance_loss_tf2_case3 = loss_functions.distance_loss(model_)(inp)
+        distance_loss_tf2_case3 = distance_loss(model_)(inp)
         self.assertNotEqual(distance_loss_tf2_case3, 0)
         self.assertEqual(distance_loss_tf1_case3, distance_loss_tf2_case3)
         # Case 4
@@ -355,23 +372,24 @@ class TestLossesNonPeriodic(tf.test.TestCase):
         )
         distance_loss_tf1_case4 = old_distance_loss(model_)(inp)
         self.assertNotEqual(distance_loss_tf1_case4, 0)
-        distance_loss_tf2_case4 = loss_functions.distance_loss(model_)(inp)
+        distance_loss_tf2_case4 = distance_loss(model_)(inp)
         self.assertNotEqual(distance_loss_tf2_case4, 0)
         self.assertEqual(distance_loss_tf1_case4, distance_loss_tf2_case4)
 
         # reg loss
         inp = np.random.random((len_data, input_dim)).astype("float32")
-        reg_loss = loss_functions.regularization_loss(model)
+        reg_loss = regularization_loss(model)
         self.assertEqual(reg_loss(inp), 0)
 
         # auto loss
         inp = np.random.random((len_data, input_dim)).astype("float32")
         inp2 = np.random.random((len_data, input_dim)).astype("float32")
-        auto_loss = loss_functions.auto_loss(model, p)
+        auto_loss = auto_loss(model, p)
         self.assertEqual(auto_loss(inp), 0)
         self.assertNotEqual(auto_loss(inp, inp2), 0)
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestLossesPeriodic(tf.test.TestCase):
     def test_losses_periodic(self):
         p = Parameters(batch_size=5, l2_reg_constant=0, periodicity=2 * np.pi)
@@ -383,7 +401,15 @@ class TestLossesPeriodic(tf.test.TestCase):
         ) - np.pi
 
         # center loss
-        center_loss = loss_functions.center_loss(model)
+        # Encodermap imports
+        from encodermap.loss_functions.loss_functions import (
+            auto_loss,
+            center_loss,
+            distance_loss,
+            regularization_loss,
+        )
+
+        center_loss = center_loss(model)
         self.assertEqual(tf.reduce_sum(tf.abs(model.encoder(inp))), 0)
         self.assertEqual(center_loss(inp), 0)
 
@@ -398,7 +424,7 @@ class TestLossesPeriodic(tf.test.TestCase):
         model_ = ConstantOutputAutoencoder(input_dim, len_data, p, latent_constant=1)
         distance_loss_tf1_case1 = old_distance_loss(model_)(inp)
         self.assertEqual(distance_loss_tf1_case1, 0)
-        distance_loss_tf2_case1 = loss_functions.distance_loss(model_)(inp)
+        distance_loss_tf2_case1 = distance_loss(model_)(inp)
         self.assertEqual(distance_loss_tf2_case1, 0)
         self.assertEqual(distance_loss_tf1_case1, distance_loss_tf2_case1)
         # Case 2
@@ -424,7 +450,7 @@ class TestLossesPeriodic(tf.test.TestCase):
             0,
             msg=f"Uniform input (np.zeros(100, 10) {inp[:5, :5]} and random latent (100, 2) {latent[:5, :]} did not NOT equal 0 in distance_loss_tf1 (periodic), but {distance_loss_tf1_case2}",
         )
-        distance_loss_tf2_case2 = loss_functions.distance_loss(model_)(inp)
+        distance_loss_tf2_case2 = distance_loss(model_)(inp)
         self.assertNotEqual(
             distance_loss_tf2_case2.numpy(),
             0,
@@ -436,7 +462,7 @@ class TestLossesPeriodic(tf.test.TestCase):
         model_ = ConstantOutputAutoencoder(input_dim, len_data, p, latent_constant=0)
         distance_loss_tf1_case3 = old_distance_loss(model_)(inp)
         self.assertNotEqual(distance_loss_tf1_case3, 0)
-        distance_loss_tf2_case3 = loss_functions.distance_loss(model_)(inp)
+        distance_loss_tf2_case3 = distance_loss(model_)(inp)
         self.assertNotEqual(distance_loss_tf2_case3, 0)
         self.assertEqual(distance_loss_tf1_case3, distance_loss_tf2_case3)
         # Case 4
@@ -446,7 +472,7 @@ class TestLossesPeriodic(tf.test.TestCase):
         )
         distance_loss_tf1_case4 = old_distance_loss(model_)(inp)
         self.assertNotEqual(distance_loss_tf1_case4, 0)
-        distance_loss_tf2_case4 = loss_functions.distance_loss(model_)(inp)
+        distance_loss_tf2_case4 = distance_loss(model_)(inp)
         self.assertNotEqual(distance_loss_tf2_case4, 0)
         self.assertEqual(distance_loss_tf1_case4, distance_loss_tf2_case4)
 
@@ -454,7 +480,7 @@ class TestLossesPeriodic(tf.test.TestCase):
         inp = (
             np.random.random((len_data, input_dim)).astype("float32") * 2 * np.pi
         ) - np.pi
-        reg_loss = loss_functions.regularization_loss(model)
+        reg_loss = regularization_loss(model)
         self.assertEqual(reg_loss(inp), 0)
 
         # auto loss
@@ -464,11 +490,12 @@ class TestLossesPeriodic(tf.test.TestCase):
         inp2 = (
             np.random.random((len_data, input_dim)).astype("float32") * 2 * np.pi
         ) - np.pi
-        auto_loss = loss_functions.auto_loss(model, p)
+        auto_loss = auto_loss(model, p)
         self.assertEqual(auto_loss(inp), 0)
         self.assertNotEqual(auto_loss(inp, inp2), 0)
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestLossesADCAutoencoder(tf.test.TestCase):
     def assertAllClosePeriodic(
         self,
@@ -774,30 +801,41 @@ class TestLossesADCAutoencoder(tf.test.TestCase):
         self.assertAllEqual(inp_angles, out_angles)
 
         # losses
+        # Encodermap imports
+        from encodermap.loss_functions.loss_functions import (
+            angle_loss,
+            cartesian_distance_loss,
+            cartesian_loss,
+            center_loss,
+            dihedral_loss,
+            distance_loss,
+            regularization_loss,
+        )
+
         # distance_cost
-        dist_cost = loss_functions.distance_loss(model_0, p)
+        dist_cost = distance_loss(model_0, p)
         self.assertNotEqual(dist_cost(main_inputs), 0)
         self.assertEqual(dist_cost(tf.zeros(main_inputs.shape)), 0)
 
         # center loss
-        center_loss = loss_functions.center_loss(model_0, p)
-        self.assertEqual(center_loss(main_inputs), 0)
-        center_loss = loss_functions.center_loss(model_1, p)
-        self.assertEqual(center_loss(tf.ones(main_inputs.shape)), p.center_cost_scale)
+        center_loss_ = center_loss(model_0, p)
+        self.assertEqual(center_loss_(main_inputs), 0)
+        center_loss_ = center_loss(model_1, p)
+        self.assertEqual(center_loss_(tf.ones(main_inputs.shape)), p.center_cost_scale)
 
         # regularization loss
         # is zero because l2_reg_constant was set to zero
-        reg_loss = loss_functions.regularization_loss(model_0)
+        reg_loss = regularization_loss(model_0)
         self.assertEqual(reg_loss(), 0)
 
         # dihedral loss
-        dihedral_loss = loss_functions.dihedral_loss(model_0, p)
+        dihedral_loss = dihedral_loss(model_0, p)
         self.assertEqual(dihedral_loss(inp_dihedrals, model_0(inp_dihedrals)), 0)
         self.assertNotEqual(dihedral_loss(inp_dihedrals, model_1(inp_dihedrals_2)), 0)
         self.assertNotEqual(dihedral_loss(inp_dihedrals, model_0(inp_dihedrals_2)), 0)
 
         # angle loss
-        angle_loss = loss_functions.angle_loss(model_0, p)
+        angle_loss = angle_loss(model_0, p)
         self.assertEqual(angle_loss(inp_angles, model_0(inp_angles)), 0)
         self.assertNotEqual(angle_loss(inp_angles, model_1(inp_angles_2)), 0)
         self.assertNotEqual(angle_loss(inp_angles, model_0(inp_angles_2)), 0)
@@ -825,7 +863,7 @@ class TestLossesADCAutoencoder(tf.test.TestCase):
         # print('diff:', diff)
 
         # define the loss
-        cartesian_distance_loss = loss_functions.cartesian_distance_loss(model_0, p)
+        cartesian_distance_loss = cartesian_distance_loss(model_0, p)
 
         # calculate the pairwise stuff use only the first 10 entries, to save memory
         inp_pair = pairwise_dist(
@@ -881,7 +919,7 @@ class TestLossesADCAutoencoder(tf.test.TestCase):
 
         # step 0 no scale
         with Capturing() as output:
-            cartesian_loss = loss_functions.cartesian_loss(
+            cartesian_loss_ = cartesian_loss(
                 model_0, callback, p, print_current_scale=True
             )
         self.assertEqual(
@@ -890,14 +928,14 @@ class TestLossesADCAutoencoder(tf.test.TestCase):
                 "<tf.Variable 'current_cartesian_cost_scale:0' shape=() dtype=float32, numpy=0.0>"
             ],
         )
-        self.assertEqual(cartesian_loss(inp_pair, out_pair), 0)
-        self.assertEqual(cartesian_loss(inp_pair, inp_pair_backmapped), 0)
+        self.assertEqual(cartesian_loss_(inp_pair, out_pair), 0)
+        self.assertEqual(cartesian_loss_(inp_pair, inp_pair_backmapped), 0)
 
         # step 9 scale is 0.5
         p.current_training_step = 9
         callback = callbacks.IncreaseCartesianCost(p)
         with Capturing() as output:
-            cartesian_loss = loss_functions.cartesian_loss(
+            cartesian_loss_ = cartesian_loss(
                 model_0, callback, p, print_current_scale=True
             )
         self.assertEqual(
@@ -906,14 +944,14 @@ class TestLossesADCAutoencoder(tf.test.TestCase):
                 "<tf.Variable 'current_cartesian_cost_scale:0' shape=() dtype=float32, numpy=0.5>"
             ],
         )
-        self.assertNotEqual(cartesian_loss(inp_pair, out_pair), 0)
-        self.assertEqual(cartesian_loss(inp_pair, inp_pair), 0)
+        self.assertNotEqual(cartesian_loss_(inp_pair, out_pair), 0)
+        self.assertEqual(cartesian_loss_(inp_pair, inp_pair), 0)
 
         # step 12 scale is 1.0
         p.current_training_step = 12
         callback = callbacks.IncreaseCartesianCost(p)
         with Capturing() as output:
-            cartesian_loss = loss_functions.cartesian_loss(
+            cartesian_loss_ = cartesian_loss(
                 model_0, callback, p, print_current_scale=True
             )
         self.assertEqual(
@@ -922,41 +960,36 @@ class TestLossesADCAutoencoder(tf.test.TestCase):
                 "<tf.Variable 'current_cartesian_cost_scale:0' shape=() dtype=float32, numpy=1.0>"
             ],
         )
-        self.assertNotEqual(cartesian_loss(inp_pair, out_pair), 0)
-        self.assertEqual(cartesian_loss(inp_pair, inp_pair), 0)
+        self.assertNotEqual(cartesian_loss_(inp_pair, out_pair), 0)
+        self.assertEqual(cartesian_loss_(inp_pair, inp_pair), 0)
 
 
-# Remove Phantom Tests from tensorflow skipped test_session
-# https://stackoverflow.com/questions/55417214/phantom-tests-after-switching-from-unittest-testcase-to-tf-test-testcase
-test_cases = (
-    TestLossesPeriodic,
-    TestLossesNonPeriodic,
-    TestLossesADCAutoencoder,
-    TestDistanceLossScipy,
-)
-
-# Standard Library Imports
-# doctests
-import doctest
-
-# Encodermap imports
-import encodermap.loss_functions.loss_functions as loss_functions
-
-
-doc_tests = tuple()  # doctest.DocTestSuite(loss_functions),)
+################################################################################
+# Collect TestCases and Filter
+################################################################################
 
 
 def load_tests(loader, tests, pattern):
+    # Remove Phantom Tests from tensorflow skipped test_session
+    # https://stackoverflow.com/questions/55417214/phantom-tests-after-switching-from-unittest-testcase-to-tf-test-testcase
+    test_cases = (
+        TestLossesPeriodic,
+        TestLossesNonPeriodic,
+        TestLossesADCAutoencoder,
+        TestDistanceLossScipy,
+    )
     suite = unittest.TestSuite()
     for test_class in test_cases:
         tests = loader.loadTestsFromTestCase(test_class)
         filtered_tests = [t for t in tests if not t.id().endswith(".test_session")]
         suite.addTests(filtered_tests)
-    suite.addTests(doc_tests)
     return suite
 
 
-# unittest.TextTestRunner(verbosity = 2).run(testSuite)
+################################################################################
+# Main
+################################################################################
+
 
 if __name__ == "__main__":
     unittest.main()

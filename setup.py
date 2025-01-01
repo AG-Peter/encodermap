@@ -25,7 +25,6 @@ setup(
     packages=[
         "encodermap",
         "encodermap.plot",
-        "encodermap.plot.dashboard",
         "encodermap.callbacks",
         "encodermap.autoencoder",
         "encodermap.encodermap_tf1",
@@ -38,6 +37,7 @@ setup(
         "encodermap.trajinfo",
     ],
     install_requires=[
+        "transformations",
         "tomli",
         "versioneer",
         "numpy",
@@ -45,12 +45,14 @@ setup(
         "scipy",
         "MDAnalysis",
         "tqdm>=4.4.0",
-        "tensorflow>=2.13.0",
+        "tensorflow>=2.15.0",
         "nglview>=3.0.1",
         "seaborn>=0.11.1",
-        "pillow==9.3.0",
-        "ipywidgets>=7.6.0,<8",
+        "pillow>=10.0.1",
+        "ipywidgets>=8.0",
         "optional_imports>=1.0.4",
+        "tensorflow_probability",
+        "rich",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

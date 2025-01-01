@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/plot/utils.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -32,9 +32,14 @@ Bezier: https://gist.github.com/gavincangan/b88a978e878e9bb1c0f8804e3af8de3c
 # Imports
 ################################################################################
 
+# Future Imports at the top
+from __future__ import annotations
+
 # Standard Library Imports
+import copy
 import os
 import shutil
+import warnings
 
 # Third Party Imports
 import matplotlib as mpl
@@ -50,11 +55,8 @@ from packaging import version
 from scipy.special import binom
 from tqdm import tqdm
 
-# Local Folder Imports
-from ..encodermap_tf1.backmapping import dihedral_backmapping
-from ..misc.clustering import gen_dummy_traj, get_cluster_frames
-from ..misc.misc import _datetime_windows_and_linux_compatible
-from .plotting import plot_cluster
+# Encodermap imports
+from encodermap.misc.misc import _datetime_windows_and_linux_compatible
 
 
 ################################################################################
@@ -68,6 +70,21 @@ mda = _optional_import("MDAnalysis")
 md = _optional_import("mdtraj")
 pd = _optional_import("pandas")
 binom = _optional_import("scipy", "special.binom")
+plotly_lasso = _optional_import("plotly", "callbacks.LassoSelector")
+
+
+################################################################################
+# Typing
+################################################################################
+
+
+# Standard Library Imports
+from typing import TYPE_CHECKING, Any, Optional, Union
+
+
+if TYPE_CHECKING:
+    # Local Folder Imports
+    from ..trajinfo.info_all import TrajEnsemble
 
 
 ################################################################################
@@ -87,34 +104,6 @@ _all__ = [
 ################################################################################
 # Functions (mainly for ternary plotting)
 ################################################################################
-
-
-def calculate_dssps(trajs, simplified=True):
-    """Calculates dssp from TrajEnsemble.
-
-    Calculates dssps from ep.TrajEnsemble and returns a numpy array.
-
-    Args:
-        trajs (ep.TrajEnsemble): The TrajEnsemble class to calculate the dssps from.
-        simplified (bool, optional): Whether to return [H ,E, C] dssp values (True),
-            or [H, B, E, G, I, T, S, ''] dssp values (False). Defaults to True.
-
-    Returns:
-        np.ndarray: The dssp array of shape (trajs.n_frames, trajs.n_residues);
-
-    ToDo:
-        Make it work with different protein lengths.
-
-    """
-    all_dssp = []
-    pbar = tqdm(total=trajs.n_trajs, position=0, leave=True)
-    for traj in trajs:
-        dssp = md.compute_dssp(traj)
-        all_dssp.append(dssp)
-        pbar.update()
-    pbar.close()
-    all_dssp = np.vstack(all_dssp)
-    return all_dssp
 
 
 def abc_to_rgb(A=0.0, B=0.0, C=0.0):
@@ -207,7 +196,7 @@ def correct_missing_uniques(uniques, sorted_, progbar=None):
     return uniques
 
 
-def _get_system_info():
+def _get_system_info() -> dict[str, Any]:
     # Standard Library Imports
     import getpass
     import platform
@@ -262,7 +251,10 @@ def _create_readme(main_path, now, info_dict):  # pragma: no cover
     from pip._internal.operations import freeze
 
     # Local Folder Imports
-    from .._version import __version__
+    from .._version import get_versions
+
+    __version__ = get_versions()["version"]
+    # Local Folder Imports
     from .jinja_template import template
 
     # update info dict
@@ -290,27 +282,33 @@ def _create_readme(main_path, now, info_dict):  # pragma: no cover
         f.write(msg)
 
 
-def _match_tops_and_trajs(min_topfiles, list_of_frames):
-    out = {i: [] for i in min_topfiles}
-    top_file_match = {md.load(i).top: i for i in min_topfiles}
-    for frame in list_of_frames:
-        top_file = top_file_match[frame.top]
-        out[top_file].append(frame)
-    return out
+def _unpack_cluster_info(
+    trajs: TrajEnsemble,
+    main_path: Union[Path, str],
+    selector: Any,
+    dummy_traj: TrajEnsemble,
+    align_string: str,
+    col: str,
+    display: Any,
+    progbar: Any,
+) -> tuple[int, Path]:
+    # Standard Library Imports
+    from pathlib import Path
 
-
-def _unpack_cluster_info(trajs, main_path, selector, dummy_traj, align_string):
-    max_ = trajs.CVs["user_selected_points"].max()
-    where = np.where(trajs.CVs["user_selected_points"] == max_)[0]
+    main_path = Path(main_path)
+    max_ = trajs.CVs[col].max()
+    where = np.where(trajs.CVs[col] == max_)[0]
+    length = len(where)
     now = _datetime_windows_and_linux_compatible()
 
     # make dirs
     os.makedirs(os.path.join(main_path, "clusters"), exist_ok=True)
     main_path = os.path.join(main_path, f"clusters/{now}")
     os.makedirs(main_path, exist_ok=True)
+    progbar.update()
 
     # define names
-    pdb_name = os.path.join(main_path, f"cluster_id_{max_}_stacked_10_structs.pdb")
+    h5_name = os.path.join(main_path, f"cluster_id_{max_}_stacked_{length}_structs.h5")
     pdb_start_name = os.path.join(main_path, f"cluster_id_{max_}_start.pdb")
     pdb_origin_names = os.path.join(main_path, f"cluster_id_{max_}_pdb_origins.txt")
     xtc_name = os.path.join(main_path, f"cluster_id_{max_}.xtc")
@@ -324,7 +322,7 @@ def _unpack_cluster_info(trajs, main_path, selector, dummy_traj, align_string):
     )
     current_clustering = os.path.join(
         main_path,
-        f"cluster_id_{max_}_cluster_current_clustering_user_selected_points.npy",
+        f"cluster_id_{max_}_cluster_current_clustering_%s.npy" % col,
     )
     selector_npy_name = os.path.join(
         main_path, f"cluster_id_{max_}_selector_points.npy"
@@ -334,32 +332,31 @@ def _unpack_cluster_info(trajs, main_path, selector, dummy_traj, align_string):
     )
 
     # save edges of selector
-    if isinstance(selector.lasso, PolygonSelector):
-        verts = np.vstack([selector.lasso._xs, selector.lasso._ys]).T
+    try:
+        verts = np.vstack([selector.xs, selector.ys]).T
         selector_npy_name = selector_npy_name.replace(
-            "selector", f"{selector.lasso.__class__.__name__.lower()}"
+            "selector", f"{selector.__class__.__name__.lower()}"
         )
         np.save(selector_npy_name, verts)
-    else:
-        warnings.warn("Can currenlty only save the vertices of Polygon.")
+    except Exception as e:
+        display.outputs = []
+        with display:
+            print(f"Currently only plotly's LassoSelector is available. Exception: {e}")
+        return
+    progbar.update()
 
-    # save pdb
-    # if list is provided the pdbs of the list need to be saved
-    if isinstance(dummy_traj, list):
-        for i, traj in enumerate(dummy_traj):
-            _pdb_name = pdb_name.replace(".pdb", f"_struct_{i}.pdb")
-            traj.save_pdb(_pdb_name)
-    else:
-        dummy_traj.save_pdb(pdb_name)
+    # save the output as a h5 file, so we can also save CVs and lowd
+    dummy_traj.save(h5_name)
+    progbar.update()
 
     # render png
-    plot_cluster(trajs, pdb_name, png_name, max_)
+    # plot_cluster(trajs, h5_name, png_name, max_)
 
     # save all trajs
     with open(parents_trajs, "w") as f:
         for traj in trajs:
             f.write(
-                f"{os.path.abspath(traj.traj_file)} {os.path.abspath(traj.top_file)} {traj.common_str}\n"
+                f"{os.path.abspath(traj.traj_file)} {os.path.abspath(traj.top_file)} {traj.traj_num} {traj.common_str}\n"
             )
 
     # create df
@@ -369,6 +366,7 @@ def _unpack_cluster_info(trajs, main_path, selector, dummy_traj, align_string):
         lowd_coords = {"x": [], "y": [], "z": []}
     else:
         lowd_coords = {f"lowd_{i}": [] for i in range(trajs.lowd.shape[-1])}
+    progbar.update()
     df = pd.DataFrame(
         {
             "trajectory file": [],
@@ -378,26 +376,24 @@ def _unpack_cluster_info(trajs, main_path, selector, dummy_traj, align_string):
             **lowd_coords,
             "cluster id": [],
             "trajectory number": [],
-            f"unique id in set of {trajs.n_trajs} trajs": [],
         }
     )
-    for w in where:
-        frame = trajs.get_single_frame(w)
-        if frame.traj_num is None:
-            traj_frame = frame.id[0]
-        else:
-            traj_frame = frame.id[0, 1]
+    # display.outputs = []
+    # with display:
+    #     print(f"Dataframe created {df.shape=}. {where=}")
+
+    progbar.update()
+    for frame_num, frame in dummy_traj.iterframes():
         if version.parse(pd.__version__) >= version.parse("2.0.0"):
             df.loc[len(df)] = pd.Series(
                 {
                     "trajectory file": os.path.abspath(frame.traj_file),
                     "topology file": os.path.abspath(frame.top_file),
-                    "frame number": traj_frame,
+                    "frame number": frame_num,
                     "time": frame.time[0],
                     "cluster id": max_,
                     "trajectory number": frame.traj_num,
-                    f"unique id in set of {trajs.n_trajs} trajs": w,
-                    **{k: v for k, v in zip(lowd_coords.keys(), frame.lowd)},
+                    **{k: v for k, v in zip(lowd_coords.keys(), frame.lowd[0])},
                 }
             )
         else:
@@ -405,15 +401,16 @@ def _unpack_cluster_info(trajs, main_path, selector, dummy_traj, align_string):
                 {
                     "trajectory file": os.path.abspath(frame.traj_file),
                     "topology file": os.path.abspath(frame.top_file),
-                    "frame number": traj_frame,
+                    "frame number": frame_num,
                     "time": frame.time[0],
                     "cluster id": max_,
                     "trajectory number": frame.traj_num,
-                    f"unique id in set of {trajs.n_trajs} trajs": w,
-                    **{k: v for k, v in zip(lowd_coords.keys(), frame.lowd)},
+                    **{k: v for k, v in zip(lowd_coords.keys(), frame.lowd[0])},
                 },
                 ignore_index=True,
             )
+    display.outputs = []
+    progbar.update()
     df = df.astype(
         dtype={
             "trajectory file": str,
@@ -423,50 +420,41 @@ def _unpack_cluster_info(trajs, main_path, selector, dummy_traj, align_string):
             **{k: float for k in lowd_coords},
             "cluster id": int,
             "trajectory number": int,
-            f"unique id in set of {trajs.n_trajs} trajs": int,
         }
     )
     df.to_csv(csv_name, index=False)
+    progbar.update()
 
     # save npy
-    np.save(lowd_npy_name, trajs.CVs["user_selected_points"][where])
+    np.save(lowd_npy_name, trajs.CVs[col][where])
     np.save(indices_npy_name, where)
-    np.save(current_clustering, trajs.CVs["user_selected_points"])
+    np.save(current_clustering, trajs.CVs[col])
+    progbar.update()
 
     # save full traj
-    _, dummy_traj = get_cluster_frames(
-        trajs,
-        max_,
-        nglview=False,
-        shorten=False,
-        stack_atoms=True,
-        col="user_selected_points",
-        align_string=align_string,
-    )
-    min_topfiles = list(set([i.top_file for i in trajs]))
-    top_traj_dict = _match_tops_and_trajs(min_topfiles, dummy_traj)
-    basenames = [trajs.basename_fn(i) for i in top_traj_dict.keys()]
+    progbar.update()
     with open(pdb_origin_names, "w") as f:
-        for i, (key, value) in enumerate(top_traj_dict.items()):
+        for i, (top, value) in enumerate(dummy_traj.trajs_by_top.items()):
             _pdb_start_name = pdb_start_name.replace(
-                ".pdb", f"_traj_{i}_from_{basenames[i]}.pdb"
+                ".pdb", f"_traj_{i}_from_{trajs.basename_fn(value.top_files[0])}.pdb"
             )
             _xtc_name = xtc_name.replace(".xtc", f"_traj_{i}.xtc")
-            shutil.copyfile(key, _pdb_start_name)
+            joined = value.join(progbar=False)[top]
+            joined[0].save_pdb(_pdb_start_name)
+            # shutil.copyfile(key, _pdb_start_name)
             f.write(
-                f"{_pdb_start_name} is a copy (`shutil.copyfile`) of {min_topfiles[i]}. The corresponding trajectory files might originate from other places. Refer to {parents_trajs} for info about xtcs.\n"
+                f"{_pdb_start_name} is a copy (`shutil.copyfile`) of "
+                f"{value.top_files[0]}. The corresponding trajectory files might "
+                f"originate from other places. Refer to {parents_trajs} for info about xtcs.\n"
             )
-            if value:
-                for j, frame in enumerate(value):
-                    if j == 0:
-                        traj_out = frame
-                    else:
-                        traj_out = traj_out.join(frame)
-                traj_out.save_xtc(_xtc_name)
+            joined.save_xtc(_xtc_name)
 
         # create an info dict
+        # Local Folder Imports
+        from .jinja_template import h5_parents, h5_rebuild, xtc_parents, xtc_rebuild
+
         info_dict = {
-            "pdb_name": pdb_name,
+            "h5_name": h5_name,
             "pdb_start_name": pdb_start_name,
             "pdb_origin_names": pdb_origin_names,
             "xtc_name": xtc_name,
@@ -478,6 +466,28 @@ def _unpack_cluster_info(trajs, main_path, selector, dummy_traj, align_string):
             "selector_npy_name": selector_npy_name,
             "parents_trajs": parents_trajs,
         }
+
+        if all([t.extension == ".h5" for t in trajs]):
+            template = jinja2.Template(h5_rebuild)
+            rebuild_clustering_info = template.render(
+                {"h5_file": trajs[0]._traj_file.resolve(), **info_dict},
+            )
+            template = jinja2.Template(h5_parents)
+            parents_trajs = template.render(
+                {"h5_file": trajs[0]._traj_file.resolve(), **info_dict},
+            )
+        else:
+            template = jinja2.Template(xtc_rebuild)
+            rebuild_clustering_info = template.render(
+                info_dict,
+            )
+            template = jinja2.Template(xtc_parents)
+            parents_trajs = template.render(
+                info_dict,
+            )
+
+        info_dict["parents_trajs"] = parents_trajs
+        info_dict["rebuild_clustering_info"] = rebuild_clustering_info
         info_dict = {k: os.path.basename(v) for k, v in info_dict.items()}
         info_dict.update({"cluster_id": max_})
         info_dict.update({"cluster_id": max_})
@@ -488,12 +498,9 @@ def _unpack_cluster_info(trajs, main_path, selector, dummy_traj, align_string):
 
         # create a readme
         _create_readme(main_path, now, info_dict)
+        progbar.update()
 
     return max_, main_path
-
-
-def _unpack_path_info(path):
-    pass
 
 
 ################################################################################

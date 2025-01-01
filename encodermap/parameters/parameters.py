@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/parameters/parameters.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -42,7 +42,7 @@ Features:
 from __future__ import annotations
 
 # Standard Library Imports
-import datetime
+import copy
 import json
 import os
 from math import pi
@@ -51,8 +51,8 @@ from textwrap import wrap
 # Third Party Imports
 from optional_imports import _optional_import
 
-# Local Folder Imports
-from ..misc.misc import _datetime_windows_and_linux_compatible, printTable
+# Encodermap imports
+from encodermap.misc.misc import _datetime_windows_and_linux_compatible, printTable
 
 
 ################################################################################
@@ -70,7 +70,7 @@ yaml = _optional_import("yaml")
 
 # Standard Library Imports
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Optional, TypeVar, Union
+from typing import TYPE_CHECKING, Optional, TypeVar, Union
 
 
 ParametersData = Union[
@@ -79,6 +79,7 @@ ParametersData = Union[
 ParametersDict = dict[str, ParametersData]
 ParametersType = TypeVar("Parameters", bound="Parent")
 ADCParametersType = TypeVar("Parameters", bound="Parent")
+AnyParameters = Union[ParametersType, ADCParametersType]
 
 
 ################################################################################
@@ -86,7 +87,7 @@ ADCParametersType = TypeVar("Parameters", bound="Parent")
 ################################################################################
 
 
-__all__ = ["Parameters", "ADCParameters"]
+__all__: list[str] = ["Parameters", "ADCParameters"]
 
 
 ################################################################################
@@ -159,8 +160,8 @@ class ParametersFramework:
 
     Attributes:
         main_path (str): The main path of the parameter class.
-        defaults (dict): The defaults passed into the Parent Class by the child classes
-            Parameters() and ADCParameters()
+        defaults (dict): The defaults passed into the Parent Class by the child
+            classes `Parameters` and `ADCParameters`.
 
     Methods:
         save ():
@@ -168,10 +169,9 @@ class ParametersFramework:
 
     """
 
-    n_neurons: list[int]
-    activation_functions: list[str]
+    _defaults = {}
 
-    def __init__(self, defaults: ParametersDict, **kwargs: ParametersData) -> None:
+    def __init__(self, **kwargs: ParametersData) -> None:
         """Instantiate the ParametersFramework class.
 
         This class is not meant to be used alone, but as a parent class for
@@ -186,29 +186,37 @@ class ParametersFramework:
 
         """
         self.main_path = os.getcwd()
-        self.defaults = defaults
 
         # overwrite class defaults with user input **kwargs
-        self._setattr(self.defaults)
         for key, value in kwargs.items():
-            if key not in self.__dict__.keys():
+            if key not in self.defaults:
                 if key == "n_epochs":
-                    print(
-                        "Parameter `n_epochs` and `n_steps_per_epoch` is deprecated. Use `n_steps` instead."
+                    raise Exception(
+                        "Parameter `n_epochs` and `n_steps_per_epoch` is "
+                        "deprecated. Use `n_steps` instead."
                     )
+                if key == "main_path":
+                    setattr(self, key, value)
+                    continue
                 print(f"Dropping unknown dict entry for {{'{key}': {value}}}")
             else:
                 setattr(self, key, value)
-        if len(self.n_neurons) != len(self.activation_functions) - 1:
+        if len(kwargs["n_neurons"]) != len(kwargs["activation_functions"]) - 1:
             raise Exception(
                 f"Length of `n_neurons` and `activation_functions` (-1) does not match: {self.n_neurons}, {self.activation_functions}"
             )
 
     def to_dict(self) -> ParametersDict:
+        """Represents parameters as a dictionary. Can be undone by `.from_dict()`.
+
+        Returns:
+            ParametersDict: The dict.
+
+        """
         out = {}
         for k in self.defaults:
             out[k] = getattr(self, k)
-        return out
+        return out | {"main_path": self.main_path}
 
     def save(self, path: Optional[Union[str, Path]] = None) -> str:
         """Save parameters in json format or yaml format.
@@ -351,7 +359,7 @@ class ParametersFramework:
 
         if Path(params["main_path"]).parent != path.parent:
             print(
-                "seems like the parameter file was moved to another directory. "
+                "Seems like the parameter file was moved to another directory. "
                 "Parameter file is updated ..."
             )
             params["main_path"] = str(path.parent)
@@ -361,7 +369,7 @@ class ParametersFramework:
         return newclass
 
     @classmethod
-    def load(cls, path: str) -> Union[ParametersType, ADCParametersType]:
+    def load(cls, path: Union[str, Path]) -> Union[ParametersType, ADCParametersType]:
         """Loads the parameters saved in a .json or .yaml file into a new Parameter object.
 
         Args:
@@ -371,15 +379,16 @@ class ParametersFramework:
             ParametersFramework: A new ParametersFramework class.
 
         """
+        path = Path(path)
         with open(path, "r") as f:
-            if path.split(".")[1] == "json":
+            if path.suffix == ".json":
                 params = json.load(f)
-            elif path.split(".")[1] == "yaml":
+            elif path.suffix == ".yaml":
                 params = yaml.load(f, Loader=yaml.FullLoader)
             else:
                 raise ValueError(
                     f"The extension of the provided file should be `.json`, or "
-                    f"`.yaml`. You provided {path.split('.')[1]}"
+                    f"`.yaml`. You provided {path.suffix}"
                 )
 
         if "n_epochs" in params:
@@ -394,7 +403,8 @@ class ParametersFramework:
         # check whether the parameters file has been moved and update it accordingly.def from
         if params["main_path"] != os.path.dirname(path):
             print(
-                "seems like the parameter file was moved to another directory. Parameter file is updated ..."
+                "s=Seems like the parameter file was moved to another directory. "
+                "Parameter file is updated ..."
             )
             search_and_replace(path, params["main_path"], os.path.dirname(path))
             with open(path, "r") as file:
@@ -423,6 +433,10 @@ class ParametersFramework:
                 print(f"Dropping unknown dict entry for {{'{key}': {value}}}")
             else:
                 setattr(self, key, value)
+
+    @property
+    def defaults(self) -> ParametersDict:
+        return copy.deepcopy(self._defaults)
 
     def _setattr(self, dictionary: ParametersDict) -> None:
         """Updates the values of `self.`
@@ -467,18 +481,16 @@ class ParametersFramework:
 
     def _string_summary(self) -> str:
         """Creates a short summary of a parameter class. Additionally, adds info about non-standard values."""
-        check_defaults = Parameters.defaults
-        if self.__class__.__name__ == "ADCParameters":
-            check_defaults.update(ADCParameters.defaults)
+        check_defaults = self.defaults
         diff_keys = list(
             filter(
                 lambda x: not self.__dict__[x] == check_defaults[x],
                 check_defaults.keys(),
             )
         )
-        s = f"{self.__class__.__name__} class with Main path at {self.main_path}."
+        s = f"{self.__class__.__name__} class with 'main_path' at {self.main_path}."
         for d in diff_keys:
-            s += f"\nNon-standard value of {d}: {self.__dict__[d]}"
+            s += f"\nNon-standard value of {d}: {self.__dict__[d]} (standard is {self.defaults[d]})"
         if diff_keys == []:
             s += " All parameters are set to default values."
         return s
@@ -568,6 +580,13 @@ class Parameters(ParametersFramework):
             by first passing these sparse tensors through `tf.keras.layers.Dense`
             layers. These layers have trainable weights, and if this parameter
             is True, these weights will be changed by the optimizer.
+        using_hypercube (bool): This parameter is not meant to be set by the user.
+            It allows us to print better error messages when re-loading and
+            re-training a model. It contains a boolean whether a model has been
+            trained on the hypercube example data. If your data is 4-dimensional
+            and you reload a model and forget to prvide your data, the model
+            will happily train with the hypercube (and not your) data. This variable
+            implements a check.
 
     Examples:
         >>> import encodermap as em
@@ -580,21 +599,21 @@ class Parameters(ParametersFramework):
         ...     print(p.auto_cost_variant)
         ...     savepath = p.save(td / "parameters.json")
         ...     print(savepath)
-        ...     new_params = em.Parameters.from_file(td / "parameters.json")  # doctest: +ELLIPSIS
-        ...     print(new_params.main_path)
+        ...     new_params = em.Parameters.from_file(td / "parameters.json")
+        ...     print(new_params.main_path)  # doctest: +SKIP
         mean_abs
-        /tmp/tmp.../parameters.json
+        /tmp...parameters.json
         seems like the parameter file was moved to another directory. Parameter file is updated ...
-        /tmp/tmp...
+        /home...
 
     """
 
-    defaults = dict(
+    _defaults = dict(
         n_neurons=[128, 128, 2],
         activation_functions=["", "tanh", "tanh", ""],
         periodicity=2 * pi,
         learning_rate=0.001,
-        n_steps=100000,
+        n_steps=1000,
         batch_size=256,
         summary_step=10,
         checkpoint_step=5000,
@@ -616,6 +635,7 @@ class Parameters(ParametersFramework):
         current_training_step=0,
         write_summary=False,
         trainable_dense_to_sparse=False,
+        using_hypercube=False,
     )
 
     def __init__(self, **kwargs: ParametersData) -> None:
@@ -631,7 +651,7 @@ class Parameters(ParametersFramework):
         # set class variable defaults to be instance variable
         if "defaults" in kwargs:
             kwargs.pop("defaults", None)
-        super().__init__(self.defaults, **kwargs)
+        super().__init__(**{**self.defaults, **kwargs})
 
     @classmethod
     def defaults_description(cls) -> str:
@@ -749,6 +769,7 @@ class ADCParameters(ParametersFramework):
         multimer_topology_classes (Any): Experimental feature.
         multimer_connection_bridges (Any): Experimental feature.
         multimer_lengths (Any): Experimental feature.
+        reconstruct_sidechains (bool): Whether to also reconstruct sidechains.
 
     Examples:
         >>> import encodermap as em
@@ -761,17 +782,17 @@ class ADCParameters(ParametersFramework):
         ...     print(p.auto_cost_variant)
         ...     savepath = p.save(td / "parameters.json")
         ...     print(savepath)
-        ...     new_params = em.Parameters.from_file(td / "parameters.json")  # doctest: +ELLIPSIS
-        ...     print(new_params.main_path)
+        ...     new_params = em.Parameters.from_file(td / "parameters.json")
+        ...     print(new_params.main_path)  # doctest: +SKIP
         mean_abs
-        /tmp/tmp.../parameters.json
+        /tmp...parameters.json
         seems like the parameter file was moved to another directory. Parameter file is updated ...
-        /tmp/tmp...
+        /home...
 
     """
 
-    defaults = dict(
-        Parameters.defaults,
+    _defaults = dict(
+        Parameters._defaults,
         **dict(
             track_clashes=False,
             track_RMSD=False,
@@ -794,7 +815,7 @@ class ADCParameters(ParametersFramework):
             cartesian_cost_scale_soft_start=(None, None),  # begin, end
             cartesian_cost_variant="mean_abs",
             cartesian_cost_reference=1,
-            cartesian_dist_sig_parameters=Parameters.defaults["dist_sig_parameters"],
+            cartesian_dist_sig_parameters=Parameters._defaults["dist_sig_parameters"],
             cartesian_distance_cost_scale=1,
             auto_cost_scale=None,
             distance_cost_scale=None,
@@ -802,6 +823,7 @@ class ADCParameters(ParametersFramework):
             multimer_topology_classes=None,
             multimer_connection_bridges=None,
             multimer_lengths=None,
+            reconstruct_sidechains=False,
         ),
     )
 
@@ -826,7 +848,7 @@ class ADCParameters(ParametersFramework):
         # set class variable defaults to be instance variable
         if "defaults" in kwargs:
             kwargs.pop("defaults", None)
-        super().__init__(self.defaults, **kwargs)
+        super().__init__(**{**self.defaults, **kwargs})
 
     @classmethod
     def defaults_description(cls) -> str:

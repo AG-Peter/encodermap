@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # tests/test_dihedral_to_cartesian.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -31,16 +31,13 @@ from pathlib import Path
 
 # Third Party Imports
 import matplotlib
-import MDAnalysis as md
 import numpy as np
 import tensorflow as tf
 from matplotlib.testing.compare import compare_images
 
 # Encodermap imports
 import encodermap.encodermap_tf1 as em_tf1
-
-
-import encodermap as em  # isort: skip
+from conftest import skip_all_tests_except_env_var_specified
 
 
 matplotlib.use("Agg")
@@ -85,6 +82,7 @@ def set_axes_equal(ax):
     ax.set_zlim3d([z_middle - plot_radius, z_middle + plot_radius])
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestDihedralToCartesianTf(tf.test.TestCase):
     @unittest.skip(
         reason=(
@@ -158,7 +156,6 @@ class TestDihedralToCartesianTf(tf.test.TestCase):
 
         # Third Party Imports
         import matplotlib.pyplot as plt
-        from mpl_toolkits.mplot3d import Axes3D
 
         fig = plt.figure(figsize=(5, 5))
         ax = fig.add_subplot(111, projection="3d")
@@ -232,7 +229,6 @@ class TestDihedralToCartesianTf(tf.test.TestCase):
 
         # Third Party Imports
         import matplotlib.pyplot as plt
-        from mpl_toolkits.mplot3d import Axes3D
 
         fig = plt.figure()
         ax = fig.add_subplot(111, projection="3d")

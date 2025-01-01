@@ -31,8 +31,8 @@ paths = ['encodermap']
 excluded_files = []
 excluded_lines = []
 excluded_errors = []
-exclude = ["development", "tests"]
-max-line-length = 90
+exclude = ["development", "tests", "encodermap/__version__.py", "versioneer.py"]
+max-line-length = 100
 verbose = 0
 
 
@@ -41,12 +41,11 @@ verbose = 0
 ################################################################################
 [tool.coverage.run]
 branch = true
-command_line = "-m unittest discover -s tests -p *trajinfo*"
+command_line = "-m unittest discover -s tests"
 
 [tool.coverage.html]
 directory = "docs/build/htmlcov"
 title = "coverage_report"
-omit = "*/tests*"
 
 [tool.coverage.report]
 exclude_lines = [
@@ -68,7 +67,13 @@ omit = [
     "*/usr/local/lib*",
     "*Users*",
     "*__init__*",
-    "*__autograph_generated*"
+    "*__autograph_generated*",
+    "*development*",
+    "versioneer.py",
+    "*examples*",
+    "*deprecated*",
+    "*encodermap_tf1*",
+    "docs/*"
 ]
 
 
@@ -109,8 +114,12 @@ exclude = [
     "development",
     "encodermap/models/models_dep",
     "encodermap/encodermap_tf1",
-    "encodermap/examples",
-    "tests"
+    "encodermap/examples*",
+    "versioneer.py",
+    "encodermap/__version__.py",
+    "tests",
+    "encodermap/plot/utils.py",
+    "encodermap/misc/clustering.py",
 ]
 namespace_packages = true
 follow_imports = "silent"

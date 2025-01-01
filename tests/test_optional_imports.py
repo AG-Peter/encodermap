@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # tests/test_optional_imports.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #

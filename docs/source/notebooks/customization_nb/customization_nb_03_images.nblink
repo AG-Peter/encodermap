@@ -1,0 +1,8 @@
+{
+    "path" : "../../../../tutorials/notebooks_customization/03_custom_images.ipynb",
+    "extra-media": [
+        "../../../../tutorials/notebooks_customization/custom_images_1.png",
+        "../../../../tutorials/notebooks_customization/custom_images_2.png",
+        "../../../../tutorials/notebooks_starter/asp7.csv"
+    ]
+}

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # tests/run_doctests.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -86,7 +86,13 @@ def yield_modules(
 ################################################################################
 
 
-@command()
+@command(
+    help=(
+        "Helps with testing the documentation. "
+        "Starts a unittest runner, that only runs the "
+        "doctest test suite."
+    )
+)
 @option(
     "--module",
     default="encodermap",
@@ -109,7 +115,7 @@ def main(
     if only is None:
         tests.append(doctest.DocTestSuite(module))
         for subpackage in yield_modules(module):
-            if not exclude in subpackage:
+            if exclude not in subpackage:
                 tests.append(doctest.DocTestSuite(subpackage))
     else:
         tests.append(doctest.DocTestSuite(only))

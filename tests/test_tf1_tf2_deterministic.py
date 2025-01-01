@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # tests/test_tf1_tf2_deterministic.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -131,7 +131,8 @@ def equal_array_of_tuples(
         bool: Whether the arrays in the sequence are equal.
 
     """
-    assert len(a) == len(b)
+    if len(a) != len(b):
+        return False
     for i, j in zip(a, b):
         if not np.array_equal(i, j):
             return False
@@ -251,15 +252,22 @@ def _synchronize_deterministic_gens(
                 d1,
                 d2,
                 msg=(
-                    f"Arrays differ at iteration {i=}. There is currently no way to resolve this issue of desyncing "
-                    f"tf.data.Datasets. Running the test multiple times results in a 3 out of 5 success rate. The "
-                    f"dataset already uses the `options = tf.data.Options(); options.deterministic = True; "
-                    f"dataset = dataset.with_options(options)` code snipped found in https://www.tensorflow.org/api_docs/python/tf/data/Options "
-                    f"but still produces this error. Feel free to raise this error over at tensorflow. "
-                    f"THIS IS INSIDE THE _synchronize_deterministic_gens FUNCTION WHICH WAS MEANT TO FIX THIS ISSUE."
+                    f"Arrays differ at iteration {i=}. There is currently no "
+                    f"way to resolve this issue of desyncing "
+                    f"tf.data.Datasets. Running the test multiple times results "
+                    f"in a 3 out of 5 success rate. The "
+                    f"dataset already uses the `options = tf.data.Options(); "
+                    f"options.deterministic = True; "
+                    f"dataset = dataset.with_options(options)` code snipped "
+                    f"found in https://www.tensorflow.org/api_docs/python/tf/data/Options "
+                    f"but still produces this error. Feel free to raise this "
+                    f"error over at tensorflow. "
+                    f"THIS IS INSIDE THE _synchronize_deterministic_gens "
+                    f"FUNCTION WHICH WAS MEANT TO FIX THIS ISSUE."
                 ),
                 success_msg=(
-                    f"Inside the `_synchronize_deterministic_gens` functions at iteration {i=}. the data of shape {d1.shape=} {d2.shape=} "
+                    f"Inside the `_synchronize_deterministic_gens` functions at "
+                    f"iteration {i=}. the data of shape {d1.shape=} {d2.shape=} "
                     f"are identical."
                 ),
             )
@@ -295,7 +303,9 @@ def _create_artificial_two_state_system(
 
         _output_dir = Path(
             get_from_kondata(
-                "linear_dimers", mk_parentdir=True, silence_overwrite_message=True
+                "linear_dimers",
+                mk_parentdir=True,
+                silence_overwrite_message=True,
             )
         )
         pdb_file = _output_dir / "01.pdb"
@@ -1013,6 +1023,7 @@ class TestTf1Tf2Deterministic(tf.test.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.console = Console(width=150)
+        return cls
 
     def assertAllClosePeriodic(
         self,
@@ -1044,17 +1055,17 @@ class TestTf1Tf2Deterministic(tf.test.TestCase):
 
     @expensive_test
     def test_deterministic_training(self):
-        # self.calculate_loss_and_gradients_from_dataset(
-        #     "linear_dimers",
-        #     "deterministic",
-        #     "deterministic",
-        #     "train_and_check",
-        #     "train_and_check",
-        #     "train_and_check",
-        #     "train_and_check",
-        #     "train_and_check",
-        #     "train_and_check",
-        # )
+        self.calculate_loss_and_gradients_from_dataset(
+            "linear_dimers",
+            "deterministic",
+            "deterministic",
+            "train_and_check",
+            "train_and_check",
+            "train_and_check",
+            "train_and_check",
+            "train_and_check",
+            "train_and_check",
+        )
 
         self.calculate_loss_and_gradients_from_dataset(
             "two_state",
@@ -1306,9 +1317,13 @@ class TestTf1Tf2Deterministic(tf.test.TestCase):
                             d,
                             msg=fail_message,
                             success_msg=(
-                                f"The deterministic option for `TrajEnsemble.batch_iterator` yielded the same data "
-                                f"from the {dataset} dataset at iteration {i} for datapoint {j} with shape {d.shape} as "
-                                f"is stored in the file {_npz_deterministic_data} which was created during development "
+                                f"The deterministic option for "
+                                f"`TrajEnsemble.batch_iterator` yielded the "
+                                f"same data "
+                                f"from the {dataset} dataset at iteration {i} "
+                                f"for datapoint {j} with shape {d.shape} as "
+                                f"is stored in the file {_npz_deterministic_data} "
+                                f"which was created during development "
                                 f"on 2023-12-01."
                             ),
                         )
@@ -1384,7 +1399,8 @@ class TestTf1Tf2Deterministic(tf.test.TestCase):
                 )
         else:
             raise ValueError(
-                f"Argument `dataset` needs to be either 'linear_dimers' or 'random', not {dataset=}"
+                f"Argument `dataset` needs to be either 'linear_dimers' or "
+                f"'random', not {dataset=}"
             )
 
         # make some tests for the tf1 and tf2 datasets
@@ -1398,14 +1414,16 @@ class TestTf1Tf2Deterministic(tf.test.TestCase):
                     d2,
                     msg=f"Failed before even checking iteration.",
                     success_msg=(
-                        f"The first call to `TrajEnsemble.tf_dataset.take(1)` returned the same data for datapoint "
+                        f"The first call to `TrajEnsemble.tf_dataset.take(1)` "
+                        f"returned the same data for datapoint "
                         f"{i} with {d1.shape}-shaped data."
                     ),
                 )
             self.console.log(
                 "Verifying the `deterministic=True` option of `TrajEnsemble.tf_dataset`. "
                 "This can sometimes fail, when tensorflow calls the method out of sync. "
-                "There is an experimental function `_synchronize_deterministic_gens` to fix that. But this function "
+                "There is an experimental function `_synchronize_deterministic_gens` "
+                "to fix that. But this function "
                 "is still under development."
             )
 
@@ -1427,10 +1445,14 @@ class TestTf1Tf2Deterministic(tf.test.TestCase):
                 pass
 
             self.console.log(
-                f"The argument `train_tf1_dummy` was set to {train_tf1_dummy}, which means, I will create two classes: "
-                f"`FakeMoldData` and `FakeCentralAtoms`, which will hold all the necessary attributes, that "
-                f"`encodermap.encodermap_tf1.moldata.MolData` needs. The `FakeCentralAtoms` is a dataclass, that holds "
-                f"the names of the central atoms (which for em_tf1 is N, H, CA, C, O)."
+                f"The argument `train_tf1_dummy` was set to {train_tf1_dummy}, "
+                f"which means, I will create two classes: "
+                f"`FakeMoldData` and `FakeCentralAtoms`, which will hold all "
+                f"the necessary attributes, that "
+                f"`encodermap.encodermap_tf1.moldata.MolData` needs. The "
+                f"`FakeCentralAtoms` is a dataclass, that holds "
+                f"the names of the central atoms (which for em_tf1 is N, H, "
+                f"CA, C, O)."
             )
 
             fake_moldata = FakeMolData()
@@ -1480,9 +1502,12 @@ class TestTf1Tf2Deterministic(tf.test.TestCase):
                 shapes[0][-1],
                 msg=f"{angles.shape=}",
                 success_msg=(
-                    f"The shape of the numpy array stored in the local variable `angles` is correct. These angles can be "
-                    f"used by em_tf1 to calculate mean angles of all samples, which for the {dataset} dataset is {len(angles)}. "
-                    f"These mean angles will be used in conjunction with the mean lengths to calculate the cost references."
+                    f"The shape of the numpy array stored in the local variable "
+                    f"`angles` is correct. These angles can be "
+                    f"used by em_tf1 to calculate mean angles of all samples, "
+                    f"which for the {dataset} dataset is {len(angles)}. "
+                    f"These mean angles will be used in conjunction with the "
+                    f"mean lengths to calculate the cost references."
                 ),
             )
             fake_moldata.angles = angles
@@ -1504,9 +1529,12 @@ class TestTf1Tf2Deterministic(tf.test.TestCase):
                 _dummy_training_steps_should_be,
                 msg=(f"{len(fake_moldata.angles)=}, {parameters.batch_size=}"),
                 success_msg=(
-                    f"The training of the dummy emap_tf1 for the {dataset} dataset commences for the correct number of "
-                    f"steps. The intention is to roughly iterate over all samples once to get the cost references. The "
-                    f"{dataset} dataset has {len(angles)} samples. With a batch size of {dummy_parameters.batch_size=} "
+                    f"The training of the dummy emap_tf1 for the {dataset} "
+                    f"dataset commences for the correct number of "
+                    f"steps. The intention is to roughly iterate over all "
+                    f"samples once to get the cost references. The "
+                    f"{dataset} dataset has {len(angles)} samples. With a "
+                    f"batch size of {dummy_parameters.batch_size=} "
                     f"the number of steps should be {dummy_parameters.n_steps}."
                 ),
             )
@@ -1527,7 +1555,10 @@ class TestTf1Tf2Deterministic(tf.test.TestCase):
             self.assertGreater(
                 len(output),
                 0,
-                success_msg="The creation of the custom_ADC_encodermap printed successfully to stdout.",
+                success_msg=(
+                    "The creation of the custom_ADC_encodermap printed "
+                    "successfully to stdout."
+                ),
             )
             for line in output:
                 if "kernel" in line or "bias" in line:
@@ -1537,8 +1568,10 @@ class TestTf1Tf2Deterministic(tf.test.TestCase):
                             line,
                             msg=f"{output=}",
                             success_msg=(
-                                f"The {initial_weights=} argument to `calculate_loss_and_gradients_from_dataset` makes "
-                                f"the `get_custom_adc_encodermap` function print the type of kernel/bias-initializer used. "
+                                f"The {initial_weights=} argument to "
+                                f"`calculate_loss_and_gradients_from_dataset` makes "
+                                f"the `get_custom_adc_encodermap` function "
+                                f"print the type of kernel/bias-initializer used. "
                                 f"The correct type of initializers were used."
                             ),
                         )
@@ -1548,17 +1581,22 @@ class TestTf1Tf2Deterministic(tf.test.TestCase):
                             line,
                             msg=f"{output=}",
                             success_msg=(
-                                f"The {initial_weights=} argument to `calculate_loss_and_gradients_from_dataset` makes "
-                                f"the `get_custom_adc_encodermap` function print the type of kernel/bias-initializer used. "
+                                f"The {initial_weights=} argument to "
+                                f"`calculate_loss_and_gradients_from_dataset` makes "
+                                f"the `get_custom_adc_encodermap` function "
+                                f"print the type of kernel/bias-initializer used. "
                                 f"The correct type of initializers were used."
                             ),
                         )
 
             if train_tf1_dummy == "train_and_check":
                 self.console.log(
-                    f"Because `train_tf1_dummy` was set to 'train_and_check' I will now commence and train the "
-                    f"`dummy_e_map_tf1`. Afterwards, I will compare the logged costs/weights/gradients with data saved "
-                    f"in the file {_npz_deterministic_dummy_training_tf1}. This data was sved on 2023-12-01 during "
+                    f"Because `train_tf1_dummy` was set to 'train_and_check' "
+                    f"I will now commence and train the "
+                    f"`dummy_e_map_tf1`. Afterwards, I will compare the "
+                    f"logged costs/weights/gradients with data saved "
+                    f"in the file {_npz_deterministic_dummy_training_tf1}. "
+                    f"This data was sved on 2023-12-01 during "
                     f"development."
                 )
                 # read the protobufs and compare
@@ -2040,9 +2078,9 @@ class TestTf1Tf2Deterministic(tf.test.TestCase):
                                 deterministic_wo_cartesians_training[name] = ar
                             if "cost" in v.tag:
                                 name = f"step_{summary.step}_{v.tag}"
-                                deterministic_wo_cartesians_training[
-                                    name
-                                ] = v.simple_value
+                                deterministic_wo_cartesians_training[name] = (
+                                    v.simple_value
+                                )
 
                 # can't get final weights. The layers still have their initial
                 # weights saved in them.
@@ -2515,9 +2553,9 @@ class TestTf1Tf2Deterministic(tf.test.TestCase):
                                 deterministic_w_cartesians_training[name] = ar
                             if "cost" in v.tag:
                                 name = f"step_{summary.step}_{v.tag}"
-                                deterministic_w_cartesians_training[
-                                    name
-                                ] = v.simple_value
+                                deterministic_w_cartesians_training[name] = (
+                                    v.simple_value
+                                )
                 outfile = _npz_deterministic_w_cartesians_training_tf1
                 np.savez(outfile, **deterministic_w_cartesians_training)
                 self.fail(

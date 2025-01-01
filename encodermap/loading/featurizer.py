@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/loading/featurizer.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -40,25 +40,19 @@ from __future__ import annotations
 # Standard Library Imports
 import itertools
 import numbers
+import os
 import re
-import tempfile
+import time
 import warnings
-from copy import deepcopy
 from pathlib import Path
-from sqlite3 import ProgrammingError
 
 # Third Party Imports
 import numpy as np
-import pandas as pd
-import rich.progress
 from optional_imports import _optional_import
 
-# Local Folder Imports
-from ..loading import features
-from ..misc.misc import FEATURE_NAMES, _validate_uri
-from ..misc.xarray import get_indices_by_feature_dim, unpack_data_and_feature
-from ..trajinfo.info_all import TrajEnsemble
-from ..trajinfo.info_single import SingleTraj
+# Encodermap imports
+from encodermap.loading import features
+from encodermap.loading.delayed import build_dask_xarray
 
 
 ################################################################################
@@ -66,13 +60,16 @@ from ..trajinfo.info_single import SingleTraj
 ################################################################################
 
 
-featurizer = _optional_import("pyemma", "coordinates.featurizer")
-source = _optional_import("pyemma", "coordinates.source")
-load = _optional_import("pyemma", "coordinates.load")
 xr = _optional_import("xarray")
 md = _optional_import("mdtraj")
 rich = _optional_import("rich")
 Client = _optional_import("dask", "distributed.Client")
+dask = _optional_import("dask")
+Callback = _optional_import("dask", "callbacks.Callback")
+dot_graph = _optional_import("dask", "dot.dot_graph")
+progress = _optional_import("dask", "distributed.progress")
+HDF5TrajectoryFile = _optional_import("mdtraj", "formats.HDF5TrajectoryFile")
+_get_global_client = _optional_import("distributed", "client._get_global_client")
 
 
 ################################################################################
@@ -81,21 +78,23 @@ Client = _optional_import("dask", "distributed.Client")
 
 
 # Standard Library Imports
-from collections.abc import Callable, Iterable, Iterator, Sequence
-from typing import TYPE_CHECKING, Any, Literal, Optional, Union
-
-# Local Folder Imports
-from .._typing import CustomAAsDict
-from .features import CustomFeature
+from collections.abc import Iterable, Sequence
+from typing import TYPE_CHECKING, Literal, Optional, Union
 
 
 if TYPE_CHECKING:
     # Third Party Imports
+    import dask
     import xarray as xr
+    from dask import dot_graph
+    from dask.callbacks import Callback
+    from dask.distributed import Client, progress
+    from distributed.client import _get_global_client
 
-    # Local Folder Imports
-    from ..trajinfo.trajinfo_utils import CustomTopology
-    from .features import AnyFeature
+    # Encodermap imports
+    from encodermap.loading.features import AnyFeature
+    from encodermap.trajinfo.info_all import TrajEnsemble
+    from encodermap.trajinfo.info_single import SingleTraj
 
 
 ################################################################################
@@ -103,7 +102,8 @@ if TYPE_CHECKING:
 ################################################################################
 
 
-def _is_notebook():  # pragma: no cover
+def _is_notebook() -> bool:  # pragma: no cover
+    """Checks, whether code is currently executed in a notebook."""
     try:
         # Third Party Imports
         from IPython import get_ipython
@@ -130,7 +130,7 @@ else:
 ################################################################################
 
 
-__all__: list[str] = ["Featurizer"]
+__all__: list[str] = ["Featurizer", "DaskFeaturizer"]
 
 
 UNDERSCORE_MAPPING: dict[str, str] = {
@@ -145,6 +145,23 @@ UNDERSCORE_MAPPING: dict[str, str] = {
     "side_angles": "SideChainAngles",
     "side_dihedrals": "SideChainDihedrals",
 }
+
+_ADD_X_FUNCTION_NAMES: list[str] = [
+    "add_all",
+    "add_selection",
+    "add_distances_ca",
+    "add_distances",
+    "add_inverse_distances",
+    "add_contacts",
+    "add_residue_mindist",
+    "add_group_COM",
+    "add_residue_COM",
+    "add_angles",
+    "add_dihedrals",
+    "add_minrmsd_to_ref",
+    "add_backbone_torsions",
+    "add_sidechain_torsions",
+]
 
 
 ################################################################################
@@ -190,6 +207,9 @@ def _atoms_in_residues(
             residues don't yield any atoms with some subsets. Take all atoms in
             that case. If False, then [] is returned for that residue.
             Defaults to None.
+
+    Returns:
+        list[np.ndarray]: The resulting list of arrays.
 
     """
     atoms_in_residues = []
@@ -365,24 +385,84 @@ def pairs(
     return np.array(p)
 
 
+class Track(Callback):
+    def __init__(
+        self,
+        path: str = "/tmp.json/dasks",
+        save_every: int = 1,
+    ) -> None:
+        self.path = path
+        self.save_every = save_every
+        self.n = 0
+        os.makedirs(path, exist_ok=True)
+
+    def _plot(
+        self,
+        dsk,
+        state,
+    ) -> None:
+        data = {}
+        func = {}
+        for key in state["released"]:
+            data[key] = {"color": "blue"}
+        for key in state["cache"]:
+            data[key] = {"color": "red"}
+        for key in state["finished"]:
+            func[key] = {"color": "blue"}
+        for key in state["running"]:
+            func[key] = {"color": "red"}
+
+        filename = os.path.join(self.path, "part_{:0>4d}".format(self.n))
+
+        dot_graph(
+            dsk,
+            filename=filename,
+            format="png",
+            data_attributes=data,
+            function_attributes=func,
+        )
+
+    def _pretask(
+        self,
+        key,
+        dsk,
+        state,
+    ) -> None:
+        if self.n % self.save_every == 0:
+            self._plot(dsk, state)
+        self.n += 1
+
+    def _finish(
+        self,
+        dsk,
+        state,
+        errored,
+    ) -> None:
+        self._plot(dsk, state)
+        self.n += 1
+
+
 ################################################################################
 # Classes
 ################################################################################
 
 
 class SingleTrajFeaturizer:
-    def __init__(self, traj: SingleTraj) -> None:
+    def __init__(self, traj: SingleTraj, delayed: bool = False) -> None:
         self.traj = traj
+        self.delayed = delayed
         self._n_custom_features = 0
         self._custom_feature_ids = []
         self.active_features = []
 
     def add_list_of_feats(
         self,
-        which: Union[Literal["all"], Sequence[str]] = "all",
+        which: Union[Literal["all", "full"], Sequence[str]] = "all",
         deg: bool = False,
         omega: bool = True,
         check_aas: bool = True,
+        periodic: bool = True,
+        delayed: bool = False,
     ) -> None:
         """Adds features to the Featurizer to be loaded either in-memory. The
         argument `which` can be either 'all' or a list of the following strings:
@@ -422,7 +502,19 @@ class SingleTrajFeaturizer:
             UNDERSCORE_MAPPING.values()
         )
         if isinstance(which, str):
-            if which == "all":
+            if which == "full":
+                which = [
+                    "CentralCartesians",
+                    "CentralBondDistances",
+                    "CentralAngles",
+                    "CentralDihedrals",
+                    "SideChainDihedrals",
+                    "SideChainCartesians",
+                    "SideChainAngles",
+                    "AllCartesians",
+                    "SideChainBondDistances",
+                ]
+            elif which == "all":
                 which = [
                     "CentralCartesians",
                     "CentralBondDistances",
@@ -457,41 +549,106 @@ class SingleTrajFeaturizer:
             if cf in UNDERSCORE_MAPPING:
                 cf = UNDERSCORE_MAPPING[cf]
             feature = getattr(features, cf)
-            if not feature._use_angle and not feature._use_omega:
-                feature = feature(self.traj, check_aas=True)
-            elif feature._use_angle and not feature._use_omega:
+            if (
+                not feature._use_periodic
+                and not feature._use_angle
+                and not feature._use_omega
+            ):
+                feature = feature(
+                    self.traj,
+                    check_aas=True,
+                    delayed=delayed,
+                )
+            elif (
+                feature._use_periodic
+                and not feature._use_angle
+                and not feature._use_omega
+            ):
+                feature = feature(
+                    self.traj,
+                    check_aas=True,
+                    periodic=periodic,
+                    delayed=delayed,
+                )
+            elif (
+                feature._use_periodic and feature._use_angle and not feature._use_omega
+            ):
                 feature = feature(
                     self.traj,
                     deg=deg,
                     check_aas=check_aas,
+                    periodic=periodic,
+                    delayed=delayed,
                 )
-            elif feature._use_angle and feature._use_omega:
-                feature = feature(self.traj, deg=deg, omega=omega, check_aas=check_aas)
+            elif feature._use_periodic and feature._use_angle and feature._use_omega:
+                feature = feature(
+                    self.traj,
+                    deg=deg,
+                    omega=omega,
+                    check_aas=check_aas,
+                    periodic=periodic,
+                    delayed=delayed,
+                )
             else:
                 raise Exception(
                     f"Unknown combination of `_use_angle` and `_use_omega` in "
                     f"class attributes of {feature=}"
                 )
-            self.active_features.append(feature)
+            self._add_feature(feature)
 
     def add_custom_feature(self, feature: AnyFeature) -> None:
-        if not hasattr(feature, "id"):
-            feature.id = self._n_custom_features
-            self._custom_feature_ids.append(self._n_custom_features)
-            self._n_custom_features += 1
-        elif feature.id is None:
-            feature.id = self._n_custom_features
-            self._custom_feature_ids.append(self._n_custom_features)
-            self._n_custom_features += 1
-        else:
-            assert feature.id not in self._custom_feature_ids, (
-                f"A CustomFeature with the id {feature.id} already exists. "
-                f"Please change the id of your CustomFeature."
+        # Encodermap imports
+        from encodermap.loading.features import CustomFeature
+
+        if not hasattr(feature, "name"):
+            if not hasattr(feature, "id"):
+                feature.id = self._n_custom_features
+                self._custom_feature_ids.append(self._n_custom_features)
+                self._n_custom_features += 1
+            elif feature.id is None:
+                feature.id = self._n_custom_features
+                self._custom_feature_ids.append(self._n_custom_features)
+                self._n_custom_features += 1
+            else:
+                assert feature.id not in self._custom_feature_ids, (
+                    f"A CustomFeature with the id {feature.id} already exists. "
+                    f"Please change the id of your CustomFeature."
+                )
+            assert isinstance(feature, CustomFeature) or issubclass(
+                feature.__class__, CustomFeature
             )
-        self.active_features.append(feature)
+            feature.name = f"CustomFeature_{feature.id}"
+        self._add_feature(feature)
+
+    def _add_feature(self, feature: AnyFeature) -> None:
+        """Adds any feature to the list of current features.
+
+        Also checks whether the feature is already part of the active features.
+
+        """
+        assert feature.delayed == self.delayed, (
+            f"In-memory featurizer {self.__class__} unexpectedly got a delayed "
+            f"feature {feature}. {feature.delayed=} {self.delayed=}"
+        )
+        if feature.dimension == 0:
+            warnings.warn(
+                f"Given an empty feature (eg. due to an empty/ineffective "
+                f"selection). Skipping it. Feature desc: {feature.describe()}"
+            )
+            return
+        if feature not in self.active_features:
+            self.active_features.append(feature)
+        else:
+            warnings.warn(
+                f"Tried to re-add the same feature {feature.__class__.__name__} to "
+                f"{self.active_features=}"
+            )
 
     def add_distances_ca(
-        self, periodic: bool = True, excluded_neighbors: int = 2
+        self,
+        periodic: bool = True,
+        excluded_neighbors: int = 2,
+        delayed: bool = False,
     ) -> None:
         """Adds the distances between all Ca's to the feature list.
 
@@ -515,13 +672,14 @@ class SingleTrajFeaturizer:
             )
         distance_indexes = np.array(distance_indexes)
 
-        self.add_distances(distance_indexes, periodic=periodic)
+        self.add_distances(distance_indexes, periodic=periodic, delayed=delayed)
 
     def add_distances(
         self,
         indices: Union[np.ndarray, Sequence[int]],
         periodic: bool = True,
         indices2: Optional[Sequence[int]] = None,
+        delayed: bool = False,
     ) -> None:
         """Adds the distances between atoms to the feature list.
 
@@ -554,8 +712,8 @@ class SingleTrajFeaturizer:
         atom_pairs = _parse_pairwise_input(indices, indices2)
 
         atom_pairs = self._check_indices(atom_pairs)
-        f = DistanceFeature(self.traj, atom_pairs, periodic=periodic)
-        self.active_features.append(f)
+        f = DistanceFeature(self.traj, atom_pairs, periodic=periodic, delayed=delayed)
+        self._add_feature(f)
 
     def add_backbone_torsions(
         self,
@@ -563,6 +721,7 @@ class SingleTrajFeaturizer:
         deg: bool = False,
         cossin: bool = False,
         periodic: bool = True,
+        delayed: bool = False,
     ) -> None:
         """Adds all backbone phi/psi angles or the ones specified in `selstr` to the feature list.
 
@@ -582,10 +741,11 @@ class SingleTrajFeaturizer:
         Examples:
             >>> import encodermap as em
             >>> import numpy as np
+            >>> from pprint import pprint
             >>> trajs = em.load_project("linear_dimers")
             >>> feat = em.Featurizer(trajs[0])
             >>> feat.add_backbone_torsions("resname PRO")
-            >>> feat.describe()
+            >>> pprint(feat.describe())
             ['PHI 0 PRO 19',
              'PSI 0 PRO 19',
              'PHI 0 PRO 37',
@@ -612,9 +772,14 @@ class SingleTrajFeaturizer:
         from .features import BackboneTorsionFeature
 
         f = BackboneTorsionFeature(
-            self.traj, selstr=selstr, deg=deg, cossin=cossin, periodic=periodic
+            self.traj,
+            selstr=selstr,
+            deg=deg,
+            cossin=cossin,
+            periodic=periodic,
+            delayed=delayed,
         )
-        self.active_features.append(f)
+        self._add_feature(f)
 
     def add_angles(
         self,
@@ -622,6 +787,7 @@ class SingleTrajFeaturizer:
         deg: bool = False,
         cossin: bool = False,
         periodic: bool = True,
+        delayed: bool = False,
     ) -> None:
         """Adds the list of angles to the feature list.
 
@@ -647,14 +813,16 @@ class SingleTrajFeaturizer:
             deg=deg,
             cossin=cossin,
             periodic=periodic,
+            delayed=delayed,
         )
-        self.active_features.append(f)
+        self._add_feature(f)
 
     def add_all(
         self,
         reference: Optional[md.Trajectory] = None,
         atom_indices: Optional[np.ndarray] = None,
         ref_atom_indices: Optional[np.ndarray] = None,
+        delayed: bool = False,
     ) -> None:
         """Adds all atom coordinates to the feature list.
         The coordinates are flattened as follows: [x1, y1, z1, x2, y2, z2, ...]
@@ -674,6 +842,7 @@ class SingleTrajFeaturizer:
             reference=reference,
             atom_indices=atom_indices,
             ref_atom_indices=ref_atom_indices,
+            delayed=delayed,
         )
 
     def add_selection(
@@ -682,6 +851,7 @@ class SingleTrajFeaturizer:
         reference: Optional[np.ndarray] = None,
         atom_indices: Optional[np.ndarray] = None,
         ref_atom_indices: Optional[np.ndarray] = None,
+        delayed: bool = False,
     ) -> None:
         """Adds the coordinates of the selected atom indexes to the feature list.
         The coordinates of the selection [1, 2, ...] are flattened as follows: [x1, y1, z1, x2, y2, z2, ...]
@@ -701,7 +871,7 @@ class SingleTrajFeaturizer:
         from .features import AlignFeature, SelectionFeature
 
         if reference is None:
-            f = SelectionFeature(self.traj, indexes)
+            f = SelectionFeature(self.traj, indexes, delayed=delayed)
         else:
             if not isinstance(reference, md.Trajectory):
                 raise ValueError(
@@ -714,14 +884,16 @@ class SingleTrajFeaturizer:
                 indexes=indexes,
                 atom_indices=atom_indices,
                 ref_atom_indices=ref_atom_indices,
+                delayed=delayed,
             )
-        self.active_features.append(f)
+        self._add_feature(f)
 
     def add_inverse_distances(
         self,
         indices: Union[np.ndarray, Sequence[int]],
         periodic: bool = True,
         indices2: Optional[Union[np.ndarray, Sequence[int]]] = None,
+        delayed: bool = False,
     ) -> None:
         """Adds the inverse distances between atoms to the feature list.
 
@@ -755,8 +927,10 @@ class SingleTrajFeaturizer:
         )
 
         atom_pairs = self._check_indices(atom_pairs)
-        f = InverseDistanceFeature(self.traj, atom_pairs, periodic=periodic)
-        self.active_features.append(f)
+        f = InverseDistanceFeature(
+            self.traj, atom_pairs, periodic=periodic, delayed=delayed
+        )
+        self._add_feature(f)
 
     def add_contacts(
         self,
@@ -765,6 +939,7 @@ class SingleTrajFeaturizer:
         threshold: float = 0.3,
         periodic: bool = True,
         count_contacts: bool = False,
+        delayed: bool = False,
     ) -> None:
         """Adds the contacts to the feature list.
 
@@ -801,8 +976,10 @@ class SingleTrajFeaturizer:
 
         atom_pairs = _parse_pairwise_input(indices, indices2)
         atom_pairs = self._check_indices(atom_pairs)
-        f = ContactFeature(self.traj, atom_pairs, threshold, periodic, count_contacts)
-        self.active_features.append(f)
+        f = ContactFeature(
+            self.traj, atom_pairs, threshold, periodic, count_contacts, delayed=delayed
+        )
+        self._add_feature(f)
 
     def add_residue_mindist(
         self,
@@ -812,6 +989,7 @@ class SingleTrajFeaturizer:
         threshold: Optional[float] = None,
         periodic: bool = True,
         count_contacts: bool = False,
+        delayed: bool = False,
     ) -> None:
         """Adds the minimum distance between residues to the feature list.
         See below how the minimum distance can be defined. If the topology
@@ -821,10 +999,10 @@ class SingleTrajFeaturizer:
 
         Args:
             residue_pairs (Union[Literal["all"], np.ndarray]): Can be 'all', in
-                which case, between all pairs of residues excluding first and
-                second neighbor. If a np.array with shape (n ,2) is supplied, these
-                residue indices (0-based) will be used to compute the mindists.
-                Default to 'all'.
+                which case mindists will be calculated between all pairs of
+                residues excluding first and second neighbor. If a np.array
+                with shape (n ,2) is supplied, these residue indices (0-based)
+                will be used to compute the mindists. Defaults to 'all'.
             scheme (Literal["ca", "closest", "closest-heavy"]): Within a residue,
                 determines the sub-group atoms that will be considered when
                 computing distances. Defaults to 'closest-heavy'.
@@ -871,9 +1049,10 @@ class SingleTrajFeaturizer:
             threshold,
             periodic,
             count_contacts=count_contacts,
+            delayed=delayed,
         )
 
-        self.active_features.append(f)
+        self._add_feature(f)
 
     def add_group_COM(
         self,
@@ -881,6 +1060,7 @@ class SingleTrajFeaturizer:
         ref_geom: Optional[md.Trajectory] = None,
         image_molecules: bool = False,
         mass_weighted: bool = True,
+        delayed: bool = False,
     ) -> None:
         """Adds the centers of mass (COM) in cartesian coordinates of a group or
         groups of atoms. If these group definitions coincide directly with
@@ -913,8 +1093,9 @@ class SingleTrajFeaturizer:
             ref_geom=ref_geom,
             image_molecules=image_molecules,
             mass_weighted=mass_weighted,
+            delayed=delayed,
         )
-        self.active_features.append(f)
+        self._add_feature(f)
 
     def add_residue_COM(
         self,
@@ -923,6 +1104,7 @@ class SingleTrajFeaturizer:
         ref_geom: Optional[md.Trajectory] = None,
         image_molecules: bool = False,
         mass_weighted: bool = True,
+        delayed: bool = False,
     ) -> None:
         """Adds a per-residue center of mass (COM) in cartesian coordinates.
         No periodic boundaries are taken into account.
@@ -968,9 +1150,10 @@ class SingleTrajFeaturizer:
             ref_geom=ref_geom,
             image_molecules=image_molecules,
             mass_weighted=mass_weighted,
+            delayed=delayed,
         )
 
-        self.active_features.append(f)
+        self._add_feature(f)
 
     def add_dihedrals(
         self,
@@ -978,6 +1161,7 @@ class SingleTrajFeaturizer:
         deg: bool = False,
         cossin: bool = False,
         periodic: bool = True,
+        delayed: bool = False,
     ) -> None:
         """Adds the list of dihedrals to the feature list
 
@@ -1003,8 +1187,9 @@ class SingleTrajFeaturizer:
             deg=deg,
             cossin=cossin,
             periodic=periodic,
+            delayed=delayed,
         )
-        self.active_features.append(f)
+        self._add_feature(f)
 
     def add_sidechain_torsions(
         self,
@@ -1015,6 +1200,7 @@ class SingleTrajFeaturizer:
         which: Union[
             Literal["all"], Sequence[Literal["chi1", "chi2", "chi3", "chi4", "chi5"]]
         ] = "all",
+        delayed: bool = False,
     ) -> None:
         """Adds all side chain torsion angles or the ones specified in `selstr`
         to the feature list.
@@ -1048,8 +1234,9 @@ class SingleTrajFeaturizer:
             cossin=cossin,
             periodic=periodic,
             which=which,
+            delayed=delayed,
         )
-        self.active_features.append(f)
+        self._add_feature(f)
 
     def add_minrmsd_to_ref(
         self,
@@ -1057,6 +1244,7 @@ class SingleTrajFeaturizer:
         ref_frame: int = 0,
         atom_indices: Optional[np.ndarray] = None,
         precentered: bool = False,
+        delayed: bool = False,
     ) -> None:
         """Adds the minimum root-mean-square-deviation (minrmsd)
         with respect to a reference structure to the feature list.
@@ -1085,8 +1273,9 @@ class SingleTrajFeaturizer:
             ref_frame=ref_frame,
             atom_indices=atom_indices,
             precentered=precentered,
+            delayed=delayed,
         )
-        self.active_features.append(f)
+        self._add_feature(f)
 
     @property
     def ndim(self) -> int:
@@ -1132,6 +1321,9 @@ class SingleTrajFeaturizer:
                 stacked along the feature dimension.
 
         """
+        # Encodermap imports
+        from encodermap.loading.features import CustomFeature
+
         # if there are no features selected, return given trajectory
         if not self.active_features:
             warnings.warn(
@@ -1157,12 +1349,12 @@ class SingleTrajFeaturizer:
                     )
                 if not vec.ndim == 2:
                     raise ValueError(
-                        f"Your custom feature {f.desccribe()} did not return a "
+                        f"Your custom feature {f.describe()} did not return a "
                         f"2d array. Shape was {vec.shape}"
                     )
                 if not vec.shape[0] == self.traj.xyz.shape[0]:
                     raise ValueError(
-                        f"Your custom feature {f.desccribe()} did not return as "
+                        f"Your custom feature {f.describe()} did not return as "
                         f"many frames, as it received. Input was {self.traj.xyz.shape[0]}, "
                         f"output was {vec.shape[0]}"
                     )
@@ -1181,8 +1373,8 @@ class SingleTrajFeaturizer:
         return res
 
     def get_output(self, pbar: Optional[tqdm] = None) -> xr.Dataset:
-        # Local Folder Imports
-        from ..misc.xarray import unpack_data_and_feature
+        # Encodermap imports
+        from encodermap.misc.xarray import unpack_data_and_feature
 
         if pbar is None:
             if self.traj.basename is None:
@@ -1198,8 +1390,7 @@ class SingleTrajFeaturizer:
             )
         with pbar as p:
             out = self.transform(p=p)
-        ds = unpack_data_and_feature(self, self.traj, out)
-        return ds
+        return unpack_data_and_feature(self, self.traj, out)
 
     def describe(self) -> list[str]:
         all_labels = []
@@ -1222,7 +1413,34 @@ class SingleTrajFeaturizer:
 
 
 class Featurizer:
+    """EncoderMap's featurization revives the archived code from PyEMMA
+    (https://github.com/markovmodel/PyEMMA).
+
+    EncoderMap's Featurizer collects and computes collective variables (CVs).
+    CVs are data that are aligned with MD trajectories on the frame/time axis.
+    Trajectory data contains (besides the topology) an axis for atoms, and
+    an axis for cartesian coordinate (x, y, z), so that a trajectory can be
+    understood as an array with shape (n_frames, n_atoms, 3). A CV is an array
+    that is aligned with the frame/time and has its own feature axis. If the
+    trajectory in our example has 3 residues (MET, ALA, GLY), we can define
+    6 dihedral angles along the backbone of this peptide. These angles are:
+
+    * PSI1:   Between MET1-N  - MET1-CA - MET1-C  - ALA2-N
+    * OMEGA1: Between MET1-CA - MET1-C  - ALA2-N  - ALA2-CA
+    * PHI1:   Between MET1-C  - ALA2-N  - ALA2-CA - ALA2-C
+    * PSI2:   Between ALA2-N  - ALA2-CA - ALA2-C  - GLY3-N
+    * OMEGA2: Between ALA2-CA - ALA2-C  - GLY3-N  - GLY3-CA
+    * PHI2:   Between ALA2-C  - GLY3-N  - GLY3-CA - GLY3-C
+
+    Thus, the collective variable 'backbone-dihedrals' provides an array of
+    shape (n_frames, 6) and is aligned with the frame/time axis of the trajectory.
+
+    """
+
     def __new__(cls, traj: Union[SingleTraj, TrajEnsemble]):
+        # Encodermap imports
+        from encodermap.trajinfo.info_single import SingleTraj
+
         if isinstance(traj, SingleTraj):
             return SingleTrajFeaturizer(traj)
         else:
@@ -1230,25 +1448,13 @@ class Featurizer:
 
 
 class AddSingleFeatureMethodsToClass(type):
-    def __new__(cls, name, bases, dct):
+    """Metaclass that programatically adds methods to the EnsembleFeaturizer."""
+
+    def __new__(cls, name, bases, dct):  # pragma: no doccheck
         x = super().__new__(cls, name, bases, dct)
 
         # iteratively add these functions
-        _add_X_function_names = (
-            "add_all",
-            "add_selection",
-            "add_distances_ca",
-            "add_distances",
-            "add_inverse_distances",
-            "add_contacts",
-            "add_residue_mindist",
-            "add_group_COM",
-            "add_residue_COM",
-            "add_angles",
-            "add_dihedrals",
-            "add_minrmsd_to_ref",
-        )
-        for add_X_function_name in _add_X_function_names:
+        for add_X_function_name in _ADD_X_FUNCTION_NAMES:
             # create a function with the corresponding add_X_function_name
             # IMPORTANT: keep this as a keyword argument, to prevent
             # python from late-binding
@@ -1258,7 +1464,11 @@ class AddSingleFeatureMethodsToClass(type):
                 # iterate over the trajs in self.trajs
                 for top, trajs in self.trajs.trajs_by_top.items():
                     # create a featurizer
-                    f = SingleTrajFeaturizer(trajs[0])
+                    if top not in self.feature_containers:
+                        f = SingleTrajFeaturizer(trajs[0], delayed=self.delayed)
+                        self.feature_containers[top] = f
+                    else:
+                        f = self.feature_containers[top]
                     # get the method defined by pyemma_function_name
                     func = getattr(f, add_x_name)
                     # call the method with *args and **kwargs, so that the
@@ -1267,12 +1477,13 @@ class AddSingleFeatureMethodsToClass(type):
                     # this is the feature we are looking for.
                     feature = f.active_features[-1]
                     # add the feature
-                    self.active_features.setdefault(top, []).append(feature)
-                    if top not in self.feature_containers:
-                        self.feature_containers[top] = FeatureContainer()
-                        self.feature_containers[
-                            top
-                        ].active_features = self.active_features[top]
+                    if top in self.active_features:
+                        if feature in self.active_features[top]:
+                            continue
+                        else:
+                            self.active_features[top].append(feature)
+                    else:
+                        self.active_features.setdefault(top, []).append(feature)
 
             # also add the docstring :)
             add_X_func.__doc__ = getattr(
@@ -1282,18 +1493,126 @@ class AddSingleFeatureMethodsToClass(type):
         return x
 
 
-class FeatureContainer:
-    @property
-    def features(self) -> list[AnyFeature]:
-        return self.active_features
+class DaskFeaturizerMeta(type):
+    def __new__(cls, name, bases, dct):
+        x = super().__new__(cls, name, bases, dct)
+
+        for add_X_function_name in _ADD_X_FUNCTION_NAMES + ["add_list_of_feats"]:
+
+            def add_X_func(self, *args, add_x_name=add_X_function_name, **kwargs):
+                # call the parents featurizer class add function
+                assert self.feat.delayed, (
+                    f"Programmatically added `add_X_func` got a featurizer with a"
+                    f"wrong `delayed` variable: {id(self.feat)=} {self.feat.delayed=}"
+                )
+                getattr(self.feat, add_x_name)(*args, delayed=True, **kwargs)
+
+            add_X_func.__doc__ = getattr(
+                SingleTrajFeaturizer,
+                add_X_function_name,
+            ).__doc__
+            setattr(x, add_X_function_name, add_X_func)
+        return x
 
 
 class EnsembleFeaturizer(metaclass=AddSingleFeatureMethodsToClass):
-    def __init__(self, trajs: TrajEnsemble) -> None:
+    """The EnsembleFeaturizer is a container of multiple SinlgeTrajFeaturizer.
+
+    The `SingleTrajFeaturizer` are collected in a dict with the topologies
+    of the sub-ensembles as keys.
+
+    """
+
+    def __init__(self, trajs: TrajEnsemble, delayed: bool = False) -> None:
+        """Instantiates the `EnsembleFeaturizer`.
+
+        Args:
+            trajs (TrajEnsmble): The `TrajEnsemble` to featurizer.
+            delayed (bool): Whether using dask to calculate features, or just do
+                a regular featurization.
+
+        """
         self.trajs = trajs
+        self.delayed = delayed
         self.active_features = {}
         self.feature_containers = {}
         self.ensemble = False
+        self._n_custom_features = 0
+        self._custom_feature_ids = []
+
+    def describe(self) -> dict[md.Topology, list[str]]:
+        """Returns the labels of the feature output.
+
+        Returns:
+            dict[md.Topology, list[str]]: A dict where the keys are the
+                topologies in the `TrajEnsemble` and the values are the
+                `describe()` outputs of the `SingleTrajFeaturizer` classes.
+
+        """
+        out = {}
+        for top, container in self.feature_containers.items():
+            out[top] = container.describe()
+        return out
+
+    def __len__(self) -> int:
+        lengths = [len(f) for f in self.feature_containers.values()]
+        assert all(
+            [lengths[0] == length for length in lengths]
+        ), f"This `{self.__class__.__name__}` has uneven features per topology."
+        if len(lengths) < 1:
+            return 0
+        return lengths[0]
+
+    def _add_feature(
+        self, f: AnyFeature, top: md.Topology, trajs: TrajEnsemble
+    ) -> None:
+        assert f.delayed == self.delayed, (
+            f"In-memory featurizer {self.__class__} unexpectedly got a delayed "
+            f"feature {f}. {f.delayed=} {self.delayed=}"
+        )
+        if top in self.feature_containers:
+            feat = self.feature_containers[top]
+        else:
+            feat = SingleTrajFeaturizer(trajs[0], delayed=self.delayed)
+            self.feature_containers[top] = feat
+        feat._add_feature(f)
+        self.active_features.setdefault(top, []).append(f)
+
+    def add_custom_feature(self, feature: AnyFeature) -> None:
+        # Encodermap imports
+        from encodermap.loading.features import CustomFeature
+
+        # decide on feature's id
+        if feature.__class__.__name__ == "CustomFeature":
+            if not hasattr(feature, "name"):
+                if not hasattr(feature, "id"):
+                    feature.id = self._n_custom_features
+                    self._custom_feature_ids.append(self._n_custom_features)
+                    self._n_custom_features += 1
+                elif feature.id is None:
+                    feature.id = self._n_custom_features
+                    self._custom_feature_ids.append(self._n_custom_features)
+                    self._n_custom_features += 1
+                else:
+                    assert feature.id not in self._custom_feature_ids, (
+                        f"A CustomFeature with the id {feature.id} already exists. "
+                        f"Please change the id of your CustomFeature."
+                    )
+                assert (
+                    isinstance(feature, CustomFeature)
+                    or issubclass(feature.__class__, CustomFeature)
+                    or hasattr(feature, "_is_custom")
+                )
+                feature.name = f"CustomFeature_{feature.id}"
+        else:
+            try:
+                feature.name = feature.__class__.__name__
+            except AttributeError:
+                pass
+
+        # add
+        for top, trajs in self.trajs.trajs_by_top.items():
+            self._add_feature(feature, top, trajs)
 
     def add_list_of_feats(
         self,
@@ -1302,6 +1621,8 @@ class EnsembleFeaturizer(metaclass=AddSingleFeatureMethodsToClass):
         deg: bool = False,
         omega: bool = True,
         check_aas: bool = True,
+        periodic: bool = True,
+        delayed: bool = False,
     ) -> None:
         """Adds features to the Featurizer to be loaded either in-memory. The
         argument `which` can be either 'all' or a list of the following strings:
@@ -1350,6 +1671,18 @@ class EnsembleFeaturizer(metaclass=AddSingleFeatureMethodsToClass):
         )
         for top, trajs in self.trajs.trajs_by_top.items():
             if isinstance(which, str):
+                if which == "full":
+                    which = [
+                        "CentralCartesians",
+                        "CentralBondDistances",
+                        "CentralAngles",
+                        "CentralDihedrals",
+                        "SideChainDihedrals",
+                        "SideChainCartesians",
+                        "SideChainAngles",
+                        "AllCartesians",
+                        "SideChainBondDistances",
+                    ]
                 if which == "all":
                     which = [
                         "CentralCartesians",
@@ -1381,41 +1714,91 @@ class EnsembleFeaturizer(metaclass=AddSingleFeatureMethodsToClass):
                     )
 
             # add the features
+            # the _use_omega and _use_angle class attrs are added by the
+            # `FeatureMeta` in `features.py` by inspecting a `Feature` subclass'
+            # call signature
             for cf in which:
                 if cf in UNDERSCORE_MAPPING:
                     cf = UNDERSCORE_MAPPING[cf]
                 feature = getattr(features, cf)
-                if not feature._use_angle and not feature._use_omega:
+                if (
+                    not feature._use_periodic
+                    and not feature._use_angle
+                    and not feature._use_omega
+                ):
                     feature = feature(
                         trajs[0],
                         check_aas=True,
                         generic_labels=ensemble,
+                        delayed=delayed,
                     )
-                elif feature._use_angle and not feature._use_omega:
+                elif (
+                    feature._use_periodic
+                    and not feature._use_angle
+                    and not feature._use_omega
+                ):
+                    feature = feature(
+                        trajs[0],
+                        check_aas=True,
+                        generic_labels=ensemble,
+                        periodic=periodic,
+                        delayed=delayed,
+                    )
+                elif (
+                    feature._use_periodic
+                    and feature._use_angle
+                    and not feature._use_omega
+                ):
                     feature = feature(
                         trajs[0],
                         deg=deg,
                         check_aas=check_aas,
                         generic_labels=ensemble,
+                        periodic=periodic,
+                        delayed=delayed,
                     )
-                elif feature._use_angle and feature._use_omega:
+                elif (
+                    feature._use_periodic and feature._use_angle and feature._use_omega
+                ):
                     feature = feature(
                         trajs[0],
                         deg=deg,
                         omega=omega,
                         check_aas=check_aas,
                         generic_labels=ensemble,
+                        periodic=periodic,
+                        delayed=delayed,
                     )
                 else:
                     raise Exception(
-                        f"Unkwon combination of `_use_angle` and `_use_omega` in "
+                        f"Unknown combination of `_use_angle` and `_use_omega` in "
                         f"class attributes of {feature=}"
                     )
-                self.active_features.setdefault(top, []).append(feature)
+                if top in self.active_features:
+                    if feature in self.active_features[top]:
+                        warnings.warn(
+                            f"Tried to re-add the same feature {feature.__class__.__name__} to "
+                            f"{self.active_features=}"
+                        )
+                        continue
+                    else:
+                        self.active_features[top].append(feature)
+                else:
+                    self.active_features.setdefault(top, []).append(feature)
 
-            if top not in self.feature_containers:
-                self.feature_containers[top] = FeatureContainer()
-                self.feature_containers[top].active_features = self.active_features[top]
+                if top in self.feature_containers:
+                    f = self.feature_containers[top]
+                else:
+                    f = SingleTrajFeaturizer(trajs[0], delayed=self.delayed)
+                    self.feature_containers[top] = f
+                f._add_feature(feature)
+
+        # after all is done, all tops should contain the same number of feats
+        no_of_feats = set([len(v) for v in self.active_features.values()])
+        assert len(no_of_feats) == 1, (
+            f"I was not able to add the same number of features to the respective "
+            f"topologies:\n{self.active_features=}\n{self.feature_containers=}"
+        )
 
     @property
     def features(self) -> list[AnyFeature]:
@@ -1426,11 +1809,32 @@ class EnsembleFeaturizer(metaclass=AddSingleFeatureMethodsToClass):
 
     def transform(
         self,
-        traj,
-        outer_p: Optional[tqdm] = None,
-        inner_p: Optional[tqdm] = None,
+        traj: Union[SingleTraj, md.Trajectory],
+        outer_p: Optional[Union[tqdm, rich.progress.Progress]] = None,
+        inner_p: Optional[Union[tqdm, rich.progress.Progress]] = None,
+        inner_p_id: Optional[int] = None,
     ) -> np.ndarray:
-        # otherwise, build feature vector.
+        """Applies the features to the trajectory data.
+
+        traj (Union[SingleTraj, md.Trajectory]): The trajectory which provides
+            the data. Make sure, that the topology of this traj matches the
+            topology used to initialize the features.
+        outer_p (Optional[Union[tqdm, rich.progress.Progress]]): An object
+            that supports `.update()` to advance a progress bar. The
+            `rich.progress.Progress` is special, as it needs additional code
+            to advance the multi-file progress bar dispolayed by the
+            `EnsembleFeaturzier`. The `outer_p` represents the overall
+            progress.
+        inner_p (Optional[Union[tqdm, rich.progress.Progress]]): Same as `outer_p`,
+            but the `inner_p` represents the progress per file.
+        inner_p_id (Optional[int]): The id of the `inner_p`, which needs to be
+            provided, if `outer_p` and `inner_p` are instances of
+            `rich.progress.Progress`.
+
+        """
+        # Encodermap imports
+        from encodermap.loading.features import CustomFeature
+
         feature_vec = []
 
         for f in self.active_features[traj.top]:
@@ -1456,18 +1860,17 @@ class EnsembleFeaturizer(metaclass=AddSingleFeatureMethodsToClass):
                         "Your custom feature %s did not return"
                         " a numpy.ndarray!" % str(f.describe())
                     )
-                if not vec.ndim == 2:
-                    raise ValueError(
-                        "Your custom feature %s did not return"
-                        " a 2d array. Shape was %s"
-                        % (str(f.describe()), str(vec.shape))
-                    )
-                if not vec.shape[0] == self.traj.xyz.shape[0]:
+                if vec.ndim == 1:
+                    vec = np.expand_dims(vec, -1)
+                if vec.ndim == 3:
+                    vec = vec.reshape(xyz.shape[0], -1)
+                    f.atom_feature = True
+                if not vec.shape[0] == traj.xyz.shape[0]:
                     raise ValueError(
                         "Your custom feature %s did not return"
                         " as many frames as it received!"
                         "Input was %i, output was %i"
-                        % (str(f.describe()), self.traj.xyz.shape[0], vec.shape[0])
+                        % (str(f.describe()), traj.xyz.shape[0], vec.shape[0])
                     )
             else:
                 vec = f.transform(
@@ -1485,7 +1888,9 @@ class EnsembleFeaturizer(metaclass=AddSingleFeatureMethodsToClass):
 
             if inner_p is not None:
                 if isinstance(inner_p, rich.progress.Progress):
-                    outer_p.update(traj.traj_num + 1, advance=1)
+                    if inner_p_id is None:
+                        inner_p_id = traj.traj_num + 1
+                    outer_p.update(inner_p_id, advance=1)
                 else:
                     outer_p.update()
 
@@ -1494,6 +1899,10 @@ class EnsembleFeaturizer(metaclass=AddSingleFeatureMethodsToClass):
         else:
             res = feature_vec[0]
 
+        # sleep half a second to let the progbars catch up
+        if outer_p is not None or inner_p is not None:
+            time.sleep(0.5)
+
         return res
 
     def n_features(self) -> int:
@@ -1501,9 +1910,14 @@ class EnsembleFeaturizer(metaclass=AddSingleFeatureMethodsToClass):
             if i == 0:
                 length = len(val)
             else:
+                _debug = []
+                for i, (key, val) in enumerate(self.active_features.items()):
+                    _debug.append(f"Top: {key}\nValue: {val}")
+                _debug = "\n\n".join(_debug)
                 assert length == len(val), (
                     f"There are different number of features per topology in "
-                    f"`self.active_features`. These features can't be transformed."
+                    f"`self.active_features`. These features can't be transformed. "
+                    f"Here are the features by topology:\n{_debug}"
                 )
         return length
 
@@ -1511,12 +1925,27 @@ class EnsembleFeaturizer(metaclass=AddSingleFeatureMethodsToClass):
         self,
         pbar: Optional[tqdm] = None,
     ) -> xr.Dataset:
+        # Encodermap imports
+        from encodermap.misc.xarray import unpack_data_and_feature
+
+        if self.active_features == {}:
+            print(f"First add some features before calling `get_output()`.")
+            return
         DSs = []
         n_features = self.n_features()
-        if pbar is None:
-            with rich.progress.Progress() as progress:
+
+        try:
+            # Third Party Imports
+            from rich.progress import Progress
+
+            _rich_installed = True
+        except ModuleNotFoundError:
+            _rich_installed = False
+
+        if pbar is None and _rich_installed:
+            with Progress() as progress:
                 tasks = []
-                overall_tasks = progress.add_task(
+                progress.add_task(
                     description=(
                         f"Getting output for an ensemble containing "
                         f"{self.trajs.n_trajs} trajs"
@@ -1524,17 +1953,20 @@ class EnsembleFeaturizer(metaclass=AddSingleFeatureMethodsToClass):
                     total=n_features * self.trajs.n_trajs,
                 )
                 for i, traj in enumerate(self.trajs):
+                    desc = traj.basename
+                    if traj.basename == "trajs":
+                        desc = f"trajectory {traj.traj_num}"
                     tasks.append(
                         progress.add_task(
                             description=(
                                 f"Getting output of {n_features} features for "
-                                f"{traj.basename}"
+                                f"{desc}"
                             ),
                             total=n_features,
                         )
                     )
                 for i, traj in enumerate(self.trajs):
-                    out = self.transform(traj, progress, progress)
+                    out = self.transform(traj, progress, progress, inner_p_id=i + 1)
                     ds = unpack_data_and_feature(
                         self.feature_containers[traj.top], traj, out
                     )
@@ -1565,6 +1997,9 @@ def format_output(
         xr.Dataset: The output dataset.
 
     """
+    # Encodermap imports
+    from encodermap.trajinfo.trajinfo_utils import trajs_combine_attrs
+
     # make sure that all traj-nums are unique
     traj_nums = [ds.traj_num.values for ds in datasets]
     assert all([i.size == 1 for i in traj_nums])
@@ -1575,7 +2010,16 @@ def format_output(
     )
 
     # create a large dataset
-    out = xr.concat(datasets, dim="traj_num", fill_value=np.nan)
+    out = xr.concat(
+        datasets,
+        data_vars="all",
+        # compat="broadcast_equals",
+        # coords="all",
+        # join="outer",
+        dim="traj_num",
+        fill_value=np.nan,
+        combine_attrs=trajs_combine_attrs,
+    )
 
     # EncoderMap datasets
     encodermap_dataarrays = list(UNDERSCORE_MAPPING.keys())
@@ -1601,6 +2045,14 @@ def format_output(
                     int(re.findall(r"\d+", x)[0]),
                 ),
             )
+        elif key == "ALLATOM":
+            all_labels[key] = sorted(
+                all_labels[key],
+                key=lambda x: (
+                    0 if x.endswith("c") else 1,
+                    *map(int, re.findall(r"\d+", x)[::-1]),
+                ),
+            )
         elif key == "CENTRAL_DIHEDRALS":
             all_labels[key] = sorted(
                 all_labels[key],
@@ -1616,1037 +2068,270 @@ def format_output(
     return out.reindex(all_labels, fill_value=np.nan)
 
 
-################################################################################
-# Deprecated Stuff, because PyEMMA got archived we do featurization on our own
-################################################################################
+class DaskFeaturizer(metaclass=DaskFeaturizerMeta):
+    """Container for `SingleTrajFeaturizer` and `EnsembleFeaturizer`
+    that implements delayed transforms.
 
-# def format_output_deprecated(
-#     inps: list["DataSource"],
-#     feats: list["AnyFeature"],
-#     trajs: list[TrajEnsemble],
-# ) -> tuple[tuple[np.ndarray], tuple[Featurizer], tuple[SingleTraj]]:
-#     """Formats the output of multiple topologies.
-#
-#     Iterates over the features in `feats` and looks for the feature
-#     with the greatest dimension, i.e., the longest returned `describe()`. This
-#     feature yields the column names, the non-defined values are np.nan.
-#
-#     Args:
-#         inps (list[DataSource]): The list of inputs, that
-#             return the values of the feats, when `get_output()` is called.
-#         feats (list[encodermap.loading.Featurizer]: These featurizers collect the
-#             features and will be used to determine the highest length of feats.
-#         trajs (list[encodermap.TrajEnsemble]): List of trajs with
-#             identical topologies.
-#
-#     Returns:
-#         tuple[list[np.ndarray], list[Featurizer], list[SingleTraj]: The
-#             data, that `TrajEnsemble` can work with.
-#
-#     """
-#
-#     class Featurizer_out:
-#         def __init__(self):
-#             self.indices_by_top = {}
-#
-#     # append to this
-#     all_out = []
-#
-#     feat_out = Featurizer_out()
-#     feat_out.features = []
-#     max_feat_lengths = {}
-#     labels = {}
-#     added_trajs = 0
-#     for feat_num, (feat, traj) in enumerate(zip(feats, trajs)):
-#         assert len(traj.top) == 1
-#         for i, f in enumerate(feat.feat.active_features):
-#             name = f.__class__.__name__
-#
-#             if name not in max_feat_lengths:
-#                 max_feat_lengths[name] = 0
-#                 feat_out.features.append(
-#                     EmptyFeature(name, len(f.describe()), f.describe(), f.indexes)
-#                 )
-#
-#             if name == "SideChainDihedrals":
-#                 if name not in labels:
-#                     labels[name] = []
-#                 labels[name].extend(f.describe())
-#             else:
-#                 if max_feat_lengths[name] < len(f.describe()):
-#                     max_feat_lengths[name] = len(f.describe())
-#                     labels[name] = f.describe()
-#                     feat_out.features[i] = EmptyFeature(
-#                         name, len(f.describe()), f.describe(), f.indexes
-#                     )
-#             feat_out.indices_by_top.setdefault(traj.top[0], {})[name] = f.indexes
-#
-#     # rejig the sidechain labels
-#     side_key = "SideChainDihedrals"
-#     if side_key in labels:
-#         labels[side_key] = np.unique(labels[side_key])
-#         labels[side_key] = sorted(
-#             labels[side_key], key=lambda x: (int(x[-3:]), int(x[13]))
-#         )
-#         index_of_sidechain_dihedral_features = [
-#             f.name == side_key for f in feat_out.features
-#         ].index(True)
-#         new_empty_feat = EmptyFeature(
-#             side_key,
-#             len(labels[side_key]),
-#             labels[side_key],
-#             None,
-#         )
-#         feat_out.features[index_of_sidechain_dihedral_features] = new_empty_feat
-#
-#     # after rejigging the sidechain labels,
-#     # reset the sidechain indices
-#     for (top, index_dict), feat, traj in zip(
-#         feat_out.indices_by_top.items(), feats, trajs
-#     ):
-#         feat_labels = feat.features[-1].describe()
-#         check = np.in1d(np.asarray(labels[side_key]), np.asarray(feat_labels))
-#         labels_copy = index_dict[side_key].copy()
-#         feat_out.indices_by_top[top][side_key] = np.full((len(check), 4), np.nan, float)
-#         feat_out.indices_by_top[top][side_key][check] = labels_copy
-#
-#     for (k, v), f in zip(labels.items(), feat_out.features):
-#         if not len(v) == len(f.describe()) == f._dim:
-#             raise Exception(
-#                 f"Could not consolidate the features of the {f.name} "
-#                 f"feature. The `labels` dict, which dictates the size "
-#                 f"of the resulting array with np.nan's defines a shape "
-#                 f"of {len(v)}, but the feature defines a shape of {len(f.describe())} "
-#                 f"(or `f._dim = {f._dim}`). The labels dict gives these labels:\n\n{v}"
-#                 f"\n\n, the feature labels gives these labels:\n\n{f.describe()}."
-#             )
-#
-#     # Flatten the labels. These will be the columns for a pandas dataframe.
-#     # At the start, the dataframe will be full of np.nan.
-#     # The values of inp.get_output() will then be used in conjunction with
-#     # The labels of the features to fill this dataframe partially.
-#     flat_labels = [item for sublist in labels.values() for item in sublist]
-#     if not len(flat_labels) == sum([f._dim for f in feat_out.features]):
-#         raise Exception(
-#             f"The length of the generic CV labels ({len(flat_labels)} "
-#             f"does not match the length of the labels of the generic features "
-#             f"({[f._dim for f in feat_out.features]})."
-#         )
-#
-#     # iterate over the sorted trajs, inps, and feats
-#     for inp, feat, sub_trajs in zip(inps, feats, trajs):
-#         # make a flat list for this specific feature space
-#         assert isinstance(sub_trajs, TrajEnsemble)
-#         describe_this_feature = []
-#         for f in feat.feat.active_features:
-#             # make sure generic labels are used
-#             if f.describe.__func__.__name__ != "generic_describe":
-#                 raise Exception(
-#                     f"It seems like this feature: {f.__class__} does not return generic "
-#                     f"feature names (i.e. labels), but topology-specific ones (generic: 'SIDECHDIH CHI1 1', "
-#                     f"topology specific: 'SIDECHDIH CHI1 ASP1'). Normally, EncoderMap's "
-#                     f"features can be instantiated with a `generic_labels=True` flag to "
-#                     f"overwrite the features `describe()` method with a `generic_describe()` "
-#                     f"method. This changes the `.__func__.__name__` of the `describe()` method "
-#                     f"to 'generic_describe'. However the func name for this feature is "
-#                     f"{f.describe.__func__.__name__}."
-#                 )
-#             describe_this_feature.extend(f.describe())
-#
-#         # use the output to fill a pandas dataframe with all labels
-#         out = inp.get_output()
-#
-#         # case1: one traj in sub_trajs: output is a list of length 1
-#         if sub_trajs.n_trajs == 1:
-#             assert len(out) == 1
-#             traj = sub_trajs[0]
-#             o = out[0]
-#             if traj.index != (None,):
-#                 for ind in traj.index:
-#                     if ind is None:
-#                         continue
-#                     o = o[ind]
-#                 assert o.shape[0] == traj.n_frames, (
-#                     f"Indexing output of featurizer for `TrajEnsemble` with single traj "
-#                     f"did not return the correct shape: {o.shape[0]=}, {traj.n_frames=}."
-#                 )
-#             df = pd.DataFrame(np.nan, index=range(traj.n_frames), columns=flat_labels)
-#             df = df.assign(**{k: v for k, v in zip(describe_this_feature, o.T)})
-#             all_out.append((df.to_numpy(), feat_out, traj))
-#             added_trajs += 1
-#         elif sub_trajs.n_trajs > 1:
-#             if len(out) != sub_trajs.n_trajs:
-#                 out_dict = {k: v for k, v in zip(inp._filenames, out)}
-#                 assert len(out_dict) == len(out)
-#                 for i, traj in enumerate(sub_trajs):
-#                     o = deepcopy(out_dict[traj.traj_file])
-#                     o_orig_shape = deepcopy(out_dict[traj.traj_file].shape)
-#                     if traj.index != (None,):
-#                         for ind in traj.index:
-#                             if ind is None:
-#                                 continue
-#                             o = o[ind]
-#                         assert o.shape[0] == traj.n_frames, (
-#                             f"Indexing output of featurizer for `TrajEnsemble` with multiple trajs, some "
-#                             f"of which share the same file {sub_trajs.traj_files=} "
-#                             f"did not return the correct shape: {o.shape[0]=}, {traj.n_frames=}, "
-#                             f"{len(traj._original_frame_indices)=}, {o_orig_shape=},"
-#                             f"{[v.shape for v in out_dict.values()]=} {inp._filenames=}, "
-#                             f"{[j.shape for j in out]=}"
-#                         )
-#                     df = pd.DataFrame(
-#                         np.nan, index=range(traj.n_frames), columns=flat_labels
-#                     )
-#                     df = df.assign(**{k: v for k, v in zip(describe_this_feature, o.T)})
-#                     all_out.append((df.to_numpy(), feat_out, traj))
-#                     added_trajs += 1
-#             else:
-#                 for o, traj in zip(out, sub_trajs):
-#                     if traj.index != (None,):
-#                         for ind in traj.index:
-#                             if ind is None:
-#                                 continue
-#                             o = o[ind]
-#                         assert o.shape[0] == traj.n_frames
-#                     df = pd.DataFrame(
-#                         np.nan, index=range(traj.n_frames), columns=flat_labels
-#                     )
-#                     df = df.assign(**{k: v for k, v in zip(describe_this_feature, o.T)})
-#                     all_out.append((df.to_numpy(), feat_out, traj))
-#                     added_trajs += 1
-#         else:
-#             raise Exception("Unknown case of shared topologies and files.")
-#
-#     # make sure the shapes of all df matches
-#     shapes = [o[0].shape[1] for o in all_out]
-#     if not len(list(set(shapes))) == 1:
-#         raise Exception(
-#             f"Alignment was not possible. Some values exhibit different shapes: "
-#             f"{list(set(shapes))}. All shapes:\n\n{[o[0].shape[1] for o in all_out]}"
-#         )
-#     assert added_trajs == sum(
-#         [t.n_trajs for t in trajs]
-#     ), f"{added_trajs=}, {len(all_out)=}, {sum([t.n_trajs for t in trajs])=}"
-#     return tuple(all_out)
-#
-#
-# class PyEMMAFeaturizer_deprecated:
-#     def __init__(
-#         self,
-#         trajs: TrajEnsemble,
-#         custom_aas: Optional[Union["CustomTopology", CustomAAsDict]] = None,
-#     ) -> None:
-#         """Instantiate the Featurizer.
-#
-#         Can be supplied with custom and non-standard aminoacid definitions.
-#
-#         Args:
-#             trajs: Union[em.SingleTraj, em.TrajEnsemble]: The trajs.
-#             custom_aas: Optional[Union[CustomAminoAcids, CustomAAsDict]]: An instance of the
-#                 `CustomAminoAcids` class or a dictionary that can be made into such.
-#
-#         """
-#         # Local Folder Imports
-#         from ..trajinfo.trajinfo_utils import CustomTopology
-#
-#         # decide on custom_aas
-#         if isinstance(custom_aas, dict):
-#             self.custom_aas = CustomTopology.from_dict(custom_aas)
-#         elif custom_aas is None:
-#             self.custom_aas = None
-#         elif (
-#             isinstance(custom_aas, CustomTopology)
-#             or custom_aas.__class__.__name__ == "CustomAminoAcids"
-#         ):
-#             self.custom_aas = custom_aas
-#         else:
-#             raise ValueError(
-#                 f"Argument `custom_aas` needs to be `dict` or `CustomAminoAcids` "
-#                 f"instance. Received {type(custom_aas)}."
-#             )
-#
-#         # set the trajs and align them if needed
-#         self._can_load = True
-#         self.trajs = trajs
-#
-#         # copy docstrings form pyemma to the various add_* methods
-#         self._copy_docstrings_from_pyemma()
-#
-#     def _copy_docstrings_from_pyemma(self):
-#         """Copies the docstrings of the add* methods from the pyemma featurizer."""
-#         if isinstance(self.feat, list):
-#             feat_ = self.feat[0]
-#         else:
-#             feat_ = self.feat
-#
-#         # fmt: off
-#         self.add_all.__func__.__doc__ = feat_.add_all.__doc__
-#         self.add_selection.__func__.__doc__ = feat_.add_selection.__doc__
-#         self.add_distances.__func__.__doc__ = feat_.add_distances.__doc__
-#         self.add_distances_ca.__func__.__doc__ = feat_.add_distances_ca.__doc__
-#         self.add_inverse_distances.__func__.__doc__ = feat_.add_inverse_distances.__doc__
-#         self.add_contacts.__func__.__doc__ = feat_.add_contacts.__doc__
-#         self.add_residue_mindist.__func__.__doc__ = feat_.add_residue_mindist.__doc__
-#         self.add_group_COM.__func__.__doc__ = feat_.add_group_COM.__doc__
-#         self.add_residue_COM.__func__.__doc__ = feat_.add_residue_COM.__doc__
-#         self.add_group_mindist.__func__.__doc__ = feat_.add_group_mindist.__doc__
-#         self.add_angles.__func__.__doc__ = feat_.add_angles.__doc__
-#         self.add_dihedrals.__func__.__doc__ = feat_.add_dihedrals.__doc__
-#         self.add_backbone_torsions.__func__.__doc__ = feat_.add_backbone_torsions.__doc__
-#         self.add_chi1_torsions.__func__.__doc__ = feat_.add_chi1_torsions.__doc__
-#         self.add_sidechain_torsions.__func__.__doc__ = feat_.add_sidechain_torsions.__doc__
-#         self.add_minrmsd_to_ref.__func__.__doc__ = feat_.add_minrmsd_to_ref.__doc__
-#         # fmt: on
-#
-#     def get_output(self) -> xr.Dataset:
-#         """Gets the output of the feat obj(s)."""
-#         if self.mode == "single_top":
-#             if len(self.feat.active_features) == 0:
-#                 print("No features loaded. No output will be returned")
-#                 return
-#
-#         if self.mode == "multiple_top":
-#             if len(self.feat[0].features) == 0:
-#                 print("No features loaded. No output will be returned")
-#                 return
-#
-#         if self.mode == "single_top":
-#             datasets = []
-#             if self._can_load:
-#                 out = self.inp.get_output()
-#             else:
-#                 with tempfile.TemporaryDirectory() as td:
-#                     fnames = [
-#                         str(Path(td) / f"file_{i}.xtc")
-#                         for i in range(self.trajs.n_trajs)
-#                     ]
-#                     for fname, t in zip(fnames, self.trajs):
-#                         t.traj.save_xtc(fname)
-#                     out = load(fnames, features=self.feat)
-#                     if isinstance(out, np.ndarray):
-#                         out = [out]
-#             for traj, o in zip(self.trajs, out):
-#                 datasets.append(unpack_data_and_feature(self, traj, o))
-#             if len(datasets) == 1:
-#                 assert datasets[0].coords["traj_num"] == np.array(
-#                     [self.trajs[0].traj_num]
-#                 )
-#                 return datasets[0]
-#             else:
-#                 out = xr.combine_nested(
-#                     datasets, concat_dim="traj_num", fill_value=np.nan
-#                 )
-#                 if (
-#                     len(out.coords["traj_num"]) != len(self.trajs)
-#                     and len(out.coords["traj_num"]) != self.trajs.n_trajs
-#                 ):
-#                     raise Exception(
-#                         f"The combine_nested xarray method returned "
-#                         f"a bad dataset, which has {out.coords['traj_num']} "
-#                         f"trajectories, but the featurizer has {self.trajs} "
-#                         f"trajectories."
-#                     )
-#                 # out = xr.concat(datasets, dim='traj_num')
-#         else:
-#             datasets = []
-#             out = format_output(self.inp, self.feat, self.sorted_trajs)
-#             for i, (data, feat, traj) in enumerate(out):
-#                 ds = unpack_data_and_feature(feat, traj, data)
-#                 assert ds.coords["traj_num"].values.tolist() == [traj.traj_num]
-#                 datasets.append(ds)
-#             try:
-#                 out = xr.concat(datasets, dim="traj_num", fill_value=np.nan)
-#             except ValueError as e:
-#                 if "index has duplicate values" in str(e):
-#                     for traj in self.trajs:
-#                         for ind in traj.index:
-#                             if isinstance(ind, (np.ndarray, list)):
-#                                 uniques, counts = np.unique(
-#                                     np.asarray(ind), return_counts=True
-#                                 )
-#                     raise Exception(
-#                         f"One of the `SingleTraj`s has duplicate frames. "
-#                         f"The frame {uniques[np.argmax(counts)]} appears "
-#                         f"{np.max(counts)} times. This can happen, when a"
-#                         f"`SingleTraj` is indexed like so:"
-#                         f"`SingleTraj[[0, 1, 2, 3, 0]]` in which case the "
-#                         f"frame 0 occurs twice. This is not forbidden per se, but "
-#                         f"Featurization won't work with this kind of `SingleTraj`."
-#                     )
-#                 else:
-#                     raise e
-#
-#         return out
-#
-#     def add_list_of_feats(
-#         self,
-#         which: Union[Literal["all"], Sequence[str]] = "all",
-#         deg: bool = False,
-#         omega: bool = True,
-#         check_aas: bool = True,
-#     ) -> None:
-#         """Adds features to the Featurizer to be loaded either in-memory or out-of-memory.
-#         `which` can be either 'all' or a list of the following strings. 'all' will add all of these features:
-#         * 'AllCartesians': Cartesian coordinates of all atoms with shape (n_frames, n_atoms, 3).
-#         * 'AllBondDistances': Bond distances of all bonds recognized by mdtraj. Use top = md.Topology.from_openmm()
-#             if mdtraj does not recognize all bonds.
-#         * 'CentralCartesians': Cartesians of the N, C, CA atoms in the backbone with shape (n_frames, n_residues * 3, 3).
-#         * 'CentralBondDistances': The bond distances of the N, C, CA bonds with shape (n_frames, n_residues * 3 - 1).
-#         * 'CentralAngles': The angles between the backbone bonds with shape (n_frames, n_residues * 3 - 2).
-#         * 'CentralDihedrals': The dihedrals between the backbone atoms (omega, phi, psi). With shape (n_frames,
-#             n_residues * 3 - 3).
-#         * 'SideChainCartesians': Cartesians of the sidechain-atoms. Starting with CB, CG, ...
-#         * 'SideChainBondDistances': Bond distances between the sidechain atoms. starting with the CA-CG bond.
-#         * 'SideChainAngles': Angles between sidechain atoms. Starting with the C-CA-CB angle.
-#         * 'SideChainDihedrals': Dihedrals of the sidechains (chi1, chi2, chi3).
-#
-#         Args:
-#             which (Union[str, list], optional). Either add 'all' features or a list of features. See Above for
-#                 possible features. Defaults to 'all'.
-#
-#         """
-#         if isinstance(which, str):
-#             if which == "all":
-#                 which = [
-#                     "CentralCartesians",
-#                     "CentralBondDistances",
-#                     "CentralAngles",
-#                     "CentralDihedrals",
-#                     "SideChainDihedrals",
-#                 ]
-#         if not isinstance(which, list):
-#             which = [which]
-#         if self.mode == "single_top":
-#             for cf in which:
-#                 if cf in UNDERSCORE_MAPPING:
-#                     cf = UNDERSCORE_MAPPING[cf]
-#                 feature = getattr(features, cf)(
-#                     self.top,
-#                     check_aas=check_aas,
-#                 )
-#                 if hasattr(feature, "deg"):
-#                     feature = getattr(features, cf)(
-#                         self.top,
-#                         deg=deg,
-#                         check_aas=check_aas,
-#                     )
-#                 if hasattr(feature, "omega"):
-#                     feature = getattr(features, cf)(
-#                         self.top, deg=deg, omega=omega, check_aas=check_aas
-#                     )
-#                 self.feat.add_custom_feature(feature)
-#         else:
-#             for cf in which:
-#                 if cf in UNDERSCORE_MAPPING:
-#                     cf = UNDERSCORE_MAPPING[cf]
-#                 for top, feat in zip(self.top, self.feat):
-#                     feature = getattr(features, cf)(
-#                         top,
-#                         generic_labels=True,
-#                         check_aas=check_aas,
-#                     )
-#                     if hasattr(feature, "deg"):
-#                         feature = getattr(features, cf)(
-#                             top, deg=deg, generic_labels=True, check_aas=check_aas
-#                         )
-#                     if hasattr(feature, "omega"):
-#                         feature = getattr(features, cf)(
-#                             top,
-#                             deg=deg,
-#                             omega=omega,
-#                             generic_labels=True,
-#                             check_aas=check_aas,
-#                         )
-#                     feat.add_custom_feature(feature)
-#
-#     def add_all(self, *args, **kwargs):
-#         if self.mode == "multiple_top":
-#             raise Exception(
-#                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
-#             )
-#         self.feat.add_all(*args, **kwargs)
-#
-#     def add_selection(self, *args, **kwargs):
-#         if self.mode == "multiple_top":
-#             raise Exception(
-#                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
-#             )
-#         self.feat.add_selection(*args, **kwargs)
-#
-#     def add_distances(self, *args, **kwargs):
-#         if self.mode == "multiple_top":
-#             raise Exception(
-#                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
-#             )
-#         self.feat.add_distances(*args, **kwargs)
-#
-#     def add_distances_ca(self, *args, **kwargs):
-#         if self.mode == "multiple_top":
-#             raise Exception(
-#                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
-#             )
-#         self.feat.add_distances_ca(*args, **kwargs)
-#
-#     def add_inverse_distances(self, *args, **kwargs):
-#         if self.mode == "multiple_top":
-#             raise Exception(
-#                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
-#             )
-#         self.feat.add_inverse_distances(*args, **kwargs)
-#
-#     def add_contacts(self, *args, **kwargs):
-#         if self.mode == "multiple_top":
-#             raise Exception(
-#                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
-#             )
-#         self.feat.add_contacts(*args, **kwargs)
-#
-#     def add_residue_mindist(self, *args, **kwargs):
-#         if self.mode == "multiple_top":
-#             raise Exception(
-#                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
-#             )
-#         self.feat.add_residue_mindist(*args, **kwargs)
-#
-#     def add_group_COM(self, *args, **kwargs):
-#         if self.mode == "multiple_top":
-#             raise Exception(
-#                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
-#             )
-#         self.feat.add_group_COM(*args, **kwargs)
-#
-#     def add_residue_COM(self, *args, **kwargs):
-#         if self.mode == "multiple_top":
-#             raise Exception(
-#                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
-#             )
-#         self.feat.add_residue_COM(*args, **kwargs)
-#
-#     def add_group_mindist(self, *args, **kwargs):
-#         if self.mode == "multiple_top":
-#             raise Exception(
-#                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
-#             )
-#         self.feat.add_group_mindist(*args, **kwargs)
-#
-#     def add_angles(self, *args, **kwargs):
-#         if self.mode == "multiple_top":
-#             raise Exception(
-#                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
-#             )
-#         self.feat.add_angles(*args, **kwargs)
-#
-#     def add_dihedrals(self, *args, **kwargs):
-#         if self.mode == "multiple_top":
-#             raise Exception(
-#                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
-#             )
-#         self.feat.add_dihedrals(*args, **kwargs)
-#
-#     def add_backbone_torsions(self, *args, **kwargs):
-#         if self.mode == "multiple_top":
-#             raise Exception(
-#                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
-#             )
-#         self.feat.add_backbone_torsions(*args, **kwargs)
-#
-#     def add_chi1_torsions(self, *args, **kwargs):
-#         if self.mode == "multiple_top":
-#             raise Exception(
-#                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
-#             )
-#         self.feat.add_sidechain_torsions(which=["chi1"], *args, **kwargs)
-#
-#     def add_sidechain_torsions(self, *args, **kwargs):
-#         if self.mode == "multiple_top":
-#             raise Exception(
-#                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
-#             )
-#         self.feat.add_sidechain_torsions(*args, **kwargs)
-#
-#     def add_minrmsd_to_ref(self, *args, **kwargs):
-#         if self.mode == "multiple_top":
-#             raise Exception(
-#                 "Using PyEMMA's `add_x` functions is not possible when TrajEnsemble contains multiple topologies."
-#             )
-#         self.feat.add_minrmsd_to_ref(*args, **kwargs)
-#
-#     def add_custom_feature(self, feature):
-#         self.feat.add_custom_feature(feature)
-#
-#     @property
-#     def features(self) -> list["AnyFeature"]:
-#         if self.mode == "single_top":
-#             return self.feat.active_features
-#         else:
-#             return [f.features for f in self.feat]
-#
-#     @property
-#     def sorted_info_single(self):
-#         if self.mode == "single_top":
-#             raise Exception(
-#                 "Attribute is only accessible, when working with multiple topologies."
-#             )
-#         out = []
-#         for info_all in self.sorted_trajs:
-#             for traj in info_all:
-#                 out.append(traj)
-#         return out
-#
-#     @property
-#     def sorted_featurizers(self):
-#         if self.mode == "single_top":
-#             raise Exception(
-#                 "Attribute is only accessible, when working with multiple topologies."
-#             )
-#         out = []
-#         for feat, info_all in zip(self.feat, self.sorted_trajs):
-#             out.extend([feat for i in range(info_all.n_trajs)])
-#         return out
-#
-#     @property
-#     def trajs(self):
-#         return self._trajs
-#
-#     def describe(self):
-#         return self.feat.describe()
-#
-#     @trajs.setter
-#     def trajs(self, trajs):
-#         # a single traj
-#         if isinstance(trajs, SingleTraj) or trajs.__class__.__name__ == "SingleTraj":
-#             self._trajs = trajs._gen_ensemble()
-#             self.top = trajs.top
-#             self.sorted_trajs = None
-#
-#             # fix topologies and prepare featurization
-#             if self.custom_aas is not None:
-#                 # Local Folder Imports
-#                 from ..misc.backmapping import _add_bonds
-#
-#                 _add_bonds(self.trajs, self.custom_aas)
-#                 self.custom_aas.inject_topologies(self.trajs)
-#                 self.custom_aas.add_definitions(features)
-#                 self.top = trajs.top
-#
-#             # instantiate the featurizer and inform the user
-#             # about problems using https://...pdb files
-#             self.feat = featurizer(self.top)
-#             if _validate_uri(trajs.traj_file):
-#                 self.inp = source([trajs.xyz], features=self.feat)
-#             else:
-#                 try:
-#                     self.inp = source([trajs.traj_file], features=self.feat)
-#                 except (ValueError, ProgrammingError) as e:
-#                     if "SQL" not in str(e) and "input files" not in str(e):
-#                         raise e
-#                     if "SQL" in str(e):
-#                         self.inp = CoordsLoad()
-#                         self.inp.get_output = lambda: load(
-#                             [trajs.traj_file], features=self.feat
-#                         )
-#                     if "input files" in str(e):
-#                         self._can_load = False
-#                 except OSError as e:
-#                     if "Could not determine delimiter" not in str(e):
-#                         raise e
-#                     self._can_load = False
-#                     # with tempfile.NamedTemporaryFile(suffix=".pdb") as tf:
-#                     #     trajs[0].traj.save_pdb(tf.name)
-#                     #     assert Path(tf.name).is_file()
-#                     #     self.inp = CoordsLoad()
-#                     #     self.inp.get_output = lambda: load(
-#                     #         [tf.name], features=self.feat
-#                     #     )
-#
-#             # set the mode
-#             self.mode = "single_top"
-#
-#         # multiple trajs
-#         elif (
-#             isinstance(trajs, TrajEnsemble)
-#             or trajs.__class__.__name__ == "TrajEnsemble"
-#         ):
-#             # with differing
-#             if len(trajs.top) > 1:
-#                 self._trajs = trajs
-#                 self.top = trajs.top
-#                 self.sorted_trajs = list(self.trajs.trajs_by_top.values())
-#
-#                 # fix topologies and prepare featurization
-#                 if self.custom_aas is not None:
-#                     # Local Folder Imports
-#                     from ..misc.backmapping import _add_bonds
-#
-#                     _add_bonds(self.trajs, self.custom_aas)
-#                     self.custom_aas.inject_topologies(self.trajs)
-#                     self.custom_aas.add_definitions(features)
-#                     self.top = trajs.top
-#
-#                 # in this case, `self.feat` is a list of featurizer objects
-#                 # that will produce their own outputs, which will
-#                 # be combined afterward
-#                 self.feat = [Featurizer(t) for t in self.sorted_trajs]
-#
-#                 # the input sources are also a list
-#                 self.inp = [
-#                     source([t.traj_file for t in t_subset], features=feat.feat)
-#                     for t_subset, feat in zip(self.sorted_trajs, self.feat)
-#                 ]
-#
-#                 # set the mode
-#                 self.mode = "multiple_top"
-#
-#             # with the same topology
-#             else:
-#                 self._trajs = trajs
-#                 self.top = trajs.top[0]
-#
-#                 # fix topologies and prepare featurization
-#                 if self.custom_aas is not None:
-#                     # Local Folder Imports
-#                     from ..misc.backmapping import _add_bonds
-#
-#                     _add_bonds(self.trajs, self.custom_aas)
-#                     self.custom_aas.inject_topologies(self.trajs)
-#                     self.custom_aas.add_definitions(features)
-#                     self.top = trajs.top[0]
-#
-#                 # self.featurizer is again a single featurizer
-#                 self.feat = featurizer(self.top)
-#
-#                 # try to create a datasource, which can fail in case some
-#                 # trajs are instantiated from an MDTRaj trajectory
-#                 if all([_validate_uri(traj.traj_file) for traj in trajs]):
-#                     self.inp = source(trajs.xtc, features=self.feat)
-#                 else:
-#                     try:
-#                         self.inp = source(
-#                             [traj.traj_file for traj in trajs], features=self.feat
-#                         )
-#                     except ValueError as e:
-#                         if "did not exists" in str(e):
-#                             if any(
-#                                 [isinstance(t.__traj, md.Trajectory) for t in trajs]
-#                             ):
-#                                 raise NotImplementedError(
-#                                     "One of your trajectories was "
-#                                     "instantiated from `mdtraj.Trajectory`,"
-#                                     "which is not compatible with PyEMMA's "
-#                                     "featurization. In future we could add a"
-#                                     "Featurizer that uses in-memory mdtrajs. "
-#                                     "Let us know if you'd like to have this feature."
-#                                 )
-#                         raise Exception(
-#                             f"{trajs=}, {trajs[0].basename=}, {[t.traj_file for t in trajs]=}"
-#                         ) from e
-#
-#                 # set the mode
-#                 self.mode = "single_top"
-#         else:
-#             raise TypeError(
-#                 f"trajs must be {SingleTraj.__class__.__name__} or "
-#                 f"{TrajEnsemble.__class__.__name__}, you provided {trajs.__class__.__name__}"
-#             )
-#
-#     def __len__(self):
-#         if self.mode == "single_top":
-#             return len(self.feat.active_features)
-#         else:
-#             return len([f.features for f in self.feat])
-#
-#     def __str__(self):
-#         if self.mode == "single_top":
-#             return self.feat.__str__()
-#         else:
-#             return ", ".join([f.__str__() for f in self.feat])
-#
-#     def __repr__(self):
-#         if self.mode == "single_top":
-#             return self.feat.__repr__()
-#         else:
-#             return ", ".join([f.__repr__() for f in self.feat])
-#
-#
-# class EmptyFeature:
-#     """Class to fill with attributes to be read by encodermap.xarray.
-#
-#     This class will be used in multiple_top mode, where the attributes
-#     _dim, describe and name will be overwritten with correct values to
-#     build features that contain NaN values.
-#
-#     """
-#
-#     def __init__(self, name, _dim, description, indexes):
-#         """Initialize the Empty feature.
-#
-#         Args:
-#             name (str): The name of the feature.
-#             _dim (int): The feature length of the feature shape=(n_frames, ferature).
-#             description (list of str): The description for every feature.
-#
-#         """
-#         self.name = name
-#         self._dim = _dim
-#         self.description = description
-#         self.indexes = indexes
-#
-#     def describe(self):
-#         return self.description
-#
-#
-# class Topologiesdeprecated:
-#     def __init__(self, tops, alignments=None):
-#         self.tops = tops
-#         if alignments is None:
-#             alignments = [
-#                 "side_dihedrals",
-#                 "central_cartesians",
-#                 "central_distances",
-#                 "central_angles",
-#                 "central_dihedrals",
-#             ]
-#         self.alignments = {k: {} for k in alignments}
-#         self.compare_tops()
-#         allowed_strings = list(
-#             filter(
-#                 lambda x: True if "side" in x else False,
-#                 (k for k in UNDERSCORE_MAPPING.keys()),
-#             )
-#         )
-#         if not all([i in allowed_strings for i in alignments]):
-#             raise Exception(
-#                 f"Invalid alignment string in `alignments`. Allowed strings are {allowed_strings}"
-#             )
-#
-#     def compare_tops(self):
-#         if not all([t.n_residues == self.tops[0].n_residues for t in self.tops]):
-#             raise Exception(
-#                 "Using Different Topologies currently only works if all contain the same number of residues."
-#             )
-#         generators = [t.residues for t in self.tops]
-#         sidechains = [t.select("sidechain") for t in self.tops]
-#         all_bonds = [
-#             list(map(lambda x: (x[0].index, x[1].index), t.bonds)) for t in self.tops
-#         ]
-#
-#         # iterate over residues of the sequences
-#         n_res_max = max([t.n_residues for t in self.tops])
-#         for i in range(n_res_max):
-#             # get some info
-#             residues = [next(g) for g in generators]
-#             all_atoms = [[a.name for a in r.atoms] for r in residues]
-#             atoms = [
-#                 list(
-#                     filter(
-#                         lambda x: True
-#                         if x.index in sel and "H" not in x.name and "OXT" not in x.name
-#                         else False,
-#                         r.atoms,
-#                     )
-#                 )
-#                 for r, sel in zip(residues, sidechains)
-#             ]
-#             atoms_indices = [[a.index for a in atoms_] for atoms_ in atoms]
-#             bonds = [
-#                 list(
-#                     filter(
-#                         lambda bond: True if any([b in ai for b in bond]) else False, ab
-#                     )
-#                 )
-#                 for ai, ab in zip(atoms_indices, all_bonds)
-#             ]
-#
-#             # reduce the integers of atoms_indices and bonds, so that N is 0. That way, we can compare them, even, when
-#             # two amino aicds in the chains are different
-#             N_indices = [
-#                 list(filter(lambda x: True if x.name == "N" else False, r.atoms))[
-#                     0
-#                 ].index
-#                 for r in residues
-#             ]
-#
-#             # align to respective N
-#             atoms_indices = [
-#                 [x - N for x in y] for y, N in zip(atoms_indices, N_indices)
-#             ]
-#             bonds = [
-#                 [(x[0] - N, x[1] - N) for x in y] for y, N in zip(bonds, N_indices)
-#             ]
-#
-#             chi1 = [
-#                 any(set(l).issubset(set(a)) for l in features.CHI1_ATOMS)
-#                 for a in all_atoms
-#             ]
-#             chi2 = [
-#                 any(set(l).issubset(set(a)) for l in features.CHI2_ATOMS)
-#                 for a in all_atoms
-#             ]
-#             chi3 = [
-#                 any(set(l).issubset(set(a)) for l in features.CHI3_ATOMS)
-#                 for a in all_atoms
-#             ]
-#             chi4 = [
-#                 any(set(l).issubset(set(a)) for l in features.CHI4_ATOMS)
-#                 for a in all_atoms
-#             ]
-#             chi5 = [
-#                 any(set(l).issubset(set(a)) for l in features.CHI5_ATOMS)
-#                 for a in all_atoms
-#             ]
-#             chi = np.array([chi1, chi2, chi3, chi4, chi5])
-#
-#             self.alignments["side_dihedrals"][f"residue_{i}"] = chi
-#
-#             if "side_cartesians" in self.alignments:
-#                 raise NotImplementedError(
-#                     "Cartesians between different topologies can currently not be aligned."
-#                 )
-#
-#             if "side_distances" in self.alignments:
-#                 raise NotImplementedError(
-#                     "Distances between different topologies can currently not be aligned."
-#                 )
-#
-#             if "side_angles" in self.alignments:
-#                 raise NotImplementedError(
-#                     "Angles between different topologies can currently not be aligned."
-#                 )
-#
-#         self.drop_double_false()
-#
-#     def drop_double_false(self):
-#         """Drops features that None of the topologies have.
-#
-#         For example: Asp and Glu. Asp has a chi1 and chi2 torsion. Glu has chi1, chi2 and chi3. Both
-#         don't have chi4 or chi5. In self.compare_tops these dihedrals are still considered. In this
-#         method they will be removed.
-#
-#         """
-#         for alignment, value in self.alignments.items():
-#             for residue, array in value.items():
-#                 where = np.where(np.any(array, axis=1))[0]
-#                 self.alignments[alignment][residue] = array[where]
-#
-#     def get_max_length(self, alignment):
-#         """Maximum length that a feature should have given a certain axis.
-#
-#         Args:
-#             alignment (str): The key for `self.alignments`.
-#
-#         """
-#         alignment_dict = self.alignments[alignment]
-#         stacked = np.vstack([v for v in alignment_dict.values()])
-#         counts = np.count_nonzero(stacked, axis=0)  # Flase is 0
-#         return np.max(counts)
-#
-#     def format_output(self, inputs, feats, sorted_trajs):
-#         """Formats the output of an em.Featurizer object using the alignment info.
-#
-#         Args:
-#             inputs (list): List of pyemma.coordinates.data.feature_reader.FeatureReader objects.
-#             feats (list): List of encodermap.Featurizer objetcs.
-#             sorted_trajs (list): List of em.TrajEnsemble objects sorted in the same way as `self.tops`.
-#
-#         """
-#         out = []
-#         for i, (inp, top, feat, trajs) in enumerate(
-#             zip(inputs, self.tops, feats, sorted_trajs)
-#         ):
-#             value_dict = {}
-#             for traj_ind, (data, traj) in enumerate(zip(inp.get_output(), trajs)):
-#                 if any(
-#                     [isinstance(o, EmptyFeature) for o in feat.feat.active_features]
-#                 ):
-#                     # Local Folder Imports
-#                     from ..misc.xarray import add_one_by_one
-#
-#                     ffunc = lambda x: True if "NaN" not in x else False
-#                     indices = [0] + add_one_by_one(
-#                         [len(list(filter(ffunc, f.describe()))) for f in feat.features]
-#                     )
-#                 else:
-#                     indices = get_indices_by_feature_dim(feat, traj, data.shape)
-#
-#                 # divide the values returned by PyEMMA
-#                 for f, ind in zip(feat.features, indices):
-#                     try:
-#                         name = FEATURE_NAMES[f.name]
-#                     except KeyError:
-#                         name = f.__class__.__name__
-#                         f.name = name
-#                     except AttributeError:
-#                         name = f.__class__.__name__
-#                         f.name = name
-#                     if traj_ind == 0:
-#                         value_dict[name] = []
-#                     value_dict[name].append(data[:, ind])
-#
-#             # stack along the frame axis, just like pyemma would
-#             value_dict = {k: np.vstack(v) for k, v in value_dict.items()}
-#
-#             # put nans in all features specified by alignment
-#             for alignment, alignment_dict in self.alignments.items():
-#                 if alignment not in value_dict:
-#                     continue
-#                 max_length = self.get_max_length(alignment)
-#                 new_values = np.full(
-#                     shape=(value_dict[alignment].shape[0], max_length),
-#                     fill_value=np.nan,
-#                 )
-#                 where = np.vstack([v for v in alignment_dict.values()])[:, i]
-#                 new_values[:, where] = value_dict[alignment]
-#                 value_dict[alignment] = new_values
-#
-#                 # find the index of the feature in feat.feat.active_features
-#                 names = np.array(
-#                     [f.__class__.__name__ for f in feat.feat.active_features]
-#                 )
-#                 index = np.where([n in FEATURE_NAMES for n in names])[0]
-#                 index = index[
-#                     np.where([FEATURE_NAMES[n] == alignment for n in names[index]])
-#                 ]
-#
-#                 # get the old description and change it around
-#                 assert len(index) == 1
-#                 index = index[0]
-#                 if not isinstance(feat.feat.active_features[index], EmptyFeature):
-#                     old_desc = np.array(
-#                         [i for i in feat.feat.active_features[index].describe()]
-#                     )
-#                     new_desc = np.array(
-#                         [
-#                             f"NaN due to ensemble with other topologies {i}"
-#                             for i in range(max_length)
-#                         ]
-#                     )
-#                     new_desc[where] = old_desc
-#                     new_desc = new_desc.tolist()
-#
-#                     # get the old indexes and add the NaNs
-#                     old_indexes = feat.feat.active_features[index].indexes
-#                     new_indexes = np.full(
-#                         shape=(max_length, old_indexes.shape[1]), fill_value=np.nan
-#                     )
-#                     new_indexes[where] = old_indexes
-#
-#                     # create empty feature
-#                     new_class = EmptyFeature(
-#                         alignment, max_length, new_desc, new_indexes
-#                     )
-#                     feat.feat.active_features[index] = new_class
-#             assert isinstance(trajs, TrajEnsemble)
-#             new_values = np.hstack([v for v in value_dict.values()])
-#             out.append([new_values, feat, trajs])
-#         return out
-#
-#     def __iter__(self):
-#         self._index = 0
-#         return self
-#
-#     def __next__(self):
-#         if self._index >= len(self.tops):
-#             raise StopIteration
-#         else:
-#             self._index += 1
-#             return self.tops[self._index - 1]
+    The DaskFeaturizer is similar to the other two featurizer classes and
+    mostly implements the same API. However, instead of computing the
+    transformations using in-memory computing, it prepares a `xarray.Dataset`,
+    which contains `dask.Arrays`. This dataset can be lazily and distributively
+    evaluated using dask.distributed clients and clusters.
+
+    """
+
+    def __init__(
+        self,
+        trajs: Union[SingleTraj, TrajEnsemble],
+        n_workers: Union[str, int] = "cpu-2",
+        client: Optional[Client] = None,
+    ) -> None:
+
+        if not hasattr(trajs, "itertrajs"):
+            self.feat = SingleTrajFeaturizer(trajs, delayed=True)
+        else:
+            self.feat = EnsembleFeaturizer(trajs, delayed=True)
+
+        if n_workers == "cpu-2":
+            # Standard Library Imports
+            from multiprocessing import cpu_count
+
+            n_workers = cpu_count() - 2
+
+        if n_workers == "max":
+            # Standard Library Imports
+            from multiprocessing import cpu_count
+
+            n_workers = cpu_count()
+
+        dask.config.set(scheduler="processes")
+
+        if client is None:
+            self.client = _get_global_client()
+        else:
+            self.client = client
+        if self.client is None:
+            self.client = Client(n_workers=n_workers)
+            print(
+                f"Created dask scheduler. Access the dashboard via: "
+                f"{self.client.dashboard_link}"
+            )
+        else:
+            print(
+                f"Using existing dask scheduler. Access the dashboard via: "
+                f"{self.client.dashboard_link}"
+            )
+
+    def add_custom_feature(self, feature):
+        if not hasattr(feature, "delayed"):
+            feature.delayed = True
+        if not feature.delayed:
+            feature.delayed = True
+        self.feat.add_custom_feature(feature)
+        if hasattr(self, "dataset"):
+            warnings.warn(
+                f"The compute graph has already been built. I will rebuild the "
+                f"graph and add the feature as a transformer. Subsequent "
+                f"calls to `.get_output()` will include this feature."
+            )
+            self.build_graph()
+
+    def build_graph(
+        self,
+        traj: Optional[SingleTraj] = None,
+        streamable: bool = False,
+        return_delayeds: bool = False,
+    ) -> None:
+        """Prepares the dask graph.
+
+        Args:
+            with_trajectories (Optional[bool]): Whether to also compute xyz.
+                This can be useful if you want to also save the trajectories to disk.
+
+        """
+        if self.feat.active_features == {} or self.feat.active_features == []:
+            print(f"First add some features before calling `get_output()`.")
+            return
+
+        self.dataset, self.variables = build_dask_xarray(
+            self,
+            traj=traj,
+            streamable=streamable,
+            return_delayeds=return_delayeds,
+        )
+
+    def to_netcdf(
+        self,
+        filename: Union[Path, str],
+        overwrite: bool = False,
+        with_trajectories: bool = False,
+    ) -> str:
+        """Saves the dask tasks to a NetCDF4 formatted HDF5 file.
+
+        Args:
+            filename (Union[str, list[str]]): The filename to be used.
+            overwrite (bool): Whether to overwrite the existing filename.
+            with_trajectories (bool): Also save the trajectory data. The output
+                file can be read with `encodermap.load(filename)` and rebuilds
+                the trajectories complete with traj_nums, common_str, custom_top,
+                and all CVs, that this featurizer calculates.
+
+        Returns:
+            str: Returns the filename of the created files.
+
+        """
+        # Standard Library Imports
+        from pathlib import Path
+
+        filename = Path(filename)
+        if "dataset" in self.__dict__:
+            raise Exception(f"Graph already built.")
+
+        # allows multiple writes to netcdf4 files
+        def set_env():
+            os.environ["HDF5_USE_FILE_LOCKING"] = "FALSE"
+
+        self.client.run(set_env)
+
+        if filename.is_file() and not overwrite:  # pragma: nocover
+            raise Exception(
+                f"File {filename} already exists. Set `overwrite=True` to overwrite."
+            )
+        if filename.is_file() and overwrite:
+            filename.unlink()
+
+        # build
+        self.build_graph(return_delayeds=with_trajectories)
+
+        if self.variables is not None:
+            # Third Party Imports
+            import h5py
+            from xarray import conventions
+            from xarray.backends.api import (
+                _finalize_store,
+                _validate_attrs,
+                _validate_dataset_names,
+            )
+            from xarray.backends.common import ArrayWriter
+            from xarray.backends.h5netcdf_ import H5NetCDFStore
+
+            # use xarrays's to_netcdf code and add saving of delayed coordinates, etc.
+            _validate_dataset_names(self.dataset)
+            _validate_attrs(self.dataset, invalid_netcdf=False)
+            store_open = H5NetCDFStore.open
+            have_chunks = any(
+                v.chunks is not None for v in self.dataset.variables.values()
+            )
+            autoclose = have_chunks
+            store = store_open(
+                filename=filename,
+                mode="a",
+                format="NETCDF4",
+                autoclose=autoclose,
+            )
+            writer = ArrayWriter()
+            try:
+                # create dicts of data to write to store
+                variables, attrs = conventions.encode_dataset_coordinates(self.dataset)
+                variables |= self.variables
+                store.store(variables, attrs, set(), writer, None)
+                store.close()
+                writes = writer.sync(compute=False)
+            finally:
+                store.close()
+
+            # this runs the computation and displays a progress
+            delayed = dask.delayed(_finalize_store)(writes, store)
+            delayed = delayed.persist()
+            progress(delayed)
+            delayed.compute()
+
+            # afterward, we remove the unwanted groups starting with md from the .h5 file
+            # they are artifacts of hijacking xarray's `to_netcdf`
+            # we also move all keys that are not part of the traj coords
+            md_keys = ["coordinates", "time", "cell_lengths", "cell_angles"]
+            with h5py.File(filename, "a") as f:
+                keys = list(f.keys())
+                for key in filter(lambda k: k.startswith("md"), keys):
+                    del f[key]
+                keys = list(f.keys())
+                for key in keys:
+                    if not any([m in key for m in md_keys]):
+                        f.move(key, f"CVs/{key}")
+
+            # and add common_str, custom_top, etc.
+            self.feat.trajs.save(fname=filename, CVs=False, only_top=True)
+        else:
+            self.dataset.to_netcdf(
+                filename,
+                format="NETCDF4",
+                group="CVs",
+                engine="h5netcdf",
+                invalid_netcdf=False,
+                compute=True,
+            )
+        return str(filename)
+
+    def get_output(
+        self,
+        make_trace: bool = False,
+    ) -> xr.Dataset:
+        """This function passes the trajs and the features of to dask to create a
+        delayed xarray out of that."""
+        if "dataset" not in self.__dict__:
+            self.build_graph()
+        if not make_trace:
+            ds = self.dataset.compute()
+            if not ds:
+                raise Exception(
+                    f"Computed dataset is empty. Maybe a computation failed in "
+                    f"the dask-delayed dataset: {self.dataset}"
+                )
+            # future = client.submit(future)
+            # out = self.client.compute(self.dataset)
+            # progress(out)
+            # return out.result()
+        else:
+            raise NotImplementedError("Currently not able to trace dask execution.")
+        # else:
+        #     with tempfile.TemporaryDirectory() as tmpdir:
+        #         tmpdir = Path(tmpdir)
+        #         with Track(path=str(tmpdir)):
+        #             out = self.client.compute(self.dataset)
+        #             progress(out)
+        #             return out.result()
+        #
+        #     raise NotImplementedError(
+        #         "gifsicle --delay 10 --loop=forever --colors 256 --scale=0.4 -O3 --merge dasks/part_*.png > output.gif"
+        #     )
+        return ds
+
+    @property
+    def feature_containers(self) -> dict[md.Topology, SingleTrajFeaturizer]:
+        return self.feat.feature_containers
+
+    @property
+    def active_features(
+        self,
+    ) -> Union[list[AnyFeature], dict[md.Topology, list[AnyFeature]]]:
+        return self.feat.active_features
+
+    def __len__(self):
+        return len(self.feat)
+
+    def transform(
+        self,
+        traj_or_trajs: Optional[Union[SingleTraj, TrajEnsemble]] = None,
+        *args,
+        **kwargs,
+    ) -> np.ndarray:
+        return self.feat.transform(traj_or_trajs, *args, **kwargs)
+
+    def describe(self) -> list[str]:
+        return self.feat.describe()
+
+    def dimension(self) -> int:
+        return self.feat.dimension
+
+    def visualize(self) -> None:
+        return dask.visualize(self.dataset)

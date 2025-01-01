@@ -1,12 +1,16 @@
 <img src="pic/new_logo_m.png" width=45% align="right" />
 
-[![Test](https://github.com/AG-Peter/encodermap/actions/workflows/unittests.yaml/badge.svg?branch=main)](https://ag-peter.github.io/encodermap/_static/html_test_runner_report.html)
-[![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/kevinsawade/e4969c0b8ce8edeb862af753cff43ad0/raw/test.json)](https://ag-peter.github.io/encodermap/_static/coverage/)
+[![Test](https://img.shields.io/endpoint?url=https%3A%2F%2Fencodermap.site%2F_static%2Ftest_badge.json)](https://encodermap.site/_static/html_test_runner_report.html)
+[![Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fencodermap.site%2F_static%2Fcoverage_badge.json)
+](https://encodermap.site/_static/coverage/index.html)
+[![Docbuild](https://img.shields.io/endpoint?url=https%3A%2F%2Fencodermap.site%2F_static%2Fdocbuild_badge.json)](https://encodermap.site)
 [![color](https://img.shields.io/badge/color-e77800-e77800)]()
 [![badge](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 [![badge](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 [![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
+[![MadeWithLove](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/kevinsawade/bcd9d09bc682b4743b84fc6e967478ac/raw/endpoint.json)](https://www.chemie.uni-konstanz.de/ag-peter/)
+
 
 
 
@@ -129,4 +133,20 @@ If you have any questions you can have a look at the [FAQ](questions.md) (not ve
   year={2019},
   publisher={ACS Publications}
 }
+```
+
+Since PyEMMA (https://github.com/markovmodel/PyEMMA) has been archived, EncoderMap incorporated some of PyEMMA's featurization code. Find the citation here:
+
+```
+@article{scherer2015pyemma,
+  title={PyEMMA 2: A software package for estimation, validation, and analysis of Markov models},
+  author={Scherer, Martin K and Trendelkamp-Schroer, Benjamin and Paul, Fabian and P{\'e}rez-Hern{\'a}ndez, Guillermo and Hoffmann, Moritz and Plattner, Nuria and Wehmeyer, Christoph and Prinz, Jan-Hendrik and No{\'e}, Frank},
+  journal={Journal of chemical theory and computation},
+  volume={11},
+  number={11},
+  pages={5525--5542},
+  year={2015},
+  publisher={ACS Publications}
+}
+
 ```

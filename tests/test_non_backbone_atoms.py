@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # tests/test_non_backbone_atoms.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -40,6 +40,7 @@ from matplotlib.testing.compare import compare_images
 
 # Encodermap imports
 import encodermap.encodermap_tf1 as em_tf1
+from conftest import skip_all_tests_except_env_var_specified
 
 
 import encodermap as em  # isort: skip
@@ -55,6 +56,7 @@ warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestNonBackboneAtoms(tf.test.TestCase):
     def test_guess_amide_H(self):
         cartesians_non_tf = np.array(

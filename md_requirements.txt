@@ -1,7 +1,6 @@
-pyEMMA
 h5py
 h5netcdf
-mdtraj # Might need 1.9.3 because of incompatibilities with astunparse
+mdtraj
 scipy
 networkx
 seaborn
@@ -11,12 +10,20 @@ PyYAML
 xarray
 mdshare
 dask
+dask-jobqueue
 numba
 distributed
 dash
 plotly
 dash_bio
 dash-bootstrap-components
+dash-mantine-components
 dash-bootstrap-templates
 pydot
 graphviz
+dash_auth
+rich
+kaleido
+ipycanvas
+orjson
+bokeh

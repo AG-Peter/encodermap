@@ -40,22 +40,6 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install .
 
-      - name: Test optional imports without all packages
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-        run: |
-          required_packages_test=$( python -m unittest tests/test_optional_imports_before_installing_reqs.py )
-          echo "::set-env name=Req_out::$required_packages_test"
-
-      - name: Fail on non-working optional imports
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-        uses: actions/github-script@v3
-        if: ${{ env.Req_out }}
-        with:
-          script: |
-            core.setFailed('Optional Packages cause test_optional_imports_before_installing_reqs.py to fail.')
-
       - name: Install MD dependencies 🔧
         run: |
           if [ -f md_requirements.txt ]; then pip install -r md_requirements.txt ; fi
@@ -70,9 +54,7 @@ jobs:
           HTML_TEST_RUNNER_FILE="$HTML_TEST_RUNNER_FILE/HtmlTestRunner/result.py"
           sed -i "s/length = self._count_relevant_tb_levels(tb)/# length = self._count_relevant_tb_levels(tb)/g" $HTML_TEST_RUNNER_FILE
           sed -i "s/msg_lines = traceback.format_exception(exctype, value, tb, length)/msg_lines = traceback.format_exception(exctype, value, tb)/g" $HTML_TEST_RUNNER_FILE
-          if [ -z ${Req_out} ] ; then
-            echo "Tests with required packages ran previously and result is ${{ env.Req_out }}"
           else
             echo "No previous Test results to compare this one with"
           fi
-          out=$( python tests/run_unittests_and_coverage.py )
+          out=$( python tests/run_docbuild_test_and_cover.py -t)

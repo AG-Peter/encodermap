@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/models/models.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -32,6 +32,7 @@
 from __future__ import annotations
 
 # Standard Library Imports
+import os
 import warnings
 from collections.abc import Iterable, Sequence
 from math import pi
@@ -44,31 +45,30 @@ import tensorflow as tf
 import tensorflow.keras.backend as K
 from tensorflow.keras.layers import Concatenate, Dense, Input, Lambda
 
-# Local Folder Imports
-from ..encodermap_tf1.backmapping import chain_in_plane, dihedrals_to_cartesian_tf
-from ..loss_functions.loss_classes import testing
-from ..misc import pairwise_dist
-from ..misc.summaries import add_layer_summaries
-from ..parameters.parameters import ADCParameters, Parameters
-from ..trajinfo.info_single import Capturing
-from .layers import (
+# Encodermap imports
+from encodermap.encodermap_tf1.backmapping import (
+    chain_in_plane,
+    dihedrals_to_cartesian_tf,
+)
+from encodermap.loss_functions.loss_classes import testing
+from encodermap.misc.distances import pairwise_dist
+from encodermap.misc.summaries import add_layer_summaries
+from encodermap.models.layers import (
     BackMapLayer,
     BackMapLayerTransformations,
+    BackMapLayerWithSidechains,
     MeanAngles,
     PairwiseDistances,
     PeriodicInput,
     PeriodicOutput,
 )
+from encodermap.parameters.parameters import ADCParameters, AnyParameters, Parameters
+from encodermap.trajinfo.info_single import Capturing
 
 
 ################################################################################
 # Typing
 ################################################################################
-
-
-if TYPE_CHECKING:
-    # Local Folder Imports
-    from .._typing import AnyParameters
 
 
 SequentialModelType = TypeVar(
@@ -87,17 +87,22 @@ ADCFunctionalModelType = TypeVar(
     "ADCFunctionalModelType",
     bound="ADCFunctionalModel",
 )
+ADCFunctionalModelSidechainReconstructionType = TypeVar(
+    "ADCFunctionalModelSidechainReconstructionType",
+    bound="ADCFunctionalModelSidechainReconstruction",
+)
 ADCFunctionalModelInputType = Union[
     tuple[tf.Tensor, tf.Tensor, tf.Tensor, tf.Tensor],
     tuple[tf.Tensor, tf.Tensor, tf.Tensor, tf.Tensor, tf.Tensor],
 ]
+
 
 ################################################################################
 # Globals
 ################################################################################
 
 
-__all__ = ["gen_sequential_model", "gen_functional_model"]
+__all__: list[str] = ["gen_sequential_model", "gen_functional_model"]
 
 
 ################################################################################
@@ -110,7 +115,7 @@ class MyKernelInitializer(tf.keras.initializers.Initializer):
 
     Gets a numpy array called weights. When called, it checks whether the requested
     shape matches the shape of the numpy array and then returns the array.
-    For examples, see the documentation of `MyBiasInitializer`.
+    For example, see the documentation of `MyBiasInitializer`.
 
     """
 
@@ -283,22 +288,34 @@ def gen_sequential_model(
             )
 
 
-class Sparse(tf.keras.layers.Dense):
-    def call(self, inputs):
-        outputs = tf.sparse.sparse_dense_matmul(inputs, self.kernel)
-        if self.use_bias:
-            outputs = tf.nn.bias_add(outputs, self.bias)
-        return outputs
+def _get_deterministic_random_normal(
+    mean: float = 0.1,
+    stddev: float = 0.05,
+    seed: Optional[int] = None,
+) -> tf.compat.v1.random_normal_initializer:
+    """Returns a deterministic random_normal_initializer wit tensorflow1.
 
+     For the tf2 implementation, look into `MyKernelInitializer`.
+     Moving from tf1 to tf2, the seeding method has changed, so that the same
+    seed can't be used to get the same random data in tf1 and tf2.
 
-def _get_deterministic_random_normal(mean=0.1, stddev=0.05, seed=None):
+    """
     # Third Party Imports
     import tensorflow.compat.v1 as tf
 
     return tf.random_normal_initializer(mean, stddev, seed=seed)
 
 
-def _get_deterministic_variance_scaling(seed=None):
+def _get_deterministic_variance_scaling(
+    seed: Optional[int] = None,
+) -> tf.compat.v1.variance_scaling_initializer:
+    """Returns a deterministic variance_scaling_initializer wit tensorflow1.
+
+    For the tf2 implementation, look into `MyBiasInitializer`.
+    Moving from tf1 to tf2, the seeding method has changed, so that the same
+    seed can't be used to get the same random data in tf1 and tf2.
+
+    """
     # Third Party Imports
     import tensorflow.compat.v1 as tf
 
@@ -322,8 +339,7 @@ def gen_functional_model(
     ] = "RandomNormal",
     write_summary: bool = True,
     use_experimental_model: bool = True,
-) -> ADCFunctionalModelTesting:
-    ...
+) -> ADCFunctionalModelTesting: ...
 
 
 @overload
@@ -343,8 +359,7 @@ def gen_functional_model(
     ] = "RandomNormal",
     write_summary: bool = True,
     use_experimental_model: bool = False,
-) -> ADCFunctionalModel:
-    ...
+) -> ADCFunctionalModel: ...
 
 
 @overload
@@ -364,8 +379,7 @@ def gen_functional_model(
     ] = "RandomNormal",
     write_summary: bool = True,
     use_experimental_model: bool = False,
-) -> "ADCSparseFunctionalModel":
-    ...
+) -> ADCSparseFunctionalModel: ...
 
 
 def gen_functional_model(
@@ -390,7 +404,7 @@ def gen_functional_model(
     ] = "RandomNormal",
     write_summary: bool = True,
     use_experimental_model: bool = False,
-) -> Union["ADCSparseFunctionalModel", ADCFunctionalModel, ADCFunctionalModelTesting]:
+) -> Union[ADCSparseFunctionalModel, ADCFunctionalModel, ADCFunctionalModelTesting]:
     """New implementation of the functional model API for AngleCartesianDihedralEncoderMap
 
     The functional API is much more flexible than the sequential API, in that
@@ -413,11 +427,16 @@ def gen_functional_model(
     Args:
         input_shapes(Union[tf.data.Dataset, tuple[int, int, int, int, int]]):
             The input shapes, that will be used in the construction of the model.
-        parameters (Optional[ADCParameters]): An instance of `ADCParameters`,
+        parameters (Optional[encodermap.parameters.ADCParameters]): An instance
+            of `encodermap.parameters.ADCParameters`,
             which holds further parameters in network construction. If None
             is provided, a new instance with default parameters will be
             created. Defaults to None.
         sparse (bool): Whether sparse inputs are expected. Defaults to False.
+        sidechain_only_sparse (bool): A special case, when the proteins have
+            the same number of residues, but different numbers of sidechain
+            dihedrals. In that case only the sidechain dihedrals are considered
+            to be sparse. Defaults to False.
         kernel_initializer (Union[dict[str, np.ndarray],
             Literal["ones", "VarianceScaling", "deterministic"]]): How to initialize
             the weights. If "ones" is provided, the weights will be initialized
@@ -560,15 +579,38 @@ def gen_functional_model(
     # these values will always be provided. They might not go through the
     # network (especially the side_dihedrals), but the shape will be provided
     # nonetheless.
-    (
-        angles_input_shape,
-        central_dihedrals_input_shape,
-        cartesians_input_shape,
-        distances_input_shape,
-        side_dihedrals_input_shape,
-        sparse,
-        sidechain_only_sparse,
-    ) = _unpack_and_assert_input_shapes(input_shapes, p, sparse, sidechain_only_sparse)
+    if not p.reconstruct_sidechains:
+        (
+            angles_input_shape,
+            central_dihedrals_input_shape,
+            cartesians_input_shape,
+            distances_input_shape,
+            side_dihedrals_input_shape,
+            sparse,
+            sidechain_only_sparse,
+        ) = _unpack_and_assert_input_shapes(
+            input_shapes,
+            p,
+            sparse,
+            sidechain_only_sparse,
+        )
+    else:
+        (
+            central_angles_input_shape,
+            central_dihedrals_input_shape,
+            all_cartesians_input_shape,
+            central_distances_input_shape,
+            side_angles_input_shape,
+            side_dihedrals_input_shape,
+            side_distances_input_shape,
+            sparse,
+            sidechain_only_sparse,
+        ) = _unpack_and_assert_input_shapes_w_sidechains(
+            input_shapes,
+            p,
+            sparse,
+            sidechain_only_sparse,
+        )
 
     # define the regularizer, that will be used from here on out
     # the L2 regularizer adds a loss with 1/2 * sum(w ** 2) to
@@ -621,11 +663,12 @@ def gen_functional_model(
     # _dihedrals_left = np.arange(central_dihedrals_input_shape)[_split - 2:: -1]
     # _n_left = int(_dihedrals_left.shape[-1])
     # _n_right = int(_dihedrals_right.shape[-1])
-    if sparse:
-        left_split = cartesians_input_shape // 3 // 2 - 1
-    else:
-        left_split = cartesians_input_shape // 2 - 1
-    right_split = central_dihedrals_input_shape // 2
+    if not p.reconstruct_sidechains:
+        if sparse:
+            left_split = cartesians_input_shape // 3 // 2 - 1
+        else:
+            left_split = cartesians_input_shape // 2 - 1
+        right_split = central_dihedrals_input_shape // 2
     # assert _n_left == left_split, f"{_n_left=} {left_split=} {cartesians_input_shape=} {sparse=}"
     # assert _n_right == right_split
 
@@ -640,7 +683,7 @@ def gen_functional_model(
     # backbone angles
     # For the case of sparse and not using backbone angles, the angles will be
     # treated as a non-periodic input.
-    if p.use_backbone_angles:
+    if p.use_backbone_angles and not p.reconstruct_sidechains:
         (
             input_angles_placeholder,
             input_angles_unit_circle,
@@ -656,6 +699,25 @@ def gen_functional_model(
         )
         encoder_input_list = [
             input_angles_placeholder,
+            input_central_dihedrals_placeholder,
+        ]
+    elif p.use_backbone_angles and p.reconstruct_sidechains:
+        (
+            input_central_angles_placeholder,
+            input_central_angles_unit_circle,
+            input_central_angles_dense_model,
+        ) = _create_inputs_periodic_maybe_sparse(
+            central_angles_input_shape,
+            p,
+            name="central_angles",
+            sparse=sparse,
+        )
+        assert (
+            input_central_angles_placeholder.shape[1] * 2
+            == input_central_angles_unit_circle.shape[1]
+        )
+        encoder_input_list = [
+            input_central_angles_placeholder,
             input_central_dihedrals_placeholder,
         ]
     else:
@@ -687,21 +749,46 @@ def gen_functional_model(
             input_side_dihedrals_placeholder.shape[1] * 2
             == input_side_dihedrals_unit_circle.shape[1]
         )
-        encoder_input_list = [
-            input_angles_placeholder,
-            input_central_dihedrals_placeholder,
-            input_side_dihedrals_placeholder,
-        ]
+        encoder_input_list.append(input_side_dihedrals_placeholder)
     else:
         input_side_dihedrals_placeholder = None
         input_side_dihedrals_unit_circle = None
         input_side_dihedrals_dense_model = None
 
+    # create more input placeholders for the sidechain angles
+    if p.reconstruct_sidechains:
+        (
+            input_side_angles_placeholder,
+            input_side_angles_unit_circle,
+            input_side_angles_dense_model,
+        ) = _create_inputs_periodic_maybe_sparse(
+            side_angles_input_shape,
+            p,
+            name="side_angles",
+            sparse=sparse or sidechain_only_sparse,
+        )
+        assert (
+            input_side_dihedrals_placeholder.shape[1] * 2
+            == input_side_dihedrals_unit_circle.shape[1]
+        )
+        encoder_input_list = [
+            input_central_angles_placeholder,
+            input_central_dihedrals_placeholder,
+            input_side_angles_placeholder,
+            input_side_dihedrals_placeholder,
+        ]
+
     # create input placeholders for the cartesians
-    if not sparse:
-        maybe_sparse_cartesian_input_shape = (cartesians_input_shape, 3)
+    if not p.reconstruct_sidechains:
+        if not sparse:
+            maybe_sparse_cartesian_input_shape = (cartesians_input_shape, 3)
+        else:
+            maybe_sparse_cartesian_input_shape = (cartesians_input_shape,)
     else:
-        maybe_sparse_cartesian_input_shape = (cartesians_input_shape,)
+        if not sparse:
+            maybe_sparse_cartesian_input_shape = (all_cartesians_input_shape, 3)
+        else:
+            maybe_sparse_cartesian_input_shape = (all_cartesians_input_shape,)
     (
         input_cartesians_placeholder,
         input_dense_cartesians_placeholder,
@@ -714,14 +801,36 @@ def gen_functional_model(
         reshape=3,
     )
 
-    # create input placeholders for the distances
-    (
-        input_distances_placeholder,
-        input_dense_distances_placeholder,
-        input_distances_dense_model,
-    ) = _create_inputs_non_periodic_maybe_sparse(
-        shape=(distances_input_shape,), p=p, name="distances", sparse=sparse
-    )
+    if p.reconstruct_sidechains:
+        (
+            input_central_distances_placeholder,
+            input_dense_central_distances_placeholder,
+            input_central_distances_dense_model,
+        ) = _create_inputs_non_periodic_maybe_sparse(
+            shape=(central_distances_input_shape,),
+            p=p,
+            name="central_distances",
+            sparse=sparse,
+        )
+        (
+            input_side_distances_placeholder,
+            input_dense_side_distances_placeholder,
+            input_side_distances_dense_model,
+        ) = _create_inputs_non_periodic_maybe_sparse(
+            shape=(side_distances_input_shape,),
+            p=p,
+            name="side_distances",
+            sparse=sparse,
+        )
+    else:
+        # create input placeholders for the distances
+        (
+            input_distances_placeholder,
+            input_dense_distances_placeholder,
+            input_distances_dense_model,
+        ) = _create_inputs_non_periodic_maybe_sparse(
+            shape=(distances_input_shape,), p=p, name="distances", sparse=sparse
+        )
 
     # we can now create the input pairwise distances, which can be used in
     # the case of multimer homogeneous_transformation matrices
@@ -759,13 +868,27 @@ def gen_functional_model(
     # define the splits for the decoder output
     # because the angular inputs are concatenated for the decoder, we want
     # to keep track how to split them afterward
-    splits, encoder_input_placeholder = _concatenate_inputs(
-        p,
-        input_angles_unit_circle,
-        input_central_dihedrals_unit_circle,
-        input_side_dihedrals_unit_circle,
-        input_cartesians_pairwise_defined_shape,
-    )
+    if not p.reconstruct_sidechains:
+        splits, encoder_input_placeholder = _concatenate_inputs(
+            p,
+            input_angles_unit_circle,
+            input_central_dihedrals_unit_circle,
+            input_side_dihedrals_unit_circle,
+            input_cartesians_pairwise_defined_shape,
+        )
+    else:
+        input_angles_unit_circle = input_central_angles_unit_circle
+        splits, encoder_input_placeholder = _concatenate_inputs_reconstruct_sidechains(
+            p,
+            input_central_angles_unit_circle,
+            input_central_dihedrals_unit_circle,
+            input_side_angles_unit_circle,
+            input_side_dihedrals_unit_circle,
+        )
+
+    assert encoder_input_placeholder is not None
+    assert encoder_input_list is not None
+    assert all([i is not None for i in encoder_input_list])
 
     # build the encoder provide it with the encoder_input_placeholder
     encoder_model, encoder_output_placeholder = _get_encoder_model(
@@ -784,7 +907,7 @@ def gen_functional_model(
         output_angles_placeholder,
         output_central_dihedrals_placeholder,
         output_side_dihedrals_placeholder,
-        output_transformation_matrices_placeholder,
+        extra_output_placeholder,
     ) = _get_adc_decoder(
         p,
         splits,
@@ -798,7 +921,7 @@ def gen_functional_model(
     )
 
     # Provide the backmap layer with all it needs
-    if p.multimer_training is None:
+    if p.multimer_training is None and not p.reconstruct_sidechains:
         back_cartesians = BackMapLayer(
             left_split=left_split,
             right_split=right_split,
@@ -809,13 +932,23 @@ def gen_functional_model(
                 output_central_dihedrals_placeholder,
             )
         )
+    elif p.multimer_training is None and p.reconstruct_sidechains:
+        _inputs = (
+            input_dense_central_distances_placeholder,
+            output_angles_placeholder,
+            output_central_dihedrals_placeholder,
+            input_dense_side_distances_placeholder,
+            extra_output_placeholder,
+            output_side_dihedrals_placeholder,
+        )
+        back_cartesians = BackMapLayerWithSidechains(p.sidechain_info)(_inputs)
     else:
         back_cartesians = BackMapLayerTransformations(multimer_lengths)(
             (
                 input_dense_distances_placeholder,
                 output_angles_placeholder,
                 output_central_dihedrals_placeholder,
-                output_transformation_matrices_placeholder,
+                extra_output_placeholder,
             )
         )
 
@@ -825,34 +958,68 @@ def gen_functional_model(
 
     # create a functional model from the inputs and outputs
     # define the inputs
-    inputs = [
-        input_angles_placeholder,
-        input_central_dihedrals_placeholder,
-        input_cartesians_placeholder,
-        input_distances_placeholder,
-    ]
+    if not p.reconstruct_sidechains:
+        inputs = [
+            input_angles_placeholder,
+            input_central_dihedrals_placeholder,
+            input_cartesians_placeholder,
+            input_distances_placeholder,
+        ]
 
-    # the outputs depend on the parameters used
-    # for use_backbone_angles, the decoder output will be a list of
-    # tensors and thus needs to be unpacked
-    # else, the output is a single tensor and can't be unpacked
-    if p.use_backbone_angles:
+        # the outputs depend on the parameters used
+        # for use_backbone_angles, the decoder output will be a list of
+        # tensors and thus needs to be unpacked
+        # else, the output is a single tensor and can't be unpacked
+        if p.use_backbone_angles:
+            outputs = [
+                *decoder_model(encoder_model(encoder_input_list)),
+                back_cartesians,
+                input_cartesians_pairwise,
+                output_cartesians_pairwise,
+            ]
+        else:
+            outputs = [
+                output_angles_placeholder,
+                decoder_model(encoder_model(encoder_input_list)),
+                back_cartesians,
+                input_cartesians_pairwise,
+                output_cartesians_pairwise,
+            ]
+        if len(splits) >= 3:
+            inputs.append(input_side_dihedrals_placeholder)
+
+    else:
+        inputs = [
+            input_central_angles_placeholder,
+            input_central_dihedrals_placeholder,
+            input_cartesians_placeholder,
+            input_central_distances_placeholder,
+            input_side_angles_placeholder,
+            input_side_dihedrals_placeholder,
+            input_side_distances_placeholder,
+        ]
         outputs = [
             *decoder_model(encoder_model(encoder_input_list)),
             back_cartesians,
             input_cartesians_pairwise,
             output_cartesians_pairwise,
         ]
-    else:
-        outputs = [
-            output_angles_placeholder,
-            decoder_model(encoder_model(encoder_input_list)),
-            back_cartesians,
-            input_cartesians_pairwise,
-            output_cartesians_pairwise,
-        ]
-    if len(splits) >= 3:
-        inputs.append(input_side_dihedrals_placeholder)
+
+        model = ADCFunctionalModelSidechainReconstruction(
+            parameters=p,
+            inputs=inputs,
+            outputs=outputs,
+            encoder=encoder_model,
+            decoder=decoder_model,
+            get_dense_model_central_dihedrals=input_central_dihedrals_dense_model,
+            get_dense_model_central_angles=input_central_angles_dense_model,
+            get_dense_model_side_dihedrals=input_side_dihedrals_dense_model,
+            get_dense_model_cartesians=input_cartesians_dense_model,
+            get_dense_model_central_distances=input_central_distances_dense_model,
+            get_dense_model_side_distances=input_side_distances_dense_model,
+            get_dense_model_side_angles=input_side_angles_dense_model,
+        )
+        return model
 
     # create the final model
     if not sparse and not sidechain_only_sparse:
@@ -891,6 +1058,140 @@ def gen_functional_model(
         else:
             model.summary()
     return model
+
+
+def _unpack_and_assert_input_shapes_w_sidechains(
+    input_shapes: Union[
+        tf.data.Dataset,
+        tuple[
+            tuple[int],
+            tuple[int],
+            Union[tuple[int, int], tuple[int]],
+            tuple[int],
+            tuple[int],
+        ],
+    ],
+    p: ADCParameters,
+    input_sparse: bool = False,
+    input_sidechain_only_sparse: bool = False,
+) -> tuple[int, int, int, int, int, bool, bool]:
+    """This function unpacks and asserts the input_shapes for the regular protein case.
+
+    In contrast to `_unpack_data_and_assert_input_shapes`, a full sidechain
+    reconstruction will be executed.
+
+    Args:
+        input_shapes(Union[tf.data.Dataset, tuple[int, int, int, int, int]]):
+            The input shapes, that will be used in the construction of the model.
+        parameters (Optional[encodermap.parametersADCParameters]): An instance
+            of `encodermap.parameters.ADCParameters`,
+            which holds further parameters in network construction. If None
+            is provided, a new instance with default parameters will be
+            created. Defaults to None.
+        sparse (bool): Whether sparse inputs are expected. Defaults to False.
+        input_sidechain_only_sparse (bool): Whether only the sidechain dihedrals
+            are sparse. In that case, the input shape of the cartesians is
+            different, because the cartesians are flattened to a rank 2 tensor
+            before running them through a dense layer and then stacking them again
+            to shape (n_frames, n_atoms, 3).
+
+    Returns:
+        tuple: A tuple containing the following:
+            - int: The input shape for the training angles.
+            - int: The input shape for the training dihedrals.
+            - int: The input shape for the cartesians.
+            - int: The input shape for the distances.
+            - Union[int, None]: The input shape for the training sidechain dihedrals.
+                Can be None, if they are not used for training.
+
+    """
+    if p.multimer_training is not None:
+        assert (
+            not input_sparse
+        ), f"Using multimers currently not possible with sparse and/or full sidechain reconstruction."
+        return _unpack_and_assert_input_shapes_multimers(input_shapes, p)
+    if isinstance(input_shapes, (tuple, list)):
+        assert len(input_shapes) == 7
+        (
+            central_angles_input_shape,
+            central_dihedrals_input_shape,
+            all_cartesians_input_shape,
+            central_distances_input_shape,
+            side_angles_input_shape,
+            side_dihedrals_input_shape,
+            side_distances_input_shape,
+        ) = [i[0] for i in input_shapes]
+        if input_sparse and len(input_shapes[2]) == 2:
+            sidechain_only_sparse = True
+            sparse = input_sparse
+        else:
+            sidechain_only_sparse = input_sidechain_only_sparse
+            sparse = input_sparse
+    else:
+        d = input_shapes.element_spec
+
+        # all dense
+        if not any([isinstance(i, tf.SparseTensorSpec) for i in d]):
+            sparse = False
+            sidechain_only_sparse = False
+        # only sparse sidechains
+        elif all(
+            [not isinstance(i, tf.SparseTensorSpec) for i in d[:-1]]
+        ) and isinstance(d[-1], tf.SparseTensorSpec):
+            sparse = False
+            sidechain_only_sparse = True
+        # other stuff sparse
+        else:
+            sparse = True
+            sidechain_only_sparse = False
+
+        # check if dataset is batches
+        try:
+            central_angles_input_shape = d[0].shape[1]
+        except IndexError as e:
+            raise Exception(
+                f"You probably provided a tf.data.Dataset, that is not batched "
+                f"and thus an index error was raised."
+            ) from e
+
+        # define shapes
+        central_dihedrals_input_shape = d[1].shape[1]
+        all_cartesians_input_shape = d[2].shape[1]
+        central_distances_input_shape = d[3].shape[1]
+        side_angles_input_shape = d[4].shape[1]
+        try:
+            side_dihedrals_input_shape = d[5].shape[1]
+            side_distances_input_shape = d[6].shape[1]
+        except IndexError:
+            raise Exception(f"Not enough items in tuple for sidechain reconstruction.")
+
+    # make sure that the inputs have had the correct order
+    # because a protein with N residues has N*3 cartesians, N*3 - 1 distances
+    # N*3 - 2 angles, and N*3 - 3 dihedrals
+    N = (central_distances_input_shape + 1) / 3
+    if not sparse or sidechain_only_sparse:
+        assert all_cartesians_input_shape == N * 3 + side_distances_input_shape
+    # sparse tensors have to be rank 2, so the sparse cartesians need to be
+    # flattened, and the stacked back, once they are dense again
+    # as of tf >= 2.16 sparse tensors can have a higher rank
+    # maybe this is worth updating
+    else:
+        assert all_cartesians_input_shape // 3 == N * 3 + side_distances_input_shape
+    assert central_angles_input_shape == N * 3 - 2
+    assert central_dihedrals_input_shape == central_angles_input_shape - 1
+    assert side_dihedrals_input_shape < side_angles_input_shape
+
+    return (
+        central_angles_input_shape,
+        central_dihedrals_input_shape,
+        all_cartesians_input_shape,
+        central_distances_input_shape,
+        side_angles_input_shape,
+        side_dihedrals_input_shape,
+        side_distances_input_shape,
+        sparse,
+        sidechain_only_sparse,
+    )
 
 
 @testing
@@ -979,19 +1280,25 @@ def _unpack_and_assert_input_shapes(
     Args:
         input_shapes(Union[tf.data.Dataset, tuple[int, int, int, int, int]]):
             The input shapes, that will be used in the construction of the model.
-        parameters (Optional[ADCParameters]): An instance of `ADCParameters`,
+        parameters (Optional[encodermap.parameters.ADCParameters]): An instance of
+            `encodermap.parameters.ADCParameters`,
             which holds further parameters in network construction. If None
             is provided, a new instance with default parameters will be
             created. Defaults to None.
         sparse (bool): Whether sparse inputs are expected. Defaults to False.
+        input_sidechain_only_sparse (bool): Whether only the sidechain dihedrals
+            are sparse. In that case, the input shape of the cartesians is
+            different, because the cartesians are flattened to a rank 2 tensor
+            before running them through a dense layer and then stacking them again
+            to shape (n_frames, n_atoms, 3).
 
     Returns:
         tuple: A tuple containing the following:
-            int: The input shape for the training angles.
-            int: The input shape for the training dihedrals.
-            int: The input shape for the cartesians.
-            int: The input shape for the distances.
-            Union[int, None]: The input shape for the training sidechain dihedrals.
+            - int: The input shape for the training angles.
+            - int: The input shape for the training dihedrals.
+            - int: The input shape for the cartesians.
+            - int: The input shape for the distances.
+            - Union[int, None]: The input shape for the training sidechain dihedrals.
                 Can be None, if they are not used for training.
 
     """
@@ -1017,7 +1324,7 @@ def _unpack_and_assert_input_shapes(
             side_dihedrals_input_shape = None
         if input_sparse and len(input_shapes[2]) == 2:
             sidechain_only_sparse = True
-            sparse = False
+            sparse = input_sparse
         else:
             sidechain_only_sparse = input_sidechain_only_sparse
             sparse = input_sparse
@@ -1050,7 +1357,16 @@ def _unpack_and_assert_input_shapes(
 
         # define shapes
         central_dihedrals_input_shape = d[1].shape[1]
-        cartesians_input_shape = d[2].shape[1]
+        try:
+            cartesians_input_shape = d[2].shape[1]
+        except IndexError as e:
+            raise Exception(
+                f"Could not decide on a cartesian input shape for the requested "
+                f"model using the provided dataset with {d=}. Normally, "
+                f"it is expected for index 2 of this dataset to provide the "
+                f"input shape of the cartesian coordinates. However, an "
+                f"IndexError was raised, trying to access this index. "
+            ) from e
         distances_input_shape = d[3].shape[1]
         if len(d) > 4:
             side_dihedrals_input_shape = d[4].shape[1]
@@ -1068,7 +1384,7 @@ def _unpack_and_assert_input_shapes(
         N = cartesians_input_shape // 3 // 3
     assert (
         distances_input_shape == N * 3 - 1
-    ), f"{N=} {distances_input_shape=} {input_shapes=}"
+    ), f"{N=} {sparse=} {sidechain_only_sparse=}"
     assert angles_input_shape == N * 3 - 2
     assert central_dihedrals_input_shape == N * 3 - 3
 
@@ -1112,7 +1428,7 @@ def _get_adc_decoder(
     splits the output according to the provided `splits` and the `p`.
 
     Args:
-        p (ADCParameters): The parameters.
+        p (encodermap.parameters.ADCParameters): The parameters.
         splits (list[int]): A list of ints giving the splits of the decoder
             outputs. It is expected that the splits follow the logic of
             angles-dihedrals-sidedihedrals. If only dihedrals are used for
@@ -1145,15 +1461,17 @@ def _get_adc_decoder(
             This is tensorflow's naming convention for unnamed dense layers.
         write_summary (bool): Whether to print a summary. If p.tensorboard is True
             a file will be generated. at the main_path.
+        n_proteins (Optional[int]): If not None, number of proteins that
+            constitute the multimer group that is trained.
 
     Returns:
         tuple: A tuple containing the following:
-            tf.keras.models.Model: The decoder model.
-            tf.Tensor: The angles (either mean, or learned angles).
-            tf.Tensor: The dihedrals.
-            Union[None, tf.Tensor]: The sidechain dihedrals. If p.use_sidechains
+            - tf.keras.models.Model: The decoder model.
+            - tf.Tensor: The angles (either mean, or learned angles).
+            - tf.Tensor: The dihedrals.
+            - Union[None, tf.Tensor]: The sidechain dihedrals. If p.use_sidechains
                 is false, None will be returned.
-            Union[None, tf.Tensor]: The homogeneous transformation matrices
+            - Union[None, tf.Tensor]: The homogeneous transformation matrices
                 for multimer training. If p.multimer_training is None, None
                 will be returned.
 
@@ -1180,7 +1498,7 @@ def _get_adc_decoder(
 
     # fmt: off
     splits_side_dihedrals = None
-    transformation_matrices = None
+    extra_tensor = None
     if len(splits) == 1:
         assert not p.use_backbone_angles and not p.use_sidechains, f"Parameters and splits do not coincide: {p=}, {splits=}"
         splits_central_dihedrals = PeriodicOutput(p, "dihedrals_from_unit_circle")(output_placeholder)
@@ -1200,17 +1518,24 @@ def _get_adc_decoder(
         splits_side_dihedrals = PeriodicOutput(p, "side_dihedrals_from_unit_circle")(out_side_dihedrals)
         decoder_output = (splits_angles, splits_central_dihedrals, splits_side_dihedrals)
     elif len(splits) == 4:
-        if p.multimer_training is None:
+        if p.multimer_training is None and not p.reconstruct_sidechains:
             raise Exception(f"Got wrong splits: {splits=}")
-        out_angles, out_dihedrals, out_side_dihedrals, out_transformation_matrices = tf.split(output_placeholder, splits, 1)
-        splits_angles = PeriodicOutput(p, "angles_from_unit_circle")(out_angles)
-        splits_central_dihedrals = PeriodicOutput(p, "dihedrals_from_unit_circle")(out_dihedrals)
-        splits_side_dihedrals = PeriodicOutput(p, "side_dihedrals_from_unit_circle")(out_side_dihedrals)
-        transformation_matrices = tf.reshape(
-            out_transformation_matrices,
-            shape=(tf.shape(splits_angles)[0], n_proteins - 1, 4, 4)
-        )
-        decoder_output = (splits_angles, splits_central_dihedrals, splits_side_dihedrals, transformation_matrices)
+        if p.multimer_training is not None and not p.reconstruct_sidechains:
+            out_angles, out_dihedrals, out_side_dihedrals, out_transformation_matrices = tf.split(output_placeholder, splits, 1)
+            splits_angles = PeriodicOutput(p, "angles_from_unit_circle")(out_angles)
+            splits_central_dihedrals = PeriodicOutput(p, "dihedrals_from_unit_circle")(out_dihedrals)
+            splits_side_dihedrals = PeriodicOutput(p, "side_dihedrals_from_unit_circle")(out_side_dihedrals)
+            extra_tensor = tf.reshape(
+                out_transformation_matrices,
+                shape=(tf.shape(splits_angles)[0], n_proteins - 1, 4, 4)
+            )
+        if p.multimer_training is None and p.reconstruct_sidechains:
+            out_angles, out_dihedrals, out_side_angles, out_side_dihedrals = tf.split(output_placeholder, splits, 1)
+            splits_angles = PeriodicOutput(p, "central_angles_from_unit_circle")(out_angles)
+            splits_central_dihedrals = PeriodicOutput(p, "central_dihedrals_from_unit_circle")(out_dihedrals)
+            extra_tensor = PeriodicOutput(p, "side_angles_from_unit_circle")(out_side_angles)
+            splits_side_dihedrals = PeriodicOutput(p, "side_dihedrals_from_unit_circle")(out_side_dihedrals)
+        decoder_output = (splits_angles, splits_central_dihedrals, extra_tensor, splits_side_dihedrals)
     else:
         raise Exception(f"Got wrong splits: {splits=}")
     # fmt: on
@@ -1259,7 +1584,7 @@ def _get_adc_decoder(
         splits_angles,
         splits_central_dihedrals,
         splits_side_dihedrals,
-        transformation_matrices,
+        extra_tensor,
     )
 
 
@@ -1286,7 +1611,7 @@ def _get_decoder_model(
     decoder like so: `output = decoder(encoder(input))`.
 
     Args:
-        p (ADCParameters): The parameters.
+        p (encodermap.parameters.ADCParameters): The parameters.
         out_shape (int): The output shape of the decoder. Make sure to match it
             with the input shape of the encoder.
         kernel_initializer (Union[dict[str, np.ndarray],
@@ -1317,9 +1642,9 @@ def _get_decoder_model(
 
     Returns:
         tuple: A tuple containing the following:
-            tf.keras.models.Model: The decoder model.
-            tf.Tensor: The output tensor with shape `out_shape`.
-            tf.Tensor: The input placeholder tensor with shape `p.n_neurons`.
+            - tf.keras.models.Model: The decoder model.
+            - tf.Tensor: The output tensor with shape `out_shape`.
+            - tf.Tensor: The input placeholder tensor with shape `p.n_neurons`.
 
     """
     n_neurons_with_inputs = [out_shape] + p.n_neurons
@@ -1440,7 +1765,7 @@ def _get_encoder_model(
 
     Args:
         inp (tf.Tensor): The input tensor of the encoder.
-        p (ADCParameters): The parameters.
+        p (encodermap.parameters.ADCParameters): The parameters.
         input_list (list[tf.Tensor]): This list contains the input placeholders
             for the encoder. Make sure that these input tensors point to the
             `inp` tensor in some way.
@@ -1472,8 +1797,8 @@ def _get_encoder_model(
 
     Returns:
         tuple: A tuple containing:
-            tf.keras.models.Model: The encoder model.
-            tf.Tensor: The output of the model.
+            - tf.keras.models.Model: The encoder model.
+            - tf.Tensor: The output of the model.
 
     """
     out = inp
@@ -1586,6 +1911,34 @@ def _get_encoder_model(
     return model, out
 
 
+def _concatenate_inputs_reconstruct_sidechains(
+    p: ADCParameters,
+    central_angles_unit_circle: tf.Tensor,
+    central_dihedrals_unit_circle: tf.Tensor,
+    side_angles_unit_circle: tf.Tensor,
+    side_dihedrals_unit_circle: tf.Tensor,
+) -> tuple[list[int], tf.Tensor]:  # pragma: no doccheck
+    """Concatenates input Tensors for the AngleDihedralCartesianEncoderMap with
+    sidechain reconstruction.
+
+    """
+    splits = [
+        central_angles_unit_circle.shape[1],
+        central_dihedrals_unit_circle.shape[1],
+        side_angles_unit_circle.shape[1],
+        side_dihedrals_unit_circle.shape[1],
+    ]
+    out = Concatenate(axis=1, name="concatenate_angular_inputs")(
+        (
+            central_angles_unit_circle,
+            central_dihedrals_unit_circle,
+            side_angles_unit_circle,
+            side_dihedrals_unit_circle,
+        )
+    )
+    return splits, out
+
+
 def _concatenate_inputs(
     p: ADCParameters,
     angles_unit_circle: Union[tf.Tensor, None],
@@ -1603,7 +1956,7 @@ def _concatenate_inputs(
     of the inputs.
 
     Args:
-        p (ADCParameters): A parameter instance.
+        p (encodermap.parameters.ADCParameters): A parameter instance.
         angles_unit_circle (Union[tf.Tensor, None]): Can be None, in case only
             the central_dihedrals are used for training. Otherwise, needs to
             be the central angles.
@@ -1616,12 +1969,12 @@ def _concatenate_inputs(
 
     Returns:
         tuple: A tuple containing the following:
-            list[int]: A list of the shape[1] of the input tensors. If only
+            - list[int]: A list of the shape[1] of the input tensors. If only
                 dihedrals are used for training, this list has only one entry.
                 In the other cases, this list can be used to split the output
                 of the decoder again into the constituents of central_angles,
                 central_dihedrals, side_dihedrals.
-            tf.Tensor: The concatenated inputs.
+            - tf.Tensor: The concatenated inputs.
 
     """
     if not p.use_backbone_angles and not p.use_sidechains:
@@ -1695,16 +2048,12 @@ def _create_inputs_non_periodic_maybe_sparse(
 
     Returns:
         tuple: A tuple containing the following:
-            tf.Tensor: The placeholder tensor for the input. If sparse is True,
+            - tf.Tensor: The placeholder tensor for the input. If sparse is True,
                 this Tensor will first be fed through a Dense layer to use sparse
                 matrix multiplication to make it dense again.
-            p (ADCParameters): An instance of ADCParameters, which contains info
-                about the periodicity of the input space.
-            Union[tf.Tensor, None]: The Dense output of the Tensor, if sparse is True.
-            Union[tf.keras.Model, None]: The model to get from sparse to dense.
-                If sparse is False, a None will be returned here.
-            reshape (Optional[int]): Whether to reshape the dense output. Can be
-                useful if providing flattened cartesians.
+            - Union[tf.Tensor, None]: The Dense output of the Tensor, if sparse is True.
+            - Union[tf.keras.Model, None]: The model to get from sparse to dense.
+                If sparse is False, None will be returned here.
 
     """
     if len(shape) == 2:
@@ -1723,8 +2072,20 @@ def _create_inputs_non_periodic_maybe_sparse(
             f"`gen_functional_model` and try to reshape the input."
         )
         placeholder = Input(shape=shape, name=f"sparse_input_{name}", sparse=True)
+
+        kernel_initializer = tf.keras.initializers.VarianceScaling()
+        bias_initializer = tf.keras.initializers.RandomNormal(0.1, 0.05)
+        if os.getenv("CONSTANT_SPARSE_TO_DENSE", "False") == "True":
+            warnings.warn("Using constant for to_dense initializers.")
+            kernel_initializer = tf.keras.initializers.Constant(1)
+            bias_initializer = tf.keras.initializers.Constant(1)
+
         output_placeholder = Dense(
-            units=shape[0], trainable=p.trainable_dense_to_sparse
+            units=shape[0],
+            trainable=p.trainable_dense_to_sparse,
+            kernel_initializer=kernel_initializer,
+            bias_initializer=bias_initializer,
+            kernel_regularizer=tf.keras.regularizers.l2(p.l2_reg_constant),
         )(placeholder)
         dense_model = tf.keras.Model(
             inputs=placeholder,
@@ -1753,7 +2114,7 @@ def _create_inputs_periodic_maybe_sparse(
             tuple with one int (in case of the central distances) or a tuple
             of two ints (in case of central cartesians), in which case, the
             2nd is checked to be 3 (for the xyz coordinates).
-        p (ADCParameters): An instance of ADCParameters, which contains info
+        p (encodermap.parameters.ADCParameters): An instance of ADCParameters, which contains info
             about the periodicity of the input space.
         name (str): The name of this input tensor. Will be preceded with 'input_'.
             The to unit_circle input will be called 'input_{name}_to_unit_circle'.
@@ -1761,11 +2122,11 @@ def _create_inputs_periodic_maybe_sparse(
 
     Returns:
         tuple: A tuple containing the following:
-            tf.Tensor: The placeholder tensor for the input. If sparse is True,
+            - tf.Tensor: The placeholder tensor for the input. If sparse is True,
                 this Tensor will first be fed through a Dense layer to use sparse
                 matrix multiplication to make it dense again.
-            tf.Tensor: The PeriodicInput of the same tensor.
-            Union[tf.keras.Model, None]: The model to get from sparse to dense.
+            - tf.Tensor: The PeriodicInput of the same tensor.
+            - Union[tf.keras.Model, None]: The model to get from sparse to dense.
                 If sparse is False, a None will be returned here.
 
     """
@@ -1781,29 +2142,6 @@ def _create_inputs_periodic_maybe_sparse(
     )
     unit_circle = PeriodicInput(p, f"input_{name}_to_unit_circle")(dense_placeholder)
     return placeholder, unit_circle, dense_model
-
-
-def _convert_to_unit_circle_inputs_maybe_sparse(
-    shape: tuple[int],
-    name: str,
-    p: ADCParameters,
-    sparse: bool = False,
-) -> tuple[tf.Tensor, tf.Tensor, tf.Tensor, Union[tf.keras.Model, None]]:
-    if not sparse:
-        inp = Input(shape=shape, name="input_" + name)
-        dense = inp
-        out = PeriodicInput(p, "unit_circle_" + name)(inp)
-        get_dense_model = None
-    else:
-        inp = Input(shape=shape, name="input_" + name, sparse=sparse)
-        dense = Dense(shape, name="convert_to_dense_" + name)(inp)
-        get_dense_model = tf.keras.Model(
-            inputs=inp,
-            outputs=dense,
-            name="convert_to_dense_model_" + name,
-        )
-        out = PeriodicInput(p, "unit_circle_" + name)(dense)
-    return inp, dense, out, get_dense_model
 
 
 ################################################################################
@@ -1828,7 +2166,7 @@ class ADCFunctionalModel(tf.keras.Model):
         """Initialize the Model.
 
         Args:
-            parameters (ADCParameters): An instance of the ADCParameters class.
+            parameters (encodermap.parameters.ADCParameters): An instance of the ADCParameters class.
             inputs (Iterable[tf.Tensor]): The inputs of the model.
             outputs (Iterable[tf.Tensor]): The outputs of the model.
             encoder (tf.keras.Model): The encoder as its own model.
@@ -1921,39 +2259,61 @@ class ADCFunctionalModel(tf.keras.Model):
 
     def get_loss(self, inp: ADCFunctionalModelInputType) -> tf.Tensor:
         # unpack the inputs
-        if self.p.use_sidechains or len(inp) == 5:
-            (
-                inp_angles,
-                inp_dihedrals,
-                inp_cartesians,
-                inp_distances,
-                inp_side_dihedrals,
-            ) = inp
-        else:
-            (
-                inp_angles,
-                inp_dihedrals,
-                inp_cartesians,
-                inp_distances,
-            ) = inp
-
-        # call the model
-        if not self.p.use_sidechains:
-            out = self(
+        if not self.p.reconstruct_sidechains:
+            if self.p.use_sidechains or len(inp) == 5:
                 (
                     inp_angles,
                     inp_dihedrals,
                     inp_cartesians,
                     inp_distances,
-                ),
-                training=True,
-            )
+                    inp_side_dihedrals,
+                ) = inp
+
+            elif len(inp) == 4:
+                (
+                    inp_angles,
+                    inp_dihedrals,
+                    inp_cartesians,
+                    inp_distances,
+                ) = inp
+            # call the model
+            if not self.p.use_sidechains:
+                out = self(
+                    (
+                        inp_angles,
+                        inp_dihedrals,
+                        inp_cartesians,
+                        inp_distances,
+                    ),
+                    training=True,
+                )
+            else:
+                out = self(inp, training=True)
         else:
+            (
+                inp_angles,
+                inp_dihedrals,
+                inp_cartesians,
+                inp_distances,
+                inp_side_angles,
+                inp_side_dihedrals,
+                inp_side_distances,
+            ) = inp
             out = self(inp, training=True)
 
         # unpack the outputs
         if self.p.multimer_training is None:
-            if self.p.use_sidechains:
+            if self.p.reconstruct_sidechains:
+                (
+                    out_angles,
+                    out_dihedrals,
+                    out_side_angles,
+                    out_side_dihedrals,
+                    back_cartesians,
+                    inp_pair,
+                    out_pair,
+                ) = out
+            elif self.p.use_sidechains and not self.p.reconstruct_sidechains:
                 (
                     out_angles,
                     out_dihedrals,
@@ -1971,27 +2331,21 @@ class ADCFunctionalModel(tf.keras.Model):
                     out_pair,
                 ) = out
         else:
-            if self.p.multimer_training == "homogeneous_transformation":
-                (
-                    out_angles,
-                    out_dihedrals,
-                    out_side_dihedrals,
-                    _,
-                    back_cartesians,
-                    inp_pair,
-                    out_pair,
-                ) = out
-            else:
-                raise NotImplementedError
+            raise NotImplementedError
 
         # get the latent
         if self.p.multimer_training is None:
-            if self.p.use_sidechains:
+            if self.p.reconstruct_sidechains:
+                latent = self.encoder_model(
+                    (inp_angles, inp_dihedrals, inp_side_angles, inp_side_dihedrals),
+                    training=True,
+                )
+            elif self.p.use_sidechains and not self.p.reconstruct_sidechains:
                 latent = self.encoder_model(
                     (inp_angles, inp_dihedrals, inp_side_dihedrals),
                     training=True,
                 )
-            elif self.p.use_backbone_angles:
+            elif self.p.use_backbone_angles and not self.p.reconstruct_sidechains:
                 latent = self.encoder_model(
                     (inp_angles, inp_dihedrals),
                     training=True,
@@ -2021,6 +2375,11 @@ class ADCFunctionalModel(tf.keras.Model):
             # either uses trained angles or mean angles
             loss += self.unpacked_loss_fns["angle_loss_func"](inp_angles, out_angles)
 
+            if self.p.reconstruct_sidechains:
+                loss += self.unpacked_loss_fns["angle_loss_func"](
+                    inp_side_angles, out_side_angles
+                )
+
             # cartesian loss
             # compares the pairwise distances of the input cartesians
             # and the output cartesians
@@ -2032,11 +2391,15 @@ class ADCFunctionalModel(tf.keras.Model):
             # based on whether the encoder takes angles+dihedrals+side dihedrals,
             # angles+dihedrals, or just dihedrals.
             if self.p.multimer_training is None:
-                if self.p.use_sidechains:
+                if self.p.reconstruct_sidechains:
+                    loss += self.unpacked_loss_fns["distance_loss_func"](
+                        (inp_angles, inp_dihedrals, inp_side_angles, inp_side_dihedrals)
+                    )
+                elif self.p.use_sidechains and not self.p.reconstruct_sidechains:
                     loss += self.unpacked_loss_fns["distance_loss_func"](
                         (inp_angles, inp_dihedrals, inp_side_dihedrals)
                     )
-                elif self.p.use_backbone_angles:
+                elif self.p.use_backbone_angles and not self.p.reconstruct_sidechains:
                     loss += self.unpacked_loss_fns["distance_loss_func"](
                         (inp_angles, inp_dihedrals)
                     )
@@ -2061,11 +2424,15 @@ class ADCFunctionalModel(tf.keras.Model):
             # makes sure, that the latent is in the center and thus depends on
             # the input of the encoder
             if self.p.multimer_training is None:
-                if self.p.use_sidechains:
+                if self.p.reconstruct_sidechains:
+                    loss += self.unpacked_loss_fns["center_loss_func"](
+                        (inp_angles, inp_dihedrals, inp_side_angles, inp_side_dihedrals)
+                    )
+                elif self.p.use_sidechains and not self.p.reconstruct_sidechains:
                     loss += self.unpacked_loss_fns["center_loss_func"](
                         (inp_angles, inp_dihedrals, inp_side_dihedrals)
                     )
-                elif self.p.use_backbone_angles:
+                elif self.p.use_backbone_angles and not self.p.reconstruct_sidechains:
                     loss += self.unpacked_loss_fns["center_loss_func"](
                         (inp_angles, inp_dihedrals)
                     )
@@ -2120,22 +2487,38 @@ class ADCFunctionalModel(tf.keras.Model):
             for l in loggable_encoder_layers + loggable_decoder_layers:
                 add_layer_summaries(l, step=self._my_train_counter)
 
-            # optimization happens here
-            # Compute Gradients
-            # trainable_vars = self.trainable_variables
+        # Compute Gradients
+        if not self.p.trainable_dense_to_sparse:
             trainable_vars = (
                 self.encoder_model.trainable_variables
                 + self.decoder_model.trainable_variables
             )
-            # maybe self.encoder_model.trainable_vars + self.decoder_model.trainable_vars
-            gradients = tape.gradient(loss, trainable_vars)
-            # Update weights
-            self.optimizer.apply_gradients(zip(gradients, trainable_vars))
-            # Update metrics
-            self.compiled_metrics.update_state(inp_cartesians, out_cartesians)
-            # update train counter because tensorflow seems to have deprecated it
-            self._my_train_counter.assign_add(1)
-            return {**{m.name: m.result() for m in self.metrics}, **{"loss": loss}}
+        else:
+            trainable_vars = self.trainable_variables
+        gradients = tape.gradient(loss, trainable_vars)
+
+        # if gradients are NaN, we skip training
+        # tf.cond(
+        #     tf.reduce_any([tf.reduce_any(tf.math.is_nan(g)) for g in gradients]),
+        #     true_fn=lambda: self.fn_true_ignore_grad(gradients, trainable_vars),
+        #     false_fn=lambda: self.fn_false_apply_grad(gradients, trainable_vars),
+        # )
+
+        # clip the gradients
+        # raise Exception(f"{[tf.reduce_max(g).numpy() for g in gradients]=}")
+
+        # Update weights
+        self.optimizer.apply_gradients(zip(gradients, trainable_vars))
+
+        # Update metrics
+        for metric in self.compiled_metrics._metrics:
+            metric.update_state(data, self(data))
+
+        # update train counter because tensorflow seems to have deprecated it
+        self._my_train_counter.assign_add(1)
+        return {m.name: m.result() for m in self.compiled_metrics._metrics} | {
+            "loss": loss,
+        }
 
 
 @testing
@@ -2156,7 +2539,7 @@ class ADCFunctionalModelTesting(tf.keras.Model):
         """Initialize the Model.
 
         Args:
-            parameters (ADCParameters): An instance of the ADCParameters class.
+            parameters (encodermap.parameters.ADCParameters): An instance of the ADCParameters class.
             inputs (Iterable[tf.Tensor]): The inputs of the model.
             outputs (Iterable[tf.Tensor]): The outputs of the model.
             encoder (tf.keras.Model): The encoder as its own model.
@@ -2295,10 +2678,10 @@ class ADCSparseFunctionalModel(ADCFunctionalModel):
         get_dense_model_distances: tf.keras.Model,
         get_dense_model_side_dihedrals: Union[tf.keras.Model, None],
     ) -> None:
-        """Initialize the Model.
+        """Instantiate the Model.
 
         Args:
-            parameters (ADCParameters): An instance of the ADCParameters class.
+            parameters (encodermap.parameters.ADCParameters): An instance of the ADCParameters class.
             inputs (Iterable[tf.Tensor]): The inputs of the model.
             outputs (Iterable[tf.Tensor]): The outputs of the model.
             encoder (tf.keras.Model): The encoder as its own model.
@@ -2327,6 +2710,17 @@ class ADCSparseFunctionalModel(ADCFunctionalModel):
         self.get_dense_model_cartesians = get_dense_model_cartesians
         self.get_dense_model_distances = get_dense_model_distances
         self.get_dense_model_side_dihedrals = get_dense_model_side_dihedrals
+        if self.get_dense_model_cartesians is not None:
+            self.reshape_layer = tf.keras.layers.Reshape(
+                target_shape=(inputs[2].shape[1] // 3, 3),
+                input_shape=(inputs[2].shape[1],),
+                name="reshape_sparse_to_dense_internally",
+            )
+            self.reshape_layer.build(
+                input_shape=(self.p.batch_size, inputs[2].shape[1])
+            )
+        else:
+            self.reshape_layer = None
 
     def get_config(self) -> dict[str, Any]:
         """Serializes this keras serializable.
@@ -2425,7 +2819,7 @@ class ADCSparseFunctionalModel(ADCFunctionalModel):
             write_summary=False,
             sparse=True,
         )
-        if len(encoder.get_weights()) < len(decoder.get_weights()):
+        if len(encoder.get_weights()) != len(new_model.encoder_model.get_weights()):
             # here, we can assume that the model was trained with
             # only sparse sidechains
             new_model = gen_functional_model(
@@ -2435,6 +2829,11 @@ class ADCSparseFunctionalModel(ADCFunctionalModel):
                 sparse=False,
                 sidechain_only_sparse=True,
             )
+
+        # for l in new_model.encoder_model.layers:
+        #     print(f"new_model.encoder layer {l=}")
+        # for l in encoder.layers:
+        #     print(f"encoder layer {l=}")
 
         new_model.encoder_model.set_weights(encoder.get_weights())
         new_model.decoder_model.set_weights(decoder.get_weights())
@@ -2475,7 +2874,7 @@ class ADCSparseFunctionalModel(ADCFunctionalModel):
 
     def get_loss(self, inp):
         # unpack the inputs
-        if self.p.use_sidechains or len(inp) == 5:
+        if self.p.use_sidechains and len(inp) == 5:
             (
                 sparse_inp_angles,
                 sparse_inp_dihedrals,
@@ -2504,6 +2903,7 @@ class ADCSparseFunctionalModel(ADCFunctionalModel):
         else:
             inp_dihedrals = sparse_inp_dihedrals
         if isinstance(sparse_inp_cartesians, tf.sparse.SparseTensor):
+
             inp_cartesians = self.get_dense_model_cartesians(
                 sparse_inp_cartesians, training=True
             )
@@ -2542,7 +2942,158 @@ class ADCSparseFunctionalModel(ADCFunctionalModel):
             )
 
         # call the loss
-        return super().get_loss(data)
+        # when we are using sparse `inp_cartesians`, index `[1]` of the output
+        # of `super().get_loss(data)` contains 'central_cartesians' in the flattened
+        # rank 2 form and we need to transform it
+        resulting_loss, _, out_cartesians = super().get_loss(data)
+        if self.get_dense_model_cartesians is not None:
+            inp_cartesians = self.reshape_layer(inp_cartesians)
+        return resulting_loss, inp_cartesians, out_cartesians
+
+
+class ADCFunctionalModelSidechainReconstruction(ADCSparseFunctionalModel):
+    def __init__(
+        self,
+        parameters: ADCParameters,
+        inputs: Iterable[tf.Tensor],
+        outputs: Iterable[tf.Tensor],
+        encoder: tf.keras.Model,
+        decoder: tf.keras.Model,
+        **kwargs: Any,
+    ) -> None:
+        super().__init__(
+            parameters=parameters,
+            inputs=inputs,
+            outputs=outputs,
+            encoder=encoder,
+            decoder=decoder,
+            get_dense_model_central_angles=kwargs["get_dense_model_central_angles"],
+            get_dense_model_central_dihedrals=kwargs[
+                "get_dense_model_central_dihedrals"
+            ],
+            get_dense_model_cartesians=kwargs["get_dense_model_cartesians"],
+            get_dense_model_distances=kwargs["get_dense_model_central_distances"],
+            get_dense_model_side_dihedrals=kwargs["get_dense_model_side_dihedrals"],
+        )
+        self.get_dense_model_side_angles = kwargs["get_dense_model_side_angles"]
+        self.get_dense_model_side_distances = kwargs["get_dense_model_side_distances"]
+
+    def get_loss(self, inp: tuple[tf.Tensor, ...]):
+        # unpack the inputs
+        (
+            sparse_inp_central_angles,
+            sparse_inp_central_dihedrals,
+            sparse_inp_all_cartesians,
+            sparse_inp_central_distances,
+            sparse_inp_side_angles,
+            sparse_inp_side_dihedrals,
+            sparse_inp_side_distances,
+        ) = inp
+
+        # central angles
+        if isinstance(sparse_inp_central_angles, tf.sparse.SparseTensor):
+            inp_central_angles = self.get_dense_model_central_angles(
+                sparse_inp_central_angles, training=True
+            )
+        else:
+            inp_central_angles = sparse_inp_central_angles
+
+        # central dihedrals
+        if isinstance(sparse_inp_central_dihedrals, tf.sparse.SparseTensor):
+            inp_central_dihedrals = self.get_dense_model_central_dihedrals(
+                sparse_inp_central_dihedrals, training=True
+            )
+        else:
+            inp_central_dihedrals = sparse_inp_central_dihedrals
+
+        # all cartesians
+        if isinstance(sparse_inp_all_cartesians, tf.sparse.SparseTensor):
+            inp_all_cartesians = self.get_dense_model_cartesians(
+                sparse_inp_all_cartesians, training=True
+            )
+        else:
+            inp_all_cartesians = sparse_inp_all_cartesians
+
+        # central distances
+        if isinstance(sparse_inp_central_distances, tf.sparse.SparseTensor):
+            inp_central_distances = self.get_dense_model_distances(
+                sparse_inp_central_distances, training=True
+            )
+        else:
+            inp_central_distances = sparse_inp_central_distances
+
+        # side_angles
+        if isinstance(sparse_inp_side_angles, tf.sparse.SparseTensor):
+            inp_side_angles = self.get_dense_model_side_angles(
+                sparse_inp_side_angles, training=True
+            )
+        else:
+            inp_side_angles = sparse_inp_side_angles
+
+        # side dihedrals
+        if isinstance(sparse_inp_side_dihedrals, tf.sparse.SparseTensor):
+            inp_side_dihedrals = self.get_dense_model_side_dihedrals(
+                sparse_inp_side_dihedrals, training=True
+            )
+        else:
+            inp_side_dihedrals = sparse_inp_side_dihedrals
+
+        # side distances
+        if isinstance(sparse_inp_side_distances, tf.sparse.SparseTensor):
+            inp_side_distances = self.get_dense_model_side_distances(
+                sparse_inp_side_distances, training=True
+            )
+        else:
+            inp_side_distances = sparse_inp_side_distances
+
+        data = (
+            inp_central_angles,
+            inp_central_dihedrals,
+            inp_all_cartesians,
+            inp_central_distances,
+            inp_side_angles,
+            inp_side_dihedrals,
+            inp_side_distances,
+        )
+
+        # call the loss
+        resulting_loss, _, out_cartesians = ADCFunctionalModel.get_loss(self, data)
+        if self.get_dense_model_cartesians is not None:
+            inp_all_cartesians = self.reshape_layer(inp_all_cartesians)
+        return resulting_loss, inp_all_cartesians, out_cartesians
+
+    def get_config(self) -> dict[str, Any]:
+        sidechain_info = self.p.sidechain_info
+        config = super().get_config().copy()
+        config.update(
+            {
+                "sidechain_info": sidechain_info,
+                "get_dense_model_side_angles": tf.keras.saving.serialize_keras_object(
+                    self.get_dense_model_side_angles
+                ),
+                "get_dense_model_side_distances": tf.keras.saving.serialize_keras_object(
+                    self.get_dense_model_side_distances
+                ),
+            }
+        )
+        return config
+
+    @classmethod
+    def from_config(
+        cls: Type[ADCFunctionalModelSidechainReconstructionType],
+        config: dict[Any, Any],
+    ) -> ADCFunctionalModelSidechainReconstructionType:
+        """Reconstructs this keras serializable from a dict.
+
+        Args:
+            config (dict[Any, Any]): A dictionary.
+
+        Returns:
+            BackMapLayerType: An instance of the BackMapLayer.
+
+        """
+        raise Exception(f"Also put the sidechain_indices back into the parameters")
+        return cls(parameters=p, **config)
 
 
 class SequentialModel(tf.keras.Model):
@@ -2778,6 +3329,19 @@ class SequentialModel(tf.keras.Model):
             raise
 
     def encoder(self, x, training=False):
+        """In the sequential model, the encoder is a method (as oppes to a model).
+
+        This method handles the input, when the periodicity of the input data
+        is greater than float('inf').
+
+        Args:
+            x (Union[np.ndarray, tf.Tensor): The input.
+            training (bool): Whether we are training and compute gradients.
+
+        Returns:
+            Union[np.ndarray, tf.Tensor]: The output of the encoder.
+
+        """
         if self.sparse:
             x = self.get_dense_model(x)
         if self.p.periodicity < float("inf"):

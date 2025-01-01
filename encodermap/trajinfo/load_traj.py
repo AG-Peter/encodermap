@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/trajinfo/load_traj.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -46,9 +46,9 @@ import numpy as np
 import requests
 import tables
 
-# Local Folder Imports
-from .._typing import CanBeIndex
-from ..misc.misc import _validate_uri
+# Encodermap imports
+from encodermap._typing import CanBeIndex
+from encodermap.misc.misc import _validate_uri
 
 
 warnings.filterwarnings(
@@ -90,7 +90,7 @@ if TYPE_CHECKING:
 ################################################################################
 
 
-__all__ = []
+__all__: list[str] = []
 this = sys.modules[__name__]
 this.PRINTED_HDF_ANNOTATION = False
 
@@ -158,7 +158,9 @@ def _load_traj_and_top(
             )
     else:
         try:
-            t = md.load(str(traj_file), top=str(top_file))
+            with warnings.catch_warnings():
+                warnings.filterwarnings("ignore", r".*kwargs\signored.*", UserWarning)
+                t = md.load(str(traj_file), top=str(top_file))
         except tables.NoSuchNodeError as e:
             if traj_num is None:
                 raise e
@@ -192,7 +194,7 @@ def _load_traj(
         *index (Unpack[Ts]): Variable length indices of which all need to be
             one of these datatypes: None, int, list[int], slice, np.ndarray.
             These indices are applied to the traj in order. So for a traj with
-            100 frames, the indices (slice(None, None, 5), [0, 2, 4, 6]) would
+            100 frames, the indices (`slice (None, None, 5)`, [0, 2, 4, 6]) would
             yield the frames 0, 10, 20, 30, 40. A None will not slice the traj at all.
         traj_file (Union[str, Path]): The pathlib.Path to the traj_file. A string
             can also be supplied. This also allows passing a URL, like e.g:
