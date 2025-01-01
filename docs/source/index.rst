@@ -51,6 +51,15 @@ Interactive Tutorials
 
 You can access interactive versions of EncoderMap tutorials online on BinderHub or Google Colab:
 
+Start with the tutorials
+------------------------
+
+You can access all EncoderMap tutorials online on mybinder.org:
+
+.. image:: https://mybinder.org/badge_logo.svg
+   :target: https://mybinder.org/v2/gh/AG-Peter/encodermap/HEAD
+
+
 .. grid:: 2
 
    .. grid-item-card:: Run EncoderMap's notebooks on Binder
