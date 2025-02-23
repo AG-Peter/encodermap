@@ -27,3 +27,4 @@ kaleido
 ipycanvas
 orjson
 bokeh
+anywidget
