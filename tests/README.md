@@ -77,20 +77,8 @@ There are some very expensive tests inside the test suites of EncoderMap. These 
 RUN_EXPENSIVE_TESTS=True python -m unittests discover -s tests
 ```
 
-Currently only the file `test_tf1_tf2_deterministic.py` contains such an expensive test which you can run via:
+The file `test_tf1_tf2_deterministic.py` contains such an expensive test which you can run via:
 
 ```bash
 RUN_EXPENSIVE_TESTS=True python tests/test_tf1_tf2_deterministic.py TestTf1Tf2Deterministic
 ```
-
-
-
-## Scripts
-
-### `find_undocumented_parts.py`
-
-This script prints information about functions and classes missing their docstring.
-
-### `run_doctests.py`
-
-This script only runs the doctests of the package.

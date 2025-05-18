@@ -1,0 +1,215 @@
+networks:
+  example:
+    driver: bridge
+
+volumes:
+  emap-vol:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=nfs.example.org,rw
+      device: ":/docker/emap-vol"
+
+services:
+  openldap:
+    image: bitnami/openldap:latest
+    container_name: openldap
+    hostname: openldap.example.org
+    domainname: example.org
+    ports:
+      - 389:389
+      - 636:636
+    environment:
+      - LDAP_ADMIN_USERNAME=admin
+      - LDAP_ADMIN_PASSWORD=adminpassword
+      - LDAP_CONFIG_ADMIN_ENABLED=yes
+      - LDAP_CONFIG_ADMIN_USERNAME=admin
+      - LDAP_CONFIG_ADMIN_PASSWORD=configpassword
+      - LDAP_ROOT=dc=example,dc=org
+      - LDAP_ADMIN_DN=cn=admin,dc=example,dc=org
+      - LDAP_ENABLE_TLS=yes
+      - LDAP_PORT_NUMBER=389
+      - LDAP_LDAPS_PORT_NUMBER=636
+      - LDAP_TLS_CERT_FILE=/certs/server.crt
+      - LDAP_TLS_KEY_FILE=/certs/server.key
+      - LDAP_TLS_CA_FILE=/certs/ca.crt
+      - BITNAMI_DEBUG=false
+    volumes:
+      - type: bind
+        source: ./tutorials/docker/certs
+        target: /certs
+      - ./tutorials/docker/ldap_server/custom.ldif:/ldifs/custom.ldif
+    networks:
+      example:
+        aliases:
+          - openldap.example.org
+
+  phpldapadmin:
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
+    domainname: example.org
+    hostname: phpldapadmin.example.org
+    ports:
+      - 10080:80
+      - 10443:443
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "openldap.example.org"
+      PHPLDAPADMIN_HTTPS: "true"
+    depends_on:
+      - openldap
+    networks:
+      example:
+        aliases:
+          - phpldapadmin.example.org
+
+  db:
+    image: mariadb:latest
+    container_name: db
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=sql_root_passw0rd
+      - MYSQL_PASSWORD=sql_passw0rd
+      - MYSQL_USER=mysql_user
+      - MYSQL_DATABASE=mysql_db
+    command: --innodb-buffer-pool-size=1024M --innodb-log-file-size=64M --innodb-lock-wait-timeout=900
+    hostname: db.example.org
+    networks:
+      example:
+        aliases:
+          - db.example.org
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=mysql
+    networks:
+      example:
+        aliases:
+          - db-gui.example.org
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./tutorials/docker/slurm_node_w_prometheus/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      example:
+        aliases:
+          - prometheus.example.org
+
+  gmx_base:
+    image: kevinsawade/modules-gmx-base
+    container_name: gmx_base
+    build:
+      context: tutorials/docker
+      dockerfile: modules/Dockerfile
+    deploy:
+      mode: replicated
+      replicas: 0
+
+  ldap_client:
+    image: kevinsawade/ldap-client
+    container_name: ldap_client
+    build:
+      context: tutorials/docker
+      dockerfile: ldap_client/Dockerfile
+    depends_on:
+      - gmx_base
+    deploy:
+      mode: replicated
+      replicas: 0
+
+  slurm_base:
+    build:
+      context: tutorials/docker
+      dockerfile: slurm_base/Dockerfile
+    depends_on:
+      - ldap_client
+    deploy:
+      mode: replicated
+      replicas: 0
+
+  slurm_db:
+    build:
+      context: tutorials/docker
+      dockerfile: slurm_db/Dockerfile
+    depends_on:
+      - slurm_base
+      - db
+    image: kevinsawade/slurm-db
+    container_name: slurm-db
+    hostname: slurm-database.example.org
+    environment:
+      - LDAP_ADMIN_PASSWORD=adminpassword
+    networks:
+      example:
+        aliases:
+          - slurm-database.example.org
+
+  slurm_master:
+    image: kevinsawade/slurm-master
+    container_name: slurm-master
+    domainname: example.org
+    hostname: slurm-master.example.org
+    build:
+      context: tutorials/docker
+      dockerfile: slurm_master/Dockerfile
+    depends_on:
+      - slurm_base
+    environment:
+      - LDAP_ADMIN_PASSWORD=adminpassword
+    networks:
+      example:
+        aliases:
+          - slurm-master.example.org
+
+  c1:
+    image: kevinsawade/slurm-node-w-prometheus
+    container_name: c1
+    ports:
+      - 8888:8888
+      - 221:22
+    domainname: example.org
+    hostname: c1.example.org
+    build:
+      context: .
+      dockerfile: tutorials/docker/slurm_node_w_prometheus/Dockerfile
+    depends_on:
+      - slurm_base
+      - c2
+    environment:
+      - LDAP_ADMIN_PASSWORD=adminpassword
+    networks:
+      example:
+        aliases:
+          - c1.example.org
+    volumes:
+      - emap-vol:/work
+
+  c2:
+    image: kevinsawade/slurm-node
+    container_name: c2
+    domainname: example.org
+    hostname: c2.example.org
+    ports:
+      - 222:22
+    build:
+      context: tutorials/docker
+      dockerfile: slurm_node/Dockerfile
+    depends_on:
+      - slurm_base
+    environment:
+      - LDAP_ADMIN_PASSWORD=adminpassword
+    networks:
+      example:
+        aliases:
+          - c2.example.org
+    volumes:
+      - emap-vol:/work

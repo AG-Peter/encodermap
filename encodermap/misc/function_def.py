@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/misc/function_def.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -19,14 +19,36 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
+"""Wraps tensorflow's `tf.function` again to accept a debug=True or debug=False argument.
+
+With debug=True, the function will not be compiled. With debug=False (which is
+teh default), it will be compiled.
+
+"""
+# Future Imports at the top
+from __future__ import annotations
+
+# Standard Library Imports
+from typing import Any
 
 # Third Party Imports
 import tensorflow as tf
 
 
-def function(debug=False):
-    def decorator(f):
-        def wrapper(*args, **kwargs):
+def function(debug: bool = False) -> Any:
+    """Encodermap's implementation of `tf.function`.
+
+    Args:
+        debug (bool): If True, the decorated function will not be compiled.
+            Defaults to False.
+
+    """
+
+    def decorator(f: Any) -> Any:
+        """The decorator, that takes the function."""
+
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            """The wrapper, that calls the function based on the debug argument."""
             if debug:
                 result = f(*args, **kwargs)
             else:

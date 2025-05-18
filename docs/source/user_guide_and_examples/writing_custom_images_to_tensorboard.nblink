@@ -1,8 +1,0 @@
-{
-    "path" : "../../../tutorials/notebooks_customization/writing_custom_images_to_tensorboard.ipynb",
-    "extra-media": [
-        "../../../tutorials/notebooks_customization/custom_images_1.png",
-        "../../../tutorials/notebooks_customization/custom_images_2.png",
-        "../../../tutorials/notebooks_starter/asp7.csv"
-    ]
-}

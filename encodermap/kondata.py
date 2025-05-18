@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/kondata.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -37,17 +37,24 @@ import getpass
 import shutil
 import tarfile
 import time
+import warnings
 from collections.abc import Generator
-from copy import deepcopy
 from pathlib import Path
 from typing import Any, Optional, Union
 
 # Third Party Imports
 import requests
-from bs4 import BeautifulSoup
 from optional_imports import _optional_import
 from requests.auth import HTTPBasicAuth
 from rich.status import Status
+
+
+################################################################################
+# Optional Imports
+################################################################################
+
+
+BeautifulSoup = _optional_import("bs4", "BeautifulSoup")
 
 
 ################################################################################
@@ -55,9 +62,10 @@ from rich.status import Status
 ################################################################################
 
 
-__all__ = ["get_from_kondata"]
+__all__: list[str] = ["get_from_kondata"]
 DATASET_URL_MAPPING = {
     "test": "https://dx.doi.org/10.48606/108",
+    "H1Ub": "https://dx.doi.org/10.48606/99",
 }
 
 
@@ -95,7 +103,7 @@ def untar(
         list[str]: A list of the new files.
 
     """
-    untarred_files = []
+    untarred_files: list[str] = []
     if not silence_overwrite:
         print(f"{tar_file} already exists. Set `force_overwrite` to True to overwrite.")
     with tarfile.open(tar_file) as tar:
@@ -106,15 +114,21 @@ def untar(
             ):
                 filename = member.path.lstrip(f"{doi_tar}/data/dataset/")
                 extract_to = output / filename
-                if extract_to.is_file() and not force_overwrite:
+                if extract_to.exists() and not force_overwrite:
                     if not silence_overwrite:
                         print(
                             f"{extract_to} already exists. Set "
                             f"`force_overwrite` to True to overwrite."
                         )
                 else:
-                    untarred_files.append(str(extract_to))
-                    tar.makefile(member, extract_to)
+                    if member.isdir():
+                        extract_to.mkdir(parents=True, exist_ok=True)
+                    elif member.isfile():
+                        untarred_files.append(str(extract_to))
+                        tar.makefile(member, extract_to)
+                    else:
+                        print(f"Unknown TarInfo type: {member}")
+    return untarred_files
 
 
 def get_from_kondata(
@@ -126,6 +140,7 @@ def get_from_kondata(
     tqdm_class: Optional[Any] = None,
     download_extra_data: bool = False,
     download_checkpoints: bool = False,
+    download_h5: bool = True,
 ) -> str:
     """Get dataset from the University of Konstanz's data repository KONData.
 
@@ -147,11 +162,16 @@ def get_from_kondata(
         download_checkpoints (bool): Whether to download pretrained checkpoints.
             It is only used if the dataset is not available on KonDATA.
             Defaults to False.
+        download_h5 (bool): Whether to also download an h5 file of the
+            ensemble. Defaults to True.
 
     Returns:
         str: The output directory.
 
     """
+    # Local Folder Imports
+    from .misc.misc import _is_notebook
+
     if dataset_name not in DATASET_URL_MAPPING:
         return get_from_url(
             f"https://sawade.io/encodermap_data/{dataset_name}",
@@ -162,32 +182,43 @@ def get_from_kondata(
             tqdm_class=tqdm_class,
             download_extra_data=download_extra_data,
             download_checkpoints=download_checkpoints,
+            download_h5=download_h5,
         )
     if output is None:
         # Standard Library Imports
         import pkgutil
 
         package = pkgutil.get_loader("encodermap")
-        emfile = package.get_filename()
-        output = Path(emfile).parent.parent / "tests"
-        if not output.is_dir():
-            output = Path("~") / f".encodermap_data/{dataset_name}"
-            if not output.parent.is_dir():
-                question = input(
-                    f"I will create the directory {output.parent} and download "
-                    f"the dataset {dataset_name}."
-                )
-                if question.lower() not in ["y", "ye", "yes"]:
-                    return
-            output.mkdir(parents=True, exist_ok=True)
-        output /= f"data/{dataset_name}"
+        if package is None:
+            output = Path("~").resolve() / f".encodermap_data/{dataset_name}"
+        else:
+            emfile = package.get_filename()
+            output = Path(emfile).parent.parent / "tests"
+            if not output.is_dir():
+                output = Path("~").resolve() / f".encodermap_data/{dataset_name}"
+            else:
+                output /= f"data/{dataset_name}"
+                output.parent.mkdir(exist_ok=True)
+        if not output.parent.is_dir():  # pragma: nocover
+            question = input(
+                f"I will create the directory {output.parent} and download "
+                f"the dataset {dataset_name} to it."
+            )
+            if question.lower() not in ["y", "ye", "yes"]:
+                raise Exception(f"User has answered to not overwrite {output.parent}.")
+        output.mkdir(parents=True, exist_ok=True)
 
     # in all other cases make sure its path
     output = Path(output)
 
     if tqdm_class is None:
-        # Third Party Imports
-        from tqdm import tqdm as tqdm_class
+        if _is_notebook():
+            # Third Party Imports
+            from tqdm.notebook import tqdm as tqdm_class  # type: ignore[no-redef]
+        else:
+            # Third Party Imports
+            from tqdm import tqdm as tqdm_class  # type: ignore[no-redef]
+    assert tqdm_class is not None
 
     if not (output := Path(output)).is_dir():
         if not mk_parentdir:
@@ -229,9 +260,10 @@ def get_from_kondata(
         from selenium.webdriver.common.by import By
     except ImportError as e:
         raise Exception(
-            f"Programatically downloading from KonDATA requires selenium. Either "
+            f"Programmatically downloading from KonDATA requires selenium. Beware "
+            f"it uses Google code to interact with web pages. Either "
             f"install it with `pip install selenium`, or manually download the "
-            f"files from {url} and untar them to {output}."
+            f"files from {url} and un-tar them to {output}"
         ) from e
     prefs = {"download.default_directory": str(output)}
     options = webdriver.ChromeOptions()
@@ -260,6 +292,17 @@ def get_from_kondata(
     untarred_files = untar(
         tar_file, doi_tar, output, force_overwrite, silence_overwrite=True
     )
+
+    if dataset_name == "H1Ub" and download_h5:
+        trajs_file = output / "trajs.h5"
+        if trajs_file.is_file() and not force_overwrite:
+            print(f"trajs.h5 file for H1Ub already present.")
+        else:
+            print(
+                f"The H1Ub dataset does not contain a trajs.h5 file. "
+                f"I will now create it."
+            )
+
     return str(output)
 
 
@@ -283,7 +326,15 @@ def get_assign_from_file(file: Path, assign: str) -> str:
 
 
 def is_directory(url: str) -> bool:
-    """Returns, whether a string ends with /."""
+    """Returns, whether a string ends with '/' which makes that an url of a dir.
+
+    Args:
+        url (str): The url.
+
+    Returns:
+        bool: Whether that string ends with '/'.
+
+    """
     if url.endswith("/"):
         return True
     return False
@@ -336,6 +387,7 @@ def get_from_url(
     tqdm_class: Optional[Any] = None,
     download_extra_data: bool = False,
     download_checkpoints: bool = False,
+    download_h5: bool = True,
     combine_progbars: bool = False,
 ) -> str:
     """Recourses through `url` and downloads all strings into `output`.
@@ -364,33 +416,49 @@ def get_from_url(
         str: The output directory.
 
     """
+    # Local Folder Imports
+    from .misc.misc import _is_notebook
+
     if "sawade.io" in url:
         dataset_name = url.replace("https://sawade.io/encodermap_data/", "")
+
+    if not url.startswith("https"):
+        raise Exception(f"Not downloading from {url=}. Missing https.")
 
     if output is None:
         # Standard Library Imports
         import pkgutil
 
         package = pkgutil.get_loader("encodermap")
-        emfile = package.get_filename()
-        output = Path(emfile).parent.parent / "tests"
-        if not output.is_dir():
+        if package is None:
             output = Path("~").resolve() / f".encodermap_data/{dataset_name}"
-            if not output.parent.is_dir():
-                question = input(
-                    f"I will create the directory {output.parent} and download "
-                    f"the dataset {dataset_name}."
-                )
-                if question.lower() not in ["y", "ye", "yes"]:
-                    return
-            output.mkdir(parents=True, exist_ok=True)
-        output /= f"data/{dataset_name}"
+        else:
+            emfile = package.get_filename()
+            output = Path(emfile).parent.parent / "tests"
+            if not output.is_dir():
+                output = Path("~").resolve() / f".encodermap_data/{dataset_name}"
+            else:
+                output /= f"data/{dataset_name}"
+                output.parent.mkdir(exist_ok=True)
+        if not output.parent.is_dir():  # pragma: nocover
+            question = input(
+                f"I will create the directory {output.parent} and download "
+                f"the dataset {dataset_name} to it."
+            )
+            if question.lower() not in ["y", "ye", "yes"]:
+                raise Exception(f"User has answered to not overwrite {output.parent}.")
+        output.mkdir(parents=True, exist_ok=True)
 
     if tqdm_class is None:
-        # Third Party Imports
-        from tqdm import tqdm as tqdm_class
+        if _is_notebook():
+            # Third Party Imports
+            from tqdm.notebook import tqdm as tqdm_class  # type: ignore[no-redef]
+        else:
+            # Third Party Imports
+            from tqdm import tqdm as tqdm_class  # type: ignore[no-redef]
+    assert tqdm_class is not None
 
-    downloaded_files = []
+    downloaded_files: list[str] = []
     if not (output := Path(output)).is_dir():
         if not mk_parentdir:
             raise Exception(
@@ -400,7 +468,14 @@ def get_from_url(
         else:
             output.mkdir()
     # check for the act.vault file
-    status_code = requests.get(url).status_code
+    try:
+        status_code = requests.get(url, timeout=3).status_code
+    except requests.exceptions.Timeout:
+        warnings.warn(f"EncoderMap's repository at {url} timed out.")
+        return str(output)
+    except requests.exceptions.ConnectionError:
+        warnings.warn(f"EncoderMap's repository at {url} is unreachable.")
+        return str(output)
     if status_code == 401:
         vault_file = Path(__file__).resolve().parent.parent / "act.vault"
         if vault_file.is_file() and username is None:
@@ -445,16 +520,22 @@ def get_from_url(
             continue
         if "checkpoints" in str(in_file) and not download_checkpoints:
             continue
+        if str(in_file).split(".")[-1] == "h5" and not download_h5:
+            print(f"Skipping {in_file}")
+            continue
         out_file.parent.mkdir(parents=True, exist_ok=True)
         response = requests.get(in_file, auth=auth, stream=True)
         total_length = int(response.headers.get("content-length", 0))
-        with open(out_file, "wb") as file, tqdm_class(
-            desc=str(out_file),
-            total=total_length,
-            unit="iB",
-            unit_scale=True,
-            unit_divisor=1024,
-        ) as bar:
+        with (
+            open(out_file, "wb") as file,
+            tqdm_class(
+                desc=str(out_file),
+                total=total_length,
+                unit="iB",
+                unit_scale=True,
+                unit_divisor=1024,
+            ) as bar,
+        ):
             for data in response.iter_content(chunk_size=1024):
                 size = file.write(data)
                 bar.update(size)

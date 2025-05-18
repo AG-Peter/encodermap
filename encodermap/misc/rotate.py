@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/misc/rotate.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -33,16 +33,25 @@ from __future__ import annotations
 
 # Standard Library Imports
 import copy
+import warnings
 from copy import deepcopy
 from typing import TYPE_CHECKING, Optional, Union, overload
 
 # Third Party Imports
-import mdtraj as md
 import numpy as np
 import transformations as trans
+from optional_imports import _optional_import
 
-# Local Folder Imports
-from ..trajinfo.trajinfo_utils import _delete_bond
+# Encodermap imports
+from encodermap.trajinfo.trajinfo_utils import _delete_bond
+
+
+################################################################################
+# Optional Imports
+################################################################################
+
+
+md = _optional_import("mdtraj")
 
 
 ################################################################################
@@ -61,7 +70,7 @@ if TYPE_CHECKING:
 ################################################################################
 
 
-__all__ = ["mdtraj_rotate"]
+__all__: list[str] = ["mdtraj_rotate"]
 
 
 ################################################################################
@@ -164,6 +173,8 @@ def mdtraj_rotate(
         verify_every_rotation (bool): Whether the rotation succeeded.
         drop_proline_angles (bool): Whether to automatically drop proline
             angles and indices.
+        delete_sulfide_bridges (bool): Whether to automatically remove bonds from
+            between cysteine residues.
 
     Raises:
         Exception: If the input seems like it is in degrees, but `deg` is False.
@@ -383,8 +394,7 @@ def _get_near_and_far_networkx(
     edge_indices: np.ndarray,
     top: Optional[md.Topology] = None,
     parallel: bool = True,
-) -> tuple[np.ndarray, None]:
-    ...
+) -> tuple[np.ndarray, None]: ...
 
 
 @overload
@@ -393,8 +403,7 @@ def _get_near_and_far_networkx(
     edge_indices: np.ndarray,
     top: Optional[md.Topology] = None,
     parallel: bool = False,
-) -> tuple[list[np.ndarray], list[np.ndarray]]:
-    ...
+) -> tuple[list[np.ndarray], list[np.ndarray]]: ...
 
 
 def _get_near_and_far_networkx(
@@ -414,15 +423,19 @@ def _get_near_and_far_networkx(
 
     Returns:
         tuple[list[np.ndarray], list[np.ndarray]]: A tuple containing the following:
-            near_sides (list[np.ndarray]): List of integer arrays giving the near
-            sides. len(near_sides) == len(edge_indices).
-            far_sides (list[np.ndarray]): Same as near sides,
-            but this time the far sides.
+            - near_sides (list[np.ndarray]): List of integer arrays giving the near
+            - sides. len(near_sides) == len(edge_indices).
+            - far_sides (list[np.ndarray]): Same as near sides, but this time the far sides.
 
     """
     # Third Party Imports
     import networkx as nx
     from networkx.algorithms.components.connected import connected_components
+
+    assert edge_indices.shape[1] == 2, (
+        f"Can only take `edge_indices` as a numpy array, with shape[1] = 2, but "
+        f"the provided `edge_indices` has shape {edge_indices.shape[1]=}."
+    )
 
     if parallel:
         out = np.zeros(shape=(len(edge_indices), len(bondgraph))).astype(bool)
@@ -447,6 +460,10 @@ def _get_near_and_far_networkx(
                 raise Exception(
                     f"Please provide arg `top` to learn more about this Exception"
                 ) from e
+        except TypeError as e:
+            raise Exception(
+                f"Could not remove the edge {edge=}, {edge_indices.shape=}."
+            ) from e
         components = [*connected_components(G)]
         if len(components) != 2:
             if top is None:
@@ -492,6 +509,39 @@ def _get_near_and_far_networkx(
         return near_sides, far_sides
     else:
         return out, None
+
+
+def _angle(
+    xyz: np.ndarray,
+    indices: np.ndarray,
+) -> float:
+    """Returns current angle between positions.
+
+    Adapted from MDTraj.
+
+    Args:
+        xyz (np.ndarray). This function only takes a xyz array of a single frame and uses np.expand_dims()
+            to make that fame work with the `_displacement` function from mdtraj.
+        indices (Union[np.ndarray, list]): List of 3 ints describing the dihedral.
+
+    Returns:
+        np.ndarray: The angle.
+
+    """
+    indices = np.expand_dims(np.asarray(indices), 0)
+    xyz = np.expand_dims(xyz, 0)
+    ix01 = indices[:, [1, 0]]
+    ix21 = indices[:, [1, 2]]
+
+    u_prime = _displacement(xyz, ix01)
+    v_prime = _displacement(xyz, ix21)
+    u_norm = np.sqrt((u_prime**2).sum(-1))
+    v_norm = np.sqrt((v_prime**2).sum(-1))
+
+    u = u_prime / (u_norm[..., np.newaxis])
+    v = v_prime / (v_norm[..., np.newaxis])
+
+    return np.arccos((u * v).sum(-1))
 
 
 def _dihedral(

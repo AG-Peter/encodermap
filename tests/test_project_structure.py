@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # tests/test_project_structure.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -33,17 +33,25 @@ sifts through all files in the encodermap package and alerts to the following:
 # Imports
 ################################################################################
 
+# Future Imports at the top
+from __future__ import annotations
 
 # Standard Library Imports
 import ast
 import os
 import re
+import sys
 import unittest
+from collections.abc import Sequence
 from pathlib import Path
+from typing import Optional, Union
 
 # Third Party Imports
 from docstring_parser import parse as docparse
 from pydoctest.main import PyDoctestService, get_configuration, get_reporter
+
+# Encodermap imports
+from conftest import skip_all_tests_except_env_var_specified
 
 
 ################################################################################
@@ -53,7 +61,7 @@ from pydoctest.main import PyDoctestService, get_configuration, get_reporter
 
 LICENSE_HEADER1 = """\
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #\
@@ -76,6 +84,9 @@ LICENSE_HEADER2 = """\
 CODING_HEADER = "# -*- coding: utf-8 -*-"
 
 
+IGNORE_COMMENT_BLOCK = ""
+
+
 TYPE_INFERRED_ASSIGNMENTS = (ast.Call, ast.JoinedStr, ast.BinOp)
 
 
@@ -87,18 +98,106 @@ _directive_regex = re.compile(r"\.\. \S+::")
 ################################################################################
 
 
-def check_missing_docstrings(
-    files_to_check,
-    exclude_files=None,
-    exclude_dirs=None,
-    exclude_class_decorators=None,
+def check_unexpected_imports(
+    files_to_check: Sequence[Path],
+    requirements_file: Path,
+    exclude_files: Optional[Sequence[str]] = None,
+    exclude_dirs: Optional[Sequence[str]] = None,
+    package_name: Optional[str] = None,
 ) -> list[str]:
     if exclude_files is None:
-        exclude_files = ["_version.py", "transformations.py"]
+        exclude_files = []
+    else:
+        exclude_files.extend(["_version.py", "dashboard.py"])
+    if exclude_dirs is None:
+        exclude_dirs = ["encodermap_tf1"]
+
+    wrong_imports = []
+
+    requirements = set("pip")
+    for line in requirements_file.read_text().splitlines():
+        name = line.split()[0]
+        requirements.add(name)
+        if "-" in name:
+            requirements.add(name.replace("-", "_"))
+    if package_name is not None:
+        requirements.add(package_name)
+
+    for file in files_to_check:
+        requirements.add(file.stem)
+
+    for file in files_to_check:
+        if any([excl in file.parents for excl in exclude_dirs]):
+            continue
+        elif file.absolute() in exclude_files or file.name in exclude_files:
+            continue
+        else:
+            module = ast.parse(file.read_text())
+
+            for node in ast.iter_child_nodes(module):
+                if isinstance(node, ast.Import):
+                    module_name = node.names[0].name.split(".")[0]
+                elif isinstance(node, ast.ImportFrom):
+                    if node.module is None:
+                        continue
+                    try:
+                        module_name = node.module.split(".")[0]
+                    except AttributeError as e:
+                        raise Exception(
+                            f'"{file.resolve()}:{node.lineno}" {node=}'
+                        ) from e
+                else:
+                    continue
+
+                if module_name == "pip":
+                    continue
+                if module_name in sys.stdlib_module_names:
+                    continue
+                if module_name in requirements:
+                    continue
+                wrong_imports.append(
+                    f"The import of/from module '{module_name}' in file "
+                    f'"{file.resolve()}:{node.lineno}" was not included in the '
+                    f"projects's requirements file. Please include it as a "
+                    f"requirement or make it an optional import."
+                )
+    return wrong_imports
+
+
+def check_missing_docstrings(
+    files_to_check: Sequence[Path],
+    exclude_files: Optional[Sequence[str]] = None,
+    exclude_dirs: Optional[Sequence[str]] = None,
+    exclude_class_decorators: Optional[Sequence[str]] = None,
+) -> list[str]:
+    """Finds missing docstrings in `files_to_check`.
+
+    Ignore functions by adding # pragma: no doccheck to the functions.::
+
+        def myfun(*args, **kwargs):  # pragma: no cover, no doccheck
+
+    Args:
+        files_to_check (Sequence[Path]): The pathlib Paths to check.
+        exclude_files (Optional[Sequence[str]]): What files to exclude. If None
+            is provided no files are skipped. Expects the filenames without
+            preceding path. I.e. /home/user/git/encodermap/encodermap/__init__.py
+            should be specified as only __init__.py.
+        exclude_dirs (Optional[Sequence[str]]): What dirs to exclude. If None is
+            provided it defaults to ['encodermap_tf1'].
+        exclude_class_decorators (Optional[Sequence[str]]): What class decorators
+            to exclude. If None is provided, it defaults to ['overload', 'testing'].
+
+    Returns:
+        list[str]: A list of strings that can be printed to easily find the offending
+            functions.
+
+    """
+    if exclude_files is None:
+        exclude_files = []
     else:
         exclude_files.extend(["_version.py", "transformations.py"])
     if exclude_dirs is None:
-        exclude_dirs = []
+        exclude_dirs = ["encodermap_tf1"]
     if exclude_class_decorators is None:
         exclude_class_decorators = ["testing"]
     else:
@@ -125,15 +224,38 @@ def check_missing_docstrings(
                 node for node in function_defs if ast.get_docstring(node) is None
             ]
             for func in func_missing_docs:
-                msg = (
-                    f"The function `{func.name}` in File "
-                    f'"{file.resolve()}:{func.lineno}" is missing its '
-                    f"docstring. Please add it."
-                )
-                missing_docstrings.append(msg)
+                if "overload" in (
+                    dec_list := [
+                        n.id for n in func.decorator_list if isinstance(n, ast.Name)
+                    ]
+                ):
+                    pass
+                else:
+                    msg = (
+                        f"The function `{func.name}` in File "
+                        f'"{file.resolve()}:{func.lineno}" is missing its '
+                        f"docstring. Please add it."
+                    )
+                    missing_docstrings.append(msg)
 
             # find functions which docstrings are incomplete
             for func in function_defs:
+                if "overload" in (
+                    dec_list := [
+                        n.id for n in func.decorator_list if isinstance(n, ast.Name)
+                    ]
+                ):
+                    continue
+                skip = False
+                for line in file.read_text().splitlines()[func.lineno :]:
+                    if ")" in line and ":" in line:
+                        if "pragma:" in line and (
+                            "no doccheck" in line or "nodoccheck" in line
+                        ):
+                            skip = True
+                        break
+                if skip:
+                    continue
                 all_args = func.args.posonlyargs + func.args.args + func.args.kwonlyargs
                 arg_names = [a.arg for a in all_args]
                 if len(all_args) == 0:
@@ -147,7 +269,7 @@ def check_missing_docstrings(
                 ):
                     for i in list(undocumented_args):
                         missing_args_and_returns.append(
-                            f"The argument {i} in function `{func.name}` in file "
+                            f"The argument '{i}' in function `{func.name}` in file "
                             f'"{file.resolve()}:{func.lineno}" is not present  '
                             f"in the function's docstring. Please add it."
                         )
@@ -167,7 +289,9 @@ def check_missing_docstrings(
                 node for node in class_defs if ast.get_docstring(node) is None
             ]
             for clas in class_missing_docs:
-                decorator_names = [d.id for d in clas.decorator_list]
+                decorator_names = [
+                    d.id for d in clas.decorator_list if hasattr(d, "id")
+                ]
                 if any([i in decorator_names for i in exclude_class_decorators]):
                     class_missing_docs.remove(clas)
                 else:
@@ -218,6 +342,49 @@ def check_missing_docstrings(
     return missing_docstrings + missing_args_and_returns
 
 
+def find_long_comments(
+    files: Sequence[Union[str, Path]],
+    exclude_files: Optional[Sequence[str]] = None,
+    exclude_dirs: Optional[Sequence[str]] = None,
+    threshold: int = 5,
+) -> list[str]:
+    if exclude_files is None:
+        exclude_files = ["_version.py", "transformations.py"]
+    else:
+        exclude_files.extend(["_version.py", "transformations.py"])
+    if exclude_dirs is None:
+        exclude_dirs = []
+
+    out = []
+
+    files = list(map(Path, files))
+
+    for file in files:
+        if any([excl in file.parents for excl in exclude_dirs]):
+            continue
+        elif file.absolute() in exclude_files or file.name in exclude_files:
+            continue
+        lines = file.read_text().splitlines()
+        writing = False
+        n_comments_lines = 0
+        for lineno, line in enumerate(lines):
+            line = line.lstrip()
+            if line.startswith("#") and not writing:
+                writing = True
+                comment = f"{file.resolve()}:{lineno} contains XXX lines with comments:\n\n{line}\n"
+                n_comments_lines += 1
+            elif line.startswith("#") and writing:
+                comment += f"{line}\n"
+                n_comments_lines += 1
+            else:
+                if n_comments_lines > threshold and LICENSE_HEADER1 not in comment:
+                    out.append(comment.replace("XXX", str(n_comments_lines)))
+                writing = False
+                n_comments_lines = 0
+    return out
+
+
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestDocumentation(unittest.TestCase):
     EXCLUDE_DIRS = [
         Path(f"{__file__}/../../development").resolve(),
@@ -236,14 +403,16 @@ class TestDocumentation(unittest.TestCase):
     ]
 
     @classmethod
-    def setUpClass(cls) -> None:
+    def setUpClass(cls):
         """Collect all possible files in encodermap, tests and encodermap/examples"""
         cls.project_root = Path(f"{__file__}/../..").resolve()
+        cls.requirements_file = cls.project_root / "requirements.txt"
         cls.files_to_check = list(cls.project_root.rglob("*.py"))
         cls.files_to_check = [file.resolve() for file in cls.files_to_check]
         cls.test_files = list(Path(__file__).resolve().parent.glob("*.py"))
+        return cls
 
-    @unittest.skip
+    @unittest.skip("Project is too convoluted to enforce MyPy and type annotations.")
     def test_type_declarations(self):
         """Test whether all functions have type declarations."""
         missing_type_info = []
@@ -296,15 +465,6 @@ class TestDocumentation(unittest.TestCase):
                             f"value is {node.value}."
                         )
                         missing_type_info.append(msg)
-
-                # print(type(node))
-
-            # for i, node in enumerate(module.body):
-            #     print(node)
-            #     print(dir(node))
-            #     if i == 10:
-            #         break
-            # print(module)
             # print(dir(module))
             break
         self.assertFalse(bool(missing_type_info), msg="\n\n".join(missing_type_info))
@@ -384,6 +544,18 @@ class TestDocumentation(unittest.TestCase):
                     files.append(msg)
         self.assertFalse(bool(files), msg="\n\n".join(files))
 
+    def test_non_optional_imports(self):
+        """Makes sure, that no imports from the md_requirements.txt are used as
+        top-level imports."""
+        unexpected_imports = check_unexpected_imports(
+            self.files_to_check,
+            self.requirements_file,
+            self.EXCLUDE_FILES + self.EXCLUDE_CONTENT_HEADERS,
+            self.EXCLUDE_DIRS + self.TEST_DIRS,
+            package_name="encodermap",
+        )
+        self.assertFalse(bool(unexpected_imports), msg="\n\n".join(unexpected_imports))
+
     def test_license_info(self):
         """Test whether all files have a license header in them."""
         files = []
@@ -441,6 +613,10 @@ class TestDocumentation(unittest.TestCase):
             self.test_files,
         )
         self.assertFalse(bool(missing_docstrings), msg="\n\n".join(missing_docstrings))
+
+    def test_find_long_comments(self):
+        long_comments = find_long_comments(self.files_to_check)
+        self.assertFalse(bool(long_comments), msg="\n\n".join(long_comments))
 
 
 test_cases = (TestDocumentation,)

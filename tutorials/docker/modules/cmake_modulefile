@@ -1,0 +1,33 @@
+#%Module1.0
+#
+# cmake compilers and headers modulefile
+# Date:
+# Author:
+#
+set     name         "cmake Toolkit"
+set     version      "3.18.2"
+set     arch         "x86_64"
+set     desc         "cmake compilers and headers"
+set     url	     "http://www.cmake.org/"
+set     CMAKE_ROOT   /home/$USER/bin/cmake-3.18.2
+
+proc ModulesHelp { } {
+        global name
+        global desc
+        global url
+        puts stderr "This module provides $desc\n"
+        puts stderr "More information about $name can be found at:"
+        puts stderr "    $url\n"
+}
+
+module-whatis   "Sets the environment for $desc"
+
+conflict        cmake
+
+module load gcc/5.5.0
+module load mvapich2/gnu/ib/2.2
+
+prepend-path    PATH                    $CMAKE_ROOT
+prepend-path    PATH                    $CMAKE_ROOT/bin
+prepend-path    PATH                    /usr/lib64
+setenv          CMAKE_ROOT              $CMAKE_ROOT

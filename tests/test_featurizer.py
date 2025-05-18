@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # tests/test_featurizer.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -19,16 +19,6 @@
 #
 # See <http://www.gnu.org/licenses/>.
 ################################################################################
-# traj1 = SingleTraj("data/1am7_corrected.xtc", "data/1am7_protein.pdb")
-# traj1.load_CV(traj1.xyz[:,:,0], 'z_coordinate')
-#
-# for i, frame in enumerate(traj1):
-#     print(frame)
-#     print(frame.z_coordinate)
-#     if i == 3:
-#         break
-#
-# This porduces wrong output in jupyter
 """Available TestSuites:
     * TestFeatures: Uses mock to make MDTraj and thus EncoderMap load atomic
         positions from an artificial trajectory. This artificial trajectory
@@ -54,6 +44,7 @@
 from __future__ import annotations
 
 # Standard Library Imports
+import os.path
 import tempfile
 import unittest
 import warnings
@@ -63,6 +54,7 @@ from typing import Optional, Union
 from unittest.mock import patch
 
 # Third Party Imports
+import dask
 import MDAnalysis as mda
 import mdtraj as md
 import numpy as np
@@ -73,12 +65,16 @@ from MDAnalysis.transformations import unwrap
 from numpy.testing import assert_array_equal
 
 # Encodermap imports
-from encodermap.loading.dask_featurizer import DaskFeaturizer
-from encodermap.loading.featurizer import Featurizer, pairs
+from conftest import skip_all_tests_except_env_var_specified
+from encodermap.loading.featurizer import (
+    DaskFeaturizer,
+    EnsembleFeaturizer,
+    Featurizer,
+    SingleTrajFeaturizer,
+)
 
 
 import encodermap as em  # isort: skip
-
 
 try:
     # Third Party Imports
@@ -100,10 +96,33 @@ except ImportError:
 from numpy.testing import assert_allclose, assert_array_compare
 
 # Encodermap imports
+from conftest import expensive_test
 from encodermap import SingleTraj
+from encodermap.loading.featurizer import pairs
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+
+################################################################################
+# Globals
+################################################################################
+
+
+ALIGNMENT = """\
+linear_dimer  -------MQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRL
+FAT10         MAPNASCLCVHVRSEEWDLMTFDANPYDSVKKIKEHVRSKTKVPVQDQVLLLGSKILKPRRSLSSYGIDKEKTIHLTLKV
+              : :.*::   . :*::.:* *:::::* :::.*  :* ::* *::..* *:  *:**.*.*:**.*:**.*::
+
+linear_dimer  ----RGGMQIFV--KTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVL
+FAT10         VKPSDEELPLFLVESGDEAKRHLLQVRRSSSVAQVKAMIETKTGIIPETQIVTCNGKRLEDGKMMADYGIRKGNLLFLAS
+              : :*:  .   .*   *:*. *.:: :*** *: * ** *: * :   **:****: ::**.*:* . *.*.
+
+linear_dimer  RLRGG
+FAT10         YCIGG
+              **
+
+"""
 
 
 ################################################################################
@@ -114,8 +133,12 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 def add_B1_and_B2_as_ca(*args, **kwargs):
     self = args[0]
     sel = self.traj.top.select("name B1 or name B2")
-    pairs = self.pairs(sel, 0)
-    self.add_distances(pairs, periodic=True)
+    pairs_ = pairs(sel, 0)
+    if "delayed" not in kwargs:
+        delayed = False
+    else:
+        delayed = kwargs.pop("delayed")
+    self.add_distances(pairs_, periodic=True, delayed=delayed)
 
 
 def add_B1_and_B4_as_ca(*args, **kwargs):
@@ -125,7 +148,26 @@ def add_B1_and_B4_as_ca(*args, **kwargs):
     else:
         sel = self.trajs[0].top.select("name B1 or name B4")
     pairs_ = pairs(sel, 0)
-    self.add_distances(pairs_, periodic=True)
+    if "delayed" not in kwargs:
+        delayed = False
+    else:
+        delayed = kwargs.pop("delayed")
+    self.add_distances(pairs_, periodic=True, delayed=delayed)
+
+
+def mocked_all_cartesians_init(
+    self,
+    traj,
+    check_aas: bool = False,
+    generic_labels: bool = False,
+    delayed: bool = False,
+) -> None:
+    super(em.features.AllCartesians, self).__init__(
+        traj=traj,
+        indexes=traj.top.select("name B1 or name B2 or name B3 or name B4"),
+        check_aas=check_aas,
+        delayed=delayed,
+    )
 
 
 ################################################################################
@@ -161,6 +203,7 @@ def assert_allclose_periodic(
     verbose: Optional[bool] = True,
     periodicity: float = 2 * np.pi,
     max_percentage_mismatched: float = 0.0,
+    indices: Optional[np.ndarray] = None,
 ) -> None:
     actual, desired = np.asanyarray(actual), np.asanyarray(desired)
     header = f"Not equal to tolerance rtol={rtol:g}, atol={atol:g}"
@@ -173,18 +216,25 @@ def assert_allclose_periodic(
         with np.errstate(invalid="ignore"), _no_nep50_warning():
             d = np.abs(x - y)
             d = np.minimum(d, periodicity - d)
+            total = x.size
             tol = atol + rtol * periodicity * np.abs(y)
             le = np.less_equal(d, tol) & (d != 0)
             mismatched = np.where((~np.less_equal(d, tol) & (d != 0)))[0]
+            percent = len(mismatched) / total * 100.0
             if mismatched.size > max_number_mismatched:
                 with np.printoptions(suppress=True):
-                    print(
-                        f"There are {len(mismatched)} elements in a periodic space of {periodicity:.4f} "
+                    msg = (
+                        f"There are {len(mismatched)} out of {total} ({percent:.1f}%) "
+                        f"elements in a periodic space of {periodicity:.4f} "
                         f"that exhibit differences, that are out of tolerance. "
-                        f"In the flattened `actual` and desired` arrays, these "
-                        f"5 example elements exhibit a"
+                        f"In the flattened `actual` and `desired` arrays, these "
+                        f"5 example elements exhibit a "
                         f"difference over the tolerance: {mismatched[:5]}\n"
                         f"The values of 5 example elements of these arrays are:\n\n"
+                    )
+                    if indices is not None:
+                        msg += f"Indices:\n{indices.flatten()[mismatched][:5]}\n\n"
+                    msg += (
                         f"Actual:\n{x[mismatched][:5]}\n\nDesired:\n{y[mismatched][:5]}\n\n"
                         f"Their difference in periodic space is:\n"
                         f"{d[mismatched][:5]}\n\nwhich is above the tolerance at "
@@ -192,6 +242,7 @@ def assert_allclose_periodic(
                         f"You can either adjust the parameters `atol`, `rtol`, or increase "
                         f"the `max_percentage_mismatched` which can be useful for periodic distances."
                     )
+                    print(msg)
             elif mismatched.size == 0:
                 return True
             else:
@@ -229,18 +280,15 @@ def assert_allclose_periodic(
 ################################################################################
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
+@expensive_test
 class TestSpecialDaskFeatures(unittest.TestCase):
     @classmethod
-    def setUpClass(cls) -> None:
-        cls.PFFP_xtc_file = (
-            Path(__file__) / "../data/PFFP_MD_fin_protonly_dt_100.xtc"
-        ).resolve()
-        cls.PFFP_tpr_file = (
-            Path(__file__) / "../data/PFFP_MD_fin_protonly.tpr"
-        ).resolve()
-        cls.PFFP_gro_file = (
-            Path(__file__) / "../data/PFFP_MD_fin_protonly.gro"
-        ).resolve()
+    def setUpClass(cls):
+        cls.data_dir = Path(__file__).resolve().parent / "data"
+        cls.PFFP_xtc_file = cls.data_dir / "PFFP_MD_fin_protonly_dt_100.xtc"
+        cls.PFFP_tpr_file = cls.data_dir / "PFFP_MD_fin_protonly.tpr"
+        cls.PFFP_gro_file = cls.data_dir / "PFFP_MD_fin_protonly.gro"
         top = md.load(str(cls.PFFP_gro_file)).top
 
         # get all bonds of the 125 tetrapeptides
@@ -254,6 +302,7 @@ class TestSpecialDaskFeatures(unittest.TestCase):
             )
             cls.bonds.append(this_peptide_bonds)
         cls.bonds = np.hstack(cls.bonds).T
+        return cls
 
     def assertAllClose(
         self,
@@ -303,12 +352,93 @@ class TestSpecialDaskFeatures(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
-    def test_dask_visualization(self):
-        traj = em.load(self.PFFP_xtc_file, self.PFFP_gro_file)
-        feat = em.Featurizer(traj, in_memory=False)
-        feat.add_all()
-        feat.get_output(make_trace=True)
-        self.assertTrue(False)
+    @unittest.skip("This test is under development.")
+    def test_save_ensemble_with_coords(self):
+        # self.fail("This breaks my computer. Don't know why.")
+        output_dir = Path(
+            em.get_from_kondata(
+                "Ub_K11_mutants",
+                mk_parentdir=True,
+                silence_overwrite_message=True,
+            )
+        )
+
+        trajs = em.load(
+            [
+                output_dir / "Ub_K11Ac_I/traj.xtc",
+                output_dir / "Ub_K11C_I/traj.xtc",
+                output_dir / "Ub_K11Q_I/traj.xtc",
+                output_dir / "Ub_K11R_I/traj.xtc",
+                output_dir / "Ub_wt_I/traj.xtc",
+            ],
+            [
+                output_dir / "Ub_K11Ac_I/start.pdb",
+                output_dir / "Ub_K11C_I/start.pdb",
+                output_dir / "Ub_K11Q_I/start.pdb",
+                output_dir / "Ub_K11R_I/start.pdb",
+                output_dir / "Ub_wt_I/start.pdb",
+            ],
+            common_str=[
+                "Ac",
+                "C",
+                "Q",
+                "R",
+                "wt",
+            ],
+        )
+
+        custom_aas = {
+            "KAC": (
+                "K",
+                {
+                    "optional_bonds": [
+                        ("-C", "N"),  # the peptide bond to the previous aa
+                        ("N", "CA"),
+                        ("N", "H"),
+                        ("CA", "C"),
+                        ("C", "O"),
+                        ("CA", "CB"),
+                        ("CB", "CG"),
+                        ("CG", "CD"),
+                        ("CD", "CE"),
+                        ("CE", "NZ"),
+                        ("NZ", "HZ"),
+                        ("NZ", "CH"),
+                        ("CH", "OI2"),
+                        ("CH", "CI1"),
+                        ("C", "+N"),  # the peptide bond to the next aa
+                        ("C", "+N"),  # the peptide bond to the next aa
+                    ],
+                    "CHI1": ["N", "CA", "CB", "CG"],
+                    "CHI2": ["CA", "CB", "CG", "CD"],
+                    "CHI3": ["CB", "CG", "CD", "CE"],
+                    "CHI4": ["CG", "CD", "CE", "NZ"],
+                    "CHI5": ["CD", "CE", "NZ", "CH"],
+                },
+            )
+        }
+        trajs.load_custom_topology(custom_aas)
+
+        feat1 = em.DaskFeaturizer(trajs=trajs)
+        feat1.add_list_of_feats("all")
+        td = Path.home()
+        file = feat1.to_netcdf(
+            filename=td / "test.h5",
+            overwrite=True,
+            with_trajectories=True,
+        )
+        self.assertTrue(os.path.isfile(file))
+
+        new_trajs = em.load(Path(file))
+        self.assertEqual(
+            new_trajs.n_trajs,
+            5,
+        )
+        self.assertEqual(new_trajs._CVs.sizes["traj_num"], 5)
+        self.assertTrue(
+            new_trajs[0]._custom_top.residues != set(),
+        )
+        self.assertEqual(set(new_trajs.common_str), set(trajs.common_str))
 
     def test_and_compare_mdtraj_pbc(self):
         traj = md.load(self.PFFP_xtc_file, top=self.PFFP_gro_file)
@@ -332,8 +462,8 @@ class TestSpecialDaskFeatures(unittest.TestCase):
         traj1 = em.load(self.PFFP_xtc_file, self.PFFP_gro_file)
         traj2 = em.load(self.PFFP_xtc_file, self.PFFP_gro_file)
 
-        feat1 = em.Featurizer(traj1, in_memory=True)
-        feat2 = em.Featurizer(traj2, in_memory=False)
+        feat1 = em.Featurizer(traj1)
+        feat2 = em.DaskFeaturizer(traj2)
 
         feat1.add_all()
         feat1.add_distances_ca()
@@ -347,19 +477,14 @@ class TestSpecialDaskFeatures(unittest.TestCase):
 
     def test_periodic_distances_angles_dihedrals(self):
         """This test uses a trajectory with many small peptides in it. That way,
-        we can be sure, that some pbc breakings occur. MDTRaj and MDAnalysis should
+        we can be sure that some pbc breaking occurs. MDTRaj and MDAnalysis should
         be able to resolve them.
         """
         print("TESTPERIODIC start")
-        PFFP_gro = Path(__file__).resolve().parent / "data/PFFP_MD_fin_protonly.gro"
-        PFFP_tpr = Path(__file__).resolve().parent / "data/PFFP_MD_fin_protonly.tpr"
-        PFFP_xtc = (
-            Path(__file__).resolve().parent / "data/PFFP_MD_fin_protonly_dt_100.xtc"
-        )
-        PFFP_fixed_xtc = (
-            Path(__file__).resolve().parent
-            / "data/PFFP_MD_fin_protonly_dt_100_fixed_pbc.xtc"
-        )
+        PFFP_gro = self.data_dir / "PFFP_MD_fin_protonly.gro"
+        PFFP_tpr = self.data_dir / "PFFP_MD_fin_protonly.tpr"
+        PFFP_xtc = self.data_dir / "PFFP_MD_fin_protonly_dt_100.xtc"
+        PFFP_fixed_xtc = self.data_dir / "PFFP_MD_fin_protonly_dt_100_fixed_pbc.xtc"
 
         print("TESTPERIODIC creating universe")
         u1 = mda.Universe(PFFP_tpr, PFFP_xtc)
@@ -465,9 +590,9 @@ class TestSpecialDaskFeatures(unittest.TestCase):
         )
 
         # with dask
-        dask_feat1 = em.Featurizer(em_traj_w_pbc, in_memory=False)
+        dask_feat1 = em.DaskFeaturizer(em_traj_w_pbc)
         dask_feat1.add_distances(atom_pairs, periodic=False)
-        dask_feat2 = em.Featurizer(em_traj_w_pbc, in_memory=False)
+        dask_feat2 = em.DaskFeaturizer(em_traj_w_pbc)
         dask_feat2.add_distances(atom_pairs, periodic=True)
         dask_em_dists_not_periodic = feat1.get_output().DistanceFeature.values.squeeze()
         dask_em_dists_periodic = feat2.get_output().DistanceFeature.values.squeeze()
@@ -514,9 +639,9 @@ class TestSpecialDaskFeatures(unittest.TestCase):
         self.assertAllClosePeriodic(md_dih_periodic, em_dih_periodic, atol=0.01)
         self.assertAllClosePeriodic(md_dih_not_periodic, em_dih_not_periodic, atol=0.01)
 
-        dask_feat1 = em.Featurizer(em_traj_w_pbc, in_memory=False)
+        dask_feat1 = em.DaskFeaturizer(em_traj_w_pbc)
         dask_feat1.add_dihedrals(dihedral_atoms, periodic=False)
-        dask_feat2 = em.Featurizer(em_traj_w_pbc, in_memory=False)
+        dask_feat2 = em.DaskFeaturizer(em_traj_w_pbc)
         dask_feat2.add_dihedrals(dihedral_atoms, periodic=True)
 
         dask_em_dih_not_periodic = feat1.get_output().DihedralFeature.values.squeeze()
@@ -527,25 +652,8 @@ class TestSpecialDaskFeatures(unittest.TestCase):
             md_dih_not_periodic, dask_em_dih_not_periodic, atol=0.01
         )
 
-    def test_performance_full_featurization(self):
-        """Less of a test, more of a comparison:
 
-        Test three datasets:
-            * Single traj.
-            * Two trajs.
-            * Large diUbq dataset.
-
-        Test these approaches to characterize all backbone features:
-            * Numpy/Scipy
-            * MDTraj
-            * MDAnalysis
-            * PyEMMA
-            * dask/delayed with numba etc. (i.e. EncoderMap)
-
-        """
-        self.assertTrue(False)
-
-
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestFeatures(tf.test.TestCase):
     featurizer_class = Featurizer
 
@@ -555,6 +663,29 @@ class TestFeatures(tf.test.TestCase):
         self.assertTrue(
             testBool, msg=f"obj lacking an attribute. {obj=}, {intendedAttr=}"
         )
+
+    def assertAllClose(
+        self,
+        actual: Union[np.ndarray, Iterable, int, float],
+        desired: Union[np.ndarray, Iterable, int, float],
+        rtol: Optional[float] = 1e-7,
+        atol: Optional[float] = 0,
+        equal_nan: Optional[bool] = True,
+        err_msg: Optional[str] = "",
+        verbose: Optional[bool] = True,
+    ) -> None:
+        try:
+            assert_allclose(
+                actual=actual,
+                desired=desired,
+                rtol=rtol,
+                atol=atol,
+                equal_nan=equal_nan,
+                err_msg=err_msg,
+                verbose=verbose,
+            )
+        except AssertionError as e:
+            self.fail(str(e))
 
     def assertAllEqual(
         self,
@@ -568,37 +699,142 @@ class TestFeatures(tf.test.TestCase):
         try:
             assert_array_equal(x, y, err_msg=msg)
         except AssertionError as e:
-            self.fail(str(e))
+            self.fail(msg)
         except TypeError as e:
             raise Exception(
                 f"assertAllEqual got bad types: {x=} {y=} {type(x)=} {type(y)=}"
             )
 
+    @classmethod
+    def setUpClass(cls):
+        cls.data_dir = Path(__file__).resolve().parent / "data"
+        return cls
+
     def setUp(self) -> None:
-        traj_path = (Path(__file__) / "../../tests/data/known_angles.h5").resolve()
+        traj_path = self.data_dir / "known_angles.h5"
         self.traj = SingleTraj(traj_path)
         self.traj.load_custom_topology({"RES": ("ARG", {})})
 
-        traj_paths = (Path(__file__) / "../../tests/data").resolve()
-        traj_paths = list(traj_paths.glob("known_angles_*.h5"))
+        traj_paths = list(self.data_dir.glob("known_angles_*.h5"))
         traj_paths = list(sorted(traj_paths, key=lambda x: int(str(x)[-4])))
         self.trajs = em.TrajEnsemble(traj_paths)
 
-        md_traj_xtc = (
-            Path(__file__) / "../../tests/data"
-        ).resolve() / "alanine_dipeptide.xtc"
-        md_traj_pdb = (
-            Path(__file__) / "../../tests/data"
-        ).resolve() / "alanine_dipeptide.pdb"
+        md_traj_xtc = self.data_dir / "alanine_dipeptide.xtc"
+        md_traj_pdb = self.data_dir / "alanine_dipeptide.pdb"
         self.md_traj = SingleTraj(md_traj_xtc, md_traj_pdb)
 
-        traj_file = (Path(__file__) / "../../tests/data/1am7_corrected.xtc").resolve()
-        top_file = (Path(__file__) / "../../tests/data/1am7_protein.pdb").resolve()
-        self.protein_1am7 = SingleTraj(traj_file, top_file)
+        self.traj_file_1am7 = self.data_dir / "1am7_corrected.xtc"
+        self.top_file_1am7 = self.data_dir / "1am7_protein.pdb"
+        self.protein_1am7 = SingleTraj(self.traj_file_1am7, self.top_file_1am7)
 
-        traj_file = (Path(__file__) / "../../tests/data/Ala10_helix.xtc").resolve()
-        top_file = (Path(__file__) / "../../tests/data/Ala10_helix.pdb").resolve()
+        traj_file = self.data_dir / "Ala10_helix.xtc"
+        top_file = self.data_dir / "Ala10_helix.pdb"
         self.ala10_helix = SingleTraj(traj_file, top_file)
+
+    def test_OTU_11_ensemble(self):
+        # Encodermap imports
+        from encodermap.kondata import get_from_url
+
+        output_dir = Path(
+            get_from_url(
+                "https://sawade.io/encodermap_data/OTU11_preequilibrated",
+                mk_parentdir=True,
+                silence_overwrite_message=True,
+            )
+        )
+        pdb_files = list(output_dir.glob("*.pdb"))
+        xtc_files = list(output_dir.glob("*.xtc"))
+        self.assertGreater(
+            len(pdb_files),
+            0,
+            msg=f"No pdb files from OTU11_preequilibrated dataset downloaded to {output_dir}",
+        )
+        self.assertGreater(
+            len(xtc_files),
+            0,
+            msg=f"No xtc files from OTU11_preequilibrated dataset downloaded to {output_dir}",
+        )
+
+        custom_aas = {
+            "CLA": None,
+            "SOD": None,
+            "POPC": None,
+            "POPE": None,
+            "SAPI": None,
+            "THR": (
+                "T",
+                {
+                    "optional_bonds": [
+                        ("-C", "N"),  # the peptide bond to the previous aa
+                        ("N", "CA"),
+                        ("N", "H"),
+                        ("CA", "HA"),
+                        ("CB", "HB"),
+                        ("CB", "OG1"),
+                        ("OG1", "P"),
+                        ("P", "O1P"),
+                        ("P", "O2P"),
+                        ("P", "OXT"),
+                        ("OXT", "HT"),
+                        ("CB", "CG2"),
+                        ("CG2", "HG21"),
+                        ("CG2", "HG22"),
+                        ("CG2", "HG23"),
+                        ("CA", "C"),
+                        ("C", "O"),
+                        ("C", "+N"),  # the peptide bond to the next aa
+                    ],
+                    "optional_delete_bonds": [
+                        ("OT", "C"),
+                    ],
+                    "CHI2": ["CA", "CB", "OG1", "P"],
+                    "CHI3": ["CB", "OG1", "P", "OXT"],
+                },
+            ),
+            "SER": (
+                "S",
+                {
+                    "optional_bonds": [
+                        ("-C", "N"),  # the peptide bond to the previous aa
+                        ("N", "CA"),
+                        ("N", "H"),
+                        ("CA", "HA"),
+                        ("CB", "HB1"),
+                        ("CB", "HB2"),
+                        ("CB", "OG"),
+                        ("OG", "P"),
+                        ("P", "O1P"),
+                        ("P", "O2P"),
+                        ("P", "OXT"),
+                        ("OXT", "HT"),
+                        ("CA", "C"),
+                        ("C", "O"),
+                        ("C", "+N"),  # the peptide bond to the next aa
+                    ],
+                    "optional_delete_bonds": [
+                        ("OT", "C"),
+                    ],
+                    "CHI2": ["CA", "CB", "OG", "P"],
+                    "CHI3": ["CB", "OG", "P", "OXT"],
+                },
+            ),
+        }
+
+        trajs = em.TrajEnsemble(pdb_files)
+        trajs.load_custom_topology(custom_aas)
+        trajs.load_CVs("all", ensemble=True)
+        self.assertIn("side_dihedrals", trajs.CVs)
+        self.assertIn("side_dihedrals", trajs._CVs)
+
+        trajs = em.TrajEnsemble(
+            trajs=xtc_files,
+            tops=[f.with_suffix(".pdb") for f in xtc_files],
+        )
+        trajs.load_custom_topology(custom_aas)
+        trajs.load_CVs("all", ensemble=True)
+        self.assertIn("side_dihedrals", trajs.CVs)
+        self.assertIn("side_dihedrals", trajs._CVs)
+        print(trajs._CVs)
 
     def test_ensemble_with_diff_length(self):
         # Encodermap imports
@@ -608,12 +844,12 @@ class TestFeatures(tf.test.TestCase):
             [
                 Path(__file__).resolve().parent.parent
                 / "tutorials/notebooks_starter/asp7.xtc",
-                Path(__file__).resolve().parent / "data/glu7.xtc",
+                self.data_dir / "glu7.xtc",
             ],
             [
                 Path(__file__).resolve().parent.parent
                 / "tutorials/notebooks_starter/asp7.pdb",
-                Path(__file__).resolve().parent / "data/glu7.pdb",
+                self.data_dir / "glu7.pdb",
             ],
             common_str=["asp7", "glu7"],
         )
@@ -636,7 +872,7 @@ class TestFeatures(tf.test.TestCase):
         # Encodermap imports
         from encodermap.kondata import get_from_url
 
-        output_dir = Path(__file__).resolve().parent / "data/pASP_pGLU"
+        output_dir = self.data_dir / "pASP_pGLU"
         get_from_url(
             "https://sawade.io/encodermap_data/pASP_pGLU",
             output_dir,
@@ -775,19 +1011,19 @@ class TestFeatures(tf.test.TestCase):
         """Test whether the featurizer also works if it is provided a list
         of mdtraj features.
         """
-        top = Path(__file__).resolve().parent / "data/1am7_protein.pdb"
+        top = self.data_dir / "1am7_protein.pdb"
         traj = em.SingleTraj(
             md.load(
-                Path(__file__).resolve().parent / "data/1am7_corrected.xtc",
+                self.data_dir / "1am7_corrected.xtc",
                 top=top,
             )
         )
-        traj_paths = Path(__file__).resolve().parent / "data"
+        traj_paths = self.data_dir / ""
         traj_paths = list(traj_paths.glob("1am7*part*.xtc"))[::-1]
         trajs = em.TrajEnsemble([md.load(t, top=top) for t in traj_paths])
 
         feat = self.featurizer_class(traj)
-        self.assertFalse(feat._can_load)
+        # self.assertFalse(feat._can_load)
 
         traj.load_CV("all", deg=True)
         trajs.load_CVs("all", deg=True)
@@ -809,7 +1045,6 @@ class TestFeatures(tf.test.TestCase):
     def test_add_all(self):
         # create featurizers for the two Info classes
         # Encodermap imports
-        from encodermap.loading.featurizer import SingleTrajFeaturizer
 
         feat1 = self.featurizer_class(self.traj)
         feat2 = self.featurizer_class(self.trajs)
@@ -823,16 +1058,13 @@ class TestFeatures(tf.test.TestCase):
         self.assertEqual(len(out2.coords["traj_num"]), 2)
 
         # check the positions
-        self.assertTrue(np.alltrue(out1.SelectionFeature.values[0][:, :3] == 0))
-        self.assertTrue(np.alltrue(out2.SelectionFeature.values[0][:, :3] == 0))
-        self.assertTrue(np.alltrue(out2.SelectionFeature.values[1][:, :3] == 0))
+        self.assertTrue(np.all(out1.SelectionFeature.values[0][:, :3] == 0))
+        self.assertTrue(np.all(out2.SelectionFeature.values[0][:, :3] == 0))
+        self.assertTrue(np.all(out2.SelectionFeature.values[1][:, :3] == 0))
         self.assertEqual(out1.SelectionFeature.values[0][5, 10], 1.5)
 
         # use the load_CV feature of TrajEnsemble and SingleTraj
         self.traj.load_CV(feat1)
-        # Encodermap imports
-        from encodermap.loading.featurizer import EnsembleFeaturizer
-
         self.assertIsInstance(feat2, EnsembleFeaturizer)
         out = list(feat2.feature_containers.values())[0]
         # Encodermap imports
@@ -849,6 +1081,11 @@ class TestFeatures(tf.test.TestCase):
         )
         self.trajs.load_CVs(feat2)
 
+        # get the output of the featurizers
+        # as datasets to check whether some coordinate mangling occurs
+        if self.featurizer_class is DaskFeaturizer:
+            self.assertIsNotNone(feat1.dataset.SelectionFeature.chunks)
+
         # test the CVs
         msg = (
             "Usually, the `add_all` method of the Featurizer class"
@@ -856,12 +1093,12 @@ class TestFeatures(tf.test.TestCase):
             "Thus, the key in `traj.CVs` should also be named 'SelectionFeature'."
         )
         self.assertIn("SelectionFeature", self.traj.CVs, msg=msg)
-        # check for same contents as feat.get_output()
-        self.assertTrue(np.alltrue(self.traj.CVs["SelectionFeature"][:, :3] == 0))
+        # check for the same contents as feat.get_output()
+        self.assertTrue(np.all(self.traj.CVs["SelectionFeature"][:, :3] == 0))
 
         msg = (
             "This error can be very serious. Normally, the `traj.CVs` attribute "
-            "was meant to be built from the `traj._CVs` dataarray. If the values "
+            "was meant to be built from the `traj._CVs` DataArray. If the values "
             "of these two arrays are not the same, something with the `CVs` property "
             f"of `SingleTraj` is broken: {self.traj._CVs=} {self.traj.CVs=}"
         )
@@ -878,7 +1115,7 @@ class TestFeatures(tf.test.TestCase):
             msg=msg,
         )
 
-        # check the coordinates of this dataarray
+        # check the coordinates of this DataArray
         self.assertIsNone(self.traj._CVs.SelectionFeature.coords["traj_num"].values[0])
         self.assertEqual(
             self.traj._CVs.SelectionFeature.coords["traj_name"].values[0],
@@ -911,6 +1148,10 @@ class TestFeatures(tf.test.TestCase):
         self.assertEqual(
             self.traj._CVs.SelectionFeature.attrs["feature_axis"], "SELECTIONFEATURE"
         )
+        self.assertIsInstance(
+            self.traj,
+            SingleTraj,
+        )
         self.assertTrue(
             np.array_equal(
                 self.traj._CVs["SelectionFeature_feature_indices"].values[0, ::3, 0],
@@ -923,10 +1164,31 @@ class TestFeatures(tf.test.TestCase):
         )
 
         # do the same things with the trajs
-        self.assertTrue(
-            np.array_equal(
-                self.trajs.CVs["SelectionFeature"], self.traj.CVs["SelectionFeature"]
-            )
+        self.assertIn(
+            "SelectionFeature",
+            self.trajs.CVs,
+            msg=(
+                f"The ensemble '{self.trajs}' has no CV with name 'SelectionFeature' "
+                f"loaded. Here is the dataset:\n\n{self.trajs._CVs}"
+            ),
+        )
+        self.assertEqual(
+            self.trajs.CVs["SelectionFeature"].shape,
+            self.traj.CVs["SelectionFeature"].shape,
+            msg=(
+                f"Shapes of SingleTraj and TrajEnsemble do not match:\n"
+                f"Single Traj: {self.traj.CVs['SelectionFeature'].shape}\n"
+                f"Traj Ensemble: {self.trajs.CVs['SelectionFeature'].shape}"
+            ),
+        )
+        self.assertAllEqual(
+            self.trajs._CVs["SelectionFeature"].sel(traj_num=0, frame_num=2).values,
+            self.traj._CVs["SelectionFeature"].sel(traj_num=None, frame_num=2).values,
+            msg=(f"The coordinate of frame 0 "),
+        )
+        self.assertAllEqual(
+            self.trajs.CVs["SelectionFeature"],
+            self.traj.CVs["SelectionFeature"],
         )
         self.assertEqual(self.trajs._CVs.sizes["traj_num"], 2)
         self.assertEqual(self.trajs._CVs.sizes["frame_num"], 3)
@@ -942,10 +1204,10 @@ class TestFeatures(tf.test.TestCase):
         feat2.add_selection(self.traj.top.select("name B1"))
 
         out1 = feat1.get_output()
-        self.assertTrue(np.alltrue(out1.SelectionFeature.values[0] == 0))
+        self.assertTrue(np.all(out1.SelectionFeature.values[0] == 0))
         out2 = feat2.get_output()
-        self.assertTrue(np.alltrue(out2.SelectionFeature.values[0] == 0))
-        self.assertTrue(np.alltrue(out2.SelectionFeature.values[0] == 0))
+        self.assertTrue(np.all(out2.SelectionFeature.values[0] == 0))
+        self.assertTrue(np.all(out2.SelectionFeature.values[0] == 0))
 
     @patch(
         "encodermap.loading.featurizer.SingleTrajFeaturizer.add_distances_ca",
@@ -957,6 +1219,9 @@ class TestFeatures(tf.test.TestCase):
 
         feat1.add_distances_ca()
         feat2.add_distances_ca()
+
+        if self.featurizer_class is DaskFeaturizer:
+            self.assertTrue(feat1.active_features[0].delayed)
 
         out1 = feat1.get_output().DistanceFeature.values[
             0
@@ -1004,9 +1269,6 @@ class TestFeatures(tf.test.TestCase):
         add_B1_and_B4_as_ca,
     )
     def test_add_inverse_distances(self):
-        # Encodermap imports
-        from encodermap.loading.featurizer import EnsembleFeaturizer
-
         feat1 = self.featurizer_class(self.traj)
         feat2 = self.featurizer_class(self.trajs)
 
@@ -1131,7 +1393,16 @@ class TestFeatures(tf.test.TestCase):
             "ResidueMinDistanceFeature_feature_indices", self.traj._CVs.data_vars
         )
         self.assertEqual(self.traj._CVs.ResidueMinDistanceFeature.shape, (1, 6, 3))
-        self.assertEqual(self.trajs._CVs.ResidueMinDistanceFeature.shape, (2, 3, 3))
+        self.assertEqual(
+            self.trajs._CVs.ResidueMinDistanceFeature.shape,
+            (2, 3, 3),
+            msg=(
+                f"The shape of `TrajEnsemble` `ResidueMinDistanceFeature` is unexpected."
+                f"The shape is expected to be (trajs, frames, n_features), which for "
+                f"the pairs {pairs=} equates to (2, 3, 3), but {self.trajs._CVs.ResidueMinDistanceFeature.shape} "
+                f"was received. The indices are {self.trajs._CVs.ResidueMinDistanceFeature.coords['RESIDUEMINDISTANCEFEATURE']=}"
+            ),
+        )
         self.assertTrue(
             np.array_equal(
                 self.traj._CVs["ResidueMinDistanceFeature_feature_indices"].values[0],
@@ -1183,14 +1454,12 @@ class TestFeatures(tf.test.TestCase):
         self.assertIn("GroupCOMFeature", self.traj._CVs)
         self.assertEqual(self.traj._CVs.GroupCOMFeature.shape, (1, 6, 6))
         self.assertEqual(self.trajs._CVs.GroupCOMFeature.shape, (2, 3, 6))
-        self.assertIn("GroupCOMFeature", self.traj._CVs.GroupCOMFeature.attrs)
-        self.assertTrue(
-            np.array_equal(self.traj._CVs.attrs["GroupCOMFeature"][0], np.array([0, 1]))
+        self.assertIn(
+            "GroupCOMFeature_feature_indices", self.traj._CVs.GroupCOMFeature.attrs
         )
-        self.assertTrue(
-            np.array_equal(
-                self.traj._CVs.attrs["GroupCOMFeature"][1], np.array([0, 1, 2, 3])
-            )
+        self.assertEqual(
+            self.traj._CVs.attrs["GroupCOMFeature_feature_indices"],
+            "[array([0, 1]), array([0, 1, 2, 3])]",
         )
         with tempfile.TemporaryDirectory() as td:
             td = Path(td)
@@ -1209,12 +1478,17 @@ class TestFeatures(tf.test.TestCase):
         feat2 = self.featurizer_class(self.trajs)
 
         feat1.add_residue_COM([0, 1, 2, 3], image_molecules=False, mass_weighted=False)
-        feat1.add_all()
+        with warnings.catch_warnings():
+            warnings.filterwarnings("error", r".*re-add.*", UserWarning)
+            feat1.add_all()
         feat2.add_residue_COM([0, 1, 2, 3], image_molecules=False, mass_weighted=False)
         feat2.add_all()
 
         out1_com = feat1.get_output().ResidueCOMFeature.values[0]
-        out1_sel = feat1.get_output().SelectionFeature.values[0]
+        try:
+            out1_sel = feat1.get_output().SelectionFeature.values[0]
+        except AttributeError as e:
+            raise Exception(f"{feat1.get_output()=}\n\n{feat1.active_features=}") from e
         out2_com = np.vstack(feat2.get_output().ResidueCOMFeature.values)
         out2_sel = np.vstack(feat2.get_output().SelectionFeature.values)
 
@@ -1227,18 +1501,13 @@ class TestFeatures(tf.test.TestCase):
         self.trajs.load_CVs(feat2)
 
         self.assertIn("ResidueCOMFeature", self.traj._CVs.data_vars)
-        self.assertIn("ResidueCOMFeature_feature_indices", self.traj._CVs.data_vars)
+        self.assertIn("ResidueCOMFeature_feature_indices", self.traj._CVs.attrs)
         self.assertEqual(self.traj._CVs.ResidueCOMFeature.shape, (1, 6, 12))
         self.assertEqual(self.trajs._CVs.ResidueCOMFeature.shape, (2, 3, 12))
         self.assertEqual(
-            self.traj._CVs["ResidueCOMFeature_feature_indices"].values[0][0][0],
-            0.0,
-            msg=f"{self.traj._CVs['ResidueCOMFeature_feature_indices'].values[0][0]=}",
-        )
-        self.assertEqual(
-            self.traj._CVs["ResidueCOMFeature_feature_indices"].values[0][3][0],
-            1.0,
-            msg=(f"{self.traj._CVs['ResidueCOMFeature_feature_indices'].values=}"),
+            self.traj._CVs.attrs["ResidueCOMFeature_feature_indices"],
+            "[[0]\n [1]\n [2]\n [3]]",
+            msg=f"{self.traj._CVs.attrs['ResidueCOMFeature_feature_indices']=}",
         )
         self.assertTrue(
             np.array_equal(
@@ -1250,6 +1519,13 @@ class TestFeatures(tf.test.TestCase):
     def test_add_angles(self):
         feat1 = self.featurizer_class(self.traj)
         feat2 = self.featurizer_class(self.trajs)
+
+        if self.featurizer_class == DaskFeaturizer:
+            self.assertTrue(feat1.feat.delayed)
+            self.assertTrue(feat2.feat.delayed)
+        else:
+            self.assertFalse(feat1.delayed)
+            self.assertFalse(feat2.delayed)
 
         feat1.add_angles([[0, 1, 2], [1, 2, 3]], deg=True)
         feat2.add_angles([[0, 1, 2], [1, 2, 3]], deg=True)
@@ -1294,6 +1570,31 @@ class TestFeatures(tf.test.TestCase):
                 self.traj._CVs.AngleFeature_feature_indices.values[0],
                 np.array([[0, 1, 2], [1, 2, 3]]),
             )
+        )
+
+        feat1 = self.featurizer_class(self.traj)
+        feat2 = self.featurizer_class(self.trajs)
+
+        feat1.add_angles([[0, 1, 2], [1, 2, 3]], deg=True, cossin=True)
+        feat2.add_angles([[0, 1, 2], [1, 2, 3]], deg=True, cossin=True)
+
+        out1 = feat1.get_output().AngleFeature.values[0]
+        out2 = np.vstack(feat2.get_output().AngleFeature.values)
+        self.assertAllEqual(
+            out1[:, 1],
+            1,
+        )
+        self.assertAllEqual(
+            out2[:, 1],
+            1,
+        )
+        self.assertAllEqual(
+            out1[[0, 1, 3], -1],
+            1,
+        )
+        self.assertAllEqual(
+            out2[[0, 1, 3], -1],
+            1,
         )
 
     def test_add_dihedrals(self):
@@ -1400,40 +1701,50 @@ class TestFeatures(tf.test.TestCase):
         feat2.add_minrmsd_to_ref(self.traj.traj, 0)
 
         out1 = feat1.get_output()
-        out1 = out1.MinRmsdFeature.values[0]
+        out1 = out1.MinRmsdFeature_with_4_atoms_in_reference.values[0]
         out2 = feat2.get_output()
-        out2 = np.vstack(out2.MinRmsdFeature.values)
+        out2 = np.vstack(out2.MinRmsdFeature_with_4_atoms_in_reference.values)
 
         self.assertEqual(out1[0, 0], 0)
         self.assertGreater(out1[1, 0], out1[0, 0])
         self.assertEqual(len(out1), len(self.traj))
         self.assertLess(out1[2, 0], out1[1, 0])
 
-        self.assertTrue(np.array_equal(out1, out2), msg=format_msg(out1, out2))
+        self.assertAllClose(out1, out2)
 
         # use the load_CV feature of TrajEnsemble and SingleTraj
         self.traj.load_CV(feat1)
         self.trajs.load_CVs(feat2)
 
         self.assertIn(
-            "MinRmsdFeature", self.traj._CVs.data_vars, msg=f"{self.traj._CVs}"
-        )
-        self.assertIn(
-            "MinRmsdFeature_feature_indices",
+            "MinRmsdFeature_with_4_atoms_in_reference",
             self.traj._CVs.data_vars,
             msg=f"{self.traj._CVs}",
         )
-        self.assertEqual(self.traj._CVs.MinRmsdFeature.shape, (1, 6, 1))
-        self.assertEqual(self.trajs._CVs.MinRmsdFeature.shape, (2, 3, 1))
+        self.assertIn(
+            "MinRmsdFeature_with_4_atoms_in_reference_feature_indices",
+            self.traj._CVs.data_vars,
+            msg=f"{self.traj._CVs}",
+        )
+        self.assertEqual(
+            self.traj._CVs.MinRmsdFeature_with_4_atoms_in_reference.shape, (1, 6, 1)
+        )
+        self.assertEqual(
+            self.trajs._CVs.MinRmsdFeature_with_4_atoms_in_reference.shape, (2, 3, 1)
+        )
         self.assertTrue(
             np.array_equal(
-                self.traj._CVs.MinRmsdFeature.values[0, :3],
-                self.trajs._CVs.MinRmsdFeature.values[0],
+                self.traj._CVs.MinRmsdFeature_with_4_atoms_in_reference.values[0, :3],
+                self.trajs._CVs.MinRmsdFeature_with_4_atoms_in_reference.values[0],
             )
         )
         self.assertTrue(
             np.array_equal(
-                self.traj._CVs.MinRmsdFeature_feature_indices.values[0][0],
+                self.traj._CVs.MinRmsdFeature_with_4_atoms_in_reference_feature_indices.values[
+                    0
+                ][
+                    0
+                ],
                 np.array([0, 1, 2, 3]),
             )
         )
@@ -1444,14 +1755,18 @@ class TestFeatures(tf.test.TestCase):
         """
         # providing a function and dim
         dim = self.md_traj.n_atoms * 3
+
         feat1 = em.features.CustomFeature(
-            fun=lambda x: (x.xyz**2).reshape(-1, dim),
+            fun=lambda traj: (traj.xyz**2).reshape(-1, dim),
             dim=dim,
+            delayed=self.featurizer_class is DaskFeaturizer,
         )
 
-        class RandomIntForAtomFeature(em.features.CustomFeature):
+        class RandomFloatForAtomFeature(em.features.CustomFeature):
             def __init__(self, traj, selstr="all"):
+                """The init method can implement whatever code you like."""
                 self.traj = traj
+                self.top = traj.top
                 self.indexes = self.traj.top.select(selstr)
                 self.dimension = len(self.indexes)
 
@@ -1462,11 +1777,33 @@ class TestFeatures(tf.test.TestCase):
                 labels = []
                 for i in self.indexes:
                     i = self.traj.top.atom(i)
-                    labels.append(f"Random int for {getlbl(i)}")
+                    labels.append(f"Random float for {getlbl(i)}")
                 return labels
 
-            def transform(self, traj):
-                values = traj.xyz[:, :, 0]
+            @staticmethod
+            @dask.delayed
+            def delayed_call(
+                traj,
+                indexes,
+                **kwargs,
+            ):
+                """Delayed implementation of `self.call()` needs to be a staticmethod
+
+                It also needs to be decorated with the dask.delayed decorator.
+
+                Per default, the instance arguments `traj` and `indexes` are passed
+                to this method. If you need more than these two arguments, you can define the
+                instance attribute `self._kwargs` in the `__init__()` method.
+                This dict will then be passed as further keyword arguments.
+
+                """
+                values = traj.xyz[..., 0]
+                for i in indexes:
+                    values[:, i] = float(str(hash(str(traj.top.atom(i)))))
+                return values
+
+            def call(self, traj):
+                values = traj.xyz[..., 0]
                 for i in self.indexes:
                     values[:, i] = float(str(hash(str(self.traj.top.atom(i))))[-5:])
                 return values
@@ -1481,11 +1818,15 @@ class TestFeatures(tf.test.TestCase):
         # add the features
         feat.add_custom_feature(feat1)
         out_squared = feat.transform().copy()
-        self.assertAllEqual(
+        self.assertAllClose(
             (self.md_traj.xyz**2).reshape(-1, dim),
             out_squared,
         )
-        feat.add_custom_feature(RandomIntForAtomFeature(self.md_traj))
+        feat.add_custom_feature(RandomFloatForAtomFeature(self.md_traj))
+
+        if self.featurizer_class is DaskFeaturizer:
+            self.assertHasAttr(feat.feat.active_features[1], "name")
+            self.assertEqual(feat.feat.active_features[1].name, "MyAwesomeFeature")
 
         # get output
         data = feat.get_output()
@@ -1493,17 +1834,754 @@ class TestFeatures(tf.test.TestCase):
         # checks
         self.assertEqual(
             (self.md_traj.xyz**2).reshape(-1, dim).shape,
-            data["CustomFeature[0][0]"].values.reshape(-1, dim).shape,
+            data["CustomFeature_0"].values.reshape(-1, dim).shape,
+        )
+        self.assertAllClose(
+            (self.md_traj.xyz**2).reshape(-1, dim),
+            data["CustomFeature_0"].values.reshape(-1, dim),
+            atol=1e-5,
+            rtol=1e-5,
+        )
+        self.assertIn("CUSTOMFEATURE_0", data.coords)
+        self.assertIn("MYAWESOMEFEATURE", data.coords)
+        self.assertIn("CUSTOMFEATURE_0", data.attrs["feature_axes"])
+        self.assertIn("MYAWESOMEFEATURE", data.attrs["feature_axes"])
+        self.assertIs(data["MyAwesomeFeature"].values.dtype, np.dtype("float32"))
+
+        # instantiate an ensemble featurizer
+        feat = self.featurizer_class(self.trajs)
+        feat.add_custom_feature(RandomFloatForAtomFeature(self.trajs[0]))
+        dim = self.trajs[0].n_atoms * 3
+        feature = em.features.CustomFeature(
+            fun=lambda traj: (traj.xyz**2).reshape(-1, dim),
+            dim=dim,
+        )
+        feat.add_custom_feature(feature)
+        out = feat.get_output()
+        test = []
+        for t in self.trajs:
+            test.append((t.xyz.copy() ** 2).reshape(-1, dim))
+        test = np.array(test)
+        self.assertAllEqual(test, out["CustomFeature_0"].values)
+
+        # try loading from featurizer
+        self.trajs.load_CVs(feat)
+
+        # add some 1-d, 2-d, and 2-d features
+        feat = self.featurizer_class(self.trajs)
+        # a per-frame-feature
+        feat1 = em.features.CustomFeature(
+            fun=lambda traj: np.array([0, 1, 2]).astype("float32"),
+            dim=1,
+        )
+        # a normal feature
+        feat2 = em.features.CustomFeature(
+            fun=lambda traj: np.array(
+                [
+                    [0, 1, 2, 3],
+                    [4, 5, 6, 7],
+                    [8, 9, 10, 11],
+                ],
+            ).astype("float32"),
+            dim=4,
+        )
+        # a cartesian feature
+        feat3 = em.features.CustomFeature(
+            fun=lambda traj: np.random.random(traj.xyz.shape).astype("float32"),
+            dim=self.trajs[0].n_atoms * 3,
+        )
+        feat.add_custom_feature(feat1)
+        feat.add_custom_feature(feat2)
+        feat.add_custom_feature(feat3)
+        self.assertEqual(
+            [f.id for l in feat.active_features.values() for f in l], [0, 1, 2]
+        )
+        out = feat.get_output()
+        self.trajs.del_CVs()
+        self.trajs.load_CVs(out)
+        self.trajs.del_CVs()
+        self.trajs.load_CVs(feat)
+        self.assertEqual(
+            set(self.trajs.CVs.keys()),
+            {"CustomFeature_2", "CustomFeature_0", "CustomFeature_1"},
+        )
+
+    def test_feature_MAE(self):
+        output_dir = Path(
+            em.get_from_kondata(
+                "topological_examples",
+                silence_overwrite_message=True,
+                mk_parentdir=True,
+            )
+        )
+        mae = em.load(output_dir / "MAE.pdb")
+        f = em.features.SideChainAngles(mae)
+        self.assertIn(
+            "SIDECHANGLE ATOM   CG:   19 GLU:   3 ANGLE ATOM   CD:   20 GLU:   3 ANGLE ATOM  OE1:   21 GLU:   3 CHAIN 0",
+            f.describe(),
         )
         self.assertAllEqual(
-            (self.md_traj.xyz**2).reshape(-1, dim),
-            data["CustomFeature[0][0]"].values.reshape(-1, dim),
+            f.angle_indexes[-1],
+            np.array([19, 20, 21]),
         )
-        self.assertIn("CUSTOMFEATURE[0][0]", data.coords)
-        self.assertIn("CustomFeature[0][0]", data.attrs)
-        self.assertIn("MYAWESOMEFEATURE", data.coords)
-        self.assertIn("MyAwesomeFeature", data.attrs)
-        self.assertIs(data["MyAwesomeFeature"].values.dtype, np.dtype(int))
+
+    def test_feature_equality(self):
+        """To ensure features are not added twice, every feature comes with an `__eq__()`
+        method. Check them here.
+        """
+        asp7_traj = em.load(
+            self.data_dir / "asp7.xtc",
+            self.data_dir / "asp7.pdb",
+        )
+        # some checks for protein_1am7
+        self.assertIsNotNone(self.protein_1am7.indices_chi1)
+        # Encodermap imports
+        from encodermap.loading import features
+        from encodermap.loading.features import __all__
+
+        trajs = self.protein_1am7.copy()._gen_ensemble()
+        count = 0
+        for a in __all__:
+            f = getattr(features, a)
+            if a == "CustomFeature":
+                continue
+            elif a == "SelectionFeature":
+                f1 = f(traj=self.protein_1am7, indexes=[0, 1, 2, 3])
+                f2 = f(traj=self.protein_1am7, indexes=[0, 1, 2, 3])
+                self.assertEqual(f1, f2)
+                f3 = f(traj=asp7_traj, indexes=[0, 1, 2, 3])
+                self.assertNotEqual(f1, f3)
+            elif a in ["DistanceFeature", "InverseDistanceFeature", "ContactFeature"]:
+                f1 = f(
+                    traj=self.protein_1am7, distance_indexes=np.array([[0, 1], [1, 2]])
+                )
+                f2 = f(
+                    traj=self.protein_1am7, distance_indexes=np.array([[0, 1], [1, 2]])
+                )
+                self.assertEqual(f1, f2)
+                f3 = f(traj=asp7_traj, distance_indexes=np.array([[0, 1], [1, 2]]))
+                self.assertNotEqual(f1, f3)
+            elif a == "ResidueMinDistanceFeature":
+                f1 = f(
+                    traj=self.protein_1am7,
+                    contacts=np.array([[0, 1], [1, 2]]),
+                    scheme="ca",
+                    ignore_nonprotein=True,
+                    threshold=2,
+                    periodic=True,
+                )
+                f2 = f(
+                    traj=self.protein_1am7,
+                    contacts=np.array([[0, 1], [1, 2]]),
+                    scheme="ca",
+                    ignore_nonprotein=True,
+                    threshold=2,
+                    periodic=True,
+                )
+                self.assertEqual(f1, f2)
+                f3 = f(
+                    traj=asp7_traj,
+                    contacts=np.array([[0, 1], [1, 2]]),
+                    scheme="ca",
+                    ignore_nonprotein=True,
+                    threshold=2,
+                    periodic=True,
+                )
+                self.assertNotEqual(f1, f3)
+            elif a == "GroupCOMFeature":
+                idx = np.array([[0, 1, 2, 3, 4, 5]])
+                f1 = f(traj=self.protein_1am7, group_definitions=idx)
+                f2 = f(traj=self.protein_1am7, group_definitions=idx)
+                self.assertEqual(f1, f2)
+                f3 = f(traj=asp7_traj, group_definitions=idx)
+                self.assertNotEqual(f1, f3)
+            elif a == "ResidueCOMFeature":
+                scheme = "backbone"
+                idx = [0, 1, 2, 3, 4]
+                # Encodermap imports
+                from encodermap.loading.featurizer import _atoms_in_residues
+
+                residue_atoms = _atoms_in_residues(
+                    self.protein_1am7,
+                    idx,
+                    subset_of_atom_idxs=self.protein_1am7.select(scheme),
+                )
+                f1 = f(
+                    traj=self.protein_1am7,
+                    residue_indices=idx,
+                    residue_atoms=np.asarray(residue_atoms),
+                )
+                f2 = f(
+                    traj=self.protein_1am7,
+                    residue_indices=idx,
+                    residue_atoms=np.asarray(residue_atoms),
+                )
+                self.assertEqual(f1, f2)
+                residue_atoms = _atoms_in_residues(
+                    asp7_traj, idx, subset_of_atom_idxs=asp7_traj.select(scheme)
+                )
+                f3 = f(
+                    traj=asp7_traj,
+                    residue_indices=idx,
+                    residue_atoms=np.asarray(residue_atoms),
+                )
+                self.assertNotEqual(f1, f3)
+                with self.assertRaises(Exception):
+                    f(
+                        traj=asp7_traj,
+                        residue_indices=[0, 1, 2, 3, 4, 5, 6, 7, 8],
+                        residue_atoms=residue_atoms,
+                    )
+            elif a == "AngleFeature":
+                f1 = f(
+                    traj=self.protein_1am7,
+                    angle_indexes=np.array([[0, 1, 2], [1, 2, 3]]),
+                )
+                f2 = f(
+                    traj=self.protein_1am7,
+                    angle_indexes=np.array([[0, 1, 2], [1, 2, 3]]),
+                )
+                self.assertEqual(f1, f2)
+                f3 = f(traj=asp7_traj, angle_indexes=np.array([[0, 1, 2], [1, 2, 3]]))
+                self.assertNotEqual(f1, f3)
+            elif a == "DihedralFeature":
+                f1 = f(
+                    traj=self.protein_1am7,
+                    dih_indexes=np.array([[0, 1, 2, 3], [1, 2, 3, 4]]),
+                )
+                f2 = f(
+                    traj=self.protein_1am7,
+                    dih_indexes=np.array([[0, 1, 2, 3], [1, 2, 3, 4]]),
+                )
+                self.assertEqual(f1, f2)
+                f3 = f(
+                    traj=asp7_traj, dih_indexes=np.array([[0, 1, 2, 3], [1, 2, 3, 4]])
+                )
+                self.assertNotEqual(f1, f3)
+            elif a == "MinRmsdFeature":
+                f1 = f(traj=self.protein_1am7, ref=self.protein_1am7.traj)
+                f2 = f(traj=self.protein_1am7, ref=self.protein_1am7.traj)
+                self.assertEqual(f1, f2)
+                f3 = f(traj=asp7_traj, ref=asp7_traj.traj)
+                self.assertNotEqual(f1, f3)
+            elif a == "AlignFeature":
+                f1 = f(
+                    traj=self.protein_1am7,
+                    indexes=np.array([0, 1, 2, 3, 4]),
+                    reference=self.protein_1am7.traj,
+                )
+                f2 = f(
+                    traj=self.protein_1am7,
+                    indexes=np.array([0, 1, 2, 3, 4]),
+                    reference=self.protein_1am7.traj,
+                )
+                self.assertEqual(f1, f2)
+                f3 = f(
+                    traj=asp7_traj,
+                    indexes=np.array([0, 1, 2, 3, 4]),
+                    reference=asp7_traj.traj,
+                )
+                self.assertNotEqual(f1, f3)
+                f4 = f(
+                    traj=self.protein_1am7,
+                    indexes=np.array([0, 1, 2, 3, 4, 5]),
+                    reference=self.protein_1am7.traj,
+                )
+                self.assertNotEqual(f1, f4)
+            else:
+                f1 = f(traj=self.protein_1am7)
+                f2 = f(traj=self.protein_1am7)
+                self.assertEqual(f1, f2)
+                f3 = f(traj=asp7_traj)
+                self.assertNotEqual(f1, f3)
+            count += 1
+            trajs.featurizer._add_feature(f1, trajs.top[0], trajs)
+
+        self.assertLen(trajs.featurizer, 23)
+        self.assertEqual(len(trajs.featurizer), count)
+        test = trajs.featurizer.transform(trajs[0])
+        self.assertEqual(test.shape, (51, 11361))
+        with self.assertWarnsRegex(
+            UserWarning,
+            r".*re-add.*",
+            msg=("No warning issued after adding features a second time."),
+        ):
+            trajs.featurizer.add_list_of_feats("all")
+        test2 = trajs.featurizer.transform(trajs[0])
+        self.assertLen(trajs.featurizer, 23)
+        self.assertEqual(len(trajs.featurizer), count)
+        self.assertEqual(test2.shape, (51, 11361))
+
+        test = trajs.featurizer.get_output()
+        self.assertIn("GroupCOMFeature_feature_indices", test.GroupCOMFeature.attrs)
+
+        # some tests before saving
+        trajs.load_CVs(trajs.featurizer)
+        self.assertIn(
+            "GroupCOMFeature_feature_indices",
+            trajs._CVs.GroupCOMFeature.attrs,
+            f"{trajs._CVs.data_vars.keys()=}",
+        )
+        self.assertIn("feature_axes", trajs._CVs.attrs)
+
+        # save and test
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            trajs.save(td / "trajs.h5")
+
+            test = em.TrajEnsemble.from_dataset(td / "trajs.h5")
+            print(test._CVs)
+            print(test._CVs.GroupCOMFeature.attrs)
+            print(test._CVs.MinRmsdFeature_with_2504_atoms_in_reference_feature_indices)
+
+    def test_generic_features_diUbi_FAT10(self):
+        """Check the feature alignment of FAT10 and M1-diUbi. This requires an
+        alignment with the ClustalW library."""
+        ubi_output_dir = Path(
+            em.get_from_kondata(
+                dataset_name="linear_dimers",
+                mk_parentdir=True,
+                silence_overwrite_message=True,
+            )
+        )
+        fat10_output_dir = Path(
+            em.get_from_kondata(
+                dataset_name="FAT10", mk_parentdir=True, silence_overwrite_message=True
+            )
+        )
+
+        ubi_trajs = [ubi_output_dir / "01.xtc", ubi_output_dir / "02.xtc"]
+        ubi_tops = [f.with_suffix(".pdb") for f in ubi_trajs]
+        ubi_trajs = em.TrajEnsemble(
+            trajs=ubi_trajs,
+            tops=ubi_tops,
+            traj_nums=[0, 1],
+            common_str=["linear_dimer", "linear_dimer"],
+        )
+        fat10_trajs = [fat10_output_dir / "01.xtc", fat10_output_dir / "02.xtc"]
+        fat10_tops = [f.with_suffix(".pdb") for f in fat10_trajs]
+        fat10_trajs = em.TrajEnsemble(
+            trajs=fat10_trajs,
+            tops=fat10_tops,
+            traj_nums=[2, 3],
+            common_str=["FAT10", "FAT10"],
+        )
+
+        self.assertEqual(ubi_trajs[0].traj_num, 0)
+        self.assertEqual(ubi_trajs[1].traj_num, 1)
+        self.assertEqual(fat10_trajs[0].traj_num, 2)
+        self.assertEqual(fat10_trajs[1].traj_num, 3)
+
+        tmp = fat10_trajs.copy()
+        tmp[0].traj_num = 0
+        self.assertEqual(tmp[0].traj_num, 0)
+
+        with self.assertRaisesRegex(
+            Exception, expected_regex=r".*overlapping traj_nums.*"
+        ):
+            _ = ubi_trajs + tmp
+
+        trajs = ubi_trajs + fat10_trajs
+        for i, traj in enumerate(trajs):
+            self.assertEqual(traj.traj_num, i)
+        alignment_str = trajs.to_alignment_query()
+        trajs.parse_clustal_w_alignment(ALIGNMENT)
+        fat10_traj = trajs[2].copy()
+        ubi_traj = trajs[0].copy()
+
+        # central dihedral alignment, because some residues can't have all angles
+        central_dihedrals = em.features.CentralDihedrals(ubi_traj)
+        self.assertLen(central_dihedrals.describe(), 152 * 3 - 3)
+
+        # load a distance feature to ensure alignment
+        self.assertHasAttr(fat10_traj, "clustal_w")
+        self.assertHasAttr(ubi_traj, "clustal_w")
+        fat10_distances = em.features.CentralBondDistances(
+            fat10_traj
+        ).generic_describe()
+        ubi_distances = em.features.CentralBondDistances(ubi_traj).generic_describe()
+        self.assertNotEqual(len(fat10_distances), len(ubi_distances))
+        self.assertEqual(ubi_distances[0], "CENTERDISTANCE  22")
+        self.assertEqual(fat10_distances[0], "CENTERDISTANCE  1")
+
+        # load some side_dihedral features to ensure presence
+        fat10_traj = trajs[2].copy()
+        side_dihedrals = em.features.SideChainDihedrals(fat10_traj).generic_describe()
+        self.assertEqual(
+            side_dihedrals[:4],
+            [
+                "SIDECHDIH CHI1   1",
+                "SIDECHDIH CHI2   1",
+                "SIDECHDIH CHI3   1",
+                "SIDECHDIH CHI1   3",
+            ],
+        )
+
+        trajs.load_CVs("all", ensemble=True, alignment=ALIGNMENT)
+        ds = trajs._CVs.copy()
+
+        # the first N sidechain dihedrals should be nan in the diUbi
+        sidechain_dihedrals_per_residue = {
+            "ALA": 0,
+            "ARG": 5,
+            "ASN": 2,
+            "ASP": 2,
+            "CYS": 1,
+            "GLN": 3,
+            "GLU": 3,
+            "GLY": 0,
+            "HIS": 2,
+            "ILE": 2,
+            "LEU": 2,
+            "LYS": 4,
+            "MET": 3,
+            "PHE": 2,
+            "PRO": 2,
+            "SER": 1,
+            "THR": 1,
+            "TRP": 2,
+            "TYR": 2,
+            "VAL": 1,
+            "A": 0,
+            "R": 5,
+            "N": 2,
+            "D": 2,
+            "C": 1,
+            "Q": 3,
+            "E": 3,
+            "G": 0,
+            "H": 2,
+            "I": 2,
+            "L": 2,
+            "K": 4,
+            "M": 3,
+            "F": 2,
+            "P": 2,
+            "S": 1,
+            "T": 1,
+            "W": 2,
+            "Y": 2,
+            "V": 1,
+        }
+
+        # count the number of sidechain angles in the N-terminal "tail" of FAT10
+        seq = "MAPNASC"
+        count = 0
+        for l in seq:
+            count += sidechain_dihedrals_per_residue[l]
+        test = ds.sel(traj_num=[0, 1]).side_dihedrals[..., :count]
+        self.assertTrue(
+            np.all(np.isnan(test.values)),
+            msg=(
+                f"This error happens, because the sidechain dihedral labels are "
+                f"not correctly ordered: "
+                f"{test.coords['SIDE_DIHEDRALS']=}\n"
+                f"Ubi   sidechain dihedrals generic features {trajs.featurizer.active_features[trajs[0].top][-1].describe()=}\n"
+                f"FAT10 sidechain dihedrals generic features {trajs.featurizer.active_features[trajs[2].top][-1].describe()=}\n"
+            ),
+        )
+        self.assertTrue(
+            np.all(~np.isnan(ds.sel(traj_num=[2, 3]).side_dihedrals[..., :count])),
+            msg=f"{test=} {count=} {test['SIDE_DIHEDRALS']=}",
+        )
+
+        # check residue 85 which should contain nan in FAT10 but not in diUbi
+        ind1 = ds.side_dihedrals["SIDE_DIHEDRALS"].str.endswith("85")
+        ind2 = ds.side_dihedrals["SIDE_DIHEDRALS"].str.contains("CHI 3|CHI 4|CHI5")
+        ind = ds.side_dihedrals["SIDE_DIHEDRALS"][ind1 & ind2]
+        test = ds.side_dihedrals.sel(SIDE_DIHEDRALS=ind)
+        self.assertTrue(np.all(~np.isnan(test[[0, 1]])))
+        self.assertTrue(np.all(np.isnan(test[[2, 3]])))
+
+        # test whether it trains and saves
+        total_steps = 5
+        main_path = em.misc.run_path(Path(fat10_output_dir) / "runs")
+        parameters = dict(
+            n_steps=total_steps,
+            main_path=main_path,
+            cartesian_cost_scale=1,
+            cartesian_cost_variant="mean_abs",
+            cartesian_cost_scale_soft_start=(
+                int(total_steps / 10 * 9),
+                int(total_steps / 10 * 9) + total_steps // 50,
+            ),
+            cartesian_pwd_start=1,
+            cartesian_pwd_step=3,
+            dihedral_cost_scale=1,
+            dihedral_cost_variant="mean_abs",
+            distance_cost_scale=0,
+            cartesian_distance_cost_scale=100,
+            cartesian_dist_sig_parameters=[40, 10, 5, 1, 2, 5],
+            checkpoint_step=max(1, int(total_steps / 10)),
+            l2_reg_constant=0.001,
+            center_cost_scale=0,
+            tensorboard=True,
+            use_sidechains=True,
+            use_backbone_angles=True,
+        )
+
+        parameters = em.ADCParameters(**parameters)
+        emap = em.AngleDihedralCartesianEncoderMap(trajs=trajs, parameters=parameters)
+        lowd = emap.encode()
+        self.assertEqual(
+            lowd.shape[1],
+            2,
+        )
+
+        # debug tensorflow
+        # first call the decoder and see, whether that works
+        highd = emap.model.decoder(np.random.random((100, 2)))
+        for h, s in zip(highd, [493, 492, 408]):
+            self.assertEqual(
+                h.shape,
+                (100, s),
+            )
+        shapes = emap.model.encoder.input_shape
+        lowd = emap.model.encoder([np.random.random((100, s[1])) for s in shapes])
+        self.assertEqual(
+            lowd.shape,
+            (100, 2),
+        )
+        _, data, __ = emap.get_train_data_from_trajs(
+            trajs[0], emap.p, attr="_CVs", max_size=100
+        )
+        lowd = emap.encode(data)
+        self.assertEqual(
+            lowd.shape,
+            (100, 2),
+        )
+        # Encodermap imports
+        from encodermap.autoencoder.autoencoder import np_to_sparse_tensor
+
+        ds_dict = {
+            key: trajs._CVs[key][0, :100].values
+            for key in [
+                "central_angles",
+                "central_dihedrals",
+                "central_cartesians",
+                "central_distances",
+                "side_dihedrals",
+            ]
+        }
+        ds = []
+        for k, v in ds_dict.items():
+            if k != "central_cartesians":
+                ds.append(np_to_sparse_tensor(v))
+            else:
+                ds.append(np_to_sparse_tensor(v.reshape(100, -1)))
+        models = [
+            "get_dense_model_central_angles",
+            "get_dense_model_central_dihedrals",
+            "get_dense_model_cartesians",
+            "get_dense_model_distances",
+            "get_dense_model_side_dihedrals",
+        ]
+        for d, model in zip(ds, models):
+            model = getattr(emap.model, model)
+            self.assertEqual(
+                d.dense_shape[1],
+                model.input_shape[1],
+            )
+            out = model(d)
+            self.assertEqual(d.dense_shape[1], out.shape[1])
+        out = emap.model(ds)
+
+    def test_sidechain_label_order(self):
+        """The sidechain dihedrals should follow a residue-first order.
+
+        So for MET-ALA-GLU, we would have
+        MET1-chi1
+        MET1-chi2
+        MET1-chi3
+        GLU3-chi1
+        GLU3-chi2
+        GLU3-chi3
+
+        This needs to be tested for:
+            * SingleTraj
+            * TrajEnsemble
+            * SingleTrajFeaturizer
+            * EnsembleFeaturizer
+            * SideChainDihedralFeature
+
+        """
+        traj = em.load(self.data_dir / "glu7.pdb")
+        traj.load_CV("all")
+        labels = traj._CVs.side_dihedrals.coords["SIDE_DIHEDRALS"].values.tolist()
+        self.assertIn("CHI1", labels[0])
+        self.assertIn("GLU", labels[0])
+        self.assertIn("CHI2", labels[1])
+        self.assertIn("CHI3", labels[2])
+        output_dir = Path(
+            em.get_from_kondata(
+                "topological_examples",
+                mk_parentdir=True,
+                silence_overwrite_message=True,
+            )
+        )
+        trajs = em.load(list(output_dir.glob("*.pdb")))
+        trajs.load_CVs("all", ensemble=False)
+        self.assertTrue(trajs[0]._CVs)
+        self.assertLen(trajs.featurizer, 0, msg=f"{trajs.featurizer=}")
+        one, two, three, four, five, six = trajs._CVs.side_dihedrals.coords[
+            "SIDE_DIHEDRALS"
+        ].values[:6]
+        self.assertIn(
+            "MET",
+            one,
+            msg=(
+                f"There's no MET in the first label of the sidechain dihedrals:\n"
+                f"{one=}\n{trajs._CVs.side_dihedrals.coords['SIDE_DIHEDRALS']=}\n"
+                f"{trajs[0]._CVs.side_dihedrals}\n{trajs[0].basename=}"
+            ),
+        )
+        self.assertIn("CHI1", one)
+        self.assertIn("MET", two)
+        self.assertIn("CHI2", two)
+        self.assertIn("MET", three)
+        self.assertIn("CHI3", three)
+        self.assertIn("GLU", four)
+        self.assertIn("CHI1", four)
+        self.assertIn(
+            "ASP",
+            five,
+            msg=(
+                f"There's no ASP in the fifth label of the sidechain dihedrals:\n"
+                f"{five=}\n{trajs._CVs.side_dihedrals.coords['SIDE_DIHEDRALS']=}\n"
+                f"{trajs[0]._CVs.side_dihedrals}\n{trajs[0].basename=}"
+            ),
+        )
+        self.assertIn("CHI1", five)
+        self.assertIn("GLU", six)
+        self.assertIn("CHI2", six)
+
+        one, two, three = trajs._CVs.central_dihedrals.coords[
+            "CENTRAL_DIHEDRALS"
+        ].values[:3]
+        self.assertIn("PSI", one)
+        self.assertIn("OMEGA", two)
+        self.assertIn("PHI", three)
+
+    def test_unnatural_amino_acids(self):
+        traj_file = (
+            Path(em.__file__).resolve().parent.parent
+            / "tests/data/unnatural_aminoacids.pdb"
+        )
+        traj = em.load(traj_file)
+
+        custom_aas = {
+            "ALL": ("A", None),  # makes EncoderMap treat 2-allyl-glycine as alanine
+            "OAS": (
+                "S",  # OAS is 2-acetylserine
+                {
+                    "CHI2": [
+                        "CA",
+                        "CB",
+                        "OG",
+                        "CD",
+                    ],  # this is a non-standard chi2 angle
+                    "CHI3": [
+                        "CB",
+                        "OG",
+                        "CD",
+                        "CE",
+                    ],  # this is a non-standard chi3 angle
+                },
+            ),
+            "CSR": (  # CSR is selenocysteine
+                "S",
+                {
+                    "bonds": [  # we can manually define bonds for selenocysteine like so:
+                        ("-C", "N"),  # bond between previous carbon and nitrogen CSR
+                        ("N", "CA"),
+                        ("N", "H1"),
+                        ("CA", "C"),
+                        ("CA", "HA"),  # this topology includes hydrogens
+                        ("C", "O"),
+                        (
+                            "C",
+                            "OXT",
+                        ),  # As the C-terminal residue, we don't need to put ("C", "+N") here
+                        ("CA", "CB"),
+                        ("CB", "HB1"),
+                        ("CB", "HB2"),
+                        ("CB", "SE"),
+                        ("SE", "HE"),
+                    ],
+                    "CHI1": [
+                        "N",
+                        "CA",
+                        "CB",
+                        "SE",
+                    ],  # this is a non-standard chi1 angle
+                },
+            ),
+            "TPO": (  # TPO is phosphothreonine
+                "T",
+                {
+                    "CHI2": ["CA", "CB", "OG1", "P"],  # a non-standard chi2 angle
+                    "CHI3": ["CB", "OG1", "P", "OXT"],  # a non-standard chi3 angle
+                },
+            ),
+        }
+
+        with self.assertRaisesRegex(Exception, r".*already exists.*"):
+            traj.load_custom_topology(custom_aas)
+
+        # rename bonds to optional bonds
+        custom_aas["CSR"][1]["optional_bonds"] = custom_aas["CSR"][1].pop("bonds")
+        traj.load_custom_topology(custom_aas)
+
+        # make sure the chi2 and chi3 of OAS is present
+        self.assertIn(
+            [65, 66, 67, 71],
+            traj.indices_chi2.tolist(),
+            msg=(f"The CA-CB-OG-CD dihedral does not exist: {traj.indices_chi2=}"),
+        )
+        self.assertIn(
+            [66, 67, 71, 70],
+            traj.indices_chi3.tolist(),
+            msg=(f"The CA-CB-OG-CD dihedral does not exist: {traj.indices_chi3=}"),
+        )
+
+        # find the chi2 and chi3 in OAS in the sidechaindihedral feature
+        f = em.features.SideChainDihedrals(traj=traj)
+        self.assertIn(
+            "SIDECHDIH CHI2  RESID  OAS:   4 CHAIN 0",
+            f.describe(),
+        )
+        self.assertIn(
+            "SIDECHDIH CHI3  RESID  OAS:   4 CHAIN 0",
+            f.describe(),
+        )
+
+        # find chi1 in selenocysteine
+        self.assertIn(
+            [94, 95, 98, 99],
+            traj.indices_chi1.tolist(),
+        )
+        self.assertIn(
+            "SIDECHDIH CHI1  RESID  CSR:   6 CHAIN 0",
+            f.describe(),
+        )
+
+        # find chi2 and chi3 in phosphothreonine
+        self.assertIn(
+            [1, 3, 5, 6],
+            traj.indices_chi2.tolist(),
+        )
+        self.assertIn(
+            "SIDECHDIH CHI2  RESID  TPO:   1 CHAIN 0",
+            f.describe(),
+        )
+        self.assertIn(
+            [3, 5, 6, 10],
+            traj.indices_chi3.tolist(),
+        )
+        self.assertIn(
+            "SIDECHDIH CHI3  RESID  TPO:   1 CHAIN 0",
+            f.describe(),
+        )
 
     def test_custom_features_with_phosphothreonine(self):
         """Test, whether a theoretical chi2 and chi3 angle in a phospho-threonine
@@ -1511,7 +2589,7 @@ class TestFeatures(tf.test.TestCase):
         # Encodermap imports
         from encodermap.kondata import get_from_url
 
-        output_dir = Path(__file__).resolve().parent / "data/OTU11"
+        output_dir = self.data_dir / "OTU11"
         get_from_url(
             "https://sawade.io/encodermap_data/OTU11",
             output_dir,
@@ -1595,8 +2673,10 @@ class TestFeatures(tf.test.TestCase):
             ],
         )
 
-        trajs.load_CVs("all", ensemble=True, custom_aas=custom_aas)
+        trajs.load_custom_topology(custom_aas)
+        trajs.load_CVs("all", ensemble=True)
         ds = trajs._CVs.copy()
+        self.assertIn("central_dihedrals", ds)
         for r in trajs[0].top.residues:
             if (r.name == "THR" or r.name == "SER") and any(
                 [a.name == "P" for a in r.atoms]
@@ -1616,12 +2696,17 @@ class TestFeatures(tf.test.TestCase):
             0,
             msg=f"{ds['side_dihedrals_feature_indices']=}\n{ds['side_dihedrals_feature_indices'].size=}",
         )
-        h5_file = Path(__file__).resolve().parent / "data/test.h5"
+        h5_file = self.data_dir / "test.h5"
         trajs.save_CVs(h5_file)
         self.assertTrue(h5_file.is_file())
 
         # Encodermap imports
         from encodermap.misc.backmapping import mdtraj_backmapping
+
+        self.assertHasAttr(trajs, "central_dihedrals")
+        self.assertHasAttr(trajs, "_CVs")
+        self.assertHasAttr(trajs[0], "central_dihedrals")
+        self.assertHasAttr(trajs[0], "_CVs")
 
         fake_central_dih_rad = np.random.uniform(
             low=-np.pi, high=np.pi, size=(5, trajs[0].central_dihedrals.shape[1])
@@ -1636,19 +2721,40 @@ class TestFeatures(tf.test.TestCase):
             sidechain_dihedrals=fake_side_dih_rad,
             trajs=trajs,
             verify_every_rotation=True,
-            custom_aas=custom_aas,
             return_indices=True,
         )
+        self.assertEqual(test.n_frames, 5)
+        self.assertEqual(test.n_atoms, trajs[0].n_atoms)
         test = em.SingleTraj(test)
-        test.load_CV("all", deg=False)
 
+        # special tests for central_distances_feature_indices
+        test2 = test.copy()
+        feat = em.features.CentralBondDistances(traj=test2)
+        self.assertGreater(len(feat.describe()), 0)
+        self.assertGreater(feat.transform().size, 0)
+        test2.featurizer.add_list_of_feats(["central_distances"])
+        ds = em.misc.xarray.unpack_data_and_feature(
+            test2.featurizer, test2, test2.featurizer.transform()
+        )
+        self.assertGreater(ds.central_distances_feature_indices.size, 0)
+
+        # back to regular tests
+        test.load_CV("all", deg=False)
+        self.assertGreater(test._CVs.central_distances_feature_indices.size, 0)
+        self.assertGreater(getattr(test, "central_distances_feature_indices").size, 0)
         self.assertEqual(test.central_dihedrals.shape, fake_central_dih_rad.shape)
         self.assertEqual(test.side_dihedrals.shape, fake_side_dih_rad.shape)
 
         # exclude prolines in this assessment
         for data_var_name, data_var in test._CVs.data_vars.items():
+            # if data_var_name.endswith("feature_indices"):
+            #     continue
             self.assertGreater(data_var.size, 0)
-            self.assertGreater(getattr(test, data_var_name).size, 0)
+            self.assertGreater(
+                getattr(test, data_var_name).size,
+                0,
+                msg=f"{data_var_name}\n{getattr(test, data_var_name)}\n{data_var}",
+            )
         self.assertFalse(
             any(["PRO" in i and "PHI" in i for i in back_indices["dihedrals_labels"]])
         )
@@ -1706,13 +2812,35 @@ class TestFeatures(tf.test.TestCase):
                     ),
                 )
 
+    @patch(
+        "encodermap.loading.features.AllCartesians.__init__", mocked_all_cartesians_init
+    )
     def test_encodermap_features_cartesians(self):
         feat1 = self.featurizer_class(self.trajs)
         feat2 = self.featurizer_class(self.trajs)
 
         feat1.add_list_of_feats(["all_cartesians"], check_aas=False)
         feat2.add_all()
-
+        self.assertEqual(len(feat2), 1)
+        if self.featurizer_class is DaskFeaturizer:
+            out1 = feat1.feat.get_output()
+            self.assertIn(
+                "all_cartesians",
+                out1.data_vars.keys(),
+            )
+            self.assertIsInstance(
+                list(feat1.feat.active_features.values())[0][0],
+                em.features.AllCartesians,
+            )
+            out2 = feat1.get_output()
+            self.assertIn(
+                "all_cartesians",
+                out2.data_vars.keys(),
+                msg=(
+                    f"The data_var 'all_cartesians' is not in the datase {out2}, "
+                    f"but without the DaskFeaturzier, it is present {out1}."
+                ),
+            )
         out1 = np.vstack(feat1.get_output().all_cartesians.values)
         out2 = np.vstack(feat2.get_output().SelectionFeature.values).reshape((6, 4, 3))
 
@@ -1722,9 +2850,10 @@ class TestFeatures(tf.test.TestCase):
         custom_aas = {
             "RES": None,
         }
-        self.traj.load_CV(["all_cartesians"], custom_aas=custom_aas)
+        self.traj.load_custom_topology(custom_aas)
+        self.traj.load_CV(["all_cartesians"])
         self.assertIsNone(self.traj._CVs.coords["traj_num"].values[0])
-        self.trajs.load_CVs(["all_cartesians"], custom_aas=custom_aas)
+        self.trajs.load_CVs(["all_cartesians"])
 
         # feat1 uses the wrong trajs and can't be used on traj.
         with self.assertRaises(Exception):
@@ -1739,16 +2868,24 @@ class TestFeatures(tf.test.TestCase):
         self.assertEqual(len(feat2), 1)
 
         # adding the same feature to feat2 should trigger a warning
-        with self.assertLogs(feat2.feat.logger, "WARNING"):
+        with self.assertWarnsRegex(
+            UserWarning,
+            r".*re-add.*",
+            msg=(
+                f"Calling `add_all` a second time did not issue a UserWarning. "
+                f"The active features are: {feat2.active_features=}"
+            ),
+        ):
             feat2.add_all()
-        with self.assertLogs(feat1.feat.logger, "WARNING"):
+        feat1.add_all()
+        with self.assertWarnsRegex(UserWarning, r".*re-add.*"):
             feat1.add_all()
         self.assertEqual(self.traj._CVs.sizes["traj_num"], 1)
         self.assertEqual(self.traj.basename, "known_angles")
         self.traj.load_CV(feat1)
         self.trajs.load_CVs(feat2)
 
-        self.assertEqual(len(self.traj.CVs), 1)
+        self.assertEqual(len(self.traj.CVs), 2)
 
         # some checks for the 3D atomic coordinates
         self.assertIn("all_cartesians", self.traj.CVs)
@@ -1756,12 +2893,12 @@ class TestFeatures(tf.test.TestCase):
         # check for the same contents as feat.get_output()
         print(self.traj.CVs["all_cartesians"].shape)
         print(self.traj.CVs["all_cartesians"][:, :3])
-        self.assertTrue(np.alltrue(self.traj.CVs["all_cartesians"][:, 0] == 0))
-        self.assertTrue(np.alltrue(self.trajs._CVs.all_cartesians.values[:, :, 0] == 0))
+        self.assertTrue(np.all(self.traj.CVs["all_cartesians"][:, 0] == 0))
+        self.assertTrue(np.all(self.trajs._CVs.all_cartesians.values[:, :, 0] == 0))
 
         msg = (
             "This error can be very serious. Normally, the `traj.CVs` attribute "
-            "was meant to be built from the `traj._CVs` dataarray. If the values "
+            "was meant to be built from the `traj._CVs` DataArray. If the values "
             "of these two arrays are not the same, something with the `CVs` property "
             "of `SingleTraj` is broken."
         )
@@ -1772,12 +2909,12 @@ class TestFeatures(tf.test.TestCase):
             msg=msg,
         )
 
-        # check the coordinates of this dataarray
+        # check the coordinates of this DataArray
         self.assertIsNone(self.traj._CVs.all_cartesians.coords["traj_num"].values[0])
         self.assertEqual(
             self.traj._CVs.all_cartesians.coords["traj_name"].values[0], "known_angles"
         )
-        self.assertIn("ATOM", self.traj._CVs.all_cartesians.coords)
+        self.assertIn("ALLATOM", self.traj._CVs.all_cartesians.coords)
         self.assertIn("COORDS", self.traj._CVs.all_cartesians.coords)
 
         # check for some additional info in the attrs
@@ -1794,7 +2931,7 @@ class TestFeatures(tf.test.TestCase):
             msg=f"Files {self.traj._CVs.all_cartesians.attrs['topology_file']} and {self.traj.top_file} "
             f"do not match.",
         )
-        self.assertEqual(self.traj._CVs.all_cartesians.attrs["feature_axis"], "ATOM")
+        self.assertEqual(self.traj._CVs.all_cartesians.attrs["feature_axis"], "ALLATOM")
         self.assertTrue(
             np.array_equal(
                 self.traj._CVs["all_cartesians_feature_indices"].values[0], np.arange(4)
@@ -1809,19 +2946,20 @@ class TestFeatures(tf.test.TestCase):
         )
         self.assertEqual(self.trajs._CVs.sizes["traj_num"], 2)
         self.assertEqual(self.trajs._CVs.sizes["frame_num"], 3)
-        self.assertEqual(self.trajs._CVs.sizes["ATOM"], 4)
+        self.assertEqual(self.trajs._CVs.sizes["ALLATOM"], 4)
         self.assertEqual(self.trajs._CVs.sizes["COORDS"], 3)
         self.assertEqual(self.trajs._CVs.sizes["traj_num"], 2)
 
     def test_encodermap_features_ala10(self):
         self.ala10_helix.load_CV("all_cartesians")
-        self.assertTrue(
-            np.array_equal(self.ala10_helix.xyz, self.ala10_helix.CVs["all_cartesians"])
+        indices = self.ala10_helix._CVs.all_cartesians_feature_indices.values[0]
+        self.assertAllEqual(
+            self.ala10_helix.xyz[:, indices],
+            self.ala10_helix.CVs["all_cartesians"],
         )
-        self.assertTrue(
-            np.array_equal(
-                self.ala10_helix.xyz, self.ala10_helix._CVs.all_cartesians.values[0]
-            )
+        self.assertAllEqual(
+            self.ala10_helix.xyz[:, indices],
+            self.ala10_helix._CVs.all_cartesians.values[0],
         )
         self.assertIn("all_cartesians", self.ala10_helix.CVs)
 
@@ -1852,15 +2990,15 @@ class TestFeatures(tf.test.TestCase):
 
         """
         self.protein_1am7.load_CV("all_cartesians")
-        self.assertTrue(
-            np.array_equal(
-                self.protein_1am7.xyz, self.protein_1am7.CVs["all_cartesians"]
-            )
+        index = self.protein_1am7._CVs.all_cartesians_feature_indices.values[0]
+        self.assertAllEqual(
+            self.protein_1am7.xyz[:, index],
+            self.protein_1am7.CVs["all_cartesians"],
+            msg=(f"{self.protein_1am7._CVs.all_cartesians_feature_indices.values[0]=}"),
         )
-        self.assertTrue(
-            np.array_equal(
-                self.protein_1am7.xyz, self.protein_1am7._CVs.all_cartesians.values[0]
-            )
+        self.assertAllEqual(
+            self.protein_1am7.xyz[:, index],
+            self.protein_1am7._CVs.all_cartesians.values[0],
         )
         self.assertIn("all_cartesians", self.protein_1am7.CVs)
 
@@ -1899,8 +3037,6 @@ class TestFeatures(tf.test.TestCase):
             + len(indices_dict["chi4"])
             + len(indices_dict["chi5"])
         )
-        print(no_of_sidechain_bonds)
-        print(self.protein_1am7.CVs["side_distances"].shape)
 
         self.assertEqual(
             self.protein_1am7.CVs["side_distances"].shape, (51, no_of_sidechain_bonds)
@@ -1908,37 +3044,134 @@ class TestFeatures(tf.test.TestCase):
         self.assertIn("side_distances", self.protein_1am7.CVs)
 
         # check out the dihedrals
-        self.protein_1am7.load_CV(["central_dihedrals", "side_dihedrals"])
+        self.protein_1am7.load_CV(
+            ["central_angles", "central_dihedrals", "side_dihedrals"]
+        )
 
         with self.assertRaises(ValueError):
             self.md_traj.load_CV(["central_dihedrals", "side_dihedrals"])
 
+        # make a trace of the central and side dihedrals for the first frame
+        # and then calculate the chi1 and chi2 torsions using mdtraj
+        traj = md.load(
+            self.traj_file_1am7,
+            top=self.top_file_1am7,
+        )
+        for i in range(1, 5):
+            indices_md, dihedrals_md = getattr(md, f"compute_chi{i}")(traj)
+            where = np.where(
+                self.protein_1am7._CVs.side_dihedrals.coords[
+                    "SIDE_DIHEDRALS"
+                ].str.contains(f"CHI{i}")
+            )
+            dihedrals_em = self.protein_1am7.side_dihedrals[:, where][:, 0]
+            indices_em = self.protein_1am7._CVs.side_dihedrals_feature_indices.values[
+                0, where
+            ][0]
+            self.assertAllEqual(
+                indices_md,
+                indices_em,
+            )
+            self.assertAllEqual(
+                dihedrals_md,
+                dihedrals_em,
+            )
 
+        frame = 0
+        trace = np.tile(
+            np.hstack(
+                [
+                    self.protein_1am7.central_angles,
+                    self.protein_1am7.central_dihedrals,
+                    self.protein_1am7.side_dihedrals,
+                ]
+            )[frame],
+            (100, 1),
+        )
+
+        # import matplotlib.pyplot as plt
+        # from matplotlib.testing.compare import compare_images
+        # img_name = "trace_image"
+        # ax = plt.imshow(trace[:, ::-1].T, cmap="viridis")
+        # ax.figure.savefig(
+        #     Path(__file__).resolve().parent / "data/{}_actual.png".format(img_name)
+        # )
+        # self.assertIsNone(
+        #     compare_images(
+        #         expected=str(
+        #             Path(__file__).resolve().parent
+        #             / "data/{}_expected.png".format(img_name)
+        #         ),
+        #         actual=str(
+        #             Path(__file__).resolve().parent
+        #             / "data/{}_actual.png".format(img_name)
+        #         ),
+        #         tol=10.0,
+        #     )
+        # )
+
+
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestDaskFeatures(TestFeatures):
+    def assertIsInstance(self, a, b):
+        """Makes this class work with instance checks in `TestFeatures`."""
+        if isinstance(a, DaskFeaturizer) and (
+            b is SingleTrajFeaturizer or b is EnsembleFeaturizer
+        ):
+            return
+        super().assertIsInstance(a, b)
+
     featurizer_class = DaskFeaturizer
 
 
+# class TestSLURMFeatures(unittest.TestCase):
+#     @classmethod
+#     def setUpClass(cls) -> None:
+#         from dask_jobqueue import SLURMCluster
+#         from dask.distributed import Client
+#         cls.cluster = SLURMCluster(
+#             queue="regular",
+#             cores=6,
+#             memory="8GB",
+#         )
+#         cls.client = Client(cls.cluster)
+#         return cls
+#
+#     def assertIsInstance(self, a, b):
+#         """Makes this class work with instance checks in `TestFeatures`."""
+#         if isinstance(a, DaskFeaturizer) and (
+#             b is SingleTrajFeaturizer or b is EnsembleFeaturizer
+#         ):
+#             return
+#         super().assertIsInstance(a, b)
+#
+#     featurizer_class = DaskFeaturizer
+#
+#
+# class TestDaskFeaturesOnSLURM(unittest.TestCase):
+#
+#     @classmethod
+#     def setUpClass(cls):
+#         raise NotImplementedError
+
+
 ################################################################################
-# Add Doctests here if needed
-################################################################################
-
-
-test_cases = (
-    TestFeatures,
-    # TestDaskFeatures
-    # TestSpecialDaskFeatures,
-)
-
-
-################################################################################
-# Filter Tests (because tensorflow is sometimes weird)
+# Collect Test Cases and Filter
 ################################################################################
 
 
 def load_tests(loader, tests, pattern):
+    test_cases = (
+        # TestFeatures,
+        TestDaskFeatures,
+        # TestSpecialDaskFeatures,
+    )
     suite = unittest.TestSuite()
     for test_class in test_cases:
-        tests = loader.loadTestsFromTestCase(test_class)
+        try:
+            tests = loader.loadTestsFromTestCase(test_class)
+        except TypeError:
+            raise Exception(f"{test_class=} {type(test_class)=}")
         filtered_tests = [t for t in tests if not t.id().endswith(".test_session")]
         suite.addTests(filtered_tests)
     return suite

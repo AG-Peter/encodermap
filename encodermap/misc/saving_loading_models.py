@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/misc/saving_loading_models.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -37,6 +37,7 @@ import copy
 import os
 import re
 import shutil
+import warnings
 from collections.abc import Callable
 from copy import deepcopy
 from glob import glob
@@ -47,9 +48,9 @@ from typing import TYPE_CHECKING, Any, Literal, Optional, Union, overload
 import numpy as np
 import tensorflow as tf
 
-# Local Folder Imports
-from ..misc.misc import _datetime_windows_and_linux_compatible, run_path
-from ..parameters import ADCParameters, Parameters
+# Encodermap imports
+from encodermap.misc.misc import _datetime_windows_and_linux_compatible, run_path
+from encodermap.parameters.parameters import ADCParameters, Parameters
 
 
 ################################################################################
@@ -61,9 +62,9 @@ if TYPE_CHECKING:
     # Third Party Imports
     import numpy as np
 
-    # Local Folder Imports
-    from .._typing import AutoencoderClass
-    from ..trajinfo.info_all import TrajEnsemble
+    # Encodermap imports
+    from encodermap.autoencoder.autoencoder import AutoencoderClass
+    from encodermap.trajinfo.info_all import TrajEnsemble
 
 
 ################################################################################
@@ -71,7 +72,7 @@ if TYPE_CHECKING:
 ################################################################################
 
 
-__all__ = ["save_model", "load_model"]
+__all__: list[str] = ["save_model", "load_model"]
 
 
 ################################################################################
@@ -86,6 +87,18 @@ def _change_setting_inform_user(
     parameters_file: Path,
     compat: bool = False,
 ) -> None:
+    """Changes a setting in a parameter file and informs the user with a print message.
+
+    Args:
+        p (Union[Parameters, ADCParameters]): An instance of the Parameters class.
+            Either `Parameters`, or `ADCParameters`.
+        setting (str): The setting to be changed.
+        value (Any): The new value of the setting.
+        parameters_file (Path): The file in which to change the setting.
+        compat (bool): When loading old .model files and some parameters are
+            inferred from this file.
+
+    """
     curr = getattr(p, setting)
     if curr != value:
         setattr(p, setting, value)
@@ -95,15 +108,18 @@ def _change_setting_inform_user(
             f"being loaded requires this parameter to be {value}. This parameter "
             f"file might not belong to the model you're trying to load."
         )
-        print(msg, "THIS IS A DEBUG MESSAGE")
+        print(msg)
         if not parameters_file.is_file():
             return
 
         if not compat:
             msg += (
-                f" If you want to load this model, "
-                f"save a new parameters.json and backup the one at {parameters_file}, "
-                f"set the `compat` argument to True."
+                f"This tensorflow model was saved in the now deprecated .model "
+                f"format. Since moving to the new .keras files, some changes have "
+                f"been made to how parameters are saved. Some parameters can "
+                f"be inferred from the old .model files by setting the `compat` "
+                f"argument to True. This will create a backup of this parameters "
+                f"file ({parameters_file}) and try to create a new one."
             )
             raise Exception(msg)
         else:
@@ -144,8 +160,34 @@ def _load_list_of_models(
 
 
 def filter_greater_than(step: int) -> Callable:
+    """Returns a function that can used for filtering.
+
+    Examples:
+        >>> from encodermap.misc.saving_loading_models import filter_greater_than
+        >>> test = ["one_1.keras", "two_2.keras", "three_3.keras", "four_4.keras"]
+        >>> list(filter(filter_greater_than(3), test))
+        ['three_3.keras', 'four_4.keras']
+
+    Args:
+        step (int): All files containing this step number or more will not
+            be removed from the Sequence by the builtin filter function.
+
+    """
+
     def closure(path: Path) -> bool:
-        current_step = int(re.findall("\d+", str(path))[-1])
+        r"""The closue of the `filter_greater_than` function.
+
+        Takes a `pathlib.Path` and extracts the last number using regexp (\d+).
+        Returns True, if this number is equal or greater than `step`.
+
+        Args:
+            path (Path): The path to use.
+
+        Returns:
+            bool: Whether the last number in `path` is equal or greater than step.
+
+        """
+        current_step = int(re.findall(r"\d+", str(path))[-1])
         return current_step >= step
 
     return closure
@@ -162,7 +204,7 @@ def save_model(
     inp_class_name: Optional[str] = None,
     step: Optional[int] = None,
     print_message: bool = False,
-) -> None:
+) -> Path:
     """Saves a model in the portable .keras format.
 
     Args:
@@ -177,6 +219,9 @@ def save_model(
             so: saved_model_{step}.keras Defaults to None.
         print_message (bool): Whether to print a message after saving the model
             Defaults to False.
+
+    Returns:
+        Path: The path, where the model was saved.
 
     """
     main_path = Path(main_path)
@@ -214,11 +259,13 @@ def save_model(
     if hasattr(model, "decoder_model"):
         if print_message:
             print(
-                f"This model has a subclassed decoder_name, which can be loaded inde"
+                f"This model has a subclassed decoder, which can be loaded inde"
                 f"pendently. Use `tf.keras.load_model('{decoder_name}')` to load "
                 f"only this model."
             )
         model.decoder_model.save(decoder_name)
+
+    return fname
 
 
 def sort_model_files_with_timestr(path: Path) -> int:
@@ -237,7 +284,7 @@ def sort_model_files_with_timestr(path: Path) -> int:
     )
     if m is not None:
         return -1
-    number = int(re.findall("\d+", str(path))[-1])
+    number = int(re.findall(r"\d+", str(path))[-1])
     return number
 
 
@@ -286,30 +333,28 @@ def _find_and_sort_files(
 def load_model(
     autoencoder: Union[None, "AutoencoderClass"],
     checkpoint_path: Union[str, Path],
-    trajs: Optional[TrajEnsemble] = None,
-    sparse: bool = False,
-    dataset: Optional[Union[tf.data.Dataset, np.ndarray]] = None,
-    print_message: bool = False,
-    submodel: None = None,
-    use_previous_model: bool = False,
-    compat: bool = False,
-) -> "AutoencoderClass":
-    ...
+    trajs: Optional[TrajEnsemble],
+    sparse: bool,
+    dataset: Optional[Union[tf.data.Dataset, np.ndarray]],
+    print_message: bool,
+    submodel: Literal[None],
+    use_previous_model: bool,
+    compat: bool,
+) -> "AutoencoderClass": ...  # pragma: no doccheck
 
 
 @overload
 def load_model(
     autoencoder: Union[None, "AutoencoderClass"],
     checkpoint_path: Union[str, Path],
-    trajs: Optional[TrajEnsemble] = None,
-    sparse: bool = False,
-    dataset: Optional[Union[tf.data.Dataset, np.ndarray]] = None,
-    print_message: bool = False,
-    submodel: Literal["encoder", "decoder"] = "encoder",
-    use_previous_model: bool = False,
-    compat: bool = False,
-) -> tf.keras.Model:
-    ...
+    trajs: Optional[TrajEnsemble],
+    sparse: bool,
+    dataset: Optional[Union[tf.data.Dataset, np.ndarray]],
+    print_message: bool,
+    submodel: Literal["encoder", "decoder"],
+    use_previous_model: bool,
+    compat: bool,
+) -> tf.keras.Model: ...  # pragma: no doccheck
 
 
 def load_model(
@@ -370,6 +415,22 @@ def load_model(
 
 
     """
+    if "decoder.keras" in str(checkpoint_path) and submodel is None:
+        raise Exception(
+            f"The file you provided is just the decoder submodel of the complete "
+            f"{autoencoder.__name__} class. Loading submodels, requires "
+            f"you to explicitly set the argument `submodel='decoder'`. Note, "
+            f"that loading submodels will return a `tf.keras.models.Model` instead "
+            f"of an instance of {autoencoder.__name__}."
+        )
+    if "encoder.keras" in str(checkpoint_path) and submodel is None:
+        raise Exception(
+            f"The file you provided is just the emcoder submodel of the complete "
+            f"{autoencoder.__name__} class. Loading submodels, requires "
+            f"you to explicitly set the argument `submodel='emcoder'`. Note, "
+            f"that loading submodels will return a `tf.keras.models.Model` instead "
+            f"of an instance of {autoencoder.__name__}."
+        )
     checkpoint_path = Path(checkpoint_path)
     if ".model" in str(checkpoint_path):
         print("Will use the legacy loader for old '*.model' file.")
@@ -386,7 +447,9 @@ def load_model(
         try:
             newest_model = possible_models[-1]
         except IndexError as e:
-            raise Exception(f"{checkpoint_path=}, {possible_models=}") from e
+            raise Exception(
+                f"{checkpoint_path=} has no .keras files: {possible_models=}"
+            ) from e
         if ".model" not in str(newest_model):
             if print_message:
                 print(
@@ -441,6 +504,12 @@ def load_model(
 
     # load the params in the directory
     parameter_file = checkpoint_path.parent / "parameters.json"
+    if not parameter_file.is_file() and autoencoder is not None:
+        warnings.warn(
+            f"There was no parameters.json file in the directory. {parameter_file.parent}. "
+            f"I will load the model from the keras file, but I can't build a "
+            f"{autoencoder} instance without the parameters."
+        )
     if parameter_file.is_file():
         assert (
             autoencoder is not None
@@ -449,7 +518,7 @@ def load_model(
             p = ADCParameters.from_file(parameter_file)
 
             # make sure parameters and current training step are the same
-            current_step = re.findall("\d+", str(checkpoint_path))
+            current_step = re.findall(r"\d+", str(checkpoint_path))
             backup_parameters = (
                 parameter_file.parent
                 / f"parameters_at_{p.current_training_step}_{_datetime_windows_and_linux_compatible()}_{parameter_file.suffix}"
@@ -484,12 +553,13 @@ def load_model(
                     else:
                         shutil.move(parameter_file, backup_parameters)
                         for f1, f2 in zip(files_to_backup, backup_files):
-                            shutil.move(f1, f2)
+                            shutil.copyfile(f1, f2)
                         p.current_training_step = current_step + 1
                         p.n_steps = current_step + 1
                         p.save()
 
             # then load and return the autoencoder
+            _using_hypercube = deepcopy(p.using_hypercube)
             out = autoencoder(
                 trajs,
                 parameters=p,
@@ -497,12 +567,13 @@ def load_model(
                 dataset=dataset,
                 model=model,
             )
+            out.p.using_hypercube = _using_hypercube
             return out
         else:
             p = Parameters.from_file(parameter_file)
 
             # make sure parameters and current training step are the same
-            current_step = re.findall("\d+", str(checkpoint_path))
+            current_step = re.findall(r"\d+", str(checkpoint_path))
             backup_parameters = (
                 parameter_file.parent
                 / f"parameters_at_{p.current_training_step}_{_datetime_windows_and_linux_compatible()}_{parameter_file.suffix}"
@@ -537,18 +608,20 @@ def load_model(
                     else:
                         shutil.move(parameter_file, backup_parameters)
                         for f1, f2 in zip(files_to_backup, backup_files):
-                            shutil.move(f1, f2)
+                            shutil.copyfile(f1, f2)
                         p.current_training_step = current_step
                         p.n_steps = current_step
                         p.save()
 
             # then load and return the autoencoder
+            _using_hypercube = deepcopy(p.using_hypercube)
             out = autoencoder(
                 parameters=p,
                 train_data=dataset,
                 read_only=False,
                 model=model,
             )
+            out.p.using_hypercube = _using_hypercube
             return out
     return model
 
@@ -561,6 +634,27 @@ def load_model_legacy(
     dataset: Optional[Union[tf.data.Dataset, np.ndarray]] = None,
     compat: bool = False,
 ) -> "AutoencoderClass":
+    """Loads legacy .model files.
+
+    Note:
+        The .model format has been deprecated. Please update your saved models
+        to the .keras format. You can yse this function to rebuild a new
+        model from the legacy .model files.
+
+    Args:
+        autoencoder_class (Union[None, AutoencoderClass]): A class of the in
+            EncoderMap implemented autoencoder classes.
+        checkpoint_path (Union[str, Path]): The path to the file to load.
+        trajs (Optional[TrajEnsemble]): When loading an AngleDihedralCartesianEncoderMap,
+            the trajectories need to be supplied to verify the input/output shapes
+            of the model.
+        sparse (bool): Whether the model contains sparse inputs.
+        dataset (Optional[Union[tf.data.Dataset, np.ndarray]): Either a tf.data.Dataset
+            or a np.ndarray to infer the input shapre from.
+        compat (bool): Whether
+
+
+    """
     # Local Folder Imports
     from ..autoencoder import AngleDihedralCartesianEncoderMap
     from ..models import gen_functional_model, gen_sequential_model
@@ -570,11 +664,11 @@ def load_model_legacy(
             sorted(map(Path, glob(str(checkpoint_path))), key=_model_sort_key)
         )
         parameters_file = checkpoint_path[0].parent / "parameters.json"
-        found = re.findall("\d+", str(checkpoint_path[0].name))
+        found = re.findall(r"\d+", str(checkpoint_path[0].name))
     else:
         checkpoint_path = Path(checkpoint_path)
         parameters_file = checkpoint_path.parent / "parameters.json"
-        found = re.findall("\d+", str(checkpoint_path.name))
+        found = re.findall(r"\d+", str(checkpoint_path.name))
     read_only = False
 
     if dataset is not None:
@@ -813,7 +907,7 @@ def load_model_legacy_dep(
     trajs: Optional[TrajEnsemble] = None,
     sparse: bool = False,
     dataset: Optional[tf.data.Dataset] = None,
-) -> AutoencoderClass:
+) -> AutoencoderClass:  # pragma: no doccheck
     """Reloads a tf.keras.Model from a checkpoint path.
 
 

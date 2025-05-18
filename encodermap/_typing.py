@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/_typing.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -31,71 +31,44 @@ from typing import Literal, Union
 import numpy as np
 
 
-CanBeIndex = Union[int, Sequence[int], np.ndarray, slice]
+################################################################################
+# Type Defs
+################################################################################
 
-CustomAAsDict = dict[
-    Union[str, tuple[str, str]],
-    tuple[
-        str,
-        dict[
-            Literal[
-                "bonds",
-                "optional_bonds",
-                "delete_bonds",
-                "optional_delete_bonds",
-                "PHI",
-                "PSI",
-                "OMEGA",
-                "CHI1",
-                "CHI2",
-                "CHI3",
-                "CHI4",
-                "ChI5",
-            ],
-            Union[list[str], list[tuple[Union[str, int], Union[str, int]]]],
-        ],
+
+CanBeIndex = Union[int, Sequence[int], Sequence[np.ndarray], slice]
+
+
+DihedralOrBondDict = dict[
+    Literal[
+        "bonds",
+        "optional_bonds",
+        "delete_bonds",
+        "optional_delete_bonds",
+        "PHI",
+        "PSI",
+        "OMEGA",
+        "not_PHI",
+        "not_PSI",
+        "not_OMEGA",
+        "CHI1",
+        "CHI2",
+        "CHI3",
+        "CHI4",
+        "CHI5",
     ],
+    Union[list[str], list[tuple[Union[str, int], Union[str, int]]]],
 ]
 
 
-if typing.TYPE_CHECKING:
-    # Local Folder Imports
-    from .parameters import ADCParameters, Parameters
-
-    AnyParameters = Union[Parameters, ADCParameters]
-
-    # Local Folder Imports
-    from .loading.features import (
-        AllBondDistances,
-        AllCartesians,
-        CentralAngles,
-        CentralBondDistances,
-        CentralCartesians,
-        CentralDihedrals,
-        SideChainAngles,
-        SideChainBondDistances,
-        SideChainCartesians,
-        SideChainDihedrals,
-    )
-
-    AnyFeature = Union[
-        AllCartesians,
-        AllBondDistances,
-        CentralCartesians,
-        CentralBondDistances,
-        CentralAngles,
-        CentralDihedrals,
-        SideChainCartesians,
-        SideChainBondDistances,
-        SideChainAngles,
-        SideChainDihedrals,
-    ]
-
-    # Local Folder Imports
-    from .autoencoder.autoencoder import (
-        AngleDihedralCartesianEncoderMap,
-        Autoencoder,
-        EncoderMap,
-    )
-
-    AutoencoderClass = Union[Autoencoder, EncoderMap, AngleDihedralCartesianEncoderMap]
+CustomAAsDict = dict[
+    Union[str, tuple[str, str]],
+    Union[
+        None,
+        tuple[str, None],
+        tuple[
+            str,
+            DihedralOrBondDict,
+        ],
+    ],
+]

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/misc/misc.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -36,15 +36,9 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 
 # Third Party Imports
-import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 from optional_imports import _optional_import
-from PIL import Image, ImageDraw, ImageFont
-from PIL.Image import Image as ImageType
-
-# Local Folder Imports
-from .errors import BadError
 
 
 ################################################################################
@@ -53,6 +47,9 @@ from .errors import BadError
 
 
 nx = _optional_import("networkx")
+Image = _optional_import("PIL", "Image")
+ImageDraw = _optional_import("PIL", "ImageDraw")
+ImageFont = _optional_import("PIL", "ImageFont")
 
 
 ################################################################################
@@ -78,7 +75,12 @@ if TYPE_CHECKING:
 ################################################################################
 
 
-__all__ = ["create_n_cube", "plot_model", "run_path", "get_full_common_str_and_ref"]
+__all__: list[str] = [
+    "create_n_cube",
+    "plot_model",
+    "run_path",
+    "get_full_common_str_and_ref",
+]
 
 
 FEATURE_NAMES = {
@@ -118,58 +120,24 @@ _TOPOLOGY_EXTS = [
 ################################################################################
 
 
-def scale_projs(trajs: TrajEnsemble, boundary: float, cols=None, debug=False) -> None:
-    """Scales the projections and moves outliers to their closest points.
+def _is_notebook() -> bool:
+    """Returns 'True', if we are currently in a notebook.
 
-    Makes sure to not place a new point where there already is a point with a while loop.
+    Returns:
+        bool: True if we are in a notebook, False otherwise.
+
     """
-    for traj in trajs:
-        data = traj.lowd
-        data_scaled = []
+    try:
+        # Third Party Imports
+        from IPython import get_ipython
 
-        outside = []
-        inside = []
-        dist_min = 99999999.9
-        comp_min = [0, 0]
-
-        for line in data:
-            if (abs(line[0]) > boundary) or (abs(line[1]) > boundary):
-                # if outside boundary find closest point
-                outside.append(line)
-            else:
-                inside.append(line)
-                data_scaled.append(line)
-
-        for line in outside:
-            for comp in inside:
-                dist = np.linalg.norm(line[:3] - comp[:3])
-                if dist < dist_min:
-                    dist_min = dist
-                    comp_min = comp
-            if debug:
-                print("scaling outlier point at " + str(line[0]) + ", " + str(line[1]))
-            # if cols is provided, only scale these points
-            addition = 0.01 * np.random.rand(trajs.dim)
-            new_point = comp_min
-            while np.any(np.isin(new_point, data_scaled)):
-                if cols is None:
-                    new_point = [comp_min[i] + addition[i] for i in range(len(line))]
-                else:
-                    new_point = [comp_min[i] + addition[i] for i in range(len(cols))]
-                addition += 0.01 * np.random.rand(trajs.dim)
-            data_scaled.append(new_point)
-
-        if not len(data) == len(data_scaled):
-            raise Exception("This method did not work")
-
-        traj.lowd = np.vstack(data_scaled)
-        try:
-            this = traj.lowd.shape[1]
-        except IndexError:
-            print(traj.basename)
-            print(traj.lowd)
-            print(data_scaled)
-            raise
+        if "IPKernelApp" not in get_ipython().config:  # pragma: no cover
+            return False
+    except ImportError:
+        return False
+    except AttributeError:
+        return False
+    return True
 
 
 def _can_be_feature(inp: Union[str, list[str]]) -> bool:
@@ -210,14 +178,46 @@ def match_files(
     tops: Union[list[str], list[Path]],
     common_str: list[str],
 ) -> tuple[list[str], list[str]]:
+    """Matches trajectory and topology files with a list of common strings.
+
+    The idea behind this function is to use one topology file with
+    multiple trajectory files, that all use the same topology.
+
+    Args:
+        trajs (Union[list[str], list[Path]]): A list of str or list of Path objects.
+            These are the trajectory files we want to match the subset of
+            topology files with.
+        tops (Union[list[str], list[Path]]): A list of str or list of Path objects.
+            These are the topology files we will assign to the trajectory files
+            using common substrings.
+        common_str (list[str]): A list of common substrings.
+
+    Returns:
+        tuple[list[str], list[str]]: A tuple containing a two list of str.
+            The first list of str are the topology files matched to the 'trajs'.
+            The second list of str are the common_str matched to the 'trajs'.
+            Both lists have the same length as `trajs`.
+
+    """
     tops_out = []
     common_str_out = []
 
     trajs = list(map(str, trajs))
     tops = list(map(str, tops))
 
+    if all([Path(p).suffix == ".h5" for p in trajs]) and len(trajs) == len(tops) == len(
+        common_str
+    ):
+        return tops, common_str
+
     if len(trajs) == len(tops):
-        first_cs = common_str[[cs in trajs[0] for cs in common_str].index(True)]
+        try:
+            first_cs = common_str[[cs in trajs[0] for cs in common_str].index(True)]
+        except ValueError as e:
+            raise Exception(
+                f"Can't find any matching common_str in the input data:\n{trajs=}\n\n"
+                f"{tops=}\n\n{common_str=}"
+            ) from e
         if first_cs not in tops[0]:
             iterator = trajs
         else:
@@ -277,9 +277,9 @@ def get_full_common_str_and_ref(
 
     Args:
         tuple: A tuple containing the following:
-            list[str]: A list of str with the traj file names.
-            list[str]: A list of str with the top file names.
-            list[str]: A list of str with the common_str's.
+            - list[str]: A list of str with the traj file names.
+            - list[str]: A list of str with the top file names.
+            - list[str]: A list of str with the common_str's.
             All lists have the same length.
 
     """
@@ -394,10 +394,10 @@ def printTable(
 def _datetime_windows_and_linux_compatible() -> str:
     """Portable way to get `now` as either a linux or windows compatible string.
 
-    For linux systems strings in this manner will be returned:
+    For linux systems, strings in this manner will be returned:
         2022-07-13T16:04:04+02:00
 
-    For windows systems strings in this manner will be returned:
+    For Windows systems, strings in this manner will be returned:
         2022-07-13_16-04-46
 
     """
@@ -412,13 +412,29 @@ def _datetime_windows_and_linux_compatible() -> str:
 
 
 def all_equal(iterable: Iterable[Any]) -> bool:
-    """Returns True, when all elements in list are equal"""
+    """Returns True, when all elements in a list are equal
+
+    Args:
+        iterable (Iterable[Any]): An iterable of Any.
+
+    Returns:
+        bool: Whether all elements in `iterable` are equal.
+
+    """
     g = groupby(iterable)
     return next(g, True) and not next(g, False)
 
 
-def _validate_uri(str_: str) -> bool:
-    """Checks whether the str_ is a valid uri."""
+def _validate_uri(str_: Union[Path, str]) -> bool:
+    """Checks whether the a str or Path is a valid uri.
+
+    Args:
+        str_ (Union[Path, str]): The str or Path to test.
+
+    Returns:
+        bool: True when `str_` is a valid URI, False otherwise.
+
+    """
     # Standard Library Imports
     from urllib.parse import urlparse
 
@@ -434,8 +450,7 @@ def _flatten_model(
     model_nested: tf.keras.Model,
     input_dim: Optional[Sequence[int]] = None,
     return_model: bool = True,
-) -> tf.keras.Model:
-    ...
+) -> tf.keras.Model: ...
 
 
 @overload
@@ -443,8 +458,7 @@ def _flatten_model(
     model_nested: tf.keras.Model,
     input_dim: Optional[Sequence[int]] = None,
     return_model: bool = False,
-) -> list[tf.keras.layers.Layer]:
-    ...
+) -> list[tf.keras.layers.Layer]: ...
 
 
 def _flatten_model(
@@ -456,6 +470,9 @@ def _flatten_model(
 
     Can be useful if a model consists of two sequential models and needs to
     be flattened to be plotted.
+
+    Union[tf.keras.Model, list[tf.keras.layers.Layer]]:
+        Either a tf.keras.Model or a list of layers.
 
     """
     layers_flat = []
@@ -475,7 +492,7 @@ def _flatten_model(
 def plot_model(
     model: tf.keras.Model,
     input_dim: Optional[Sequence[int]] = None,
-) -> Optional[ImageType]:
+) -> Optional[Image]:
     """Plots keras model using tf.keras.utils.plot_model"""
     # Encodermap imports
     from encodermap.models.models import SequentialModel
@@ -548,7 +565,10 @@ def run_path(path: str) -> str:
         >>> import encodermap as em
         >>> import tempfile
         >>> import os
-        ...
+        >>>
+        >>> def sort_key(inp: str) -> int:
+        ...     return int(inp[-1])
+        >>>
         >>> with tempfile.TemporaryDirectory() as td:
         ...     # create some directories
         ...     os.makedirs(os.path.join(td, "run0"))
@@ -556,8 +576,8 @@ def run_path(path: str) -> str:
         ...     # em.misc.run_path will automatically advance the counter to 'run2'
         ...     new_path = em.misc.run_path(td)
         ...     print(new_path)
-        ...     print(os.listdir(td))  # doctest: +ELLIPSIS
-        /tmp/tmp.../run2
+        ...     print(sorted(os.listdir(td), key=sort_key))  # doctest: +ELLIPSIS
+        /tmp/.../run2
         ['run0', 'run1', 'run2']
 
     """
@@ -603,8 +623,8 @@ def create_n_cube(
 
     Returns:
         tuple: A tuple containing the following:
-            np.ndarray: The coordinates of the points.
-            np.ndarray: Integers that can be used for coloration.
+            - np.ndarray: The coordinates of the points.
+            - np.ndarray: Integers that can be used for coloration.
 
     Example:
         >>> from encodermap.misc.misc import create_n_cube

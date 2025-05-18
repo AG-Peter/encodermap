@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/tests/delete_run_directories.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -44,11 +44,14 @@ if __name__ == "__main__":
     project_dir = Path(em.__file__).resolve().parent.parent
     repo = Repo(project_dir / ".git")
     tracked_dirs = []
+    tracked_files = []
     for entry in repo.commit().tree.traverse():
         tracked_dirs.append(Path(entry.abspath).parent)
+        tracked_files.append(Path(entry.abspath))
     tracked_dirs = set(tracked_dirs)
     run_dirs = list(filter(sort_fn, project_dir.glob("**")))
-    if input(f"Deleting these directories: {run_dirs}? [y/N]").lower() in [
+    q = "\n".join(map(str, run_dirs))
+    if input(f"Deleting these directories:\n\n{q}\n\n[y/N]?").lower() in [
         "y",
         "yes",
         "ye",
@@ -60,4 +63,68 @@ if __name__ == "__main__":
                 print(f"Deleting {rd}...")
                 shutil.rmtree(rd)
     else:
-        print("Aborting.")
+        print("Aborting. Deleting runs.")
+
+    # delete summaries
+    model_summaries_txt = list(
+        filter(
+            lambda x: "finished_training" not in str(x),
+            project_dir.rglob("*_summary.txt"),
+        )
+    )
+    q = "\n".join(map(str, model_summaries_txt))
+    if input(f"Deleting these model_summary files:\n\n{q}\n\n[y/N]?").lower() in [
+        "y",
+        "yes",
+        "ye",
+    ]:
+        for file in model_summaries_txt:
+            if file in tracked_files:
+                print(f"Won't delete {file}, because it is tracked in git.")
+            else:
+                print(f"Deleting {file}...")
+                file.unlink()
+
+    # delete parameters.json
+    parameters_files = list(project_dir.rglob("parameters*json"))
+    parameters_files = list(
+        filter(
+            lambda x: not (
+                "finished_training" in str(x) and x.name == "parameters.json"
+            ),
+            parameters_files,
+        )
+    )
+    q = "\n".join(map(str, parameters_files))
+    if input(f"Deleting these parameters.json files:\n\n{q}n\n\[y/N]?").lower() in [
+        "y",
+        "yes",
+        "ye",
+    ]:
+        for file in parameters_files:
+            if file in tracked_files:
+                print(f"Won't delete {file}, because it is tracked in git.")
+            else:
+                print(f"Deleting {file}...")
+                file.unlink()
+
+    # delete model.keras
+    keras_files = list(project_dir.rglob("saved_model*keras"))
+    keras_files = list(
+        filter(
+            lambda x: not ("finished_training" in str(x)),
+            keras_files,
+        )
+    )
+    q = "\n".join(map(str, keras_files))
+    if input(f"Deleting these saved_model*keras files:\n\n{q}\n\n[y/N]?").lower() in [
+        "y",
+        "yes",
+        "ye",
+    ]:
+        for file in keras_files:
+            if file in tracked_files:
+                print(f"Won't delete {file}, because it is tracked in git.")
+            else:
+                print(f"Deleting {file}...")
+                file.unlink()

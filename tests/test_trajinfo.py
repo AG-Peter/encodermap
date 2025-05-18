@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # tests/test_trajinfo.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -21,7 +21,7 @@
 ################################################################################
 """Main tests for the `TrajEnsemble` and `SingleTraj` classes. The following suites
 are available:
-    * TestTraj: Tests all aspects of the classes
+    * TestTraj: Tests all aspects of the classes `TrajEnsemble` and `SingleTraj`.
 
 """
 # Future Imports at the top
@@ -29,10 +29,26 @@ from __future__ import annotations
 
 # Standard Library Imports
 import importlib.metadata
+import os
+import shutil
+import sys
+import tempfile
+import unittest
+import warnings
+from io import StringIO
+from pathlib import Path
 from typing import Optional
 
 # Third Party Imports
+import mdtraj as md
+import numpy as np
 import pandas as pd
+import tensorflow as tf
+import xarray as xr
+from numpy.testing import assert_array_equal
+
+# Encodermap imports
+from conftest import skip_all_tests_except_env_var_specified
 
 
 ################################################################################
@@ -57,22 +73,12 @@ if not any(["encodermap" in pkg for pkg in installed_packages_list]):
 ################################################################################
 
 
-# Standard Library Imports
-import tempfile
-import unittest
-from pathlib import Path
-
-# Third Party Imports
-import mdtraj as md
-import numpy as np
-import xarray as xr
-from numpy.testing import assert_array_equal
-
 # Encodermap imports
-from encodermap.kondata import get_from_url
+from encodermap.kondata import get_from_kondata, get_from_url
 from encodermap.loading.features import CentralDihedrals
 from encodermap.loading.featurizer import Featurizer
 from encodermap.trajinfo import SingleTraj, TrajEnsemble
+from encodermap.trajinfo.info_single import Capturing
 from encodermap.trajinfo.trajinfo_utils import np_to_xr
 
 
@@ -89,10 +95,26 @@ except ImportError:
 ################################################################################
 
 
-class TestTraj(unittest.TestCase):
+class CapturingStderr(list):
+    """Class to capture print statements from function calls"""
+
+    def __enter__(self):
+        self._stderr = sys.stderr
+        sys.stderr = self._stringio = StringIO()
+        return self
+
+    def __exit__(self, *args):
+        self.extend(self._stringio.getvalue().splitlines())
+        del self._stringio  # free up some memory
+        sys.stderr = self._stderr
+
+
+@skip_all_tests_except_env_var_specified(unittest.skip)
+class TestTraj(tf.test.TestCase):
     @classmethod
-    def setUpClass(cls) -> None:
+    def setUpClass(cls):
         cls.data_dir = Path(__file__).resolve().parent / "data"
+        return cls
 
     def assertAllEqual(
         self,
@@ -218,6 +240,55 @@ class TestTraj(unittest.TestCase):
         print(traj.xyz[0].shape)
         self.assertEqual(traj.backend, "mdtraj")
 
+    def test_1am7(self):
+        # Encodermap imports
+        from encodermap import EncoderMap, Parameters, load
+        from encodermap.models import gen_sequential_model
+
+        trajs = load(
+            trajs=[
+                self.data_dir / "1am7_corrected_part1.xtc",
+                self.data_dir / "1am7_corrected_part2.xtc",
+            ],
+            tops=[
+                self.data_dir / "1am7_protein.pdb",
+            ],
+        )
+        trajs.load_CVs("all")
+        self.assertIn(
+            "traj_name",
+            trajs._CVs.coords.keys(),
+        )
+        self.assertTrue(not np.any(np.isnan(trajs.central_dihedrals)))
+        parameters = Parameters(periodicity=2 * np.pi)
+        self.assertEqual(parameters.model_api, "sequential")
+        test = gen_sequential_model(451, parameters)
+        self.assertEqual(test.__class__.__name__, "SequentialModel")
+        emap = EncoderMap(
+            train_data=trajs.central_dihedrals,
+            parameters=parameters,
+            read_only=True,
+        )
+        lowd = emap.encode()
+        self.assertTrue(not np.any(np.isnan(lowd)))
+        trajs.load_CVs(lowd, "lowd")
+        self.assertTrue(
+            not np.any(np.isnan(trajs.lowd)),
+            msg=(f"There's a NaN in the lowds from emap."),
+        )
+        with tempfile.TemporaryDirectory() as td:
+            file = Path(td) / "trajs.h5"
+            trajs.save(file)
+            test = load(file)
+            self.assertIn(
+                "traj_name",
+                test._CVs.coords.keys(),
+            )
+            self.assertTrue(
+                not np.any(np.isnan(test.lowd)),
+                msg=(f"There's a NaN in the loaded lowds."),
+            )
+
     def test_load_url(self):
         """Test whether `SingleTraj` can be loaded from a URL."""
         traj = SingleTraj("https://files.rcsb.org/view/1GHC.pdb")
@@ -308,9 +379,9 @@ class TestTraj(unittest.TestCase):
 
             # raises IOerror
             with self.assertRaises(IOError):
-                traj.save("/tmp/tmp_file.h5")
+                traj.save("/tmp.json/tmp_file.h5")
             tmp.unlink()
-            traj.save("/tmp/tmp_file.h5")
+            traj.save("/tmp.json/tmp_file.h5")
 
             traj2 = SingleTraj("/tmp/tmp_file.h5")
             self.asserTrue(np.array_equal(traj.ones, traj2.ones))
@@ -425,15 +496,21 @@ class TestTraj(unittest.TestCase):
         self.assertEqual(traj.top.n_chains, 1)
 
     def test_load_info_all_with_trajs_and_one_top_does_not_raise_error(self):
-        trajs = ["tests/data/1YUF.pdb", "tests/data/1YUG.pdb"]
-        trajs = TrajEnsemble(trajs=trajs, tops=trajs)
+        with (
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f1,
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f2,
+        ):
+            shutil.copyfile(self.data_dir / "1am7_corrected_part1.xtc", f1.name)
+            shutil.copyfile(self.data_dir / "1am7_corrected_part2.xtc", f2.name)
+            trajs = ["tests/data/1YUF.pdb", "tests/data/1YUG.pdb"]
+            trajs = TrajEnsemble(trajs=trajs, tops=trajs)
 
-        trajs = [
-            "tests/data/1am7_corrected_part1.xtc",
-            "tests/data/1am7_corrected_part2.xtc",
-        ]
-        top = "tests/data/1am7_protein.pdb"
-        trajs = TrajEnsemble(trajs=trajs, tops=top)
+            trajs = [
+                f1.name,
+                f2.name,
+            ]
+            top = "tests/data/1am7_protein.pdb"
+            trajs = TrajEnsemble(trajs=trajs, tops=top)
 
     def test_single_traj_double_index_with_int(self):
         traj = SingleTraj(
@@ -512,12 +589,15 @@ class TestTraj(unittest.TestCase):
             traj.load_CV("some CV")
 
         # check the override message
-        # Encodermap imports
-        from encodermap.trajinfo.info_single import Capturing
-
-        with Capturing() as output:
+        with self.assertWarnsRegex(
+            expected_warning=UserWarning,
+            expected_regex=r".*the following CVs.*",
+            msg=(
+                "Overwriting existing CVs should issue a warning to the user, but "
+                "it does not."
+            ),
+        ):
             traj.load_CV("central_dihedrals", override=True)
-        self.assertIn("Overwriting", output[0])
 
         # load unaligned data from npy file
         with self.assertRaises(Exception):
@@ -735,17 +815,23 @@ class TestTraj(unittest.TestCase):
         self.assertFalse(np.any(np.isnan(trajs._CVs.central_distances.values)))
 
     def test_traj_ensemble_equality(self):
-        traj1 = SingleTraj(
-            self.data_dir / "1am7_corrected_part1.xtc",
-            top=self.data_dir / "1am7_protein.pdb",
-        )
-        traj2 = SingleTraj(
-            self.data_dir / "1am7_corrected_part2.xtc",
-            top=self.data_dir / "1am7_protein.pdb",
-        )
-        trajs1 = TrajEnsemble([traj1, traj2])
-        trajs2 = TrajEnsemble([traj1, traj2])
-        self.assertEqual(trajs1, trajs2)
+        with (
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f1,
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f2,
+        ):
+            shutil.copyfile(self.data_dir / "1am7_corrected_part1.xtc", f1.name)
+            shutil.copyfile(self.data_dir / "1am7_corrected_part2.xtc", f2.name)
+            traj1 = SingleTraj(
+                f1.name,
+                top=self.data_dir / "1am7_protein.pdb",
+            )
+            traj2 = SingleTraj(
+                f2.name,
+                top=self.data_dir / "1am7_protein.pdb",
+            )
+            trajs1 = TrajEnsemble([traj1, traj2])
+            trajs2 = TrajEnsemble([traj1, traj2])
+            self.assertEqual(trajs1, trajs2)
 
     def test_save_and_load_custom_amino_acids(self):
         # Encodermap imports
@@ -819,7 +905,8 @@ class TestTraj(unittest.TestCase):
             ),
         },
         )
-        custom_aas.to_yaml(yaml_file)
+        with open(yaml_file, "w") as f:
+            f.write(custom_aas.to_yaml())
         new_custom_aas = CustomTopology.from_yaml(yaml_file)
         # fmt: on
         yaml_file.unlink()
@@ -827,7 +914,6 @@ class TestTraj(unittest.TestCase):
 
     def test_save_hdf5_ensemble_with_different_top(self):
         # Encodermap imports
-        from encodermap.kondata import get_from_url
         from encodermap.trajinfo import TrajEnsemble
 
         output_dir = self.data_dir / "pASP_pGLU"
@@ -864,7 +950,10 @@ class TestTraj(unittest.TestCase):
             )
 
             # test Ensemble slicing
-            self.assertEqual(trajs[1:14:3].n_frames, loaded_trajs[1:14:3].n_frames)
+            self.assertEqual(
+                trajs[1:14:3].n_frames,
+                loaded_trajs[1:14:3].n_frames,
+            )
             self.assertEqual(
                 trajs[1:14:3][::2].n_frames, loaded_trajs[1:14:3][::2].n_frames
             )
@@ -887,7 +976,7 @@ class TestTraj(unittest.TestCase):
     @expensive_test
     def test_save_and_load_traj_ensemble_to_h5_and_slice(self):
         # Encodermap imports
-        from encodermap import get_from_kondata, load
+        from encodermap import load
 
         output_dir = Path(
             get_from_kondata(
@@ -1163,8 +1252,8 @@ class TestTraj(unittest.TestCase):
                     ]
                 )
 
-            trajs = TrajEnsemble.overwrite_trajnums(
-                [
+            trajs = TrajEnsemble.with_overwrite_trajnums(
+                *[
                     straj1,
                     straj2,
                     straj3,
@@ -1189,8 +1278,8 @@ class TestTraj(unittest.TestCase):
                     ]
                 )
 
-            trajs = TrajEnsemble.overwrite_trajnums(
-                [
+            trajs = TrajEnsemble.with_overwrite_trajnums(
+                *[
                     straj1,
                     straj2,
                     straj3,
@@ -1246,10 +1335,12 @@ class TestTraj(unittest.TestCase):
         traj2.load_CV(np.ones((15, 3)), attr_name="ones")
         trajs = TrajEnsemble([traj1, traj2])
         self.assertEqual(
-            trajs._CVs.attrs["full_paths"], [traj1.traj_file, traj2.traj_file]
+            set(trajs._CVs.attrs["full_paths"]),
+            set([traj1.traj_file, traj2.traj_file]),
         )
         self.assertEqual(
-            trajs._CVs.attrs["full_paths"], [traj1.top_file, traj2.top_file]
+            set(trajs._CVs.attrs["full_paths"]),
+            set([traj1.top_file, traj2.top_file]),
         )
         self.assertNotIn("angle_unit", trajs._CVs.attrs)
         traj1.load_CV(np.random.random((15, 3)), attr_name="angles", deg=True)
@@ -1299,7 +1390,23 @@ class TestTraj(unittest.TestCase):
             )
         )
 
+    @unittest.mock.patch.dict(os.environ, {"ENCODERMAP_PRINT_PROG_UPDATES": "True"})
     def test_clustering(self):
+        # download the M1-Ubq dataset and the K48 dataset
+        m1_diUbi_dir = Path(
+            get_from_kondata(
+                "linear_dimers",
+                silence_overwrite_message=True,
+                mk_parentdir=True,
+            )
+        )
+        diUbi_dir = Path(
+            get_from_kondata(
+                "Ub_dimers",
+                silence_overwrite_message=True,
+                mk_parentdir=True,
+            )
+        )
         traj1 = SingleTraj(
             self.data_dir / "asp7.xtc",
             top=self.data_dir / "asp7.pdb",
@@ -1309,56 +1416,158 @@ class TestTraj(unittest.TestCase):
             top=self.data_dir / "glu7.pdb",
         )
 
+        # trajs are an ensemble of asp7 and glu7
         trajs = TrajEnsemble([traj1, traj2])
+
+        # cluster_points with only one frame in asp7
+        cluster_points = np.full((200,), -1, int)
+        cluster_points[np.array([0, 150, 151, 152])] = 0
+        trajs.load_CVs(cluster_points, "clu")
+        trajs.load_CVs(np.ones((200, 15), int), "ones")
+        cluster = trajs.cluster(0, "clu")
+        self.assertTrue(np.all(cluster.ones == 1))
+
+        # some integer points as clusters
+        trajs.del_CVs()
         cluster_points = np.random.randint(-1, 2, trajs.n_frames)
-        trajs.load_CVs(cluster_points, "cluster_membership")
-        # assert raises cluster = trajs.cluster(0, "_user_selected_points")
+
+        # this should not raise a warning so catch it as error
+        with warnings.catch_warnings():
+            warnings.simplefilter("error")
+            trajs.load_CVs(cluster_points, "cluster_membership")
+
+        # the key user selected points is not present, so an exception is raised
+        with self.assertRaises(Exception):
+            cluster = trajs.cluster(0, "_user_selected_points")
+
+        # create a cluster
         cluster1 = trajs.cluster(0, "cluster_membership", n_points=10)
+
+        # some manual computations to get the cluster frames from trajs
         index = trajs.id[trajs.cluster_membership == 0]
         index = index[
             np.unique(np.round(np.linspace(0, len(index) - 1, 10)).astype(int))
         ]
         frames = trajs[index]
+        n_atoms_cluster1 = sum([f[2].n_atoms for f in frames.iterframes()])
+
+        # the n_frames should be equal to n_points, no matter what
         self.assertEqual(
             cluster1.n_frames,
             10,
         )
-        n_atoms_cluster1 = sum([f[1].n_atoms for f in frames.iterframes()])
 
+        # some more trajs
         traj1 = SingleTraj(
-            self.data_dir / "M1_diUbi.xtc",
-            top=self.data_dir / "M1_diUbi.gro",
+            m1_diUbi_dir / "01.xtc",
+            top=m1_diUbi_dir / "01.pdb",
         )
         traj2 = SingleTraj(
-            self.data_dir / "K48_diUbi.xtc",
-            top=self.data_dir / "K48_diUbi.gro",
+            diUbi_dir / "GROMOS/K48/traj.xtc",
+            top=diUbi_dir / "GROMOS/K48/start.gro",
         )
         traj3 = SingleTraj(
-            self.data_dir / "K63_diUbi.xtc",
-            top=self.data_dir / "K63_diUbi.gro",
+            diUbi_dir / "GROMOS/K63/traj.xtc",
+            top=diUbi_dir / "GROMOS/K63/start.gro",
         )
 
+        # create an inhomogeneous ensemble
         trajs = TrajEnsemble([traj1, traj2, traj3])
+
+        # randomly choose integer cluster memberships
         cluster_points = np.random.randint(-1, 2, trajs.n_frames)
-        trajs.load_CVs(cluster_points, "cluster_membership")
+
+        # this should not raise a warning so catch it as error
+        with warnings.catch_warnings():
+            warnings.simplefilter("error")
+            trajs.load_CVs(cluster_points, "cluster_membership")
+
+        # cluster with different n_points
         cluster2 = trajs.cluster(0, "cluster_membership", n_points=12)
+
+        # manual calculations to assert stuff about cluster2
         index = trajs.id[trajs.cluster_membership == 0]
         index = index[
             np.unique(np.round(np.linspace(0, len(index) - 1, 12)).astype(int))
         ]
         frames = trajs[index]
-        n_atoms_cluster2 = sum([f[1].n_atoms for f in frames.iterframes()])
+        n_atoms_cluster2 = sum([f[2].n_atoms for f in frames.iterframes()])
+
+        with CapturingStderr() as output:
+            cluster1_stacked = cluster1.stack()
 
         self.assertEqual(
-            cluster1.stack().n_atoms,
+            cluster1_stacked.n_atoms,
             n_atoms_cluster1,
         )
+        self.assertTrue(any(["/26" in i for i in output]))
+        with CapturingStderr() as output:
+            cluster2_stacked = cluster2.stack()
+        self.assertTrue(any(["/33" in i for i in output]))
         self.assertEqual(
-            cluster2.stack().n_atoms,
+            cluster2_stacked.n_atoms,
             n_atoms_cluster2,
         )
-        self.assertEqual(cluster1.n_frames, 10)
-        self.assertEqual(cluster2.n_frames, 12)
+
+        # import the interactive plotting
+        # Encodermap imports
+        from encodermap.plot.interactive_plotting import InteractivePlotting
+
+        trajs.load_CVs(np.random.random((trajs.n_frames, 2)), "lowd")
+        trajs.load_CVs(np.random.random((trajs.n_frames, 20)), "highd")
+        sess = InteractivePlotting(
+            autoencoder=None,
+            trajs=trajs,
+        )
+        sess.selected_point_ids = np.where(cluster_points == 0)[0]
+        with Capturing() as output:
+            sess.cluster(None)
+        self.assertEqual(
+            output[1],
+            "{'join': {'update_calls': 3, 'total': 3}, '_traj_joined': {'update_calls': 16, 'total': 16}}",
+        )
+
+        cluster3 = trajs.cluster(
+            0,
+            memberships=np.random.randint(low=-1, high=500, size=(trajs.n_frames,)),
+            overwrite=True,
+            n_points=10,
+        )
+        self.assertEqual(cluster3.n_frames, 10)
+
+        class Progbar:
+            def __init__(self):
+                self.total = 0
+                self.n = 0
+
+            def update(self, value=1, **kwargs):
+                self.n += value
+
+            def reset(self, new_total, **kwargs):
+                self.total = new_total
+
+        progbar_joined = Progbar()
+        progbar_stacked = Progbar()
+        cluster3_joined = cluster3.join(progbar=progbar_joined)
+        cluster3_stacked = cluster3.stack(progbar=progbar_stacked)
+
+        self.assertEqual(
+            progbar_joined.n,
+            progbar_joined.total,
+            msg=(
+                f"The progress bar provided to `join` did not end on the same "
+                f"value as total: {progbar_joined.total=} {progbar_joined.n=}"
+            ),
+        )
+
+        self.assertEqual(
+            progbar_stacked.n,
+            progbar_stacked.total,
+            msg=(
+                f"The progress bar provided to `join` did not end on the same "
+                f"value as total: {progbar_joined.total=} {progbar_joined.n=}"
+            ),
+        )
 
     def test_clustering_different_atom_counts(self):
         # Encodermap imports
@@ -1439,29 +1648,36 @@ class TestTraj(unittest.TestCase):
         self.assertHasAttr(TrajEnsemble, "stack")
 
     def test_load_all_with_deg_and_rad(self):
-        traj1 = SingleTraj(
-            self.data_dir / "1am7_corrected_part1.xtc",
-            top=self.data_dir / "1am7_protein.pdb",
-        )
-        traj2 = SingleTraj(
-            self.data_dir / "1am7_corrected_part2.xtc",
-            top=self.data_dir / "1am7_protein.pdb",
-        )
+        with (
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f1,
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f2,
+        ):
+            shutil.copyfile(self.data_dir / "1am7_corrected_part1.xtc", f1.name)
+            shutil.copyfile(self.data_dir / "1am7_corrected_part2.xtc", f2.name)
+            traj1 = SingleTraj(
+                f1.name,
+                top=self.data_dir / "1am7_protein.pdb",
+            )
+            traj2 = SingleTraj(
+                f2.name,
+                top=self.data_dir / "1am7_protein.pdb",
+            )
 
-        # Encodermap imports
-        from encodermap.loading.features import CentralDihedrals
+            # Encodermap imports
+            from encodermap.loading.features import CentralDihedrals
 
-        self.assertTrue(hasattr(CentralDihedrals(traj1), "deg"))
+            self.assertTrue(hasattr(CentralDihedrals(traj1), "deg"))
 
-        trajs = TrajEnsemble([traj1, traj2])
-        trajs.load_CVs("all", deg=True)
-        self.assertEqual(trajs._CVs.central_dihedrals.attrs["angle_units"], "deg")
-        self.assertTrue(np.any(trajs._CVs.central_dihedrals.values > 10))
+            trajs = TrajEnsemble([traj1, traj2])
+            trajs.load_CVs("all", deg=True)
+            self.assertEqual(trajs._CVs.central_dihedrals.attrs["angle_units"], "deg")
+            self.assertTrue(np.any(trajs._CVs.central_dihedrals.values > 10))
 
-        traj1.load_CV(np.ones((traj1.n_frames, 3)), attr_name="ones", deg=True)
-        traj2.load_CV(np.ones((traj2.n_frames, 3)), attr_name="ones", deg=False)
-        with self.assertRaises(Exception):
-            print(trajs._CVs)
+            traj1.load_CV(np.ones((traj1.n_frames, 3)), attr_name="ones", deg=True)
+            with self.assertRaisesRegex(
+                AssertionError, r".*inhomogeneous angle types.*"
+            ):
+                traj2.load_CV(np.ones((traj2.n_frames, 3)), attr_name="ones", deg=False)
 
     def test_load_h5(self):
         traj = SingleTraj(self.data_dir / "traj.h5")
@@ -1658,28 +1874,36 @@ class TestTraj(unittest.TestCase):
             )
 
     def test_CVs_for_TrajEnsemble_containing_only_single_frames(self):
-        traj1 = SingleTraj(
-            self.data_dir / "1am7_corrected_part1.xtc",
-            top=self.data_dir / "1am7_protein.pdb",
-        )
-        traj2 = SingleTraj(
-            self.data_dir / "1am7_corrected_part2.xtc",
-            top=self.data_dir / "1am7_protein.pdb",
-        )
-        trajs = TrajEnsemble([traj1, traj2])
-        trajs.load_CVs("all")
-        trajs.load_CVs(np.random.randint(0, 10, trajs.n_frames), "cluster_membership")
-        shapes = {
-            "central_distances": (51, 473),
-            "cluster_membership": (51,),
-            "central_angles": (51, 472),
-            "side_dihedrals": (51, 316),
-            "central_cartesians": (51, 474, 3),
-            "central_dihedrals": (51, 471),
-        }
-        self.assertEqual({k: v.shape for k, v in trajs.CVs.items()}, shapes)
-        new_trajs = trajs.split_into_frames()
-        self.assertEqual({k: v.shape for k, v in new_trajs.CVs.items()}, shapes)
+        with (
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f1,
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f2,
+        ):
+            shutil.copyfile(self.data_dir / "1am7_corrected_part1.xtc", f1.name)
+            shutil.copyfile(self.data_dir / "1am7_corrected_part2.xtc", f2.name)
+            traj1 = SingleTraj(
+                f1.name,
+                top=self.data_dir / "1am7_protein.pdb",
+            )
+            traj2 = SingleTraj(
+                f2.name,
+                top=self.data_dir / "1am7_protein.pdb",
+            )
+            trajs = TrajEnsemble([traj1, traj2])
+            trajs.load_CVs("all")
+            trajs.load_CVs(
+                np.random.randint(0, 10, trajs.n_frames), "cluster_membership"
+            )
+            shapes = {
+                "central_distances": (51, 473),
+                "cluster_membership": (51,),
+                "central_angles": (51, 472),
+                "side_dihedrals": (51, 316),
+                "central_cartesians": (51, 474, 3),
+                "central_dihedrals": (51, 471),
+            }
+            self.assertEqual({k: v.shape for k, v in trajs.CVs.items()}, shapes)
+            new_trajs = trajs.split_into_frames()
+            self.assertEqual({k: v.shape for k, v in new_trajs.CVs.items()}, shapes)
 
     def test_CV_slicing_SingleTraj(self):
         traj1 = SingleTraj(
@@ -1792,36 +2016,42 @@ class TestTraj(unittest.TestCase):
         self.assertEqual(subsample.n_frames, 14)
 
     def test_addition_along_TrajEnsemble(self):
-        traj1 = SingleTraj(
-            self.data_dir / "1am7_corrected_part1.xtc",
-            top=self.data_dir / "1am7_protein.pdb",
-            traj_num=1,
-        )
-        traj2 = SingleTraj(
-            self.data_dir / "1am7_corrected_part2.xtc",
-            top=self.data_dir / "1am7_protein.pdb",
-            traj_num=2,
-        )
-        traj1.load_CV(traj1.xyz[:, :, 1], "y_coordinate")
-        traj2.load_CV(traj2.xyz[:, :, 1], "y_coordinate")
-        traj2.load_CV(traj2.xyz[:, :, 2], "z_coordinate")
+        with (
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f1,
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f2,
+        ):
+            shutil.copyfile(self.data_dir / "1am7_corrected_part1.xtc", f1.name)
+            shutil.copyfile(self.data_dir / "1am7_corrected_part2.xtc", f2.name)
+            traj1 = SingleTraj(
+                f1.name,
+                top=self.data_dir / "1am7_protein.pdb",
+                traj_num=1,
+            )
+            traj2 = SingleTraj(
+                f2.name,
+                top=self.data_dir / "1am7_protein.pdb",
+                traj_num=2,
+            )
+            traj1.load_CV(traj1.xyz[:, :, 1], "y_coordinate")
+            traj2.load_CV(traj2.xyz[:, :, 1], "y_coordinate")
+            traj2.load_CV(traj2.xyz[:, :, 2], "z_coordinate")
 
-        trajs = traj1 + traj2
-        self.assertIsInstance(trajs, TrajEnsemble)
-        self.assertEqual(trajs.n_frames, 51)
-        self.assertEqual(trajs.CVs["y_coordinate"].shape, (51, 2504))
-        self.assertEqual(trajs.n_trajs, 2)
-        self.assertEqual(list(trajs.CVs.keys()), ["y_coordinate"])
-        self.assertEqual(
-            trajs.traj_files,
-            [
-                str(self.data_dir / "1am7_corrected_part1.xtc"),
-                str(self.data_dir / "1am7_corrected_part2.xtc"),
-            ],
-        )
-        trajs.load_trajs()
-        self.assertEqual(trajs.top_files, [self.data_dir / "1am7_protein.pdb"])
-        self.assertEqual(trajs.y_coordinate.shape, (51, 2504))
+            trajs = traj1 + traj2
+            self.assertIsInstance(trajs, TrajEnsemble)
+            self.assertEqual(trajs.n_frames, 51)
+            self.assertEqual(trajs.CVs["y_coordinate"].shape, (51, 2504))
+            self.assertEqual(trajs.n_trajs, 2)
+            self.assertEqual(list(trajs.CVs.keys()), ["y_coordinate"])
+            self.assertEqual(
+                trajs.traj_files,
+                [
+                    f1.name,
+                    f2.name,
+                ],
+            )
+            trajs.load_trajs()
+            self.assertEqual(trajs.top_files, [str(self.data_dir / "1am7_protein.pdb")])
+            self.assertEqual(trajs.y_coordinate.shape, (51, 2504))
 
     def test_gen_ensemble(self):
         traj = SingleTraj(
@@ -1873,44 +2103,178 @@ class TestTraj(unittest.TestCase):
         )
 
     def test_stack(self):
-        traj1 = SingleTraj(
-            self.data_dir / "1am7_corrected_part1.xtc",
-            top=self.data_dir / "1am7_protein.pdb",
-            traj_num=1,
-        )
-        traj2 = SingleTraj(
-            self.data_dir / "1am7_corrected_part2.xtc",
-            top=self.data_dir / "1am7_protein.pdb",
-            traj_num=2,
-        )
-        with self.assertRaises(ValueError):
-            traj1.stack(traj2)
-        new = traj1.stack(traj2[:25])
-        self.assertEqual(new.n_atoms, 5008)
-        self.assertEqual(new.n_residues, 316)
-        self.assertEqual(new.n_frames, 25)
+        with (
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f1,
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f2,
+        ):
+            shutil.copyfile(self.data_dir / "1am7_corrected_part1.xtc", f1.name)
+            shutil.copyfile(self.data_dir / "1am7_corrected_part2.xtc", f2.name)
+            traj1 = SingleTraj(
+                f1.name,
+                top=self.data_dir / "1am7_protein.pdb",
+                traj_num=1,
+            )
+            traj2 = SingleTraj(
+                f2.name,
+                top=self.data_dir / "1am7_protein.pdb",
+                traj_num=2,
+            )
+            with self.assertRaises(ValueError):
+                traj1.stack(traj2)
+            new = traj1.stack(traj2[:25])
+            self.assertEqual(new.n_atoms, 5008)
+            self.assertEqual(new.n_residues, 316)
+            self.assertEqual(new.n_frames, 25)
 
     def test_join(self):
-        traj1 = SingleTraj(
-            self.data_dir / "1am7_corrected_part1.xtc",
-            top=self.data_dir / "1am7_protein.pdb",
-            traj_num=1,
-        )
-        traj2 = SingleTraj(
-            self.data_dir / "1am7_corrected_part2.xtc",
-            top=self.data_dir / "1am7_protein.pdb",
-            traj_num=2,
-        )
-        new = traj1.join(traj2)
-        self.assertEqual(new.n_atoms, 2504)
-        self.assertEqual(new.n_residues, 158)
-        self.assertEqual(new.n_frames, 51)
+        with (
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f1,
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f2,
+        ):
+            shutil.copyfile(self.data_dir / "1am7_corrected_part1.xtc", f1.name)
+            shutil.copyfile(self.data_dir / "1am7_corrected_part2.xtc", f2.name)
+            traj1 = SingleTraj(
+                f1.name,
+                top=self.data_dir / "1am7_protein.pdb",
+                traj_num=1,
+            )
+            traj2 = SingleTraj(
+                f2.name,
+                top=self.data_dir / "1am7_protein.pdb",
+                traj_num=2,
+            )
+            new = traj1.join(traj2)
+            self.assertEqual(new.n_atoms, 2504)
+            self.assertEqual(new.n_residues, 158)
+            self.assertEqual(new.n_frames, 51)
 
     def test_wrong_formatted_CVs(self):
         traj = SingleTraj(self.data_dir / "1YUF.pdb")
         test = np.append(traj.xyz[:, 0], [5])
         with self.assertRaises(Exception):
             traj.load_CV(test, "test")
+
+    def test_batch_iterator_correctly_stacks_sparse_cartesians(self):
+        """If cartesians contain NaNs they get stacked to a rank 2 array/tensor,
+        before they are made to a sparse Tensor. It is important to make the stacking
+        and unstacking of the cartesians reversible.
+
+        During programming of the `TrajEnsemble.batch_iterator()` method, I got this
+        result:
+
+        Exception: [k.shape for k in out]=[(10, 493), (10, 492), (10, 495, 3), (10, 494), (10, 408)]
+            out[2][:2, :5, -1]=array([[2.9060001, 3.045    , 3.1290002, 3.246    , 3.3400002],
+                   [8.176001 , 8.211    , 8.229    , 8.185    , 8.192    ]],
+                  dtype=float32)
+            test[:, :5, -1]=array([[2.9060001, 3.045    , 3.1290002, 3.246    , 3.3400002],
+                   [8.176001 , 8.211    , 8.229    , 8.185    , 8.192    ]],
+                  dtype=float32)
+
+        """
+        with (
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f1,
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f2,
+        ):
+            shutil.copyfile(self.data_dir / "1am7_corrected_part1.xtc", f1.name)
+            shutil.copyfile(self.data_dir / "1am7_corrected_part2.xtc", f2.name)
+            trajs = TrajEnsemble(
+                [
+                    f1.name,
+                    f2.name,
+                ],
+                tops=[
+                    self.data_dir / "1am7_protein.pdb",
+                    self.data_dir / "1am7_protein.pdb",
+                ],
+            )
+            trajs.load_CVs("all")
+            self.assertEqual(
+                trajs.traj_files,
+                [
+                    f1.name,
+                    f2.name,
+                ],
+            )
+            for index, batch in trajs.batch_iterator(10, yield_index=True):
+                break
+
+            self.assertIsInstance(index, np.ndarray)
+            for i, type_ in enumerate(
+                [
+                    "central_angles",
+                    "central_dihedrals",
+                    "central_cartesians",
+                    "central_distances",
+                    "side_dihedrals",
+                ]
+            ):
+                test = np.stack(
+                    [
+                        trajs._CVs[type_]
+                        .sel(
+                            traj_num=index[0, 0],
+                            frame_num=index[0, 1],
+                        )
+                        .values,
+                        trajs._CVs[type_]
+                        .sel(
+                            traj_num=index[1, 0],
+                            frame_num=index[1, 1],
+                        )
+                        .values,
+                    ],
+                )
+                self.assertEqual(
+                    test.shape,
+                    batch[i][:2].shape,
+                    msg=(
+                        f"Comparing shapes of arrays for {type_}. "
+                        f"Shapes are not identical: {test.shape=} {batch[2].shape=}"
+                    ),
+                )
+                self.assertAllEqual(test, batch[i][:2])
+
+            # Encodermap imports
+            from encodermap.autoencoder.autoencoder import np_to_sparse_tensor
+            from encodermap.models.models import (
+                _create_inputs_non_periodic_maybe_sparse,
+            )
+            from encodermap.parameters.parameters import ADCParameters
+
+            test = np.stack(
+                [
+                    trajs._CVs.central_cartesians.sel(
+                        traj_num=index[0, 0],
+                        frame_num=index[0, 1],
+                    ).values,
+                    trajs._CVs.central_cartesians.sel(
+                        traj_num=index[1, 0],
+                        frame_num=index[1, 1],
+                    ).values,
+                ],
+            )
+            test_copy = test.copy()
+            test_copy[1, [0, 1, 2, 470, 471, 472, 473]] = np.nan
+            test_tensor = np_to_sparse_tensor(test_copy.reshape((2, -1)))
+
+            input, output, _ = _create_inputs_non_periodic_maybe_sparse(
+                shape=(474 * 3,),
+                p=ADCParameters(),
+                name="testing_reshaping_central_cartesians",
+                sparse=True,
+                reshape=3,
+            )
+            model = tf.keras.models.Model(inputs=input, outputs=output)
+            test_tensor = model(test_tensor).numpy()
+            self.assertTrue(not np.any(np.isnan(test_tensor)))
+            self.assertAllEqual(
+                test_copy,
+                tf.keras.layers.Reshape(
+                    target_shape=(474, 3),
+                    input_shape=(474 * 3,),
+                    name="reshape_sparse_to_dense_test",
+                )(test_copy.reshape((2, -1))).numpy(),
+            )
 
     def test_info_all_loading(self):
         with self.assertRaises(Exception):
@@ -1968,57 +2332,65 @@ class TestTraj(unittest.TestCase):
         self.assertTrue(np.array_equal(frames.id, index))
 
     def test_traj_joined(self):
-        traj1 = SingleTraj(
-            self.data_dir / "1am7_corrected_part1.xtc",
-            top=self.data_dir / "1am7_protein.pdb",
-        )
-        traj2 = SingleTraj(
-            self.data_dir / "1am7_corrected_part2.xtc",
-            top=self.data_dir / "1am7_protein.pdb",
-        )
-        trajs = TrajEnsemble([traj1.traj, traj2.traj])
-        self.assertIsInstance(trajs, TrajEnsemble)
-        self.assertEqual(
-            trajs.top[0],
-            md.load_topology(str(self.data_dir / "1am7_protein.pdb")),
-            msg=f"The tops of traj does seem to be an empty list {trajs.top}.",
-        )
-        self.assertEqual(trajs.n_residues, [158, 158])
-        self.assertEqual(trajs.basenames, [None, None])
-        split_into_frames = trajs.split_into_frames()
-        self.assertEqual(split_into_frames.n_frames, 51)
-        test = split_into_frames.traj_joined
-        self.assertIsInstance(test, md.Trajectory)
+        with (
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f1,
+            tempfile.NamedTemporaryFile(suffix=".xtc") as f2,
+        ):
+            shutil.copyfile(self.data_dir / "1am7_corrected_part1.xtc", f1.name)
+            shutil.copyfile(self.data_dir / "1am7_corrected_part2.xtc", f2.name)
+            traj1 = SingleTraj(
+                f1.name,
+                top=self.data_dir / "1am7_protein.pdb",
+            )
+            traj2 = SingleTraj(
+                f2.name,
+                top=self.data_dir / "1am7_protein.pdb",
+            )
+            trajs = TrajEnsemble([traj1.traj, traj2.traj])
+            self.assertIsInstance(trajs, TrajEnsemble)
+            self.assertEqual(
+                trajs.top[0],
+                md.load_topology(str(self.data_dir / "1am7_protein.pdb")),
+                msg=f"The tops of traj does seem to be an empty list {trajs.top}.",
+            )
+            self.assertEqual(trajs.n_residues, [158, 158])
+            self.assertEqual(trajs.basenames, [None, None])
+            split_into_frames = trajs.split_into_frames()
+            self.assertEqual(split_into_frames.n_frames, 51)
+            test = split_into_frames.traj_joined
+            self.assertIsInstance(test, md.Trajectory)
 
     def test_adding_mixed_pyemma_features_with_custom_names(self):
-        traj = SingleTraj(
-            self.data_dir / "1am7_corrected_part1.xtc",
-            top=self.data_dir / "1am7_protein.pdb",
-        )
-        # Encodermap imports
-        from encodermap import Featurizer
+        with tempfile.NamedTemporaryFile(suffix=".xtc") as f1:
+            shutil.copyfile(self.data_dir / "1am7_corrected_part1.xtc", f1.name)
+            traj = SingleTraj(
+                f1.name,
+                top=self.data_dir / "1am7_protein.pdb",
+            )
+            # Encodermap imports
+            from encodermap import Featurizer
 
-        featurizer = Featurizer(traj)
-        featurizer.add_distances_ca(excluded_neighbors=0)
-        traj.load_CV(featurizer, attr_name="Custom_Feature_1")
-        self.assertHasAttr(traj, "Custom_Feature_1")
+            featurizer = Featurizer(traj)
+            featurizer.add_distances_ca(excluded_neighbors=0)
+            traj.load_CV(featurizer, attr_name="Custom_Feature_1")
+            self.assertHasAttr(traj, "Custom_Feature_1")
 
-        featurizer.add_list_of_feats("central_dihedrals")
-        with self.assertRaises(TypeError):
-            traj.load_CV(featurizer, attr_name="Custom_Feature")
-        traj.load_CV(
-            featurizer,
-            attr_name=["Custom_Feature_2", "Custom_Feature_3"],
-            override=True,
-        )
+            featurizer.add_list_of_feats("central_dihedrals")
+            with self.assertRaises(TypeError):
+                traj.load_CV(featurizer, attr_name="Custom_Feature")
+            traj.load_CV(
+                featurizer,
+                attr_name=["Custom_Feature_2", "Custom_Feature_3"],
+                override=True,
+            )
 
-        self.assertEqual(traj.Custom_Feature_1.shape, (25, 12_403))
-        self.assertEqual(traj.Custom_Feature_2.shape, (25, 12_403))
-        self.assertEqual(
-            traj.Custom_Feature_3.shape,
-            (25, 471),
-            msg=f"{traj._CVs.Custom_Feature_3.coords['CENTRAL_DIHEDRALS'].values.tolist()}",
-        )
+            self.assertEqual(traj.Custom_Feature_1.shape, (25, 12_403))
+            self.assertEqual(traj.Custom_Feature_2.shape, (25, 12_403))
+            self.assertEqual(
+                traj.Custom_Feature_3.shape,
+                (25, 471),
+                msg=f"{traj._CVs.Custom_Feature_3.coords['CENTRAL_DIHEDRALS'].values.tolist()}",
+            )
 
     def test_info_all_load_CVs_from_file(self):
         traj1 = SingleTraj(self.data_dir / "1YUG.pdb")[:15]
@@ -2158,8 +2530,8 @@ class TestTraj(unittest.TestCase):
 
     def test_traj_ensemble_from_textfile(self):
         test_str = """\
-        {{ traj1 }} {{ traj1 }} asp7
-        {{ traj2 }} {{ traj2 }} glu7
+        {{ traj1 }} {{ top1 }} 0 asp7
+        {{ traj2 }} {{ top2 }} 1 glu7
 
         """
         # Standard Library Imports
@@ -2192,26 +2564,12 @@ class TestTraj(unittest.TestCase):
 
 
 ################################################################################
-# Doctests
-################################################################################
-
-
-# Standard Library Imports
-import doctest
-
-# Encodermap imports
-import encodermap.trajinfo as trajinfo
-
-
-################################################################################
 # Create and filter suite
 ################################################################################
 
 
 testSuite = unittest.TestSuite()
-doctests = (doctest.DocTestSuite(trajinfo),)
 testSuite.addTests((unittest.makeSuite(TestTraj),))
-testSuite.addTests(doctests)
 
 
 ################################################################################

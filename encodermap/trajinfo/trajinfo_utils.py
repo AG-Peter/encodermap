@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/trajinfo/trajinfo_utils.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -44,12 +44,19 @@ from pathlib import Path
 
 # Third Party Imports
 import numpy as np
-import yaml
 from optional_imports import _optional_import
 
-# Local Folder Imports
-from ..misc.misc import FEATURE_NAMES
-from ..misc.xarray import construct_xarray_from_numpy
+# Encodermap imports
+from encodermap._typing import CustomAAsDict, DihedralOrBondDict
+from encodermap.loading.features import AnyFeature, Feature
+from encodermap.loading.featurizer import (
+    DaskFeaturizer,
+    EnsembleFeaturizer,
+    SingleTrajFeaturizer,
+)
+from encodermap.misc.misc import FEATURE_NAMES
+from encodermap.misc.xarray import construct_xarray_from_numpy
+from encodermap.trajinfo.info_single import SingleTraj
 
 
 ##############################################################################
@@ -65,6 +72,8 @@ _construct_atom_dict = _optional_import(
     "mdtraj", "geometry.dihedral._construct_atom_dict"
 )
 _strip_offsets = _optional_import("mdtraj", "geometry.dihedral._strip_offsets")
+h5py = _optional_import("h5py")
+yaml = _optional_import("yaml")
 
 
 ################################################################################
@@ -74,45 +83,44 @@ _strip_offsets = _optional_import("mdtraj", "geometry.dihedral._strip_offsets")
 
 # Standard Library Imports
 from collections.abc import Generator, Sequence
-from types import ModuleType
 from typing import TYPE_CHECKING, Any, Literal, Optional, Union
 
-# Local Folder Imports
-from .._typing import CustomAAsDict
+
+SingleTrajFeatureType = Union[
+    str,
+    Path,
+    np.ndarray,
+    Feature,
+    xr.Dataset,
+    xr.DataArray,
+    SingleTrajFeaturizer,
+    DaskFeaturizer,
+    Literal["all"],
+    Literal["full"],
+    AnyFeature,
+    None,
+]
+TrajEnsembleFeatureType = Union[
+    Sequence[str],
+    Sequence[Path],
+    Sequence[np.ndarray],
+    xr.Dataset,
+    EnsembleFeaturizer,
+    DaskFeaturizer,
+    Literal["all"],
+    Literal["full"],
+    AnyFeature,
+    None,
+]
 
 
 if TYPE_CHECKING:  # pragma: no cover
     # Third Party Imports
     import mdtraj as md
     import xarray as xr
-    from pyemma.coordinates.data.featurization._base import Feature
 
-    # Local Folder Imports
-    from .._typing import AnyFeature
-    from ..loading.dask_featurizer import DaskFeaturizer
-    from ..loading.featurizer import Featurizer
-    from .info_single import SingleTraj, TrajEnsemble
-
-    SingleTrajFeatureType = Union[
-        str,
-        Path,
-        np.ndarray,
-        Feature,
-        xr.Dataset,
-        xr.DataArray,
-        DaskFeaturizer,
-        Literal["all"],
-        AnyFeature,
-    ]
-    TrajEnsembleFeatureType = Union[
-        Sequence[str],
-        Sequence[Path],
-        Sequence[np.ndarray],
-        xr.Dataset,
-        DaskFeaturizer,
-        Literal["all"],
-        AnyFeature,
-    ]
+    # Encodermap imports
+    from encodermap.trajinfo.info_all import TrajEnsemble
 
 
 ################################################################################
@@ -124,7 +132,7 @@ CAN_BE_FEATURE_NAME = list(FEATURE_NAMES.keys()) + list(FEATURE_NAMES.values())
 
 
 # fmt: off
-_AMINO_ACID_CODES =  {'ACE': None, 'NME':  None, '00C': 'C', '01W':  'X', '02K':
+_AMINO_ACID_CODES = {'ACE': None, 'NME':  None, '00C': 'C', '01W':  'X', '02K':
 'A', '02L':  'N', '03Y': 'C',  '07O': 'C', '08P':  'C', '0A0': 'D',  '0A1': 'Y',
 '0A2': 'K', '0A8':  'C', '0AA': 'V', '0AB': 'V', '0AC':  'G', '0AF': 'W', '0AG':
 'L', '0AH':  'S', '0AK': 'D',  '0BN': 'F', '0CS':  'A', '0E5': 'T',  '0EA': 'Y',
@@ -282,7 +290,7 @@ CHI4_ATOMS = [["CG", "CD", "NE", "CZ"], ["CG", "CD", "CE", "NZ"]]
 CHI5_ATOMS = [["CD", "NE", "CZ", "NH1"]]
 
 
-__all__ = ["load_CVs_singletraj", "load_CVs_ensembletraj", "CustomTopology"]
+__all__: list[str] = ["load_CVs_singletraj", "load_CVs_ensembletraj", "CustomTopology"]
 
 
 ################################################################################
@@ -331,6 +339,32 @@ class Bond:
 
 @dataclass
 class Dihedral:
+    """Dataclass that stores information about a dihedral of 4 atoms.
+
+    Attributes:
+        resname (str): The name of the residue, this bond belongs to. Although
+            bonds belong to residues, they can also have `atom1` or `atom2`
+            belonging to a different residue.
+        type (Literal["OMEGA", "PHI", "PSI", "CHI1", "CHI2", "CHI3", "CHI4", "CHI5"]):
+            Defines what type of dihedral this dihedral is. Mainly used to
+            discern different these types of dihedrals.
+        atom1 (Union[str, int]): The name of the first atom. Can be 'CA', 'N', or
+            whatever (not limited to proteins). If it is `int` it can be any other
+            atom of the topology (also belonging to a different residue).
+        atom2 (Union[str, int]): The name of the second atom. Can be 'CA', 'N', or
+            whatever (not limited to proteins). If it is `int` it can be any other
+            atom of the topology (also belonging to a different residue).
+        atom3 (Union[str, int]): The name of the third atom. Can be 'CA', 'N', or
+            whatever (not limited to proteins). If it is `int` it can be any other
+            atom of the topology (also belonging to a different residue).
+        atom4 (Union[str, int]): The name of the fourth atom. Can be 'CA', 'N', or
+            whatever (not limited to proteins). If it is `int` it can be any other
+            atom of the topology (also belonging to a different residue).
+        delete (bool): Whether this dihedral has to be deleted or not. If
+            `delete` is set to True, this dihedral won't produce output.
+
+    """
+
     resname: str
     type: Literal["OMEGA", "PHI", "PSI", "CHI1", "CHI2", "CHI3", "CHI4", "CHI5"]
     atom1: Union[int, str, None] = None
@@ -353,6 +387,7 @@ class Dihedral:
 
     @property
     def new_atoms_def(self) -> list[str]:
+        """list[str]: A list of str, that describes the dihedral's atoms."""
         if not self.delete:
             atoms = [self.atom1, self.atom2, self.atom3, self.atom4]
             assert all(
@@ -365,6 +400,31 @@ class Dihedral:
 
 @dataclass
 class NewResidue:
+    """Dataclass that stores information about a new (nonstandard) residue.
+
+    Attributes:
+        name (str): The 3-letter code name of the new residue.
+        idx (Union[None, int]): The 0-based unique index of the residue. The
+            `idx` index is always unique (i.e., if multiple chains are present,
+            this residue can only appear in one chain).
+        resSeq (Union[None, int]): The 1-based non-unique index of the residue.
+            resSeqs can appear multiple times, but in separate chains. Each
+            residue chain can have a MET1 residue. Either resSeq or idx must
+            be defined. Not both can be None.
+        one_letter_code (str): The one letter code of this new resiude.
+            Can be set to a known one letter code, so that this new residue
+            mimics that one letter code residue's behavior. Can also be ''
+            (empty string), if you don't want to bother with this definition.
+        ignore (bool): Whether to ignore the features of this residue.
+        bonds (list[Bond]): A list of `Bond` instances.
+        dihedrals (list[Dihedral]): A list of `Dihedral` instances.
+        common_str (Optional[str]): The common_str of the (sub)set of
+            `SingleTraj`s that this new dihedral should apply to. Only
+            applies to `SingleTraj`s with the same `common_str`. Can be
+            None and thus applies to all trajs in the `TrajEnsmeble`.
+
+    """
+
     name: str
     idx: Union[None, int] = None
     resSeq: Union[None, int] = None
@@ -397,10 +457,16 @@ class NewResidue:
 
     def parse_bonds_and_dihedrals(
         self,
-        bonds_and_dihedrals: dict[
-            str, Union[list[tuple[Union[int, str], Union[int, str]]], list[str]]
-        ],
+        bonds_and_dihedrals: DihedralOrBondDict,
     ) -> None:
+        """Parses a dict of bonds and dihedrals. The format of this can be derived
+        from the format of the `CustomTopology` input dict.
+
+        Args:
+            bonds_and_dihedrals (DihedralOrBondDict): A dict defining bonds
+                and dihedrals of this newResidue.
+
+        """
         if self.bonds or self.dihedrals:
             raise Exception(
                 f"The method `parse_bonds_and_dihedrals` works on empty `NewResidue` "
@@ -416,10 +482,9 @@ class NewResidue:
                     bond = Bond(self.name, bond_type, *bond)
                     self.bonds.append(bond)
             else:
-                if isinstance(atoms_or_bonds, str):
-                    assert (
-                        atoms_or_bonds == "delete"
-                    ), f"Only a list of str or 'delete' allowed here."
+                if isinstance(atoms_or_bonds, str) or atoms_or_bonds is None:
+                    if bond_or_dihe_type.startswith("not_"):
+                        bond_or_dihe_type = bond_or_dihe_type.replace("not_", "")
                     dihe_name = bond_or_dihe_type
                     atoms_or_bonds = []
                     delete = True
@@ -430,6 +495,7 @@ class NewResidue:
                 dihedral = Dihedral(
                     self.name, dihe_name, *atoms_or_bonds, delete=delete
                 )
+
                 self.dihedrals.append(dihedral)
 
     def get_dihedral_by_type(self, type: str) -> Dihedral:
@@ -515,19 +581,237 @@ def _delete_bond(
 
 
 class CustomTopology:
-    """Adds custom topology elements to a topology parsed by MDTraj."""
+    """Adds custom topology elements to a topology parsed by MDTraj.
+
+    Postpones parsing the custom AAs until requested.
+
+    The custom_aminoacids dictionary follows these styleguides:
+        * The keys can be str or tuple[str, str]
+        * If a key is str, it needs to be a 3-letter code (MET, ALA, GLY, ...)
+        * If a key is a tuple[str, str], the first str of the tuple is a common_str
+            (see the docstring for `encodermap.TrajEnsemble` to learn about common_str.
+            This common_str can be used to apply custom topologies to an ensemble
+            based on their common_str. For example::
+
+                {("CSR_mutant", "CSR"): ...}
+
+        * A key can also affect only a single residue (not all resides called "CSR").
+             For that, the 3-letter code of the residue needs to be postponed with
+             a dash and the 1-based indexed resSeq of the residue::
+
+                {"CSR-2": ...}
+
+        * The value to a key can be None, which means this residue will not be
+            used for building a topology. Because EncoderMap raises Exceptions,
+            when it encounters unknown residues (to make sure, you don't forget to
+            featurize some important residues), it will also raise Exceptions when
+            the topology contains unknown solvents/solutes. If you run a simulation
+            in water/methanol mixtures with the residue names SOL and MOH, EncoderMap
+            will raise an Exception upon encountering MOH, so your custom topology
+            should contain 1{"MOH": None}` to include MOH.
+        * The value of a key can also be a tuple[str, Union[dict, None]]. In this
+            case, the first string should be the one-letter code of the residue or
+            the residue most closely representing this residue. If you use
+            phosphotyrosine (PTR) in your simulations and want to use it as a
+            standard tyrosine residue, the custom topology should contain
+            `{"PTR": ("Y", None)}`
+        * If your residue is completely novel you need to define all possible
+            bonds, backbone and sidechain dihedrals yourself. For that, you want
+            to provide a tuple[str, dict[str, Union[listr[str], list[int]]] type.
+            This second level dict allows for the following keys:
+            * bonds: For bonds between atoms. This key can contain a list[tuple[str, str]],
+                which defines bonds in this residue. This dict defines a bond
+                between N and CA in phosphothreonine.
+                {"PTR": ("Y", {
+                    "bonds": [
+                        ("N", "CA"),
+                    ],
+                }}
+                These strings can cotain + and - signs to denote bonds to
+                previous or following residues. To connect the residues MET1 to
+                TPO2 to ALA3, you want to have this dict:
+                {"TPO": ("T", {
+                    "bonds": [
+                        ("-C", "N"),  # bond to MET1-C
+                        ("N", "CA"),
+                        ...
+                        ("C", "+N"),  # bond to ALA2-N
+                    ],
+                }}
+                For exotic bonds, one of the strings can also be int to
+                connect to any 0-based indexed atom in your topology. You can connect
+                the residues CYS2 and CYS20 wit a sulfide bride like so:
+                {"CYS-2": ("C", {
+                    "bonds": [
+                        ("S", 321),  # connect to CYS20, the 321 is a placeholder
+                    ],
+                    },
+                "CYS-20": ("C", {
+                    "bonds": [
+                        (20, "S"),  # connect to CYS2
+                    ],
+                    },
+                }
+            * optional_bonds: This key accepts the same list[tuple] as 'bonds'.
+                However, bonds will raise an Exception if a bond already exists.
+                The above example with a disulfide bridge between CYS2 and CYS20
+                will thus raise an exception. A better example is:
+                {"CYS-2": ("C", {
+                    "optional_bonds": [
+                        ("S", 321),  # connect to CYS20, the 321 is a placeholder
+                    ],
+                    },
+                "CYS-20": ("C", {
+                    "optional_bonds": [
+                        (20, "S"),  # connect to CYS2
+                    ],
+                    },
+                }
+            * delete_bonds: This key accepts the same list[tuple] as 'bonds',
+                but will remove bonds. If a bond was marked for deletion, but
+                does not exist in your topology, an Exception will be raised.
+                To delete bonds, without raising an Exception, use:
+            * optional_delete_bonds: This will delete bonds, if they are present
+                and won't raise an Exception if no bond is present.
+            * PHI, PSI, OMEGA: These keys define the backbone torsions of this
+                residue. You can just provide a list[str] for these keys. But
+                the str can contain + and - to use atoms in previous or following
+                residues. Example:
+                {
+                    "CYS-2": (
+                        "C",
+                        {
+                            "PHI": ["-C", "N", "CA", "C"],
+                            "PSI": ["N", "CA", "C", "+N"],
+                            "OMEGA": ["CA", "C", "+N", "+CA"],
+                        },
+                    ),
+                }
+            * not-PSI, not_OMEGA, not_PHI: Same as 'PHI', 'PSI", 'OMEGA', but
+                will remove these dihedrals from consideration. The vales of
+                these keys do not matter. Example:
+                {
+                    "CYS-2": (
+                        "C",
+                        {
+                            "PHI": ["-C", "N", "CA", "C"],
+                            "not_PSI": [],  # value for not_* keys does not matter
+                            "not_OMEGA": [],  # it just makes EncoderMap skip these dihedrals.
+                        },
+                    ),
+                }
+            * CHI1, ..., CHI5: Finally, these keys define the atoms considered for
+                the sidechain angles. If you want to add extra sidechain dihedrals
+                for phosphothreonine, you can do:
+                {
+                    "TPO": (
+                        "T",
+                        {
+                            "CHI2": ["CA", "CB", "OG1", "P"],  # include phosphorus in sidechain angles
+                            "CHI3": ["CB", "OG1", "P", "OXT"],  # include the terminal axygen in sidechain angles
+                        },
+                    )
+                }
+
+    Examples:
+        >>> # Aminoacids taken from https://www.swisssidechain.ch/
+        >>> # The provided .pdb file has only strange and unnatural aminoacids.
+        >>> # Its sequence is:
+        >>> # TPO - PTR - ORN - OAS - 2AG - CSR
+        >>> # TPO: phosphothreonine
+        >>> # PTR: phosphotyrosine
+        >>> # ORN: ornithine
+        >>> # OAS: o-acetylserine
+        >>> # 2AG: 2-allyl-glycine
+        >>> # CSR: selenocysteine
+        >>> # However, someone mis-named the 2AG residue to ALL
+        >>> # Let's fix that with EncoderMap's CustomTopology
+        >>> import encodermap as em
+        >>> from pathlib import Path
+        ...
+        >>> traj = em.load(Path(em.__file__).resolve().parent.parent / "tests/data/unnatural_aminoacids.pdb")
+        ...
+        >>> custom_aas = {
+        ...     "ALL": ("A", None),  # makes EncoderMap treat 2-allyl-glycine as alanine
+        ...     "OAS": (
+        ...         "S",  # OAS is 2-acetylserine
+        ...         {
+        ...             "CHI2": ["CA", "CB", "OG", "CD"],  # this is a non-standard chi2 angle
+        ...             "CHI3": ["CB", "OG", "CD", "CE"],  # this is a non-standard chi3 angle
+        ...         },
+        ...     ),
+        ...     "CSR": (  # CSR is selenocysteine
+        ...         "S",
+        ...         {
+        ...             "bonds": [   # we can manually define bonds for selenocysteine like so:
+        ...                 ("-C", "N"),      # bond between previous carbon and nitrogen CSR
+        ...                 ("N", "CA"),
+        ...                 ("N", "H1"),
+        ...                 ("CA", "C"),
+        ...                 ("CA", "HA"),     # this topology includes hydrogens
+        ...                 ("C", "O"),
+        ...                 ("C", "OXT"),     # As the C-terminal residue, we don't need to put ("C", "+N") here
+        ...                 ("CA", "CB"),
+        ...                 ("CB", "HB1"),
+        ...                 ("CB", "HB2"),
+        ...                 ("CB", "SE"),
+        ...                 ("SE", "HE"),
+        ...             ],
+        ...             "CHI1": ["N", "CA", "CB", "SE"],  # this is a non-standard chi1 angle
+        ...         },
+        ...     ),
+        ...     "TPO": (  # TPO is phosphothreonine
+        ...         "T",
+        ...         {
+        ...             "CHI2": ["CA", "CB", "OG1", "P"],  # a non-standard chi2 angle
+        ...             "CHI3": ["CB", "OG1", "P", "OXT"],  # a non-standard chi3 angle
+        ...         },
+        ...     ),
+        ... }
+        ...
+        >>> # loading this will raise an Exception, because the bonds in CSR already exist
+        >>> traj.load_custom_topology(custom_aas)  # doctest: +IGNORE_EXCEPTION_DETAIL, +ELLIPSIS, +NORMALIZE_WHITESPACE
+        Traceback (most recent call last):
+            ...
+        Exception: Bond between ALL5-C and CSR6-N already exists. Consider using the key 'optional_bonds' to not raise an Exception on already existing bonds.
+        >>> # If we rename the "bonds" section in "CSR" to "optional_bonds" it will work
+        >>> custom_aas["CSR"][1]["optional_bonds"] = custom_aas["CSR"][1].pop("bonds")
+        >>> traj.load_custom_topology(custom_aas)
+        >>> sidechains = em.features.SideChainDihedrals(traj).describe()
+        >>> "SIDECHDIH CHI2  RESID  OAS:   4 CHAIN 0" in sidechains
+        True
+        >>> "SIDECHDIH CHI3  RESID  OAS:   4 CHAIN 0" in sidechains
+        True
+        >>> "SIDECHDIH CHI1  RESID  CSR:   6 CHAIN 0" in sidechains
+        True
+        >>> "SIDECHDIH CHI2  RESID  TPO:   1 CHAIN 0" in sidechains
+        True
+        >>> "SIDECHDIH CHI3  RESID  TPO:   1 CHAIN 0" in sidechains
+        True
+
+    """
 
     def __init__(
-        self, *new_residues: NewResidue, traj: Optional["InfoSingle"] = None
+        self,
+        *new_residues: NewResidue,
+        traj: Optional[SingleTraj] = None,
     ) -> None:
+        """Instantiate the CustomTopology.
+
+        Args:
+            *residues (NewResidue): An arbitrary amount of instances of `NewResidue`.
+            traj (Optional[SingleTraj]): An instance of `SingleTraj` can be
+                provided to allow fixing that traj's topology.
+
+        """
         self.residues = set([*new_residues])
         self.traj = traj
         self._parsed = False
-        global _AMINO_ACID_CODES
         self.amino_acid_codes = _AMINO_ACID_CODES
 
     @property
-    def top(self):
+    def top(self) -> md.Topology:
+        """md.Topology: The fixed topology."""
         if not self._parsed:
             top = self.add_bonds()
             self.add_amino_acid_codes()
@@ -537,9 +821,16 @@ class CustomTopology:
 
     @property
     def new_residues(self) -> list[NewResidue]:
+        """list[NewResidue]: A list of all new residues."""
         return list(self.residues)
 
     def add_new_residue(self, new_residue: NewResidue) -> None:
+        """Adds an instance of `NewResidue` to the reisdues of this `CustomTopology`.
+
+        Args:
+            new_residue (NewResidue): An instance of `NewResidue`.
+
+        """
         self.residues += new_residue
 
     def __hash__(self) -> int:
@@ -555,6 +846,12 @@ class CustomTopology:
         return self.residues == other.residues
 
     def add_bonds(self) -> md.Topology:
+        """Adds and deletes bonds specified in the custom topology.
+
+        Returns:
+            md.Topology: The new topology.
+
+        """
         # Encodermap imports
         from encodermap.misc.misc import _validate_uri
 
@@ -566,7 +863,7 @@ class CustomTopology:
                 assert top_residue.name == residue.name, (
                     f"There is no residue with the name {residue.name} "
                     f"and the index {residue.idx} in the topology."
-                    f"Residue at index {residue.idx} has the name {residue}."
+                    f"Residue at index {residue.idx} has the name {top_residue.name}."
                 )
                 top_residues = [top_residue]
             elif residue.resSeq is not None:
@@ -673,9 +970,24 @@ class CustomTopology:
                                 a2,
                                 a1,
                             ) in [(n1, n2) for n1, n2 in top.bonds]
+                        else:
+                            if action != "optional":
+                                raise Exception(
+                                    f"Bond between {a1} and {a2} already exists. "
+                                    f"Consider using the key 'optional_bonds' to not "
+                                    f"raise an Exception on already existing bonds."
+                                )
                     elif action == "delete" or action == "optional_delete":
                         if (a1, a2) in current_bonds or (a2, a1) in current_bonds:
                             top = _delete_bond(top, (a1, a2))
+                        else:
+                            if action == "delete":
+                                raise Exception(
+                                    f"Bond between {a1} and {a2} was not present in topology. "
+                                    f"Consider using the key 'optional_delete_bonds' to not "
+                                    f"raise an Exception on bonds that don't exist in the "
+                                    f"first place."
+                                )
                     else:
                         raise Exception(
                             f"Bond action must be 'add', 'optional', 'delete', or "
@@ -684,21 +996,51 @@ class CustomTopology:
         return top
 
     def combine_chains(self, chain_id1: int, chain_id2: int) -> None:
+        """Function to combine two chains into one.
+
+        Args:
+            chain_id1 (int): The 0-based index of chain 1.
+            chain_id2 (int): The 0-based index of chain 2.
+
+        """
         raise NotImplementedError(
             f"Currently not able to make a new bond across two different chains. "
             f"Should be easy though, just make the atoms to bonds and pandas dataframe "
             f"and manually combine and renumber chains. But don't have the time to do it now."
         )
 
-    # @functools.cache
-    def _atom_dict(self) -> dict[Any, Any]:
-        return _construct_atom_dict(self.top)
+    def _atom_dict(
+        self, top: Optional[md.Topology] = None
+    ) -> dict[int, dict[int, dict[str, int]]]:
+        """A dictionary to lookup indices by atom name, residue_id and chain index.
+
+        The dictionary is nested as such::
+            atom_dict[chain_index][residue_index][atom_name] = atom_index
+
+        """
+        if top is None:
+            return _construct_atom_dict(self.top)
+        else:
+            return _construct_atom_dict(top)
 
     def get_single_residue_atom_ids(
         self,
         atom_names: list[str],
         r: NewResidue,
+        key_error_ok: bool = False,
     ) -> np.ndarray:
+        """Gives the 0-based atom ids of a single residue.
+
+        Args:
+            atom_names (list[str]): The names of the atoms. ie. ['N' ,'CA', 'C', '+N']
+            r (NewResidue): An instance of `NewResidue`.
+            key_error_ok (bool): Whether a key error when querying `self._atom_dict`
+                raises an error or returns an empty np.ndarray.
+
+        Returns:
+            np.ndarray: An integer array with the ids of the requested atoms.
+
+        """
         new_defs = []
         offsets = parse_offsets(atom_names)
         atom_names = _strip_offsets(atom_names)
@@ -713,25 +1055,47 @@ class CustomTopology:
                     if r.idx is not None:
                         if rid != r.idx:
                             continue
-                    new_def = [
-                        self._atom_dict()[cid][rid + offset][atom]
-                        for atom, offset in zip(atom_names, offsets)
-                    ]
+                    try:
+                        new_def = [
+                            self._atom_dict()[cid][rid + offset][atom]
+                            for atom, offset in zip(atom_names, offsets)
+                        ]
+                    except KeyError as e:
+                        if key_error_ok:
+                            return np.array([])
+                        else:
+                            raise e
                     new_defs.append(new_def)
         return np.asarray(new_defs)
 
     def backbone_sequence(
         self,
         atom_names: list[str],
-        type: str,
-    ) -> tuple[np.ndarray, np.ndarray]:
-        default_indices, default_sequence = _atom_sequence(self.top, atom_names)
+        type: Literal["PHI", "PSI", "OMEGA"],
+    ) -> np.ndarray:
+        """Searches for a sequence along the backbone.
+
+        Args:
+            atom_names (list[str]): The names of the atoms. Can use +/- to
+                mark atoms in previous or following residue.
+            type (Literal["PHI", "PSI", "OMEGA"]): The type of the dihedral
+                sequence.
+
+        Returns:
+            np.ndarray: The integer indices of the requested atoms.
+
+        """
+        top = self.top.copy()
+        if hasattr(self, "traj"):
+            if self.traj._atom_indices is not None:
+                top = top.subset(self.traj._atom_indices)
+        default_indices, default_sequence = _atom_sequence(top, atom_names)
         for r in self.residues:
             if r.ignore:
                 continue
             d = r.get_dihedral_by_type(type)
             if d is None:
-                warnings.warn(
+                msg = (
                     f"Your custom topology for residue name={r.name} resSeq={r.resSeq} "
                     f"index={r.idx} does not define atoms for the dihedral {type}. "
                     f"If this dihedral consists of standard atom names, it "
@@ -742,6 +1106,7 @@ class CustomTopology:
                     f"If you want this dihedral to be present in your topology, "
                     f"you can ignore this warning."
                 )
+                warnings.warn(msg, stacklevel=2)
                 continue
             if not d.delete:
                 if d.new_atoms_def != atom_names:
@@ -788,22 +1153,35 @@ class CustomTopology:
                 delete_idx = np.where(delete_idx)[0]
                 assert len(delete_idx) == 1
                 delete_idx = delete_idx[0]
-                # msg = f"{delete_idx=}\n\n"
-                # for i, row in enumerate(default_sequence):
-                #     msg += f"{i:<3} {row}\n"
                 default_sequence = np.delete(default_sequence, delete_idx, 0)
-                # for delete_def in delete_defs:
-                #     idx = np.all(delete_def == default_sequence, axis=1)
-                #     assert np.where(idx)[0].size == 1
-                #     default_indices = default_indices[~idx]
-                #     default_sequence = default_sequence[~idx]
-        # return default_indices, default_sequence
         return default_sequence
 
     def sidechain_sequence(
-        self, atom_names: list[str], type: str
-    ) -> tuple[np.ndarray, np.ndarray]:
-        top = self.top
+        self,
+        atom_names: list[str],
+        type: Literal["CHI1", "CHI2", "CHI3", "CHI4", "CHI5"],
+        top: Optional[md.Topology] = None,
+    ) -> np.ndarray:
+        """Searches for a sequence along the sidechains.
+
+        Args:
+            atom_names (list[str]): The names of the atoms. Can use +/- to
+                mark atoms in previous or following residue.
+            type (Literal["CHI1", "CHI2", "CHI3", "CHI4", "CHI5"]: The type of the dihedral
+                sequence.
+            top (Optional[md.Topology]): Can be used to overwrite the toplogy in
+                self.traj.
+
+        Returns:
+            np.ndarray: The integer indices of the requested atoms.
+
+        """
+        delete_defs = None
+        if top is None:
+            top = self.top.copy()
+            if hasattr(self, "traj"):
+                if self.traj._atom_indices is not None:
+                    top = top.subset(self.traj._atom_indices)
         for r in self.residues:
             d = r.get_dihedral_by_type(type)
             if d is None:
@@ -816,29 +1194,62 @@ class CustomTopology:
             if atoms_def not in atom_names:
                 atom_names.append(atoms_def)
             if d.delete:
-                raise NotImplementedError(
-                    "Currently can not delete custom sidechain dihedrals."
-                )
-        return self._indices_chi(atom_names)
+                if delete_defs is None:
+                    delete_defs = []
+                if (atoms_def := d.new_atoms_def) == []:
+                    atoms_def = globals()[f"{d.type}_ATOMS"]
+                delete = [
+                    self.get_single_residue_atom_ids(atoms, r, key_error_ok=True)
+                    for atoms in atoms_def
+                ]
+                delete = list(filter(lambda x: x.size > 0, delete))
+                delete = np.vstack(delete)
+                delete_defs.append(delete)
+        if delete_defs is not None:
+            delete_defs = np.vstack(delete_defs)
+        return self._indices_chi(atom_names, top, delete=delete_defs)
 
-    def _indices_chi(self, chi_atoms: Sequence[list[str]]) -> np.ndarray:
-        rids, indices = zip(*(self._atom_sequence(atoms) for atoms in chi_atoms))
+    def _indices_chi(
+        self,
+        chi_atoms: Sequence[list[str]],
+        top: Optional[md.Topology] = None,
+        delete: Optional[Sequence[np.ndarray]] = None,
+    ) -> np.ndarray:
+        chi_atoms = list(filter(lambda x: x != [], chi_atoms))
+        if top is None:
+            top = self.top.copy()
+        rids, indices = zip(
+            *(self._atom_sequence(atoms, top=top) for atoms in chi_atoms)
+        )
         id_sort = np.argsort(np.concatenate(rids))
         if not any(x.size for x in indices):
             return np.empty(shape=(0, 4), dtype=int)
         indices = np.vstack([x for x in indices if x.size])[id_sort]
+        if delete is not None:
+            delete_ids = []
+            for row in delete:
+                delete_ids.append(np.where((indices == row).all(1)))
+            delete_ids = np.array(delete_ids)
+            indices = np.delete(indices, delete_ids, 0)
         return indices
 
-    def _atom_sequence(self, atom_names, residue_offsets=None):
+    def _atom_sequence(
+        self,
+        atom_names,
+        residue_offsets=None,
+        top: Optional[md.Topology] = None,
+    ) -> tuple[np.ndarray, np.ndarray]:
+        if top is None:
+            top = self.top.copy()
         if residue_offsets is None:
             residue_offsets = parse_offsets(atom_names)
         atom_names = _strip_offsets(atom_names)
-        atom_dict = self._atom_dict()
+        atom_dict = self._atom_dict(top)
 
         atom_indices = []
         found_residue_ids = []
         atoms_and_offsets = list(zip(atom_names, residue_offsets))
-        for chain in self.top.chains:
+        for chain in top.chains:
             cid = chain.index
             for residue in chain.residues:
                 rid = residue.index
@@ -889,55 +1300,92 @@ class CustomTopology:
         else:
             return self.sidechain_sequence(atom_names, type)
 
-    def indices_chi1(self):
+    def sidechain_indices_by_residue(
+        self,
+    ) -> Generator[md.core.topology.Residue, np.ndarray]:
+        for residue in self.top.residues:
+            indices = []
+            for i in range(1, 6):
+                atoms = np.array([a.index for a in residue.atoms])
+                indices.extend(
+                    self.sidechain_sequence(
+                        atom_names=globals()[f"CHI{i}_ATOMS"],
+                        type=f"CHI{i}",
+                        top=self.top.subset(atoms),
+                    )
+                )
+            indices = np.sort(np.unique(indices)) + atoms.min()
+            yield residue, indices
+
+    def indices_chi1(self) -> np.ndarray:
+        """Returns the requested indices as a (n_dihedrals, 4)-shaped numpy array."""
         return self.atom_sequence(type="CHI1")
 
-    def indices_chi2(self):
+    def indices_chi2(self) -> np.ndarray:
+        """Returns the requested indices as a (n_dihedrals, 4)-shaped numpy array."""
         return self.atom_sequence(type="CHI2")
 
-    def indices_chi3(self):
+    def indices_chi3(self) -> np.ndarray:
+        """Returns the requested indices as a (n_dihedrals, 4)-shaped numpy array."""
         return self.atom_sequence(type="CHI3")
 
-    def indices_chi4(self):
+    def indices_chi4(self) -> np.ndarray:
+        """Returns the requested indices as a (n_dihedrals, 4)-shaped numpy array."""
         return self.atom_sequence(type="CHI4")
 
-    def indices_chi5(self):
+    def indices_chi5(self) -> np.ndarray:
+        """Returns the requested indices as a (n_dihedrals, 4)-shaped numpy array."""
         return self.atom_sequence(type="CHI5")
 
-    def indices_psi(self):
+    def indices_psi(self) -> np.ndarray:
+        """Returns the requested indices as a (n_dihedrals, 4)-shaped numpy array."""
         return self.atom_sequence(type="PSI")
 
-    def indices_phi(self):
+    def indices_phi(self) -> np.ndarray:
+        """Returns the requested indices as a (n_dihedrals, 4)-shaped numpy array."""
         return self.atom_sequence(type="PHI")
 
-    def indices_omega(self):
+    def indices_omega(self) -> np.ndarray:
+        """Returns the requested indices as a (n_dihedrals, 4)-shaped numpy array."""
         return self.atom_sequence(type="OMEGA")
 
     def add_amino_acid_codes(self) -> None:
         self.amino_acid_codes |= {r.name: r.one_letter_code for r in self.new_residues}
 
-    # def get_residues_by_common_str(self, common_str: str) -> Generator[NewResidue]:
-    #     for r in self.new_residues:
-    #         if r.common_str is None:
-    #             yield r
-    #         elif r.common_str == common_str:
-    #             yield r
-    #
-    # def get_residues_by_top(self, top: md.Topology) -> Generator[NewResidue]:
-    #     for r in self.new_residues:
-    #         if r.topology is None:
-    #             yield r
-    #         elif r.topology == top:
-    #             yield r
-
     def _str_summary(self):
         out = []
         for r in self.new_residues:
             out.append(str(r))
-        return "\n\n".join(out)
+        if len(out) > 0:
+            return "\n\n".join(out)
+        return "CustomTopology without any custom residues."
 
     def __str__(self):
         return self._str_summary()
+
+    def __bool__(self):
+        return bool(self.residues)
+
+    def to_json(self) -> str:
+        # Standard Library Imports
+        import json
+
+        return json.dumps(self.to_dict())
+
+    def to_hdf_file(
+        self,
+        fname: Union[Path, str],
+    ) -> None:
+        if hasattr(self, "traj"):
+            key = self.traj.traj_num
+        else:
+            key = None
+        if key is None:
+            key = "_custom_top"
+        else:
+            key = f"_custom_top_{key}"
+        with h5py.File(fname, mode="a") as file:
+            file.attrs[key] = str(self.to_dict())
 
     def to_dict(self) -> CustomAAsDict:
         out = {}
@@ -947,8 +1395,8 @@ class CustomTopology:
                 assert r.idx is None, f"Can't have resSeq and idx be not None."
                 key = f"{key}{r.resSeq}"
             if r.idx is not None:
-                assert r.idx is None, f"Can't have resSeq and idx be not None."
-                key = f"{key}-{r.index}"
+                assert r.resSeq is None, f"Can't have resSeq and idx be not None."
+                key = f"{key}-{r.idx}"
             if r.common_str:
                 key = (r.common_str, key)
 
@@ -968,23 +1416,52 @@ class CustomTopology:
                 if not d.delete:
                     def_dict[d.type] = [d.atom1, d.atom2, d.atom3, d.atom4]
                 else:
-                    def_dict["not_" + d.type] = [d.atom1, d.atom2, d.atom3, d.atom4]
+                    def_dict["not_" + d.type] = None
             out[key] = (one_letter_code, def_dict)
         return out
 
-    def to_yaml(self, path: Union[str, Path]) -> None:
+    def to_yaml(self) -> None:
         data = self.to_dict()
-        with open(path, "w") as f:
-            yaml.safe_dump(data, f)
+        return yaml.dump(data)
+
+    @classmethod
+    def from_hdf5_file(
+        cls,
+        fname: Union[Path, str],
+        traj: Optional[SingleTraj] = None,
+    ):
+        # Standard Library Imports
+        import ast
+
+        if traj is None:
+            key = None
+        else:
+            key = traj.traj_num
+
+        if key is None:
+            key = "_custom_top"
+        else:
+            key = f"_custom_top_{key}"
+        with h5py.File(fname, mode="r") as file:
+            dic = ast.literal_eval(file.attrs[key])
+        return cls.from_dict(dic, traj=traj)
 
     @classmethod
     def from_yaml(cls, path: Union[str, Path], traj: Optional["SingleTraj"] = None):
         with open(path) as f:
-            data = yaml.safe_load(f)
+            data = yaml.load(f, Loader=yaml.FullLoader)
         return cls.from_dict(data, traj)
 
     @classmethod
-    def from_dict(cls, custom_aas: CustomAAsDict, traj: Optional["InfoSingle"] = None):
+    def from_json(cls, json_str: str, traj: Optional["SingleTraj"] = None):
+        """The same as `from_dict`, but using a json str."""
+        # Standard Library Imports
+        import json
+
+        return cls.from_dict(json.loads(json_str), traj)
+
+    @classmethod
+    def from_dict(cls, custom_aas: CustomAAsDict, traj: Optional[SingleTraj] = None):
         """Instantiate the class from a dictionary.
 
         Args:
@@ -1035,18 +1512,29 @@ class CustomTopology:
                 ), f"The custom_aas dict needs a tuple[str, dict] as its values."
 
             if "-" in resname:
-                idx = int(re.findall("\d+", resname)[-1])
+                idx = int(re.findall(r"\d+", resname)[-1])
                 resSeq = None
                 resname = resname.replace(f"-{idx}", "")
-            elif any(re.findall("\d+", resname)) and "-" not in resname:
+            elif any(re.findall(r"\d+", resname)) and "-" not in resname:
                 idx = None
-                resSeq = int(re.findall("\d+", resname)[-1])
-                resname = resname.replace(resSeq, "")
+                resSeq = int(re.findall(r"\d+", resname)[-1])
+                resname = resname.replace(str(resSeq), "")
             else:
                 idx = None
                 resSeq = None
 
             if value is None:
+                residue = NewResidue(
+                    name=resname,
+                    common_str=common_str,
+                    resSeq=resSeq,
+                    idx=idx,
+                    ignore=True,
+                )
+                new_residues.append(residue)
+                continue
+
+            if value[1] is None:
                 residue = NewResidue(
                     name=resname,
                     common_str=common_str,
@@ -1075,8 +1563,17 @@ class CustomTopology:
 ################################################################################
 
 
+def flatten(container):
+    for i in container:
+        if isinstance(i, (list, tuple)):
+            for j in flatten(i):
+                yield j
+        else:
+            yield i
+
+
 def trajs_combine_attrs(
-    args: Sequence[dict[str, Union[str, np.ndarray]]],
+    args: Sequence[dict[str, Union[str, Any]]],
     context: Optional[xr.Context] = None,  # noqa: U100
 ) -> dict[str, Any]:
     """Used for combining attributes and checking, whether CVs stay in the same unit system.
@@ -1090,101 +1587,51 @@ def trajs_combine_attrs(
         dict[str, Any]: The combined dict.
 
     """
+    args = list(filter(lambda x: x != {}, args))
+    if len(args) == 1:
+        return args[0]
+
     concat = {
         "full_path": "full_paths",
         "topology_file": "topology_files",
         "feature_axis": "feature_axes",
     }
+    _inv_concat = {v: k for k, v in concat.items()}
     out = {}
-    arrays = []
 
-    if all([not bool(a) for a in args]):
-        return {}
-    types = []
-    for d in args:
-        for k, v in d.items():
-            types.append(v)
-
-    for d in args:
-        for k, v in d.items():
+    for arg in args:
+        for k, v in arg.items():
             if k in concat:
-                out.setdefault(concat[k], []).append(v)
-                continue
-            if k in concat.values():
-                out.setdefault(k, []).append(v)
-                continue
+                k = concat[k]
             if isinstance(v, list):
-                if all([isinstance(i, (int, float, complex)) for i in v]):
-                    inhomogeneous_shapes = False
-                elif all([isinstance(i, np.ndarray) for i in v]):
-                    inhomogeneous_shapes = (
-                        len(np.unique(np.asarray([i.shape for i in v]))) != 1
-                    )
-                else:
-                    dtypes = set([type(i) for i in v])
-                    content = v[:2]
-                    raise Exception(
-                        f"I can't combine `_CVs.attrs` with such "
-                        f"inhomogeneous datatypes: {dtypes},"
-                        f"{content}"
-                    )
-                if inhomogeneous_shapes:
-                    if k not in out:
-                        out.setdefault(k, []).append(v)
-                    else:
-                        if any(
-                            [
-                                all([np.array_equal(i, j) for i, j in zip(v, w)])
-                                for w in out[k]
-                            ]
-                        ):
-                            continue
-                else:
-                    v = np.asarray(v)
-                    if k not in out:
-                        out.setdefault(k, []).append(v)
-                    else:
-                        if any([np.array_equal(v, a) for a in out[k]]):
-                            continue
-                arrays.append(k)
-                continue
-            if isinstance(v, np.ndarray):
-                if k not in out:
-                    out.setdefault(k, []).append(v)
-                else:
-                    if any([np.array_equal(v, a) for a in out[k]]):
-                        continue
-                arrays.append(k)
-                continue
-            if k not in out:
-                out[k] = v
+                out.setdefault(k, []).extend(v)
             else:
-                if out[k] != v:
-                    raise Exception(
-                        f"The passed attributes differ in {k}: "
-                        f"value1={v}, value2={out[k]}. There is no "
-                        f"way to consolidate collective variables in "
-                        f"different unit systems."
-                    )
-    for k, v in concat.items():
-        if v in out:
-            if isinstance(out[v], list):
-                if len(out[v]) == 1:
-                    out[k] = out.pop(v)[0]
-                    continue
-                if all([i == out[v][0] for i in out[v][1:]]):
-                    out[v] = out[v][0]
-                    continue
-    for k, v in concat.items():
-        if v in out:
-            if not isinstance(out[v], list):
-                out[k] = out.pop(v)
-    for a in arrays:
-        if len(out[a]) == 1:
-            out[a] = out[a][0]
-    for k, v in out.items():
-        if v is None:
-            out[k] = np.array([])
+                out.setdefault(k, []).append(v)
+
+    for k in out.keys():
+        out[k] = list(set(out[k]))
+
+    if "angle_units" in out:
+        assert len(out["angle_units"]) == 1, (
+            f"Can't combine datasets with inhomogeneous angle types. The datasets "
+            f"you tried to combine had the angle types {out['angle_units']}."
+        )
+
+    for k, v in out.copy().items():
+        if len(v) == 1 and k in concat:
+            out[concat[k]] = out.pop(k)[0]
+        elif len(v) == 1 and k in _inv_concat:
+            out[_inv_concat[k]] = out.pop(k)[0]
+        elif all([v[0] == i for i in v[1:]]):
+            out[k] = v[0]
+
+    if "feature_axis" in out:
+        if len(out["feature_axis"]) > 1 and isinstance(out["feature_axis"], list):
+            raise Exception(
+                f"Could not combine xarray Dataset attributes:\n"
+                f"{out['feature_axis']}\n\n{args=}"
+            )
+
     return out
 
 
@@ -1196,6 +1643,38 @@ def np_to_xr(
     labels: Optional[list[str]] = None,
     filename: Optional[Union[str, Path]] = None,
 ) -> xr.DataArray:
+    """Converts a numpy.ndarray to a xarray.DataArray.
+
+    Can use some additional labels and attributes to customize the DataArray.
+
+    Args:
+        data (np.ndarray): The data to put into the xarray.DataArray. It is
+            assumed that this array is of shape (n_frames, n_features), where
+            n_frames is the number of frames in `traj` and n_features can be
+            any positive integer.
+        traj (SingleTraj): An instance of `SingleTraj`.
+        attr_name (Optional[str]): The name of the feature, that will be used
+            to identify this feature (e.g. 'dihedral_angles', 'my_distance').
+            Can be completely custom. If None is provided, the feature will be
+            called 'FEATURE_{i}', where i is a 0-based index of unnamed features.
+            Defaults to None.
+        deg (Optional[bool]): When True, the input is assumed to use degree.
+            When False, the input is assumed in radians. This can be important
+            if you want to combine features (that are not allowed for angle
+            features with different units). If None, the input is assumed to be
+            not angular (distances, absolute positions). Defaults to None.
+        labels (Optional[list[str]]): A list of str, which contain labels for the
+            feature. If provided needs to be of `len(labels) == data.shape[1]`.
+            If None is provided, the labels will be '... FEATURE 0', '... FEATURE 1',
+            ..., '... FEATURE {n_frames}'.
+        filename (Optional[Union[str, Path]]): If the data is loaded from a file,
+            and `attr_name` and `labels` are both None, then they will use
+            the filename.
+
+    Returns:
+        xr.DataArray: The DataArray.
+
+    """
     if attr_name is None:
         if filename is None:
             msg = f"Please also provide an `attr_name` under which to save the CV."
@@ -1220,11 +1699,41 @@ def np_to_xr(
     if np.any(np.isnan(data)):
         # if some nans are found along frame remove them
         if data.ndim == 2:
-            data = data[:, ~np.isnan(data).any(axis=0)]
+            index = np.isnan(data).all(axis=0)
+            if np.any(index):
+                print(
+                    f"The 2D `np.ndarray` provided for the trajectory {traj} has "
+                    f"some frames ({np.count_nonzero(index)} of {len(index)} "
+                    f"frames in axis 0) that are full of nans. These are "
+                    f"automatically dropped from the array."
+                )
+            data = data[:, ~index]
         if data.ndim == 3:
-            data = data[:, ~np.isnan(data).any(axis=2)[0]]
+            idx = np.isnan(data).all(axis=2)[0]
+            if np.any(idx):
+                print(
+                    f"The 3D `np.ndarray` provided for the trajectory {traj} has "
+                    f"some frames ({np.count_nonzero(idx)} of {len(idx)} "
+                    f"frames in axis 1) that are full of nans. These are "
+                    f"automatically dropped from the array. For 3D arrays, axis "
+                    f"0 represents the traj axis, which should always have "
+                    f"length 1 (test: {data.shape[0]=})"
+                )
+            data = data[:, ~idx]
         if data.ndim == 4:
-            data = data[:, ~np.isnan(data).any(axis=2)[0].any(axis=1)]
+            idx = np.isnan(data).any(axis=2)[0].any(axis=1)
+            if np.any(idx):
+                print(
+                    f"The 4D `np.ndarray` provided for the trajectory {traj} has "
+                    f"some frames ({np.count_nonzero(idx)} of {len(idx)} "
+                    f"frames in axis 1) that are full of nans. These are "
+                    f"automatically dropped from the array. For 4D arrays, axis "
+                    f"0 represents the traj axis, which should always have "
+                    f"length 1 (test: {data.shape[0]=}) and axis 3 represents the "
+                    f"cartesian coordinate axis (x, y, z) so this axis should "
+                    f"always have length 3 (test: {data.shape[3]=})."
+                )
+            data = data[:, ~idx]
     da = construct_xarray_from_numpy(
         traj, data, attr_name, deg, labels, check_n_frames=True
     )
@@ -1238,7 +1747,7 @@ def load_CV_from_string_or_path(
     attr_name: Optional[str] = None,
     cols: Optional[Union[int, list[int]]] = None,
     deg: Optional[bool] = None,
-    labels: Optional[list[str]] = None,
+    labels: Optional[Union[list[str], str]] = None,
 ) -> xr.Dataset:
     """Loads CV data from a string. That string can either identify a features,
     or point to a file.
@@ -1249,28 +1758,40 @@ def load_CV_from_string_or_path(
             like 'sidechain_angle' can alsop be provided. If a file with
             the .txt or .npy extension is provided, the data in that file is used.
         traj (SingleTraj): The trajectory, that is used to load the features.
-        attr_name (Union[None, str], optional): The name under which the CV should be found in the class.
-            Is needed, if a raw numpy array is passed, otherwise the name will be generated from the filename
-            (if data == str), the DataArray.name (if data == xarray.DataArray), or the feature name.
-        cols (Union[list, None], optional): A list specifying the columns to use for the highD data.
-            If your highD data contains (x,y,z,...)-errors or has an enumeration
-            column at col=0 this can be used to remove this unwanted data.
-        deg (Optional[bool]): Whether the provided data is in radians (False)
-                or degree (True). Can also be None for non-angular data.
-        labels (Union[list, str, None], optional): If you want to label the data you provided pass a list of str.
-            If set to None, the features in this dimension will be labelled as
-            [f"{attr_name.upper()} FEATURE {i}" for i in range(self.n_frames)]. If a str is provided, the features
-            will be labelled as [f"{attr_name.upper()} {label.upper()} {i}" for i in range(self.n_frames)]. If a list of str
-            is provided it needs to have the same length as the traj has frames. Defaults to None.
+        attr_name (Union[None, str], optional): The name under which the CV
+            should be found in the class. Is needed, if a raw numpy array is
+            passed, otherwise the name will be generated from the filename
+            (if data == str), the DataArray.name (if data == xarray.DataArray),
+            or the feature name.
+        cols (Union[list, None], optional): A list specifying the columns to
+            use for the high-dimensional data. If your highD data contains
+            (x,y,z,...)-errors or has an enumeration column at col=0 this can
+            be used to remove this unwanted data.
+        deg (bool): Whether the provided data is in radians (False)
+            or degree (True). Can also be None for non-angular data.
+        labels (Union[list[str], str, None], optional): If you want to label the data
+            you provided pass a list of str. If set to None, the features in this
+            dimension will be labeled as
+            `[f"{attr_name.upper()} FEATURE {i}" for i in range(self.n_frames)]`.
+            If a str is provided, the features will be labeled as
+            `[f"{attr_name.upper()} {label.upper()} {i}" for i in range(self.n_frames)]`.
+            If a list[str] is provided, it needs to have the same length as
+            the traj has frames. Defaults to None.
 
     Returns:
         xr.Dataset: An xarray dataset.
 
     """
-    if str(file_or_feature) == "all" or str(file_or_feature) in CAN_BE_FEATURE_NAME:
+    if (
+        str(file_or_feature) == "all"
+        or str(file_or_feature) == "full"
+        or str(file_or_feature) in CAN_BE_FEATURE_NAME
+    ):
         # feat = Featurizer(traj)
         if file_or_feature == "all":
             traj.featurizer.add_list_of_feats(which="all", deg=deg)
+        elif file_or_feature == "full":
+            traj.featurizer.add_list_of_feats(which="full", deg=deg)
         else:
             traj.featurizer.add_list_of_feats(which=[file_or_feature], deg=deg)
         out = traj.featurizer.get_output()
@@ -1294,9 +1815,9 @@ def load_CV_from_string_or_path(
                 if attr_name is not None:
                     raise Exception(
                         f"The dataset in {f} has "
-                        f"{len(data.data_vars.keys())} dataarrays, "
+                        f"{len(data.data_vars.keys())} DataArrays, "
                         f"but only one `attr_name`: '{attr_name}' "
-                        f"was requested. The names of the dataarrays "
+                        f"was requested. The names of the DataArrays "
                         f"are: {data.data_vars.keys()}. I can't over"
                         f"ride them all with one `attr_name`. Set "
                         f"`attr_name` to None to load the data with "
@@ -1333,12 +1854,16 @@ def load_CVs_singletraj(
     attr_name: Optional[str] = None,
     cols: Optional[list[int]] = None,
     deg: Optional[bool] = None,
+    periodic: bool = True,
     labels: Optional[list[str]] = None,
 ) -> xr.Dataset:
     # Local Folder Imports
-    from ..loading.dask_featurizer import DaskFeaturizer
     from ..loading.features import Feature
-    from ..loading.featurizer import EnsembleFeaturizer, SingleTrajFeaturizer
+    from ..loading.featurizer import (
+        DaskFeaturizer,
+        EnsembleFeaturizer,
+        SingleTrajFeaturizer,
+    )
 
     if isinstance(attr_name, str):
         if not attr_name.isidentifier():
@@ -1353,13 +1878,14 @@ def load_CVs_singletraj(
     # load a list of strings from standard features
     elif isinstance(data, list) and all([isinstance(_, str) for _ in data]):
         # feat = Featurizer(traj)
-        traj.featurizer.add_list_of_feats(data)
+        traj.featurizer.add_list_of_feats(data, deg=deg, periodic=periodic)
         out = traj.featurizer.get_output()
         out.coords["traj_num"] = [traj.traj_num]
         return out
 
     # if the data is a numpy array
     elif isinstance(data, (list, np.ndarray)):
+        assert not isinstance(labels, bool)
         CVs = np_to_xr(np.asarray(data), traj, attr_name, deg, labels).to_dataset(
             promote_attrs=True
         )
@@ -1373,11 +1899,10 @@ def load_CVs_singletraj(
 
     # if this is a feature
     elif issubclass(data.__class__, Feature):
-        # feat = Featurizer(traj)
         traj.featurizer.add_custom_feature(data)
         return traj.featurizer.get_output()
 
-    # if an instance of featurizer is provided
+    # if an instance of Featurizer is provided
     elif isinstance(data, (DaskFeaturizer, SingleTrajFeaturizer, EnsembleFeaturizer)):
         if isinstance(attr_name, str):
             if len(data) != 1:
@@ -1396,7 +1921,7 @@ def load_CVs_singletraj(
                     f"they contain the same amount of items."
                 )
         out = data.get_output()
-        assert out.dims["traj_num"] == 1
+        assert out.sizes["traj_num"] == 1
         if attr_name is not None:
             if isinstance(attr_name, str):
                 attr_name = [attr_name]
@@ -1428,6 +1953,7 @@ def load_CVs_ensembletraj(
     attr_name: Optional[list[str]] = None,
     cols: Optional[list[int]] = None,
     deg: Optional[bool] = None,
+    periodic: bool = True,
     labels: Optional[list[str]] = None,
     directory: Optional[Union[Path, str]] = None,
     ensemble: bool = False,
@@ -1444,11 +1970,11 @@ def load_CVs_ensembletraj(
             of the trajectories will be used to look for .npy and .txt files.
         * str: Some strings like "central_dihedrals" are recognized out-of-the-box.
             You can also provide "all" to load all dihedrals used in an
-            `encodermap.AngleDihecralCartesianEncoderMap`.
+            `encodermap.AngleDihedralCartesianEncoderMap`.
         * Feature: You can provide an `encodermap.loading.features` Feature. The
             CVs will be loaded by creating a featurizer, adding this feature, and
             obtaining the output.
-        * Featurizer: You can also directly provide a featurizer, wiht multiple
+        * Featurizer: You can also directly provide a featurizer with multiple
             features.
         * xr.DataArray: You can also provide a xarray.DataArray, which will be
             appended to the existing CVs.
@@ -1490,12 +2016,13 @@ def load_CVs_ensembletraj(
         deg (Optional[bool]): Whether to return angular CVs using degrees.
             If None or False, CVs will be in radian. Defaults to None.
         labels (list): A list containing the labels for the dimensions of
-            the data. If you provide a `np.ndarra` with shape (n_trajs,
+            the data. If you provide a `np.ndarray` with shape (n_trajs,
             n_frames, n_feat), this list needs to be of len(n_feat)
             Defaults to None.
-        directory (Optional[str]): The directory to save the data at if data
-            is an instance of `em.Featurizer` and this featurizer has
-            `in_memory` set to Fase. Defaults to ''.
+        directory (Optional[str]): If this argument is provided, the
+                directory will be searched for ``.txt`` or ``.npy`` files which
+                have the same names as the trajectories have basenames. The
+                CVs will then be loaded from these files.
         ensemble (bool): Whether the trajs in this class belong to an ensemble.
             This implies that they contain either the same topology or are
             very similar (think wt, and mutant). Setting this option True will
@@ -1507,10 +2034,23 @@ def load_CVs_ensembletraj(
 
     """
     # Local Folder Imports
-    from ..loading.features import CustomFeature, Feature
-    from ..loading.featurizer import EnsembleFeaturizer, SingleTrajFeaturizer
+    from ..loading.features import Feature
+    from ..loading.featurizer import DaskFeaturizer, EnsembleFeaturizer
 
     if isinstance(data, (str, Path)) and not ensemble:
+        # all EncoderMap features for ML training
+        if str(data) == "all":
+            [
+                t.load_CV("all", deg=deg, periodic=periodic, override=override)
+                for t in trajs
+            ]
+            return
+        if str(data) == "full":
+            [
+                t.load_CV("full", deg=deg, periodic=periodic, override=override)
+                for t in trajs
+            ]
+            return
         path_data = Path(data)
         if not all([t.basename is None for t in trajs]):
             npy_files = [
@@ -1528,16 +2068,27 @@ def load_CVs_ensembletraj(
                 / (t.basename + f"_{data}")
                 for t in trajs
             ]
-        if str(data) == "all":
-            [t.load_CV("all", deg=deg, override=override) for t in trajs]
-            return
+        # a directory containing files with names identical to trajs
         if path_data.is_dir():
             return load_CVs_from_dir(
                 trajs, data, attr_name=attr_name, deg=deg, cols=cols
             )
+        # maybe just a single feature
         elif data in CAN_BE_FEATURE_NAME:
-            [t.load_CV(data, attr_name, cols, deg, labels, override) for t in trajs]
+            [
+                t.load_CV(
+                    data,
+                    attr_name,
+                    cols,
+                    deg=deg,
+                    periodic=periodic,
+                    labels=labels,
+                    override=override,
+                )
+                for t in trajs
+            ]
             return
+        # a h5 or nc file
         elif path_data.is_file() and (
             path_data.suffix == ".h5" or path_data.suffix == ".nc"
         ):
@@ -1547,13 +2098,19 @@ def load_CVs_ensembletraj(
                     f"The dataset you try to load and the TrajEnsemble "
                     f"have different number of trajectories: {diff}."
                 )
-            for t, (traj_num, sub_ds) in zip(trajs, ds.groupby("traj_num")):
+            for t, (traj_num, sub_ds) in zip(
+                trajs, ds.groupby("traj_num", squeeze=False)
+            ):
                 assert t.traj_num == traj_num, f"{t.traj_num=}, {traj_num=}"
-                sub_ds = sub_ds.assign_coords(traj_num=t.traj_num)
-                sub_ds = sub_ds.expand_dims("traj_num")
+                if "traj_num" in sub_ds.coords:
+                    assert sub_ds.coords["traj_num"] == t.traj_num
+                else:
+                    sub_ds = sub_ds.assign_coords(traj_num=t.traj_num)
+                    sub_ds = sub_ds.expand_dims("traj_num")
                 assert sub_ds.coords["traj_num"] == np.array([t.traj_num])
                 t.load_CV(sub_ds)
             return
+        # all numpy files
         elif all([f.is_file() for f in npy_files]):
             [
                 t.load_CV(
@@ -1567,6 +2124,7 @@ def load_CVs_ensembletraj(
                 for t, f in zip(trajs, npy_files)
             ]
             return
+        # all txt files
         elif all([f.is_file() for f in txt_files]):
             [
                 t.load_CV(
@@ -1580,6 +2138,7 @@ def load_CVs_ensembletraj(
                 for t, f in zip(trajs, txt_files)
             ]
             return
+        # all raw files without suffix
         elif all([f.is_file() for f in raw_files]):
             [
                 t.load_CV(
@@ -1593,6 +2152,7 @@ def load_CVs_ensembletraj(
                 for t, f in zip(trajs, raw_files)
             ]
             return
+        # raise ValueError
         else:
             msg = (
                 f"If `data` is provided a single string, the string needs to "
@@ -1605,12 +2165,31 @@ def load_CVs_ensembletraj(
     elif isinstance(data, list) and not ensemble:
         if all([isinstance(i, (list, np.ndarray)) for i in data]):
             [
-                t.load_CV(d, attr_name, cols, deg, labels, override)
+                t.load_CV(
+                    d,
+                    attr_name,
+                    cols,
+                    deg=deg,
+                    periodic=periodic,
+                    labels=labels,
+                    override=override,
+                )
                 for t, d in zip(trajs, data)
             ]
             return
         elif all([i in CAN_BE_FEATURE_NAME for i in data]):
-            [t.load_CV(data, attr_name, cols, deg, labels, override) for t in trajs]
+            [
+                t.load_CV(
+                    data=data,
+                    attr_name=attr_name,
+                    cols=cols,
+                    deg=deg,
+                    periodic=periodic,
+                    labels=labels,
+                    override=override,
+                )
+                for t in trajs
+            ]
             return
         elif all([Path(f).is_file() for f in data]):
             suffix = set([Path(f).suffix for f in data])
@@ -1622,28 +2201,44 @@ def load_CVs_ensembletraj(
             suffix = suffix.pop()
             if suffix == ".npy":
                 [
-                    t.load_CV(np.load(d), attr_name, cols, deg, labels, override)
+                    t.load_CV(
+                        data=np.load(d),
+                        attr_name=attr_name,
+                        cols=cols,
+                        deg=deg,
+                        periodic=periodic,
+                        labels=labels,
+                        override=override,
+                    )
                     for t, d in zip(trajs, data)
                 ]
             else:
                 [
                     t.load_CV(
-                        np.genfromtxt(d),
-                        attr_name,
-                        cols,
-                        deg,
-                        labels,
-                        override,
+                        data=np.genfromtxt(d),
+                        attr_name=attr_name,
+                        cols=cols,
+                        deg=deg,
+                        periodic=periodic,
+                        labels=labels,
+                        override=override,
                     )
                     for t, d in zip(trajs, data)
                 ]
             return
         else:
-            msg = (
-                f"If `data` is provided as a list, the list needs to contain "
-                f"strings that can be features ({CAN_BE_FEATURE_NAME}), or "
-                f"some combination of lists and numpy arrays."
-            )
+            if not all([isinstance(d, str) for d in data]):
+                msg = (
+                    f"If `data` is provided as a list, the list needs to contain "
+                    f"strings that can be features ({CAN_BE_FEATURE_NAME}), or "
+                    f"some combination of lists and numpy arrays."
+                )
+            else:
+                wrong = [d for d in data if d not in CAN_BE_FEATURE_NAME]
+                msg = (
+                    f"The list of str you supplied, did contain some str, that is "
+                    f"not recognized as a feature: {wrong}."
+                )
             raise ValueError(msg)
 
     elif isinstance(data, np.ndarray):
@@ -1658,44 +2253,99 @@ def load_CVs_ensembletraj(
             data = [
                 data[np.where(trajs.index_arr[:, 0] == t.traj_num)[0]] for t in trajs
             ]
-        [
-            t.load_CV(d, attr_name, cols, deg, labels, override)
-            for t, d in zip(trajs, data)
-        ]
+        assert len(data) == trajs.n_trajs
+        for d, t in zip(data, trajs):
+            t.load_CV(
+                data=d,
+                attr_name=attr_name,
+                cols=cols,
+                deg=deg,
+                periodic=periodic,
+                labels=labels,
+                override=override,
+            )
         for t in trajs:
             for v in t._CVs.values():
                 assert v.shape[0] == 1, f"{t.basename=}, {v=}"
         return
 
     elif issubclass(data.__class__, Feature):
-        [t.load_CV(data, attr_name, cols, deg, labels, override) for t in trajs]
+        for t in trajs:
+            t.load_CV(
+                data,
+                attr_name,
+                cols,
+                deg=deg,
+                periodic=periodic,
+                labels=labels,
+                override=override,
+            )
         return
 
-    elif isinstance(data, EnsembleFeaturizer):
+    elif (isinstance(data, (EnsembleFeaturizer, DaskFeaturizer))) or (
+        data.__class__.__name__ in ["EnsembleFeaturizer", "DaskFeaturizer"]
+    ):
         ds = data.get_output()
-        for t, (traj_num, sub_ds) in zip(trajs, ds.groupby("traj_num")):
+        assert (ds_traj_nums := list(ds.coords["traj_num"])) == (
+            traj_traj_nums := [t.traj_num for t in trajs]
+        ), (
+            f"The dataset provided by '{data}' does not match the trajectories in "
+            f"'{trajs}'. The dataset defines trajectories with these traj_nums: "
+            f"{ds_traj_nums}, while the TrajEnsemble has these traj_nums: {traj_traj_nums}. "
+            f"If you are using the DaskFeaturizer, make sure to not call its "
+            f"`transform()` method with any arguments, as this will alter the "
+            f"compute graph and affect the output of `get_output()`. To fix "
+            f"this for `DaskFeaturizers`, you can run `del feat.dataset`."
+        )
+        for t, (traj_num, sub_ds) in zip(trajs, ds.groupby("traj_num", squeeze=False)):
             assert t.traj_num == traj_num, f"{t.traj_num=}, {traj_num=}"
-            sub_ds = sub_ds.assign_coords(traj_num=t.traj_num)
-            sub_ds = sub_ds.expand_dims("traj_num")
-            for name, da in sub_ds.data_vars.items():
-                if "feature_axis" in da.attrs:
-                    sub_ds = sub_ds.dropna(da.attrs["feature_axis"])
+            if "traj_num" in sub_ds.coords:
+                assert sub_ds.coords["traj_num"] == t.traj_num
+            else:
+                sub_ds = sub_ds.assign_coords(traj_num=t.traj_num)
+                sub_ds = sub_ds.expand_dims("traj_num")
+
+            # remove frames of full nans, which can happen for weird overlaps
+            # Standard Library Imports
+            from functools import reduce
+
+            to_reduce = []
+            for da in sub_ds.data_vars.values():
+                if da.name.endswith("feature_indices"):
+                    continue
+                a = (
+                    (~np.isnan(da).any(dim=da.attrs["feature_axis"]))
+                    .squeeze("traj_num")
+                    .values
+                )
+                if a.ndim == 2:
+                    a = np.all(a, axis=1)
+                to_reduce.append(a)
+
+            if len(to_reduce) == 1:
+                idx = to_reduce[0]
+            else:
+                idx = reduce(np.bitwise_and, to_reduce)
+            sub_ds = sub_ds.sel(frame_num=idx)
             t.load_CV(sub_ds)
         return
 
     elif isinstance(data, xr.Dataset):
         for i, (t, (traj_num, sub_ds)) in enumerate(
-            zip(trajs, data.groupby("traj_num"))
+            zip(trajs, data.groupby("traj_num", squeeze=False))
         ):
             assert t.traj_num == traj_num, f"{t.traj_num=}, {traj_num=}"
-            sub_ds = sub_ds.assign_coords(traj_num=t.traj_num)
-            sub_ds = sub_ds.expand_dims("traj_num")
+            if "traj_num" in sub_ds.coords:
+                assert sub_ds.coords["traj_num"] == t.traj_num
+            else:
+                sub_ds = sub_ds.assign_coords(traj_num=t.traj_num)
+                sub_ds = sub_ds.expand_dims("traj_num")
             sub_ds = sub_ds.dropna("frame_num", how="all")
             t.load_CV(sub_ds)
         return
 
     if ensemble:
-        return load_CVs_ensemble(trajs, data)
+        return load_CVs_ensemble(trajs, data, periodic=periodic)
 
     else:
         raise TypeError(
@@ -1706,7 +2356,8 @@ def load_CVs_ensembletraj(
 
 def load_CVs_ensemble(
     trajs: TrajEnsemble,
-    data: Union[str, list[str], Literal["all"]],
+    data: Union[str, list[str], Literal["all", "full"]],
+    periodic: bool = True,
 ) -> None:
     """Loads CVs for a trajectory ensemble. This time with generic feature names
     so different topologies are aligned and can be treated separately. Loading
@@ -1727,12 +2378,14 @@ def load_CVs_ensemble(
             .txt or .npy files matching that string in the `directory`,
             the CVs will be loaded from these files to the corresponding
             trajs. Defaults to None.
+        periodic (bool): Whether distance, angle, dihedral calculations should
+            obey the minimum image convention.
 
     """
     if isinstance(data, str):
         if data != "all":
             data = [data]
-    trajs.featurizer.add_list_of_feats(data, ensemble=True)
+    trajs.featurizer.add_list_of_feats(data, ensemble=True, periodic=periodic)
     deg_units = []
     for f in trajs.featurizer.features:
         if hasattr(f, "deg"):
@@ -1741,7 +2394,7 @@ def load_CVs_ensemble(
         [not d for d in deg_units]
     ), "Loading an ensemble only possible if all degree units are radian."
     output = trajs.featurizer.get_output()
-    for t, (traj_num, sub_ds) in zip(trajs, output.groupby("traj_num")):
+    for t, (traj_num, sub_ds) in zip(trajs, output.groupby("traj_num", squeeze=False)):
         assert t.traj_num == traj_num, f"{t.traj_num=}, {traj_num=}"
         try:
             sub_ds = sub_ds.assign_coords(traj_num=t.traj_num)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/misc/xarray_save_wrong_hdf5.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -103,7 +103,7 @@ if TYPE_CHECKING:
 ################################################################################
 
 
-__all__ = ["save_netcdf_alongside_mdtraj"]
+__all__: list[str] = ["save_netcdf_alongside_mdtraj"]
 
 
 ################################################################################
@@ -112,6 +112,7 @@ __all__ = ["save_netcdf_alongside_mdtraj"]
 
 
 def save_netcdf_alongside_mdtraj(fname: str, dataset: Dataset) -> None:
+    """Saves a netcdf dataset alongside an MDTraj trajectory."""
     _to_netcdf(
         dataset,
         fname,
@@ -135,7 +136,7 @@ def dump_to_store(
     encoder: Optional[Callable] = None,
     encoding: Optional[str] = None,
     unlimited_dims: Optional[Iterable[Hashable]] = None,
-):
+) -> None:  # pragma: no cover, no doccheck
     """Store dataset contents to a backends.*DataStore object."""
     if writer is None:
         writer = ArrayWriter()
@@ -159,6 +160,18 @@ def dump_to_store(
 
 
 def _normalize_path(path: str) -> str:
+    """Normalize a path.
+
+    See Also:
+        https://docs.python.org/3.10/library/os.path.html#os.path.abspath
+
+    Args:
+        path (str): The input path.
+
+    Returns:
+        str: The output path.
+
+    """
     if is_remote_uri(path):
         return path
     else:
@@ -166,6 +179,15 @@ def _normalize_path(path: str) -> str:
 
 
 def is_remote_uri(path: str) -> bool:
+    """Checks, whether a path is a remote URI.
+
+    Args:
+        path (str): The path to check.
+
+    Returns:
+        bool: Whether the path is an URI.
+
+    """
     return bool(re.search(r"^https?\://", path))
 
 
@@ -239,13 +261,14 @@ def _to_netcdf(
     compute: bool = True,
     multifile: bool = False,
     invalid_netcdf: bool = False,
-) -> Optional[Delayed]:
+) -> Optional[Delayed]:  # pragma: no cover, no doccheck
     """This function creates an appropriate datastore for writing a dataset to
-    disk as a netCDF file
+    disk as a HDF5 file.
 
     See `Dataset.to_netcdf` for full API docs.
 
-    The ``multifile`` argument is only for the private use of save_mfdataset.
+    The `multifile` argument is only for the private use of `save_mfdataset`.
+
     """
     if isinstance(path_or_file, Path):
         path_or_file = str(path_or_file)

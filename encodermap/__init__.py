@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/__init__.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -34,82 +34,40 @@ This iteration of EncoderMap continues this endeavour by porting the old
 code to the newer tensorflow version (2.x). However, more has been added which
 should aid computational chemists and also structural biologists:
 
-* New trajectory classes with lazy loading of coordinates to save disk space.
+* New trajectory classes with lazy loading of coordinates to accelerate analysis.
 * Featurization which can be parallelized using the distributed computing
     library dask.
-* Interactive matplotlib plots for clustering and structure creation.
+* Interactive plotly plots for clustering and structure creation.
 * Neural network building blocks that allows users to easily build new
-    nural networks.
+    neural networks.
 * Sparse networks allow comparison of proteins with different topologies.
 
 Todo:
-    * [ ] Fix the docker-compose.yaml and add two args: -type [normal, dask] The dask type should add two containers inheriting from base with different ssh signature.
     * [ ] Rework all notebooks.
+        * [x] 01 Basic cube
+        * [x] 02 asp7
+        * [x] 03 your data
+        * [ ] customization
+        * [ ] Ensembles and ensemble classes
+        * [ ] Ub mutants
+        * [ ] sidechain reconstruction (if possible)
+        * [ ] FAT10 (if possible)
+    * [ ] Rewrite the install encodermap script in a github gist and add that to the notebooks.
     * [ ] Record videos.
-    * [x] Add a convenience script to run all doctests.
-    * [ ] Add a python/bash script to add to crontab to build tests and host.
-    * [ ] Run all tests.
-        * [x] test_angles.py
-        * [x] test_autoencoder.py
-            * [x] Fix the `test_encodermap_with_dataset` test
-            * [x] Fix the splits with an appropriate test.
-            * [x] Put a variation of the two-state system test here, without the deterministic stuff.
-            * [x] `test_normal_autoencoder_has_correct_activations`
-            * [x] `test_encodermap_with_dataset`
-            * [x] `test_save_train_load`
-            * [x] `load_legacy_model`
-        * [x] test_backmapping_em1_em2.py
-            * [x] Rework the features and Featurizers.
-            * [x] Fix `test_mdtraj_with_given_inputs`
-            * [x] Fix `test_custom_AAs_with_KAC`
-            * [x] Fix `test_custom_aas_with_OTU11` <- moved into `test_backmapping_cases`
-            * [x] Fix `test_backmapping_cases`
-            * [x] Add a performance metric to the test_backmapping_em1_em2.py and try to beat MDAnalysis
-                * [x] Make MDTRaj rotation faster with joblib parallel and cython.
-            * The problem was my parallel implementation which was baaaad
-        * [x] test_dihedral_to_cartesian.py
-        * [ ] test_featurizer.py
-            * [ ] Run all tests for the dask featurizer.
-        * [ ] test_interactive_plotting.py
-        * [x] test_losses.py
-        * [x] test_moldata.py
-        * [x] test_non_backbone_atoms.py
-        * [x] test_optional_imports.py
-        * [x] test_pairwise_distances.py
-        * [ ] test_project_structure.py
-        * [ ] test_trajinfo.py
-            * [x] `test_CV_slicing_SingleTraj`
-            * [x] `test_clustering_different_atom_counts`
-            * [x] `test_adding_mixed_pyemma_features_with_custom_names`
-            * [x] `test_atom_slice`
-            * [x] `test_clustering`
-            * [x] `test_load_CVs_from_other_sources`
-            * [x] `test_load_all_with_deg_and_rad`
-            * [x] `test_load_single_traj_with_traj_and_top`
-            * [x] `test_n_frames_in_h5_file`
-            * [x] `test_reversed`
-            * [x] `test_save_and_load_custom_amino_acids`
-            * [x] `test_save_and_load_traj_ensemble_to_h5_and_slice`
-            * [x] `test_save_hdf5_ensemble_with_different_top
-            * [x] `test_traj_CVs_retain_attrs`
-        * [ ] test_version.py
-        * [x] test_xarray.py
-        * [x] test_tf1_tf2_deterministically.py
-            * I've put all tests here as @expensive tests. These won't be part of the official unittest suite.
-    * [X] Why does the get_output() not display a progress bar?
-        * Removed by new Featurizer.
-    * [ ] Add extensive docstring to CustomTopology.
-    * [x] Would be nice to display progress bars. Also in dashboard.
-    * [ ] Add GAN
-    * [ ] Add Unet
-    * [ ] Add Multimer training.
-    * [ ] Run vulture
-    * [ ] Delete commented stuff (i.e. all occurences of more than 3 # signs in lines)
-    * [ ] in `xarray.py` delete the occurences of '_INDICES'
-    * [ ] Write examples in features.py
-    * [ ] Write docstrings in featurizer.py
-    * [ ] Write Examples in featurizer.py
-    * [ ] Write a runner for my local machine at Uni.
+    * [~] Fix FAT 10 Nans
+        * [  ] NaNs are fixed, but training still bad.
+        * [x] Check whether sigmoid values are good for FAT10
+            * [x] Test [40, 10, 5, 1, 2, 5] (from linear dimers) and compare.
+        * [ ] Test (20, 10, 5, 1, 2, 5)
+    * [~] Fix sidechain reconstruction NaNs
+        * [ ] Try out LSTM layers
+        * [ ] Try out gradient clipping
+        * [~] Try out a higher regularization cost (increase l2 reg constant from 0.001 to 0.1)
+    * [ ] Remove OTU11 from tests
+    * [ ] Image for FAT10 decoding, if NaN error is fixed.
+    * [ ] Delete commented stuff (i.e. all occurrences of more than 3 # signs in lines)
+    * [ ] Fix the deterministic training for M1diUb
+    * [ ] Add FAT10 to the deterministic training.
 
 """
 # Future Imports at the top
@@ -119,6 +77,7 @@ from __future__ import annotations
 import os as _os
 import re as _re
 import sys as _sys
+import warnings
 import warnings as _warnings
 from io import StringIO as _StringIO
 
@@ -129,15 +88,52 @@ from io import StringIO as _StringIO
 
 
 class _suppress_stderr:
-    def __init__(self, filters: Sequence[str]) -> None:
+    """Some modules (looking at you BioPython) are nasty with their warnings.
+    They won't accept the builtin catch_warnings() decorator. So we capture
+    standard error and prevent them from using it anyway. Delightfully
+    devilish, if I say so myself.
+
+    """
+
+    def __init__(
+        self,
+        filters: Sequence[str],
+        issue_warnings: bool = False,
+    ) -> None:
+        """Instantiate the _supress_stderr class.
+
+        Args:
+            filters (Sequence[str]): Sequence of regex patterns to ignore.
+            issue_warnings (bool): When set to True, stderr will not be
+                suppressed. Can be used in development.
+
+        """
         self.filter = filters
+        self.issue_warnings = issue_warnings
 
     def __enter__(self):
-        self._stderr = _sys.stderr
+        if self.issue_warnings:
+            return self
+        # Standard Library Imports
+        import copy
+
+        # We need to ignore warnings here, otherwise BioPython will issue
+        # a deprecation warning
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            # Local Folder Imports
+            from .misc.misc import _is_notebook
+
+        if _is_notebook():
+            self._stderr = copy.copy(_sys.stderr)
+        else:
+            self._stderr = _sys.stderr
         _sys.stderr = self._stringio = _StringIO()
         return self
 
     def __exit__(self, *args, **kwargs):
+        if self.issue_warnings:
+            return
         _sys.stderr = self._stderr
         self.combine_warnings()
         for warning in self.warnings:
@@ -153,8 +149,12 @@ class _suppress_stderr:
                         raise e
         del self.warnings
 
-    def combine_warnings(self):
-        self.warnings = []
+    def combine_warnings(self) -> None:
+        """Once concluded, all warnings that have not been ignored will be
+        combined here and issued to stderr. Just like Guido intended.
+
+        """
+        self.warnings: list[str] = []
         index = -1
         previous_is_warn = False
         for line in self._stringio.getvalue().splitlines():
@@ -175,14 +175,49 @@ class _suppress_stderr:
         del self._stringio
 
 
+################################################################################
+# GPU stuff
+################################################################################
+
+
+class GPUsAreDisabledWarning(UserWarning):
+    """Warning to inform users, that EncoderMap runs with higher compatibility,
+    if GPUs are disabled."""
+
+    pass
+
+
+_enable_GPU: bool = _os.getenv("ENCODERMAP_ENABLE_GPU", "False") == "True"
+
+
+if not _enable_GPU:
+    _warnings.warn(
+        message=(
+            "EncoderMap disables the GPU per default because most tensorflow code "
+            "runs with a higher compatibility when the GPU is disabled. If you "
+            "want to enable GPUs manually, set the environment variable "
+            "'ENCODERMAP_ENABLE_GPU' to 'True' before importing EncoderMap. "
+            "To do this in python you can run:\n\n"
+            "import os; os.environ['ENCODERMAP_ENABLE_GPU'] = 'True'\n\n"
+            "before importing encodermap."
+        ),
+        category=GPUsAreDisabledWarning,
+    )
+    _os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
+
 _warnings.filterwarnings(
     "ignore",
     message="'XTCReader' object has no attribute '_xdr'",
 )
+
+
 _warnings.filterwarnings(
     "ignore",
     message=".*unit cell vectors detected in PDB.*",
 )
+
+
 _IGNORE_WARNINGS_REGEX = [
     r".*going maintenance burden of keeping command line.*",
     r".*not pure-Python.*",
@@ -197,11 +232,18 @@ _IGNORE_WARNINGS_REGEX = [
 
 # Standard Library Imports
 from collections.abc import Callable, Sequence
-from typing import TYPE_CHECKING, Literal, Optional, Union
+from pathlib import Path
+from typing import TYPE_CHECKING, Literal, Optional, Union, overload
 
 
-# from beartype.claw import beartype_this_package
-# beartype_this_package()
+if _os.getenv("ENCODERMAP_BEARTYPE", "False") == "True":
+    _beartyping = True
+    # Third Party Imports
+    from beartype.claw import beartype_this_package
+
+    beartype_this_package()
+else:
+    _beartyping = False
 
 
 if TYPE_CHECKING:
@@ -220,7 +262,7 @@ if TYPE_CHECKING:
 ################################################################################
 
 
-__all__ = [
+__all__: list[str] = [
     "features",
     "__version__",
     "Autoencoder",
@@ -238,12 +280,30 @@ __all__ = [
 ]
 
 
+ALL_PROJECT_NAMES = Union[
+    Literal["linear_dimers"],
+    Literal["pASP_pGLU"],
+    Literal["Ub_K11_mutants"],
+    Literal["cube"],
+    Literal["1am7"],
+    Literal["H1Ub"],
+]
+
+
 ################################################################################
 # Disable tf logging
 ################################################################################
 
 
 _os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+
+
+################################################################################
+# Allow distributed writes into H5 files
+################################################################################
+
+
+_os.environ["HDF5_USE_FILE_LOCKING"] = "FALSE"
 
 
 ################################################################################
@@ -258,7 +318,7 @@ from packaging import version as _pkg_version
 
 if _pkg_version.parse(_tf.__version__) < _pkg_version.parse("2.13.0"):
     raise Exception(
-        f"Please install the newest tensorflow version (>=2.13.0) to use EncoderMap. "
+        f"Please install the newest tensorflow version (>=2.15.0) to use EncoderMap. "
         f"Your version: {_tf.__version__}."
     )
 
@@ -269,10 +329,10 @@ if _pkg_version.parse(_tf.__version__) < _pkg_version.parse("2.13.0"):
 
 
 # Encodermap imports
-# There are some nasty non pure-python functions in EncoderMap, that beartype
-# can't check. The warnings filter does also not work. If beartype likes to
+# There are some nasty non-pure python functions in EncoderMap, that beartype
+# can't check. The `warnings` filter does also not work. If beartype likes to
 # play the hard way, I will just catch stderr and filter it myself.
-with _suppress_stderr(_IGNORE_WARNINGS_REGEX):
+with _suppress_stderr(_IGNORE_WARNINGS_REGEX, _beartyping):
     # Encodermap imports
     import encodermap.misc as misc
     import encodermap.plot as plot
@@ -287,7 +347,7 @@ with _suppress_stderr(_IGNORE_WARNINGS_REGEX):
     from .callbacks.callbacks import EncoderMapBaseCallback
     from .kondata import get_from_kondata
     from .loading import features
-    from .loading.featurizer import Featurizer
+    from .loading.featurizer import DaskFeaturizer, Featurizer
     from .misc.function_def import function
     from .moldata.moldata import NewMolData as MolData
     from .parameters.parameters import ADCParameters, Parameters
@@ -303,15 +363,22 @@ with _suppress_stderr(_IGNORE_WARNINGS_REGEX):
 
 
 def load(
-    trajs: Union[str, md.Trajectory, Sequence[str], Sequence[md.Trajectory]],
+    trajs: Union[
+        str,
+        md.Trajectory,
+        Sequence[str],
+        Sequence[md.Trajectory],
+        Sequence[Path],
+        Sequence[SingleTraj],
+    ],
     tops: Optional[
-        Union[str, md.Topology, Sequence[str], Sequence[md.Topology]]
+        Union[str, md.Topology, Sequence[str], Sequence[md.Topology], Sequence[Path]]
     ] = None,
-    common_str: Optional[str, list[str]] = None,
+    common_str: Optional[Union[str, list[str]]] = None,
     backend: Literal["no_load", "mdtraj"] = "no_load",
     index: Optional[Union[int, np.ndarray, list[int], slice]] = None,
-    traj_num: Optional[Union[int], Sequence[int]] = None,
-    basename_fn: Optional[Callable] = None,
+    traj_num: Optional[Union[int, Sequence[int]]] = None,
+    basename_fn: Optional[Callable[[str], str]] = None,
     custom_top: Optional["CustomAAsDict"] = None,
 ) -> Union[SingleTraj, TrajEnsemble]:
     """Load MD data.
@@ -378,7 +445,7 @@ def load(
              a list of `SingleTraj`s and provide this list as the `trajs` argument to
             `em.load()`. In this case you need to set the `traj_num`s of the `SingleTraj`s
             yourself. Defaults to None.
-        basename_fn (Optional[Callable]): A function to apply to the `traj_file` string to return the
+        basename_fn (Optional[Callable[[str], str]]): A function to apply to the `traj_file` string to return the
             basename of the trajectory. If None is provided, the filename without extension will be used. When
             all files are named the same and the folder they're in defines the name of the trajectory you can supply
             `lambda x: split('/')[-2]` as this argument. Defaults to None.
@@ -401,16 +468,23 @@ def load(
         [0, 1]
 
     """
-    # Third Party Imports
-    import numpy as _np
+    # Standard Library Imports
+    from pathlib import Path
+    from typing import Sequence
 
-    if isinstance(trajs, (list, tuple, _np.ndarray)):
+    if (
+        (isinstance(trajs, Sequence) and not isinstance(trajs, (Path, str)))
+        and (isinstance(tops, Sequence) or tops is None)
+        and (isinstance(traj_num, Sequence) or traj_num is None)
+        and (isinstance(common_str, Sequence) or common_str is None)
+    ):
         # Encodermap imports
         from encodermap.trajinfo.info_all import TrajEnsemble
 
         if index is not None:
             print(
-                "The `index` argument is not used when building a trajectory ensemble "
+                "The `index` argument to `em.load()` is not used when building "
+                "a trajectory ensemble. It is only passed to `SingleTraj.__init__()`. "
                 "Use `trajs.subsample()` to reduce the number of frames staged for analysis."
             )
         return TrajEnsemble(
@@ -422,60 +496,255 @@ def load(
             traj_nums=traj_num,
             custom_top=custom_top,
         )
-    else:
-        # Standard Library Imports
-        from pathlib import Path
-
+    elif (
+        isinstance(trajs, (str, Path))
+        and (isinstance(tops, (str, Path)) or tops is None)
+        and (isinstance(traj_num, int) or traj_num is None)
+        and (isinstance(common_str, str) or common_str is None)
+    ):
         if Path(trajs).suffix in [".h5", ".nc"]:
             # Encodermap imports
             from encodermap.trajinfo.info_all import TrajEnsemble
 
             return TrajEnsemble.from_dataset(trajs)
 
+        if common_str is None:
+            common_str = ""
+
         # Encodermap imports
         from encodermap.trajinfo.info_single import SingleTraj
 
         return SingleTraj(
-            trajs, tops, common_str, backend, index, traj_num, basename_fn, custom_top
+            trajs,
+            tops,
+            common_str,
+            backend,
+            index,
+            traj_num,
+            basename_fn,
+            custom_top,
+        )
+    else:
+        raise TypeError(
+            f"Incompatible types of 'trajs' and 'tops'. Either both have to "
+            f"be a sequence or both have to be not a sequence. The provided types "
+            f"are 'trajs'={type(trajs)} and 'tops'={type(tops)}."
         )
 
 
+@overload
 def load_project(
-    project_name: Literal["linear_dimers", "pASP_pGLU"],
+    project_name: Literal["linear_dimers"],
+    traj: int,
+    load_autoencoder: Literal[True],
+) -> tuple[TrajEnsemble, AngleDihedralCartesianEncoderMap]: ...
+
+
+@overload
+def load_project(
+    project_name: Literal["linear_dimers"],
+    traj: int,
+    load_autoencoder: Literal[False],
+) -> TrajEnsemble: ...
+
+
+@overload
+def load_project(
+    project_name: Literal["pASP_pGLU"],
+    traj: int,
+    load_autoencoder: Literal[True],
+) -> tuple[TrajEnsemble, AngleDihedralCartesianEncoderMap]: ...
+
+
+@overload
+def load_project(
+    project_name: Literal["pASP_pGLU"],
+    traj: int,
+    load_autoencoder: Literal[False],
+) -> TrajEnsemble: ...
+
+
+@overload
+def load_project(
+    project_name: Literal["Ub_K11_mutants"],
+    traj: int,
+    load_autoencoder: Literal[True],
+) -> tuple[TrajEnsemble, AngleDihedralCartesianEncoderMap]: ...
+
+
+@overload
+def load_project(
+    project_name: Literal["Ub_K11_mutants"],
+    traj: int,
+    load_autoencoder: Literal[False],
+) -> TrajEnsemble: ...
+
+
+@overload
+def load_project(
+    project_name: Literal["1am7"],
+    traj: int,
+    load_autoencoder: Literal[True],
+) -> tuple[TrajEnsemble, EncoderMap]: ...
+
+
+@overload
+def load_project(
+    project_name: Literal["1am7"],
+    traj: int,
+    load_autoencoder: Literal[False],
+) -> TrajEnsemble: ...
+
+
+@overload
+def load_project(
+    project_name: Literal["cube"],
+    traj: int,
+    load_autoencoder: Literal[True],
+) -> tuple[np.ndarray, EncoderMap]: ...
+
+
+@overload
+def load_project(
+    project_name: Literal["cube"],
+    traj: int,
+    load_autoencoder: Literal[False],
+) -> np.ndarray: ...
+
+
+@overload
+def load_project(
+    project_name: Literal["H1Ub"],
+    traj: int,
+    load_autoencoder: Literal[True],
+) -> tuple[np.ndarray, EncoderMap]: ...
+
+
+@overload
+def load_project(
+    project_name: Literal["H1Ub"],
+    traj: int,
+    load_autoencoder: Literal[False],
+) -> np.ndarray: ...
+
+
+def load_project(
+    project_name: ALL_PROJECT_NAMES,
     traj: int = -1,
-) -> Union[SingleTraj, TrajEnsemble]:
+    load_autoencoder: bool = False,
+) -> Union[
+    Union[SingleTraj, TrajEnsemble, np.ndarray],
+    tuple[
+        Union[SingleTraj, TrajEnsemble, np.ndarray],
+        Union[EncoderMap, AngleDihedralCartesianEncoderMap],
+    ],
+]:
     """Loads an encodermap project directly into a SingleTraj or TrajEnsemble.
+    Also loads an instance of an AutoEncoder, when requested.
 
     Args:
         project_name (Literal["linear_dimers"]): The name of the project.
         traj (int): If you want only one traj from the ensemble, set this
-            to the appropriate index. If set to -1 the ensemble will be returned.
+            to the appropriate index. If set to -1, the ensemble will be returned.
             Defaults to -1.
+        load_autoencoder (bool): Whether to also reload a trained autoencoder model.
 
     Returns:
-        Union[SingleTraj, TrajEnsemble]: The trajectory class.
+        Union[
+            Union[SingleTraj, TrajEnsemble],
+            tuple[
+                Union[SingleTraj, TrajEnsemble],
+                Union[EncoderMap, AngleDihedralCartesianEncoderMap],
+            ],
+        ]: either the trajectory class or a tuple of Trajectory and Autoencoder.
 
     """
-    if project_name not in ["linear_dimers", "pASP_pGLU"]:
+    autoencoder_mapping = {
+        "linear_dimers": AngleDihedralCartesianEncoderMap,
+        "pASP_pGLU": AngleDihedralCartesianEncoderMap,
+        "Ub_K11_mutants": AngleDihedralCartesianEncoderMap,
+        "cube": EncoderMap,
+        "1am7": EncoderMap,
+        "H1Ub": EncoderMap,
+    }
+    if project_name not in autoencoder_mapping.keys():
         raise Exception(
             f"The project {project_name} is not part of the EnocoderMap projects."
         )
 
     # Standard Library Imports
     import os
+    from pathlib import Path
+
+    # Third Party Imports
+    import tensorflow
+    from packaging import version
 
     # Local Folder Imports
     from .kondata import get_from_kondata
 
-    output_dir = get_from_kondata(
-        project_name, mk_parentdir=True, silence_overwrite_message=True
+    output_dir = Path(
+        get_from_kondata(
+            project_name,
+            mk_parentdir=True,
+            silence_overwrite_message=True,
+            download_checkpoints=True,
+            download_h5=True,
+        )
     )
-    traj_file = os.path.join(output_dir, "trajs.h5")
-    trajs = load(traj_file)
-    if isinstance(trajs, TrajEnsemble):
-        if traj > -1:
-            return trajs[traj]
-    return trajs
+
+    if project_name != "cube":
+        traj_file = os.path.join(output_dir, "trajs.h5")
+        trajs = load(traj_file)
+        if isinstance(trajs, TrajEnsemble):
+            if traj > -1:
+                trajs = trajs[traj]
+        if not load_autoencoder:
+            return trajs
+    else:
+        # Local Folder Imports
+        from .misc.misc import create_n_cube
+
+        positions, _ = misc.create_n_cube()
+        autoencoder = EncoderMap(
+            train_data=positions,
+        )
+        return positions, autoencoder
+
+    if version.parse(tensorflow.__version__) >= version.parse("2.15"):
+        keras_files = list(
+            (output_dir / "checkpoints/finished_training/tf2_15").glob("*.keras")
+        )
+        if len(keras_files) == 0:
+            raise Exception(
+                f"Found no keras files in {output_dir / 'checkpoints/finished_training'}: "
+                f"{keras_files}. Not all EncoderMap projects are accompanied by "
+                f"trained tensorflow models."
+            )
+    else:
+        keras_files = list(
+            (output_dir / "checkpoints/finished_training").glob("*.keras")
+        )
+        if len(keras_files) == 0:
+            raise Exception(
+                f"Found no keras files in {output_dir / 'checkpoints/finished_training'}: "
+                f"{keras_files}. Most EncoderMap models are trained with tensorflow "
+                f"version >= 2.15. Not all models are available for older versions. "
+                f"You can update your tensorflow version and try again."
+            )
+    if len(keras_files) > 1:
+        raise Exception(f"Found multiple keras files in {output_dir}: {keras_files}. ")
+    keras_file = keras_files[0]
+    if autoencoder_mapping[project_name].__name__ == "AngleDihedralCartesianEncoderMap":
+        autoencoder = autoencoder_mapping[project_name].from_checkpoint(
+            trajs, checkpoint_path=keras_file
+        )
+    else:
+        autoencoder = autoencoder_mapping[project_name].from_checkpoint(
+            checkpoint_path=keras_file,
+            train_data=trajs.central_dihedrals,
+        )
+    return trajs, autoencoder
 
 
 ################################################################################
@@ -512,4 +781,10 @@ del (
     _os,
     _StringIO,
     _sys,
+    _beartyping,
+    GPUsAreDisabledWarning,
+    _enable_GPU,
+    warnings,
+    overload,
+    Path,
 )

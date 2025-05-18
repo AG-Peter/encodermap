@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # encodermap/tests/find_undocumented_package_parts.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -62,10 +62,14 @@ def main(
     print(f"Found {len(missing)} missing documentations.")
     if n_print == -1:
         for m in range(n_print):
-            print(m)
+            print(missing[m])
     else:
-        for m in random.sample(missing, n_print):
-            print(m)
+        if len(missing) < n_print:
+            for m in missing:
+                print(m)
+        else:
+            for m in random.sample(missing, n_print):
+                print(m)
     return 0
 
 

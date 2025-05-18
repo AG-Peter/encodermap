@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # tests/test_backmapping_em1_em2.py
 ################################################################################
-# Encodermap: A python library for dimensionality reduction.
+# EncoderMap: A python library for dimensionality reduction.
 #
 # Copyright 2019-2024 University of Konstanz and the Authors
 #
@@ -53,18 +53,21 @@ from copy import deepcopy
 from itertools import cycle, islice
 from pathlib import Path
 from time import perf_counter
+from types import SimpleNamespace
 from typing import Optional, Union
 
 # Third Party Imports
 import mdtraj as md
 import numpy as np
 import tensorflow as tf
+import xarray as xr
 from numpy.testing import assert_allclose
 
 # Encodermap imports
+from conftest import skip_all_tests_except_env_var_specified
+from encodermap.encodermap_tf1.backmapping import chain_in_plane as chain_in_plane_tf1
 from encodermap.encodermap_tf1.backmapping import (
-    chain_in_plane,
-    dihedrals_to_cartesian_tf,
+    dihedrals_to_cartesian_tf as dihedrals_to_cartesian_tf_tf1,
 )
 from encodermap.encodermap_tf1.backmapping import guess_amide_H as guess_amide_H_tf1
 from encodermap.encodermap_tf1.backmapping import guess_amide_O as guess_amide_O_tf1
@@ -92,8 +95,154 @@ import encodermap as em  # isort: skip
 
 
 ################################################################################
+# Globals
+################################################################################
+
+
+CONST_Q1Q2 = 0.084
+CONST_F = 332
+DEFAULT_CUTOFF = -0.5
+DEFAULT_MARGIN = 1.0
+C3_ALPHABET = np.array(["C", "H", "E"])
+
+
+################################################################################
 # Utils
 ################################################################################
+
+
+def _unfold(a: np.ndarray, window: int, axis: int):
+    idx = np.arange(window)[:, None] + np.arange(a.shape[axis] - window + 1)[None, :]
+    unfolded = np.take(a, idx, axis=axis)
+    return np.moveaxis(unfolded, axis - 1, -1)
+
+
+def _check_input(coord):
+    """Taken from PyDSSP: https://github.com/ShintaroMinami/PyDSSP"""
+    # Third Party Imports
+    from einops import repeat
+
+    org_shape = coord.shape
+    assert (len(org_shape) == 3) or (
+        len(org_shape) == 4
+    ), "Shape of input tensor should be [batch, L, atom, xyz] or [L, atom, xyz]"
+    coord = repeat(coord, "... -> b ...", b=1) if len(org_shape) == 3 else coord
+    return coord, org_shape
+
+
+def _get_hydrogen_atom_position(coord: np.ndarray) -> np.ndarray:
+    """Taken from PyDSSP: https://github.com/ShintaroMinami/PyDSSP"""
+    # A little bit lazy (but should be OK) definition of H position here.
+    vec_cn = coord[:, 1:, 0] - coord[:, :-1, 2]
+    vec_cn = vec_cn / np.linalg.norm(vec_cn, axis=-1, keepdims=True)
+    vec_can = coord[:, 1:, 0] - coord[:, 1:, 1]
+    vec_can = vec_can / np.linalg.norm(vec_can, axis=-1, keepdims=True)
+    vec_nh = vec_cn + vec_can
+    vec_nh = vec_nh / np.linalg.norm(vec_nh, axis=-1, keepdims=True)
+    return coord[:, 1:, 0] + 1.01 * vec_nh
+
+
+def get_hbond_map(
+    coord: np.ndarray,
+    cutoff: float = DEFAULT_CUTOFF,
+    margin: float = DEFAULT_MARGIN,
+    return_e: bool = False,
+) -> np.ndarray:
+    """Taken from PyDSSP: https://github.com/ShintaroMinami/PyDSSP"""
+    # Third Party Imports
+    from einops import repeat
+
+    # check input
+    coord, org_shape = _check_input(coord)
+    b, l, a, _ = coord.shape
+    # add pseudo-H atom if not available
+    assert (a == 4) or (
+        a == 5
+    ), "Number of atoms should be 4 (N,CA,C,O) or 5 (N,CA,C,O,H)"
+    h = coord[:, 1:, 4] if a == 5 else _get_hydrogen_atom_position(coord)
+    # distance matrix
+    nmap = repeat(coord[:, 1:, 0], "... m c -> ... m n c", n=l - 1)
+    hmap = repeat(h, "... m c -> ... m n c", n=l - 1)
+    cmap = repeat(coord[:, 0:-1, 2], "... n c -> ... m n c", m=l - 1)
+    omap = repeat(coord[:, 0:-1, 3], "... n c -> ... m n c", m=l - 1)
+    d_on = np.linalg.norm(omap - nmap, axis=-1)
+    d_ch = np.linalg.norm(cmap - hmap, axis=-1)
+    d_oh = np.linalg.norm(omap - hmap, axis=-1)
+    d_cn = np.linalg.norm(cmap - nmap, axis=-1)
+    # electrostatic interaction energy
+    e = np.pad(
+        CONST_Q1Q2 * (1.0 / d_on + 1.0 / d_ch - 1.0 / d_oh - 1.0 / d_cn) * CONST_F,
+        [[0, 0], [1, 0], [0, 1]],
+    )
+    if return_e:
+        return e
+    # mask for local pairs (i,i), (i,i+1), (i,i+2)
+    local_mask = ~np.eye(l, dtype=bool)
+    local_mask *= ~np.diag(np.ones(l - 1, dtype=bool), k=-1)
+    local_mask *= ~np.diag(np.ones(l - 2, dtype=bool), k=-2)
+    # hydrogen bond map (continuous value extension of original definition)
+    hbond_map = np.clip(cutoff - margin - e, a_min=-margin, a_max=margin)
+    hbond_map = (np.sin(hbond_map / margin * np.pi / 2) + 1.0) / 2
+    hbond_map = hbond_map * repeat(local_mask, "l1 l2 -> b l1 l2", b=b)
+    # return h-bond map
+    hbond_map = np.squeeze(hbond_map, axis=0) if len(org_shape) == 3 else hbond_map
+    return hbond_map
+
+
+def assign(coord: np.ndarray) -> np.ndarray:
+    """Taken from PyDSSP: https://github.com/ShintaroMinami/PyDSSP"""
+    # Third Party Imports
+    from einops import rearrange
+
+    # check input
+    coord, org_shape = _check_input(coord)
+    # get hydrogen bond map
+    hbmap = get_hbond_map(coord)
+    hbmap = rearrange(
+        hbmap, "... l1 l2 -> ... l2 l1"
+    )  # convert into "i:C=O, j:N-H" form
+    # identify turn 3, 4, 5
+    turn3 = np.diagonal(hbmap, axis1=-2, axis2=-1, offset=3) > 0.0
+    turn4 = np.diagonal(hbmap, axis1=-2, axis2=-1, offset=4) > 0.0
+    turn5 = np.diagonal(hbmap, axis1=-2, axis2=-1, offset=5) > 0.0
+    # assignment of helical sses
+    h3 = np.pad(turn3[:, :-1] * turn3[:, 1:], [[0, 0], [1, 3]])
+    h4 = np.pad(turn4[:, :-1] * turn4[:, 1:], [[0, 0], [1, 4]])
+    h5 = np.pad(turn5[:, :-1] * turn5[:, 1:], [[0, 0], [1, 5]])
+    # helix4 first
+    helix4 = h4 + np.roll(h4, 1, 1) + np.roll(h4, 2, 1) + np.roll(h4, 3, 1)
+    h3 = h3 * ~np.roll(helix4, -1, 1) * ~helix4  # helix4 is higher prioritized
+    h5 = h5 * ~np.roll(helix4, -1, 1) * ~helix4  # helix4 is higher prioritized
+    helix3 = h3 + np.roll(h3, 1, 1) + np.roll(h3, 2, 1)
+    helix5 = (
+        h5
+        + np.roll(h5, 1, 1)
+        + np.roll(h5, 2, 1)
+        + np.roll(h5, 3, 1)
+        + np.roll(h5, 4, 1)
+    )
+    # identify bridge
+    unfoldmap = _unfold(_unfold(hbmap, 3, -2), 3, -2) > 0.0
+    unfoldmap_rev = rearrange(unfoldmap, "b l1 l2 ... -> b l2 l1 ...")
+    p_bridge = (unfoldmap[:, :, :, 0, 1] * unfoldmap_rev[:, :, :, 1, 2]) + (
+        unfoldmap_rev[:, :, :, 0, 1] * unfoldmap[:, :, :, 1, 2]
+    )
+    p_bridge = np.pad(p_bridge, [[0, 0], [1, 1], [1, 1]])
+    a_bridge = (unfoldmap[:, :, :, 1, 1] * unfoldmap_rev[:, :, :, 1, 1]) + (
+        unfoldmap[:, :, :, 0, 2] * unfoldmap_rev[:, :, :, 0, 2]
+    )
+    a_bridge = np.pad(a_bridge, [[0, 0], [1, 1], [1, 1]])
+    # ladder
+    ladder = (p_bridge + a_bridge).sum(-1) > 0
+    # H, E, L of C3
+    helix = (helix3 + helix4 + helix5) > 0
+    strand = ladder
+    loop = ~helix * ~strand
+    onehot = np.stack([loop, helix, strand], axis=-1)
+    onehot = rearrange(onehot, "1 ... -> ...") if len(org_shape) == 3 else onehot
+    index = np.argmax(onehot, axis=1)
+    assign = np.array([C3_ALPHABET[i] for i in index])
+    return assign
 
 
 class LayerThatOutputsConstant(tf.keras.layers.Layer):
@@ -155,7 +304,7 @@ def catchtime() -> float:
     """Catches execution time in a contextmanager.
 
     Examples:
-        >>> import sleep
+        >>> from time import sleep
         >>> with catchtime() as c:
         ...     sleep(1)
         >>> c()
@@ -194,11 +343,146 @@ def roundrobin(*iterables):
 ################################################################################
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestBackmappingEm1Em2(tf.test.TestCase):
-    def test_backmapping_wo_angles(self):
+    def assertAllClosePeriodic(self, *args, **kwargs):
+        # Encodermap imports
+        from test_autoencoder import TestAutoencoder
+
+        TestAutoencoder.assertAllClosePeriodic(self, *args, **kwargs)
+
+    @unittest.skip(
+        "This test was meant to debug the difference between the structures "
+        "produced by applying the backbone coordinates from the decoder vs "
+        "applying the torsional angles. Using the first method and then "
+        "calculating the dihedral angles, the same angles are calculated as "
+        "the second method applies to the backbone. However, most visualization "
+        "tools will mangle the protein render. Maybe this is due to the first "
+        "method deleting the sidechain atoms prior to applying the coordinates. "
+        "This needs to be investigated."
+    )
+    def test_backmapping_and_dssp(self):
+        """This test is not part of the test suite. It is meant to check, how
+        EncoderMap's decoding can produce different DSSP results for the dihedrals
+        and cartesian output.
+        """
+        try:
+            # Third Party Imports
+            import einops
+        except ModuleNotFoundError:
+            return
+        # Third Party Imports
+        import MDAnalysis as mda
+
+        output_dir = Path(
+            em.get_from_kondata(
+                "linear_dimers",
+                silence_overwrite_message=True,
+                mk_parentdir=True,
+                download_checkpoints=True,
+            )
+        )
+
+        file = output_dir / "01.pdb"
+        base_traj = md.load(file)
+        coords = []
+        for r in base_traj.top.residues:
+            idx = base_traj.top.select(
+                f"resid {r.index} and (name C or name CA or name N or name O or (resid 76 and name O1))"
+            )
+            self.assertEqual(idx.shape[0], 4)
+            coords.append(base_traj.xyz[0, idx] * 10)
+        coords = np.array(coords)
+        ds = xr.open_dataset(output_dir / "trajs.h5", group="CVs")
+        ds = ds.sel(traj_num=0, frame_num=list(range(10)))
+        self.assertEqual(
+            ds.central_dihedrals.shape[0],
+            10,
+            msg=(f"Wrong shape of dataset: {ds.central_dihedrals.shape=}"),
+        )
+
+        # # can be used with pydssp to compare with coords from mdtraj
+        # # the assign() function in the Utils section expects the input of
+        # import pydssp
+        # inp = file.read_text()
+        # inp = inp.replace("ATOM   1520  O1  GLY   152", "ATOM   1520  O   GLY   152")
+        # coords_pydssp = pydssp.read_pdbtext(inp)
+        # self.assertAllClose(
+        #     coords_pydssp,
+        #     coords,
+        #     rtol=1e-5
+        # )
+        # raise Exception
+
+        dssp1 = assign(coords)
+        dssp2 = md.compute_dssp(base_traj, simplified=True)[0]
+        ind = np.setdiff1d(
+            np.arange(152),
+            np.array([41, 69, 82, 131, 132, 133, 134]),
+        )
+        self.assertAllEqual(
+            dssp1[ind],
+            dssp2[ind],
+        )
+
+        # load the encodermap1 checkpoint
+        # Encodermap imports
+        import encodermap.encodermap_tf1 as em_tf1
+
+        parameters = em_tf1.ADCParameters.load(
+            str(output_dir / "checkpoints/finished_training/tf1/parameters.json"),
+        )
+        uni = mda.Universe(
+            output_dir / "01.pdb",
+            list(output_dir.glob("*.xtc")),
+        )
+        atoms = uni.select_atoms(
+            "backbone or name H or name O1 or (name CD and resname PRO)"
+        )
+        moldata = em_tf1.MolData(atoms, cache_path=output_dir / "cache")
+        e_map_tf1 = em_tf1.AngleDihedralCartesianEncoderMap(
+            parameters=parameters,
+            train_data=moldata,
+            checkpoint_path=str(
+                output_dir / "checkpoints/finished_training/tf1/step50000.ckpt"
+            ),
+        )
+
+        # and decode
+        # Use MDAnalysis backmapping to generate cartesians form the dihedrals
+        # of 01.pdb and compare the dssp output.
+        (
+            angles,
+            dihedrals,
+            cartesians,
+        ) = e_map_tf1.generate(
+            e_map_tf1.encode(
+                ds.central_dihedrals.values.astype("float32"),
+            ),
+        )
+
+        # provide the cartesians to assign
+        N = cartesians[
+            0, np.concatenate([np.array([0]), np.arange(cartesians.shape[1])[4::5]])
+        ]
+        CA = cartesians[
+            0, np.concatenate([np.array([1]), np.arange(cartesians.shape[1])[6::5]])
+        ]
+        C = cartesians[
+            0, np.concatenate([np.array([2]), np.arange(cartesians.shape[1])[7::5]])
+        ]
+        O = cartesians[
+            0, np.concatenate([np.array([3]), np.arange(cartesians.shape[1])[5::5]])
+        ]
+        coords_from_tf1_cartesians = np.stack([N, CA, C, O], axis=1)
+        dssp_from_em_tf1_cartesians = assign(coords_from_tf1_cartesians)
+
+        self.fail("Use mdtraj to get dihedrals from cartesians in em1 and em2")
+        self.fail("Compare DSSP assignments of both outputs.")
+
+    def test_backmapping_wo_angles1(self):
         p = em.ADCParameters(l2_reg_constant=0, periodicity=2 * np.pi)
-        print(p)
-        no_central_cartesians = 474  # same as 1am7 protein dihedral length
+        no_central_cartesians = 228  # same as 1UBQ
         if p.use_backbone_angles:
             input_dim = no_central_cartesians - 3 + no_central_cartesians - 2
         else:
@@ -209,22 +493,18 @@ class TestBackmappingEm1Em2(tf.test.TestCase):
         model_1 = ConstantOutputAutoencoder(input_dim, len_data, p, 1)
         # model.compile(tf.keras.optimizers.Adam())
 
-        dihedral_data = (
-            np.random.random((len_data, no_central_cartesians - 3)).astype("float32")
-            * np.pi
-            * 2
-        ) - np.pi
-        angle_data = (
-            np.random.random((len_data, no_central_cartesians - 2)).astype("float32")
-            * np.pi
-            * 2
-        ) - np.pi
-        distance_data = np.random.random((len_data, no_central_cartesians - 1)).astype(
-            "float32"
+        ds = xr.load_dataset(
+            Path(__file__).resolve().parent / "data/em1_em2_backmapping_data.nc"
         )
-        central_cartesian_data = np.random.random(
-            (len_data, no_central_cartesians, 3)
-        ).astype("float32")
+        dihedral_data = ds.central_dihedrals.values.astype("float32")
+        angle_data = ds.central_angles.values.astype("float32")
+        distance_data = ds.central_distances.values.astype("float32")
+        central_cartesian_data = ds.central_cartesians.values.astype("float32")
+        self.assertEqual(dihedral_data.shape, (10, 225))
+        self.assertEqual(angle_data.shape, (10, 226))
+        self.assertEqual(distance_data.shape, (10, 227))
+        self.assertEqual(central_cartesian_data.shape, (10, 228, 3))
+
         cartesian_data = np.random.random(
             (len_data, no_central_cartesians * 5, 3)
         ).astype("float32")
@@ -236,8 +516,7 @@ class TestBackmappingEm1Em2(tf.test.TestCase):
         dataset = dataset.repeat()
         dataset = dataset.batch(p.batch_size)
 
-        for i in range(2):
-            d = dataset.take(1)
+        for i, d in enumerate(dataset):
             if i == 0:
                 angles, dihedrals, cartesians = d
             elif i == 1:
@@ -269,17 +548,17 @@ class TestBackmappingEm1Em2(tf.test.TestCase):
             # If angles are not trained, use the mean from all provided angles
             generated_angles = tf.tile(
                 np.expand_dims(np.mean(angle_data, 0), 0),
-                multiples=(out_dihedrals.shape[0], 1),
+                multiples=(dihedrals.shape[0], 1),
             )
 
         # mean lengths over trajectory used for backmapping
         mean_lengths = np.expand_dims(np.mean(distance_data, 0), 0)
 
         # build s chain in plane with lengths and angles
-        _chain_in_plane = chain_in_plane(mean_lengths, generated_angles)
+        _chain_in_plane = chain_in_plane_tf1(mean_lengths, generated_angles)
 
         # add a third dimension by adding torsion angles to that chain
-        cartesians = dihedrals_to_cartesian_tf(
+        cartesians = dihedrals_to_cartesian_tf_tf1(
             generated_dihedrals + np.pi, _chain_in_plane
         )
 
@@ -313,6 +592,10 @@ class TestBackmappingEm1Em2(tf.test.TestCase):
             amide_O_cartesians,
         )
         self.assertAllEqual(merged_cartesians_tf1, merged_cartesians)
+        self.assertNotEqual(
+            cartesians.shape,
+            merged_cartesians.shape,
+        )
 
         # These are here to test whether they run or not
         # They will be tested with the always zero model in the test_losses unittest
@@ -332,7 +615,68 @@ class TestBackmappingEm1Em2(tf.test.TestCase):
             pairwise_dist(cartesians, flat=True) < 1, axis=1, dtype=tf.float32
         )
 
-    def test_backmapping_wo_angles(self):
+        # compare whether the cartesians without amide and with are the same
+        self.assertEqual(
+            cartesians.shape,
+            (256, 228, 3),
+        )
+        backbone_indices = np.vstack(
+            [
+                np.concatenate(
+                    [np.array([0]), np.arange(merged_cartesians.shape[1])[4::5]]
+                ),
+                np.concatenate(
+                    [np.array([1]), np.arange(merged_cartesians.shape[1])[6::5]]
+                ),
+                np.concatenate(
+                    [np.array([2]), np.arange(merged_cartesians.shape[1])[7::5]]
+                ),
+            ]
+        )
+        backbone_indices = np.sort(np.unique(backbone_indices))
+        test_central_cartesians = merged_cartesians.numpy()[:, backbone_indices]
+        self.assertAllClose(
+            test_central_cartesians,
+            cartesians,
+        )
+
+        # calculate the dihedrals from that and compare
+        n_residues = 76
+        central_dihedrals_quadruplets = np.vstack(
+            [
+                np.arange(0, n_residues * 3)[:-3],
+                np.arange(0, n_residues * 3)[1:-2],
+                np.arange(0, n_residues * 3)[2:-1],
+                np.arange(0, n_residues * 3)[3:],
+            ]
+        ).T
+
+        # calculate dihedrals of the cartesians
+        traj = SimpleNamespace(
+            xyz=cartesians.numpy(),
+            n_frames=256,
+            n_atoms=228,
+        )
+        md_computed_dihedrals = md.compute_dihedrals(
+            traj=traj,
+            indices=central_dihedrals_quadruplets,
+            periodic=False,
+        )
+        self.assertAllClosePeriodic(
+            a=generated_dihedrals.numpy(),
+            b=md_computed_dihedrals,
+            rtol=1e-3,
+        )
+
+        # without explicitly deleting these datasets and clearing
+        # the session, the dataset might leak into other methods
+        # We had an error in test_trajinfo.TestTraj.test_1am7, where the
+        # get_functional_model() got the two-tuple dataset of an EncoderMap
+        # class
+        del dataset
+        tf.keras.backend.clear_session()
+
+    def test_backmapping_wo_angles2(self):
         p = em.ADCParameters(
             l2_reg_constant=0, periodicity=2 * np.pi, use_backbone_angles=True
         )
@@ -414,10 +758,10 @@ class TestBackmappingEm1Em2(tf.test.TestCase):
         mean_lengths = np.expand_dims(np.mean(distance_data, 0), 0)
 
         # build s chain in plane with lengths and angles
-        _chain_in_plane = chain_in_plane(mean_lengths, generated_angles)
+        _chain_in_plane = chain_in_plane_tf1(mean_lengths, generated_angles)
 
         # add a third dimension by adding torsion angles to that chain
-        cartesians = dihedrals_to_cartesian_tf(
+        cartesians = dihedrals_to_cartesian_tf_tf1(
             generated_dihedrals + np.pi, _chain_in_plane
         )
 
@@ -469,14 +813,17 @@ class TestBackmappingEm1Em2(tf.test.TestCase):
         clashes = tf.math.count_nonzero(
             pairwise_dist(cartesians, flat=True) < 1, axis=1, dtype=tf.float32
         )
+        del dataset
+        tf.keras.backend.clear_session()
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
     custom_aas_K48_diUbi = {
         "LYQ-123": (
             "K",
             {  # LYQ-123 is basically just lysine
-                "bonds": [  # the bonds are defined as a list of tuples
+                "optional_bonds": [  # the bonds are defined as a list of tuples
                     ("-C", "N"),  # the peptide bond to the previous aa
                     ("N", "CA"),
                     ("N", "H"),
@@ -500,14 +847,14 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
         "GLQ-75": (
             "G",
             {  # GLQ-75 is basically just glycine
-                "bonds": [
+                "optional_bonds": [
                     ("-C", "N"),  # the peptide bond to the previous aa
                     ("N", "CA"),
                     ("N", "H"),
                     ("CA", "C"),
                     ("C", "O"),
                 ],
-                "delete_bonds": [
+                "optional_delete_bonds": [
                     (
                         "C",
                         761,
@@ -575,7 +922,6 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
-    @expensive_test
     def test_backmapping_mdtraj_vs_mdanalysis_performance(self):
         output_dir = Path(
             em.get_from_kondata(
@@ -604,6 +950,7 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
                 dihedrals=dihedrals,
                 remove_component_size=10,
                 parallel=False,
+                guess_sp2_atoms=False,
             )
 
         print(
@@ -643,6 +990,7 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
                 top=Path(__file__).resolve().parent / "data/1am7_protein.pdb",
                 dihedrals=dihedrals,
                 remove_component_size=10,
+                guess_sp2_atoms=False,
             )
         out2 = em.SingleTraj(out2)
         out2.load_CV("central_dihedrals")
@@ -651,9 +999,11 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
         print(f"{np.all(ind)=}")
         self.assertTrue(
             np.all(ind),
-            msg=f"Some proline angles of the MDTraj backmapping function "
-            f"`mdtraj_backmapping` are outside of their natural phi angle range "
-            f"of -63 +/- 17 degrees:\n{angles[~ind]}",
+            msg=(
+                f"Some proline angles of the MDTraj backmapping function "
+                f"`mdtraj_backmapping` are outside of their natural phi angle range "
+                f"of -63 +/- 17 degrees:\n{angles[~ind]}"
+            ),
         )
 
         print(
@@ -681,7 +1031,6 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
                 f"of -63 +/- 17 degrees:\n{angles[~ind]}"
             )
 
-    @expensive_test
     def test_custom_AAs_with_KAC(self):
         # define output dir and load trajs
         output_dir = Path(
@@ -693,12 +1042,11 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
         )
         trajs = list(output_dir.rglob("*_I/*.xtc"))
         self.assertGreater(len(trajs), 0)
-
         custom_aas = {
             "KAC": (
                 "K",
                 {
-                    "bonds": [
+                    "optional_bonds": [
                         ("-C", "N"),  # the peptide bond to the previous aa
                         ("N", "CA"),
                         ("N", "H"),
@@ -742,6 +1090,27 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
             ],
             custom_top=custom_aas,
         )
+
+        # test the guess_sp2_atom function
+        # Encodermap imports
+        from encodermap.misc.backmapping import _guess_sp2_atoms
+
+        self.assertEqual(len(trajs[0].top.select("name N")), 76)
+        test_traj = deepcopy(trajs[0].traj[:5])
+        test_traj.top = trajs[0].top
+        self.assertEqual(test_traj.n_frames, 5)
+        _guess_sp2_atoms(test_traj)
+        for i in range(1, 10):
+            dist = md.compute_distances(
+                test_traj,
+                atom_pairs=np.array(
+                    [
+                        test_traj.top.select(f"resid {i} and name N"),
+                        test_traj.top.select(f"resid {i} and name H"),
+                    ]
+                ).T,
+            )
+            self.assertAllClose(dist, np.full((5, 1), fill_value=0.11), rtol=1e-3)
 
         # test some common strings
         for cs, sub_trajs in trajs.trajs_by_common_str.items():
@@ -882,6 +1251,7 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
                 verify_every_rotation=True,
                 angle_type="radian",
                 return_indices=True,
+                guess_sp2_atoms=True,
             )
             rad_traj = em.SingleTraj(rad_traj, custom_top=custom_aas)
             rad_traj.load_CV(["central_dihedrals", "side_dihedrals"])
@@ -915,11 +1285,21 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
         from pathlib import Path
 
         # Encodermap imports
+        from encodermap.kondata import get_from_kondata
         from encodermap.misc.backmapping import mdtraj_backmapping
 
+        output_dir = Path(
+            get_from_kondata(
+                "Ub_dimers",
+                silence_overwrite_message=True,
+                mk_parentdir=True,
+            )
+        )
+
         traj = em.SingleTraj(
-            Path(__file__).resolve().parent / "data/K48_diUbi.xtc",
-            Path(__file__).resolve().parent / "data/K48_diUbi.gro",
+            output_dir / "GROMOS/K48/traj.xtc",
+            output_dir / "GROMOS/K48/start.gro",
+            basename_fn=lambda x: x.split("/")[-2],
         )
         self.assertHasMember(traj, "indices_chi1")
         self.assertHasAttr(traj, "indices_chi2")
@@ -1475,7 +1855,7 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
         stacked_ds = (
             ds.stack({"frame": ("traj_num", "frame_num")})
             .transpose("frame", ...)
-            .dropna("frame", "all")
+            .dropna("frame", how="all")
         )
 
         # some side dihedrals have to be nan
@@ -1497,7 +1877,7 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
         stacked_ds = (
             ds.stack({"frame": ("traj_num", "frame_num")})
             .transpose("frame", ...)
-            .dropna("frame", "all")
+            .dropna("frame", how="all")
         )
         # all central dihedrals in OTU11 are defined
         self.assertTrue(
@@ -1648,7 +2028,7 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
                     )
                     # mdtraj
                     traj_out, indices = mdtraj_backmapping(
-                        top=i,
+                        top=0,
                         dihedrals=inp_dihedrals,
                         sidechain_dihedrals=inp_side_dihedrals,
                         trajs=traj,
@@ -1667,10 +2047,8 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
                     if not omega:
                         self.assertFalse(
                             any(
-                                trajs._CVs.central_dihedrals.sel(
-                                    CENTRAL_DIHEDRALS=indices[
-                                        "generic_dihedrals_labels"
-                                    ]
+                                traj._CVs.central_dihedrals.sel(
+                                    CENTRAL_DIHEDRALS=indices["dihedrals_labels"]
                                 )
                                 .coords["CENTRAL_DIHEDRALS"]
                                 .str.contains("OMEGA")
@@ -1679,18 +2057,16 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
                     else:
                         self.assertTrue(
                             any(
-                                trajs._CVs.central_dihedrals.sel(
-                                    CENTRAL_DIHEDRALS=indices[
-                                        "generic_dihedrals_labels"
-                                    ]
+                                traj._CVs.central_dihedrals.sel(
+                                    CENTRAL_DIHEDRALS=indices["dihedrals_labels"]
                                 )
                                 .coords["CENTRAL_DIHEDRALS"]
                                 .str.contains("OMEGA")
                             ),
                         )
                     central_index = np.in1d(
-                        trajs._CVs.central_dihedrals.coords["CENTRAL_DIHEDRALS"],
-                        indices["generic_dihedrals_labels"],
+                        traj._CVs.central_dihedrals.coords["CENTRAL_DIHEDRALS"],
+                        indices["dihedrals_labels"],
                     )
                     angles = traj_out._CVs.central_dihedrals.sel(
                         CENTRAL_DIHEDRALS=indices["dihedrals_labels"]
@@ -1703,8 +2079,8 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
                         atol=1e-3,
                     )
                     side_index = np.in1d(
-                        trajs._CVs.side_dihedrals.coords["SIDE_DIHEDRALS"],
-                        indices["generic_side_dihedrals_labels"],
+                        traj._CVs.side_dihedrals.coords["SIDE_DIHEDRALS"],
+                        indices["side_dihedrals_labels"],
                     )
                     angles = traj_out._CVs.side_dihedrals.sel(
                         SIDE_DIHEDRALS=indices["side_dihedrals_labels"]
@@ -1717,23 +2093,25 @@ class TestBackmappingMdtrajMdanalysis(unittest.TestCase):
                         atol=1e-3,
                     )
 
+    def test_backmapping_dihedral(self):
+        # Standard Library Imports
+        from pathlib import Path
 
-def test_backmapping_dihedral(self):
-    # Standard Library Imports
-    from pathlib import Path
+        # Third Party Imports
+        import mdtraj as md
 
-    # Third Party Imports
-    import mdtraj as md
+        traj = md.load(str(Path(__file__).resolve().parent / "data/known_angles.h5"))
+        # Encodermap imports
+        from encodermap.misc.backmapping import _dihedral
 
-    traj = md.load(str(Path(__file__).resolve().parent / "data/known_angles.h5"))
-    # Encodermap imports
-    from encodermap.misc.backmapping import _dihedral
-
-    for frame in traj:
-        dih = _dihedral(frame.xyz[0], np.array([0, 1, 2, 3]))
-        self.assertTrue(-np.pi < dih <= np.pi, msg=f"Dihedral not in radian: {dih}.")
+        for frame in traj:
+            dih = _dihedral(frame.xyz[0], np.array([0, 1, 2, 3]))
+            self.assertTrue(
+                -np.pi < dih <= np.pi, msg=f"Dihedral not in radian: {dih}."
+            )
 
 
+@skip_all_tests_except_env_var_specified(unittest.skip)
 class TestCompareSplits(tf.test.TestCase):
     def test_random_shapes(self):
         for i in np.random.randint(0, 1000, size=10):
@@ -1784,10 +2162,10 @@ class TestCompareSplits(tf.test.TestCase):
 # mean_lengths = np.expand_dims(np.mean(distance_data, 0), 0)
 # print('mean_lengths:', mean_lengths.shape)
 # # build s chain in plane with lengths and angles
-# _chain_in_plane = chain_in_plane(mean_lengths, generated_angles)
+# _chain_in_plane = chain_in_plane_tf1(mean_lengths, generated_angles)
 # print('chain_in_plane:', _chain_in_plane.shape)
 # # add a third dimension by adding torsion angles to that chain
-# cartesians = dihedrals_to_cartesian_tf(generated_dihedrals + np.pi, _chain_in_plane)
+# cartesians = dihedrals_to_cartesian_tf_tf1(generated_dihedrals + np.pi, _chain_in_plane)
 # print('cartesians:', cartesians.shape)
 # atom_names = ['N', 'CA', 'C'] * int(no_central_cartesians / 3)
 # amide_H_cartesians_tf1 = guess_amide_H_tf1(cartesians, atom_names)
@@ -1814,36 +2192,23 @@ class TestCompareSplits(tf.test.TestCase):
 # clashes = tf.math.count_nonzero(pairwise_dist(cartesians, flat=True) < 1, axis=1, dtype=tf.float32)
 # print('clashes:', clashes.shape)
 
-# Remove Phantom Tests from tensorflow skipped test_session
-# https://stackoverflow.com/questions/55417214/phantom-tests-after-switching-from-unittest-testcase-to-tf-test-testcase
-test_cases = (
-    TestBackmappingEm1Em2,
-    TestBackmappingMdtrajMdanalysis,
-    TestCompareSplits,
-)
 
 ################################################################################
-# Doctests
+# Collect Test Cases and Filter
 ################################################################################
-
-
-# Standard Library Imports
-import doctest
-
-# Encodermap imports
-import encodermap.misc.backmapping as backmapping
-
-
-doc_tests = (doctest.DocTestSuite(backmapping),)
 
 
 def load_tests(loader, tests, pattern):
+    test_cases = (
+        TestBackmappingEm1Em2,
+        TestBackmappingMdtrajMdanalysis,
+        TestCompareSplits,
+    )
     suite = unittest.TestSuite()
     for test_class in test_cases:
         tests = loader.loadTestsFromTestCase(test_class)
         filtered_tests = [t for t in tests if not t.id().endswith(".test_session")]
         suite.addTests(filtered_tests)
-    suite.addTests(doc_tests)
     return suite
 
 
