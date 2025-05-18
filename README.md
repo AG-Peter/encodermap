@@ -1,9 +1,10 @@
 <img src="pic/new_logo_m.png" width=45% align="right" />
 
-[![Test](https://img.shields.io/endpoint?url=https%3A%2F%2Fencodermap.site%2F_static%2Ftest_badge.json)](https://encodermap.site/_static/html_test_runner_report.html)
-[![Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fencodermap.site%2F_static%2Fcoverage_badge.json)
-](https://encodermap.site/_static/coverage/index.html)
-[![Docbuild](https://img.shields.io/endpoint?url=https%3A%2F%2Fencodermap.site%2F_static%2Fdocbuild_badge.json)](https://encodermap.site)
+
+[![Test](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FAG-Peter%2Fencodermap%2Frefs%2Fheads%2Fgh-pages%2Ftest_bade.json)](https://ag-peter.github.io/encodermap/_static/html_test_runner_report.html)
+[![Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FAG-Peter%2Fencodermap%2Frefs%2Fheads%2Fgh-pages%2Fcoverage_badge.json)
+](https://ag-peter.github.io/encodermap/_static/coverage/index.html)
+[![Docbuild](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FAG-Peter%2Fencodermap%2Frefs%2Fheads%2Fgh-pages%2Fdocbuild_badge.json)](https://ag-peter.github.io/encodermap/)
 [![color](https://img.shields.io/badge/color-e77800-e77800)]()
 [![badge](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 [![badge](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
@@ -135,7 +136,7 @@ If you have any questions you can have a look at the [FAQ](questions.md) (not ve
 }
 ```
 
-Since PyEMMA (https://github.com/markovmodel/PyEMMA) has been archived, EncoderMap incorporated some of PyEMMA's featurization code. Find the citation here:
+Since PyEMMA (https://github.com/markovmodel/PyEMMA) has been archived, EncoderMap incorporated some ideas of PyEMMA's featurization code. Find the citation here:
 
 ```
 @article{scherer2015pyemma,
