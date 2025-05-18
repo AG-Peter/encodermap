@@ -1,7 +1,7 @@
 <img src="pic/new_logo_m.png" width=45% align="right" />
 
 
-[![Test](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FAG-Peter%2Fencodermap%2Frefs%2Fheads%2Fgh-pages%2Ftest_bade.json)](https://ag-peter.github.io/encodermap/_static/html_test_runner_report.html)
+[![Test](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FAG-Peter%2Fencodermap%2Frefs%2Fheads%2Fgh-pages%2Ftest_badge.json)](https://ag-peter.github.io/encodermap/_static/html_test_runner_report.html)
 [![Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FAG-Peter%2Fencodermap%2Frefs%2Fheads%2Fgh-pages%2Fcoverage_badge.json)
 ](https://ag-peter.github.io/encodermap/_static/coverage/index.html)
 [![Docbuild](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FAG-Peter%2Fencodermap%2Frefs%2Fheads%2Fgh-pages%2Fdocbuild_badge.json)](https://ag-peter.github.io/encodermap/)
