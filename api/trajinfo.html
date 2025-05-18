@@ -1,0 +1,2133 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>trajinfo.info_single &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c1026b93" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/trajinfo';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T22:43:00"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">trajinfo.info_single</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-encodermap.trajinfo.info_single">
+<span id="trajinfo-info-single"></span><span id="api-trajinfo"></span><h1>trajinfo.info_single<a class="headerlink" href="#module-encodermap.trajinfo.info_single" title="Link to this heading">#</a></h1>
+<p>Classes to work with ensembles of trajectories.</p>
+<p>The statistics of a protein can be better described by an ensemble of proteins,
+rather than a single long trajectory. Treating a protein in such a way opens great
+possibilities and changes the way one can treat molecular dynamics data.
+Trajectory ensembles allow:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Faster convergence via adaptive sampling.</p></li>
+<li><p>Better anomaly detection of unique structural states.</p></li>
+</ul>
+</div></blockquote>
+<p>This subpackage contains two classes which are containers of trajectory data.
+The SingleTraj trajectory contains information about a single trajectory.
+The TrajEnsemble class contains information about multiple trajectories. This adds
+a new dimension to MD data. The time and atom dimension are already established.
+Two frames can be appended along the time axis to get a trajectory with multiple
+frames. If they are appended along the atom axis, the new frame contains the
+atoms of these two. The trajectory works in a similar fashion. Adding two trajectories
+along the trajectory axis returns a trajectory ensemble, represented as a TrajEnsemble
+class in this package.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="http://statisticalbiophysicsblog.org/?p=92">http://statisticalbiophysicsblog.org/?p=92</a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.Capturing">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Capturing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#Capturing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.Capturing" title="Link to this definition">#</a></dt>
+<dd><p>Class to capture print statements from function calls.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># write a function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">my_func</span><span class="p">(</span><span class="n">arg</span><span class="o">=</span><span class="s1">&#39;argument&#39;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span><span class="p">(</span><span class="s1">&#39;fin&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># use capturing context manager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">Capturing</span><span class="p">()</span> <span class="k">as</span> <span class="n">output</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">my_func</span><span class="p">(</span><span class="s1">&#39;new_argument&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<span class="go">[&#39;new_argument&#39;, &quot;&#39;fin&#39;&quot;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.MixedUpInputs">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MixedUpInputs</span></span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#MixedUpInputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.MixedUpInputs" title="Link to this definition">#</a></dt>
+<dd><p>For when the user provides trajectories as topologies and vice versa.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTrajFsel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SingleTrajFsel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTrajFsel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTrajFsel" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-encodermap.trajinfo.trajinfo_utils">
+<span id="trajinfo-trajinfo-utils"></span><h1>trajinfo.trajinfo_utils<a class="headerlink" href="#module-encodermap.trajinfo.trajinfo_utils" title="Link to this heading">#</a></h1>
+<p>Util functions for the <cite>TrajEnsemble</cite> and <cite>SingleTraj</cite> classes.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.Bond">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#Bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.Bond" title="Link to this definition">#</a></dt>
+<dd><p>Dataclass, that contains information of an atomic bond.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>resname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
+<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'add'</em><em>, </em><em>'delete'</em><em>, </em><em>'optional'</em><em>, </em><em>'optional_delete'</em><em>]</em>)</p></li>
+<li><p><strong>atom1</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
+<li><p><strong>atom2</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.Bond.resname">
+<span class="sig-name descname"><span class="pre">resname</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.Bond.resname" title="Link to this definition">#</a></dt>
+<dd><p>The name of the residue, this bond belongs to. Although
+bonds belong to residues, they can also have <cite>atom1</cite> or <cite>atom2</cite>
+belonging to a different residue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.Bond.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.Bond.type" title="Link to this definition">#</a></dt>
+<dd><p>Defines
+what should be done with this bond. ‘add’, adds it to the topology and
+raises an Exception if the bond was already present. ‘optional’ does
+the same as ‘add’, but without raising an Exception. ‘delete’ deletes
+this bond from the topology. An Exception is raised, if this bond
+wasn’t even in the topology to begin with. ‘optional_delete’ deletes
+bonds, but doesn’t raise an Exception.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Literal[“add”, “delete”, “optional”, “optional_delete”]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.Bond.atom1">
+<span class="sig-name descname"><span class="pre">atom1</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.Bond.atom1" title="Link to this definition">#</a></dt>
+<dd><p>The name of the first atom. Can be ‘CA’, ‘N’, or
+whatever (not limited to proteins). If it is int it can be any other
+atom of the topology (also belonging to a different residue).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.Bond.atom2">
+<span class="sig-name descname"><span class="pre">atom2</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.Bond.atom2" title="Link to this definition">#</a></dt>
+<dd><p>The name of the second atom. Can be ‘CA’, ‘N’, or
+whatever (not limited to proteins). If it is int it can be any other
+atom of the topology (also belonging to a different residue).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">atom1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#id0" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">atom2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#id1" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">resname</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#id2" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'add'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'delete'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'optional'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'optional_delete'</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id3" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CustomTopology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">new_residues</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology" title="Link to this definition">#</a></dt>
+<dd><p>Adds custom topology elements to a topology parsed by MDTraj.</p>
+<p>Postpones parsing the custom AAs until requested.</p>
+<dl>
+<dt>The custom_aminoacids dictionary follows these styleguides:</dt><dd><ul>
+<li><p>The keys can be str or tuple[str, str]</p></li>
+<li><p>If a key is str, it needs to be a 3-letter code (MET, ALA, GLY, …)</p></li>
+<li><dl>
+<dt>If a key is a tuple[str, str], the first str of the tuple is a common_str</dt><dd><p>(see the docstring for <cite>encodermap.TrajEnsemble</cite> to learn about common_str.
+This common_str can be used to apply custom topologies to an ensemble
+based on their common_str. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{(</span><span class="s2">&quot;CSR_mutant&quot;</span><span class="p">,</span> <span class="s2">&quot;CSR&quot;</span><span class="p">):</span> <span class="o">...</span><span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>A key can also affect only a single residue (not all resides called “CSR”).</dt><dd><p>For that, the 3-letter code of the residue needs to be postponed with
+a dash and the 1-based indexed resSeq of the residue:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;CSR-2&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>The value to a key can be None, which means this residue will not be</dt><dd><p>used for building a topology. Because EncoderMap raises Exceptions,
+when it encounters unknown residues (to make sure, you don’t forget to
+featurize some important residues), it will also raise Exceptions when
+the topology contains unknown solvents/solutes. If you run a simulation
+in water/methanol mixtures with the residue names SOL and MOH, EncoderMap
+will raise an Exception upon encountering MOH, so your custom topology
+should contain 1{“MOH”: None}` to include MOH.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>The value of a key can also be a tuple[str, Union[dict, None]]. In this</dt><dd><p>case, the first string should be the one-letter code of the residue or
+the residue most closely representing this residue. If you use
+phosphotyrosine (PTR) in your simulations and want to use it as a
+standard tyrosine residue, the custom topology should contain
+<cite>{“PTR”: (“Y”, None)}</cite></p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>If your residue is completely novel you need to define all possible</dt><dd><p>bonds, backbone and sidechain dihedrals yourself. For that, you want
+to provide a tuple[str, dict[str, Union[listr[str], list[int]]] type.
+This second level dict allows for the following keys:
+* bonds: For bonds between atoms. This key can contain a list[tuple[str, str]],</p>
+<blockquote>
+<div><p>which defines bonds in this residue. This dict defines a bond
+between N and CA in phosphothreonine.
+{“PTR”: (“Y”, {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“bonds”: [</dt><dd><p>(“N”, “CA”),</p>
+</dd>
+</dl>
+<p>],</p>
+</div></blockquote>
+<p>}}
+These strings can cotain + and - signs to denote bonds to
+previous or following residues. To connect the residues MET1 to
+TPO2 to ALA3, you want to have this dict:
+{“TPO”: (“T”, {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“bonds”: [</dt><dd><p>(“-C”, “N”),  # bond to MET1-C
+(“N”, “CA”),
+…
+(“C”, “+N”),  # bond to ALA2-N</p>
+</dd>
+</dl>
+<p>],</p>
+</div></blockquote>
+<p>}}
+For exotic bonds, one of the strings can also be int to
+connect to any 0-based indexed atom in your topology. You can connect
+the residues CYS2 and CYS20 wit a sulfide bride like so:
+{“CYS-2”: (“C”, {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“bonds”: [</dt><dd><p>(“S”, 321),  # connect to CYS20, the 321 is a placeholder</p>
+</dd>
+</dl>
+<p>],
+},</p>
+</div></blockquote>
+<dl>
+<dt>“CYS-20”: (“C”, {</dt><dd><dl class="simple">
+<dt>“bonds”: [</dt><dd><p>(20, “S”),  # connect to CYS2</p>
+</dd>
+</dl>
+<p>],
+},</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<ul>
+<li><dl>
+<dt>optional_bonds: This key accepts the same list[tuple] as ‘bonds’.</dt><dd><p>However, bonds will raise an Exception if a bond already exists.
+The above example with a disulfide bridge between CYS2 and CYS20
+will thus raise an exception. A better example is:
+{“CYS-2”: (“C”, {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“optional_bonds”: [</dt><dd><p>(“S”, 321),  # connect to CYS20, the 321 is a placeholder</p>
+</dd>
+</dl>
+<p>],
+},</p>
+</div></blockquote>
+<dl>
+<dt>“CYS-20”: (“C”, {</dt><dd><dl class="simple">
+<dt>“optional_bonds”: [</dt><dd><p>(20, “S”),  # connect to CYS2</p>
+</dd>
+</dl>
+<p>],
+},</p>
+</dd>
+</dl>
+<p>}</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>delete_bonds: This key accepts the same list[tuple] as ‘bonds’,</dt><dd><p>but will remove bonds. If a bond was marked for deletion, but
+does not exist in your topology, an Exception will be raised.
+To delete bonds, without raising an Exception, use:</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>optional_delete_bonds: This will delete bonds, if they are present</dt><dd><p>and won’t raise an Exception if no bond is present.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>PHI, PSI, OMEGA: These keys define the backbone torsions of this</dt><dd><p>residue. You can just provide a list[str] for these keys. But
+the str can contain + and - to use atoms in previous or following
+residues. Example:
+{</p>
+<blockquote>
+<div><dl>
+<dt>“CYS-2”: (</dt><dd><p>“C”,
+{</p>
+<blockquote>
+<div><p>“PHI”: [“-C”, “N”, “CA”, “C”],
+“PSI”: [“N”, “CA”, “C”, “+N”],
+“OMEGA”: [“CA”, “C”, “+N”, “+CA”],</p>
+</div></blockquote>
+<p>},</p>
+</dd>
+</dl>
+<p>),</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>not-PSI, not_OMEGA, not_PHI: Same as ‘PHI’, ‘PSI”, ‘OMEGA’, but</dt><dd><p>will remove these dihedrals from consideration. The vales of
+these keys do not matter. Example:
+{</p>
+<blockquote>
+<div><dl>
+<dt>“CYS-2”: (</dt><dd><p>“C”,
+{</p>
+<blockquote>
+<div><p>“PHI”: [“-C”, “N”, “CA”, “C”],
+“not_PSI”: [],  # value for not_* keys does not matter
+“not_OMEGA”: [],  # it just makes EncoderMap skip these dihedrals.</p>
+</div></blockquote>
+<p>},</p>
+</dd>
+</dl>
+<p>),</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>CHI1, …, CHI5: Finally, these keys define the atoms considered for</dt><dd><p>the sidechain angles. If you want to add extra sidechain dihedrals
+for phosphothreonine, you can do:
+{</p>
+<blockquote>
+<div><dl>
+<dt>“TPO”: (</dt><dd><p>“T”,
+{</p>
+<blockquote>
+<div><p>“CHI2”: [“CA”, “CB”, “OG1”, “P”],  # include phosphorus in sidechain angles
+“CHI3”: [“CB”, “OG1”, “P”, “OXT”],  # include the terminal axygen in sidechain angles</p>
+</div></blockquote>
+<p>},</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Aminoacids taken from https://www.swisssidechain.ch/</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># The provided .pdb file has only strange and unnatural aminoacids.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Its sequence is:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># TPO - PTR - ORN - OAS - 2AG - CSR</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># TPO: phosphothreonine</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># PTR: phosphotyrosine</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ORN: ornithine</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># OAS: o-acetylserine</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># 2AG: 2-allyl-glycine</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># CSR: selenocysteine</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># However, someone mis-named the 2AG residue to ALL</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Let&#39;s fix that with EncoderMap&#39;s CustomTopology</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">em</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;tests/data/unnatural_aminoacids.pdb&quot;</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">custom_aas</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;ALL&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>  <span class="c1"># makes EncoderMap treat 2-allyl-glycine as alanine</span>
+<span class="gp">... </span>    <span class="s2">&quot;OAS&quot;</span><span class="p">:</span> <span class="p">(</span>
+<span class="gp">... </span>        <span class="s2">&quot;S&quot;</span><span class="p">,</span>  <span class="c1"># OAS is 2-acetylserine</span>
+<span class="gp">... </span>        <span class="p">{</span>
+<span class="gp">... </span>            <span class="s2">&quot;CHI2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;CA&quot;</span><span class="p">,</span> <span class="s2">&quot;CB&quot;</span><span class="p">,</span> <span class="s2">&quot;OG&quot;</span><span class="p">,</span> <span class="s2">&quot;CD&quot;</span><span class="p">],</span>  <span class="c1"># this is a non-standard chi2 angle</span>
+<span class="gp">... </span>            <span class="s2">&quot;CHI3&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;CB&quot;</span><span class="p">,</span> <span class="s2">&quot;OG&quot;</span><span class="p">,</span> <span class="s2">&quot;CD&quot;</span><span class="p">,</span> <span class="s2">&quot;CE&quot;</span><span class="p">],</span>  <span class="c1"># this is a non-standard chi3 angle</span>
+<span class="gp">... </span>        <span class="p">},</span>
+<span class="gp">... </span>    <span class="p">),</span>
+<span class="gp">... </span>    <span class="s2">&quot;CSR&quot;</span><span class="p">:</span> <span class="p">(</span>  <span class="c1"># CSR is selenocysteine</span>
+<span class="gp">... </span>        <span class="s2">&quot;S&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="p">{</span>
+<span class="gp">... </span>            <span class="s2">&quot;bonds&quot;</span><span class="p">:</span> <span class="p">[</span>   <span class="c1"># we can manually define bonds for selenocysteine like so:</span>
+<span class="gp">... </span>                <span class="p">(</span><span class="s2">&quot;-C&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>      <span class="c1"># bond between previous carbon and nitrogen CSR</span>
+<span class="gp">... </span>                <span class="p">(</span><span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;CA&quot;</span><span class="p">),</span>
+<span class="gp">... </span>                <span class="p">(</span><span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;H1&quot;</span><span class="p">),</span>
+<span class="gp">... </span>                <span class="p">(</span><span class="s2">&quot;CA&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">),</span>
+<span class="gp">... </span>                <span class="p">(</span><span class="s2">&quot;CA&quot;</span><span class="p">,</span> <span class="s2">&quot;HA&quot;</span><span class="p">),</span>     <span class="c1"># this topology includes hydrogens</span>
+<span class="gp">... </span>                <span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;O&quot;</span><span class="p">),</span>
+<span class="gp">... </span>                <span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;OXT&quot;</span><span class="p">),</span>     <span class="c1"># As the C-terminal residue, we don&#39;t need to put (&quot;C&quot;, &quot;+N&quot;) here</span>
+<span class="gp">... </span>                <span class="p">(</span><span class="s2">&quot;CA&quot;</span><span class="p">,</span> <span class="s2">&quot;CB&quot;</span><span class="p">),</span>
+<span class="gp">... </span>                <span class="p">(</span><span class="s2">&quot;CB&quot;</span><span class="p">,</span> <span class="s2">&quot;HB1&quot;</span><span class="p">),</span>
+<span class="gp">... </span>                <span class="p">(</span><span class="s2">&quot;CB&quot;</span><span class="p">,</span> <span class="s2">&quot;HB2&quot;</span><span class="p">),</span>
+<span class="gp">... </span>                <span class="p">(</span><span class="s2">&quot;CB&quot;</span><span class="p">,</span> <span class="s2">&quot;SE&quot;</span><span class="p">),</span>
+<span class="gp">... </span>                <span class="p">(</span><span class="s2">&quot;SE&quot;</span><span class="p">,</span> <span class="s2">&quot;HE&quot;</span><span class="p">),</span>
+<span class="gp">... </span>            <span class="p">],</span>
+<span class="gp">... </span>            <span class="s2">&quot;CHI1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;CA&quot;</span><span class="p">,</span> <span class="s2">&quot;CB&quot;</span><span class="p">,</span> <span class="s2">&quot;SE&quot;</span><span class="p">],</span>  <span class="c1"># this is a non-standard chi1 angle</span>
+<span class="gp">... </span>        <span class="p">},</span>
+<span class="gp">... </span>    <span class="p">),</span>
+<span class="gp">... </span>    <span class="s2">&quot;TPO&quot;</span><span class="p">:</span> <span class="p">(</span>  <span class="c1"># TPO is phosphothreonine</span>
+<span class="gp">... </span>        <span class="s2">&quot;T&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="p">{</span>
+<span class="gp">... </span>            <span class="s2">&quot;CHI2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;CA&quot;</span><span class="p">,</span> <span class="s2">&quot;CB&quot;</span><span class="p">,</span> <span class="s2">&quot;OG1&quot;</span><span class="p">,</span> <span class="s2">&quot;P&quot;</span><span class="p">],</span>  <span class="c1"># a non-standard chi2 angle</span>
+<span class="gp">... </span>            <span class="s2">&quot;CHI3&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;CB&quot;</span><span class="p">,</span> <span class="s2">&quot;OG1&quot;</span><span class="p">,</span> <span class="s2">&quot;P&quot;</span><span class="p">,</span> <span class="s2">&quot;OXT&quot;</span><span class="p">],</span>  <span class="c1"># a non-standard chi3 angle</span>
+<span class="gp">... </span>        <span class="p">},</span>
+<span class="gp">... </span>    <span class="p">),</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># loading this will raise an Exception, because the bonds in CSR already exist</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span><span class="o">.</span><span class="n">load_custom_topology</span><span class="p">(</span><span class="n">custom_aas</span><span class="p">)</span>  
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">Exception</span>: <span class="n">Bond between ALL5-C and CSR6-N already exists. Consider using the key &#39;optional_bonds&#39; to not raise an Exception on already existing bonds.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># If we rename the &quot;bonds&quot; section in &quot;CSR&quot; to &quot;optional_bonds&quot; it will work</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">custom_aas</span><span class="p">[</span><span class="s2">&quot;CSR&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;optional_bonds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">custom_aas</span><span class="p">[</span><span class="s2">&quot;CSR&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;bonds&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span><span class="o">.</span><span class="n">load_custom_topology</span><span class="p">(</span><span class="n">custom_aas</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sidechains</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">SideChainDihedrals</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;SIDECHDIH CHI2  RESID  OAS:   4 CHAIN 0&quot;</span> <span class="ow">in</span> <span class="n">sidechains</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;SIDECHDIH CHI3  RESID  OAS:   4 CHAIN 0&quot;</span> <span class="ow">in</span> <span class="n">sidechains</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;SIDECHDIH CHI1  RESID  CSR:   6 CHAIN 0&quot;</span> <span class="ow">in</span> <span class="n">sidechains</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;SIDECHDIH CHI2  RESID  TPO:   1 CHAIN 0&quot;</span> <span class="ow">in</span> <span class="n">sidechains</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;SIDECHDIH CHI3  RESID  TPO:   1 CHAIN 0&quot;</span> <span class="ow">in</span> <span class="n">sidechains</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_residues</strong> (<a class="reference internal" href="#encodermap.trajinfo.trajinfo_utils.NewResidue" title="encodermap.trajinfo.trajinfo_utils.NewResidue"><em>NewResidue</em></a>)</p></li>
+<li><p><strong>traj</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../user_guide/singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.add_amino_acid_codes">
+<span class="sig-name descname"><span class="pre">add_amino_acid_codes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.add_amino_acid_codes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.add_amino_acid_codes" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.add_bonds">
+<span class="sig-name descname"><span class="pre">add_bonds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.add_bonds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.add_bonds" title="Link to this definition">#</a></dt>
+<dd><p>Adds and deletes bonds specified in the custom topology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The new topology.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>md.Topology</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.add_new_residue">
+<span class="sig-name descname"><span class="pre">add_new_residue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_residue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.add_new_residue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.add_new_residue" title="Link to this definition">#</a></dt>
+<dd><p>Adds an instance of <cite>NewResidue</cite> to the reisdues of this <cite>CustomTopology</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_residue</strong> (<a class="reference internal" href="#encodermap.trajinfo.trajinfo_utils.NewResidue" title="encodermap.trajinfo.trajinfo_utils.NewResidue"><em>NewResidue</em></a>) – An instance of <cite>NewResidue</cite>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.atom_sequence">
+<span class="sig-name descname"><span class="pre">atom_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.atom_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.atom_sequence" title="Link to this definition">#</a></dt>
+<dd><p>Returns either backbone or sidechain indices in a useful order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>type</strong> (<em>Literal</em><em>[</em><em>&quot;OMEGA&quot;</em><em>, </em><em>&quot;PHI&quot;</em><em>, </em><em>&quot;PSI&quot;</em><em>, </em><em>&quot;CHI1&quot;</em><em>, </em><em>&quot;CHI2&quot;</em><em>, </em><em>&quot;CHI3&quot;</em><em>, </em><em>&quot;CHI4&quot;</em><em>, </em><em>&quot;CHI5&quot;</em><em>]</em>) – The angle, that is looked for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing two numpy arrays:</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[np.ndarray, np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.backbone_sequence">
+<span class="sig-name descname"><span class="pre">backbone_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.backbone_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.backbone_sequence" title="Link to this definition">#</a></dt>
+<dd><p>Searches for a sequence along the backbone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>atom_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The names of the atoms. Can use +/- to
+mark atoms in previous or following residue.</p></li>
+<li><p><strong>type</strong> (<em>Literal</em><em>[</em><em>&quot;PHI&quot;</em><em>, </em><em>&quot;PSI&quot;</em><em>, </em><em>&quot;OMEGA&quot;</em><em>]</em>) – The type of the dihedral
+sequence.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The integer indices of the requested atoms.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.combine_chains">
+<span class="sig-name descname"><span class="pre">combine_chains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chain_id1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chain_id2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.combine_chains"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.combine_chains" title="Link to this definition">#</a></dt>
+<dd><p>Function to combine two chains into one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chain_id1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The 0-based index of chain 1.</p></li>
+<li><p><strong>chain_id2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The 0-based index of chain 2.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">custom_aas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.from_dict" title="Link to this definition">#</a></dt>
+<dd><p>Instantiate the class from a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>custom_aas</strong> (<em>CustomAAsDict</em>) – <p>Custom AAs defined by a dict with the following properties:
+The keys are the residue names encountered in this traj. The
+values to the keys can be one of three types:</p>
+<blockquote>
+<div><ul>
+<li><dl class="simple">
+<dt>None: if a key: None pair is supplied, this just adds the</dt><dd><p>residue to the recognized residues. Nothing will be done
+with it.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>str: If a key: str pair is supplied, it is expected that the</dt><dd><p>string matches one of the one-letter amino-acid codes.
+If your new residue is based on Lysine and you named it
+LYQ, you need to supply: {“LYQ”: “K”}</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>tuple[str, dict]: If your residue has nonstandard side-chain</dt><dd><p>angles (i.e. due to phosphorylation), you can supply a tuple
+of the one-letter amino-acid code and a dict which defines
+the sidechain angles like so:
+{“THR”: (“T”, {“CHI2”: [“CA”, “CB”, “CG”, “P”]})}
+In this example, the standard amino acid threonine was
+phosphorylated. The chi2 angle was added.
+If you want to add custom bonds you can add the “bond” key
+to the dict and give it either atom names or atom indices of
+other atoms like so:
+{“LYQ”: (“K”, {“bonds”: [(“N”, “CA”), (“N”, “H”), …], “CHI1”: [“N”, “CA”, “CB”, “CG”]}).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>tuple[str, str, dict]: In this case, the first string should</dt><dd><p>be the name of the amino-acid, the second string should
+be a common_str, that is in <cite>self.common_str</cite>. That way,
+the different topologies in this <cite>TrajEnsemble</cite> can dynamically
+use different custom_aas.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>traj</strong> (<a class="reference internal" href="../user_guide/singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.from_hdf5_file">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_hdf5_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.from_hdf5_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.from_hdf5_file" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><em>Path</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
+<li><p><strong>traj</strong> (<a class="reference internal" href="../user_guide/singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.from_json">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.from_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.from_json" title="Link to this definition">#</a></dt>
+<dd><p>The same as <cite>from_dict</cite>, but using a json str.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>json_str</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
+<li><p><strong>traj</strong> (<a class="reference internal" href="../user_guide/singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.from_yaml">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_yaml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.from_yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.from_yaml" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><em>Path</em></a>)</p></li>
+<li><p><strong>traj</strong> (<a class="reference internal" href="../user_guide/singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.get_single_residue_atom_ids">
+<span class="sig-name descname"><span class="pre">get_single_residue_atom_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_error_ok</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.get_single_residue_atom_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.get_single_residue_atom_ids" title="Link to this definition">#</a></dt>
+<dd><p>Gives the 0-based atom ids of a single residue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>atom_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The names of the atoms. ie. [‘N’ ,’CA’, ‘C’, ‘+N’]</p></li>
+<li><p><strong>r</strong> (<a class="reference internal" href="#encodermap.trajinfo.trajinfo_utils.NewResidue" title="encodermap.trajinfo.trajinfo_utils.NewResidue"><em>NewResidue</em></a>) – An instance of <cite>NewResidue</cite>.</p></li>
+<li><p><strong>key_error_ok</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether a key error when querying <cite>self._atom_dict</cite>
+raises an error or returns an empty np.ndarray.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An integer array with the ids of the requested atoms.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_chi1">
+<span class="sig-name descname"><span class="pre">indices_chi1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.indices_chi1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_chi1" title="Link to this definition">#</a></dt>
+<dd><p>Returns the requested indices as a (n_dihedrals, 4)-shaped numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_chi2">
+<span class="sig-name descname"><span class="pre">indices_chi2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.indices_chi2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_chi2" title="Link to this definition">#</a></dt>
+<dd><p>Returns the requested indices as a (n_dihedrals, 4)-shaped numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_chi3">
+<span class="sig-name descname"><span class="pre">indices_chi3</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.indices_chi3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_chi3" title="Link to this definition">#</a></dt>
+<dd><p>Returns the requested indices as a (n_dihedrals, 4)-shaped numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_chi4">
+<span class="sig-name descname"><span class="pre">indices_chi4</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.indices_chi4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_chi4" title="Link to this definition">#</a></dt>
+<dd><p>Returns the requested indices as a (n_dihedrals, 4)-shaped numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_chi5">
+<span class="sig-name descname"><span class="pre">indices_chi5</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.indices_chi5"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_chi5" title="Link to this definition">#</a></dt>
+<dd><p>Returns the requested indices as a (n_dihedrals, 4)-shaped numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_omega">
+<span class="sig-name descname"><span class="pre">indices_omega</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.indices_omega"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_omega" title="Link to this definition">#</a></dt>
+<dd><p>Returns the requested indices as a (n_dihedrals, 4)-shaped numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_phi">
+<span class="sig-name descname"><span class="pre">indices_phi</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.indices_phi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_phi" title="Link to this definition">#</a></dt>
+<dd><p>Returns the requested indices as a (n_dihedrals, 4)-shaped numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_psi">
+<span class="sig-name descname"><span class="pre">indices_psi</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.indices_psi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_psi" title="Link to this definition">#</a></dt>
+<dd><p>Returns the requested indices as a (n_dihedrals, 4)-shaped numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.new_residues">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">new_residues</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#encodermap.trajinfo.trajinfo_utils.NewResidue" title="encodermap.trajinfo.trajinfo_utils.NewResidue"><span class="pre">NewResidue</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.new_residues" title="Link to this definition">#</a></dt>
+<dd><p>A list of all new residues.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference internal" href="#encodermap.trajinfo.trajinfo_utils.NewResidue" title="encodermap.trajinfo.trajinfo_utils.NewResidue">NewResidue</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.sidechain_indices_by_residue">
+<span class="sig-name descname"><span class="pre">sidechain_indices_by_residue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.sidechain_indices_by_residue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.sidechain_indices_by_residue" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.13)"><em>Generator</em></a>[<em>Residue</em>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.sidechain_sequence">
+<span class="sig-name descname"><span class="pre">sidechain_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.sidechain_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.sidechain_sequence" title="Link to this definition">#</a></dt>
+<dd><p>Searches for a sequence along the sidechains.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>atom_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The names of the atoms. Can use +/- to
+mark atoms in previous or following residue.</p></li>
+<li><p><strong>(</strong><strong>Literal</strong><strong>[</strong><strong>&quot;CHI1&quot;</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.13)"><em>type</em></a>) – The type of the dihedral
+sequence.</p></li>
+<li><p><strong>&quot;CHI2&quot;</strong> – The type of the dihedral
+sequence.</p></li>
+<li><p><strong>&quot;CHI3&quot;</strong> – The type of the dihedral
+sequence.</p></li>
+<li><p><strong>&quot;CHI4&quot;</strong> – The type of the dihedral
+sequence.</p></li>
+<li><p><strong>&quot;CHI5&quot;</strong><strong>]</strong> – The type of the dihedral
+sequence.</p></li>
+<li><p><strong>top</strong> (<em>Optional</em><em>[</em><em>md.Topology</em><em>]</em>) – Can be used to overwrite the toplogy in
+self.traj.</p></li>
+<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'CHI1'</em><em>, </em><em>'CHI2'</em><em>, </em><em>'CHI3'</em><em>, </em><em>'CHI4'</em><em>, </em><em>'CHI5'</em><em>]</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The integer indices of the requested atoms.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.to_dict" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>], None | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, None] | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a>[‘bonds’, ‘optional_bonds’, ‘delete_bonds’, ‘optional_delete_bonds’, ‘PHI’, ‘PSI’, ‘OMEGA’, ‘not_PHI’, ‘not_PSI’, ‘not_OMEGA’, ‘CHI1’, ‘CHI2’, ‘CHI3’, ‘CHI4’, ‘CHI5’], list[str] | list[tuple[str | int, str | int]]]]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.to_hdf_file">
+<span class="sig-name descname"><span class="pre">to_hdf_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.to_hdf_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.to_hdf_file" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><em>Path</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.to_json" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.to_yaml">
+<span class="sig-name descname"><span class="pre">to_yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#CustomTopology.to_yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.to_yaml" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.CustomTopology.top">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">top</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Topology</span></em><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.top" title="Link to this definition">#</a></dt>
+<dd><p>The fixed topology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>md.Topology</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.Dihedral">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Dihedral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom4</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#Dihedral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.Dihedral" title="Link to this definition">#</a></dt>
+<dd><p>Dataclass that stores information about a dihedral of 4 atoms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>resname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
+<li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'OMEGA'</em><em>, </em><em>'PHI'</em><em>, </em><em>'PSI'</em><em>, </em><em>'CHI1'</em><em>, </em><em>'CHI2'</em><em>, </em><em>'CHI3'</em><em>, </em><em>'CHI4'</em><em>, </em><em>'CHI5'</em><em>]</em>)</p></li>
+<li><p><strong>atom1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>atom2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>atom3</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>atom4</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>delete</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.Dihedral.resname">
+<span class="sig-name descname"><span class="pre">resname</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.Dihedral.resname" title="Link to this definition">#</a></dt>
+<dd><p>The name of the residue, this bond belongs to. Although
+bonds belong to residues, they can also have <cite>atom1</cite> or <cite>atom2</cite>
+belonging to a different residue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.Dihedral.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.Dihedral.type" title="Link to this definition">#</a></dt>
+<dd><p>Defines what type of dihedral this dihedral is. Mainly used to
+discern different these types of dihedrals.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Literal[“OMEGA”, “PHI”, “PSI”, “CHI1”, “CHI2”, “CHI3”, “CHI4”, “CHI5”]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.Dihedral.atom1">
+<span class="sig-name descname"><span class="pre">atom1</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.Dihedral.atom1" title="Link to this definition">#</a></dt>
+<dd><p>The name of the first atom. Can be ‘CA’, ‘N’, or
+whatever (not limited to proteins). If it is <cite>int</cite> it can be any other
+atom of the topology (also belonging to a different residue).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.Dihedral.atom2">
+<span class="sig-name descname"><span class="pre">atom2</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.Dihedral.atom2" title="Link to this definition">#</a></dt>
+<dd><p>The name of the second atom. Can be ‘CA’, ‘N’, or
+whatever (not limited to proteins). If it is <cite>int</cite> it can be any other
+atom of the topology (also belonging to a different residue).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.Dihedral.atom3">
+<span class="sig-name descname"><span class="pre">atom3</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.Dihedral.atom3" title="Link to this definition">#</a></dt>
+<dd><p>The name of the third atom. Can be ‘CA’, ‘N’, or
+whatever (not limited to proteins). If it is <cite>int</cite> it can be any other
+atom of the topology (also belonging to a different residue).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.Dihedral.atom4">
+<span class="sig-name descname"><span class="pre">atom4</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.Dihedral.atom4" title="Link to this definition">#</a></dt>
+<dd><p>The name of the fourth atom. Can be ‘CA’, ‘N’, or
+whatever (not limited to proteins). If it is <cite>int</cite> it can be any other
+atom of the topology (also belonging to a different residue).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.Dihedral.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.Dihedral.delete" title="Link to this definition">#</a></dt>
+<dd><p>Whether this dihedral has to be deleted or not. If
+<cite>delete</cite> is set to True, this dihedral won’t produce output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">atom1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id4" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">atom2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id5" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">atom3</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id6" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">atom4</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id7" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">delete</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#id8" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.Dihedral.new_atoms_def">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">new_atoms_def</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.Dihedral.new_atoms_def" title="Link to this definition">#</a></dt>
+<dd><p>A list of str, that describes the dihedral’s atoms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">resname</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#id9" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'OMEGA'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'PHI'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'PSI'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'CHI1'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'CHI2'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'CHI3'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'CHI4'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'CHI5'</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id10" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.NewResidue">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NewResidue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resSeq=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">one_letter_code=''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bonds=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dihedrals=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">common_str=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#NewResidue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.NewResidue" title="Link to this definition">#</a></dt>
+<dd><p>Dataclass that stores information about a new (nonstandard) residue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
+<li><p><strong>idx</strong> (<em>None</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
+<li><p><strong>resSeq</strong> (<em>None</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
+<li><p><strong>one_letter_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
+<li><p><strong>topology</strong> (<em>Topology</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>ignore</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>bonds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference internal" href="#encodermap.trajinfo.trajinfo_utils.Bond" title="encodermap.trajinfo.trajinfo_utils.Bond"><em>Bond</em></a><em>]</em>)</p></li>
+<li><p><strong>dihedrals</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference internal" href="#encodermap.trajinfo.trajinfo_utils.Dihedral" title="encodermap.trajinfo.trajinfo_utils.Dihedral"><em>Dihedral</em></a><em>]</em>)</p></li>
+<li><p><strong>common_str</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.NewResidue.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.name" title="Link to this definition">#</a></dt>
+<dd><p>The 3-letter code name of the new residue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.NewResidue.idx">
+<span class="sig-name descname"><span class="pre">idx</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.idx" title="Link to this definition">#</a></dt>
+<dd><p>The 0-based unique index of the residue. The
+<cite>idx</cite> index is always unique (i.e., if multiple chains are present,
+this residue can only appear in one chain).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[None, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.NewResidue.resSeq">
+<span class="sig-name descname"><span class="pre">resSeq</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.resSeq" title="Link to this definition">#</a></dt>
+<dd><p>The 1-based non-unique index of the residue.
+resSeqs can appear multiple times, but in separate chains. Each
+residue chain can have a MET1 residue. Either resSeq or idx must
+be defined. Not both can be None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[None, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.NewResidue.one_letter_code">
+<span class="sig-name descname"><span class="pre">one_letter_code</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.one_letter_code" title="Link to this definition">#</a></dt>
+<dd><p>The one letter code of this new resiude.
+Can be set to a known one letter code, so that this new residue
+mimics that one letter code residue’s behavior. Can also be ‘’
+(empty string), if you don’t want to bother with this definition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.NewResidue.ignore">
+<span class="sig-name descname"><span class="pre">ignore</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.ignore" title="Link to this definition">#</a></dt>
+<dd><p>Whether to ignore the features of this residue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.NewResidue.bonds">
+<span class="sig-name descname"><span class="pre">bonds</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.bonds" title="Link to this definition">#</a></dt>
+<dd><p>A list of <cite>Bond</cite> instances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference internal" href="#encodermap.trajinfo.trajinfo_utils.Bond" title="encodermap.trajinfo.trajinfo_utils.Bond">Bond</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.NewResidue.dihedrals">
+<span class="sig-name descname"><span class="pre">dihedrals</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.dihedrals" title="Link to this definition">#</a></dt>
+<dd><p>A list of <cite>Dihedral</cite> instances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference internal" href="#encodermap.trajinfo.trajinfo_utils.Dihedral" title="encodermap.trajinfo.trajinfo_utils.Dihedral">Dihedral</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.NewResidue.common_str">
+<span class="sig-name descname"><span class="pre">common_str</span></span><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.common_str" title="Link to this definition">#</a></dt>
+<dd><p>The common_str of the (sub)set of
+<cite>SingleTraj`s that this new dihedral should apply to. Only
+applies to `SingleTraj`s with the same `common_str</cite>. Can be
+None and thus applies to all trajs in the <cite>TrajEnsmeble</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.NewResidue.add_bond">
+<span class="sig-name descname"><span class="pre">add_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bond</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#NewResidue.add_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.add_bond" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bond</strong> (<a class="reference internal" href="#encodermap.trajinfo.trajinfo_utils.Bond" title="encodermap.trajinfo.trajinfo_utils.Bond"><em>Bond</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.NewResidue.add_dihedral">
+<span class="sig-name descname"><span class="pre">add_dihedral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dihedral</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#NewResidue.add_dihedral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.add_dihedral" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dihedral</strong> (<a class="reference internal" href="#encodermap.trajinfo.trajinfo_utils.Dihedral" title="encodermap.trajinfo.trajinfo_utils.Dihedral"><em>Dihedral</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.NewResidue.as_amino_acid_dict_entry">
+<span class="sig-name descname"><span class="pre">as_amino_acid_dict_entry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#NewResidue.as_amino_acid_dict_entry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.as_amino_acid_dict_entry" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a> | None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">bonds</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#encodermap.trajinfo.trajinfo_utils.Bond" title="encodermap.trajinfo.trajinfo_utils.Bond"><span class="pre">Bond</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id11" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">common_str</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id12" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">dihedrals</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#encodermap.trajinfo.trajinfo_utils.Dihedral" title="encodermap.trajinfo.trajinfo_utils.Dihedral"><span class="pre">Dihedral</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id13" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.NewResidue.get_dihedral_by_type">
+<span class="sig-name descname"><span class="pre">get_dihedral_by_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#NewResidue.get_dihedral_by_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.get_dihedral_by_type" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#encodermap.trajinfo.trajinfo_utils.Dihedral" title="encodermap.trajinfo.trajinfo_utils.Dihedral"><em>Dihedral</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">idx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id14" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">ignore</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#id15" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id16">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#id16" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id17">
+<span class="sig-name descname"><span class="pre">one_letter_code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#id17" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.NewResidue.parse_bonds_and_dihedrals">
+<span class="sig-name descname"><span class="pre">parse_bonds_and_dihedrals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bonds_and_dihedrals</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#NewResidue.parse_bonds_and_dihedrals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.parse_bonds_and_dihedrals" title="Link to this definition">#</a></dt>
+<dd><p>Parses a dict of bonds and dihedrals. The format of this can be derived
+from the format of the <cite>CustomTopology</cite> input dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bonds_and_dihedrals</strong> (<em>DihedralOrBondDict</em>) – A dict defining bonds
+and dihedrals of this newResidue.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id18">
+<span class="sig-name descname"><span class="pre">resSeq</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id18" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.NewResidue.topology">
+<span class="sig-name descname"><span class="pre">topology</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Topology</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.topology" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.flatten">
+<span class="sig-name descname"><span class="pre">flatten</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">container</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#flatten"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.flatten" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.load_CV_from_string_or_path">
+<span class="sig-name descname"><span class="pre">load_CV_from_string_or_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_or_feature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#load_CV_from_string_or_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.load_CV_from_string_or_path" title="Link to this definition">#</a></dt>
+<dd><p>Loads CV data from a string. That string can either identify a features,
+or point to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_or_feature</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The file or feature to load. If ‘all’ is
+provided, all “standard” features are loaded. But a feature name
+like ‘sidechain_angle’ can alsop be provided. If a file with
+the .txt or .npy extension is provided, the data in that file is used.</p></li>
+<li><p><strong>traj</strong> (<a class="reference internal" href="../user_guide/singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a>) – The trajectory, that is used to load the features.</p></li>
+<li><p><strong>attr_name</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><em>optional</em>) – The name under which the CV
+should be found in the class. Is needed, if a raw numpy array is
+passed, otherwise the name will be generated from the filename
+(if data == str), the DataArray.name (if data == xarray.DataArray),
+or the feature name.</p></li>
+<li><p><strong>cols</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>, </em><em>None</em><em>]</em><em>, </em><em>optional</em>) – A list specifying the columns to
+use for the high-dimensional data. If your highD data contains
+(x,y,z,…)-errors or has an enumeration column at col=0 this can
+be used to remove this unwanted data.</p></li>
+<li><p><strong>deg</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the provided data is in radians (False)
+or degree (True). Can also be None for non-angular data.</p></li>
+<li><p><strong>labels</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>None</em><em>]</em><em>, </em><em>optional</em>) – If you want to label the data
+you provided pass a list of str. If set to None, the features in this
+dimension will be labeled as
+<cite>[f”{attr_name.upper()} FEATURE {i}” for i in range(self.n_frames)]</cite>.
+If a str is provided, the features will be labeled as
+<cite>[f”{attr_name.upper()} {label.upper()} {i}” for i in range(self.n_frames)]</cite>.
+If a list[str] is provided, it needs to have the same length as
+the traj has frames. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An xarray dataset.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>xr.Dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.load_CVs_ensemble">
+<span class="sig-name descname"><span class="pre">load_CVs_ensemble</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#load_CVs_ensemble"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.load_CVs_ensemble" title="Link to this definition">#</a></dt>
+<dd><p>Loads CVs for a trajectory ensemble. This time with generic feature names
+so different topologies are aligned and can be treated separately. Loading
+CVs with ensemble=True will always delete existing CVs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajs</strong> (<a class="reference internal" href="../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><em>TrajEnsemble</em></a>) – The trajectory ensemble to load the data for.</p></li>
+<li><p><strong>data</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><em>Literal</em><em>[</em><em>&quot;all'</em><em>]</em>) – The CV to
+load. When a numpy array is provided, it needs to have a shape
+matching <cite>n_frames</cite>. The data is distributed to the trajs.
+When a list of files is provided, <cite>len(data)</cite> needs to match
+<cite>n_trajs</cite>. The first file will be loaded by the first traj
+(based on the traj’s <cite>traj_num</cite>) and so on. If a list of
+<cite>np.ndarray</cite> is provided, the first array will be assigned to
+the first traj (based on the traj’s <cite>traj_num</cite>). If None is provided,
+the argument <cite>directory</cite> will be used to construct a str like:
+fname = directory + traj.basename + ‘_’ + attr_name. If there are
+.txt or .npy files matching that string in the <cite>directory</cite>,
+the CVs will be loaded from these files to the corresponding
+trajs. Defaults to None.</p></li>
+<li><p><strong>periodic</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether distance, angle, dihedral calculations should
+obey the minimum image convention.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.load_CVs_ensembletraj">
+<span class="sig-name descname"><span class="pre">load_CVs_ensembletraj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensemble</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#load_CVs_ensembletraj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.load_CVs_ensembletraj" title="Link to this definition">#</a></dt>
+<dd><p>Loads CVs for a trajectory ensemble.</p>
+<dl class="simple">
+<dt>CVs can be loaded from a multitude of sources. The argument <cite>data</cite> can be:</dt><dd><ul class="simple">
+<li><p>np.ndarray: Use a numpy array as a feature.</p></li>
+<li><dl class="simple">
+<dt>str | Path: You can point to .txt or .npy files and load the features</dt><dd><p>from these files. In this case, the <cite>cols</cite> argument can be
+used to only use a subset of columns in these files.
+You can also point to a single directory in which case the basename
+of the trajectories will be used to look for .npy and .txt files.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>str: Some strings like “central_dihedrals” are recognized out-of-the-box.</dt><dd><p>You can also provide “all” to load all dihedrals used in an
+<cite>encodermap.AngleDihedralCartesianEncoderMap</cite>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Feature: You can provide an <cite>encodermap.loading.features</cite> Feature. The</dt><dd><p>CVs will be loaded by creating a featurizer, adding this feature, and
+obtaining the output.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Featurizer: You can also directly provide a featurizer with multiple</dt><dd><p>features.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>xr.DataArray: You can also provide a xarray.DataArray, which will be</dt><dd><p>appended to the existing CVs.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>xr.Dataset: If you provide a xarray.Dataset, you will overwrite all</dt><dd><p>currently loaded CVs.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajs</strong> (<a class="reference internal" href="../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><em>TrajEnsemble</em></a>) – The trajectory ensemble to load the data for.</p></li>
+<li><p><strong>data</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>, </em><em>np.ndarray</em><em>, </em><em>'all'</em><em>, </em><em>xr.Dataset</em><em>]</em>) – The CV to
+load. When a numpy array is provided, it needs to have a shape
+matching <cite>n_frames</cite>. The data is distributed to the trajs.
+When a list of files is provided, <cite>len(data)</cite> needs to match
+<cite>n_trajs</cite>. The first file will be loaded by the first traj
+(based on the traj’s <cite>traj_num</cite>) and so on. If a list of
+<cite>np.ndarray</cite> is provided, the first array will be assigned to
+the first traj (based on the traj’s <cite>traj_num</cite>). If None is provided,
+the argument <cite>directory</cite> will be used to construct a str like:
+fname = directory + traj.basename + ‘_’ + attr_name. If there are
+.txt or .npy files matching that string in the <cite>directory</cite>,
+the CVs will be loaded from these files to the corresponding
+trajs. Defaults to None.</p></li>
+<li><p><strong>attr_name</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The name under which the CV should
+be found in the class. Choose whatever you like. <cite>highd</cite>, <cite>lowd</cite>,
+<cite>dists</cite>, etc. The CV can then be accessed via dot-notation:
+<cite>trajs.attr_name</cite>. Defaults to None, in which case, the argument
+<cite>data</cite> should point to existing files and the <cite>attr_name</cite> will
+be extracted from these files.</p></li>
+<li><p><strong>cols</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>]</em>) – <p>A list of integers indexing the columns
+of the data to be loaded. This is useful if a file contains
+columns which are not features (i.e. an indexer or the error of
+the features. eg:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span>   <span class="n">f1</span>    <span class="n">f2</span>    <span class="n">f1_err</span>    <span class="n">f2_err</span>
+<span class="mi">0</span>    <span class="mf">1.0</span>   <span class="mf">2.0</span>   <span class="mf">0.1</span>       <span class="mf">0.1</span>
+<span class="mi">1</span>    <span class="mf">2.5</span>   <span class="mf">1.2</span>   <span class="mf">0.11</span>      <span class="mf">0.52</span>
+</pre></div>
+</div>
+<p>In that case, you would want to supply <cite>cols=[1, 2]</cite> to the <cite>cols</cite>
+argument. If None all columns are loaded. Defaults to None.</p>
+</p></li>
+<li><p><strong>deg</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>]</em>) – Whether to return angular CVs using degrees.
+If None or False, CVs will be in radian. Defaults to None.</p></li>
+<li><p><strong>labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a>) – A list containing the labels for the dimensions of
+the data. If you provide a <cite>np.ndarray</cite> with shape (n_trajs,
+n_frames, n_feat), this list needs to be of len(n_feat)
+Defaults to None.</p></li>
+<li><p><strong>directory</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – If this argument is provided, the
+directory will be searched for <code class="docutils literal notranslate"><span class="pre">.txt</span></code> or <code class="docutils literal notranslate"><span class="pre">.npy</span></code> files which
+have the same names as the trajectories have basenames. The
+CVs will then be loaded from these files.</p></li>
+<li><p><strong>ensemble</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the trajs in this class belong to an ensemble.
+This implies that they contain either the same topology or are
+very similar (think wt, and mutant). Setting this option True will
+try to match the CVs of the trajs onto the same dataset.
+If a VAL residue has been replaced by LYS in the mutant,
+the number of sidechain dihedrals will increase. The CVs of the
+trajs with VAL will thus contain some NaN values. Defaults to False.</p></li>
+<li><p><strong>override</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to override CVs with the same name as <cite>attr_name</cite>.</p></li>
+<li><p><strong>periodic</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.load_CVs_from_dir">
+<span class="sig-name descname"><span class="pre">load_CVs_from_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#load_CVs_from_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.load_CVs_from_dir" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajs</strong> (<a class="reference internal" href="../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><em>TrajEnsemble</em></a>)</p></li>
+<li><p><strong>data</strong> (<em>Path</em>)</p></li>
+<li><p><strong>attr_name</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>)</p></li>
+<li><p><strong>cols</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>deg</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.load_CVs_singletraj">
+<span class="sig-name descname"><span class="pre">load_CVs_singletraj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#load_CVs_singletraj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.load_CVs_singletraj" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><em>Path</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a><em> | </em><a class="reference internal" href="../user_guide/featurization.html#encodermap.loading.features.Feature" title="encodermap.loading.features.Feature"><em>Feature</em></a><em> | </em><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2025.4.1.dev0)"><em>Dataset</em></a><em> | </em><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2025.4.1.dev0)"><em>DataArray</em></a><em> | </em><em>SingleTrajFeaturizer</em><em> | </em><a class="reference internal" href="encodermap.loading.html#encodermap.loading.featurizer.DaskFeaturizer" title="encodermap.loading.featurizer.DaskFeaturizer"><em>DaskFeaturizer</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'all'</em><em>] </em><em>| </em><em>~typing.Literal</em><em>[</em><em>'full'</em><em>] </em><em>| </em><em>~encodermap.loading.features.AllCartesians</em><em> | </em><em>~encodermap.loading.features.AllBondDistances</em><em> | </em><em>~encodermap.loading.features.CentralCartesians</em><em> | </em><em>~encodermap.loading.features.CentralBondDistances</em><em> | </em><em>~encodermap.loading.features.CentralAngles</em><em> | </em><em>~encodermap.loading.features.CentralDihedrals</em><em> | </em><em>~encodermap.loading.features.SideChainCartesians</em><em> | </em><em>~encodermap.loading.features.SideChainBondDistances</em><em> | </em><em>~encodermap.loading.features.SideChainAngles</em><em> | </em><em>~encodermap.loading.features.SideChainDihedrals</em><em> | </em><em>~encodermap.loading.features.CustomFeature</em><em> | </em><em>~encodermap.loading.features.SelectionFeature</em><em> | </em><em>~encodermap.loading.features.AngleFeature</em><em> | </em><em>~encodermap.loading.features.DihedralFeature</em><em> | </em><em>~encodermap.loading.features.DistanceFeature</em><em> | </em><em>~encodermap.loading.features.AlignFeature</em><em> | </em><em>~encodermap.loading.features.InverseDistanceFeature</em><em> | </em><em>~encodermap.loading.features.ContactFeature</em><em> | </em><em>~encodermap.loading.features.BackboneTorsionFeature</em><em> | </em><em>~encodermap.loading.features.ResidueMinDistanceFeature</em><em> | </em><em>~encodermap.loading.features.GroupCOMFeature</em><em> | </em><em>~encodermap.loading.features.ResidueCOMFeature</em><em> | </em><em>~encodermap.loading.features.SideChainTorsions</em><em> | </em><em>~encodermap.loading.features.MinRmsdFeature</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>traj</strong> (<a class="reference internal" href="../user_guide/singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a>)</p></li>
+<li><p><strong>attr_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>cols</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>deg</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>periodic</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2025.4.1.dev0)"><em>Dataset</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.np_to_xr">
+<span class="sig-name descname"><span class="pre">np_to_xr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#np_to_xr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.np_to_xr" title="Link to this definition">#</a></dt>
+<dd><p>Converts a numpy.ndarray to a xarray.DataArray.</p>
+<p>Can use some additional labels and attributes to customize the DataArray.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>np.ndarray</em>) – The data to put into the xarray.DataArray. It is
+assumed that this array is of shape (n_frames, n_features), where
+n_frames is the number of frames in <cite>traj</cite> and n_features can be
+any positive integer.</p></li>
+<li><p><strong>traj</strong> (<a class="reference internal" href="../user_guide/singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a>) – An instance of <cite>SingleTraj</cite>.</p></li>
+<li><p><strong>attr_name</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The name of the feature, that will be used
+to identify this feature (e.g. ‘dihedral_angles’, ‘my_distance’).
+Can be completely custom. If None is provided, the feature will be
+called ‘FEATURE_{i}’, where i is a 0-based index of unnamed features.
+Defaults to None.</p></li>
+<li><p><strong>deg</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>]</em>) – When True, the input is assumed to use degree.
+When False, the input is assumed in radians. This can be important
+if you want to combine features (that are not allowed for angle
+features with different units). If None, the input is assumed to be
+not angular (distances, absolute positions). Defaults to None.</p></li>
+<li><p><strong>labels</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>]</em>) – A list of str, which contain labels for the
+feature. If provided needs to be of <cite>len(labels) == data.shape[1]</cite>.
+If None is provided, the labels will be ‘… FEATURE 0’, ‘… FEATURE 1’,
+…, ‘… FEATURE {n_frames}’.</p></li>
+<li><p><strong>filename</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Path</em><em>]</em><em>]</em>) – If the data is loaded from a file,
+and <cite>attr_name</cite> and <cite>labels</cite> are both None, then they will use
+the filename.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The DataArray.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>xr.DataArray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.trajinfo.trajinfo_utils.trajs_combine_attrs">
+<span class="sig-name descname"><span class="pre">trajs_combine_attrs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/trajinfo_utils.html#trajs_combine_attrs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.trajinfo_utils.trajs_combine_attrs" title="Link to this definition">#</a></dt>
+<dd><p>Used for combining attributes and checking, whether CVs stay in the same unit system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Any</em><em>]</em><em>]</em>) – A sequence of dicts to combine.</p></li>
+<li><p><strong>context</strong> (<em>Optional</em><em>[</em><em>xr.Context</em><em>]</em>) – An xarray.Context object.
+Currently not used in the function, but xarray passes it nonetheless</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The combined dict.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">trajinfo.info_single</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.Capturing"><code class="docutils literal notranslate"><span class="pre">Capturing</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.MixedUpInputs"><code class="docutils literal notranslate"><span class="pre">MixedUpInputs</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTrajFsel"><code class="docutils literal notranslate"><span class="pre">SingleTrajFsel</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-encodermap.trajinfo.trajinfo_utils">trajinfo.trajinfo_utils</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.Bond"><code class="docutils literal notranslate"><span class="pre">Bond</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.Bond.resname"><code class="docutils literal notranslate"><span class="pre">resname</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.Bond.type"><code class="docutils literal notranslate"><span class="pre">type</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.Bond.atom1"><code class="docutils literal notranslate"><span class="pre">atom1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.Bond.atom2"><code class="docutils literal notranslate"><span class="pre">atom2</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id0"><code class="docutils literal notranslate"><span class="pre">atom1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><code class="docutils literal notranslate"><span class="pre">atom2</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><code class="docutils literal notranslate"><span class="pre">resname</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><code class="docutils literal notranslate"><span class="pre">type</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology"><code class="docutils literal notranslate"><span class="pre">CustomTopology</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.add_amino_acid_codes"><code class="docutils literal notranslate"><span class="pre">add_amino_acid_codes</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.add_bonds"><code class="docutils literal notranslate"><span class="pre">add_bonds</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.add_new_residue"><code class="docutils literal notranslate"><span class="pre">add_new_residue</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.atom_sequence"><code class="docutils literal notranslate"><span class="pre">atom_sequence</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.backbone_sequence"><code class="docutils literal notranslate"><span class="pre">backbone_sequence</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.combine_chains"><code class="docutils literal notranslate"><span class="pre">combine_chains</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.from_hdf5_file"><code class="docutils literal notranslate"><span class="pre">from_hdf5_file</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.from_json"><code class="docutils literal notranslate"><span class="pre">from_json</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.from_yaml"><code class="docutils literal notranslate"><span class="pre">from_yaml</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.get_single_residue_atom_ids"><code class="docutils literal notranslate"><span class="pre">get_single_residue_atom_ids</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_chi1"><code class="docutils literal notranslate"><span class="pre">indices_chi1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_chi2"><code class="docutils literal notranslate"><span class="pre">indices_chi2</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_chi3"><code class="docutils literal notranslate"><span class="pre">indices_chi3</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_chi4"><code class="docutils literal notranslate"><span class="pre">indices_chi4</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_chi5"><code class="docutils literal notranslate"><span class="pre">indices_chi5</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_omega"><code class="docutils literal notranslate"><span class="pre">indices_omega</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_phi"><code class="docutils literal notranslate"><span class="pre">indices_phi</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.indices_psi"><code class="docutils literal notranslate"><span class="pre">indices_psi</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.new_residues"><code class="docutils literal notranslate"><span class="pre">new_residues</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.sidechain_indices_by_residue"><code class="docutils literal notranslate"><span class="pre">sidechain_indices_by_residue</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.sidechain_sequence"><code class="docutils literal notranslate"><span class="pre">sidechain_sequence</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.to_hdf_file"><code class="docutils literal notranslate"><span class="pre">to_hdf_file</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.to_json"><code class="docutils literal notranslate"><span class="pre">to_json</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.to_yaml"><code class="docutils literal notranslate"><span class="pre">to_yaml</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.CustomTopology.top"><code class="docutils literal notranslate"><span class="pre">top</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.Dihedral"><code class="docutils literal notranslate"><span class="pre">Dihedral</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.Dihedral.resname"><code class="docutils literal notranslate"><span class="pre">resname</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.Dihedral.type"><code class="docutils literal notranslate"><span class="pre">type</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.Dihedral.atom1"><code class="docutils literal notranslate"><span class="pre">atom1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.Dihedral.atom2"><code class="docutils literal notranslate"><span class="pre">atom2</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.Dihedral.atom3"><code class="docutils literal notranslate"><span class="pre">atom3</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.Dihedral.atom4"><code class="docutils literal notranslate"><span class="pre">atom4</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.Dihedral.delete"><code class="docutils literal notranslate"><span class="pre">delete</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><code class="docutils literal notranslate"><span class="pre">atom1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><code class="docutils literal notranslate"><span class="pre">atom2</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><code class="docutils literal notranslate"><span class="pre">atom3</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><code class="docutils literal notranslate"><span class="pre">atom4</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8"><code class="docutils literal notranslate"><span class="pre">delete</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.Dihedral.new_atoms_def"><code class="docutils literal notranslate"><span class="pre">new_atoms_def</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9"><code class="docutils literal notranslate"><span class="pre">resname</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10"><code class="docutils literal notranslate"><span class="pre">type</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.NewResidue"><code class="docutils literal notranslate"><span class="pre">NewResidue</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.name"><code class="docutils literal notranslate"><span class="pre">name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.idx"><code class="docutils literal notranslate"><span class="pre">idx</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.resSeq"><code class="docutils literal notranslate"><span class="pre">resSeq</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.one_letter_code"><code class="docutils literal notranslate"><span class="pre">one_letter_code</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.ignore"><code class="docutils literal notranslate"><span class="pre">ignore</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.bonds"><code class="docutils literal notranslate"><span class="pre">bonds</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.dihedrals"><code class="docutils literal notranslate"><span class="pre">dihedrals</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.common_str"><code class="docutils literal notranslate"><span class="pre">common_str</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.add_bond"><code class="docutils literal notranslate"><span class="pre">add_bond</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.add_dihedral"><code class="docutils literal notranslate"><span class="pre">add_dihedral</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.as_amino_acid_dict_entry"><code class="docutils literal notranslate"><span class="pre">as_amino_acid_dict_entry</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11"><code class="docutils literal notranslate"><span class="pre">bonds</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12"><code class="docutils literal notranslate"><span class="pre">common_str</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13"><code class="docutils literal notranslate"><span class="pre">dihedrals</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.get_dihedral_by_type"><code class="docutils literal notranslate"><span class="pre">get_dihedral_by_type</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14"><code class="docutils literal notranslate"><span class="pre">idx</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15"><code class="docutils literal notranslate"><span class="pre">ignore</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16"><code class="docutils literal notranslate"><span class="pre">name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17"><code class="docutils literal notranslate"><span class="pre">one_letter_code</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.parse_bonds_and_dihedrals"><code class="docutils literal notranslate"><span class="pre">parse_bonds_and_dihedrals</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18"><code class="docutils literal notranslate"><span class="pre">resSeq</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.NewResidue.topology"><code class="docutils literal notranslate"><span class="pre">topology</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.flatten"><code class="docutils literal notranslate"><span class="pre">flatten</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.load_CV_from_string_or_path"><code class="docutils literal notranslate"><span class="pre">load_CV_from_string_or_path</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.load_CVs_ensemble"><code class="docutils literal notranslate"><span class="pre">load_CVs_ensemble</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.load_CVs_ensembletraj"><code class="docutils literal notranslate"><span class="pre">load_CVs_ensembletraj</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.load_CVs_from_dir"><code class="docutils literal notranslate"><span class="pre">load_CVs_from_dir</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.load_CVs_singletraj"><code class="docutils literal notranslate"><span class="pre">load_CVs_singletraj</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.np_to_xr"><code class="docutils literal notranslate"><span class="pre">np_to_xr</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.trajinfo_utils.trajs_combine_attrs"><code class="docutils literal notranslate"><span class="pre">trajs_combine_attrs</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/trajinfo.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T22:43:00.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

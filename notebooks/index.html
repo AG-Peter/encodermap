@@ -1,0 +1,955 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Notebook Gallery &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c1026b93" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/index';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Getting started: Basic Cube" href="starter_nb/starter_nb_01_basic.html" />
+    <link rel="prev" title="Review the README" href="../getting_started/link_to_readme.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T22:46:30"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Starter Notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="starter_nb/starter_nb_01_basic.html">Getting started: Basic Cube</a></li>
+<li class="toctree-l1"><a class="reference internal" href="starter_nb/starter_nb_02_advanced.html">Advanced Usage: Asp 7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="starter_nb/starter_nb_03_your_data.html">Your Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MD Notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html">Working with trajectory ensembles</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Customization Notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="customization_nb/customization_nb_01_scalars.html">Customize EncoderMap: Logging Custom Scalars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html">Customize EncoderMap: Custom loss functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization_nb/customization_nb_03_images.html">Logging Custom Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization_nb/customization_nb_04_lr.html">Learning Rate Schedulers</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publication Notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="publication/figure1.html">Publication Figure 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publication/figure2.html">Publication Figure 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publication/figure3.html">Publication Figure 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publication/figure5.html">Publication Figure 5</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Static Code Examples</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="static_code.html">Static Code Examples</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Notebook Gallery</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="notebook-gallery">
+<span id="notebooks-index"></span><h1>Notebook Gallery<a class="headerlink" href="#notebook-gallery" title="Link to this heading">#</a></h1>
+<p>Here, you can find static renders of EncoderMap’s example notebooks. You can run them interactively on Google Colab or MyBinder. You can also run them on your local machine by cloning EncoderMap’s repository.</p>
+<section id="starter-notebooks">
+<h2>Starter Notebooks<a class="headerlink" href="#starter-notebooks" title="Link to this heading">#</a></h2>
+<p>The starter notebooks help you with your first steps with EncoderMap.</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-3 sd-row-cols-xs-3 sd-row-cols-sm-3 sd-row-cols-md-3 sd-row-cols-lg-3 docutils">
+<div class="sd-col sd-d-flex-row sd-mt-2 sd-mb-0 sd-ml-0 sd-mr-0 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Basic Cube Example</div>
+<p class="sd-card-text">Get started with EncoderMap</p>
+</div>
+<img alt="A cube with colored vertices." class="sd-card-img-bottom" src="../_images/starter_nb_01_basic_thumbnail.png" />
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="starter_nb/starter_nb_01_basic.html"><span class="doc">Getting started: Basic Cube</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row sd-mt-2 sd-mb-0 sd-ml-0 sd-mr-0 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Advanced Asp7</div>
+<p class="sd-card-text">Advanced EncoderMap usage with MD data</p>
+</div>
+<img alt="the Mybinder logo" class="sd-card-img-bottom" src="../_images/starter_nb_02_advanced_thumbnail.png" />
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="starter_nb/starter_nb_02_advanced.html"><span class="doc">Advanced Usage: Asp 7</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row sd-mt-2 sd-mb-0 sd-ml-0 sd-mr-0 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Your Data</div>
+<p class="sd-card-text">Upload your own data and use this notebook</p>
+</div>
+<img alt="the Mybinder logo" class="sd-card-img-bottom" src="../_images/starter_nb_03_your_data_thumbnail.png" />
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="starter_nb/starter_nb_03_your_data.html"><span class="doc">Your Data</span></a></div>
+</div>
+</div>
+</div>
+</section>
+<section id="notebooks-md">
+<h2>Notebooks MD<a class="headerlink" href="#notebooks-md" title="Link to this heading">#</a></h2>
+<p>The MD notebooks contain more detailed descriptions of how EncoderMap deals with MD data. It helps you in saving and loading large MD datasets and using them to train EncoderMap. It also helps you in understanding the terms <cite>feature space</cite> and <cite>collective variable</cite>.</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-1 sd-row-cols-lg-1 docutils">
+<div class="sd-col sd-d-flex-row sd-mt-2 sd-mb-0 sd-ml-0 sd-mr-0 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Trajectory Ensembles</div>
+<p class="sd-card-text">Trajectory Ensembles</p>
+</div>
+<img alt="Img description." class="sd-card-img-bottom" src="../_images/md_nb_01_traj_ensemble_thumbnail.png" />
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="md_nb/md_nb_01_traj_ensemble.html"><span class="doc">Working with trajectory ensembles</span></a></div>
+</div>
+</div>
+</div>
+</section>
+<section id="notebooks-customization">
+<h2>Notebooks Customization<a class="headerlink" href="#notebooks-customization" title="Link to this heading">#</a></h2>
+<p>These notebooks help you in customizing EncoderMap. These tools can assist you in understanding how EncoderMap trains on your data. Furthermore, you will learn how to implement new cost functions and vary the training rate of the Neural Network.</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-4 sd-row-cols-xs-4 sd-row-cols-sm-4 sd-row-cols-md-4 sd-row-cols-lg-4 docutils">
+<div class="sd-col sd-d-flex-row sd-mt-2 sd-mb-0 sd-ml-0 sd-mr-0 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Custom Scalars</div>
+<p class="sd-card-text">Monitor in TensorBoard</p>
+</div>
+<img alt="Img description." class="sd-card-img-bottom" src="../_images/customization_nb_01_scalars_thumbnail.png" />
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="customization_nb/customization_nb_01_scalars.html"><span class="doc">Customize EncoderMap: Logging Custom Scalars</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row sd-mt-2 sd-mb-0 sd-ml-0 sd-mr-0 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Custom Loss</div>
+<p class="sd-card-text">Add new loss functions</p>
+</div>
+<img alt="Img description." class="sd-card-img-bottom" src="../_images/customization_nb_02_loss_thumbnail.png" />
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="customization_nb/customization_nb_02_loss.html"><span class="doc">Customize EncoderMap: Custom loss functions</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row sd-mt-2 sd-mb-0 sd-ml-0 sd-mr-0 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Custom Images</div>
+<p class="sd-card-text">Write images to TensorBoard</p>
+</div>
+<img alt="Img description." class="sd-card-img-bottom" src="../_images/customization_nb_03_images_thumbnail.png" />
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="customization_nb/customization_nb_03_images.html"><span class="doc">Logging Custom Images</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row sd-mt-2 sd-mb-0 sd-ml-0 sd-mr-0 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Learning Rate Scheduler</div>
+<p class="sd-card-text">Adjust the learning rate</p>
+</div>
+<img alt="Img description." class="sd-card-img-bottom" src="../_images/customization_nb_04_lr_thumbnail.png" />
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="customization_nb/customization_nb_04_lr.html"><span class="doc">Learning Rate Schedulers</span></a></div>
+</div>
+</div>
+</div>
+</section>
+<section id="notebooks-publication">
+<h2>Notebooks Publication<a class="headerlink" href="#notebooks-publication" title="Link to this heading">#</a></h2>
+<p>These notebooks contain the analysis code of an upcoming publication “”EncoderMap III: A dimensionality reduction package for feature exploration in molecular simulations” featuring the new version of the EncoderMap package. Trained network weights are available upon reasonable request by raising an issue on GitHub: <a class="github reference external" href="https://github.com/AG-Peter/encodermap/issues">AG-Peter/encodermap#issues</a>, or by contacting the authors of the publication.</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-4 sd-row-cols-xs-4 sd-row-cols-sm-4 sd-row-cols-md-4 sd-row-cols-lg-4 docutils">
+<div class="sd-col sd-d-flex-row sd-mt-2 sd-mb-0 sd-ml-0 sd-mr-0 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Figure1</div>
+<p class="sd-card-text">Notebook to create figure1 of the publication</p>
+</div>
+<img alt="Img description." class="sd-card-img-bottom" src="../_images/figure1_thumbnail.png" />
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="publication/figure1.html"><span class="doc">Publication Figure 1</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row sd-mt-2 sd-mb-0 sd-ml-0 sd-mr-0 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Figure2</div>
+<p class="sd-card-text">Notebook to create figure2 of the publication</p>
+</div>
+<img alt="Img description." class="sd-card-img-bottom" src="../_images/figure2_thumbnail.png" />
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="publication/figure2.html"><span class="doc">Publication Figure 2</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row sd-mt-2 sd-mb-0 sd-ml-0 sd-mr-0 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Figure3</div>
+<p class="sd-card-text">Notebook to create figure3 of the publication</p>
+</div>
+<img alt="Img description." class="sd-card-img-bottom" src="../_images/figure3_thumbnail.png" />
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="publication/figure3.html"><span class="doc">Publication Figure 3</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row sd-mt-2 sd-mb-0 sd-ml-0 sd-mr-0 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Figure5</div>
+<p class="sd-card-text">Notebook to create figure5 of the publication</p>
+</div>
+<img alt="Img description." class="sd-card-img-bottom" src="../_images/figure5_thumbnail.png" />
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="publication/figure5.html"><span class="doc">Publication Figure 5</span></a></div>
+</div>
+</div>
+</div>
+</section>
+<section id="notebooks-advanced">
+<h2>Notebooks Advanced<a class="headerlink" href="#notebooks-advanced" title="Link to this heading">#</a></h2>
+<p>These notebooks contain more advanced training examples, like when you want to train with EncoderMap’s sparse networks, that allow simultaneous training of various protein topologies, that could stem from mutations or protein families.</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-1 sd-row-cols-lg-1 docutils">
+<div class="sd-col sd-d-flex-row sd-mt-2 sd-mb-0 sd-ml-0 sd-mr-0 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Different Topologies</div>
+<p class="sd-card-text">Training EncoderMap on inhomogeneous MD datasets</p>
+</div>
+<img alt="Img description." class="sd-card-img-bottom" src="_static/intermediate_nb_01_sparse_thumbnail.png" />
+<span class="sd-stretched-link sd-hide-link-text">intermediate_nb/intermediate_nb_01_sparse</span></div>
+</div>
+</div>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Starter Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="starter_nb/starter_nb_01_basic.html">Getting started: Basic Cube</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="starter_nb/starter_nb_01_basic.html#Import-Libraries">Import Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="starter_nb/starter_nb_01_basic.html#Load-Data">Load Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="starter_nb/starter_nb_01_basic.html#Select-Parameters">Select Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="starter_nb/starter_nb_01_basic.html#Get-more-info-about-parameters">Get more info about parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="starter_nb/starter_nb_01_basic.html#Perform-Dimensionality-Reduction">Perform Dimensionality Reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="starter_nb/starter_nb_01_basic.html#Generate-High-Dimensional-Data">Generate High-Dimensional Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="starter_nb/starter_nb_01_basic.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="starter_nb/starter_nb_02_advanced.html">Advanced Usage: Asp 7</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="starter_nb/starter_nb_02_advanced.html#Primer">Primer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="starter_nb/starter_nb_02_advanced.html#Imports-and-load-data">Imports and load data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="starter_nb/starter_nb_02_advanced.html#Periodic-variables">Periodic variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="starter_nb/starter_nb_02_advanced.html#Parameter-selection">Parameter selection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="starter_nb/starter_nb_02_advanced.html#Visualize-Learning-with-TensorBoard">Visualize Learning with TensorBoard</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="starter_nb/starter_nb_02_advanced.html#Running-tensorboard-on-Google-colab">Running tensorboard on Google colab</a></li>
+<li class="toctree-l3"><a class="reference internal" href="starter_nb/starter_nb_02_advanced.html#Running-tensorboard-locally">Running tensorboard locally</a></li>
+<li class="toctree-l3"><a class="reference internal" href="starter_nb/starter_nb_02_advanced.html#Save-and-Load">Save and Load</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="starter_nb/starter_nb_02_advanced.html#Generate-Molecular-Conformations">Generate Molecular Conformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="starter_nb/starter_nb_02_advanced.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="starter_nb/starter_nb_03_your_data.html">Your Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="starter_nb/starter_nb_03_your_data.html#Load-Libraries">Load Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="starter_nb/starter_nb_03_your_data.html#Load-Your-Data">Load Your Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="starter_nb/starter_nb_03_your_data.html#Set-Parameters">Set Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="starter_nb/starter_nb_03_your_data.html#Run-the-Dimensionality-Reduction">Run the Dimensionality Reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="starter_nb/starter_nb_03_your_data.html#Plot-the-Results">Plot the Results</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MD Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html">Working with trajectory ensembles</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#For-Google-colab-only:">For Google colab only:</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#Primer">Primer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#Collective-Variables">Collective Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#Example-CVs">Example CVs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#Sharing-MD-data">Sharing MD data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#Classes-for-working-with-MD-data">Classes for working with MD data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#The-new-SingleTraj-class">The new <code class="docutils literal notranslate"><span class="pre">SingleTraj</span></code> class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#The-TrajEnsemble-class-contains-multiple-SingleTrajs">The <code class="docutils literal notranslate"><span class="pre">TrajEnsemble</span></code> class contains multiple <code class="docutils literal notranslate"><span class="pre">SingleTraj</span></code>s</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#Loading-CVs">Loading CVs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#From-numpy">From numpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#Slicing-with-CVs.">Slicing with CVs.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#Loading-from-files">Loading from files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#Loading-with-EncoderMap's-featurzier">Loading with EncoderMap’s featurzier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#Wrtiting-custom-features-No-1">Wrtiting custom features No 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#Writing-custom-features-No-2">Writing custom features No 2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#Saving-trajectory-and-CVs-into-one-file">Saving trajectory and CVs into one file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#Saving-a-complete-trajectory-Ensemble">Saving a complete trajectory Ensemble</a></li>
+<li class="toctree-l3"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Customization Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="customization_nb/customization_nb_01_scalars.html">Customize EncoderMap: Logging Custom Scalars</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_01_scalars.html#For-Google-colab-only:">For Google colab only:</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_01_scalars.html#Import-libraries">Import libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_01_scalars.html#Adding-custom-scalars-to-TensorBoard-by-subclassing-EncoderMapBaseMetric">Adding custom scalars to TensorBoard by subclassing <code class="docutils literal notranslate"><span class="pre">EncoderMapBaseMetric</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_01_scalars.html#Use-the-y_true-and-y_pred-parameters-in-the-update()-function">Use the <code class="docutils literal notranslate"><span class="pre">y_true</span></code> and <code class="docutils literal notranslate"><span class="pre">y_pred</span></code> parameters in the <code class="docutils literal notranslate"><span class="pre">update()</span></code> function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_01_scalars.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_01_scalars.html#Getting-input-data">Getting input data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_01_scalars.html#Setting-parameters">Setting parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_01_scalars.html#Subclassing-the-SequentialModel">Subclassing the SequentialModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_01_scalars.html#Changing-what-happens-in-a-training-step">Changing what happens in a training step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_01_scalars.html#Running-EncoderMap-with-the-new-model">Running EncoderMap with the new model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html">Customize EncoderMap: Custom loss functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#For-Google-colab-only:">For Google colab only:</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Import-Libraries">Import Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#What-are-loss-functions">What are loss functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Cost-functions">Cost functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Cost-functions-in-TensorFlow">Cost functions in TensorFlow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Cost-functions-in-EncoderMap">Cost functions in EncoderMap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Custom-cost-functions">Custom cost functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#FAT10">FAT10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Adding-a-unit-circle-loss">Adding a unit circle loss</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Include-the-loss-function-in-EncoderMap">Include the loss function in EncoderMap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Train">Train</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Output">Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Loading-logs-into-jupyter-notebook">Loading logs into jupyter notebook</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Conclusion">Conclusion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#References">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="customization_nb/customization_nb_03_images.html">Logging Custom Images</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_03_images.html#For-Google-colab-only:">For Google colab only:</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_03_images.html#Logging-via-a-custom-function">Logging via a custom function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_03_images.html#Provide-this-function-to-EncoderMap">Provide this function to EncoderMap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_03_images.html#Train-EncoderMap-with-our-new-function.">Train EncoderMap with our new function.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_03_images.html#Output">Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_03_images.html#Writing-custom-callbacks">Writing custom callbacks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_03_images.html#Polar-coordinates">Polar coordinates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_03_images.html#Subclassing-EncoderMapBaseCallback">Subclassing <code class="docutils literal notranslate"><span class="pre">EncoderMapBaseCallback</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_03_images.html#Adding-the-callback-to-EncoderMap">Adding the callback to EncoderMap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_03_images.html#id1">Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_03_images.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="customization_nb/customization_nb_04_lr.html">Learning Rate Schedulers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_04_lr.html#For-Google-colab-only:">For Google colab only:</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_04_lr.html#Import-Libraries">Import Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_04_lr.html#Why-learning-rate-schedulers?-A-linear-regression-example">Why learning rate schedulers? A linear regression example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_04_lr.html#Log-the-current-learning-rate-to-Tensorboard">Log the current learning rate to Tensorboard</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_04_lr.html#Running-tensorboard-on-Google-colab">Running tensorboard on Google colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_04_lr.html#Running-tensorboard-locally">Running tensorboard locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_04_lr.html#Sublcassing-EncoderMap's-EncoderMapBaseCallback">Sublcassing EncoderMap’s <code class="docutils literal notranslate"><span class="pre">EncoderMapBaseCallback</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_04_lr.html#Write-a-learning-rate-scheduler">Write a learning rate scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_04_lr.html#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publication Notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="publication/figure1.html">Publication Figure 1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="publication/figure1.html#Imports">Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="publication/figure1.html#Trained-network-weights">Trained network weights</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure1.html#Load-MD-data-from-KonDATA">Load MD data from KonDATA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure1.html#Add-collective-variables-to-MD-data-by-featurization">Add collective variables to MD data by featurization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure1.html#Create-a-TensorFlow-dataset">Create a TensorFlow dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure1.html#Plot-images-during-training">Plot images during training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure1.html#Train-/-load-trained-network">Train / load trained network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure1.html#Look-at-the-images-that-have-been-saved-during-training">Look at the images that have been saved during training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure1.html#Final-image">Final image</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="publication/figure2.html">Publication Figure 2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="publication/figure2.html#Imports">Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="publication/figure2.html#Trained-network-weights">Trained network weights</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure2.html#Load-MD-data-from-KonDATA">Load MD data from KonDATA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure2.html#Featurize">Featurize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure2.html#Create-EncoderMap">Create EncoderMap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure2.html#Train-/-Load-trained-network">Train / Load trained network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure2.html#Images">Images</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="publication/figure3.html">Publication Figure 3</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="publication/figure3.html#Imports">Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="publication/figure3.html#Trained-network-weights">Trained network weights</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure3.html#Get-data">Get data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure3.html#Train-Networks">Train Networks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure3.html#Final-image">Final image</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="publication/figure5.html">Publication Figure 5</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="publication/figure5.html#Imports">Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="publication/figure5.html#Trained-network-weights">Trained network weights</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure5.html#Load-MD-Data-from-KonDATA">Load MD Data from KonDATA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure5.html#Add-custom-topologies">Add custom topologies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure5.html#Load-CVs">Load CVs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure5.html#Train-/-Load-trained-network">Train / Load trained network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure5.html#Project-all-data">Project all data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure5.html#Images-of-lowd-procetions">Images of lowd procetions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure5.html#Cluster-and-paths">Cluster and paths</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Static Code Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="static_code.html">Static Code Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="static_code.html#cube-example">Cube Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="static_code.html#cube-distance-analysis">Cube Distance Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="static_code.html#trp-cage">Trp Cage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="static_code.html#dihedral-to-cartesian-diubi">Dihedral to Cartesian diUbi</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../getting_started/link_to_readme.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Review the README</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="starter_nb/starter_nb_01_basic.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Getting started: Basic Cube</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#starter-notebooks">Starter Notebooks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notebooks-md">Notebooks MD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notebooks-customization">Notebooks Customization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notebooks-publication">Notebooks Publication</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notebooks-advanced">Notebooks Advanced</a><ul class="nav section-nav flex-column">
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/notebooks/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T22:46:30.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

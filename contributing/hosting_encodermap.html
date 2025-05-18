@@ -1,0 +1,775 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Hosting EncoderMap &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c1026b93" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'contributing/hosting_encodermap';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Scripts" href="scripts.html" />
+    <link rel="prev" title="EncoderMap tests" href="testing.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T22:43:00"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="testing.html">EncoderMap tests</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Hosting EncoderMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">Scripts</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Contributing</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Hosting EncoderMap</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="hosting-encodermap">
+<span id="contributing-hosting-encodermap"></span><h1>Hosting EncoderMap<a class="headerlink" href="#hosting-encodermap" title="Link to this heading">#</a></h1>
+<p>In this tutorial, you will be guided through the necessary steps to host EncoderMap’s webpage on your computer. As a requisite, we want to have a public IPv4.</p>
+<section id="determining-whether-you-have-a-public-ipv4">
+<h2>Determining whether you have a public IPv4<a class="headerlink" href="#determining-whether-you-have-a-public-ipv4" title="Link to this heading">#</a></h2>
+<p>Run this command to get your public IPv4:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>https://ipinfo.io/ip
+</pre></div>
+</div>
+<p>Note down the output. Then run this command to get your local IPv4:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ifconfig<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>inet
+</pre></div>
+</div>
+<p>If this output contains the same IP address, as the <code class="docutils literal notranslate"><span class="pre">curl</span></code> command, we are set. Otherwise, your are sitting behind a router and want to add a port forwarding in your router configuration to your local IPv4 address. Forward both ports 80 and 443 using the TCP protocol.</p>
+</section>
+<section id="installing-apache">
+<h2>Installing Apache<a class="headerlink" href="#installing-apache" title="Link to this heading">#</a></h2>
+<p>To install apache2 run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>apache2
+</pre></div>
+</div>
+<p>Visit the IP address from the <code class="docutils literal notranslate"><span class="pre">curl</span></code> command in your browser. If you see the Apache2 default page you are set.</p>
+<section id="extra-prevent-search-engines-from-crawling-your-site">
+<h3>Extra: Prevent search engines from crawling your site<a class="headerlink" href="#extra-prevent-search-engines-from-crawling-your-site" title="Link to this heading">#</a></h3>
+<p>EncoderMap’s Sphinx documentation comes with its own <code class="docutils literal notranslate"><span class="pre">robots.txt</span></code> which prevents all search engines from crawling and indexing the site.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">User</span><span class="o">-</span><span class="n">agent</span><span class="p">:</span> <span class="o">*</span>
+<span class="n">Disallow</span><span class="p">:</span> <span class="o">/</span>
+</pre></div>
+</div>
+<p>Of course, if you want the page to be visible, you need to remove that file from <code class="docutils literal notranslate"><span class="pre">docs/source/_static/robots.txt</span></code> and/or the setting in <code class="docutils literal notranslate"><span class="pre">docs/source/conf.py</span></code>. The <code class="docutils literal notranslate"><span class="pre">run_docbuild_test_and_cover.py</span></code> script has an option that deletes the <code class="docutils literal notranslate"><span class="pre">robots.txt</span></code> after a pull.</p>
+<p>Finally, we will add apache2 to the autostart:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>update-rc.d<span class="w"> </span>apache2<span class="w"> </span>defaults
+</pre></div>
+</div>
+</section>
+</section>
+<section id="creating-passwordless-ssh-to-github-gitlab">
+<h2>Creating passwordless ssh to GitHub, GitLab<a class="headerlink" href="#creating-passwordless-ssh-to-github-gitlab" title="Link to this heading">#</a></h2>
+<section id="creating-a-directory-on-the-server">
+<h3>Creating a directory on the server<a class="headerlink" href="#creating-a-directory-on-the-server" title="Link to this heading">#</a></h3>
+<p>If you are running on a shared home, we recommend to create a copy of the repository on a local drive, where constant builds and rebuilds don’t affect your data-traffic too much.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/mnt/data
+git<span class="w"> </span>clone<span class="w"> </span>git<span class="w"> </span>https://github.com/AG-Peter/encodermap.git
+<span class="nb">cd</span><span class="w"> </span>encodermap
+</pre></div>
+</div>
+</section>
+<section id="setting-up-ssh-keys">
+<h3>Setting up ssh keys<a class="headerlink" href="#setting-up-ssh-keys" title="Link to this heading">#</a></h3>
+<p>For the cron job, it might be beneficial to allow passwordless access to EncoderMap’s GitHub and GitLab repository. To do so for GitHub, we first create a new ssh key using (leave the passphrase empty):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/mnt/data
+ssh-keygen<span class="w"> </span>-t<span class="w"> </span>ed25519<span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;your.github.email@provider.com&quot;&quot; -f encodermap_passwordless</span>
+</pre></div>
+</div>
+<p>The public key of this key-pair then needs to be uploaded to GitHub. Get the content with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>encodermap_passwordless.pub
+</pre></div>
+</div>
+</section>
+<section id="github">
+<h3>GitHub<a class="headerlink" href="#github" title="Link to this heading">#</a></h3>
+<p>And add it on this site: https://github.com/settings/keys (after logging in to GitHub).</p>
+<p>Then, we need to tell the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code> command to use this key for cloning/pulling. For that we need to configure the ssh settings in <code class="docutils literal notranslate"><span class="pre">~/.ssh/config</span></code> and add:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Host</span> <span class="n">encodermap_passwordless_github</span>
+     <span class="n">HostName</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span>
+     <span class="n">User</span> <span class="n">git</span>
+     <span class="n">IdentityFile</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">encodermap_passwordless</span>
+</pre></div>
+</div>
+<p>We can test the connection via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh<span class="w"> </span>-T<span class="w"> </span>git@encodermap_passwordless_github
+</pre></div>
+</div>
+<p>Then, we can clone via:</p>
+<div class="highlight-angular2html notranslate"><div class="highlight"><pre><span></span>git clone git@encodermap_passwordless_github:AG-Peter/encodermap.git
+</pre></div>
+</div>
+<p>To better distinguish GitHub from GitLab, we rename the remote:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>rename<span class="w"> </span>origin<span class="w"> </span>public
+</pre></div>
+</div>
+</section>
+<section id="gitlab">
+<h3>GitLab<a class="headerlink" href="#gitlab" title="Link to this heading">#</a></h3>
+<p>To do the same thing with GitLab, we add this configuration to <code class="docutils literal notranslate"><span class="pre">~/.ssh/conf</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Host</span> <span class="n">encodermap_passwordless_gitlab</span>
+     <span class="n">HostName</span> <span class="n">gitlab</span><span class="o">.</span><span class="n">inf</span><span class="o">.</span><span class="n">uni</span><span class="o">-</span><span class="n">konstanz</span><span class="o">.</span><span class="n">de</span>
+     <span class="n">User</span> <span class="n">git</span>
+     <span class="n">IdentityFile</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">encodermap_passwordless</span>
+     <span class="n">IdentitiesOnly</span> <span class="n">yes</span>
+</pre></div>
+</div>
+<p>And upload the public key to GitLab. We then add the new remote via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>gitlab<span class="w"> </span>git@encodermap_passwordless_gitlab:ag-peter/encoder_map_private.git
+</pre></div>
+</div>
+<p>We can now switch between the public encodermap (changes in branch <code class="docutils literal notranslate"><span class="pre">main</span></code>) and the private repo on GitLab.</p>
+</section>
+</section>
+<section id="building-the-documentation">
+<h2>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Link to this heading">#</a></h2>
+<p>We can now install the requirements</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>md_equirements.txt
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>docs/sphinx_equirements.txt
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>tests/test_equirements.txt
+</pre></div>
+</div>
+<p>We then build the documentation with the <code class="docutils literal notranslate"><span class="pre">run_docbuild_test_and_cover.py</span></code> script. For our purposes, we can skip the tests so that the script concludes in shorter time (Executing the notebooks can take a while, too. But they are only executed when they change between commits).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./docs/run_docbuild_test_and_cover.py<span class="w"> </span>--doc-only
+</pre></div>
+</div>
+<p>This will create a directory under <code class="docutils literal notranslate"><span class="pre">docs/build</span></code> named <code class="docutils literal notranslate"><span class="pre">html</span></code>. This is where the page resides. We then need to tell apache2 to host the site from this directory.</p>
+</section>
+<section id="linking-encodermap-s-docs-and-apache2">
+<h2>Linking EncoderMap’s docs and apache2<a class="headerlink" href="#linking-encodermap-s-docs-and-apache2" title="Link to this heading">#</a></h2>
+<p>Inside the apache directory (<code class="docutils literal notranslate"><span class="pre">/var/www/html</span></code>) we then create a softlink to EncoderMap’s build documentation.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span>/mnt/data/git/encodermap/docs/build/html<span class="w"> </span>html_public
+</pre></div>
+</div>
+<p>We then need to set the document root for the site in apache, by a line in apache2’s default site: <code class="docutils literal notranslate"><span class="pre">/etc/apache2/sites-available/000-default.conf</span></code></p>
+<p>Change DocumentRoot from <code class="docutils literal notranslate"><span class="pre">DocumentRoot</span> <span class="pre">/var/www/html</span></code> to <code class="docutils literal notranslate"><span class="pre">DocumentRoot</span> <span class="pre">/var/www/html/html_public</span></code> and activate the new site by either reloading apache2:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>/etc/init.d/apache2<span class="w"> </span>reload
+</pre></div>
+</div>
+<p>or restarting</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>service<span class="w"> </span>apache2<span class="w"> </span>restart
+</pre></div>
+</div>
+<p>Then open your public IP in a browser, and you should be greeted by EncoderMap’s documentation.</p>
+</section>
+<section id="generating-a-certificate">
+<h2>Generating a certificate<a class="headerlink" href="#generating-a-certificate" title="Link to this heading">#</a></h2>
+<p>We want to change the site from http to https. For that, we call first:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>a2enmod<span class="w"> </span>ssl
+</pre></div>
+</div>
+<p>Then, we create the certificate:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>openssl<span class="w"> </span>req<span class="w"> </span>-x509<span class="w"> </span>-nodes<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-newkey<span class="w"> </span>rsa:2048<span class="w"> </span>-keyout<span class="w"> </span>/etc/ssl/private/apache-selfsigned.key<span class="w"> </span>-out<span class="w"> </span>/etc/ssl/certs/apache-selfsigned.crt
+</pre></div>
+</div>
+<p>and answer the questions as good, as we can. Providing our public IP for the server’s common name. When the server is accessible via a FQDN (fully qualified domain name), we can use certbot to request certificates signed by a certificate authority and skip the safety warning.</p>
+<p>We then change <code class="docutils literal notranslate"><span class="pre">/etc/apache2/sites-available/000-default.conf</span></code> again. We change the port of the first virtual host from <code class="docutils literal notranslate"><span class="pre">*:80</span></code> to <code class="docutils literal notranslate"><span class="pre">*:443</span></code> and add the ssl settings. We then add another virtualhost, that redirects http to https.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">443</span><span class="o">&gt;</span>
+
+    <span class="c1"># Here&#39;s the other stuff we already configured.</span>
+
+   <span class="n">SSLEngine</span> <span class="n">on</span>
+   <span class="n">SSLCertificateFile</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssl</span><span class="o">/</span><span class="n">certs</span><span class="o">/</span><span class="n">apache</span><span class="o">-</span><span class="n">selfsigned</span><span class="o">.</span><span class="n">crt</span>
+   <span class="n">SSLCertificateKeyFile</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssl</span><span class="o">/</span><span class="n">private</span><span class="o">/</span><span class="n">apache</span><span class="o">-</span><span class="n">selfsigned</span><span class="o">.</span><span class="n">key</span>
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>And create a new site called <code class="docutils literal notranslate"><span class="pre">001-redirect.conf</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
+        <span class="n">ServerName</span> <span class="n">your_domain_or_ip</span>
+        <span class="n">Redirect</span> <span class="o">/</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">your_domain_or_ip</span><span class="o">/</span>
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>to the configuration of the virtual host. We can then test and (after a successful test) reload apache.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudp<span class="w"> </span>a2ensite<span class="w"> </span><span class="m">001</span>-redirect.conf
+sudo<span class="w"> </span>apachectl<span class="w"> </span>configtest
+sudo<span class="w"> </span>systemctl<span class="w"> </span>reload<span class="w"> </span>apache2
+</pre></div>
+</div>
+</section>
+<section id="using-a-fqdn">
+<h2>Using a FQDN<a class="headerlink" href="#using-a-fqdn" title="Link to this heading">#</a></h2>
+<p>For the purposes of this tutorial, we have bough the domain <code class="docutils literal notranslate"><span class="pre">encodermap.site</span></code> and forward it via an A record to our public IP. We then need to reconfigure Apache to use this site and then can use certbot to get a trusted certificate.</p>
+<p>Install certbot via</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>certbot<span class="w"> </span>python3-certbot-apache
+</pre></div>
+</div>
+<p>We then check the configuration of the virtual host in <code class="docutils literal notranslate"><span class="pre">/etc/apache2/sites-available/000-default.conf</span></code> and put our new domain into the ServerName fields.</p>
+<p>We then get our certificate via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>certbot<span class="w"> </span>--apache
+</pre></div>
+</div>
+</section>
+<section id="linking-to-encodermap-s-data-repos">
+<h2>Linking to EncoderMap’s data repos<a class="headerlink" href="#linking-to-encodermap-s-data-repos" title="Link to this heading">#</a></h2>
+<p>We will place EncoderMap’s data repos in <code class="docutils literal notranslate"><span class="pre">/var/www/html/encodermap_data</span></code>. For this to be accessible under <code class="docutils literal notranslate"><span class="pre">encodermap.site/encodermap_data</span></code>, we have
+to add these lines to <code class="docutils literal notranslate"><span class="pre">/etc/apache2/sites-available/000-default.conf</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Alias</span> <span class="o">/</span><span class="n">encodermap_data</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">encodermap_data</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">encodermap_data</span><span class="o">&gt;</span>
+    <span class="n">allow</span> <span class="kn">from</span> <span class="nn">all</span>
+    <span class="n">order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+    <span class="n">AllowOverride</span> <span class="n">All</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>To verify, whether our Alias works, we can place a text file (<code class="docutils literal notranslate"><span class="pre">test.txt</span></code>) in <code class="docutils literal notranslate"><span class="pre">/var/www/html/encodermap_data</span></code> and go to <code class="docutils literal notranslate"><span class="pre">https://encodermap.site/encodermap_data</span></code> and see, whether the file shows up.</p>
+<section id="creating-htaccess">
+<h3>Creating .htaccess<a class="headerlink" href="#creating-htaccess" title="Link to this heading">#</a></h3>
+<p>To enable password protection for the data repository, we will create a <code class="docutils literal notranslate"><span class="pre">.htaccess</span></code> file in <code class="docutils literal notranslate"><span class="pre">/var/www/html/encodermap_data</span></code> with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>nano<span class="w"> </span>/var/www/html/encodermap_data/.htaccess
+</pre></div>
+</div>
+<p>the content of this file should be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AuthUserFile</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apache2</span><span class="o">/.</span><span class="n">encodermap_data_htpasswd</span>
+<span class="n">AuthName</span> <span class="s2">&quot;Please Enter Password&quot;</span>
+<span class="n">AuthType</span> <span class="n">Basic</span>
+<span class="n">Require</span> <span class="n">valid</span><span class="o">-</span><span class="n">user</span>
+</pre></div>
+</div>
+</section>
+<section id="setting-passwords">
+<h3>Setting passwords<a class="headerlink" href="#setting-passwords" title="Link to this heading">#</a></h3>
+<p>Next, we can create the <code class="docutils literal notranslate"><span class="pre">/etc/apache2/.encodermap_data_htpasswd</span></code> file via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>htpasswd<span class="w"> </span>-c<span class="w"> </span>/etc/apache2/.encodermap_data_htpasswd<span class="w"> </span>&lt;username&gt;
+</pre></div>
+</div>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">&lt;username&gt;</span></code> with the username you want to set for that site. After that we are asked for the password we want to set for the data repository.</p>
+</section>
+</section>
+<section id="running-a-cronjob">
+<h2>Running a cronjob<a class="headerlink" href="#running-a-cronjob" title="Link to this heading">#</a></h2>
+</section>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="testing.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">EncoderMap tests</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="scripts.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Scripts</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-whether-you-have-a-public-ipv4">Determining whether you have a public IPv4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-apache">Installing Apache</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extra-prevent-search-engines-from-crawling-your-site">Extra: Prevent search engines from crawling your site</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-passwordless-ssh-to-github-gitlab">Creating passwordless ssh to GitHub, GitLab</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-directory-on-the-server">Creating a directory on the server</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-ssh-keys">Setting up ssh keys</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#github">GitHub</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gitlab">GitLab</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-documentation">Building the documentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linking-encodermap-s-docs-and-apache2">Linking EncoderMap’s docs and apache2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-a-certificate">Generating a certificate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-a-fqdn">Using a FQDN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linking-to-encodermap-s-data-repos">Linking to EncoderMap’s data repos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-htaccess">Creating .htaccess</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-passwords">Setting passwords</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-a-cronjob">Running a cronjob</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/contributing/hosting_encodermap.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T22:43:00.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

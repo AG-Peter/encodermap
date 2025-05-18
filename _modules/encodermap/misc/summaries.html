@@ -1,180 +1,205 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+
+<html lang="en" data-content_root="../../../" >
+
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>encodermap.misc.summaries &#8212; encodermap 3.0.0 documentation</title>
+    <title>encodermap.misc.summaries &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
   
   
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
-<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=c1026b93" />
   
-  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
-
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
-  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/sphinx_highlight.js"></script>
-    <script src="../../../_static/clipboard.min.js"></script>
-    <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/design-tabs.js"></script>
+    <script src="../../../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/encodermap/misc/summaries';</script>
-    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="docsearch:language" content="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T21:24:25"/>
   </head>
   
   
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
-  <label class="overlay overlay-primary" for="__primary"></label>
-
-  
-  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
-  <label class="overlay overlay-secondary" for="__secondary"></label>
-
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
-      
-<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form>
-    </div>
-  </div>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
 
   
-  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
-  <label class="sidebar-toggle primary-toggle" for="__primary">
-      <span class="fa-solid fa-bars"></span>
-  </label>
-  <div id="navbar-start">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
     
+      <div class="navbar-item">
+
+  
     
   
-
 
 <a class="navbar-brand logo" href="../../../index.html">
-
   
   
   
   
   
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
   
   
-
-  
-    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="Logo image">
-    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark" alt="Logo image">
-  
-  
-</a>
+</a></div>
     
   </div>
-
   
   <div class="col-lg-9 navbar-header-items">
-    <div id="navbar-center" class="mr-auto">
+    
+    <div class="me-auto navbar-header-items__center">
       
-      <div class="navbar-center-item">
-        <nav class="navbar-nav">
-    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
-        Site Navigation
-    </p>
-    <ul id="navbar-main-elements" class="navbar-nav">
-        
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
-                        Getting started
-                      </a>
-                    </li>
-                
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
-                        User Guide
-                      </a>
-                    </li>
-                
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../reference/index.html">
-                        API reference
-                      </a>
-                    </li>
-                
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
-                        Changelog
-                      </a>
-                    </li>
-                
-    </ul>
-</nav>
-      </div>
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
       
     </div>
-
-    <div id="navbar-end">
+    
+    
+    <div class="navbar-header-items__end">
       
-        <div class="navbar-end-item navbar-persistent--container">
+        <div class="navbar-item navbar-persistent--container">
           
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
-  <i class="fa-solid fa-magnifying-glass"></i>
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
 </button>
         </div>
       
       
-      <div class="navbar-end-item">
-        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-</button>
-      </div>
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
       
-      <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
         <li class="nav-item">
           
           
@@ -183,101 +208,110 @@
           
           
           
-          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
         </li>
-      </ul>
-      </div>
+</ul></div>
       
     </div>
+    
   </div>
-
-
   
   
     <div class="navbar-persistent--mobile">
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
-  <i class="fa-solid fa-magnifying-glass"></i>
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
 </button>
     </div>
   
 
   
-  <label class="sidebar-toggle secondary-toggle" for="__secondary">
-      <span class="fa-solid fa-outdent"></span>
-  </label>
-  
-
 </div>
-  </nav>
+
+    </header>
   
 
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      
+      
         
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
   
   <div class="sidebar-header-items sidebar-primary__section">
     
     
       <div class="sidebar-header-items__center">
-      
-      <div class="navbar-center-item">
-        <nav class="navbar-nav">
-    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
-        Site Navigation
-    </p>
-    <ul id="navbar-main-elements" class="navbar-nav">
         
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
-                        Getting started
-                      </a>
-                    </li>
-                
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
-                        User Guide
-                      </a>
-                    </li>
-                
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../reference/index.html">
-                        API reference
-                      </a>
-                    </li>
-                
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
-                        Changelog
-                      </a>
-                    </li>
-                
-    </ul>
-</nav>
-      </div>
-      
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
       </div>
     
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
 
-    
-    
-    <div class="sidebar-header-items__end">
-      
-      <div class="navbar-end-item">
-        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-</button>
-      </div>
-      
-      <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
         <li class="nav-item">
           
           
@@ -286,48 +320,81 @@
           
           
           
-          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
         </li>
-      </ul>
+</ul></div>
+        
       </div>
-      
-    </div>
     
   </div>
-
   
-
   
-  <div class="sidebar-end-items sidebar-primary__section">
-    <div class="sidebar-end-items__item">
-    </div>
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
 
-  
-  <div id="rtd-footer-container"></div>
 
       </div>
-      <main id="main-content" class="bd-main">
+      
+      <main id="main-content" class="bd-main" role="main">
         
         
-        <div class="bd-content">
-          <div class="bd-article-container">
-            
-            <div class="bd-header-article">
-                
-            </div>
-            
-            
-            <article class="bd-article" role="main">
+          <div class="bd-content">
+            <div class="bd-article-container">
               
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../../encodermap.html" class="nav-link">encodermap</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">encodermap.misc.summaries</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <h1>Source code for encodermap.misc.summaries</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1"># encodermap/misc/summaries.py</span>
 <span class="c1">################################################################################</span>
-<span class="c1"># Encodermap: A python library for dimensionality reduction.</span>
+<span class="c1"># EncoderMap: A python library for dimensionality reduction.</span>
 <span class="c1">#</span>
-<span class="c1"># Copyright 2019-2022 University of Konstanz and the Authors</span>
+<span class="c1"># Copyright 2019-2024 University of Konstanz and the Authors</span>
 <span class="c1">#</span>
 <span class="c1"># Authors:</span>
 <span class="c1"># Kevin Sawade, Tobias Lemke</span>
@@ -345,22 +412,61 @@
 <span class="c1">################################################################################</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Functions that write stuff to tensorboard. Mainly used for the iumage callbacks.</span>
+<span class="sd">Functions that write stuff to tensorboard. Mainly used for the image callbacks.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">io</span>
+<span class="c1">################################################################################</span>
+<span class="c1"># Imports</span>
+<span class="c1">################################################################################</span>
 
+
+<span class="c1"># Future Imports at the top</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="c1"># Standard Library Imports</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="c1"># Third Party Imports</span>
 <span class="kn">import</span> <span class="nn">matplotlib</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">optional_imports</span> <span class="kn">import</span> <span class="n">_optional_import</span>
 
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">)</span>
+<span class="c1"># Encodermap imports</span>
+<span class="kn">from</span> <span class="nn">encodermap.plot.plotting</span> <span class="kn">import</span> <span class="n">_plot_free_energy</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;add_layer_summaries&quot;</span><span class="p">,</span> <span class="s2">&quot;image_summary&quot;</span><span class="p">]</span>
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Optional Imports</span>
+<span class="c1">################################################################################</span>
 
 
-<div class="viewcode-block" id="add_layer_summaries"><a class="viewcode-back" href="../../../encodermap.misc.html#encodermap.misc.summaries.add_layer_summaries">[docs]</a><span class="k">def</span> <span class="nf">add_layer_summaries</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="n">px</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;plotly&quot;</span><span class="p">,</span> <span class="s2">&quot;express&quot;</span><span class="p">)</span>
+<span class="n">go</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;plotly&quot;</span><span class="p">,</span> <span class="s2">&quot;graph_objects&quot;</span><span class="p">)</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Globals</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="n">__all__</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;add_layer_summaries&quot;</span><span class="p">,</span> <span class="s2">&quot;image_summary&quot;</span><span class="p">]</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Summary Functions</span>
+<span class="c1">################################################################################</span>
+
+
+<div class="viewcode-block" id="add_layer_summaries">
+<a class="viewcode-back" href="../../../api/encodermap.misc.html#encodermap.misc.summaries.add_layer_summaries">[docs]</a>
+<span class="k">def</span> <span class="nf">add_layer_summaries</span><span class="p">(</span>
+    <span class="n">layer</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">,</span>
+    <span class="n">step</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds summaries for a layer to Tensorboard.</span>
 
 <span class="sd">    Args:</span>
@@ -383,7 +489,13 @@
     <span class="n">variable_summaries</span><span class="p">(</span><span class="n">namescope</span><span class="p">,</span> <span class="n">layer</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;/biases&quot;</span><span class="p">,</span> <span class="n">biases</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">variable_summaries</span><span class="p">(</span><span class="n">namescope</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="nf">variable_summaries</span><span class="p">(</span>
+    <span class="n">namescope</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">variables</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">step</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Attach several summaries to a Tensor for TensorBoard visualization.</span>
 
@@ -415,51 +527,377 @@
             <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_max</span><span class="p">(</span><span class="n">var</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
             <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_min</span><span class="p">(</span><span class="n">var</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
             <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="s2">&quot;histogram&quot;</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">tensor_summary</span><span class="p">(</span><span class="s2">&quot;values&quot;</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="image_summary"><a class="viewcode-back" href="../../../encodermap.misc.html#encodermap.misc.summaries.image_summary">[docs]</a><span class="k">def</span> <span class="nf">image_summary</span><span class="p">(</span>
-    <span class="n">lowd</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">},</span> <span class="n">hist_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;bins&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">},</span> <span class="n">additional_fns</span><span class="o">=</span><span class="kc">None</span>
-<span class="p">):</span>
+<span class="c1"># def intermediate_summary(</span>
+<span class="c1">#     highd_data: Union[np.ndarray, Sequence[np.ndarray]],</span>
+<span class="c1">#     step: int,</span>
+<span class="c1">#     model: tf.keras.Model,</span>
+<span class="c1">#     parameters: &quot;AnyParameters&quot;,</span>
+<span class="c1">#     backend: Literal[&quot;matplotlib&quot;, &quot;plotly&quot;] = &quot;matplotlib&quot;,</span>
+<span class="c1"># ) -&gt; dict[str, io.BytesIO]:</span>
+<span class="c1">#     &quot;&quot;&quot;Produces images of intermediate layers during training.</span>
+<span class="c1">#</span>
+<span class="c1">#     Args:</span>
+<span class="c1">#         highd_data (Union[np.ndarray, Sequence[np.ndarray]]): The high dimensional</span>
+<span class="c1">#             data to be used with the autoencoder model. If the autoencoder is</span>
+<span class="c1">#             of type `Autoencoder`, `EncoderMap`, or `DihedralEncoderMap`, the</span>
+<span class="c1">#             `highd_data` should be a single np.ndarray. For the `AngleDihedralCartesianEncderMap`,</span>
+<span class="c1">#             the `highd_data` should be a Sequence of np.ndarray in the sequence</span>
+<span class="c1">#             angles, dihedrals, cartesians, distance, (and maybe side_dihedrals,</span>
+<span class="c1">#             depending on whether side_dihedrals are used for the training).</span>
+<span class="c1">#         step (int): The current training ste.</span>
+<span class="c1">#         model (tf.keras.Model): The autoencoder model.</span>
+<span class="c1">#         parameters (AnyParameters): Either an instance of `encodermap.parameters.Parameters`, or</span>
+<span class="c1">#             `encodermap.parameters.ADCParameters`, depending on which autoencoder model is used.</span>
+<span class="c1">#             The parameters are used to fix periodic input data.</span>
+<span class="c1">#         backend (Literal[&quot;matplotlib&quot;, &quot;plotly&quot;]: Which backend to use for</span>
+<span class="c1">#             plotting. Defaults to &#39;matplotlib&#39;.</span>
+<span class="c1">#</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     if model.encoder_model.layers[0].name == &quot;Encoder_0&quot;:</span>
+<span class="c1">#         return _encodermap_intermediate_summary(</span>
+<span class="c1">#             highd_data,</span>
+<span class="c1">#             step,</span>
+<span class="c1">#             model,</span>
+<span class="c1">#             parameters,</span>
+<span class="c1">#             backend,</span>
+<span class="c1">#         )</span>
+<span class="c1">#     else:</span>
+<span class="c1">#         return _angledihedralcartesianencodermap_intermediate_summary(</span>
+<span class="c1">#             highd_data,</span>
+<span class="c1">#             step,</span>
+<span class="c1">#             model,</span>
+<span class="c1">#             parameters,</span>
+<span class="c1">#             backend,</span>
+<span class="c1">#         )</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="c1"># def _layer_output_and_input_summary(</span>
+<span class="c1">#     data: np.ndarray,</span>
+<span class="c1">#     name: str,</span>
+<span class="c1">#     step: int,</span>
+<span class="c1">##     type: Literal[&quot;input&quot;, &quot;layer&quot;] = &quot;layer&quot;,</span>
+<span class="c1">#     backend: Literal[&quot;matplotlib&quot;, &quot;plotly&quot;] = &quot;matplotlib&quot;,</span>
+<span class="c1"># ) -&gt; io.BytesIO:</span>
+<span class="c1">#     buf = io.BytesIO()</span>
+<span class="c1">#     raise Exception(f&quot;Here&quot;)</span>
+<span class="c1">#     if isinstance(data, tf.SparseTensor):</span>
+<span class="c1">#         data = tf.sparse.to_dense(data, default_value=np.nan)</span>
+<span class="c1">#     if isinstance(data, tf.Tensor):</span>
+<span class="c1">#         data = data.numpy()</span>
+<span class="c1">#     mean = np.mean(data, 0)</span>
+<span class="c1">#     if backend == &quot;plotly&quot;:</span>
+<span class="c1">#         fig = px.bar(</span>
+<span class="c1">#             x=mean,</span>
+<span class="c1">#             y=np.arange(data.shape[1]),</span>
+<span class="c1">#             orientation=&quot;h&quot;,</span>
+<span class="c1">#             color=mean,</span>
+<span class="c1">#             color_continuous_scale=&quot;Viridis&quot;,</span>
+<span class="c1">#             labels={</span>
+<span class="c1">#                 &quot;x&quot;: f&quot;mean value of {data.shape[0]} samples&quot;,</span>
+<span class="c1">#                 &quot;y&quot;: &quot;feature&quot; if type == &quot;input&quot; else &quot;neuron&quot;,</span>
+<span class="c1">#             },</span>
+<span class="c1">#             width=500,</span>
+<span class="c1">#             height=500,</span>
+<span class="c1">#         )</span>
+<span class="c1">#         fig.update_layout(</span>
+<span class="c1">#             margin={&quot;l&quot;: 0, &quot;r&quot;: 0, &quot;t&quot;: 0, &quot;b&quot;: 0},</span>
+<span class="c1">#             coloraxis_showscale=False,</span>
+<span class="c1">#         )</span>
+<span class="c1">#         fig.write_image(buf)</span>
+<span class="c1">#     elif backend == &quot;matplotlib&quot;:</span>
+<span class="c1">#         raise NotImplementedError(f&quot;{mean.shape=}&quot;)</span>
+<span class="c1">#     else:</span>
+<span class="c1">#         raise Exception(</span>
+<span class="c1">#             f&quot;Argument `backend` must be either &#39;plotly&#39; or &#39;matplotlib&#39;.&quot;</span>
+<span class="c1">#         )</span>
+<span class="c1">#     image = tf.image.decode_png(buf.getvalue(), 4)</span>
+<span class="c1">#     image = tf.expand_dims(image, 0)</span>
+<span class="c1">#     with tf.name_scope(&quot;Layer Outputs&quot;):</span>
+<span class="c1">#         tf.summary.image(name, image, step=step)</span>
+<span class="c1">#     buf.seek(0)</span>
+<span class="c1">#     return buf</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="c1"># def _encodermap_intermediate_summary(</span>
+<span class="c1">#     highd_data: Union[np.ndarray, Sequence[np.ndarray]],</span>
+<span class="c1">#     step: int,</span>
+<span class="c1">#     model: tf.keras.Model,</span>
+<span class="c1">#     parameters: &quot;AnyParameters&quot;,</span>
+<span class="c1">#     backend: Literal[&quot;matplotlib&quot;, &quot;plotly&quot;] = &quot;matplotlib&quot;,</span>
+<span class="c1"># ) -&gt; dict[str, io.BytesIO]:</span>
+<span class="c1">#     # Local Folder Imports</span>
+<span class="c1">#</span>
+<span class="c1">#     out = {}</span>
+<span class="c1">#     layers = []</span>
+<span class="c1">#     for layer in model.encoder_model.layers:</span>
+<span class="c1">#         layers.append(layer)</span>
+<span class="c1">#     for layer in model.decoder_model.layers:</span>
+<span class="c1">#         layers.append(layer)</span>
+<span class="c1">#</span>
+<span class="c1">#     if model.sparse:</span>
+<span class="c1">#         input = model.get_dense_model(highd_data)</span>
+<span class="c1">#     else:</span>
+<span class="c1">#         input = highd_data</span>
+<span class="c1">#</span>
+<span class="c1">#     out[&quot;input&quot;] = _layer_output_and_input_summary(</span>
+<span class="c1">#         input, name=&quot;Input&quot;, step=step, type=&quot;input&quot;, backend=backend</span>
+<span class="c1">#     )</span>
+<span class="c1">#</span>
+<span class="c1">#     if parameters.periodicity != float(&quot;inf&quot;):</span>
+<span class="c1">#         if parameters.periodicity != 2 * np.pi:</span>
+<span class="c1">#             input = input / parameters.periodicity * 2 * np.pi</span>
+<span class="c1">#         input = tf.concat([tf.sin(input), tf.cos(input)], 1)</span>
+<span class="c1">#</span>
+<span class="c1">#     for layer in layers[:-1]:</span>
+<span class="c1">#         input = layer(input)</span>
+<span class="c1">#         out[layer.name] = _layer_output_and_input_summary(input, layer.name, step=step, backend=backend)</span>
+<span class="c1">#</span>
+<span class="c1">#     # last layer needs to be treated individually because of maybe being periodic</span>
+<span class="c1">#     input = layers[-1](input)</span>
+<span class="c1">#     if parameters.periodicity != float(&quot;inf&quot;):</span>
+<span class="c1">#         input = tf.atan2(*tf.split(input, 2, 1))</span>
+<span class="c1">#         if parameters.periodicity != 2 * np.pi:</span>
+<span class="c1">#             input = input / (2 * np.pi) * p.periodicity</span>
+<span class="c1">#         out[layer.name] = _layer_output_and_input_summary(</span>
+<span class="c1">#             input, layers[-1].name, step=step, backend=backend</span>
+<span class="c1">#         )</span>
+<span class="c1">#     return out</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="c1"># def _angledihedralcartesianencodermap_intermediate_summary(</span>
+<span class="c1">#     highd_data: Union[np.ndarray, Sequence[np.ndarray]],</span>
+<span class="c1">#     step: int,</span>
+<span class="c1">#     model: tf.keras.Model,</span>
+<span class="c1">#     parameters: &quot;AnyParameters&quot;,</span>
+<span class="c1">#     backend: Literal[&quot;matplotlib&quot;, &quot;plotly&quot;] = &quot;matplotlib&quot;,</span>
+<span class="c1"># ) -&gt; dict[str, io.BytesIO]:</span>
+<span class="c1">#     out = {}</span>
+<span class="c1">#</span>
+<span class="c1">#     if isinstance(highd_data, (list, tuple)):</span>
+<span class="c1">#         if len(highd_data) == 1:</span>
+<span class="c1">#             dihedrals = highd_data[0]</span>
+<span class="c1">#             angles = None</span>
+<span class="c1">#             side_dihedrals = None</span>
+<span class="c1">#         elif len(highd_data) == 2:</span>
+<span class="c1">#             angles, dihedrals = highd_data</span>
+<span class="c1">#             side_dihedrals = None</span>
+<span class="c1">#         elif len(highd_data) == 3:</span>
+<span class="c1">#             angles, dihedrals, side_dihedrals = highd_data</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             raise Exception(</span>
+<span class="c1">#                 f&quot;Can&#39;t construct intermediate layer outputs for ADCEMap when &quot;</span>
+<span class="c1">#                 f&quot;provided high-dimensional contains more than 3 elements.&quot;</span>
+<span class="c1">#             )</span>
+<span class="c1">#     else:</span>
+<span class="c1">#         dihedrals = highd_data</span>
+<span class="c1">#         angles = None</span>
+<span class="c1">#         side_dihedrals = None</span>
+<span class="c1">#</span>
+<span class="c1">#     layers = {}</span>
+<span class="c1">#     for layer in model.encoder_model.layers:</span>
+<span class="c1">#         layers[layer.name] = layer</span>
+<span class="c1">#     for layer in model.decoder_model.layers:</span>
+<span class="c1">#         layers[layer.name] = layer</span>
+<span class="c1">#</span>
+<span class="c1">#     # angles</span>
+<span class="c1">#     if angles is not None:</span>
+<span class="c1">#         layer = layers[&quot;input_angles_to_unit_circle&quot;]</span>
+<span class="c1">#         raise Exception(f&quot;Here {layer=} {model.__class__.__name__=} {angles.shape=} {model.get_dense_model_central_angles.input_shape=}&quot;)</span>
+<span class="c1">#         if model.__class__.__name__ == &quot;ADCSparseFunctionalModel&quot;:</span>
+<span class="c1">#             if model.get_dense_model_central_angles is not None:</span>
+<span class="c1">#                 angles = model.get_dense_model_central_angles(</span>
+<span class="c1">#                     angles</span>
+<span class="c1">#                 )</span>
+<span class="c1">#         raise Exception(f&quot;Here&quot;)</span>
+<span class="c1">#         angles = layer(angles)</span>
+<span class="c1">#         out[layer.name] = _layer_output_and_input_summary(angles, layer.name, step=step, backend=backend)</span>
+<span class="c1">#</span>
+<span class="c1">#     raise Exception(&quot;Here&quot;)</span>
+<span class="c1">#</span>
+<span class="c1">#     # sidechain dihedrals</span>
+<span class="c1">#     if side_dihedrals is not None:</span>
+<span class="c1">#         layer = layers[&quot;input_side_dihedrals_to_unit_circle&quot;]</span>
+<span class="c1">#         out[&quot;input_side_dihedrals&quot;] = _layer_output_and_input_summary(</span>
+<span class="c1">#             side_dihedrals, name=&quot;Input Side Dihedrals&quot;, step=step, type=&quot;input&quot;</span>
+<span class="c1">#         )</span>
+<span class="c1">#         if model.__class__.__name__ == &quot;ADCSparseFunctionalModel&quot;:</span>
+<span class="c1">#             if model.get_dense_model_side_dihedrals is not None:</span>
+<span class="c1">#                 side_dihedrals = model.get_dense_model_side_dihedrals(</span>
+<span class="c1">#                     side_dihedrals</span>
+<span class="c1">#                 )</span>
+<span class="c1">#         side_dihedrals = layer(side_dihedrals)</span>
+<span class="c1">#         out[layer.name] = _layer_output_and_input_summary(</span>
+<span class="c1">#             side_dihedrals, layer.name, step=step, backend=backend</span>
+<span class="c1">#         )</span>
+<span class="c1">#</span>
+<span class="c1">#     layer = layers[&quot;input_central_dihedrals_to_unit_circle&quot;]</span>
+<span class="c1">#     out[&quot;input_dihedrals&quot;] = _layer_output_and_input_summary(</span>
+<span class="c1">#         dihedrals, name=&quot;Input Dihedrals&quot;, step=step, type=&quot;input&quot;</span>
+<span class="c1">#     )</span>
+<span class="c1">#     if model.__class__.__name__ == &quot;ADCSparseFunctionalModel&quot;:</span>
+<span class="c1">#         if model.get_dense_model_central_dihedrals is not None:</span>
+<span class="c1">#             dihedrals = model.get_dense_model_side_dihedrals(</span>
+<span class="c1">#                 dihedrals</span>
+<span class="c1">#             )</span>
+<span class="c1">#     dihedrals = layer(dihedrals)</span>
+<span class="c1">#     out[layer.name] = _layer_output_and_input_summary(dihedrals, layer.name, step=step, backend=backend)</span>
+<span class="c1">#</span>
+<span class="c1">#     # concatenate</span>
+<span class="c1">#     if angles is not None and side_dihedrals is not None:</span>
+<span class="c1">#         layer = layers[&quot;concatenate_angular_inputs&quot;]</span>
+<span class="c1">#         input = layer((angles, dihedrals, side_dihedrals))</span>
+<span class="c1">#         splits = [angles.shape[1], dihedrals.shape[1], side_dihedrals.shape[1]]</span>
+<span class="c1">#     elif angles is not None and side_dihedrals is None:</span>
+<span class="c1">#         layer = layers[&quot;concatenate_angular_inputs&quot;]</span>
+<span class="c1">#         input = layer((angles, dihedrals))</span>
+<span class="c1">#         splits = [angles.shape[1], dihedrals.shape[1]]</span>
+<span class="c1">#     else:</span>
+<span class="c1">#         input = dihedrals</span>
+<span class="c1">#         splits = [dihedrals.shape[1]]</span>
+<span class="c1">#     out[layer.name] = _layer_output_and_input_summary(input, layer.name, step=step, backend=backend)</span>
+<span class="c1">#</span>
+<span class="c1">#     # Encoder</span>
+<span class="c1">#     i = 0</span>
+<span class="c1">#     while True:</span>
+<span class="c1">#         try:</span>
+<span class="c1">#             layer = layers[f&quot;Encoder_{i}&quot;]</span>
+<span class="c1">#         except KeyError:</span>
+<span class="c1">#             break</span>
+<span class="c1">#         input = layer(input)</span>
+<span class="c1">#         out[layer.name] = _layer_output_and_input_summary(input, layer.name, step=step, backend=backend)</span>
+<span class="c1">#         i += 1</span>
+<span class="c1">#</span>
+<span class="c1">#     # Decoder</span>
+<span class="c1">#     i = 0</span>
+<span class="c1">#     while True:</span>
+<span class="c1">#         try:</span>
+<span class="c1">#             layer = layers[f&quot;Decoder_{i}&quot;]</span>
+<span class="c1">#         except KeyError:</span>
+<span class="c1">#             break</span>
+<span class="c1">#         input = layer(input)</span>
+<span class="c1">#         out[layer.name] = _layer_output_and_input_summary(input, layer.name, step=step, backend=backend)</span>
+<span class="c1">#         i += 1</span>
+<span class="c1">#</span>
+<span class="c1">#     # split</span>
+<span class="c1">#     if angles is not None and side_dihedrals is not None:</span>
+<span class="c1">#         input = tf.split(input, splits, 1)</span>
+<span class="c1">#         angles, dihedrals, side_dihedrals = input</span>
+<span class="c1">#     elif angles is not None and side_dihedrals is None:</span>
+<span class="c1">#         input = tf.split(input, splits, 1)</span>
+<span class="c1">#         angles, dihedrals = input</span>
+<span class="c1">#     else:</span>
+<span class="c1">#         dihedrals = input</span>
+<span class="c1">#</span>
+<span class="c1">#     # rejig</span>
+<span class="c1">#     if angles is not None:</span>
+<span class="c1">#         layer = layers[&quot;angles_from_unit_circle&quot;]</span>
+<span class="c1">#         angles = layer(angles)</span>
+<span class="c1">#         out[&quot;output_angles&quot;] = _layer_output_and_input_summary(</span>
+<span class="c1">#             angles, name=&quot;Output Angles&quot;, step=step, backend=backend</span>
+<span class="c1">#         )</span>
+<span class="c1">#</span>
+<span class="c1">#     # sidechain dihedrals</span>
+<span class="c1">#     if side_dihedrals is not None:</span>
+<span class="c1">#         layer = layers[&quot;side_dihedrals_from_unit_circle&quot;]</span>
+<span class="c1">#         side_dihedrals = layer(side_dihedrals)</span>
+<span class="c1">#         out[&quot;output_side_dihedrals&quot;] = _layer_output_and_input_summary(</span>
+<span class="c1">#             side_dihedrals, name=&quot;Output Side Dihedrals&quot;, step=step, backend=backend</span>
+<span class="c1">#         )</span>
+<span class="c1">#</span>
+<span class="c1">#     layer = layers[&quot;dihedrals_from_unit_circle&quot;]</span>
+<span class="c1">#     dihedrals = layer(dihedrals)</span>
+<span class="c1">#     out[&quot;output_dihedrals&quot;] = _layer_output_and_input_summary(</span>
+<span class="c1">#         dihedrals, name=&quot;Output Dihedrals&quot;, step=step, backend=backend</span>
+<span class="c1">#     )</span>
+<span class="c1">#     return out</span>
+
+
+<div class="viewcode-block" id="image_summary">
+<a class="viewcode-back" href="../../../api/encodermap.misc.html#encodermap.misc.summaries.image_summary">[docs]</a>
+<span class="k">def</span> <span class="nf">image_summary</span><span class="p">(</span>
+    <span class="n">lowd</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">step</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">scatter_kws</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">hist_kws</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">additional_fns</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Callable</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;matplotlib&quot;</span><span class="p">,</span> <span class="s2">&quot;plotly&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;matplotlib&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Writes an image to Tensorboard.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        lowd (np.ndarray): The data to plot. Usually that will be the output of the latent space of the</span>
-<span class="sd">            Autoencoder. This array has to be of dimensionality 2 (rows and columns). The first two points of the</span>
-<span class="sd">            rows will be used as xy coordinates in a scatter plot.</span>
-<span class="sd">        step (Union[int, None], optional): The training step under which you can find the image</span>
-<span class="sd">            in tensorboard. Defaults to None.</span>
-<span class="sd">        scatter_kws (dict, optional): A dictionary with keyword arguments to be passed to matpltlib.pyplot.scatter().</span>
-<span class="sd">            Defaults to {&#39;s&#39;: 20}.</span>
-<span class="sd">        hist_kws (dict, optional): A dictionary with keyword arguments to be passed to matpltlib.pyplot.hist2d().</span>
-<span class="sd">            Defaults to {&#39;bins&#39;: 50}.</span>
-<span class="sd">        additional_fns (Union[None, list], optional): A list of functions that take the data of the latent space</span>
-<span class="sd">            and return a tf.Tensor that can be logged to tensorboard with tf.summary.image().</span>
+<span class="sd">        lowd (np.ndarray): The data to plot. Usually that</span>
+<span class="sd">            will be the output of the latent space of the Autoencoder.</span>
+<span class="sd">            This array has to be of dimensionality 2 (rows and columns).</span>
+<span class="sd">            The first two points of the rows will be used as xy coordinates</span>
+<span class="sd">            in a scatter plot.</span>
+<span class="sd">        step (Optional[int]): The training step under which you can find the</span>
+<span class="sd">            image in tensorboard. Defaults to None.</span>
+<span class="sd">        scatter_kws (Optional[dict[str, Any]]): A dict with items that</span>
+<span class="sd">            `plotly.express.scatter()` will accept. If None is provided,</span>
+<span class="sd">            a dict with size 20 will be passed to</span>
+<span class="sd">            `px.scatter(**{&#39;size_max&#39;: 10, &#39;opacity&#39;: 0.2})`,</span>
+<span class="sd">            which sets an appropriate size of scatter points for the size of</span>
+<span class="sd">            datasets encodermap is usually used for.</span>
+<span class="sd">        hist_kws (Optional[dict[str, Any]]): A dict with items that</span>
+<span class="sd">            `encodermap.plot.plotting._plot_free_energy()` will accept. If None is provided a</span>
+<span class="sd">            dict with bins 50 will be passed to</span>
+<span class="sd">            `encodermap.plot.plotting._plot_free_energy(**{&#39;bins&#39;: 50})`.</span>
+<span class="sd">            You can choose a colormap here by providing `{&#39;bins&#39;: 50, &#39;cmap&#39;:</span>
+<span class="sd">            &#39;plasma&#39;}` for this argument.</span>
+<span class="sd">        additional_fns (Optional[Sequence[Callable]]): A sequence of functions that</span>
+<span class="sd">            take the data of the latent space and return a tf.Tensor that can</span>
+<span class="sd">            be logged to tensorboard with tf.summary.image().</span>
+<span class="sd">        backend (Literal[&quot;matplotlib&quot;, &quot;plotly&quot;]: Which backend to use for</span>
+<span class="sd">            plotting. Defaults to &#39;matplotlib&#39;.</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        AssertionError: When lowd.ndim is not 2 and when len(lowd) != len(ids)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;plotly&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">scatter_kws</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scatter_kws</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;size_max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;opacity&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">hist_kws</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">hist_kws</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;bins&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;matplotlib&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">scatter_kws</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">scatter_kws</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">hist_kws</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">hist_kws</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;bins&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Argument `backend` must be either &#39;plotly&#39; or &#39;matplotlib&#39;.&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">lowd</span><span class="p">)):</span>
-        <span class="n">image</span> <span class="o">=</span> <span class="n">_gen_nan_image</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;plotly&quot;</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">_gen_nan_image_plotly</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">_gen_nan_image_matplotlib</span><span class="p">()</span>
         <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;Latent Scatter&quot;</span><span class="p">):</span>
             <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Latent at step </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
         <span class="k">return</span>
-    <span class="n">scatter_image</span> <span class="o">=</span> <span class="n">_gen_scatter</span><span class="p">(</span><span class="n">lowd</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">scatter_kws</span><span class="p">)</span>
-    <span class="n">hist_image</span> <span class="o">=</span> <span class="n">_gen_hist</span><span class="p">(</span><span class="n">lowd</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">hist_kws</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;Latent Scatter&quot;</span><span class="p">):</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Latent at step </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">scatter_image</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;Latent Density&quot;</span><span class="p">):</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Latent at step </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">hist_image</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;plotly&quot;</span><span class="p">:</span>
+        <span class="n">scatter_image</span> <span class="o">=</span> <span class="n">_gen_scatter_plotly</span><span class="p">(</span><span class="n">lowd</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">scatter_kws</span><span class="p">)</span>
+        <span class="n">hist_image</span> <span class="o">=</span> <span class="n">_gen_hist_plotly</span><span class="p">(</span><span class="n">lowd</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">hist_kws</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">scatter_image</span> <span class="o">=</span> <span class="n">_gen_scatter_matplotlib</span><span class="p">(</span><span class="n">lowd</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">scatter_kws</span><span class="p">)</span>
+        <span class="n">hist_image</span> <span class="o">=</span> <span class="n">_gen_hist_matplotlib</span><span class="p">(</span><span class="n">lowd</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">hist_kws</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;Latent Output&quot;</span><span class="p">):</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Latent Scatter&quot;</span><span class="p">,</span> <span class="n">scatter_image</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Latent Density&quot;</span><span class="p">,</span> <span class="n">hist_image</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">additional_fns</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;User Provided Plotting Functions&quot;</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">fn</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">additional_fns</span><span class="p">):</span>
-                <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">image</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;User Plotting </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> at step </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fn</span><span class="p">(</span><span class="n">lowd</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span>
-                <span class="p">)</span></div>
+                <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User Plotting </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fn</span><span class="p">(</span><span class="n">lowd</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="_gen_hist"><a class="viewcode-back" href="../../../encodermap.misc.html#encodermap.misc.summaries._gen_hist">[docs]</a><span class="k">def</span> <span class="nf">_gen_hist</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">hist_kws</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="nf">_gen_hist_matplotlib</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">hist_kws</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates matplotlib histogram and returns tensorflow Tensor that represents an image.</span>
 
 <span class="sd">    Args:</span>
@@ -480,11 +918,84 @@
     <span class="n">buf</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">decode_png</span><span class="p">(</span><span class="n">buf</span><span class="o">.</span><span class="n">getvalue</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">image</span></div>
+    <span class="k">return</span> <span class="n">image</span>
 
 
-<div class="viewcode-block" id="_gen_nan_image"><a class="viewcode-back" href="../../../encodermap.misc.html#encodermap.misc.summaries._gen_nan_image">[docs]</a><span class="k">def</span> <span class="nf">_gen_nan_image</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates matplotlib image, whith debug info.</span>
+<span class="k">def</span> <span class="nf">_gen_hist_plotly</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">hist_kws</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates matplotlib histogram and returns tensorflow Tensor that</span>
+<span class="sd">    represents an image.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (Union[np.ndarray, tf.Tensor]): The xy data to be used.</span>
+<span class="sd">            `data.ndim` should be 2. 1st dimension the datapoints, 2nd dimension x, y.</span>
+<span class="sd">        hist_kws (Optional[dict[str, Any]]): A dict with items that</span>
+<span class="sd">            `encodermap.plot.plotting._plot_free_energy()` will accept. If None is provided a</span>
+<span class="sd">            dict with bins 50 will be passed to</span>
+<span class="sd">            `encodermap.plot.plotting._plot_free_energy(**{&#39;bins&#39;: 50})`.</span>
+<span class="sd">            You can choose a colormap here by providing `{&#39;bins&#39;: 50, &#39;cmap&#39;:</span>
+<span class="sd">            &#39;plasma&#39;}` for this argument.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tf.Tensor: A tensorflow tensor that can be written to Tensorboard with tf.summary.image().</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">_plot_free_energy</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="o">**</span><span class="n">hist_kws</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">trace</span><span class="p">,</span>
+        <span class="p">],</span>
+        <span class="n">layout</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+            <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+            <span class="s2">&quot;margin&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;l&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+    <span class="n">buf</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">decode_png</span><span class="p">(</span><span class="n">buf</span><span class="o">.</span><span class="n">getvalue</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image</span>
+
+
+<span class="k">def</span> <span class="nf">_gen_nan_image_plotly</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates matplotlib image, with debug info.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tf.Tensor: A tensorflow tensor that can be written to Tensorboard with tf.summary.image().</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span>
+        <span class="n">layout</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+            <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+            <span class="s2">&quot;margin&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;l&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_annotation</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span>
+        <span class="n">y</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+        <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Some data of lowd is nan&quot;</span><span class="p">,</span>
+        <span class="n">showarrow</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">font</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">36</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+    <span class="n">buf</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">decode_png</span><span class="p">(</span><span class="n">buf</span><span class="o">.</span><span class="n">getvalue</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image</span>
+
+
+<span class="k">def</span> <span class="nf">_gen_nan_image_matplotlib</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates matplotlib image, with debug info.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        tf.Tensor: A tensorflow tensor that can be written to Tensorboard with tf.summary.image().</span>
@@ -506,10 +1017,56 @@
     <span class="n">buf</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">decode_png</span><span class="p">(</span><span class="n">buf</span><span class="o">.</span><span class="n">getvalue</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">image</span></div>
+    <span class="k">return</span> <span class="n">image</span>
 
 
-<div class="viewcode-block" id="_gen_scatter"><a class="viewcode-back" href="../../../encodermap.misc.html#encodermap.misc.summaries._gen_scatter">[docs]</a><span class="k">def</span> <span class="nf">_gen_scatter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">scatter_kws</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_gen_scatter_plotly</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">scatter_kws</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates matplotlib scatter plot and returns tensorflow Tensor that represents an image.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (Union[np.ndarray, tf.Tensor]): The xy data to be used. data.ndim should be 2.</span>
+<span class="sd">            1st dimension the datapoints, 2nd dimension x, y.</span>
+<span class="sd">        scatter_kws (Optional[dict[str, Any]]): A dict with items that</span>
+<span class="sd">            `plotly.express.scatter()` will accept. If None is provided,</span>
+<span class="sd">            a dict with size 20 will be passed to</span>
+<span class="sd">            `px.scatter(**{&#39;size_max&#39;: 10, &#39;opacity&#39;: 0.2})`,</span>
+<span class="sd">            which sets an appropriate size of scatter points for the size of</span>
+<span class="sd">            datasets encodermap is usually used for.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tf.Tensor: A tensorflow tensor that can be written to Tensorboard with tf.summary.image().</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+        <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">},</span>
+        <span class="o">**</span><span class="n">scatter_kws</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+        <span class="n">margin</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;l&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">coloraxis_showscale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">showlegend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+    <span class="n">buf</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">decode_png</span><span class="p">(</span><span class="n">buf</span><span class="o">.</span><span class="n">getvalue</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image</span>
+
+
+<span class="k">def</span> <span class="nf">_gen_scatter_matplotlib</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">scatter_kws</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates matplotlib scatter plot and returns tensorflow Tensor that represents an image.</span>
 
 <span class="sd">    Args:</span>
@@ -524,7 +1081,6 @@
     <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
     <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">)</span>  <span class="c1"># overwrites current backend of notebook</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-    <span class="c1"># plt.plot([1, 2])</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="o">**</span><span class="n">scatter_kws</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -534,89 +1090,83 @@
     <span class="n">buf</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">decode_png</span><span class="p">(</span><span class="n">buf</span><span class="o">.</span><span class="n">getvalue</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">image</span></div>
+    <span class="k">return</span> <span class="n">image</span>
 </pre></div>
 
-            </article>
-            
-            
-            
-            <footer class="bd-footer-article">
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-</div>
-            </footer>
-            
-          </div>
-          
-          
-          
-            <div class="bd-sidebar-secondary bd-toc">
+                </article>
               
-<div class="toc-item">
-  
-<div id="searchbox"></div>
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
 </div>
-
-<div class="toc-item">
-  
-</div>
-
-<div class="toc-item">
-  
-</div>
-
+                </footer>
+              
             </div>
-          
-          
-        </div>
-        <footer class="bd-footer-content">
-          <div class="bd-footer-content__inner">
+            
+            
+              
             
           </div>
-        </footer>
+          <footer class="bd-footer-content">
+            
+          </footer>
         
       </main>
     </div>
   </div>
-
   
-    
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
-<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
-  <footer class="bd-footer"><div class="bd-footer__inner container">
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
   
-  <div class="footer-item">
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
     
-<p class="copyright">
-
-    &copy; Copyright 2023, Kevin Sawade, Tobias Lemke.<br>
-
-</p>
-
-  </div>
-  
-  <div class="footer-item">
-    <p class="theme-version">
-    Built with the
-    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
-        PyData Sphinx Theme
-    </a>
-    0.12.0.
-</p>
-  </div>
-  
-  <div class="footer-item">
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
     
-<p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
-</p>
+  </p>
+</div>
+      
+        <div class="footer-item">
 
-  </div>
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T21:24:25.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
   
 </div>
+
   </footer>
   </body>
 </html>

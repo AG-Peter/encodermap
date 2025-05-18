@@ -1,0 +1,633 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Changelog &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c1026b93" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'changelog/index';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T22:43:00"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Changelog</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="changelog">
+<span id="changelog-index"></span><h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">#</a></h1>
+<section id="version-3-1-0-todo-date">
+<h2>Version 3.1.0 (Todo Date)<a class="headerlink" href="#version-3-1-0-todo-date" title="Link to this heading">#</a></h2>
+<section id="additions">
+<h3>Additions<a class="headerlink" href="#additions" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>More Tests.</p>
+<ul>
+<li><p>A lot more tests have been implemented. The software is pretty stable for general use.</p></li>
+</ul>
+</li>
+<li><p>Reference training.</p>
+<ul>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">AngleDihedralCartesianEncoderMap</span></code> class now runs a short reference training before the actual neural network training. The idea behind this training is to get typical values for the cartesian cost contributions (dihedral_cost, angle_cost, cartesian_cost). And adjust them to roughly the same values.</p></li>
+</ul>
+</li>
+<li><p>Plotting:</p>
+<ul>
+<li><p>Added plotly interactive distance histogram, in which the sigmoid parameters can be adjusted interactively. This function is accessible as the <code class="docutils literal notranslate"><span class="pre">distance_histogram_interactive</span></code> function in <code class="docutils literal notranslate"><span class="pre">encodermap.plot</span></code>:</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">encodermap.plot</span> <span class="kn">import</span> <span class="n">distance_histogram_interactive</span>
+<span class="n">distance_histogram_interactive</span><span class="p">(</span>
+    <span class="n">highd_data</span><span class="p">,</span>
+    <span class="n">periodicity</span><span class="o">=</span><span class="mf">3.141</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Added a plotly/dash-based interactive plotting, which supports clustering and path generation.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">TrajEnsemble</span></code> and <code class="docutils literal notranslate"><span class="pre">SingleTraj</span></code> classes:</p>
+<ul>
+<li><p>Added a way for a <code class="docutils literal notranslate"><span class="pre">TrajEnsemble</span></code> to be saved to a single netCDF-formatted HDF5 file.</p></li>
+</ul>
+</li>
+<li><p>Better Docs:</p>
+<ul>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">run_livereload.py</span></code> script to <code class="docutils literal notranslate"><span class="pre">docs</span></code> with which the docs can be built interactively.</p></li>
+<li><p>Reworked the notebooks to allow better Google Colab integration and added the new interactive plotting tools.</p></li>
+<li><p>Reworked the notebooks to allow better Google Colab integration and added the new interactive plotting tools.</p></li>
+</ul>
+</li>
+<li><p>Tensorflow stuff:</p>
+<ul>
+<li><p>Added a clashes metric, that calculates the clashes during training.</p></li>
+<li><p>A RMSD metric is currently being developed.</p></li>
+</ul>
+</li>
+<li><p>Changed to <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> and added better import sorting with isort. Can be run with <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">isort</span> <span class="pre">.</span></code></p></li>
+<li><p>Added the possibility to choose different kernel and bias initializers. You can now supply the keywords:</p>
+<ul>
+<li><p>“VarianceScaling”: For the normal variance scaling initializer. This is the default.</p></li>
+<li><p>“deterministic”: This will use the old <code class="docutils literal notranslate"><span class="pre">tf.compat.v1.variance_scaling_initizlier</span></code> wiht a seed, so that the starting weights are deterministic.</p></li>
+<li><p>“ones”: For a weight matrix full of ones.</p></li>
+<li><p>You can also provide a dict following TensorFlow’s naming convention for unnamed dense layers: [“dense/kernel”, “dense_1/kernel”, “dense_2/kerne”, etc.] as the keys and np.ndarrays as the values and these arrays will be used. This can also be used to rebuilt a model from bare numpy weight arrays.</p></li>
+</ul>
+</li>
+<li><p>The BiasInitializer doesn’t recognize the standard “VarianceScaling” keyword, but uses the “RandomNormal” keyword as a default. It also recognizes “deterministic”, “ones” and can use a dict with these keys: [“dense/bias”, “dense_1/bias”, “dense_2/bias”, etc.]</p></li>
+</ul>
+</section>
+<section id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fixed error in <code class="docutils literal notranslate"><span class="pre">TrajEnsemble._pyemma_indexing</span></code>, which did not correctly concatenate the <code class="docutils literal notranslate"><span class="pre">SingleTraj</span></code>’s.</p></li>
+<li><p>Fixed error using the <code class="docutils literal notranslate"><span class="pre">TrajEnsemble.load_CVs</span></code> method with the <code class="docutils literal notranslate"><span class="pre">labels</span></code> argument, which did not recognize the passed in <code class="docutils literal notranslate"><span class="pre">data</span></code> as a <code class="docutils literal notranslate"><span class="pre">np.array</span></code>.</p></li>
+<li><p>Fixed the calculation of sidechains in the tf1 version according to #25.</p></li>
+<li><p>Fixed the activation functions for the ADCEMap model.</p></li>
+<li><p>Fixed the splits of the ADCEMap model, which led to bad decoding.</p></li>
+<li><p>Replaced the <code class="docutils literal notranslate"><span class="pre">tf.keras.backend.Variable</span></code> <code class="docutils literal notranslate"><span class="pre">_train_step</span></code> in all encodermap models that implement custom training with <code class="docutils literal notranslate"><span class="pre">_my_train_counter</span></code>, because the subclasses models advanced the <code class="docutils literal notranslate"><span class="pre">train_step</span></code> by themselves, leading to train_counters advancing in multiples of two for all logging purposes (tensorboard).</p></li>
+<li><p>Fixed the way atom indices are passed for <code class="docutils literal notranslate"><span class="pre">TrajEnsemble</span></code>s. Previously the <code class="docutils literal notranslate"><span class="pre">xr.Dataset</span></code>s of the <code class="docutils literal notranslate"><span class="pre">SingleTraj</span></code> classes had attributes with numpy arrays giving the indices of the atoms from which this attribute was calculated. E.g. when a dihedral feature was loaded, the <code class="docutils literal notranslate"><span class="pre">traj._CVs.attrs[&quot;indices&quot;]</span></code> had a numpy array of shape (n_dihedrals, 4) to index the atoms from which the dihedrals were loaded. Adding a distance feature to this traj would have made the <code class="docutils literal notranslate"><span class="pre">traj._CVs.attrs[&quot;indices&quot;]</span></code> into a list of numpy arrays with shapes [(n_dihedrals, 4), (n_distances, 2)]. This attribute could not be serialized correctly. Now the datasets contain their own <code class="docutils literal notranslate"><span class="pre">feature_indices</span></code> dataarrays, that omit the frame coordinate and keep track of the atoms from which this feature was calculated.</p></li>
+<li><p>Fixed the <code class="docutils literal notranslate"><span class="pre">dihedral_to_cartesian_tf_one_way_layers</span></code> function to be more compatible with the tf1 version of EncoderMap.</p></li>
+<li><p>Fixed that the argument <code class="docutils literal notranslate"><span class="pre">dataset</span></code> for <code class="docutils literal notranslate"><span class="pre">AngleCartesianEncoderMap</span></code> is not used, when the <code class="docutils literal notranslate"><span class="pre">trajs</span></code> have the property<code class="docutils literal notranslate"> <span class="pre">_CVs_in_file</span></code> as True.</p></li>
+<li><p>Fixed the <code class="docutils literal notranslate"><span class="pre">np.mean</span></code> section in <code class="docutils literal notranslate"><span class="pre">dihedral_to_cartesian_diubi.py</span></code>:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">means</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">costs</span><span class="p">:</span>
+    <span class="n">means</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span><span class="p">]))</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="version-3-0-1-2023-07-27">
+<h2>Version 3.0.1 (2023-07-27)<a class="headerlink" href="#version-3-0-1-2023-07-27" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>Fixes<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fixed error in <code class="docutils literal notranslate"><span class="pre">encodermap_tf1/moldata.py</span></code>, where sidechain dihedrals are not
+correctly indexed. Now using MDTraj’s chi1, ch2, … indexers (#25)</p></li>
+<li><p>In plot/utils.py fixed <code class="docutils literal notranslate"><span class="pre">_unpack_cluster_info</span></code> to allow pandas versions &lt; 2.0 and &gt;= 2.0.</p></li>
+<li><p>Fixed github workflow to accomodate newer versions of html-testRunner (see: https://stackoverflow.com/questions/71858651/attributeerror-htmltestresult-object-has-no-attribute-count-relevant-tb-lev)</p></li>
+<li><p>Fixed the optional imports for dask.</p></li>
+<li><p>Fixed the loss function for the ADCEncoderMap cartesian dist sig cost.</p></li>
+<li><p>Fixed the unittest for optional imports in tests/test_optional_imports_before_installing_reqs.py.</p></li>
+<li><p>Fixed the unittests in tests/test_moldata.py (#25).</p></li>
+<li><p>Fixed the unittests in tests/test_losses.py</p></li>
+<li><p>Fixed the .gitignore and excluded test files.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Additions<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">del_CVs</span></code> to <code class="docutils literal notranslate"><span class="pre">SingleTraj</span></code> and <code class="docutils literal notranslate"><span class="pre">TrajEnsemble</span></code> to easily delete attached CVs.</p></li>
+</ul>
+</section>
+</section>
+<section id="id3">
+<h2>2021-02-01<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Reduced the number of training steps in the example notebooks.</p></li>
+<li><p>Added Google Colab links to the example notebooks.</p></li>
+</ul>
+</section>
+<section id="version-3-0-0-2021-01-25">
+<h2>Version 3.0.0 (2021-01-25)<a class="headerlink" href="#version-3-0-0-2021-01-25" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Updated tests to TensorFlow2</p></li>
+<li><p>Added trajinfo classes.</p></li>
+<li><p>Autoencoder model and high-level training available.</p></li>
+<li><p>Started tracking changes via this changelog.</p></li>
+<li><p>Started semantic versioning.</p></li>
+<li><p>Features from Tensorflow 1 version are all ported to tf2.</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-3-1-0-todo-date">Version 3.1.0 (Todo Date)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additions">Additions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-3-0-1-2023-07-27">Version 3.0.1 (2023-07-27)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Additions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2021-02-01</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-3-0-0-2021-01-25">Version 3.0.0 (2021-01-25)</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/changelog/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T22:43:00.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

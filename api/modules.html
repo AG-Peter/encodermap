@@ -1,0 +1,782 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>EncoderMap &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c1026b93" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/modules';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T22:43:00"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">EncoderMap</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="encodermap">
+<h1>EncoderMap<a class="headerlink" href="#encodermap" title="Link to this heading">#</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.html">encodermap package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="encodermap.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.autoencoder.html">encodermap.autoencoder package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.autoencoder.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.autoencoder.html#module-encodermap.autoencoder.autoencoder">encodermap.autoencoder.autoencoder module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.autoencoder.html#module-encodermap.autoencoder">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.callbacks.html">encodermap.callbacks package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.callbacks.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.callbacks.html#module-encodermap.callbacks.callbacks">encodermap.callbacks.callbacks module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.callbacks.html#module-encodermap.callbacks.metrics">encodermap.callbacks.metrics module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.callbacks.html#module-encodermap.callbacks">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.encodermap_tf1.html">encodermap.encodermap_tf1 package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.encodermap_tf1.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.encodermap_tf1.html#module-encodermap.encodermap_tf1.angle_dihedral_cartesian_encodermap">encodermap.encodermap_tf1.angle_dihedral_cartesian_encodermap module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.encodermap_tf1.html#module-encodermap.encodermap_tf1.autoencoder">encodermap.encodermap_tf1.autoencoder module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.encodermap_tf1.html#module-encodermap.encodermap_tf1.backmapping">encodermap.encodermap_tf1.backmapping module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.encodermap_tf1.html#module-encodermap.encodermap_tf1.encodermap">encodermap.encodermap_tf1.encodermap module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.encodermap_tf1.html#module-encodermap.encodermap_tf1.misc">encodermap.encodermap_tf1.misc module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.encodermap_tf1.html#module-encodermap.encodermap_tf1.moldata">encodermap.encodermap_tf1.moldata module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.encodermap_tf1.html#module-encodermap.encodermap_tf1.parameters">encodermap.encodermap_tf1.parameters module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.encodermap_tf1.html#module-encodermap.encodermap_tf1.plot">encodermap.encodermap_tf1.plot module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.encodermap_tf1.html#module-encodermap.encodermap_tf1">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.loading.html">encodermap.loading package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.loading.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.loading.html#module-encodermap.loading.delayed">encodermap.loading.delayed module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.loading.html#module-encodermap.loading.features">encodermap.loading.features module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.loading.html#module-encodermap.loading.featurizer">encodermap.loading.featurizer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.loading.html#module-encodermap.loading">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.loss_functions.html">encodermap.loss_functions package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.loss_functions.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.loss_functions.html#module-encodermap.loss_functions.loss_classes">encodermap.loss_functions.loss_classes module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.loss_functions.html#module-encodermap.loss_functions.loss_functions">encodermap.loss_functions.loss_functions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.loss_functions.html#module-encodermap.loss_functions">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.misc.html">encodermap.misc package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.misc.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.misc.html#module-encodermap.misc.backmapping">encodermap.misc.backmapping module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.misc.html#module-encodermap.misc.clustering">encodermap.misc.clustering module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.misc.html#module-encodermap.misc.distances">encodermap.misc.distances module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.misc.html#module-encodermap.misc.function_def">encodermap.misc.function_def module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.misc.html#module-encodermap.misc.misc">encodermap.misc.misc module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.misc.html#module-encodermap.misc.rotate">encodermap.misc.rotate module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.misc.html#module-encodermap.misc.saving_loading_models">encodermap.misc.saving_loading_models module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.misc.html#module-encodermap.misc.summaries">encodermap.misc.summaries module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.misc.html#module-encodermap.misc.xarray">encodermap.misc.xarray module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.misc.html#module-encodermap.misc.xarray_save_wrong_hdf5">encodermap.misc.xarray_save_wrong_hdf5 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.misc.html#module-encodermap.misc">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.models.html">encodermap.models package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.models.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.models.html#module-encodermap.models.layers">encodermap.models.layers module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.models.html#module-encodermap.models.models">encodermap.models.models module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.models.html#module-encodermap.models">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.moldata.html">encodermap.moldata package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.moldata.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.moldata.html#module-encodermap.moldata.moldata">encodermap.moldata.moldata module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.moldata.html#module-encodermap.moldata">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.parameters.html">encodermap.parameters package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.parameters.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.parameters.html#module-encodermap.parameters.parameters">encodermap.parameters.parameters module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.parameters.html#module-encodermap.parameters">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.plot.html">encodermap.plot package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.plot.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.plot.html#module-encodermap.plot.dashboard">encodermap.plot.dashboard module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.plot.html#module-encodermap.plot.interactive_plotting">encodermap.plot.interactive_plotting module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.plot.html#module-encodermap.plot.jinja_template">encodermap.plot.jinja_template module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.plot.html#module-encodermap.plot.plotting">encodermap.plot.plotting module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.plot.html#module-encodermap.plot.utils">encodermap.plot.utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.plot.html#module-encodermap.plot">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.trajinfo.html">encodermap.trajinfo package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.trajinfo.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.trajinfo.html#module-encodermap.trajinfo.info_all">encodermap.trajinfo.info_all module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.trajinfo.html#module-encodermap.trajinfo.info_single">encodermap.trajinfo.info_single module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.trajinfo.html#module-encodermap.trajinfo.load_traj">encodermap.trajinfo.load_traj module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.trajinfo.html#module-encodermap.trajinfo.trajinfo_utils">encodermap.trajinfo.trajinfo_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.trajinfo.html#module-encodermap.trajinfo">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="encodermap.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encodermap.html#module-encodermap._typing">encodermap._typing module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encodermap.html#module-encodermap._version">encodermap._version module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.get_config"><code class="docutils literal notranslate"><span class="pre">get_config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.get_keywords"><code class="docutils literal notranslate"><span class="pre">get_keywords</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.get_versions"><code class="docutils literal notranslate"><span class="pre">get_versions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.git_get_keywords"><code class="docutils literal notranslate"><span class="pre">git_get_keywords</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.git_pieces_from_vcs"><code class="docutils literal notranslate"><span class="pre">git_pieces_from_vcs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.git_versions_from_keywords"><code class="docutils literal notranslate"><span class="pre">git_versions_from_keywords</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.pep440_split_post"><code class="docutils literal notranslate"><span class="pre">pep440_split_post</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.plus_or_dot"><code class="docutils literal notranslate"><span class="pre">plus_or_dot</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.register_vcs_handler"><code class="docutils literal notranslate"><span class="pre">register_vcs_handler</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.render"><code class="docutils literal notranslate"><span class="pre">render</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.render_git_describe"><code class="docutils literal notranslate"><span class="pre">render_git_describe</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.render_git_describe_long"><code class="docutils literal notranslate"><span class="pre">render_git_describe_long</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.render_pep440"><code class="docutils literal notranslate"><span class="pre">render_pep440</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.render_pep440_branch"><code class="docutils literal notranslate"><span class="pre">render_pep440_branch</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.render_pep440_old"><code class="docutils literal notranslate"><span class="pre">render_pep440_old</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.render_pep440_post"><code class="docutils literal notranslate"><span class="pre">render_pep440_post</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.render_pep440_post_branch"><code class="docutils literal notranslate"><span class="pre">render_pep440_post_branch</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.render_pep440_pre"><code class="docutils literal notranslate"><span class="pre">render_pep440_pre</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.run_command"><code class="docutils literal notranslate"><span class="pre">run_command</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap._version.versions_from_parentdir"><code class="docutils literal notranslate"><span class="pre">versions_from_parentdir</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="encodermap.html#module-encodermap.kondata">encodermap.kondata module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap.kondata.get_from_kondata"><code class="docutils literal notranslate"><span class="pre">get_from_kondata</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="encodermap.html#module-encodermap">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters"><code class="docutils literal notranslate"><span class="pre">ADCParameters</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.track_clashes"><code class="docutils literal notranslate"><span class="pre">track_clashes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.track_RMSD"><code class="docutils literal notranslate"><span class="pre">track_RMSD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.cartesian_pwd_start"><code class="docutils literal notranslate"><span class="pre">cartesian_pwd_start</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.cartesian_pwd_stop"><code class="docutils literal notranslate"><span class="pre">cartesian_pwd_stop</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.cartesian_pwd_step"><code class="docutils literal notranslate"><span class="pre">cartesian_pwd_step</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.use_backbone_angles"><code class="docutils literal notranslate"><span class="pre">use_backbone_angles</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.use_sidechains"><code class="docutils literal notranslate"><span class="pre">use_sidechains</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.angle_cost_scale"><code class="docutils literal notranslate"><span class="pre">angle_cost_scale</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.angle_cost_variant"><code class="docutils literal notranslate"><span class="pre">angle_cost_variant</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.angle_cost_reference"><code class="docutils literal notranslate"><span class="pre">angle_cost_reference</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.dihedral_cost_scale"><code class="docutils literal notranslate"><span class="pre">dihedral_cost_scale</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.dihedral_cost_variant"><code class="docutils literal notranslate"><span class="pre">dihedral_cost_variant</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.dihedral_cost_reference"><code class="docutils literal notranslate"><span class="pre">dihedral_cost_reference</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.side_dihedral_cost_scale"><code class="docutils literal notranslate"><span class="pre">side_dihedral_cost_scale</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.side_dihedral_cost_variant"><code class="docutils literal notranslate"><span class="pre">side_dihedral_cost_variant</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.side_dihedral_cost_reference"><code class="docutils literal notranslate"><span class="pre">side_dihedral_cost_reference</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.cartesian_cost_scale"><code class="docutils literal notranslate"><span class="pre">cartesian_cost_scale</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.cartesian_cost_scale_soft_start"><code class="docutils literal notranslate"><span class="pre">cartesian_cost_scale_soft_start</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.cartesian_cost_variant"><code class="docutils literal notranslate"><span class="pre">cartesian_cost_variant</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.cartesian_cost_reference"><code class="docutils literal notranslate"><span class="pre">cartesian_cost_reference</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.cartesian_dist_sig_parameters"><code class="docutils literal notranslate"><span class="pre">cartesian_dist_sig_parameters</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.cartesian_distance_cost_scale"><code class="docutils literal notranslate"><span class="pre">cartesian_distance_cost_scale</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.multimer_training"><code class="docutils literal notranslate"><span class="pre">multimer_training</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.multimer_topology_classes"><code class="docutils literal notranslate"><span class="pre">multimer_topology_classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.multimer_connection_bridges"><code class="docutils literal notranslate"><span class="pre">multimer_connection_bridges</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.multimer_lengths"><code class="docutils literal notranslate"><span class="pre">multimer_lengths</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.reconstruct_sidechains"><code class="docutils literal notranslate"><span class="pre">reconstruct_sidechains</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters._defaults"><code class="docutils literal notranslate"><span class="pre">_defaults</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.ADCParameters.defaults_description"><code class="docutils literal notranslate"><span class="pre">defaults_description</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap"><code class="docutils literal notranslate"><span class="pre">AngleDihedralCartesianEncoderMap</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.add_callback"><code class="docutils literal notranslate"><span class="pre">add_callback</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.add_images_to_tensorboard"><code class="docutils literal notranslate"><span class="pre">add_images_to_tensorboard</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.add_loss"><code class="docutils literal notranslate"><span class="pre">add_loss</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.add_metric"><code class="docutils literal notranslate"><span class="pre">add_metric</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.close"><code class="docutils literal notranslate"><span class="pre">close</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.decode"><code class="docutils literal notranslate"><span class="pre">decode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.decoder"><code class="docutils literal notranslate"><span class="pre">decoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.encode"><code class="docutils literal notranslate"><span class="pre">encode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.encoder"><code class="docutils literal notranslate"><span class="pre">encoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.from_checkpoint"><code class="docutils literal notranslate"><span class="pre">from_checkpoint</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.generate"><code class="docutils literal notranslate"><span class="pre">generate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.get_train_data_from_trajs"><code class="docutils literal notranslate"><span class="pre">get_train_data_from_trajs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.plot_network"><code class="docutils literal notranslate"><span class="pre">plot_network</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.save"><code class="docutils literal notranslate"><span class="pre">save</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.set_train_data"><code class="docutils literal notranslate"><span class="pre">set_train_data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.train"><code class="docutils literal notranslate"><span class="pre">train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.AngleDihedralCartesianEncoderMap.train_for_references"><code class="docutils literal notranslate"><span class="pre">train_for_references</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder"><code class="docutils literal notranslate"><span class="pre">Autoencoder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.train_data"><code class="docutils literal notranslate"><span class="pre">train_data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.p"><code class="docutils literal notranslate"><span class="pre">p</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.dataset"><code class="docutils literal notranslate"><span class="pre">dataset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.read_only"><code class="docutils literal notranslate"><span class="pre">read_only</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.metrics"><code class="docutils literal notranslate"><span class="pre">metrics</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.callbacks"><code class="docutils literal notranslate"><span class="pre">callbacks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.encoder"><code class="docutils literal notranslate"><span class="pre">encoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.decoder"><code class="docutils literal notranslate"><span class="pre">decoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.loss"><code class="docutils literal notranslate"><span class="pre">loss</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.from_checkpoint"><code class="docutils literal notranslate"><span class="pre">from_checkpoint</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.add_images_to_tensorboard"><code class="docutils literal notranslate"><span class="pre">add_images_to_tensorboard</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.train"><code class="docutils literal notranslate"><span class="pre">train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.plot_network"><code class="docutils literal notranslate"><span class="pre">plot_network</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.encode"><code class="docutils literal notranslate"><span class="pre">encode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.decode"><code class="docutils literal notranslate"><span class="pre">decode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.generate"><code class="docutils literal notranslate"><span class="pre">generate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.add_callback"><code class="docutils literal notranslate"><span class="pre">add_callback</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#id0"><code class="docutils literal notranslate"><span class="pre">add_images_to_tensorboard</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.add_loss"><code class="docutils literal notranslate"><span class="pre">add_loss</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.add_metric"><code class="docutils literal notranslate"><span class="pre">add_metric</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.close"><code class="docutils literal notranslate"><span class="pre">close</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#id8"><code class="docutils literal notranslate"><span class="pre">decode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#id9"><code class="docutils literal notranslate"><span class="pre">decoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#id10"><code class="docutils literal notranslate"><span class="pre">encode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#id11"><code class="docutils literal notranslate"><span class="pre">encoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#id12"><code class="docutils literal notranslate"><span class="pre">from_checkpoint</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#id13"><code class="docutils literal notranslate"><span class="pre">generate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#id14"><code class="docutils literal notranslate"><span class="pre">plot_network</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.save"><code class="docutils literal notranslate"><span class="pre">save</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Autoencoder.set_train_data"><code class="docutils literal notranslate"><span class="pre">set_train_data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#id15"><code class="docutils literal notranslate"><span class="pre">train</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap.EncoderMap"><code class="docutils literal notranslate"><span class="pre">EncoderMap</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.EncoderMap.from_checkpoint"><code class="docutils literal notranslate"><span class="pre">from_checkpoint</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap.EncoderMapBaseCallback"><code class="docutils literal notranslate"><span class="pre">EncoderMapBaseCallback</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.EncoderMapBaseCallback.steps_counter"><code class="docutils literal notranslate"><span class="pre">steps_counter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.EncoderMapBaseCallback.on_checkpoint_step"><code class="docutils literal notranslate"><span class="pre">on_checkpoint_step</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.EncoderMapBaseCallback.on_summary_step"><code class="docutils literal notranslate"><span class="pre">on_summary_step</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.EncoderMapBaseCallback.on_train_batch_end"><code class="docutils literal notranslate"><span class="pre">on_train_batch_end</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap.Featurizer"><code class="docutils literal notranslate"><span class="pre">Featurizer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting"><code class="docutils literal notranslate"><span class="pre">InteractivePlotting</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting._cluster_col"><code class="docutils literal notranslate"><span class="pre">_cluster_col</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting._cluster_method"><code class="docutils literal notranslate"><span class="pre">_cluster_method</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting._help_url"><code class="docutils literal notranslate"><span class="pre">_help_url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting._max_filepath_len"><code class="docutils literal notranslate"><span class="pre">_max_filepath_len</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting._max_slider_len"><code class="docutils literal notranslate"><span class="pre">_max_slider_len</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting._nbins"><code class="docutils literal notranslate"><span class="pre">_nbins</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting.advance_path"><code class="docutils literal notranslate"><span class="pre">advance_path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting.cluster"><code class="docutils literal notranslate"><span class="pre">cluster</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting.density"><code class="docutils literal notranslate"><span class="pre">density</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting.from_project"><code class="docutils literal notranslate"><span class="pre">from_project</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting.generate"><code class="docutils literal notranslate"><span class="pre">generate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting.help"><code class="docutils literal notranslate"><span class="pre">help</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting.on_canvas_mouse_down"><code class="docutils literal notranslate"><span class="pre">on_canvas_mouse_down</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting.on_canvas_mouse_move"><code class="docutils literal notranslate"><span class="pre">on_canvas_mouse_move</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting.on_canvas_mouse_up"><code class="docutils literal notranslate"><span class="pre">on_canvas_mouse_up</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting.on_select"><code class="docutils literal notranslate"><span class="pre">on_select</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting.save"><code class="docutils literal notranslate"><span class="pre">save</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting.scatter"><code class="docutils literal notranslate"><span class="pre">scatter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting.scatter_on_click"><code class="docutils literal notranslate"><span class="pre">scatter_on_click</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting.stride"><code class="docutils literal notranslate"><span class="pre">stride</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.InteractivePlotting.switch_between_density_and_scatter"><code class="docutils literal notranslate"><span class="pre">switch_between_density_and_scatter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap.MolData"><code class="docutils literal notranslate"><span class="pre">MolData</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap.Parameters"><code class="docutils literal notranslate"><span class="pre">Parameters</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.defaults"><code class="docutils literal notranslate"><span class="pre">defaults</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.main_path"><code class="docutils literal notranslate"><span class="pre">main_path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.n_neurons"><code class="docutils literal notranslate"><span class="pre">n_neurons</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.activation_functions"><code class="docutils literal notranslate"><span class="pre">activation_functions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.periodicity"><code class="docutils literal notranslate"><span class="pre">periodicity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.learning_rate"><code class="docutils literal notranslate"><span class="pre">learning_rate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.n_steps"><code class="docutils literal notranslate"><span class="pre">n_steps</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.batch_size"><code class="docutils literal notranslate"><span class="pre">batch_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.summary_step"><code class="docutils literal notranslate"><span class="pre">summary_step</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.checkpoint_step"><code class="docutils literal notranslate"><span class="pre">checkpoint_step</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.dist_sig_parameters"><code class="docutils literal notranslate"><span class="pre">dist_sig_parameters</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.distance_cost_scale"><code class="docutils literal notranslate"><span class="pre">distance_cost_scale</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.auto_cost_scale"><code class="docutils literal notranslate"><span class="pre">auto_cost_scale</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.auto_cost_variant"><code class="docutils literal notranslate"><span class="pre">auto_cost_variant</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.center_cost_scale"><code class="docutils literal notranslate"><span class="pre">center_cost_scale</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.l2_reg_constant"><code class="docutils literal notranslate"><span class="pre">l2_reg_constant</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.gpu_memory_fraction"><code class="docutils literal notranslate"><span class="pre">gpu_memory_fraction</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.analysis_path"><code class="docutils literal notranslate"><span class="pre">analysis_path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.id"><code class="docutils literal notranslate"><span class="pre">id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.model_api"><code class="docutils literal notranslate"><span class="pre">model_api</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.loss"><code class="docutils literal notranslate"><span class="pre">loss</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.batched"><code class="docutils literal notranslate"><span class="pre">batched</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.training"><code class="docutils literal notranslate"><span class="pre">training</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.tensorboard"><code class="docutils literal notranslate"><span class="pre">tensorboard</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.seed"><code class="docutils literal notranslate"><span class="pre">seed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.current_training_step"><code class="docutils literal notranslate"><span class="pre">current_training_step</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.write_summary"><code class="docutils literal notranslate"><span class="pre">write_summary</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.trainable_dense_to_sparse"><code class="docutils literal notranslate"><span class="pre">trainable_dense_to_sparse</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.using_hypercube"><code class="docutils literal notranslate"><span class="pre">using_hypercube</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters._defaults"><code class="docutils literal notranslate"><span class="pre">_defaults</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="encodermap.html#encodermap.Parameters.defaults_description"><code class="docutils literal notranslate"><span class="pre">defaults_description</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap.function"><code class="docutils literal notranslate"><span class="pre">function</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="encodermap.html#encodermap.load"><code class="docutils literal notranslate"><span class="pre">load</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/modules.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T22:43:00.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

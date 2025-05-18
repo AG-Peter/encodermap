@@ -1,0 +1,1826 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>TrajEnsemble &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c1026b93" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/trajensemble';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Featurization" href="featurization.html" />
+    <link rel="prev" title="SingleTraj" href="singletraj.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T22:43:00"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Trajectory Classes</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="singletraj.html">SingleTraj</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">TrajEnsemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="featurization.html">Featurization</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Neural Network Classes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="autoencoder_classes.html">Autoencoder Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameter_classes.html">Parameter Classes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Models, Layers, Losses</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers.html">Layers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loss_functions.html">Loss functions</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">TrajEnsemble</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="trajensemble">
+<span id="user-guide-trajensmeble"></span><h1>TrajEnsemble<a class="headerlink" href="#trajensemble" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TrajEnsemble</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tops</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'no_load'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">common_str</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basename_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj_nums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="Link to this definition">#</a></dt>
+<dd><p>A fancy list of single trajectories. Topologies can be different across trajs.</p>
+<p>Check out <a class="reference external" href="http://statisticalbiophysicsblog.org/?p=92">http://statisticalbiophysicsblog.org/?p=92</a> for why trajectory ensembles are awesome.</p>
+<p>This class is a fancy list of <code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.trajinfo.info_single.SingleTraj`</span></code>.
+Trajectories can have different topologies and will be grouped by
+the <code class="docutils literal notranslate"><span class="pre">common_str</span></code> argument. Each trajectory has its own unique <code class="docutils literal notranslate"><span class="pre">traj_num</span></code>,
+which identifies it in the ensemble - even when the ensemble is sliced or
+subsampled.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj1</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="o">.</span><span class="n">from_pdb_id</span><span class="p">(</span><span class="s2">&quot;1YUG&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj2</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="o">.</span><span class="n">from_pdb_id</span><span class="p">(</span><span class="s2">&quot;1YUF&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Addition of two <a class="reference internal" href="singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.trajinfo.info_single.SingleTraj</span></code></a> also creates an ensemble.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span> <span class="o">=</span> <span class="n">traj1</span> <span class="o">+</span> <span class="n">traj2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span>  
+<span class="go">&lt;encodermap.TrajEnsemble object. Current backend is no_load. Containing 2 trajectories. Common str is [&#39;1YUG&#39;, &#39;1YUF&#39;]. Not containing any CVs...&gt;</span>
+</pre></div>
+</div>
+<p>Indexing a <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> returns a <a class="reference internal" href="singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.trajinfo.info_single.SingleTraj</span></code></a>
+based on its 0-based index. Think of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsmeble</span></code> as a list of
+<a class="reference internal" href="singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.trajinfo.info_single.SingleTraj</span></code></a>. But trajectories can also
+have <code class="docutils literal notranslate"><span class="pre">traj_nums</span></code>, which do not have to adhere to <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">...]</span></code>. This
+is similar to how a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v3.0.0.dev0+2106.gb2b2d04e41)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> offers indexing via <code class="docutils literal notranslate"><span class="pre">.loc[]</span></code>
+and <code class="docutils literal notranslate"><span class="pre">.iloc[]</span></code> (<a class="reference external" href="https://pandas.pydata.org/docs/user_guide/indexing.html#different-choices-for-indexing">https://pandas.pydata.org/docs/user_guide/indexing.html#different-choices-for-indexing</a>).
+For indexing trajs based on their <code class="docutils literal notranslate"><span class="pre">traj_num</span></code>, you can use the <code class="docutils literal notranslate"><span class="pre">.tsel[]</span></code>
+accessor of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsmeble</span></code></p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj1</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="o">.</span><span class="n">from_pdb_id</span><span class="p">(</span><span class="s2">&quot;1YUG&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj2</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="o">.</span><span class="n">from_pdb_id</span><span class="p">(</span><span class="s2">&quot;1YUF&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Addition of two <cite>SingleTraj</cite> also creates an ensemble.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span> <span class="o">=</span> <span class="n">traj1</span> <span class="o">+</span> <span class="n">traj2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span><span class="o">.</span><span class="n">traj_nums</span>
+<span class="go">[0, 1]</span>
+</pre></div>
+</div>
+<p>Change the <code class="docutils literal notranslate"><span class="pre">traj_num</span></code> of <code class="docutils literal notranslate"><span class="pre">traj2</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">traj_num</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span><span class="o">.</span><span class="n">traj_nums</span>
+<span class="go">[0, 4]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  
+<span class="go">&lt;encodermap.SingleTraj object. Currently not in memory. Basename is &#39;1YUF&#39;. Not containing any CVs. Common string is &#39;1YUF&#39;. Object at ...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span><span class="o">.</span><span class="n">tsel</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>  
+<span class="go">&lt;encodermap.SingleTraj object. Currently not in memory. Basename is &#39;1YUF&#39;. Not containing any CVs. Common string is &#39;1YUF&#39;. Object at ...&gt;</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> supports fancy indexing. You can slice to your liking
+(<code class="docutils literal notranslate"><span class="pre">trajs[::5]</span></code> returns a <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> object that only consideres
+every fifth frame). Besides indexing by slices and integers, you can pass a
+2-dimensional <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>. <code class="docutils literal notranslate"><span class="pre">np.array([[0,</span> <span class="pre">5],</span> <span class="pre">[1,</span> <span class="pre">10],</span> <span class="pre">[5,</span> <span class="pre">20]])</span></code>
+will return a <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> object with frame 5 of trajectory 0, frame
+10 of trajectory 1 and frame 20 of trajectory 5.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj1</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="o">.</span><span class="n">from_pdb_id</span><span class="p">(</span><span class="s2">&quot;1YUG&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj2</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="o">.</span><span class="n">from_pdb_id</span><span class="p">(</span><span class="s2">&quot;1YUF&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span> <span class="o">=</span> <span class="n">traj1</span> <span class="o">+</span> <span class="n">traj2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sel</span> <span class="o">=</span> <span class="n">trajs</span><span class="p">[[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sel</span>  
+<span class="go">&lt;encodermap.TrajEnsemble object. Current backend is no_load. Containing 4 frames and 2 trajectories. Common str is...&gt;</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> class also is an iterator to iterate over trajectores.
+Besides plain iteration, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsmeble</span></code> also offers alternate iterators.
+The <code class="docutils literal notranslate"><span class="pre">itertrajs()</span></code> iterator returns a two-tuple of <code class="docutils literal notranslate"><span class="pre">traj_num</span></code> and <code class="docutils literal notranslate"><span class="pre">traj</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">iterframes()</span></code> iterator returns a three-tuple of <code class="docutils literal notranslate"><span class="pre">traj_num</span></code>,
+<code class="docutils literal notranslate"><span class="pre">frame_num</span></code>, and <code class="docutils literal notranslate"><span class="pre">traj</span></code>.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj1</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="o">.</span><span class="n">from_pdb_id</span><span class="p">(</span><span class="s2">&quot;1YUG&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj2</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="o">.</span><span class="n">from_pdb_id</span><span class="p">(</span><span class="s2">&quot;1YUF&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span> <span class="o">=</span> <span class="n">traj1</span> <span class="o">+</span> <span class="n">traj2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">traj_num</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">traj_num</span><span class="p">,</span> <span class="n">traj</span> <span class="ow">in</span> <span class="n">trajs</span><span class="o">.</span><span class="n">itertrajs</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">traj_num</span><span class="p">,</span> <span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span><span class="p">)</span>
+<span class="go">0 15</span>
+<span class="go">4 16</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">traj_num</span><span class="p">,</span> <span class="n">frame_num</span> <span class="p">,</span><span class="n">traj</span> <span class="ow">in</span> <span class="n">trajs</span><span class="o">.</span><span class="n">subsample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">iterframes</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">traj_num</span><span class="p">,</span> <span class="n">frame_num</span><span class="p">,</span> <span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span><span class="p">)</span>
+<span class="go">0 0 1</span>
+<span class="go">0 10 1</span>
+<span class="go">4 0 1</span>
+<span class="go">4 10 1</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> has multiple alternative constructors. The
+<a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble.with_overwrite_trajnums" title="encodermap.trajinfo.info_all.TrajEnsemble.with_overwrite_trajnums"><code class="xref py py-meth docutils literal notranslate"><span class="pre">with_overwrite_trajnums</span></code></a> constructor fixes inhomogeneous sequences of
+<a class="reference internal" href="singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.trajinfo.info_single.SingleTraj</span></code></a> and <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a>.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj1</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="o">.</span><span class="n">from_pdb_id</span><span class="p">(</span><span class="s2">&quot;1YUG&quot;</span><span class="p">,</span> <span class="n">traj_num</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj2</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="o">.</span><span class="n">from_pdb_id</span><span class="p">(</span><span class="s2">&quot;1YUF&quot;</span><span class="p">,</span> <span class="n">traj_num</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">TrajEnsemble</span><span class="p">([</span><span class="n">traj1</span><span class="p">,</span> <span class="n">traj2</span><span class="p">])</span>  
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">Exception</span>: <span class="n">The `traj_num` attributes of the provided 2 `SingleTraj`s is not unique, the `traj_num` 0 occurs 2 times. This can happen, if you use `SingleTraj`s, that are already part of a `TrajEnsemble`. To create copies of the `SingleTraj`s and overwrite their `traj_num`s, use the `with_overwrite_trajnums()` constructor.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">TrajEnsemble</span><span class="o">.</span><span class="n">with_overwrite_trajnums</span><span class="p">(</span><span class="n">traj1</span><span class="p">,</span> <span class="n">traj2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span>  
+<span class="go">&lt;encodermap.TrajEnsemble...&gt;</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="../api/encodermap.trajinfo.html#encodermap.trajinfo.info_all.TrajEnsemble.from_dataset" title="encodermap.trajinfo.info_all.TrajEnsemble.from_dataset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_dataset</span></code></a> constructor can be used to load an ensemble from
+an <code class="docutils literal notranslate"><span class="pre">.h5</span></code> file</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">TemporaryDirectory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj1</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="o">.</span><span class="n">from_pdb_id</span><span class="p">(</span><span class="s2">&quot;1YUG&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj2</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="o">.</span><span class="n">from_pdb_id</span><span class="p">(</span><span class="s2">&quot;1YUF&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">TrajEnsemble</span><span class="p">([</span><span class="n">traj1</span><span class="p">,</span> <span class="n">traj2</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">td</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">trajs</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">td</span> <span class="o">+</span> <span class="s2">&quot;/trajs.h5&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">new</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">TrajEnsemble</span><span class="o">.</span><span class="n">from_dataset</span><span class="p">(</span><span class="n">td</span> <span class="o">+</span> <span class="s2">&quot;/trajs.h5&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">new</span><span class="p">)</span>  
+<span class="go">encodermap.TrajEnsemble object. Current backend is no_load. Containing 2 trajectories. Common str is...Not containing any CVs.</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.CVs">
+<span class="sig-name descname"><span class="pre">CVs</span></span><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.CVs" title="Link to this definition">#</a></dt>
+<dd><p>The collective variables of the <code class="docutils literal notranslate"><span class="pre">SingleTraj</span></code>
+classes. Only CVs with matching names in all <code class="docutils literal notranslate"><span class="pre">SingleTraj</span></code> classes
+are returned. The data is stacked along a hypothetical time axis
+along the trajs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble._CVs">
+<span class="sig-name descname"><span class="pre">_CVs</span></span><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble._CVs" title="Link to this definition">#</a></dt>
+<dd><p>The same data as in CVs but with labels.
+Additionally, the xarray is not stacked along the time axis.
+It contains an extra dimension for trajectories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2025.4.1.dev0)">xarray.Dataset</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.n_trajs">
+<span class="sig-name descname"><span class="pre">n_trajs</span></span><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.n_trajs" title="Link to this definition">#</a></dt>
+<dd><p>Number of individual trajectories in this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.n_frames">
+<span class="sig-name descname"><span class="pre">n_frames</span></span><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.n_frames" title="Link to this definition">#</a></dt>
+<dd><p>Number of frames, sum over all trajectories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.locations">
+<span class="sig-name descname"><span class="pre">locations</span></span><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.locations" title="Link to this definition">#</a></dt>
+<dd><p>A list with the locations of the trajectories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.top">
+<span class="sig-name descname"><span class="pre">top</span></span><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.top" title="Link to this definition">#</a></dt>
+<dd><p>A list with the reference pdb for each trajecotry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[mdtraj.Topology]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.basenames">
+<span class="sig-name descname"><span class="pre">basenames</span></span><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.basenames" title="Link to this definition">#</a></dt>
+<dd><p>A list with the names of the trajecotries.
+The leading path and the file extension is omitted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.name_arr">
+<span class="sig-name descname"><span class="pre">name_arr</span></span><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.name_arr" title="Link to this definition">#</a></dt>
+<dd><p>An array with <code class="docutils literal notranslate"><span class="pre">len(name_arr)</span> <span class="pre">==</span> <span class="pre">n_frames</span></code>.
+This array keeps track of each frame in this object by identifying each
+frame with a filename. This can be useful, when frames are mixed inside
+a <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Instantiate the <code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsmeble</span></code> class with two lists of files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>(</strong><strong>Union</strong><strong>[</strong><strong>Sequence</strong><strong>[</strong><strong>str</strong><strong>]</strong> (<em>trajs</em>) – Sequence[SingleTraj], Sequence[Path]]): List of strings with
+paths to trajectories. Can also be a list of md.Trajectory or
+em.SingleTraj.</p></li>
+<li><p><strong>Sequence</strong><strong>[</strong><strong>md.Trajectory</strong><strong>]</strong> – Sequence[SingleTraj], Sequence[Path]]): List of strings with
+paths to trajectories. Can also be a list of md.Trajectory or
+em.SingleTraj.</p></li>
+<li><p><strong>trajs</strong> (<em>Union</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><em>Sequence</em><em>[</em><em>Path</em><em>]</em><em>, </em><em>Sequence</em><em>[</em><em>md.Trajectory</em><em>]</em><em>, </em><em>Sequence</em><em>[</em><a class="reference internal" href="singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>tops</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><em>Sequence</em><em>[</em><em>Path</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>backend</strong> (<em>Literal</em><em>[</em><em>'mdtraj'</em><em>, </em><em>'no_load'</em><em>]</em>)</p></li>
+<li><p><strong>common_str</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>basename_fn</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>traj_nums</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>custom_top</strong> (<em>Optional</em><em>[</em><em>CustomAAsDict</em><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>:param<span class="classifier">Sequence[SingleTraj], Sequence[Path]]): List of strings with</span></dt><dd><p>paths to trajectories. Can also be a list of md.Trajectory or
+em.SingleTraj.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tops</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>]</em>) – List of strings with paths to reference pdbs.</p></li>
+<li><p><strong>backend</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>optional</em>) – <dl class="simple">
+<dt>Choose the backend to load trajectories:</dt><dd><ul>
+<li><p>’mdtraj’ uses mdtraj, which loads all trajectories into RAM.</p></li>
+<li><p>’no_load’ creates an empty trajectory object.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Defaults to ‘no_load’, which makes the instantiation of large
+ensembles fast and RAM efficient.</p>
+</p></li>
+<li><p><strong>common_str</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><em>optional</em>) – If you want to include trajectories with
+different topology. The common string is used to pair traj-files
+(<code class="docutils literal notranslate"><span class="pre">.xtc,</span> <span class="pre">.dcd,</span> <span class="pre">.lammpstrj,</span> <span class="pre">...</span></code>) with their topology
+(<code class="docutils literal notranslate"><span class="pre">.pdb,</span> <span class="pre">.gro,</span> <span class="pre">...</span></code>). The common-string should be a substring
+of matching traj and topology files.</p></li>
+<li><p><strong>basename_fn</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>Callable</em><em>[</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><em>optional</em>) – A function
+to apply to the trajectory file path string to return the basename
+of the trajectory. If None is provided, the filename without
+extension will be used. When all files are named the same and
+the folder they’re in defines the name of the trajectory, you
+can supply <code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">x:</span> <span class="pre">split('/')[-2]</span></code> as this argument.
+Defaults to None.</p></li>
+<li><p><strong>custom_top</strong> (<em>Optional</em><em>[</em><em>CustomAAsDict</em><em>]</em>) – Optional[CustomAAsDict]: An instance of the
+<a class="reference internal" href="../api/trajinfo.html#encodermap.trajinfo.trajinfo_utils.CustomTopology" title="encodermap.trajinfo.trajinfo_utils.CustomTopology"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.trajinfo.trajinfo_utils.CustomTopology</span></code></a> or a
+dictionary that can be made into such.</p></li>
+<li><p><strong>trajs</strong> (<em>Union</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><em>Sequence</em><em>[</em><em>Path</em><em>]</em><em>, </em><em>Sequence</em><em>[</em><em>md.Trajectory</em><em>]</em><em>, </em><em>Sequence</em><em>[</em><a class="reference internal" href="singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>traj_nums</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.batch_iterator">
+<span class="sig-name descname"><span class="pre">batch_iterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CV_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">('',)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deterministic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yield_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.13)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.batch_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.batch_iterator" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">batch_iterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CV_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">('',)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deterministic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yield_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.13)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></span></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">batch_iterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CV_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.13)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deterministic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yield_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.13)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">batch_iterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CV_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.13)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deterministic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yield_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.13)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></dt>
+<dd><p>Lazy batched iterator of CV data.</p>
+<p>This iterator extracts batches of CV data from the ensemble. If the
+ensemble is a large HDF5 datset, this provides the ability to use all
+data without loading it all into memory.</p>
+<p class="rubric">Examples</p>
+<p>Import EncoderMap and load some example trajectories.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">TrajEnsemble</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span>
+<span class="gp">... </span>        <span class="s1">&#39;https://files.rcsb.org/view/1YUG.pdb&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;https://files.rcsb.org/view/1YUF.pdb&#39;</span>
+<span class="gp">... </span>    <span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This iterator will yield new samples forever. The batch is a tuple
+of <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">trajs</span><span class="o">.</span><span class="n">batch_iterator</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">([</span><span class="n">b</span><span class="o">.</span><span class="n">shape</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="k">break</span>
+<span class="go">[(2, 148), (2, 147), (2, 150, 3), (2, 149), (2, 82)]</span>
+</pre></div>
+</div>
+<p>Use it with Python’s builtin <code class="docutils literal notranslate"><span class="pre">next()</span></code> function. The <code class="docutils literal notranslate"><span class="pre">deterministic</span></code>
+flag returns deterministic batches. The <code class="docutils literal notranslate"><span class="pre">yield_index</span></code> flag also
+provides the index of the extracted batch. In this example, both batches
+are extracted from the 1YUG trajectory (<code class="docutils literal notranslate"><span class="pre">traj_num==0</span></code>).</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">iterator</span> <span class="o">=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">batch_iterator</span><span class="p">(</span><span class="n">deterministic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">yield_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">index</span><span class="p">,</span> <span class="n">batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">index</span>
+<span class="go">[[0 5]</span>
+<span class="go"> [0 8]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">index</span><span class="p">,</span> <span class="n">batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">index</span>
+<span class="go">[[ 0  3]</span>
+<span class="go"> [ 0 10]]</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>If a single string is requested for <code class="docutils literal notranslate"><span class="pre">CV_names</span></code>, the batch, will
+be a sinlge <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>, rather than a tuple thereof.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">iterator</span> <span class="o">=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">batch_iterator</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">CV_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;central_dihedrals&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">batch</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(2, 147)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The size of the batch.</p></li>
+<li><p><strong>replace</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether inside a single batch a sample can occur
+more than once. Set to False (default) to only allow unique
+samples in a batch.</p></li>
+<li><p><strong>CV_names</strong> (<em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The names of the CVs to be used in the
+iterator. If a list/tuple with a single string is provided, the
+batch will be a <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>, rather than a tuple
+thereof.</p></li>
+<li><p><strong>deterministic</strong> (<em>bbol</em>) – Whether the samples should be deterministic.</p></li>
+<li><p><strong>yield_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to also yield the index of the extracted
+samples.</p></li>
+<li><p><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – A start ineteger, which can be used together with
+<code class="docutils literal notranslate"><span class="pre">deterministic=True</span></code> to get different deterministic datasets.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Different iterators based on chosen arguments.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Iterator[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.cluster">
+<span class="sig-name descname"><span class="pre">cluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cluster_membership'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memberships</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.cluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.cluster" title="Link to this definition">#</a></dt>
+<dd><p>Clusters this <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> based on the provided
+<code class="docutils literal notranslate"><span class="pre">cluster_id</span></code> and <code class="docutils literal notranslate"><span class="pre">col</span></code>.</p>
+<p>With ‘clustering’ we mean to extract a subset given a certain membership.
+Take two trajectories with 3 frames each as an ensemble. Let’s say we
+calculate the end-to-end distance of the trajectories and use it as
+a collective variable of the system. The values are
+<code class="docutils literal notranslate"><span class="pre">[0.8,</span> <span class="pre">1.3,</span> <span class="pre">1.2,</span> <span class="pre">1.9,</span> <span class="pre">0.2,</span> <span class="pre">1.3]</span></code>. Based on these values, we define a
+boolean CV (using 0 as False and 1 as True) which says whether the
+end-to-end distance is smaller or grather than 1.0. We give this CV the
+name <code class="docutils literal notranslate"><span class="pre">'end_to_end_binary'</span></code> and the values are <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">0,</span> <span class="pre">1]</span></code>.
+We can use this CV to ‘cluster’ the <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> via:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">cluster</span> <span class="pre">=</span> <span class="pre">trajs.cluster(cluster_id=0,</span> <span class="pre">col='end_to_end_binary')</span></code>:</dt><dd><p>This gives a <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> with 2 frames.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">cluster</span> <span class="pre">=</span> <span class="pre">trajs.cluster(cluster_id=0,</span> <span class="pre">col='end_to_end_binary')</span></code>:</dt><dd><p>This gives a <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> with 4 frames.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>Sometimes, you want to save this a cluster in a format that can be rendered
+by graphical programs (<code class="docutils literal notranslate"><span class="pre">.xtc,</span> <span class="pre">.pdb</span></code>), you can use either the <a class="reference internal" href="../api/encodermap.trajinfo.html#encodermap.trajinfo.info_all.TrajEnsemble.join" title="encodermap.trajinfo.info_all.TrajEnsemble.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">join</span></code></a> or
+<a class="reference internal" href="../api/encodermap.trajinfo.html#encodermap.trajinfo.info_all.TrajEnsemble.stack" title="encodermap.trajinfo.info_all.TrajEnsemble.stack"><code class="xref py py-meth docutils literal notranslate"><span class="pre">stack</span></code></a> method of the resulting :obj:<a href="#id1"><span class="problematic" id="id2">``</span></a>TrajEnsemble` to get a
+<cite>mdtraj.Trajectory</cite>, which is either stacked along the atom axis or
+joined along the time axis.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the resulting <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> has inhomogeneous topologies, the
+<a class="reference internal" href="../api/encodermap.trajinfo.html#encodermap.trajinfo.info_all.TrajEnsemble.join" title="encodermap.trajinfo.info_all.TrajEnsemble.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">join</span></code></a> method will return a dict[md.Topology, md.Trajectory]
+instead. This dict can be used to save multiple (<code class="docutils literal notranslate"><span class="pre">.xtc,</span> <span class="pre">.pdb</span></code>) files
+and visualize your cluster in external programs.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">col</span></code> parameter takes any CV name, that is per-frame and integer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cluster_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The cluster id to use. Needs to be an integer,
+that is present in the <code class="docutils literal notranslate"><span class="pre">col</span></code> parameter.</p></li>
+<li><p><strong>col</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Which ‘column’ of the collective variables to use.
+Needs to be a key, that can be found in <code class="docutils literal notranslate"><span class="pre">trajs.CVs.keys()</span></code>.</p></li>
+<li><p><strong>memberships</strong> (<em>Optional</em><em>[</em><em>np.ndarray</em><em>]</em>) – If a <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> is
+provided here, the memberships from this array will be used.
+In this case, the <code class="docutils literal notranslate"><span class="pre">col</span></code> argument will be unused.</p></li>
+<li><p><strong>n_points</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – How many points the resulting cluster should contain.
+Subsamples the points in <code class="docutils literal notranslate"><span class="pre">col</span> <span class="pre">==</span> <span class="pre">cluster_id</span></code> evenly and without
+repeat. If set to -1, all points will be used.</p></li>
+<li><p><strong>overwrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – When the <code class="docutils literal notranslate"><span class="pre">memberships</span></code> argument is used, but the
+<a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> already has a CV under the name specified by
+<code class="docutils literal notranslate"><span class="pre">col</span></code>, you can set this to True to overwrite this column. Can
+be helpful, when you iteratively conduct multiple clusterings.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><em>TrajEnsemble</em></a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Import EncoderMap and NumPy.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+<p>Load an example project.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="s2">&quot;pASP_pGLU&quot;</span><span class="p">,</span> <span class="n">load_autoencoder</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Create an array full of <code class="docutils literal notranslate"><span class="pre">-1</span></code>’s. These are the ‘outliers’.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cluster_membership</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">n_frames</span><span class="p">,</span> <span class="p">))</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Select the first 5 frames of every traj to be in cluster 0.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cluster_membership</span><span class="p">[</span><span class="n">trajs</span><span class="o">.</span><span class="n">id</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>Select all frames between 50 and 55 to be cluster 1.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cluster_membership</span><span class="p">[(</span><span class="mi">50</span> <span class="o">&lt;=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">id</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">id</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">55</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">cluster_membership</span><span class="p">)</span>
+<span class="go">array([-1.,  0.,  1.])</span>
+</pre></div>
+</div>
+<p>Load this array as a CV called <code class="docutils literal notranslate"><span class="pre">'clu_mem'</span></code>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span><span class="o">.</span><span class="n">load_CVs</span><span class="p">(</span><span class="n">cluster_membership</span><span class="p">,</span> <span class="n">attr_name</span><span class="o">=</span><span class="s1">&#39;clu_mem&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Extract all of cluster 0 with <code class="docutils literal notranslate"><span class="pre">n_points=-1</span></code>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">clu0</span> <span class="o">=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">cluster</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;clu_mem&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">clu0</span><span class="o">.</span><span class="n">n_frames</span>
+<span class="go">35</span>
+</pre></div>
+</div>
+<p>Extract an evenly spaced subset of cluster 1 with 10 total points.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">clu1</span> <span class="o">=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">cluster</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;clu_mem&quot;</span><span class="p">,</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">clu1</span><span class="o">.</span><span class="n">n_frames</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+<p>Cclusters with inhomogeneous topologies can be stacked along the atom axis.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">n_atoms</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">]</span>
+<span class="go">[69, 83, 103, 91, 80, 63, 73]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stacked</span> <span class="o">=</span> <span class="n">clu1</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stacked</span><span class="o">.</span><span class="n">n_atoms</span>
+<span class="go">795</span>
+</pre></div>
+</div>
+<p>But joining the trajectories returns a <code class="docutils literal notranslate"><span class="pre">dict[top,</span> <span class="pre">traj]</span></code> if the
+topologies are inhomogeneous.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">joined</span> <span class="o">=</span> <span class="n">clu1</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">joined</span><span class="p">)</span>
+<span class="go">&lt;class &#39;dict&#39;&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.dash_summary">
+<span class="sig-name descname"><span class="pre">dash_summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.dash_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.dash_summary" title="Link to this definition">#</a></dt>
+<dd><p>A <a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v3.0.0.dev0+2106.gb2b2d04e41)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> that summarizes this ensemble.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The DataFrame.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.del_CVs">
+<span class="sig-name descname"><span class="pre">del_CVs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">CVs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.del_CVs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.del_CVs" title="Link to this definition">#</a></dt>
+<dd><p>Deletes all CVs in all trajs. Does not affect the files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>CVs</strong> (<a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.13)"><em>Sequence</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>] </em><em>| </em><em>None</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.del_featurizer">
+<span class="sig-name descname"><span class="pre">del_featurizer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.del_featurizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.del_featurizer" title="Link to this definition">#</a></dt>
+<dd><p>Deletes the current instance of <code class="docutils literal notranslate"><span class="pre">self.featurizer</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.from_textfile">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_textfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basename_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.from_textfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.from_textfile" title="Link to this definition">#</a></dt>
+<dd><p>Creates a <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> object from a textfile.</p>
+<dl class="simple">
+<dt>The textfile needs to be space-separated with two or three columns:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Column 1:</dt><dd><p>The trajectory file.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Column 2:</dt><dd><p>The corresponding topology file (If you are using <code class="docutils literal notranslate"><span class="pre">.h5</span></code> trajs,
+column 1 and 2 will be identical, but column 2 needs to be there
+nonetheless).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Column 3:</dt><dd><p>The common string of the trajectory. This column can be left
+out, which will result in an <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> without common
+strings.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Path</em><em>]</em>) – File to be read.</p></li>
+<li><p><strong>basename_fn</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>Callable</em><em>[</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>]</em><em>, </em><em>optional</em>) – A function
+to apply to the <code class="docutils literal notranslate"><span class="pre">traj_file</span></code> string to return the basename of
+the trajectory. If None is provided, the filename without
+extension will be used.  When all files are named the same and
+the folder they’re in defines the name of the trajectory, you
+can supply <code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">x:</span> <span class="pre">split('/')[-2]</span></code> as this argument.
+Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble">TrajEnsemble</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.get_single_frame">
+<span class="sig-name descname"><span class="pre">get_single_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.get_single_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.get_single_frame" title="Link to this definition">#</a></dt>
+<dd><p>Returns a single frame from all loaded trajectories.</p>
+<p>Consider a <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> class with two trajectories. One has 10
+frames, the other 5 (<code class="docutils literal notranslate"><span class="pre">trajs.n_frames</span></code> is 15). Calling
+<code class="docutils literal notranslate"><span class="pre">trajs.get_single_frame(12)</span></code> is equal to calling <code class="docutils literal notranslate"><span class="pre">trajs[1][1]</span></code>.
+Calling <code class="docutils literal notranslate"><span class="pre">trajs.get_single_frame(16)</span></code> will error, and
+<code class="docutils literal notranslate"><span class="pre">trajs.get_single_frame(1)</span></code> is the same as <code class="docutils literal notranslate"><span class="pre">trajs[0][1]</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The frame to return.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The frame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj">encodermap.trajinfo.info_single.SingleTraj</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.iterframes">
+<span class="sig-name descname"><span class="pre">iterframes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.iterframes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.iterframes" title="Link to this definition">#</a></dt>
+<dd><p>Generator over the frames in this instance.</p>
+<dl class="field-list">
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>tuple</em> –</p>
+<dl class="simple">
+<dt>A tuple containing the following:</dt><dd><ul class="simple">
+<li><p>int: The traj_num</p></li>
+<li><p>int: The frame_num</p></li>
+<li><p>encodermap.SingleTraj: An SingleTraj object.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.13)"><em>Iterator</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>, <a class="reference internal" href="singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj">SingleTraj</a>]]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Import EncoderMap and load an example <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">TrajEnsemble</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span>
+<span class="gp">... </span>        <span class="s1">&#39;https://files.rcsb.org/view/1YUG.pdb&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;https://files.rcsb.org/view/1YUF.pdb&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">],</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">n_frames</span><span class="p">)</span>
+<span class="go">31</span>
+</pre></div>
+</div>
+<p>Subsample every tenth frame.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span> <span class="o">=</span> <span class="n">trajs</span><span class="o">.</span><span class="n">subsample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span><span class="o">.</span><span class="n">n_frames</span>
+<span class="go">4</span>
+</pre></div>
+</div>
+<p>Call the <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble.iterframes" title="encodermap.trajinfo.info_all.TrajEnsemble.iterframes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">iterframes</span></code></a> method.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">traj_num</span><span class="p">,</span> <span class="n">frame_num</span><span class="p">,</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">trajs</span><span class="o">.</span><span class="n">iterframes</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">traj_num</span><span class="p">,</span> <span class="n">frame_num</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">n_frames</span><span class="p">)</span>
+<span class="go">0 0 1</span>
+<span class="go">0 10 1</span>
+<span class="go">1 0 1</span>
+<span class="go">1 10 1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.itertrajs">
+<span class="sig-name descname"><span class="pre">itertrajs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.itertrajs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.itertrajs" title="Link to this definition">#</a></dt>
+<dd><p>Generator over the SingleTraj classes.</p>
+<dl class="field-list">
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>tuple</em> –</p>
+<dl class="simple">
+<dt>A tuple containing the following:</dt><dd><ul class="simple">
+<li><p>int: A loop-counter integer. Is identical with traj.traj_num.</p></li>
+<li><p>encodermap.SingleTraj: An SingleTraj object.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.13)"><em>Iterator</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>, <a class="reference internal" href="singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj">SingleTraj</a>]]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">TrajEnsemble</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span>
+<span class="gp">... </span>        <span class="s1">&#39;https://files.rcsb.org/view/1YUG.pdb&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;https://files.rcsb.org/view/1YUF.pdb&#39;</span>
+<span class="gp">... </span>    <span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">traj</span> <span class="ow">in</span> <span class="n">trajs</span><span class="o">.</span><span class="n">itertrajs</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">basename</span><span class="p">)</span>
+<span class="go">1YUG</span>
+<span class="go">1YUF</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.load_CVs">
+<span class="sig-name descname"><span class="pre">load_CVs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensemble</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_aas</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alignment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.load_CVs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.load_CVs" title="Link to this definition">#</a></dt>
+<dd><p>Loads CVs in various ways. The easiest way is to provide a single
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> and a name for that array.</p>
+<p>Besides np.ndarray, files (<code class="docutils literal notranslate"><span class="pre">.txt</span> <span class="pre">and</span> <span class="pre">.npy</span></code>) can be loaded. Features
+or Featurizers can be provided. A <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2025.4.1.dev0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a> can be provided.
+A str can be provided which either is the name of one of EncoderMap’s
+features (<cite>encodermap.features</cite>) or the string can be ‘all’,
+which loads all features required for EncoderMap’s
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.autoencoder.autoencoder`AngleDihedralCartesianEncoderMap</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Optional</em><em>[</em><em>TrajEnsembleFeatureType</em><em>]</em>) – The CV to
+load. When a <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> is provided, it needs to have
+a shape matching <code class="docutils literal notranslate"><span class="pre">n_frames</span></code> and the data will be distributed
+to the trajs, When a list of files is provided, <code class="docutils literal notranslate"><span class="pre">len(data)</span></code>
+(the files) needs to match <code class="docutils literal notranslate"><span class="pre">n_trajs</span></code>. The first file will be
+loaded by the first traj (based on the traj’s <code class="docutils literal notranslate"><span class="pre">traj_num</span></code>) and
+so on. If a list of <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> is provided, the first
+array will be assigned to the first traj (based on the traj’s
+<code class="docutils literal notranslate"><span class="pre">traj_num</span></code>). If None is provided, the argument <code class="docutils literal notranslate"><span class="pre">directory</span></code>
+will be used to construct a str using this expression
+<code class="docutils literal notranslate"><span class="pre">fname</span> <span class="pre">=</span> <span class="pre">directory</span> <span class="pre">+</span> <span class="pre">traj.basename</span> <span class="pre">+</span> <span class="pre">'_'</span> <span class="pre">+</span> <span class="pre">attr_name</span></code>. If
+there are <code class="docutils literal notranslate"><span class="pre">.txt</span></code> or <code class="docutils literal notranslate"><span class="pre">.npy</span></code> files matching that string in
+the <code class="docutils literal notranslate"><span class="pre">directory</span></code>, the CVs will be loaded from these files to
+the corresponding trajs. Defaults to None.</p></li>
+<li><p><strong>attr_name</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The name under which the CV should
+be found in the class. Choose whatever you like. <code class="docutils literal notranslate"><span class="pre">'highd'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'lowd'</span></code>, <code class="docutils literal notranslate"><span class="pre">'dists'</span></code>, etc. The CV can then be accessed via
+dot-notation: <code class="docutils literal notranslate"><span class="pre">trajs.attr_name</span></code>. Defaults to None, in which
+case, the argument <code class="docutils literal notranslate"><span class="pre">data</span></code> should point to existing files.
+The <code class="docutils literal notranslate"><span class="pre">attr_name</span></code> will be extracted from these files.</p></li>
+<li><p><strong>cols</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>]</em>) – <p>A list of integers indexing the columns
+of the data to be loaded. This is useful if a file contains
+columns which are not features (i.e. an indexer or the error of
+the features. eg:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span>   <span class="n">f1</span>    <span class="n">f2</span>    <span class="n">f1_err</span>    <span class="n">f2_err</span>
+<span class="mi">0</span>    <span class="mf">1.0</span>   <span class="mf">2.0</span>   <span class="mf">0.1</span>       <span class="mf">0.1</span>
+<span class="mi">1</span>    <span class="mf">2.5</span>   <span class="mf">1.2</span>   <span class="mf">0.11</span>      <span class="mf">0.52</span>
+</pre></div>
+</div>
+<p>In that case, you would want to supply <code class="docutils literal notranslate"><span class="pre">cols=[1,</span> <span class="pre">2]</span></code> to the
+<code class="docutils literal notranslate"><span class="pre">cols</span></code> argument. If None is provided all columns are loaded.
+Defaults to None.</p>
+</p></li>
+<li><p><strong>deg</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>]</em>) – Whether to return angular CVs using degrees.
+If None or False, CVs will be in radian. Defaults to None.</p></li>
+<li><p><strong>periodic</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to use the minimum image convention to
+calculate distances/angles/dihedrals. This is generally recommended,
+when you don’t clean up your trajectories and the proteins break
+over the periodic boundary conditions. However, when the protein is
+large, the distance between one site and another might be shorter
+through the periodic boundary. This can lead to wrong results
+in your distance calculations.</p></li>
+<li><p><strong>labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – A list containing the labels for the dimensions of
+the data. If you provide a <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> with shape
+<code class="docutils literal notranslate"><span class="pre">(n_trajs,</span> <span class="pre">n_frames,</span> <span class="pre">n_feat)</span></code>, this list needs to be of
+<code class="docutils literal notranslate"><span class="pre">len(n_feat)</span></code>. An exception will be raised otherwise. If None is
+privided, the labels will be automatically generated. Defaults to None.</p></li>
+<li><p><strong>directory</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – If this argument is provided, the
+directory will be searched for <code class="docutils literal notranslate"><span class="pre">.txt</span></code> or <code class="docutils literal notranslate"><span class="pre">.npy</span></code> files which
+have the same names as the trajectories have basenames. The
+CVs will then be loaded from these files.</p></li>
+<li><p><strong>ensemble</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the trajs in this class belong to an ensemble.
+This implies that they contain either the same topology or are
+very similar (think wt, and mutant). Setting this option True will
+try to match the CVs of the trajs onto the same dataset.
+If a VAL residue has been replaced by LYS in the mutant,
+the number of sidechain dihedrals will increase. The CVs of the
+trajs with VAL will thus contain some NaN values. Defaults to False.</p></li>
+<li><p><strong>override</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to override CVs with the same name as <code class="docutils literal notranslate"><span class="pre">attr_name</span></code>.</p></li>
+<li><p><strong>custom_aas</strong> (<em>Optional</em><em>[</em><em>CustomAAsDict</em><em>]</em>) – You can provide non-standard
+residue definitions in this argument. See
+<a class="reference internal" href="../api/trajinfo.html#encodermap.trajinfo.trajinfo_utils.CustomTopology" title="encodermap.trajinfo.trajinfo_utils.CustomTopology"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.trajinfo.trajinfo_utils.CustomTopology</span></code></a> for
+information how to use the custom_aas argument. If set to None
+(default), only standard residue names are assumed.</p></li>
+<li><p><strong>alignment</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – If your proteins have similar but different
+sequences, you can provide a CLUSTAL W alignment as this argument
+and the featurization will align the features accordingly.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.13)"><strong>TypeError</strong></a> – When wrong Type has been provided for data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.load_custom_topology">
+<span class="sig-name descname"><span class="pre">load_custom_topology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">custom_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.load_custom_topology"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.load_custom_topology" title="Link to this definition">#</a></dt>
+<dd><p>Loads a custom_topology from a <cite>CustomTopology</cite> class or a dict.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><cite>CustomTopology</cite></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>custom_top</strong> (<a class="reference internal" href="../api/trajinfo.html#encodermap.trajinfo.trajinfo_utils.CustomTopology" title="encodermap.trajinfo.trajinfo_utils.CustomTopology"><em>CustomTopology</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><em>None</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>None</em><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'bonds'</em><em>, </em><em>'optional_bonds'</em><em>, </em><em>'delete_bonds'</em><em>, </em><em>'optional_delete_bonds'</em><em>, </em><em>'PHI'</em><em>, </em><em>'PSI'</em><em>, </em><em>'OMEGA'</em><em>, </em><em>'not_PHI'</em><em>, </em><em>'not_PSI'</em><em>, </em><em>'not_OMEGA'</em><em>, </em><em>'CHI1'</em><em>, </em><em>'CHI2'</em><em>, </em><em>'CHI3'</em><em>, </em><em>'CHI4'</em><em>, </em><em>'CHI5'</em><em>]</em><em>, </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>list</em><em>[</em><em>tuple</em><em>[</em><em>str</em><em> | </em><em>int</em><em>, </em><em>str</em><em> | </em><em>int</em><em>]</em><em>]</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Optional[Union[CustomTopology, CustomAAsDict]]: An instance of the
+<cite>CustomTopology</cite> class or a dictionary that can be made into such.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.load_trajs">
+<span class="sig-name descname"><span class="pre">load_trajs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.load_trajs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.load_trajs" title="Link to this definition">#</a></dt>
+<dd><p>Loads all trajs in self.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.parse_clustal_w_alignment">
+<span class="sig-name descname"><span class="pre">parse_clustal_w_alignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aln</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.parse_clustal_w_alignment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.parse_clustal_w_alignment" title="Link to this definition">#</a></dt>
+<dd><p>Parse an alignment in ClustalW format and add the info to the trajectories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>aln</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The alignment in ClustalW format.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CVs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.save" title="Link to this definition">#</a></dt>
+<dd><p>Saves this TrajEnsemble into a single <code class="docutils literal notranslate"><span class="pre">.h5</span></code> file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Path</em><em>]</em>) – Where to save the file.</p></li>
+<li><p><strong>CVs</strong> (<em>Union</em><em>[</em><em>Literal</em><em>[</em><em>&quot;all&quot;</em><em>]</em><em>, </em><em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>Literal</em><em>[</em><em>False</em><em>]</em><em>]</em>) – Which CVs
+to alos store in the file. If set to <code class="docutils literal notranslate"><span class="pre">'all'</span></code>, all CVs will
+be saved. Otherwise, a list[str] can be provided to only save
+specific CVs. Can also be set to False, no CVs are stored in the
+file.</p></li>
+<li><p><strong>overwrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If the file exists, it is overwritten.</p></li>
+<li><p><strong>only_top</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Only writes the trajectorie’s topologies into the file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#IOError" title="(in Python v3.13)"><strong>IOError</strong></a> – If file already exists and overwrite is not True.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.save_CVs">
+<span class="sig-name descname"><span class="pre">save_CVs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.save_CVs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.save_CVs" title="Link to this definition">#</a></dt>
+<dd><p>Saves the CVs to a NETCDF file using xarray.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><em>Path</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.sidechain_info">
+<span class="sig-name descname"><span class="pre">sidechain_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.sidechain_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.sidechain_info" title="Link to this definition">#</a></dt>
+<dd><p>Indices used for the AngleDihedralCartesianEncoderMap class to
+allow training with multiple different sidechains.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The indices. The key ‘-1’ is used for
+the hypothetical convex hull of all feature spaces (the output of
+the tensorflow model). The other keys match the common_str of the
+trajs.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, Sequence[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]]</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – When the common_strings and topologies are not
+    aligned. An exception is raised. Aligned means that all trajs
+    with the same common_str should possess the same topology.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.split_into_frames">
+<span class="sig-name descname"><span class="pre">split_into_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.split_into_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.split_into_frames" title="Link to this definition">#</a></dt>
+<dd><p>Splits self into separate frames.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>inplace</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to do the split inplace or not.
+Defaults to False and thus, returns a new <cite>TrajEnsemble</cite> class.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.subsample">
+<span class="sig-name descname"><span class="pre">subsample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.subsample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.subsample" title="Link to this definition">#</a></dt>
+<dd><p>Returns a subset of this <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> given the provided stride
+or total.</p>
+<p>This is a faster alternative than using the <code class="docutils literal notranslate"><span class="pre">trajs[trajs.index_arr[::1000]]</span></code>
+when HDF5 trajs are used, because the slicing information is saved in the
+respective <a class="reference internal" href="singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.trajinfo.info_single.SingleTraj</span></code></a></p>
+<blockquote>
+<div><p>and loading of single frames is faster in HDF5 formatted trajs.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stride</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Return a frame ever stride frames.</p></li>
+<li><p><strong>total</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Return a total of evenly sampled frames.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A trajectory ensemble.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble">TrajEnsemble</a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The result from <code class="docutils literal notranslate"><span class="pre">subsample(1000)`</span> <span class="pre">`is</span> <span class="pre">different</span> <span class="pre">from</span>
+<span class="pre">``trajs[trajs.index_arr[::1000]]</span></code>. With subsample every trajectory
+is sub-sampled independently. Consider a <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> with two
+<a class="reference internal" href="singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.trajinfo.info_single.SingleTraj</span></code></a> trajectories with
+18 frames each. <code class="docutils literal notranslate"><span class="pre">subsampled</span> <span class="pre">=</span> <span class="pre">trajs.subsample(5)</span></code> would return a
+<a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> with two trajs with 3 frames each
+(<code class="docutils literal notranslate"><span class="pre">subsampled.n_frames</span> <span class="pre">==</span> <span class="pre">6</span></code>). Whereas,
+<code class="docutils literal notranslate"><span class="pre">subsampled</span> <span class="pre">=</span> <span class="pre">trajs[trajs.index_arr[::5]]</span></code> would return a
+<a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> with 7 SingleTrajs with 1 frame each
+(<code class="docutils literal notranslate"><span class="pre">subsampled.n_frames</span> <span class="pre">==</span> <span class="pre">7</span></code>). Because the time and frame numbers
+are saved all the time, this should not be too much of a problem.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.to_alignment_query">
+<span class="sig-name descname"><span class="pre">to_alignment_query</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.to_alignment_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.to_alignment_query" title="Link to this definition">#</a></dt>
+<dd><p>A string, that cen be put into sequence alignment software.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.unload">
+<span class="sig-name descname"><span class="pre">unload</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.unload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.unload" title="Link to this definition">#</a></dt>
+<dd><p>Unloads all trajs in self.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.with_overwrite_trajnums">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">with_overwrite_trajnums</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">trajs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_all.html#TrajEnsemble.with_overwrite_trajnums"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.with_overwrite_trajnums" title="Link to this definition">#</a></dt>
+<dd><p>Creates a <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> by copying the provided
+<a class="reference internal" href="singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.trajinfo.info_single.SingleTraj</span></code></a> instances and
+changing their <code class="docutils literal notranslate"><span class="pre">traj_num</span></code> attribute to adhere to <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">...]</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>trajs</strong> (<em>Sequence</em><em>[</em><a class="reference internal" href="singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a><em>]</em>) – The sequence of trajs.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a> instance.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble">TrajEnsemble</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CVs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id0" title="Link to this definition">#</a></dt>
+<dd><p>Returns dict of CVs in SingleTraj classes. Only CVs with the same names
+in all SingleTraj classes are loaded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.CVs_in_file">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CVs_in_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.CVs_in_file" title="Link to this definition">#</a></dt>
+<dd><p>Is true, if CVs can be loaded from file. Can be used to build a
+data generator from.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id3">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_CVs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2025.4.1.dev0)"><span class="pre">Dataset</span></a></em><a class="headerlink" href="#id3" title="Link to this definition">#</a></dt>
+<dd><p>Returns x-array Dataset of matching CVs. stacked
+along the trajectory-axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2025.4.1.dev0)">xarray.Dataset</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id4">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">basenames</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id4" title="Link to this definition">#</a></dt>
+<dd><p>List of the basenames in the Info single classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.frames">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">frames</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.frames" title="Link to this definition">#</a></dt>
+<dd><p>Frames of individual trajectories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.id" title="Link to this definition">#</a></dt>
+<dd><p>Duplication of self.index_arr</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.index_arr">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index_arr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.index_arr" title="Link to this definition">#</a></dt>
+<dd><p>Returns np.ndarray with ndim = 2. Clearly assigning every
+loaded frame an identifier of traj_num (self.index_arr[:,0]) and
+frame_num (self.index_arr[:,1]). Can be used to create an unspecified
+subset of frames and can be useful when used with clustering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id5">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">locations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id5" title="Link to this definition">#</a></dt>
+<dd><p>Duplication of self.traj_files but using the trajs own traj_file attribute.
+Ensures that traj files are always returned independent of the current load state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id6">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_frames</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#id6" title="Link to this definition">#</a></dt>
+<dd><p>Sum of the loaded frames.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.n_residues">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_residues</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.n_residues" title="Link to this definition">#</a></dt>
+<dd><p>List of number of residues of the SingleTraj classes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id7">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_trajs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#id7" title="Link to this definition">#</a></dt>
+<dd><p>Number of trajectories in this ensemble.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id8">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name_arr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#id8" title="Link to this definition">#</a></dt>
+<dd><p>Trajectory names with the same length as self.n_frames.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id9">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">top</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Topology</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id9" title="Link to this definition">#</a></dt>
+<dd><p>Returns a minimal set of mdtraj.Topologies.</p>
+<p>If all trajectories share the same topology a list
+with len 1 will be returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.top_files">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">top_files</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.top_files" title="Link to this definition">#</a></dt>
+<dd><p>Returns minimal set of topology files.</p>
+<p>If yoy want a list of top files with the same
+length as self.trajs use self._top_files and
+self._traj_files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.traj_files">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">traj_files</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.traj_files" title="Link to this definition">#</a></dt>
+<dd><p>A list of the traj_files of the individual SingleTraj classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.traj_joined">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">traj_joined</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Trajectory</span></em><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.traj_joined" title="Link to this definition">#</a></dt>
+<dd><p>Returns a mdtraj Trajectory with every frame of
+this class appended along the time axis.</p>
+<p>Can also work if different topologies (with the same number of atoms) are loaded.
+In that case, the first frame in self will be used as topology parent and the remaining frames’
+xyz coordinates are used to position the parents’ atoms accordingly.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="s2">&quot;pASP_pGLU&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subsample</span> <span class="o">=</span> <span class="n">trajs</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">20</span><span class="p">]</span> <span class="o">+</span> <span class="n">trajs</span><span class="p">[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">20</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subsample</span><span class="o">.</span><span class="n">split_into_frames</span><span class="p">()</span><span class="o">.</span><span class="n">traj_joined</span>  
+<span class="go">&lt;mdtraj.Trajectory with 40 frames, 69 atoms, 6 residues, and unitcells at ...&gt;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mdtraj.Trajectory</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.traj_nums">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">traj_nums</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.traj_nums" title="Link to this definition">#</a></dt>
+<dd><p>Number of info single classes in self.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.trajs_by_common_str">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">trajs_by_common_str</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><span class="pre">TrajEnsemble</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.trajs_by_common_str" title="Link to this definition">#</a></dt>
+<dd><p>Returns the trajs in <cite>self</cite> ordered by top.</p>
+<p>If all trajectories share the same common_str, a dict with
+one key will be returned. As the common_str can be None, None can also
+occur as a key in this dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble">TrajEnsemble</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.trajs_by_top">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">trajs_by_top</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Topology</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><span class="pre">TrajEnsemble</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.trajs_by_top" title="Link to this definition">#</a></dt>
+<dd><p>Returns the trajs in <cite>self</cite> ordered by top.</p>
+<p>If all trajectories share the same topology, a dict with
+one key will be returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[md.Topology, <a class="reference internal" href="#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble">TrajEnsemble</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_all.TrajEnsemble.xyz">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">xyz</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_all.TrajEnsemble.xyz" title="Link to this definition">#</a></dt>
+<dd><p>xyz coordinates of all atoms stacked along the traj-time axis.</p>
+<p>Only works if all trajs share the same topology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="singletraj.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">SingleTraj</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="featurization.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Featurization</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble"><code class="docutils literal notranslate"><span class="pre">TrajEnsemble</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.CVs"><code class="docutils literal notranslate"><span class="pre">CVs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble._CVs"><code class="docutils literal notranslate"><span class="pre">_CVs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.n_trajs"><code class="docutils literal notranslate"><span class="pre">n_trajs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.n_frames"><code class="docutils literal notranslate"><span class="pre">n_frames</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.locations"><code class="docutils literal notranslate"><span class="pre">locations</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.top"><code class="docutils literal notranslate"><span class="pre">top</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.basenames"><code class="docutils literal notranslate"><span class="pre">basenames</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.name_arr"><code class="docutils literal notranslate"><span class="pre">name_arr</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.batch_iterator"><code class="docutils literal notranslate"><span class="pre">batch_iterator</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.cluster"><code class="docutils literal notranslate"><span class="pre">cluster</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.dash_summary"><code class="docutils literal notranslate"><span class="pre">dash_summary</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.del_CVs"><code class="docutils literal notranslate"><span class="pre">del_CVs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.del_featurizer"><code class="docutils literal notranslate"><span class="pre">del_featurizer</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.from_textfile"><code class="docutils literal notranslate"><span class="pre">from_textfile</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.get_single_frame"><code class="docutils literal notranslate"><span class="pre">get_single_frame</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.iterframes"><code class="docutils literal notranslate"><span class="pre">iterframes</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.itertrajs"><code class="docutils literal notranslate"><span class="pre">itertrajs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.load_CVs"><code class="docutils literal notranslate"><span class="pre">load_CVs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.load_custom_topology"><code class="docutils literal notranslate"><span class="pre">load_custom_topology</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.load_trajs"><code class="docutils literal notranslate"><span class="pre">load_trajs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.parse_clustal_w_alignment"><code class="docutils literal notranslate"><span class="pre">parse_clustal_w_alignment</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.save"><code class="docutils literal notranslate"><span class="pre">save</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.save_CVs"><code class="docutils literal notranslate"><span class="pre">save_CVs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.sidechain_info"><code class="docutils literal notranslate"><span class="pre">sidechain_info</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.split_into_frames"><code class="docutils literal notranslate"><span class="pre">split_into_frames</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.subsample"><code class="docutils literal notranslate"><span class="pre">subsample</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.to_alignment_query"><code class="docutils literal notranslate"><span class="pre">to_alignment_query</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.unload"><code class="docutils literal notranslate"><span class="pre">unload</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.with_overwrite_trajnums"><code class="docutils literal notranslate"><span class="pre">with_overwrite_trajnums</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id0"><code class="docutils literal notranslate"><span class="pre">CVs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.CVs_in_file"><code class="docutils literal notranslate"><span class="pre">CVs_in_file</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><code class="docutils literal notranslate"><span class="pre">_CVs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><code class="docutils literal notranslate"><span class="pre">basenames</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.frames"><code class="docutils literal notranslate"><span class="pre">frames</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.id"><code class="docutils literal notranslate"><span class="pre">id</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.index_arr"><code class="docutils literal notranslate"><span class="pre">index_arr</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><code class="docutils literal notranslate"><span class="pre">locations</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><code class="docutils literal notranslate"><span class="pre">n_frames</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.n_residues"><code class="docutils literal notranslate"><span class="pre">n_residues</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><code class="docutils literal notranslate"><span class="pre">n_trajs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8"><code class="docutils literal notranslate"><span class="pre">name_arr</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9"><code class="docutils literal notranslate"><span class="pre">top</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.top_files"><code class="docutils literal notranslate"><span class="pre">top_files</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.traj_files"><code class="docutils literal notranslate"><span class="pre">traj_files</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.traj_joined"><code class="docutils literal notranslate"><span class="pre">traj_joined</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.traj_nums"><code class="docutils literal notranslate"><span class="pre">traj_nums</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.trajs_by_common_str"><code class="docutils literal notranslate"><span class="pre">trajs_by_common_str</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.trajs_by_top"><code class="docutils literal notranslate"><span class="pre">trajs_by_top</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_all.TrajEnsemble.xyz"><code class="docutils literal notranslate"><span class="pre">xyz</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/user_guide/trajensemble.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T22:43:00.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

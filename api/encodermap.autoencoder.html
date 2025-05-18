@@ -1,0 +1,1817 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>encodermap.autoencoder package &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c1026b93" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/encodermap.autoencoder';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="encodermap.callbacks package" href="encodermap.callbacks.html" />
+    <link rel="prev" title="API" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T22:43:00"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">encodermap.autoencoder package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.callbacks.html">encodermap.callbacks package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.encodermap_tf1.html">encodermap.encodermap_tf1 package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.loading.html">encodermap.loading package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.loss_functions.html">encodermap.loss_functions package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.misc.html">encodermap.misc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.models.html">encodermap.models package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.moldata.html">encodermap.moldata package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.parameters.html">encodermap.parameters package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.plot.html">encodermap.plot package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.trajinfo.html">encodermap.trajinfo package</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">API</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">encodermap.autoencoder package</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="encodermap-autoencoder-package">
+<h1>encodermap.autoencoder package<a class="headerlink" href="#encodermap-autoencoder-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-encodermap.autoencoder.autoencoder">
+<span id="encodermap-autoencoder-autoencoder-module"></span><h2>encodermap.autoencoder.autoencoder module<a class="headerlink" href="#module-encodermap.autoencoder.autoencoder" title="Link to this heading">#</a></h2>
+<p>Forward facing Autoencoder classes. Contains four classes:</p>
+<ul class="simple">
+<li><p>Autoencoder: Simple NN dense, fully connected AE architecture. Reg loss, auto loss and center loss</p></li>
+<li><p>EncoderMap: Uses the same architecture as <cite>Autoencoder</cite>, but adds another loss function.</p></li>
+<li><dl class="simple">
+<dt>DihedralEncoderMap: Basically the same as <cite>EncoderMap</cite>, but rewrites the <cite>generate</cite> method to use</dt><dd><p>an atomistic topology to rebuild a trajectory.</p>
+</dd>
+</dl>
+</li>
+<li><p>AngleDihedralCartesianEncoderMap: Uses more loss functions and tries to learn a full all atom conformation.</p></li>
+</ul>
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AngleDihedralCartesianEncoderMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensemble</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_dataset_when_possible</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deterministic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#AngleDihedralCartesianEncoderMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Different <cite>__init__</cite> method, than Autoencoder Class. Uses callbacks to tune-in cartesian cost.</p>
+<p>Overwritten methods: <cite>_set_up_callbacks</cite> and <cite>generate</cite>.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Load two trajectories</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test_data</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">em</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;tests/data&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test_data</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xtcs</span> <span class="o">=</span> <span class="p">[</span><span class="n">test_data</span> <span class="o">/</span> <span class="s2">&quot;1am7_corrected_part1.xtc&quot;</span><span class="p">,</span> <span class="n">test_data</span> <span class="o">/</span> <span class="s2">&quot;1am7_corrected_part2.xtc&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tops</span> <span class="o">=</span> <span class="p">[</span><span class="n">test_data</span> <span class="o">/</span> <span class="s2">&quot;1am7_protein.pdb&quot;</span><span class="p">,</span> <span class="n">test_data</span>  <span class="o">/</span><span class="s2">&quot;1am7_protein.pdb&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">xtcs</span><span class="p">,</span> <span class="n">tops</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">trajs</span><span class="p">)</span>
+<span class="go">encodermap.TrajEnsemble object. Current backend is no_load. Containing 2 trajectories. Not containing any CVs.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># load CVs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># This step can be omitted. The AngleDihedralCartesianEncoderMap class automatically loads CVs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span><span class="o">.</span><span class="n">load_CVs</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">[</span><span class="s1">&#39;central_cartesians&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="go">(51, 474, 3)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">CVs</span><span class="p">[</span><span class="s1">&#39;central_dihedrals&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="go">(51, 471)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create some parameters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">ADCParameters</span><span class="p">(</span><span class="n">periodicity</span><span class="o">=</span><span class="mi">360</span><span class="p">,</span> <span class="n">use_backbone_angles</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_sidechains</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>                     <span class="n">cartesian_cost_scale_soft_start</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Standard is functional model, as it offers more flexibility</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">model_api</span><span class="p">)</span>
+<span class="go">functional</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">distance_cost_scale</span><span class="p">)</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Instantiate the class</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e_map</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">AngleDihedralCartesianEncoderMap</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  
+<span class="go">Model...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># dataset contains these inputs:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># central_angles, central_dihedrals, central_cartesians, central_distances, sidechain_dihedrals</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">e_map</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>  
+<span class="go">&lt;BatchDataset element_spec=(TensorSpec(shape=(None, 472), dtype=tf.float32, name=None), TensorSpec(shape=(None, 471), dtype=tf.float32, name=None), TensorSpec(shape=(None, 474, 3), dtype=tf.float32, name=None), TensorSpec(shape=(None, 473), dtype=tf.float32, name=None), TensorSpec(shape=(None, 316), dtype=tf.float32, name=None))&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># output from the model contains the following data:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># out_angles, out_dihedrals, back_cartesians, pairwise_distances of inp cartesians, pairwise of back-mapped cartesians, out_side_dihedrals</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">e_map</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">e_map</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">shape</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">out</span><span class="p">])</span>  
+<span class="go">[TensorShape([256, 472]), TensorShape([256, 471]), TensorShape([256, 474, 3]), TensorShape([256, 112101]), TensorShape([256, 112101]), TensorShape([256, 316])]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># get output of latent space by providing central_angles, central_dihedrals, sidehcain_dihedrals</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">latent</span> <span class="o">=</span> <span class="n">e_map</span><span class="o">.</span><span class="n">encoder</span><span class="p">([</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">latent</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="go">(256, 2)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Rebuild central_angles, central_dihedrals and sidechain_angles from latent</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dih</span><span class="p">,</span> <span class="n">ang</span><span class="p">,</span> <span class="n">side_dih</span> <span class="o">=</span> <span class="n">e_map</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">latent</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">dih</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">ang</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">side_dih</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="go">(256, 472) (256, 471) (256, 316)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajs</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><em>TrajEnsemble</em></a><em>]</em>)</p></li>
+<li><p><strong>parameters</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="index.html#encodermap.ADCParameters" title="encodermap.ADCParameters"><em>ADCParameters</em></a><em>]</em>)</p></li>
+<li><p><strong>model</strong> (<em>Optional</em><em>[</em><em>tf.keras.Model</em><em>]</em>)</p></li>
+<li><p><strong>read_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>dataset</strong> (<em>Optional</em><em>[</em><em>tf.data.Dataset</em><em>]</em>)</p></li>
+<li><p><strong>ensemble</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>use_dataset_when_possible</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>deterministic</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.add_callback">
+<span class="sig-name descname"><span class="pre">add_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#AngleDihedralCartesianEncoderMap.add_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.add_callback" title="Link to this definition">#</a></dt>
+<dd><p>Adds a new callback to the existing callbacks.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.add_images_to_tensorboard">
+<span class="sig-name descname"><span class="pre">add_images_to_tensorboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#AngleDihedralCartesianEncoderMap.add_images_to_tensorboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.add_images_to_tensorboard" title="Link to this definition">#</a></dt>
+<dd><p>Adds images of the latent space to tensorboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>Sequence</em><em>[</em><em>np.ndarray</em><em>]</em><em>]</em>) – The input-data will
+be passed through the encoder part of the autoencoder. If None
+is provided, a set of 10_000 points from <cite>self.train_data</cite> will
+be taken. A list[np.ndarray] is needed for the functional API of the
+<cite>AngleDihedralCartesianEncoderMap</cite>, that takes a list of
+[angles, dihedrals, side_dihedrals]. Defaults to None.</p></li>
+<li><p><strong>image_step</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The interval in which to plot
+images to tensorboard. If None is provided, the <cite>image_step</cite>
+will be the same as <cite>Parameters.summary_step</cite>. Defaults to None.</p></li>
+<li><p><strong>max_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The maximum size of the high-dimensional data, that is
+projected. Prevents excessively large-datasets from being projected
+at every <cite>image_step</cite>. Defaults to 10_000.</p></li>
+<li><p><strong>scatter_kws</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Any</em><em>]</em><em>]</em>) – A dict with items that
+<cite>plotly.express.scatter()</cite> will accept. If None is provided,
+a dict with size 20 will be passed to
+<cite>px.scatter(**{‘size_max’: 10, ‘opacity’: 0.2})</cite>,
+which sets an appropriate size of scatter points for the size of
+datasets encodermap is usually used for.</p></li>
+<li><p><strong>hist_kws</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Any</em><em>]</em><em>]</em>) – A dict with items that
+<cite>encodermap.plot.plotting._plot_free_energy()</cite> will accept. If None is provided a
+dict with bins 50 will be passed to
+<cite>encodermap.plot.plotting._plot_free_energy(**{‘bins’: 50})</cite>.
+You can choose a colormap here by providing <cite>{‘bins’: 50, ‘cmap’:
+‘plasma’}</cite> for this argument.</p></li>
+<li><p><strong>additional_fns</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><em>Callable</em><em>]</em><em>]</em>) – A list of functions
+that will accept the low-dimensional output of the <cite>Autoencoder</cite>
+latent/bottleneck layer and return a tf.Tensor that can be logged
+by <cite>tf.summary.image()</cite>. See the notebook
+‘writing_custom_images_to_tensorboard.ipynb’ in
+tutorials/notebooks_customization for more info. If None is
+provided, no additional functions will be used to plot to
+tensorboard. Defaults to None.</p></li>
+<li><p><strong>when</strong> (<em>Literal</em><em>[</em><em>&quot;epoch&quot;</em><em>, </em><em>&quot;batch&quot;</em><em>]</em>) – When to log the images can be
+either ‘batch’, then the images will be logged after every step
+during training, or ‘epoch’, then only after every image_step
+epoch the images will be written. Defaults to ‘epoch’.</p></li>
+<li><p><strong>save_to_disk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to also write the images to disk.</p></li>
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.add_loss">
+<span class="sig-name descname"><span class="pre">add_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loss</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#AngleDihedralCartesianEncoderMap.add_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.add_loss" title="Link to this definition">#</a></dt>
+<dd><p>Adds a new loss to the existing losses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.add_metric">
+<span class="sig-name descname"><span class="pre">add_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#AngleDihedralCartesianEncoderMap.add_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.add_metric" title="Link to this definition">#</a></dt>
+<dd><p>Adds a new metric to the existing metrics.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#AngleDihedralCartesianEncoderMap.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.close" title="Link to this definition">#</a></dt>
+<dd><p>Clears the current keras backend and frees up resources.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.decode">
+<span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#AngleDihedralCartesianEncoderMap.decode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.decode" title="Link to this definition">#</a></dt>
+<dd><p>Calls the decoder part of the model.</p>
+<p><cite>AngleDihedralCartesianAutoencoder</cite> will, like the other two classes’
+output a list of np.ndarray.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>np.ndarray</em>) – The data to be passed to the decoder part of
+the model. Make sure that the shape of the data matches the
+number of neurons in the latent space.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Outputs from the decoder part.</dt><dd><p>For <cite>AngleDihedralCartesianEncoderMap</cite>, this will be a list of
+np.ndarray.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[np.ndarray], np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.decoder">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">decoder</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Model</span></em><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.decoder" title="Link to this definition">#</a></dt>
+<dd><p>The decoder Model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.keras.Model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.encode">
+<span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#AngleDihedralCartesianEncoderMap.encode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.encode" title="Link to this definition">#</a></dt>
+<dd><p>Runs the central_angles, central_dihedrals, (side_dihedrals) through the
+autoencoder. Make sure that <cite>data</cite> has the correct shape.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Sequence</em><em>[</em><em>np.ndarray</em><em>]</em>) – Provide a sequence of angles, and
+central_dihedrals, if you used sidechain_dihedrals during training
+append these to the end of the sequence.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The latent space representation of the provided <cite>data</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.encoder">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">encoder</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Model</span></em><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.encoder" title="Link to this definition">#</a></dt>
+<dd><p>The encoder Model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.keras.Model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.from_checkpoint">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_previous_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#AngleDihedralCartesianEncoderMap.from_checkpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.from_checkpoint" title="Link to this definition">#</a></dt>
+<dd><p>Reconstructs the model from a checkpoint.</p>
+<p>Although the model can be loaded from disk without any form of data and
+still yield the correct input and output shapes, it is required to either
+provide <cite>trajs</cite> or <cite>dataset</cite> to double-check, that the correct model will
+be reloaded.</p>
+<p>This is also, whe the <cite>sparse</cite> argument is not needed, as sparcity of the
+input data is a property of the <cite>TrajEnsemble</cite> provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajs</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><a class="reference internal" href="../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><em>TrajEnsemble</em></a><em>]</em>) – Either None (in which case, the
+argument <cite>dataset</cite> is required), or an instance of <cite>TrajEnsemble</cite>,
+which was used to instantiate the <cite>AngleDihedralCartesianEncoderMap</cite>,
+before it was saved to disk.</p></li>
+<li><p><strong>checkpoint_path</strong> (<em>Union</em><em>[</em><em>Path</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The path to the checkpoint. Can
+either be the path to a .keras file or to a directory containing
+.keras files, in which case the most recently created .keras
+file will be used.</p></li>
+<li><p><strong>dataset</strong> (<em>Optional</em><em>[</em><em>tf.data.Dataset</em><em>]</em>) – If <cite>trajs</cite> is not provided, a
+dataset is required to make sure the input shapes match the model,
+that is stored on the disk.</p></li>
+<li><p><strong>use_previous_model</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Set this flag to True, if you load a model
+from an in-between checkpoint step (e.g., to continue training with
+different parameters). If you have the files saved_model_0.keras,
+saved_model_500.keras and saved_model_1000.keras, setting this to
+True and loading the saved_model_500.keras will back up the
+saved_model_1000.keras.</p></li>
+<li><p><strong>compat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to use compatibility mode when missing or wrong
+parameter files are present. In this special case, some assumptions
+about the network architecture are made from the model and the
+parameters in parameters.json overwritten accordingly (a backup
+will also be made).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of <cite>AngleDihedralCartesianEncoderMap</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AngleDihedralCartesianEncoderMapType</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Topology</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'mdtraj'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progbar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Trajectory</span></span></span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#AngleDihedralCartesianEncoderMap.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.generate" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Topology</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'mdanalysis'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progbar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Universe</span></span></span></dt>
+<dd><p>Overrides the parent class’ <cite>generate</cite> method and builds a trajectory.</p>
+<p>Instead of just providing data to <cite>decode</cite> using the decoder part of the
+network, this method also takes a molecular topology as its <cite>top</cite>
+argument. This topology is then used to rebuild a time-resolved
+trajectory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<em>np.ndarray</em>) – The low-dimensional points from which the
+trajectory should be rebuilt.</p></li>
+<li><p><strong>top</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>mdtraj.Topology</em><em>]</em>) – The topology to be used for rebuilding the
+trajectory. This should be a string pointing towards a &lt;<a href="#id1"><span class="problematic" id="id2">*</span></a>.pdb,
+<a href="#id3"><span class="problematic" id="id4">*</span></a>.gro, <a href="#id5"><span class="problematic" id="id6">*</span></a>.h5&gt; file. Alternatively, None can be provided; in which
+case, the internal topology (<cite>self.top</cite>) of this class is used.
+Defaults to None.</p></li>
+<li><p><strong>backend</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – <p>Defines what MD python package is to use, to build the
+trajectory and also what type this method returns, needs to be
+one of the following:</p>
+<blockquote>
+<div><ul>
+<li><p>”mdtraj”</p></li>
+<li><p>”mdanalysis”</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The trajectory after</dt><dd><p>applying the decoded structural information. The type of this
+depends on the chosen <cite>backend</cite> parameter.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[mdtraj.Trajectory, MDAnalysis.universe]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.get_train_data_from_trajs">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_train_data_from_trajs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CVs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#AngleDihedralCartesianEncoderMap.get_train_data_from_trajs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.get_train_data_from_trajs" title="Link to this definition">#</a></dt>
+<dd><p>Builds train data from a <cite>TrajEnsemble</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajs</strong> (<a class="reference internal" href="../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><em>TrajEnsemble</em></a>) – A <cite>TrajEnsemble</cite> instance.</p></li>
+<li><p><strong>p</strong> (<em>encodermap.parameters.ADCParameters</em>) – An instance of <cite>encodermap.parameters.ADCParameters</cite>.</p></li>
+<li><p><strong>attr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Which attribute to get from <cite>TrajEnsemble</cite>. This defaults
+to ‘CVs’, because ‘CVs’ is usually a dict containing the CV data.
+However, you can build the train data from any dict in the <cite>TrajEnsemble</cite>.</p></li>
+<li><p><strong>max_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – When you only want a subset of the CV data. Set this
+to the desired size.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tuple containing the following:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>bool: A bool that shows whether some ‘CV’ values are <cite>np.nan</cite> (True),</dt><dd><p>which will be used to decide whether the sparse training
+will be used.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>list[np.ndarray]: An array of features fed into the autoencoder,</dt><dd><p>concatenated along the feature axis. The order of the
+features is: central_angles, central_dihedral, (side_dihedrals
+if p.use_sidechain_dihedrals is True).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>dict[str, np.ndarray]: The training data as a dict. Containing</dt><dd><p>all values in <cite>trajs.CVs</cite>.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.plot_network">
+<span class="sig-name descname"><span class="pre">plot_network</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#AngleDihedralCartesianEncoderMap.plot_network"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.plot_network" title="Link to this definition">#</a></dt>
+<dd><p>Tries to plot the network using pydot, pydotplus and graphviz.
+Doesn’t raise an exception if plotting is not possible.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Refer to this guide to install these programs:
+<a class="reference external" href="https://stackoverflow.com/questions/47605558/importerror-failed-to-import-pydot-you-must-install-pydot-and-graphviz-for-py">https://stackoverflow.com/questions/47605558/importerror-failed-to-import-pydot-you-must-install-pydot-and-graphviz-for-py</a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#AngleDihedralCartesianEncoderMap.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.save" title="Link to this definition">#</a></dt>
+<dd><p>Saves the model to the current path defined in <cite>parameters.main_path</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>step</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Does not save the model at the given
+training step, but rather changes the string used for saving
+the model from a datetime format to another.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>When the model has been saved, the Path will</dt><dd><p>be returned. If the model could not be saved. None will be
+returned.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[None, Path]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.set_train_data">
+<span class="sig-name descname"><span class="pre">set_train_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#AngleDihedralCartesianEncoderMap.set_train_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.set_train_data" title="Link to this definition">#</a></dt>
+<dd><p>Resets the train data for reloaded models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference internal" href="../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><em>TrajEnsemble</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#AngleDihedralCartesianEncoderMap.train"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.train" title="Link to this definition">#</a></dt>
+<dd><p>Overwrites the parent class’ <cite>train()</cite> method to implement references.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.train_for_references">
+<span class="sig-name descname"><span class="pre">train_for_references</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#AngleDihedralCartesianEncoderMap.train_for_references"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.train_for_references" title="Link to this definition">#</a></dt>
+<dd><p>Calculates the angle, dihedral, and cartesian costs to so-called
+references, which can be used to bring these costs to a similar
+magnitude.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subsample</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
+<li><p><strong>maxiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Autoencoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sparse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Main Autoencoder class. Presents all high-level functions.</p>
+<p>This is the main class for neural networks inside EncoderMap. The class
+prepares the data (batching and shuffling), creates a <cite>tf.keras.Model</cite>
+of layers specified by the attributes of the <cite>encodermap.Parameters</cite> class.
+Depending on what Parent/Child-Class is instantiated, a combination of
+various cost functions is set up. Callbacks to Tensorboard are also set up.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_data</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>tf.data.Dataset</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>model</strong> (<em>Optional</em><em>[</em><em>tf.keras.Model</em><em>]</em>)</p></li>
+<li><p><strong>read_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>sparse</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.train_data">
+<span class="sig-name descname"><span class="pre">train_data</span></span><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.train_data" title="Link to this definition">#</a></dt>
+<dd><p>The numpy array of the train data passed at init.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.p">
+<span class="sig-name descname"><span class="pre">p</span></span><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.p" title="Link to this definition">#</a></dt>
+<dd><p>An <cite>encodermap.Parameters</cite> class
+containing all info needed to set up the network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AnyParameters</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.dataset">
+<span class="sig-name descname"><span class="pre">dataset</span></span><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.dataset" title="Link to this definition">#</a></dt>
+<dd><p>The dataset that is actually used
+in training the keras model. The dataset is a batched, shuffled,
+infinitely-repeating dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tensorflow.data.Dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.read_only">
+<span class="sig-name descname"><span class="pre">read_only</span></span><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.read_only" title="Link to this definition">#</a></dt>
+<dd><p>Variable telling the class whether it is allowed to
+write to disk (False) or not (True).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.metrics">
+<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.metrics" title="Link to this definition">#</a></dt>
+<dd><p>A list of metrics passed to the model when it is compiled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.callbacks">
+<span class="sig-name descname"><span class="pre">callbacks</span></span><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.callbacks" title="Link to this definition">#</a></dt>
+<dd><p>A list of tf.keras.callbacks.Callback subclasses
+changing the behavior of the model during training.
+Some standard callbacks are always present like:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>encodermap.callbacks.callbacks.ProgressBar:</dt><dd><p>A progress bar callback using tqdm giving the current
+progress of training and the current loss.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>CheckPointSaver:</dt><dd><p>A callback that saves the model every
+<cite>parameters.checkpoint_step</cite> steps into the main directory.
+This callback will only be used, when <cite>read_only</cite> is False.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>TensorboardWriteBool:</dt><dd><p>A callback that contains a boolean Tensor that will be
+True or False, depending on the current training step and
+the summary_step in the parameters class. The loss functions
+use this callback to decide whether they should write to
+Tensorboard. This callback will only be present when
+<cite>read_only</cite> is False and <cite>parameters.tensorboard</cite> is True.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>You can append your own callbacks to this list before executing
+<cite>self.train()</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.encoder">
+<span class="sig-name descname"><span class="pre">encoder</span></span><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.encoder" title="Link to this definition">#</a></dt>
+<dd><p>The encoder submodel of <cite>self.model</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.keras.Model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.decoder">
+<span class="sig-name descname"><span class="pre">decoder</span></span><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.decoder" title="Link to this definition">#</a></dt>
+<dd><p>The decoder submodel of <cite>self.model</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.keras.Model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.loss">
+<span class="sig-name descname"><span class="pre">loss</span></span><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.loss" title="Link to this definition">#</a></dt>
+<dd><p>A list of loss functions passed to the model
+when it is compiled. When the main <cite>Autoencoder</cite> class is used and
+<cite>parameters.loss</cite> is ‘emap_cost’, this list comprises center_cost,
+regularization_cost, auto_cost. When the <cite>EncoderMap</cite> sub-class is
+used and <cite>parameters.loss</cite> is ‘emap_cost’, distance_cost is added to
+the list. When <cite>parameters.loss</cite> is not ‘emap_cost’, the loss can either
+be a string (‘mse’), or a function, that both are acceptable
+arguments for loss, when a keras model is compiled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sequence[Callable]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.from_checkpoint">
+<span class="sig-name descname"><span class="pre">from_checkpoint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.from_checkpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.from_checkpoint" title="Link to this definition">#</a></dt>
+<dd><p>Rebuild the model from a checkpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>checkpoint_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><em>Path</em></a>)</p></li>
+<li><p><strong>train_data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>sparse</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>use_previous_model</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>compat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>AutoencoderType</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.add_images_to_tensorboard">
+<span class="sig-name descname"><span class="pre">add_images_to_tensorboard</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.add_images_to_tensorboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.add_images_to_tensorboard" title="Link to this definition">#</a></dt>
+<dd><p>Make tensorboard plot images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.train"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.train" title="Link to this definition">#</a></dt>
+<dd><p>Starts the training of the tf.keras.models.Model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.plot_network">
+<span class="sig-name descname"><span class="pre">plot_network</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.plot_network"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.plot_network" title="Link to this definition">#</a></dt>
+<dd><p>Tries to plot the network. For this method to work
+graphviz, pydot and pydotplus need to be installed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.encode">
+<span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.encode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.encode" title="Link to this definition">#</a></dt>
+<dd><p>Takes high-dimensional data and sends it through the encoder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.13)"><em>Sequence</em></a><em>[</em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a><em>] </em><em>| </em><em>None</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.decode">
+<span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.decode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.decode" title="Link to this definition">#</a></dt>
+<dd><p>Takes low-dimensional data and sends it through the encoder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.13)"><em>Sequence</em></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.generate" title="Link to this definition">#</a></dt>
+<dd><p>Same as <cite>decode</cite>. For AngleDihedralCartesianAutoencoder classes,
+this will build a protein strutcure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Performance of tensorflow is not only dependent on your system’s
+hardware and how the data is presented to the network
+(for this check out <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">https://www.tensorflow.org/guide/data_performance</a>),
+but also how you compiled tensorflow. Normal tensorflow
+(pip install tensorflow) is build without CPU extensions to work on
+many CPUs. However, Tensorflow can greatly benefit from using CPU
+instructions like AVX2, AVX512 that bring a speed-up in linear algebra
+computations of 300%. By building tensorflow from source,
+you can activate these extensions. However, the speed-up of using
+tensorflow with a GPU dwarfs the CPU speed-up. To check whether a
+GPU is available run: <cite>print(len(tf.config.list_physical_devices(‘GPU’)))</cite>.
+Refer to these pages to install tensorflow for the best performance:
+<a class="reference external" href="https://www.tensorflow.org/install/pip">https://www.tensorflow.org/install/pip</a> and
+<a class="reference external" href="https://www.tensorflow.org/install/gpu">https://www.tensorflow.org/install/gpu</a></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># without providing any data, default parameters and a 4D</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># hypercube as input data will be used.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e_map</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">EncoderMap</span><span class="p">(</span><span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">e_map</span><span class="o">.</span><span class="n">train_data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="go">(16000, 4)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">e_map</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>  
+<span class="go">&lt;BatchDataset element_spec=(TensorSpec(shape=(None, 4), dtype=tf.float32, name=None), TensorSpec(shape=(None, 4), dtype=tf.float32, name=None))&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">e_map</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">e_map</span><span class="o">.</span><span class="n">train_data</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="go">(16000, 2)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.add_callback">
+<span class="sig-name descname"><span class="pre">add_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.add_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.add_callback" title="Link to this definition">#</a></dt>
+<dd><p>Adds a new callback to the existing callbacks.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">add_images_to_tensorboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.add_images_to_tensorboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition">#</a></dt>
+<dd><p>Adds images of the latent space to tensorboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>Sequence</em><em>[</em><em>np.ndarray</em><em>]</em><em>]</em>) – The input-data will
+be passed through the encoder part of the autoencoder. If None
+is provided, a set of 10_000 points from <cite>self.train_data</cite> will
+be taken. A list[np.ndarray] is needed for the functional API of the
+<cite>AngleDihedralCartesianEncoderMap</cite>, that takes a list of
+[angles, dihedrals, side_dihedrals]. Defaults to None.</p></li>
+<li><p><strong>image_step</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The interval in which to plot
+images to tensorboard. If None is provided, the <cite>image_step</cite>
+will be the same as <cite>Parameters.summary_step</cite>. Defaults to None.</p></li>
+<li><p><strong>max_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The maximum size of the high-dimensional data, that is
+projected. Prevents excessively large-datasets from being projected
+at every <cite>image_step</cite>. Defaults to 10_000.</p></li>
+<li><p><strong>scatter_kws</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Any</em><em>]</em><em>]</em>) – A dict with items that
+<cite>plotly.express.scatter()</cite> will accept. If None is provided,
+a dict with size 20 will be passed to
+<cite>px.scatter(**{‘size_max’: 10, ‘opacity’: 0.2})</cite>,
+which sets an appropriate size of scatter points for the size of
+datasets encodermap is usually used for.</p></li>
+<li><p><strong>hist_kws</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Any</em><em>]</em><em>]</em>) – A dict with items that
+<cite>encodermap.plot.plotting._plot_free_energy()</cite> will accept. If None is provided a
+dict with bins 50 will be passed to
+<cite>encodermap.plot.plotting._plot_free_energy(**{‘bins’: 50})</cite>.
+You can choose a colormap here by providing <cite>{‘bins’: 50, ‘cmap’:
+‘plasma’}</cite> for this argument.</p></li>
+<li><p><strong>additional_fns</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><em>Callable</em><em>]</em><em>]</em>) – A list of functions
+that will accept the low-dimensional output of the <cite>Autoencoder</cite>
+latent/bottleneck layer and return a tf.Tensor that can be logged
+by <cite>tf.summary.image()</cite>. See the notebook
+‘writing_custom_images_to_tensorboard.ipynb’ in
+tutorials/notebooks_customization for more info. If None is
+provided, no additional functions will be used to plot to
+tensorboard. Defaults to None.</p></li>
+<li><p><strong>when</strong> (<em>Literal</em><em>[</em><em>&quot;epoch&quot;</em><em>, </em><em>&quot;batch&quot;</em><em>]</em>) – When to log the images can be
+either ‘batch’, then the images will be logged after every step
+during training, or ‘epoch’, then only after every image_step
+epoch the images will be written. Defaults to ‘epoch’.</p></li>
+<li><p><strong>save_to_disk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to also write the images to disk.</p></li>
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.add_loss">
+<span class="sig-name descname"><span class="pre">add_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loss</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.add_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.add_loss" title="Link to this definition">#</a></dt>
+<dd><p>Adds a new loss to the existing losses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.add_metric">
+<span class="sig-name descname"><span class="pre">add_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.add_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.add_metric" title="Link to this definition">#</a></dt>
+<dd><p>Adds a new metric to the existing metrics.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.close" title="Link to this definition">#</a></dt>
+<dd><p>Clears the current keras backend and frees up resources.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.decode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id7" title="Link to this definition">#</a></dt>
+<dd><p>Calls the decoder part of the model.</p>
+<p><cite>AngleDihedralCartesianAutoencoder</cite> will, like the other two classes’
+output a list of np.ndarray.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>np.ndarray</em>) – The data to be passed to the decoder part of
+the model. Make sure that the shape of the data matches the
+number of neurons in the latent space.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Outputs from the decoder part.</dt><dd><p>For <cite>AngleDihedralCartesianEncoderMap</cite>, this will be a list of
+np.ndarray.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[np.ndarray], np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id8">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">decoder</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Model</span></em><a class="headerlink" href="#id8" title="Link to this definition">#</a></dt>
+<dd><p>Decoder part of the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.keras.Model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.encode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id9" title="Link to this definition">#</a></dt>
+<dd><p>Calls encoder part of <cite>self.model</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Optional</em><em>[</em><em>np.ndarray</em><em>]</em>) – The data to be passed top the encoder part.
+It can be either numpy ndarray or None. If None is provided,
+a set of 10000 points from the provided train data will be taken.
+Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The output from the bottleneck/latent layer.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id10">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">encoder</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Model</span></em><a class="headerlink" href="#id10" title="Link to this definition">#</a></dt>
+<dd><p>Encoder part of the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.keras.Model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id11">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sparse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_previous_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.from_checkpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id11" title="Link to this definition">#</a></dt>
+<dd><p>Reconstructs the class from a checkpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>checkpoint_path</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Path</em><em>]</em>) – The path to the checkpoint. Can
+be either a directory, in which case the most recently saved
+model will be loaded. Or a direct .keras file, in which case, this
+specific model will be loaded.</p></li>
+<li><p><strong>train_data</strong> (<em>Optional</em><em>[</em><em>np.ndarray</em><em>]</em>) – can provide the train data here.</p></li>
+<li><p><strong>sparse</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the reloaded model should be sparse.</p></li>
+<li><p><strong>use_previous_model</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Set this flag to True, if you load a model
+from an in-between checkpoint step (e.g., to continue training with
+different parameters). If you have the files saved_model_0.keras,
+saved_model_500.keras and saved_model_1000.keras, setting this to
+True and loading the saved_model_500.keras will back up the
+saved_model_1000.keras.</p></li>
+<li><p><strong>compat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to use compatibility mode when missing or wrong
+parameter files are present. In this special case, some assumptions
+about the network architecture are made from the model and the
+parameters in parameters.json overwritten accordingly (a backup
+will also be made).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Encodermap <cite>Autoencoder</cite> class.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.Autoencoder" title="encodermap.autoencoder.autoencoder.Autoencoder">Autoencoder</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id12" title="Link to this definition">#</a></dt>
+<dd><p>Duplication of <cite>self.decode</cite>.</p>
+<p>In <cite>Autoencoder</cite> and <cite>EncoderMap</cite> this method is equivalent to <cite>decode()</cite>.
+In <cite>AngleDihedralCartesianEncoderMap</cite> this method will be overwritten
+to produce output molecular conformations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>np.ndarray</em>) – The data to be passed to the decoder part of the
+model. Make sure that the shape of the data matches the number
+of neurons in the latent space.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Outputs from the decoder part. For</dt><dd><p><cite>AngleDihedralCartesianEncoderMap</cite>, this will either be a
+<cite>mdtraj.Trajectory</cite> or <cite>MDAnalysis.Universe</cite>.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">plot_network</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.plot_network"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id13" title="Link to this definition">#</a></dt>
+<dd><p>Tries to plot the network using pydot, pydotplus and graphviz.
+Doesn’t raise an exception if plotting is not possible.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Refer to this guide to install these programs:
+<a class="reference external" href="https://stackoverflow.com/questions/47605558/importerror-failed-to-import-pydot-you-must-install-pydot-and-graphviz-for-py">https://stackoverflow.com/questions/47605558/importerror-failed-to-import-pydot-you-must-install-pydot-and-graphviz-for-py</a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.save" title="Link to this definition">#</a></dt>
+<dd><p>Saves the model to the current path defined in <cite>parameters.main_path</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>step</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Does not save the model at the given
+training step, but rather changes the string used for saving
+the model from a datetime format to another.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>When the model has been saved, the Path will</dt><dd><p>be returned. If the model could not be saved. None will be
+returned.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[None, Path]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.Autoencoder.set_train_data">
+<span class="sig-name descname"><span class="pre">set_train_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.set_train_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.Autoencoder.set_train_data" title="Link to this definition">#</a></dt>
+<dd><p>Resets the train data for reloaded models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a><em> | </em><em>DatasetV2</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#Autoencoder.train"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id14" title="Link to this definition">#</a></dt>
+<dd><p>Starts the training of the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>If training succeeds, an</dt><dd><p>instance of <cite>tf.keras.callbacks.History</cite> is returned. If not,
+None is returned.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Union[tf.keras.callbacks.History, None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.DihedralEncoderMap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DihedralEncoderMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sparse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#DihedralEncoderMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.DihedralEncoderMap" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.EncoderMap" title="encodermap.autoencoder.autoencoder.EncoderMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">EncoderMap</span></code></a></p>
+<p>Similar to the <cite>EncoderMap</cite> class, but overwrites the <cite>generate</cite> method.</p>
+<p>Using this class, instead of tbe <cite>EncoderMap</cite> class, the <cite>generate</cite> method,
+needs an additional argument: <cite>top</cite>, which should be a topology file. This
+topology will be used as a base on which the dihedrals of the <cite>decode</cite>
+method are applied.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_data</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>tf.data.Dataset</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>model</strong> (<em>Optional</em><em>[</em><em>tf.keras.Model</em><em>]</em>)</p></li>
+<li><p><strong>read_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>sparse</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.DihedralEncoderMap.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#DihedralEncoderMap.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.DihedralEncoderMap.generate" title="Link to this definition">#</a></dt>
+<dd><p>Overwrites <cite>EncoderMap</cite>’s generate method and actually does
+backmapping if a list of dihedrals is provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>np.ndarray</em>) – The low-dimensional/latent/bottleneck data.
+A ndim==2 numpy array with xy coordinates of points in latent space.</p></li>
+<li><p><strong>top</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Topology file for this run of EncoderMap (can be .pdb, .gro, .. etc.).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The topology with the provided backbone torsions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>MDAnalysis.Universe</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># get some time-resolved pdb files</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pdb_link</span> <span class="o">=</span> <span class="s1">&#39;https://files.rcsb.org/view/1YUF.pdb&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">contents</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pdb_link</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">contents</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>  
+<span class="go">HEADER    GROWTH FACTOR                           01-APR-96   1YUF</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># fake a file with stringio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">MDAnalysis</span> <span class="k">as</span> <span class="nn">mda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">file</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># pass it to MDAnalysis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">mda</span><span class="o">.</span><span class="n">Universe</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;PDB&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+<span class="go">&lt;Universe with 720 atoms&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># select the atomgroups</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ags</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">psi_selection</span><span class="p">()</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">u</span><span class="o">.</span><span class="n">residues</span><span class="p">],</span>
+<span class="gp">... </span>       <span class="o">*</span><span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">omega_selection</span><span class="p">()</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">u</span><span class="o">.</span><span class="n">residues</span><span class="p">],</span>
+<span class="gp">... </span>       <span class="o">*</span><span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">phi_selection</span><span class="p">()</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">u</span><span class="o">.</span><span class="n">residues</span><span class="p">]</span>
+<span class="gp">... </span>       <span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># filter Nones</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ags</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">False</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">True</span><span class="p">,</span> <span class="n">ags</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ags</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>  
+<span class="go">&lt;Atom 3: C of type C of resname VAL, resid 1 and segid A and altLoc &gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Run dihedral Angles</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">MDAnalysis.analysis.dihedrals</span> <span class="kn">import</span> <span class="n">Dihedral</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">Dihedral</span><span class="p">(</span><span class="n">ags</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="go">(16, 147)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># import EncoderMap and define parameters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">encodermap.autoencoder</span> <span class="kn">import</span> <span class="n">DihedralEncoderMap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parameters</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">Parameters</span><span class="p">(</span>
+<span class="gp">... </span><span class="n">dist_sig_parameters</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+<span class="gp">... </span><span class="n">periodicity</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">l2_reg_constant</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">summary_step</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+<span class="gp">... </span><span class="n">tensorboard</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e_map</span> <span class="o">=</span> <span class="n">DihedralEncoderMap</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">e_map</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="go">DihedralEncoderMap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># get some low-dimensional data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lowd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># use the generate method to get a new MDAnalysis universe</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># but first remove the time resolution</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">file</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">contents</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;MODEL        2&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new</span> <span class="o">=</span> <span class="n">e_map</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">lowd</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">new</span><span class="o">.</span><span class="n">trajectory</span><span class="o">.</span><span class="n">coordinate_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="go">(100, 720, 3)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># check whether frame 0 of u and new_u are different</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">u</span><span class="o">.</span><span class="n">trajectory</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">a1</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">positions</span>
+<span class="gp">... </span>    <span class="k">break</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">new</span><span class="o">.</span><span class="n">trajectory</span><span class="o">.</span><span class="n">coordinate_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.EncoderMap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EncoderMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sparse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#EncoderMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.EncoderMap" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.Autoencoder" title="encodermap.autoencoder.autoencoder.Autoencoder"><code class="xref py py-class docutils literal notranslate"><span class="pre">Autoencoder</span></code></a></p>
+<p>Complete copy of Autoencoder class but uses additional distance cost
+scaled by the SketchMap sigmoid params</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_data</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>tf.data.Dataset</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>model</strong> (<em>Optional</em><em>[</em><em>tf.keras.Model</em><em>]</em>)</p></li>
+<li><p><strong>read_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>sparse</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.autoencoder.autoencoder.EncoderMap.from_checkpoint">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sparse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_previous_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/autoencoder/autoencoder.html#EncoderMap.from_checkpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.autoencoder.autoencoder.EncoderMap.from_checkpoint" title="Link to this definition">#</a></dt>
+<dd><p>Reconstructs the class from a checkpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>checkpoint_path</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Path</em><em>]</em>) – The path to the checkpoint. Can
+be either a directory, in which case the most recently saved
+model will be loaded. Or a direct .keras file, in which case, this
+specific model will be loaded.</p></li>
+<li><p><strong>train_data</strong> (<em>Optional</em><em>[</em><em>np.ndarray</em><em>]</em>) – can provide the train data here.</p></li>
+<li><p><strong>sparse</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the reloaded model should be sparse.</p></li>
+<li><p><strong>use_previous_model</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Set this flag to True, if you load a model
+from an in-between checkpoint step (e.g., to continue training with
+different parameters). If you have the files saved_model_0.keras,
+saved_model_500.keras and saved_model_1000.keras, setting this to
+True and loading the saved_model_500.keras will back up the
+saved_model_1000.keras.</p></li>
+<li><p><strong>compat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to use compatibility mode when missing or wrong
+parameter files are present. In this special case, some assumptions
+about the network architecture are made from the model and the
+parameters in parameters.json overwritten accordingly (a backup
+will also be made).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>EncoderMap <cite>EncoderMap</cite> class.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.EncoderMap" title="encodermap.autoencoder.autoencoder.EncoderMap">EncoderMap</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-encodermap.autoencoder">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-encodermap.autoencoder" title="Link to this heading">#</a></h2>
+<p>Front-facing autoencoder classes.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">API</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="encodermap.callbacks.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">encodermap.callbacks package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-encodermap.autoencoder.autoencoder">encodermap.autoencoder.autoencoder module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap"><code class="docutils literal notranslate"><span class="pre">AngleDihedralCartesianEncoderMap</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.add_callback"><code class="docutils literal notranslate"><span class="pre">add_callback</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.add_images_to_tensorboard"><code class="docutils literal notranslate"><span class="pre">add_images_to_tensorboard</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.add_loss"><code class="docutils literal notranslate"><span class="pre">add_loss</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.add_metric"><code class="docutils literal notranslate"><span class="pre">add_metric</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.close"><code class="docutils literal notranslate"><span class="pre">close</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.decode"><code class="docutils literal notranslate"><span class="pre">decode</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.decoder"><code class="docutils literal notranslate"><span class="pre">decoder</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.encode"><code class="docutils literal notranslate"><span class="pre">encode</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.encoder"><code class="docutils literal notranslate"><span class="pre">encoder</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.from_checkpoint"><code class="docutils literal notranslate"><span class="pre">from_checkpoint</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.generate"><code class="docutils literal notranslate"><span class="pre">generate</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.get_train_data_from_trajs"><code class="docutils literal notranslate"><span class="pre">get_train_data_from_trajs</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.plot_network"><code class="docutils literal notranslate"><span class="pre">plot_network</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.save"><code class="docutils literal notranslate"><span class="pre">save</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.set_train_data"><code class="docutils literal notranslate"><span class="pre">set_train_data</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.train"><code class="docutils literal notranslate"><span class="pre">train</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.train_for_references"><code class="docutils literal notranslate"><span class="pre">train_for_references</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder"><code class="docutils literal notranslate"><span class="pre">Autoencoder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.train_data"><code class="docutils literal notranslate"><span class="pre">train_data</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.p"><code class="docutils literal notranslate"><span class="pre">p</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.dataset"><code class="docutils literal notranslate"><span class="pre">dataset</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.read_only"><code class="docutils literal notranslate"><span class="pre">read_only</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.metrics"><code class="docutils literal notranslate"><span class="pre">metrics</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.callbacks"><code class="docutils literal notranslate"><span class="pre">callbacks</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.encoder"><code class="docutils literal notranslate"><span class="pre">encoder</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.decoder"><code class="docutils literal notranslate"><span class="pre">decoder</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.loss"><code class="docutils literal notranslate"><span class="pre">loss</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.from_checkpoint"><code class="docutils literal notranslate"><span class="pre">from_checkpoint</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.add_images_to_tensorboard"><code class="docutils literal notranslate"><span class="pre">add_images_to_tensorboard</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.train"><code class="docutils literal notranslate"><span class="pre">train</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.plot_network"><code class="docutils literal notranslate"><span class="pre">plot_network</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.encode"><code class="docutils literal notranslate"><span class="pre">encode</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.decode"><code class="docutils literal notranslate"><span class="pre">decode</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.generate"><code class="docutils literal notranslate"><span class="pre">generate</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.add_callback"><code class="docutils literal notranslate"><span class="pre">add_callback</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id0"><code class="docutils literal notranslate"><span class="pre">add_images_to_tensorboard</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.add_loss"><code class="docutils literal notranslate"><span class="pre">add_loss</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.add_metric"><code class="docutils literal notranslate"><span class="pre">add_metric</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.close"><code class="docutils literal notranslate"><span class="pre">close</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7"><code class="docutils literal notranslate"><span class="pre">decode</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8"><code class="docutils literal notranslate"><span class="pre">decoder</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9"><code class="docutils literal notranslate"><span class="pre">encode</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10"><code class="docutils literal notranslate"><span class="pre">encoder</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11"><code class="docutils literal notranslate"><span class="pre">from_checkpoint</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12"><code class="docutils literal notranslate"><span class="pre">generate</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13"><code class="docutils literal notranslate"><span class="pre">plot_network</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.save"><code class="docutils literal notranslate"><span class="pre">save</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.Autoencoder.set_train_data"><code class="docutils literal notranslate"><span class="pre">set_train_data</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id14"><code class="docutils literal notranslate"><span class="pre">train</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.DihedralEncoderMap"><code class="docutils literal notranslate"><span class="pre">DihedralEncoderMap</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.DihedralEncoderMap.generate"><code class="docutils literal notranslate"><span class="pre">generate</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.EncoderMap"><code class="docutils literal notranslate"><span class="pre">EncoderMap</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.autoencoder.autoencoder.EncoderMap.from_checkpoint"><code class="docutils literal notranslate"><span class="pre">from_checkpoint</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-encodermap.autoencoder">Module contents</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/encodermap.autoencoder.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T22:43:00.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

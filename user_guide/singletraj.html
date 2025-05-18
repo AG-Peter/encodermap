@@ -1,0 +1,1776 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>SingleTraj &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c1026b93" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/singletraj';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="TrajEnsemble" href="trajensemble.html" />
+    <link rel="prev" title="User Guide" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T22:43:00"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Trajectory Classes</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">SingleTraj</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trajensemble.html">TrajEnsemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="featurization.html">Featurization</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Neural Network Classes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="autoencoder_classes.html">Autoencoder Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameter_classes.html">Parameter Classes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Models, Layers, Losses</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers.html">Layers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loss_functions.html">Loss functions</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">SingleTraj</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="singletraj">
+<span id="user-guide-singletraj"></span><h1>SingleTraj<a class="headerlink" href="#singletraj" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SingleTraj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">common_str</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'no_load'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basename_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj" title="Link to this definition">#</a></dt>
+<dd><p>This class contains the info about a single trajectory.</p>
+<p>This class contains many of the attributes and methods of
+<a class="reference external" href="https://www.mdtraj.org/1.9.8.dev0/api/generated/mdtraj.Trajectory.html">mdtraj.Trajectory</a>.
+It is meant to be used as a standalone single trajetcory or in an ensemble
+defined in the <a class="reference internal" href="trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.trajinfo.info_all.TrajEnsemble</span></code></a> class.
+Other than the standard
+<a class="reference external" href="https://www.mdtraj.org/1.9.8.dev0/api/generated/mdtraj.Trajectory.html">mdtraj.Trajectory</a>
+this class loads the MD data only when needed. The location of the file(s)
+and other attributes like indices (int, list[int], numpy.ndarray, slice)
+are stored until the traj is accessed via the
+<a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj.traj" title="encodermap.trajinfo.info_single.SingleTraj.traj"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SingleTraj.traj</span></code></a> attribute. The returned traj is a
+<a class="reference external" href="https://www.mdtraj.org/1.9.8.dev0/api/generated/mdtraj.Trajectory.html">mdtraj.Trajectory</a>
+with the correct number of frames in the correct sequence.</p>
+<p>Besides MD data,  this class keeps track of your collective variables. Oftentimes
+the raw xyz data of a trajectory is not needed for understanding the conformation
+and suitable CVs are selected to represent a protein via internal coordinates
+(torsions, pairwise distances, etc.). This class keeps tack of your CVs.
+Whether you call them <code class="docutils literal notranslate"><span class="pre">'highd'</span></code> or <code class="docutils literal notranslate"><span class="pre">'torsions'</span></code>, this class keeps
+track of everything and returns the values when you need them.</p>
+<p><a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SingleTraj</span></code></a> supports fancy indexing, so you can extract one or more frames
+from a Trajectory as a separate trajectory. For example, to form a
+trajectory with every other frame, you can slice with <code class="docutils literal notranslate"><span class="pre">traj[::2]</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>SingleTraj uses the nanometer, degree &amp; picosecond unit system.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.backend">
+<span class="sig-name descname"><span class="pre">backend</span></span><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.backend" title="Link to this definition">#</a></dt>
+<dd><p>Current state of loading. If <code class="docutils literal notranslate"><span class="pre">backend</span> <span class="pre">==</span> <span class="pre">'no_load'</span></code> xyz
+data will be loaded from disk, if accessed. If <code class="docutils literal notranslate"><span class="pre">backend</span> <span class="pre">==</span> <span class="pre">'mdtraj'</span></code>,
+the data is already in RAM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.common_str">
+<span class="sig-name descname"><span class="pre">common_str</span></span><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.common_str" title="Link to this definition">#</a></dt>
+<dd><p>Substring of <a class="reference internal" href="#id5" title="encodermap.trajinfo.info_single.SingleTraj.traj_file"><code class="xref py py-attr docutils literal notranslate"><span class="pre">traj_file</span></code></a> and <a class="reference internal" href="#id0" title="encodermap.trajinfo.info_single.SingleTraj.top_file"><code class="xref py py-attr docutils literal notranslate"><span class="pre">top_file</span></code></a>.
+Used to group multiple trajectory and topology files.
+If <code class="docutils literal notranslate"><span class="pre">traj</span> <span class="pre">files=['protein1_traj1.xtc',</span> <span class="pre">'protein1_traj2.xtc']</span></code>
+have the same topolgy stored in a file called <code class="docutils literal notranslate"><span class="pre">'protein1.pdb'</span></code>, you
+can load them with <code class="docutils literal notranslate"><span class="pre">common_str='protein1'</span></code> together with more <code class="docutils literal notranslate"><span class="pre">.xtc</span></code>
+and <code class="docutils literal notranslate"><span class="pre">.pdb</span></code> files and these two <code class="docutils literal notranslate"><span class="pre">.xtc</span></code> files will use the correct
+<code class="docutils literal notranslate"><span class="pre">.pdb</span></code> file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.index">
+<span class="sig-name descname"><span class="pre">index</span></span><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.index" title="Link to this definition">#</a></dt>
+<dd><p>A sequence of
+fancy slices of the trajectory. When file is loaded from disk, the
+fancy indexes will be applied one after the other.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sequence[Union[None, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.13)">slice</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.traj_num">
+<span class="sig-name descname"><span class="pre">traj_num</span></span><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.traj_num" title="Link to this definition">#</a></dt>
+<dd><p>Integer to identify a SingleTraj class in a TrajEnsemble class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.traj_file">
+<span class="sig-name descname"><span class="pre">traj_file</span></span><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.traj_file" title="Link to this definition">#</a></dt>
+<dd><p>Trajectory file used to create this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.top_file">
+<span class="sig-name descname"><span class="pre">top_file</span></span><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.top_file" title="Link to this definition">#</a></dt>
+<dd><p>Topology file used to create this class. If a .h5 trajectory
+was used traj_file and top_file are identical. If a
+<code class="docutils literal notranslate"><span class="pre">mdtraj.Trajectory</span></code> was used to create SingleTraj, these strings are empty.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<p>Load a pdb file with 14 frames from rcsb.org</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="p">(</span><span class="s2">&quot;https://files.rcsb.org/view/1GHC.pdb&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span>  
+<span class="go">&lt;encodermap.SingleTraj object...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span>
+<span class="go">14</span>
+</pre></div>
+</div>
+<p>Providing common_str sets this attribute.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="p">(</span><span class="s2">&quot;https://files.rcsb.org/view/1GHC.pdb&quot;</span><span class="p">,</span> <span class="n">common_str</span><span class="o">=</span><span class="s2">&quot;1GHC&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span><span class="o">.</span><span class="n">common_str</span>
+<span class="go">&#39;1GHC&#39;</span>
+</pre></div>
+</div>
+<p>Indexing using integers returns a SingleTraj with only one frame.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">frame</span> <span class="o">=</span> <span class="n">traj</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">frame</span><span class="o">.</span><span class="n">n_frames</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>Indexing can also use lists of integers.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">subset</span> <span class="o">=</span> <span class="n">traj</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subset</span><span class="o">.</span><span class="n">n_frames</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<p>Further indexing this <code class="docutils literal notranslate"><span class="pre">subset</span></code> uses the current trajectory ‘as is’. Although
+frame 0, 1, and 5 have been extracted from <code class="docutils literal notranslate"><span class="pre">traj</span></code>, we get frame 5 from
+<code class="docutils literal notranslate"><span class="pre">subset</span></code> by indexing with 2.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">frame</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">frame</span><span class="o">.</span><span class="n">id</span>
+<span class="go">array([5])</span>
+</pre></div>
+</div>
+<p>Indexing using the original frame indices from the file is done using the
+<code class="docutils literal notranslate"><span class="pre">fsel[]</span></code> accessor.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">frame</span> <span class="o">=</span> <span class="n">subset</span><span class="o">.</span><span class="n">fsel</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">frame</span><span class="o">.</span><span class="n">id</span>
+<span class="go">array([5])</span>
+</pre></div>
+</div>
+<p>Advanced slicing</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="p">(</span><span class="s2">&quot;https://files.rcsb.org/view/1GHC.pdb&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">7</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">frame</span><span class="o">.</span><span class="n">id</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">traj</span><span class="p">]</span>
+<span class="go">[13, 11, 9]</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">traj_num</span></code> argument is mainly used in <code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.TrajEnsemble</span></code>,
+but can be provided manually.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="p">(</span><span class="s2">&quot;https://files.rcsb.org/view/1GHC.pdb&quot;</span><span class="p">,</span> <span class="n">traj_num</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span><span class="o">.</span><span class="n">traj_num</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<p>The argument <code class="docutils literal notranslate"><span class="pre">basename_fn</span></code> should be a callable, that takes a string
+and returns a string.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">my_basename_fn</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">stem</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="s2">&quot;custom_&quot;</span> <span class="o">+</span> <span class="n">stem</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="p">(</span><span class="s2">&quot;https://files.rcsb.org/view/1GHC.pdb&quot;</span><span class="p">,</span> <span class="n">basename_fn</span><span class="o">=</span><span class="n">my_basename_fn</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span><span class="o">.</span><span class="n">basename</span>
+<span class="go">&#39;custom_1GHC&#39;</span>
+</pre></div>
+</div>
+<p>Build a trajectory ensemble from multiple <a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SingleTraj</span></code></a> objects.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">traj1</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="p">(</span><span class="s2">&quot;https://files.rcsb.org/view/1YUG.pdb&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj2</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="p">(</span><span class="s2">&quot;https://files.rcsb.org/view/1YUF.pdb&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trajs</span> <span class="o">=</span> <span class="n">traj1</span> <span class="o">+</span> <span class="n">traj2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">n_trajs</span><span class="p">,</span> <span class="n">trajs</span><span class="o">.</span><span class="n">n_frames</span><span class="p">,</span> <span class="p">[</span><span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span> <span class="k">for</span> <span class="n">traj</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">])</span>
+<span class="go">2 31 [15, 16]</span>
+</pre></div>
+</div>
+<p>Initialize the SingleTraj object with location and reference pdb file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>traj</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>mdtraj.Trajectory</em><em>]</em>) – <p>The trajectory. This argument
+can either be the filename of a trajectory file
+(<code class="docutils literal notranslate"><span class="pre">.xtc,</span> <span class="pre">.dcd,</span> <span class="pre">.h5,</span> <span class="pre">.trr</span></code>) or an instance of</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">mdtraj.Trajectory</span></code>.</p>
+</div></blockquote>
+</p></li>
+<li><p><strong>top</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>mdtraj.Topology</em><em>]</em><em>, </em><em>optional</em>) – The path to the
+topology file. Defaults to <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>. If a <code class="docutils literal notranslate"><span class="pre">mdtraj.Trajectory</span></code>
+or a <code class="docutils literal notranslate"><span class="pre">.h5</span></code> file is provided in <a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj.traj" title="encodermap.trajinfo.info_single.SingleTraj.traj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">traj</span></code></a>, this argument will
+not be used and the topology from the corresponding <code class="docutils literal notranslate"><span class="pre">traj</span></code>
+argument will be used.</p></li>
+<li><p><strong>common_str</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>optional</em>) – A string to group traj of similar
+topology. If multiple <a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SingleTraj</span></code></a> are grouped in one
+<a class="reference internal" href="trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.trajinfo.info_all.TrajEnsemble</span></code></a>, the
+<code class="docutils literal notranslate"><span class="pre">common_str</span></code> is used to group them together. Defaults to ‘’
+which means this instance of <a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SingleTraj</span></code></a> won’t have a common
+string.</p></li>
+<li><p><strong>backend</strong> (<em>Literal</em><em>[</em><em>'no_load'</em><em>, </em><em>'mdtraj'</em><em>]</em><em>, </em><em>optional</em>) – <p>Choose the
+backend to load trajectories.</p>
+<blockquote>
+<div><ul>
+<li><p>’mdtraj’ uses mdtraj, which loads all trajectories into RAM.</p></li>
+<li><p>’no_load’ creates an empty trajectory object.</p></li>
+</ul>
+</div></blockquote>
+<p>Defaults to ‘no_load’</p>
+</p></li>
+<li><p><strong>index</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>, </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.13)"><em>slice</em></a><em>]</em><em>]</em>) – An
+integer or a Sequence of <code class="docutils literal notranslate"><span class="pre">int</span></code>. If an integer is provided,
+only the frame at this position will be loaded once the internal
+<code class="docutils literal notranslate"><span class="pre">mdtraj.Trajectory</span></code> is accessed. If an array or list is provided,
+the corresponding frames will be used. Indices always slice the
+trajectory as is, meaning they don’t index the original frames
+of the trajectory on disk (see Example section). These indices
+can have duplicates: <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">0,</span> <span class="pre">1]</span></code>. A slice object
+can also be provided. Supports fancy slicing (<code class="docutils literal notranslate"><span class="pre">traj[1:50:3]</span></code>).
+If <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a> is provided, the traj is loaded fully.
+Defaults to <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>.</p></li>
+<li><p><strong>traj_num</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>None</em><em>]</em><em>, </em><em>optional</em>) – If working with multiple
+trajs, this is the easiest unique identifier. If multiple
+<a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SingleTraj</span></code></a> are instantiated by
+<a class="reference internal" href="trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.trajinfo.info_all.TrajEnsemble</span></code></a> the <code class="docutils literal notranslate"><span class="pre">traj_num</span></code>
+is used as a unique identifier per traj. Defaults to <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>.</p></li>
+<li><p><strong>basename_fn</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>]</em>) – A function to apply to
+<code class="docutils literal notranslate"><span class="pre">traj</span></code> to give it another identifier. If all your trajs are called
+<code class="docutils literal notranslate"><span class="pre">'traj.xtc'</span></code> and only the directory they’re in gives them a
+unique identifier, you can provide a function into this
+argument to split the path. The function has to take a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a> and
+return <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>. If None is provided, the basename
+is extracted like so: <code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">x:</span> <span class="pre">x.split('/')[0].split('.')[-1]</span></code>.
+Defaults to None, in which case the filename without
+extension will be used.</p></li>
+<li><p><strong>custom_top</strong> (<em>Optional</em><em>[</em><em>CustomAAsDict</em><em>]</em>) – Optional[<code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap._typing.CustomAAsDict</span></code>]: An
+instance of the <a class="reference internal" href="../api/trajinfo.html#encodermap.trajinfo.trajinfo_utils.CustomTopology" title="encodermap.trajinfo.trajinfo_utils.CustomTopology"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.trajinfo.trajinfo_utils.CustomTopology</span></code></a>
+class or a dictionary that can be made into such.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.atom_slice">
+<span class="sig-name descname"><span class="pre">atom_slice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.atom_slice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.atom_slice" title="Link to this definition">#</a></dt>
+<dd><p>Deletes atoms from this <a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SingleTraj</span></code></a> instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>atom_indices</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>, </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a><em>]</em>) – The indices of the
+atoms to keep.</p></li>
+<li><p><strong>invert</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If False, it is assumed, that the atoms in <code class="docutils literal notranslate"><span class="pre">atom_indices</span></code>
+are the ones to be kept. If True, the atoms in <code class="docutils literal notranslate"><span class="pre">atom_indices</span></code>
+are the ones to be removed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.copy" title="Link to this definition">#</a></dt>
+<dd><p>Returns a copy of <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.dash_summary">
+<span class="sig-name descname"><span class="pre">dash_summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.dash_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.dash_summary" title="Link to this definition">#</a></dt>
+<dd><p>Returns a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/dev/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v3.0.0.dev0+2106.gb2b2d04e41)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> with useful information about this instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The dataframe.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.del_CVs">
+<span class="sig-name descname"><span class="pre">del_CVs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.del_CVs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.del_CVs" title="Link to this definition">#</a></dt>
+<dd><p>Resets the <code class="docutils literal notranslate"><span class="pre">_CVs</span></code> attribute to an empty <a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2025.4.1.dev0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.from_pdb_id">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_pdb_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pdb_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.from_pdb_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.from_pdb_id" title="Link to this definition">#</a></dt>
+<dd><p>Alternate constructor for the TrajEnsemble class.</p>
+<p>Builds an SingleTraj class from a pdb-id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pdb_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The 4-letter pdb id.</p></li>
+<li><p><strong>traj_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An SingleTraj class.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj">SingleTraj</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.get_single_frame">
+<span class="sig-name descname"><span class="pre">get_single_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.get_single_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.get_single_frame" title="Link to this definition">#</a></dt>
+<dd><p>Returns a single frame from the trajectory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>np.int</em><em>]</em>) – Index of the frame.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Import EncoderMap and load <a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SingleTraj</span></code></a>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="p">(</span><span class="s2">&quot;https://files.rcsb.org/view/1GHC.pdb&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span>
+<span class="go">14</span>
+</pre></div>
+</div>
+<p>Load the same traj and give it a <code class="docutils literal notranslate"><span class="pre">traj_num</span></code> for recognition in a
+set of multiple trajectories.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="p">(</span><span class="s2">&quot;https://files.rcsb.org/view/1GHC.pdb&quot;</span><span class="p">,</span> <span class="n">traj_num</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">frame</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">get_single_frame</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">frame</span><span class="o">.</span><span class="n">id</span>
+<span class="go">array([[5, 2]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.iterframes">
+<span class="sig-name descname"><span class="pre">iterframes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">with_traj_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.13)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><span class="pre">SingleTraj</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.iterframes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.iterframes" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">iterframes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">with_traj_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.13)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><span class="pre">SingleTraj</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></dt>
+<dd><p>Iterator over the frames in this class.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>with_traj_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to return a three-tuple of traj_num,
+frame_num, frame (True) or just traj_num, frame (False).</p>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>tuple</em> –</p>
+<dl class="simple">
+<dt>A tuple containing the following:</dt><dd><ul class="simple">
+<li><p>int: The traj_num.</p></li>
+<li><p>int: The frame_num.</p></li>
+<li><p>encodermap.SingleTraj: An SingleTraj object.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Import EncoderMap and create <a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SingleTraj</span></code></a> instance.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="p">(</span><span class="s1">&#39;https://files.rcsb.org/view/1YUG.pdb&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span>
+<span class="go">15</span>
+</pre></div>
+</div>
+<p>Slicing the trajectory every 5th frame</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">traj</span><span class="p">[::</span><span class="mi">5</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">iterframes()</span></code> iterator.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">frame_num</span><span class="p">,</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">traj</span><span class="o">.</span><span class="n">iterframes</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">frame_num</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">n_frames</span><span class="p">)</span>
+<span class="go">0 1</span>
+<span class="go">5 1</span>
+<span class="go">10 1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.join">
+<span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.join"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.join" title="Link to this definition">#</a></dt>
+<dd><p>Join two trajectories together along the time/frame axis.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Returns a <code class="docutils literal notranslate"><span class="pre">mdtraj.Trajectory</span></code> and thus loses CVs, filenames, etc.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a><em> | </em><em>Trajectory</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Trajectory</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.load_CV">
+<span class="sig-name descname"><span class="pre">load_CV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.load_CV"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.load_CV" title="Link to this definition">#</a></dt>
+<dd><p>Load CVs into traj. Many options are possible. Provide xarray,
+numpy array, em.loading.feature, em.featurizer, and even string!</p>
+<p>This method loads CVs into the SingleTraj instance. Many ways of doing so
+are available:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>: The easiest way. Provide a np array and a name for</dt><dd><p>the array, and the data will be saved as an instance variable,
+accesible via <cite>SingleTraj.name</cite>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2025.4.1.dev0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a>: You can load a multidimensional xarray as</dt><dd><p>data into the class. Please refer to xarrays own documentation
+if you want to create one yourself.</p>
+</dd>
+</dl>
+</li>
+<li><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2025.4.1.dev0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></a>: You can add another dataset to the existing _CVs.</p></li>
+<li><dl class="simple">
+<dt><a class="reference internal" href="featurization.html#encodermap.loading.features.Feature" title="encodermap.loading.features.Feature"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.loading.features.Feature</span></code></a>: If you provide one of the</dt><dd><p>features from <code class="docutils literal notranslate"><span class="pre">encodermap.loading.features</span></code> the resulting
+features will be loaded and also be placed under the set name.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference internal" href="featurization.html#encodermap.loading.featurizer.Featurizer" title="encodermap.loading.featurizer.Featurizer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.loading.featurizer.Featurizer</span></code></a>: If you provide a</dt><dd><p>full featurizer, the data will be generated and be accessible
+as an attribute.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>str: If a string is provided, the data will be loaded from a</dt><dd><p><code class="docutils literal notranslate"><span class="pre">.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">.npy</span></code>, or NetCDF / HDF5 <code class="docutils literal notranslate"><span class="pre">.nc</span></code> file.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>(</strong><strong>Union</strong><strong>[</strong><strong>str</strong> (<em>data</em>) – em.loading.features.Feature, em.loading.featurizer.Featurizer]):
+The CV to load. Either as <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>,
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2025.4.1.dev0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a>, EncoderMap feature,
+or EncoderMap Featurizer.</p></li>
+<li><p><strong>numpy.ndarray</strong> – em.loading.features.Feature, em.loading.featurizer.Featurizer]):
+The CV to load. Either as <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>,
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2025.4.1.dev0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a>, EncoderMap feature,
+or EncoderMap Featurizer.</p></li>
+<li><p><strong>xr.DataArray</strong> – em.loading.features.Feature, em.loading.featurizer.Featurizer]):
+The CV to load. Either as <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>,
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2025.4.1.dev0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a>, EncoderMap feature,
+or EncoderMap Featurizer.</p></li>
+<li><p><strong>data</strong> (<em>SingleTrajFeatureType</em>)</p></li>
+<li><p><strong>attr_name</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>)</p></li>
+<li><p><strong>cols</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>deg</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>]</em>)</p></li>
+<li><p><strong>periodic</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>labels</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>override</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>:param<span class="classifier">em.loading.features.Feature, em.loading.featurizer.Featurizer]):</span></dt><dd><p>The CV to load. Either as <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>,
+<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2025.4.1.dev0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a>, EncoderMap feature,
+or EncoderMap Featurizer.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attr_name</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The name under which the CV
+should be found in the class. Is needed, if a raw numpy array
+is passed, otherwise the name will be generated from the filename
+(if <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">==</span> <span class="pre">str</span></code>), the DataArray.name (if <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">==</span> <span class="pre">xarray.DataArray</span></code>),
+or the feature name.</p></li>
+<li><p><strong>cols</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>]</em>) – A list specifying the columns
+to use it for the high-dimensional data. If your highD data contains
+(x,y,z,…)-errors or has an enumeration column at <code class="docutils literal notranslate"><span class="pre">col=0</span></code>
+this can be used to remove this unwanted data.</p></li>
+<li><p><strong>deg</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>]</em>) – Whether the provided data is in radians (False)
+or degree (True). It can also be None for non-angular data.</p></li>
+<li><p><strong>labels</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>]</em>) – If you want to label
+the data you provided, pass a list of str. If set to None,
+the features in this dimension will be labeled as
+<code class="docutils literal notranslate"><span class="pre">[f&quot;{attr_name.upper()}</span> <span class="pre">FEATURE</span> <span class="pre">{i}&quot;</span> <span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(self.n_frames)]</span></code>.
+If a str is provided, the features will be labeled as
+<code class="docutils literal notranslate"><span class="pre">[f&quot;{attr_name.upper()}</span> <span class="pre">{label.upper()}</span> <span class="pre">{i}&quot;</span> <span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(self.n_frames)]</span></code>.
+If a list of str is provided, it needs to have the same length
+as the traj has frames. Defaults to None.</p></li>
+<li><p><strong>override</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to overwrite existing CVs. The method will also
+print a message which CVs have been overwritten.</p></li>
+<li><p><strong>data</strong> (<em>SingleTrajFeatureType</em>)</p></li>
+<li><p><strong>periodic</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Import EncoderMap and load an example Trajectory.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="p">(</span><span class="s2">&quot;https://files.rcsb.org/view/1GHC.pdb&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Load the central dihedrals using <a href="#id3"><span class="problematic" id="id4">``</span></a>data=’central_dihedrals’` as shortcut.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span><span class="o">.</span><span class="n">load_CV</span><span class="p">(</span><span class="s2">&quot;central_dihedrals&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span><span class="o">.</span><span class="n">central_dihedrals</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(14, 222)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span><span class="o">.</span><span class="n">_CVs</span><span class="p">[</span><span class="s1">&#39;central_dihedrals&#39;</span><span class="p">][</span><span class="s1">&#39;CENTRAL_DIHEDRALS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+<span class="go">[&#39;CENTERDIH PSI   RESID  MET:   1 CHAIN 0&#39;</span>
+<span class="go"> &#39;CENTERDIH OMEGA RESID  MET:   1 CHAIN 0&#39;]</span>
+</pre></div>
+</div>
+<p>Slicing the <a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SingleTraj</span></code></a> keeps all CVs in order.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj1</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">Path</span><span class="p">(</span><span class="n">em</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;tests/data/1am7_corrected.xtc&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">Path</span><span class="p">(</span><span class="n">em</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;tests/data/1am7_protein.pdb&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj1</span><span class="o">.</span><span class="n">load_CV</span><span class="p">(</span><span class="n">traj1</span><span class="o">.</span><span class="n">xyz</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;z_coordinate&#39;</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">frame</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">traj1</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">z_coordinate</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">frame</span><span class="o">.</span><span class="n">xyz</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">break</span>
+<span class="go">True</span>
+<span class="go">True</span>
+<span class="go">True</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#FileNotFoundError" title="(in Python v3.13)"><strong>FileNotFoundError</strong></a> – When the file given by <cite>data</cite> does not exist.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#IOError" title="(in Python v3.13)"><strong>IOError</strong></a> – When the provided filename does not have .txt, .npy or .nc extension.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.13)"><strong>TypeError</strong></a> – When <cite>data</cite> does not match the specified input types.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – When a numpy array has been passed as <cite>data</cite> and no <cite>attr_name</cite> has been provided.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – When the provided <cite>attr_name</cite> is str, but cannot be a python identifier.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>data</strong> (<em>SingleTrajFeatureType</em>)</p></li>
+<li><p><strong>attr_name</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>)</p></li>
+<li><p><strong>cols</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>deg</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>]</em>)</p></li>
+<li><p><strong>periodic</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>labels</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>override</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.load_custom_topology">
+<span class="sig-name descname"><span class="pre">load_custom_topology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">custom_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.load_custom_topology"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.load_custom_topology" title="Link to this definition">#</a></dt>
+<dd><p>Loads a custom_topology from a <cite>CustomTopology</cite> class or a dict.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../api/trajinfo.html#encodermap.trajinfo.trajinfo_utils.CustomTopology" title="encodermap.trajinfo.trajinfo_utils.CustomTopology"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.trajinfo.trajinfo_utils.CustomTopology</span></code></a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>custom_top</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference internal" href="../api/trajinfo.html#encodermap.trajinfo.trajinfo_utils.CustomTopology" title="encodermap.trajinfo.trajinfo_utils.CustomTopology"><em>CustomTopology</em></a><em>, </em><em>CustomAAsDict</em><em>]</em><em>]</em>) – Optional[Union[CustomTopology, CustomAAsDict]]: An
+instance of <a class="reference internal" href="../api/trajinfo.html#encodermap.trajinfo.trajinfo_utils.CustomTopology" title="encodermap.trajinfo.trajinfo_utils.CustomTopology"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encodermap.trajinfo.trajinfo_utils.CustomTopology</span></code></a>
+or a dictionary that can be made into such.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.load_traj">
+<span class="sig-name descname"><span class="pre">load_traj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mdtraj'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.load_traj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.load_traj" title="Link to this definition">#</a></dt>
+<dd><p>Loads the trajectory, with a new specified backend.</p>
+<p>After this is called the instance variable self.trajectory
+will contain a mdtraj Trajectory object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_backend</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>optional</em>) – <dl class="simple">
+<dt>Can either be:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">'mdtraj'</span></code> to load the trajectory using mdtraj.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'no_load'</span></code> to not load the traj (unload).</p></li>
+</ul>
+</dd>
+</dl>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">'mdtraj'</span></code>.</p>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CVs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.save" title="Link to this definition">#</a></dt>
+<dd><p>Save the trajectory as HDF5 file format to disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The filename.</p></li>
+<li><p><strong>CVs</strong> (<em>Union</em><em>[</em><em>List</em><em>, </em><em>'all'</em><em>]</em><em>, </em><em>optional</em>) – Either provide a list of strings
+of the CVs you would like to save to disk, or set to ‘all’ to save
+all CVs. Defaults to [].</p></li>
+<li><p><strong>overwrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether force overwrite an existing file.
+Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#IOError" title="(in Python v3.13)"><strong>IOError</strong></a> – When the file already exists and overwrite is False.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.save_CV_as_numpy">
+<span class="sig-name descname"><span class="pre">save_CV_as_numpy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.save_CV_as_numpy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.save_CV_as_numpy" title="Link to this definition">#</a></dt>
+<dd><p>Saves a specified collective variable of this traj as a <code class="docutils literal notranslate"><span class="pre">.npy</span></code> file.</p>
+<p>This got its own method for parallelization purposes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attr_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the CV to save.</p></li>
+<li><p><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>optional</em>) – Can be either</p></li>
+<li><p><strong>overwrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>, </em><em>opt</em>) – Whether to overwrite the file. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#IOError" title="(in Python v3.13)"><strong>IOError</strong></a> – When the file already exists and overwrite is set to False.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sel_str</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.select" title="Link to this definition">#</a></dt>
+<dd><p>Execute a selection against the topology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sel_str</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>optional</em>) – What to select. Defaults to ‘all’.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://mdtraj.org/1.9.4/atom_selection.html">https://mdtraj.org/1.9.4/atom_selection.html</a></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="p">(</span><span class="s2">&quot;https://files.rcsb.org/view/1GHC.pdb&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">select</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;name CA and resSeq 1&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">select</span>
+<span class="go">array([1])</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="p">(</span><span class="s2">&quot;https://files.rcsb.org/view/1GHC.pdb&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">select</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;name CA and resSeq 1&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">atom</span><span class="p">(</span><span class="n">select</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">MET1-CA</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.show_traj">
+<span class="sig-name descname"><span class="pre">show_traj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gui</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.show_traj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.show_traj" title="Link to this definition">#</a></dt>
+<dd><p>Returns an nglview view object.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://nglviewer.org/nglview/latest/">https://nglviewer.org/nglview/latest/</a></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The nglview widget object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>view (nglview.widget)</p>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>gui</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.sidechain_info">
+<span class="sig-name descname"><span class="pre">sidechain_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.sidechain_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.sidechain_info" title="Link to this definition">#</a></dt>
+<dd><p>Indices used for the AngleDihedralCartesianEncoderMap class to
+allow training with multiple different sidechains.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The indices. The key ‘-1’ is used for
+the hypothetical convex hull of all feature spaces (the output of
+the tensorflow model). The other keys match the common_str of the
+trajs.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, Sequence[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]]</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – When the common_strings and topologies are not
+    aligned. An exception is raised. Aligned means that all trajs
+    with the same common_str should possess the same topology.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.stack">
+<span class="sig-name descname"><span class="pre">stack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.stack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.stack" title="Link to this definition">#</a></dt>
+<dd><p>Stack two trajectories along the atom axis</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Returns a m``dtraj.Trajectory`` and thus loses CVs, filenames, etc.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Trajectory</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.superpose">
+<span class="sig-name descname"><span class="pre">superpose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_atom_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inherit_CVs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.superpose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.superpose" title="Link to this definition">#</a></dt>
+<dd><p>Superpose each conformation in this trajectory upon a reference</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reference</strong> (<em>Union</em><em>[</em><em>mdtraj.Trajectory</em><em>, </em><a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a><em>]</em>) – The reference
+frame to align to. If the reference has multiple frames and
+you want to use a specific frame as reference, use the
+<code class="docutils literal notranslate"><span class="pre">frame</span></code> argument also.</p></li>
+<li><p><strong>frame</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>optional</em>) – Align to this frame in reference.
+Default is 0.</p></li>
+<li><p><strong>atom_indices</strong> (<em>Union</em><em>[</em><em>np.array</em><em>, </em><em>None</em><em>]</em><em>, </em><em>optional</em>) – Indices in
+self, used to calculate RMS values. Defaults to None which
+means all atoms will be used.</p></li>
+<li><p><strong>ref_atom_indices</strong> (<em>Union</em><em>[</em><em>np.array</em><em>, </em><em>None</em><em>]</em><em>, </em><em>optional</em>) – Indices
+in reference, used to calculate RMS values. Defaults to None
+which means all atoms will be used.</p></li>
+<li><p><strong>parallel</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>, </em><em>optional</em>) – Use OpenMP to run the superposition
+in parallel over multiple cores.</p></li>
+<li><p><strong>inherit_CVs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to also inherit the CVs.
+This feature is currently not implemented. It would require
+additional code in all Feature classes discerning intrinsic
+(distance, angle, cluster_membership, etc.) or an extrinsic
+feature (absolute coordinate, COG position, etc.). Then this
+extrinsic/intrinsic boolean flag also needs to accompany the
+xarray Datasets, so that the intrinsic CVs can be inherited,
+and the extrinsic can be dropped with a corresponding message.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new trajectory with atoms aligned.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj">SingleTraj</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.unload">
+<span class="sig-name descname"><span class="pre">unload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">CVs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/trajinfo/info_single.html#SingleTraj.unload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.unload" title="Link to this definition">#</a></dt>
+<dd><p>Clears up RAM by deleting the trajectory info and the CV data.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">CVs</span></code> is set to True the loaded CVs will also be deleted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>CVs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to also delete CVs, defaults to False.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.CVs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CVs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.CVs" title="Link to this definition">#</a></dt>
+<dd><p>Returns a simple dict from the more complicated self._CVs xarray Dataset.</p>
+<p>If self._CVs is empty and self.traj_file is a HDF5 (.h5) file, the contents
+of the HDF5 will be checked, whether CVs have been stored there.
+If not and empty dict will be returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.CVs_in_file">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CVs_in_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.CVs_in_file" title="Link to this definition">#</a></dt>
+<dd><p>Is True, if <cite>traj_file</cite> has exyension .h5 and contains CVs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj._frames">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_frames</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj._frames" title="Link to this definition">#</a></dt>
+<dd><p>Applies self.index over self._orig_frames.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj._n_frames_base_h5_file">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_n_frames_base_h5_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj._n_frames_base_h5_file" title="Link to this definition">#</a></dt>
+<dd><p>Can be used to get n_frames without loading an HDF5 into memory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj._original_frame_indices">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_original_frame_indices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj._original_frame_indices" title="Link to this definition">#</a></dt>
+<dd><p>If trajectory has not been loaded, it is loaded and the
+frames of the trajectory file on disk are put into a <cite>np.arange()</cite>. If
+the trajectory is sliced in weird ways, this array tracks the original frames.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj._traj">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_traj</span></span><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj._traj" title="Link to this definition">#</a></dt>
+<dd><p>Needs to be here to complete setter.
+Not returning anything, because setter is also not returning anything.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.basename">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">basename</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.basename" title="Link to this definition">#</a></dt>
+<dd><p>Basename is the filename without path and without extension. If <cite>basename_fn</cite> is not None, it will be
+applied to <cite>traj_file</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.extension">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">extension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.extension" title="Link to this definition">#</a></dt>
+<dd><p>Extension is the file extension of the trajectory file (self.traj_file).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.id" title="Link to this definition">#</a></dt>
+<dd><p>id is an array of unique identifiers which identify the frames in
+this SingleTraj object when multiple Trajectories are considered.</p>
+<p>If the traj was initialized from an TrajEnsemble class, the traj gets a unique
+identifier (traj_num) which will also be put into the id array, so that id
+can have two shapes ((n_frames, ), (n_frames, 2)) This corresponds to
+self.id.ndim = 1 and self.id.ndim = 2. In the latter case self.id[:,1] are the
+frames and self.id[:,0] is an array full of traj_num.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.indices_chi1">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indices_chi1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.indices_chi1" title="Link to this definition">#</a></dt>
+<dd><p>A numpy array with shape (n_dihedrals, 4) indexing the
+atoms that take part in this dihedral angle. This index is 0-based.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.indices_chi2">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indices_chi2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.indices_chi2" title="Link to this definition">#</a></dt>
+<dd><p>A numpy array with shape (n_dihedrals, 4) indexing the
+atoms that take part in this dihedral angle. This index is 0-based.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.indices_chi3">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indices_chi3</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.indices_chi3" title="Link to this definition">#</a></dt>
+<dd><p>A numpy array with shape (n_dihedrals, 4) indexing the
+atoms that take part in this dihedral angle. This index is 0-based.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.indices_chi4">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indices_chi4</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.indices_chi4" title="Link to this definition">#</a></dt>
+<dd><p>A numpy array with shape (n_dihedrals, 4) indexing the
+atoms that take part in this dihedral angle. This index is 0-based.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.indices_chi5">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indices_chi5</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.indices_chi5" title="Link to this definition">#</a></dt>
+<dd><p>A numpy array with shape (n_dihedrals, 4) indexing the
+atoms that take part in this dihedral angle. This index is 0-based.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.indices_omega">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indices_omega</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.indices_omega" title="Link to this definition">#</a></dt>
+<dd><p>A numpy array with shape (n_dihedrals, 4) indexing the
+atoms that take part in this dihedral angle. This index is 0-based.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.indices_phi">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indices_phi</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.indices_phi" title="Link to this definition">#</a></dt>
+<dd><p>A numpy array with shape (n_dihedrals, 4) indexing the
+atoms that take part in this dihedral angle. This index is 0-based.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.indices_psi">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indices_psi</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.indices_psi" title="Link to this definition">#</a></dt>
+<dd><p>A numpy array with shape (n_dihedrals, 4) indexing the
+atoms that take part in this dihedral angle. This index is 0-based.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.n_atoms">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_atoms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.n_atoms" title="Link to this definition">#</a></dt>
+<dd><p>Number of atoms in traj.</p>
+<p>Loads the traj into memory if not in HDF5 file format. Be aware.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.n_chains">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_chains</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.n_chains" title="Link to this definition">#</a></dt>
+<dd><p>Number of chains in traj.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.n_frames">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_frames</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.n_frames" title="Link to this definition">#</a></dt>
+<dd><p>Number of frames in traj.</p>
+<p>Loads the traj into memory if not in HDF5 file format. Be aware.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.n_residues">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_residues</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.n_residues" title="Link to this definition">#</a></dt>
+<dd><p>Number of residues in traj.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.top">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">top</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Topology</span></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.top" title="Link to this definition">#</a></dt>
+<dd><p>The structure of a Topology object is similar to that of a PDB file.</p>
+<p>It consists. of a set of Chains (often but not always corresponding to
+polymer chains).  Each Chain contains a set of Residues, and each Residue
+contains a set of Atoms.  In addition, the Topology stores a list of which
+atom pairs are bonded to each other.
+Atom and residue names should follow the PDB 3.0 nomenclature for all
+molecules for which one exists</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.chains">
+<span class="sig-name descname"><span class="pre">chains</span></span><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.chains" title="Link to this definition">#</a></dt>
+<dd><p>Iterate over chains.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>generator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.residues">
+<span class="sig-name descname"><span class="pre">residues</span></span><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.residues" title="Link to this definition">#</a></dt>
+<dd><p>Iterate over residues.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>generator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.atoms">
+<span class="sig-name descname"><span class="pre">atoms</span></span><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.atoms" title="Link to this definition">#</a></dt>
+<dd><p>Iterate over atoms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>generator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.bonds">
+<span class="sig-name descname"><span class="pre">bonds</span></span><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.bonds" title="Link to this definition">#</a></dt>
+<dd><p>Iterate over bonds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>generator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mdtraj.Topology</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">top_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#id0" title="Link to this definition">#</a></dt>
+<dd><p>The topology file as a string (rather than a <cite>pathlib.Path</cite>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="encodermap.trajinfo.info_single.SingleTraj.traj">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">traj</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Trajectory</span></em><a class="headerlink" href="#encodermap.trajinfo.info_single.SingleTraj.traj" title="Link to this definition">#</a></dt>
+<dd><p>This attribute always returns an mdtraj.Trajectory.
+if <cite>backend</cite> is ‘no_load’, the trajectory will be loaded into memory and returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mdtraj.Trajectory</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id5">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">traj_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#id5" title="Link to this definition">#</a></dt>
+<dd><p>The traj file as a string (rather than a <cite>pathlib.Path</cite>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">User Guide</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="trajensemble.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">TrajEnsemble</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj"><code class="docutils literal notranslate"><span class="pre">SingleTraj</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.backend"><code class="docutils literal notranslate"><span class="pre">backend</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.common_str"><code class="docutils literal notranslate"><span class="pre">common_str</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.index"><code class="docutils literal notranslate"><span class="pre">index</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.traj_num"><code class="docutils literal notranslate"><span class="pre">traj_num</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.traj_file"><code class="docutils literal notranslate"><span class="pre">traj_file</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.top_file"><code class="docutils literal notranslate"><span class="pre">top_file</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.atom_slice"><code class="docutils literal notranslate"><span class="pre">atom_slice</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.copy"><code class="docutils literal notranslate"><span class="pre">copy</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.dash_summary"><code class="docutils literal notranslate"><span class="pre">dash_summary</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.del_CVs"><code class="docutils literal notranslate"><span class="pre">del_CVs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.from_pdb_id"><code class="docutils literal notranslate"><span class="pre">from_pdb_id</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.get_single_frame"><code class="docutils literal notranslate"><span class="pre">get_single_frame</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.iterframes"><code class="docutils literal notranslate"><span class="pre">iterframes</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.join"><code class="docutils literal notranslate"><span class="pre">join</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.load_CV"><code class="docutils literal notranslate"><span class="pre">load_CV</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.load_custom_topology"><code class="docutils literal notranslate"><span class="pre">load_custom_topology</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.load_traj"><code class="docutils literal notranslate"><span class="pre">load_traj</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.save"><code class="docutils literal notranslate"><span class="pre">save</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.save_CV_as_numpy"><code class="docutils literal notranslate"><span class="pre">save_CV_as_numpy</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.select"><code class="docutils literal notranslate"><span class="pre">select</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.show_traj"><code class="docutils literal notranslate"><span class="pre">show_traj</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.sidechain_info"><code class="docutils literal notranslate"><span class="pre">sidechain_info</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.stack"><code class="docutils literal notranslate"><span class="pre">stack</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.superpose"><code class="docutils literal notranslate"><span class="pre">superpose</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.unload"><code class="docutils literal notranslate"><span class="pre">unload</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.CVs"><code class="docutils literal notranslate"><span class="pre">CVs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.CVs_in_file"><code class="docutils literal notranslate"><span class="pre">CVs_in_file</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj._frames"><code class="docutils literal notranslate"><span class="pre">_frames</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj._n_frames_base_h5_file"><code class="docutils literal notranslate"><span class="pre">_n_frames_base_h5_file</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj._original_frame_indices"><code class="docutils literal notranslate"><span class="pre">_original_frame_indices</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj._traj"><code class="docutils literal notranslate"><span class="pre">_traj</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.basename"><code class="docutils literal notranslate"><span class="pre">basename</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.extension"><code class="docutils literal notranslate"><span class="pre">extension</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.id"><code class="docutils literal notranslate"><span class="pre">id</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.indices_chi1"><code class="docutils literal notranslate"><span class="pre">indices_chi1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.indices_chi2"><code class="docutils literal notranslate"><span class="pre">indices_chi2</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.indices_chi3"><code class="docutils literal notranslate"><span class="pre">indices_chi3</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.indices_chi4"><code class="docutils literal notranslate"><span class="pre">indices_chi4</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.indices_chi5"><code class="docutils literal notranslate"><span class="pre">indices_chi5</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.indices_omega"><code class="docutils literal notranslate"><span class="pre">indices_omega</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.indices_phi"><code class="docutils literal notranslate"><span class="pre">indices_phi</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.indices_psi"><code class="docutils literal notranslate"><span class="pre">indices_psi</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.n_atoms"><code class="docutils literal notranslate"><span class="pre">n_atoms</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.n_chains"><code class="docutils literal notranslate"><span class="pre">n_chains</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.n_frames"><code class="docutils literal notranslate"><span class="pre">n_frames</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.n_residues"><code class="docutils literal notranslate"><span class="pre">n_residues</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.top"><code class="docutils literal notranslate"><span class="pre">top</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.chains"><code class="docutils literal notranslate"><span class="pre">chains</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.residues"><code class="docutils literal notranslate"><span class="pre">residues</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.atoms"><code class="docutils literal notranslate"><span class="pre">atoms</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.bonds"><code class="docutils literal notranslate"><span class="pre">bonds</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id0"><code class="docutils literal notranslate"><span class="pre">top_file</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.trajinfo.info_single.SingleTraj.traj"><code class="docutils literal notranslate"><span class="pre">traj</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><code class="docutils literal notranslate"><span class="pre">traj_file</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/user_guide/singletraj.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T22:43:00.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

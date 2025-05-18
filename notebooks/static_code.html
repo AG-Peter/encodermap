@@ -1,0 +1,982 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Static Code Examples &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c1026b93" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/static_code';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="User Guide" href="../user_guide/index.html" />
+    <link rel="prev" title="Publication Figure 5" href="publication/figure5.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T22:43:00"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Starter Notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="starter_nb/starter_nb_01_basic.html">Getting started: Basic Cube</a></li>
+<li class="toctree-l1"><a class="reference internal" href="starter_nb/starter_nb_02_advanced.html">Advanced Usage: Asp 7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="starter_nb/starter_nb_03_your_data.html">Your Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MD Notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="md_nb/md_nb_01_traj_ensemble.html">Working with trajectory ensembles</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Customization Notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="customization_nb/customization_nb_01_scalars.html">Customize EncoderMap: Logging Custom Scalars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html">Customize EncoderMap: Custom loss functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization_nb/customization_nb_03_images.html">Logging Custom Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization_nb/customization_nb_04_lr.html">Learning Rate Schedulers</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publication Notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="publication/figure1.html">Publication Figure 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publication/figure2.html">Publication Figure 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publication/figure5.html">Publication Figure 5</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Static Code Examples</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Static Code Examples</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Notebook Gallery</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Static Code Examples</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="static-code-examples">
+<span id="notebooks-static-code"></span><h1>Static Code Examples<a class="headerlink" href="#static-code-examples" title="Link to this heading">#</a></h1>
+<p>These static code examples can also help you with your EncoderMap endeavors.</p>
+<section id="cube-example">
+<h2>Cube Example<a class="headerlink" href="#cube-example" title="Link to this heading">#</a></h2>
+<p>This is the classic EncoderMap example. In this example, EncoderMap is used to project a 3D cube into 2D and back.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Cube Example</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Encodermap imports</span>
+<span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+
+
+<span class="c1"># generating data:</span>
+<span class="n">high_d_data</span><span class="p">,</span> <span class="n">ids</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">random_on_cube_edges</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+
+<span class="c1"># setting parameters:</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">Parameters</span><span class="p">()</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">main_path</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">run_path</span><span class="p">(</span><span class="s2">&quot;runs/cube/&quot;</span><span class="p">)</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">n_steps</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">dist_sig_parameters</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">periodicity</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+
+<span class="c1"># training:</span>
+<span class="n">e_map</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">EncoderMap</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">high_d_data</span><span class="p">)</span>
+<span class="n">e_map</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+<span class="c1"># projecting:</span>
+<span class="n">low_d_projection</span> <span class="o">=</span> <span class="n">e_map</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">high_d_data</span><span class="p">)</span>
+<span class="n">generated</span> <span class="o">=</span> <span class="n">e_map</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">low_d_projection</span><span class="p">)</span>
+
+
+<span class="c1">#########################################################################</span>
+<span class="c1"># Plotting:</span>
+<span class="c1">#########################################################################</span>
+
+<span class="c1"># Third Party Imports</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="p">(</span>  <span class="c1"># somehow this conflicts with tensorflow if imported earlier</span>
+    <span class="n">Axes3D</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">axe</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
+<span class="n">axe</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">high_d_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">high_d_data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">high_d_data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="n">c</span><span class="o">=</span><span class="n">ids</span><span class="p">,</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+    <span class="n">linewidths</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;tab10&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axe</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">axe</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">low_d_projection</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">low_d_projection</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">c</span><span class="o">=</span><span class="n">ids</span><span class="p">,</span>
+    <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+    <span class="n">linewidths</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;tab10&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">axe</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
+<span class="n">axe</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">generated</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">generated</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">generated</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="n">c</span><span class="o">=</span><span class="n">ids</span><span class="p">,</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+    <span class="n">linewidths</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;tab10&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details></section>
+<section id="cube-distance-analysis">
+<h2>Cube Distance Analysis<a class="headerlink" href="#cube-distance-analysis" title="Link to this heading">#</a></h2>
+<p>In this example a way of visualizing the mapping of high-dimensional differences to low-dimensional distances is introduced.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Cube Distance Analysis</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Third Party Imports</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Encodermap imports</span>
+<span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+
+
+<span class="n">data</span><span class="p">,</span> <span class="n">ids</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">random_on_cube_edges</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+
+<span class="n">dist_sig_parameters</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">periodicity</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+
+<span class="n">axe</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">distance_histogram</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">,</span> <span class="n">dist_sig_parameters</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details></section>
+<section id="trp-cage">
+<h2>Trp Cage<a class="headerlink" href="#trp-cage" title="Link to this heading">#</a></h2>
+<p>In this example, you can work with actual MD data from simulations of the Trp-cage protein.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Trp Cage</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standard Library Imports</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># Third Party Imports</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Encodermap imports</span>
+<span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+
+
+<span class="c1"># setting parameters</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="s2">&quot;./data&quot;</span>
+<span class="n">run_path</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">run_path</span><span class="p">(</span><span class="s2">&quot;./runs&quot;</span><span class="p">)</span>
+<span class="n">csv_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="s2">&quot;trp_cage.csv&quot;</span><span class="p">)</span>  <span class="c1"># can be downloaded from:</span>
+<span class="c1"># https://www.kaggle.com/tobiasle/trp-cage-dihedrals</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">Parameters</span><span class="p">()</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">main_path</span> <span class="o">=</span> <span class="n">run_path</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">n_steps</span> <span class="o">=</span> <span class="mi">50000</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;loading data ...&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">csv_path</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+<span class="n">dihedrals</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">41</span><span class="p">]</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;training autoencoder ...&quot;</span><span class="p">)</span>
+<span class="n">e_map</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">EncoderMap</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">dihedrals</span><span class="p">)</span>
+<span class="n">e_map</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;projecting data ...&quot;</span><span class="p">)</span>
+<span class="n">low_d_projection</span> <span class="o">=</span> <span class="n">e_map</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">dihedrals</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;plotting result ...&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axe</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">caxe</span> <span class="o">=</span> <span class="n">axe</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">low_d_projection</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">low_d_projection</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">c</span><span class="o">=</span><span class="n">data</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">s</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;nipy_spectral&quot;</span><span class="p">,</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+    <span class="n">linewidths</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">caxe</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;helix rmsd&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># generate structures along path</span>
+<span class="n">pdb_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="s2">&quot;trp_cage_extended.pdb&quot;</span><span class="p">)</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">PathGenerateDihedrals</span><span class="p">(</span><span class="n">axe</span><span class="p">,</span> <span class="n">e_map</span><span class="p">,</span> <span class="n">pdb_path</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details></section>
+<section id="dihedral-to-cartesian-diubi">
+<h2>Dihedral to Cartesian diUbi<a class="headerlink" href="#dihedral-to-cartesian-diubi" title="Link to this heading">#</a></h2>
+<p>In this example, you can work with MD data from simulations of the M1-linked diUbi protein.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Data Generation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standard Library Imports</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">locale</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># Third Party Imports</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">MDAnalysis</span> <span class="k">as</span> <span class="nn">md</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="c1"># Encodermap imports</span>
+<span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+
+
+<span class="n">molname</span> <span class="o">=</span> <span class="s2">&quot;diubi&quot;</span>
+
+
+<span class="c1"># ######################### Load data #########################</span>
+
+<span class="c1"># Data available at:</span>
+<span class="c1"># https://www.kaggle.com/andrejberg/md-simulations-of-linear-ubiquitin-dimers</span>
+
+<span class="n">structure_path</span> <span class="o">=</span> <span class="s2">&quot;data/</span><span class="si">{}</span><span class="s2">/01.pdb&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">molname</span><span class="p">)</span>
+<span class="n">trajectory_paths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;data/</span><span class="si">{}</span><span class="s2">/</span><span class="si">{:02d}</span><span class="s2">.xtc&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">molname</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">)]</span>
+
+<span class="n">uni</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">Universe</span><span class="p">(</span><span class="n">structure_path</span><span class="p">,</span> <span class="n">trajectory_paths</span><span class="p">)</span>
+
+<span class="c1"># select only atoms in the backbone or directly bound to the backbone. Atoms in the side chains are not supported (yet)</span>
+<span class="n">selected_atoms</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">select_atoms</span><span class="p">(</span>
+    <span class="s2">&quot;backbone or name H or name O1 or (name CD and resname PRO)&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># The MolData object takes care of calculating all the necessary information like dihedrals, angles, bondlengths ...</span>
+<span class="c1"># You can provide a cache_path to store this information for the next time.</span>
+<span class="n">moldata</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">MolData</span><span class="p">(</span><span class="n">selected_atoms</span><span class="p">,</span> <span class="n">cache_path</span><span class="o">=</span><span class="s2">&quot;data/</span><span class="si">{}</span><span class="s2">/cache&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">molname</span><span class="p">))</span>
+
+
+<span class="c1"># ######################### Define parameters #########################</span>
+
+<span class="n">total_steps</span> <span class="o">=</span> <span class="mi">50000</span>
+
+<span class="c1"># First we want to train without C_alpha cost.</span>
+<span class="c1"># Finally, we want to activate the C_alpha cost to improve the long-range order of the generated conformations</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">ADCParameters</span><span class="p">()</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">main_path</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">run_path</span><span class="p">(</span><span class="s2">&quot;runs/</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">molname</span><span class="p">))</span>
+
+<span class="n">parameters</span><span class="o">.</span><span class="n">cartesian_cost_scale</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">cartesian_cost_variant</span> <span class="o">=</span> <span class="s2">&quot;mean_abs&quot;</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">cartesian_cost_scale_soft_start</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="nb">int</span><span class="p">(</span><span class="n">total_steps</span> <span class="o">/</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">9</span><span class="p">),</span>
+    <span class="nb">int</span><span class="p">(</span><span class="n">total_steps</span> <span class="o">/</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">9</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1000</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">cartesian_pwd_start</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="mi">1</span>  <span class="c1"># Calculate pairwise distances starting form the second backbone atom ...</span>
+<span class="p">)</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">cartesian_pwd_step</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># for every third atom. These are the C_alpha atoms</span>
+
+<span class="n">parameters</span><span class="o">.</span><span class="n">dihedral_cost_scale</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">dihedral_cost_variant</span> <span class="o">=</span> <span class="s2">&quot;mean_abs&quot;</span>
+
+<span class="n">parameters</span><span class="o">.</span><span class="n">distance_cost_scale</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># no distance cost in dihedral space</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">cartesian_distance_cost_scale</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="mi">100</span>  <span class="c1"># instead we use distance cost in C_alpha distance space</span>
+<span class="p">)</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">cartesian_dist_sig_parameters</span> <span class="o">=</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+
+<span class="n">parameters</span><span class="o">.</span><span class="n">checkpoint_step</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">total_steps</span> <span class="o">/</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">l2_reg_constant</span> <span class="o">=</span> <span class="mf">0.001</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">center_cost_scale</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">molname</span>
+
+
+<span class="c1"># ########### Check how distances are mapped with your choice of Sigmoid parameters ##################</span>
+
+<span class="n">pwd</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">pairwise_dist</span><span class="p">(</span>
+    <span class="n">moldata</span><span class="o">.</span><span class="n">central_cartesians</span><span class="p">[</span>
+        <span class="p">::</span><span class="mi">1000</span><span class="p">,</span> <span class="n">parameters</span><span class="o">.</span><span class="n">cartesian_pwd_start</span> <span class="p">::</span> <span class="n">parameters</span><span class="o">.</span><span class="n">cartesian_pwd_step</span>
+    <span class="p">],</span>
+    <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="n">pwd</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">pwd</span><span class="p">)</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">distance_histogram</span><span class="p">(</span>
+    <span class="n">pwd</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">),</span> <span class="n">parameters</span><span class="o">.</span><span class="n">cartesian_dist_sig_parameters</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># somehow matplotlib messes with this setting and causes problems in tensorflow</span>
+<span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_NUMERIC</span><span class="p">,</span> <span class="s2">&quot;en_US.UTF-8&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># ######################### Get references from dummy model #########################</span>
+<span class="n">dummy_parameters</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+<span class="n">dummy_parameters</span><span class="o">.</span><span class="n">main_path</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">create_dir</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">main_path</span><span class="p">,</span> <span class="s2">&quot;dummy&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">dummy_parameters</span><span class="o">.</span><span class="n">n_steps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">moldata</span><span class="o">.</span><span class="n">dihedrals</span><span class="p">)</span> <span class="o">/</span> <span class="n">parameters</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span>
+<span class="n">dummy_parameters</span><span class="o">.</span><span class="n">summary_step</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">e_map</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">AngleDihedralCartesianEncoderMapDummy</span><span class="p">(</span><span class="n">dummy_parameters</span><span class="p">,</span> <span class="n">moldata</span><span class="p">)</span>
+<span class="n">e_map</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<span class="n">e_map</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">e_map</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="n">costs</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">read_from_log</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dummy_parameters</span><span class="o">.</span><span class="n">main_path</span><span class="p">,</span> <span class="s2">&quot;train&quot;</span><span class="p">),</span>
+    <span class="p">[</span><span class="s2">&quot;cost/angle_cost&quot;</span><span class="p">,</span> <span class="s2">&quot;cost/dihedral_cost&quot;</span><span class="p">,</span> <span class="s2">&quot;cost/cartesian_cost&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">means</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">costs</span><span class="p">:</span>
+    <span class="n">means</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span><span class="p">]))</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">angle_cost_reference</span> <span class="o">=</span> <span class="n">means</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">dihedral_cost_reference</span> <span class="o">=</span> <span class="n">means</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">cartesian_cost_reference</span> <span class="o">=</span> <span class="n">means</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dummy_parameters</span><span class="o">.</span><span class="n">main_path</span><span class="p">,</span> <span class="s2">&quot;adc_cost_means.txt&quot;</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">means</span><span class="p">)</span>
+<span class="p">)</span>
+
+
+<span class="c1"># ######################### Run Training #########################</span>
+
+<span class="c1"># First run without C_alpha cost</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">n_steps</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">cartesian_cost_scale_soft_start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">e_map</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">AngleDihedralCartesianEncoderMap</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">moldata</span><span class="p">)</span>
+<span class="n">e_map</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<span class="n">e_map</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">e_map</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1"># Now we turn on C_alpha cost and continue the training run</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">n_steps</span> <span class="o">=</span> <span class="n">total_steps</span> <span class="o">-</span> <span class="n">parameters</span><span class="o">.</span><span class="n">cartesian_cost_scale_soft_start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">parameters</span><span class="o">.</span><span class="n">cartesian_cost_scale</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">ckpt_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="n">parameters</span><span class="o">.</span><span class="n">main_path</span><span class="p">,</span>
+    <span class="s2">&quot;checkpoints&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;step</span><span class="si">{}</span><span class="s2">.ckpt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">cartesian_cost_scale_soft_start</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+<span class="p">)</span>
+
+<span class="n">e_map</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">AngleDihedralCartesianEncoderMap</span><span class="p">(</span>
+    <span class="n">parameters</span><span class="p">,</span> <span class="n">moldata</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="o">=</span><span class="n">ckpt_path</span>
+<span class="p">)</span>
+<span class="n">e_map</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<span class="n">e_map</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">e_map</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Data Analysis</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standard Library Imports</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># Third Party Imports</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">MDAnalysis</span> <span class="k">as</span> <span class="nn">md</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Encodermap imports</span>
+<span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+
+
+<span class="n">molname</span> <span class="o">=</span> <span class="s2">&quot;diubi&quot;</span>
+<span class="n">run_id</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">step</span> <span class="o">=</span> <span class="mi">50000</span>
+<span class="n">selection_for_alignment</span> <span class="o">=</span> <span class="s2">&quot;resid 0:77&quot;</span>
+
+<span class="n">main_path</span> <span class="o">=</span> <span class="s2">&quot;runs/</span><span class="si">{}</span><span class="s2">/run</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">molname</span><span class="p">,</span> <span class="n">run_id</span><span class="p">)</span>
+
+
+<span class="c1"># ######################### Load data #########################</span>
+
+<span class="n">structure_path</span> <span class="o">=</span> <span class="s2">&quot;data/</span><span class="si">{}</span><span class="s2">/01.pdb&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">molname</span><span class="p">)</span>
+<span class="n">trajectory_paths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;data/</span><span class="si">{}</span><span class="s2">/</span><span class="si">{:02d}</span><span class="s2">.xtc&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">molname</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">)]</span>
+
+<span class="n">uni</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">Universe</span><span class="p">(</span><span class="n">structure_path</span><span class="p">,</span> <span class="n">trajectory_paths</span><span class="p">)</span>
+<span class="n">selected_atoms</span> <span class="o">=</span> <span class="n">uni</span><span class="o">.</span><span class="n">select_atoms</span><span class="p">(</span>
+    <span class="s2">&quot;backbone or name H or name O1 or (name CD and resname PRO)&quot;</span>
+<span class="p">)</span>
+<span class="n">moldata</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">MolData</span><span class="p">(</span><span class="n">selected_atoms</span><span class="p">,</span> <span class="n">cache_path</span><span class="o">=</span><span class="s2">&quot;data/</span><span class="si">{}</span><span class="s2">/cache&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">molname</span><span class="p">))</span>
+
+
+<span class="c1"># ######################### Load parameters and checkpoint #########################</span>
+
+<span class="n">parameters</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">ADCParameters</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">main_path</span><span class="p">,</span> <span class="s2">&quot;parameters.json&quot;</span><span class="p">))</span>
+<span class="n">e_map</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">AngleDihedralCartesianEncoderMap</span><span class="p">(</span>
+    <span class="n">parameters</span><span class="p">,</span>
+    <span class="n">moldata</span><span class="p">,</span>
+    <span class="n">checkpoint_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">main_path</span><span class="p">,</span> <span class="s2">&quot;checkpoints&quot;</span><span class="p">,</span> <span class="s2">&quot;step</span><span class="si">{}</span><span class="s2">.ckpt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">step</span><span class="p">)),</span>
+    <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="c1"># ######################### Project Data to map #########################</span>
+
+<span class="n">projected</span> <span class="o">=</span> <span class="n">e_map</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">moldata</span><span class="o">.</span><span class="n">dihedrals</span><span class="p">)</span>
+
+
+<span class="c1"># ######################### Plot histogram with path generator and lasso Select #########################</span>
+
+<span class="n">hist</span><span class="p">,</span> <span class="n">xedges</span><span class="p">,</span> <span class="n">yedges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram2d</span><span class="p">(</span><span class="n">projected</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">projected</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+
+<span class="n">fig1</span><span class="p">,</span> <span class="n">axe1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="n">caxe</span> <span class="o">=</span> <span class="n">axe1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+    <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">hist</span><span class="o">.</span><span class="n">T</span><span class="p">),</span>
+    <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;low&quot;</span><span class="p">,</span>
+    <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">xedges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xedges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">yedges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">yedges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig1</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">caxe</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;-ln(p)&quot;</span><span class="p">,</span> <span class="n">labelpad</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">axe1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Path Generator&quot;</span><span class="p">)</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">PathGenerateCartesians</span><span class="p">(</span>
+    <span class="n">axe1</span><span class="p">,</span>
+    <span class="n">e_map</span><span class="p">,</span>
+    <span class="n">moldata</span><span class="p">,</span>
+    <span class="n">vmd_path</span><span class="o">=</span><span class="s2">&quot;/home/soft/bin/vmd&quot;</span><span class="p">,</span>
+    <span class="n">align_reference</span><span class="o">=</span><span class="n">moldata</span><span class="o">.</span><span class="n">sorted_atoms</span><span class="p">,</span>
+    <span class="n">align_select</span><span class="o">=</span><span class="n">selection_for_alignment</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">fig2</span><span class="p">,</span> <span class="n">axe2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">caxe</span> <span class="o">=</span> <span class="n">axe2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+    <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">hist</span><span class="o">.</span><span class="n">T</span><span class="p">),</span>
+    <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;low&quot;</span><span class="p">,</span>
+    <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">xedges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xedges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">yedges</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">yedges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+    <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig2</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">caxe</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;-ln(p)&quot;</span><span class="p">,</span> <span class="n">labelpad</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">axe2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Selector&quot;</span><span class="p">)</span>
+<span class="n">selector</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">PathSelect</span><span class="p">(</span>
+    <span class="n">axe2</span><span class="p">,</span>
+    <span class="n">projected</span><span class="p">,</span>
+    <span class="n">moldata</span><span class="p">,</span>
+    <span class="n">e_map</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">main_path</span><span class="p">,</span>
+    <span class="n">vmd_path</span><span class="o">=</span><span class="s2">&quot;/home/soft/bin/vmd&quot;</span><span class="p">,</span>
+    <span class="n">align_reference</span><span class="o">=</span><span class="n">moldata</span><span class="o">.</span><span class="n">sorted_atoms</span><span class="p">,</span>
+    <span class="n">align_select</span><span class="o">=</span><span class="n">selection_for_alignment</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details></section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="publication/figure5.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Publication Figure 5</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../user_guide/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">User Guide</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cube-example">Cube Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cube-distance-analysis">Cube Distance Analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trp-cage">Trp Cage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dihedral-to-cartesian-diubi">Dihedral to Cartesian diUbi</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/notebooks/static_code.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T22:43:00.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

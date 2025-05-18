@@ -1,180 +1,205 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+
+<html lang="en" data-content_root="../../../" >
+
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>encodermap.misc.misc &#8212; encodermap 3.0.0 documentation</title>
+    <title>encodermap.misc.misc &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
   
   
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
-<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=c1026b93" />
   
-  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
-
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
-  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/sphinx_highlight.js"></script>
-    <script src="../../../_static/clipboard.min.js"></script>
-    <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/design-tabs.js"></script>
+    <script src="../../../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/encodermap/misc/misc';</script>
-    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="docsearch:language" content="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T21:24:25"/>
   </head>
   
   
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
-  <label class="overlay overlay-primary" for="__primary"></label>
-
-  
-  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
-  <label class="overlay overlay-secondary" for="__secondary"></label>
-
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
-      
-<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form>
-    </div>
-  </div>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
 
   
-  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
-  <label class="sidebar-toggle primary-toggle" for="__primary">
-      <span class="fa-solid fa-bars"></span>
-  </label>
-  <div id="navbar-start">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
     
+      <div class="navbar-item">
+
+  
     
   
-
 
 <a class="navbar-brand logo" href="../../../index.html">
-
   
   
   
   
   
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
   
   
-
-  
-    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="Logo image">
-    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark" alt="Logo image">
-  
-  
-</a>
+</a></div>
     
   </div>
-
   
   <div class="col-lg-9 navbar-header-items">
-    <div id="navbar-center" class="mr-auto">
+    
+    <div class="me-auto navbar-header-items__center">
       
-      <div class="navbar-center-item">
-        <nav class="navbar-nav">
-    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
-        Site Navigation
-    </p>
-    <ul id="navbar-main-elements" class="navbar-nav">
-        
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
-                        Getting started
-                      </a>
-                    </li>
-                
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
-                        User Guide
-                      </a>
-                    </li>
-                
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../reference/index.html">
-                        API reference
-                      </a>
-                    </li>
-                
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
-                        Changelog
-                      </a>
-                    </li>
-                
-    </ul>
-</nav>
-      </div>
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
       
     </div>
-
-    <div id="navbar-end">
+    
+    
+    <div class="navbar-header-items__end">
       
-        <div class="navbar-end-item navbar-persistent--container">
+        <div class="navbar-item navbar-persistent--container">
           
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
-  <i class="fa-solid fa-magnifying-glass"></i>
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
 </button>
         </div>
       
       
-      <div class="navbar-end-item">
-        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-</button>
-      </div>
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
       
-      <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
         <li class="nav-item">
           
           
@@ -183,101 +208,110 @@
           
           
           
-          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
         </li>
-      </ul>
-      </div>
+</ul></div>
       
     </div>
+    
   </div>
-
-
   
   
     <div class="navbar-persistent--mobile">
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
-  <i class="fa-solid fa-magnifying-glass"></i>
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
 </button>
     </div>
   
 
   
-  <label class="sidebar-toggle secondary-toggle" for="__secondary">
-      <span class="fa-solid fa-outdent"></span>
-  </label>
-  
-
 </div>
-  </nav>
+
+    </header>
   
 
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      
+      
         
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
   
   <div class="sidebar-header-items sidebar-primary__section">
     
     
       <div class="sidebar-header-items__center">
-      
-      <div class="navbar-center-item">
-        <nav class="navbar-nav">
-    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
-        Site Navigation
-    </p>
-    <ul id="navbar-main-elements" class="navbar-nav">
         
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../getting_started/index.html">
-                        Getting started
-                      </a>
-                    </li>
-                
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../user_guide_and_examples/index.html">
-                        User Guide
-                      </a>
-                    </li>
-                
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../reference/index.html">
-                        API reference
-                      </a>
-                    </li>
-                
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../whatsnew/index.html">
-                        Changelog
-                      </a>
-                    </li>
-                
-    </ul>
-</nav>
-      </div>
-      
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
       </div>
     
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
 
-    
-    
-    <div class="sidebar-header-items__end">
-      
-      <div class="navbar-end-item">
-        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-</button>
-      </div>
-      
-      <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
         <li class="nav-item">
           
           
@@ -286,48 +320,81 @@
           
           
           
-          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
         </li>
-      </ul>
+</ul></div>
+        
       </div>
-      
-    </div>
     
   </div>
-
   
-
   
-  <div class="sidebar-end-items sidebar-primary__section">
-    <div class="sidebar-end-items__item">
-    </div>
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
 
-  
-  <div id="rtd-footer-container"></div>
 
       </div>
-      <main id="main-content" class="bd-main">
+      
+      <main id="main-content" class="bd-main" role="main">
         
         
-        <div class="bd-content">
-          <div class="bd-article-container">
-            
-            <div class="bd-header-article">
-                
-            </div>
-            
-            
-            <article class="bd-article" role="main">
+          <div class="bd-content">
+            <div class="bd-article-container">
               
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../../encodermap.html" class="nav-link">encodermap</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">encodermap.misc.misc</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <h1>Source code for encodermap.misc.misc</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1"># encodermap/misc/misc.py</span>
 <span class="c1">################################################################################</span>
-<span class="c1"># Encodermap: A python library for dimensionality reduction.</span>
+<span class="c1"># EncoderMap: A python library for dimensionality reduction.</span>
 <span class="c1">#</span>
-<span class="c1"># Copyright 2019-2022 University of Konstanz and the Authors</span>
+<span class="c1"># Copyright 2019-2024 University of Konstanz and the Authors</span>
 <span class="c1">#</span>
 <span class="c1"># Authors:</span>
 <span class="c1"># Kevin Sawade, Tobias Lemke</span>
@@ -350,17 +417,20 @@
 <span class="c1">##############################################################################</span>
 
 
+<span class="c1"># Future Imports at the top</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="c1"># Standard Library Imports</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">groupby</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">NamedTemporaryFile</span>
 
-<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="c1"># Third Party Imports</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">optional_imports</span> <span class="kn">import</span> <span class="n">_optional_import</span>
 
-<span class="kn">from</span> <span class="nn">.._optional_imports</span> <span class="kn">import</span> <span class="n">_optional_import</span>
-<span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="n">BadError</span>
 
 <span class="c1">################################################################################</span>
 <span class="c1"># Optional Imports</span>
@@ -368,6 +438,27 @@
 
 
 <span class="n">nx</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;networkx&quot;</span><span class="p">)</span>
+<span class="n">Image</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;PIL&quot;</span><span class="p">,</span> <span class="s2">&quot;Image&quot;</span><span class="p">)</span>
+<span class="n">ImageDraw</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;PIL&quot;</span><span class="p">,</span> <span class="s2">&quot;ImageDraw&quot;</span><span class="p">)</span>
+<span class="n">ImageFont</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;PIL&quot;</span><span class="p">,</span> <span class="s2">&quot;ImageFont&quot;</span><span class="p">)</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Typing</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="c1"># Standard Library Imports</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">overload</span>
+
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="c1"># Standard Library Imports</span>
+    <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+    <span class="c1"># Local Folder Imports</span>
+    <span class="kn">from</span> <span class="nn">..trajinfo.info_all</span> <span class="kn">import</span> <span class="n">TrajEnsemble</span>
 
 
 <span class="c1">################################################################################</span>
@@ -375,7 +466,12 @@
 <span class="c1">################################################################################</span>
 
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;create_n_cube&quot;</span><span class="p">,</span> <span class="s2">&quot;plot_model&quot;</span><span class="p">,</span> <span class="s2">&quot;run_path&quot;</span><span class="p">,</span> <span class="s2">&quot;get_full_common_str_and_ref&quot;</span><span class="p">]</span>
+<span class="n">__all__</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;create_n_cube&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;plot_model&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;run_path&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;get_full_common_str_and_ref&quot;</span><span class="p">,</span>
+<span class="p">]</span>
 
 
 <span class="n">FEATURE_NAMES</span> <span class="o">=</span> <span class="p">{</span>
@@ -415,65 +511,27 @@
 <span class="c1">################################################################################</span>
 
 
-<span class="k">def</span> <span class="nf">scale_projs</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">boundary</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Scales the projections and moves outliers to their closest points.</span>
+<span class="k">def</span> <span class="nf">_is_notebook</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns &#39;True&#39;, if we are currently in a notebook.</span>
 
-<span class="sd">    Makes sure to not place a new point where there already is a point with a while loop.&quot;&quot;&quot;</span>
-    <span class="kn">import</span> <span class="nn">glob</span>
-    <span class="kn">import</span> <span class="nn">os</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if we are in a notebook, False otherwise.</span>
 
-    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Third Party Imports</span>
+        <span class="kn">from</span> <span class="nn">IPython</span> <span class="kn">import</span> <span class="n">get_ipython</span>
 
-    <span class="k">for</span> <span class="n">traj</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">lowd</span>
-        <span class="n">data_scaled</span> <span class="o">=</span> <span class="p">[]</span>
-
-        <span class="n">outside</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">inside</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">dist_min</span> <span class="o">=</span> <span class="mf">99999999.9</span>
-        <span class="n">comp_min</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-
-        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">boundary</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">boundary</span><span class="p">):</span>
-                <span class="c1"># if outside boundary find closest point</span>
-                <span class="n">outside</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">inside</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-                <span class="n">data_scaled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">outside</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">inside</span><span class="p">:</span>
-                <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">line</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">comp</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
-                <span class="k">if</span> <span class="n">dist</span> <span class="o">&lt;</span> <span class="n">dist_min</span><span class="p">:</span>
-                    <span class="n">dist_min</span> <span class="o">=</span> <span class="n">dist</span>
-                    <span class="n">comp_min</span> <span class="o">=</span> <span class="n">comp</span>
-            <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;scaling outlier point at &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-            <span class="c1"># if cols is provided, only scale these points</span>
-            <span class="n">addition</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">dim</span><span class="p">)</span>
-            <span class="n">new_point</span> <span class="o">=</span> <span class="n">comp_min</span>
-            <span class="k">while</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">new_point</span><span class="p">,</span> <span class="n">data_scaled</span><span class="p">)):</span>
-                <span class="k">if</span> <span class="n">cols</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">new_point</span> <span class="o">=</span> <span class="p">[</span><span class="n">comp_min</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">addition</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">))]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">new_point</span> <span class="o">=</span> <span class="p">[</span><span class="n">comp_min</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">addition</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">))]</span>
-                <span class="n">addition</span> <span class="o">+=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">trajs</span><span class="o">.</span><span class="n">dim</span><span class="p">)</span>
-            <span class="n">data_scaled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_point</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_scaled</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;This method did not work&quot;</span><span class="p">)</span>
-
-        <span class="n">traj</span><span class="o">.</span><span class="n">lowd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">data_scaled</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">this</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">lowd</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">basename</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">lowd</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">data_scaled</span><span class="p">)</span>
-            <span class="k">raise</span>
+        <span class="k">if</span> <span class="s2">&quot;IPKernelApp&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
 
 
-<div class="viewcode-block" id="_can_be_feature"><a class="viewcode-back" href="../../../encodermap.trajinfo.html#encodermap.loading.featurizer._can_be_feature">[docs]</a><span class="k">def</span> <span class="nf">_can_be_feature</span><span class="p">(</span><span class="n">inp</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_can_be_feature</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Function to decide whether the input can be interpreted by the Featurizer class.</span>
 
 <span class="sd">    Outputs True, if inp == &#39;all&#39; or inp is a list of strings contained in FEATURE_NAMES.</span>
@@ -503,34 +561,104 @@
                 <span class="p">[</span><span class="n">i</span> <span class="ow">in</span> <span class="n">FEATURE_NAMES</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">or</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">FEATURE_NAMES</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inp</span><span class="p">]</span>
             <span class="p">):</span>
                 <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">return</span> <span class="kc">False</span></div>
+    <span class="k">return</span> <span class="kc">False</span>
 
 
-<span class="k">def</span> <span class="nf">match_files</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">tops</span><span class="p">,</span> <span class="n">common_str</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">match_files</span><span class="p">(</span>
+    <span class="n">trajs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]],</span>
+    <span class="n">tops</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]],</span>
+    <span class="n">common_str</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Matches trajectory and topology files with a list of common strings.</span>
+
+<span class="sd">    The idea behind this function is to use one topology file with</span>
+<span class="sd">    multiple trajectory files, that all use the same topology.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        trajs (Union[list[str], list[Path]]): A list of str or list of Path objects.</span>
+<span class="sd">            These are the trajectory files we want to match the subset of</span>
+<span class="sd">            topology files with.</span>
+<span class="sd">        tops (Union[list[str], list[Path]]): A list of str or list of Path objects.</span>
+<span class="sd">            These are the topology files we will assign to the trajectory files</span>
+<span class="sd">            using common substrings.</span>
+<span class="sd">        common_str (list[str]): A list of common substrings.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple[list[str], list[str]]: A tuple containing a two list of str.</span>
+<span class="sd">            The first list of str are the topology files matched to the &#39;trajs&#39;.</span>
+<span class="sd">            The second list of str are the common_str matched to the &#39;trajs&#39;.</span>
+<span class="sd">            Both lists have the same length as `trajs`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tops_out</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">common_str_out</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="n">trajs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">trajs</span><span class="p">))</span>
     <span class="n">tops</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">tops</span><span class="p">))</span>
 
-    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">cs</span> <span class="ow">in</span> <span class="n">t</span> <span class="k">for</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">common_str</span><span class="p">]):</span>
-            <span class="k">raise</span> <span class="n">BadError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;The traj file </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2"> does not match any of the common_str you provided.&quot;</span>
-            <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">Path</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.h5&quot;</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">])</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">trajs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">tops</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span>
+        <span class="n">common_str</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="n">tops</span><span class="p">,</span> <span class="n">common_str</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trajs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">tops</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">first_cs</span> <span class="o">=</span> <span class="n">common_str</span><span class="p">[[</span><span class="n">cs</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">common_str</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">True</span><span class="p">)]</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Can&#39;t find any matching common_str in the input data:</span><span class="se">\n</span><span class="si">{</span><span class="n">trajs</span><span class="si">=}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tops</span><span class="si">=}</span><span class="se">\n\n</span><span class="si">{</span><span class="n">common_str</span><span class="si">=}</span><span class="s2">&quot;</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+        <span class="k">if</span> <span class="n">first_cs</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tops</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">iterator</span> <span class="o">=</span> <span class="n">trajs</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">t_lcut</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span> <span class="k">for</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">common_str</span><span class="p">])</span>
-            <span class="n">t_lcut</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">t_lcut</span><span class="p">:]</span>
-            <span class="n">cs</span> <span class="o">=</span> <span class="n">common_str</span><span class="p">[[</span><span class="n">cs</span> <span class="ow">in</span> <span class="n">t_lcut</span> <span class="k">for</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">common_str</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">True</span><span class="p">)]</span>
-            <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;h5&quot;</span><span class="p">:</span>
-                <span class="n">tops_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trajs</span><span class="p">[[</span><span class="n">cs</span> <span class="ow">in</span> <span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">True</span><span class="p">)])</span>
+            <span class="n">iterator</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">tops</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">iterator</span> <span class="o">=</span> <span class="n">trajs</span>
+
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">iterator</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">t</span><span class="p">,</span> <span class="n">top</span> <span class="o">=</span> <span class="n">t</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">cs</span> <span class="ow">in</span> <span class="n">t</span> <span class="k">for</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">common_str</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;The traj file </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2"> does not match any of the common_str you provided.&quot;</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">tops_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tops</span><span class="p">[[</span><span class="n">cs</span> <span class="ow">in</span> <span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">tops</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">True</span><span class="p">)])</span>
-            <span class="n">common_str_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span>
+                <span class="n">t_lcut</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span> <span class="k">for</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">common_str</span><span class="p">])</span>
+                <span class="n">t_lcut</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">t_lcut</span><span class="p">:]</span>
+                <span class="n">cs</span> <span class="o">=</span> <span class="n">common_str</span><span class="p">[[</span><span class="n">cs</span> <span class="ow">in</span> <span class="n">t_lcut</span> <span class="k">for</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">common_str</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">True</span><span class="p">)]</span>
+                <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;h5&quot;</span><span class="p">:</span>
+                    <span class="n">tops_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+                    <span class="k">assert</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">t</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cs</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">top</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">t</span><span class="si">=}</span><span class="s2">&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">tops_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
+                    <span class="k">assert</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">top</span> <span class="ow">and</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">t</span>
+                <span class="n">common_str_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">cs</span> <span class="ow">in</span> <span class="n">t</span> <span class="k">for</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">common_str</span><span class="p">]):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;The traj file </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2"> does not match any of the common_str you provided.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">t_lcut</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span> <span class="k">for</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">common_str</span><span class="p">])</span>
+                <span class="n">t_lcut</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">t_lcut</span><span class="p">:]</span>
+                <span class="n">cs</span> <span class="o">=</span> <span class="n">common_str</span><span class="p">[[</span><span class="n">cs</span> <span class="ow">in</span> <span class="n">t_lcut</span> <span class="k">for</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">common_str</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">True</span><span class="p">)]</span>
+                <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;h5&quot;</span><span class="p">:</span>
+                    <span class="n">tops_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trajs</span><span class="p">[[</span><span class="n">cs</span> <span class="ow">in</span> <span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">True</span><span class="p">)])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">tops_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tops</span><span class="p">[[</span><span class="n">cs</span> <span class="ow">in</span> <span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">tops</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">True</span><span class="p">)])</span>
+                <span class="k">assert</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">t</span>
+                <span class="n">common_str_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tops_out</span><span class="p">,</span> <span class="n">common_str_out</span>
 
 
-<div class="viewcode-block" id="get_full_common_str_and_ref"><a class="viewcode-back" href="../../../encodermap.misc.html#encodermap.loading.featurizer.get_full_common_str_and_ref">[docs]</a><span class="k">def</span> <span class="nf">get_full_common_str_and_ref</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">tops</span><span class="p">,</span> <span class="n">common_str</span><span class="p">):</span>
+<div class="viewcode-block" id="get_full_common_str_and_ref">
+<a class="viewcode-back" href="../../../api/encodermap.misc.html#encodermap.misc.misc.get_full_common_str_and_ref">[docs]</a>
+<span class="k">def</span> <span class="nf">get_full_common_str_and_ref</span><span class="p">(</span>
+    <span class="n">trajs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]],</span>
+    <span class="n">tops</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]],</span>
+    <span class="n">common_str</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Matches traj_files, top_files and common string and returns lists with the</span>
 <span class="sd">    same length matching the provided common str.</span>
 
@@ -540,19 +668,42 @@
 <span class="sd">        common_str (list[str]): A list of strings that can be found in</span>
 <span class="sd">            both trajs and tops (i.e. substrings).</span>
 
+<span class="sd">    Args:</span>
+<span class="sd">        tuple: A tuple containing the following:</span>
+<span class="sd">            - list[str]: A list of str with the traj file names.</span>
+<span class="sd">            - list[str]: A list of str with the top file names.</span>
+<span class="sd">            - list[str]: A list of str with the common_str&#39;s.</span>
+<span class="sd">            All lists have the same length.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">common_str</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trajs</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tops</span><span class="p">)</span> <span class="ow">and</span> <span class="n">common_str</span> <span class="o">==</span> <span class="p">[]</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">tops</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">BadError</span><span class="p">(</span>
-            <span class="s2">&quot;When providing a list of trajs and a list of refs with different length you must provide a list of common_str to match them.&quot;</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="s2">&quot;When providing a list of trajs and a list of refs with different &quot;</span>
+            <span class="s2">&quot;length you must provide a list of common_str to match them.&quot;</span>
         <span class="p">)</span>
 
     <span class="c1"># if the length of all objects is the same we just return them</span>
+    <span class="c1"># but also we check, whether the common_str appears in the</span>
+    <span class="c1"># trajs and tops to make sure its correclty ordered</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trajs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">tops</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">common_str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">i</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">common_str</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">traj</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">cs</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">tops</span><span class="p">,</span> <span class="n">common_str</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">cs</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span> <span class="ow">or</span> <span class="n">cs</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">top</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="o">*</span><span class="n">match_files</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">tops</span><span class="p">,</span> <span class="n">common_str</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">trajs</span><span class="p">,</span> <span class="n">tops</span><span class="p">,</span> <span class="n">common_str</span>
 
-    <span class="c1"># if trajs and tops is the same length they are expected to match</span>
+    <span class="c1"># if trajs and tops are the same length, they are expected to match</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">trajs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">tops</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">trajs</span><span class="p">,</span> <span class="n">tops</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">common_str</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">trajs</span><span class="p">,</span> <span class="n">tops</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">common_str</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">trajs</span><span class="p">,</span> <span class="n">tops</span><span class="p">,</span> <span class="p">[</span><span class="n">common_str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tops_out</span><span class="p">,</span> <span class="n">common_str_out</span> <span class="o">=</span> <span class="n">match_files</span><span class="p">(</span><span class="n">trajs</span><span class="p">,</span> <span class="n">tops</span><span class="p">,</span> <span class="n">common_str</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">trajs</span><span class="p">,</span> <span class="n">tops_out</span><span class="p">,</span> <span class="n">common_str_out</span>
 
     <span class="c1"># if only one topology is provided, we hope the user passed a correct one and fill everything else up</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">trajs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">tops</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
@@ -569,7 +720,7 @@
 
         <span class="k">return</span> <span class="n">trajs</span><span class="p">,</span> <span class="n">tops_out</span><span class="p">,</span> <span class="n">common_str_out</span>
 
-    <span class="c1"># in the other cases we need to do something similar</span>
+    <span class="c1"># in other cases, we need to do something similar</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tops</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">trajs</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
@@ -593,7 +744,12 @@
         <span class="k">return</span> <span class="n">trajs</span><span class="p">,</span> <span class="n">tops_out</span><span class="p">,</span> <span class="n">common_str_out</span></div>
 
 
-<span class="k">def</span> <span class="nf">printTable</span><span class="p">(</span><span class="n">myDict</span><span class="p">,</span> <span class="n">colList</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\uFFFA</span><span class="s2">&quot;</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="nf">printTable</span><span class="p">(</span>
+    <span class="n">myDict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+    <span class="n">colList</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">sep</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\uFFFA</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Pretty print a list of dictionaries (myDict) as a dynamically sized table.</span>
 <span class="sd">    If column names (colList) aren&#39;t specified, they will show in random order.</span>
 <span class="sd">    sep: row separator. Ex: sep=&#39;\n&#39; on Linux. Default: dummy to not split line.</span>
@@ -629,47 +785,88 @@
 <span class="c1">##############################################################################</span>
 
 
-<div class="viewcode-block" id="_datetime_windows_and_linux_compatible"><a class="viewcode-back" href="../../../encodermap.trajinfo.html#encodermap.loading.featurizer._datetime_windows_and_linux_compatible">[docs]</a><span class="k">def</span> <span class="nf">_datetime_windows_and_linux_compatible</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">_datetime_windows_and_linux_compatible</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Portable way to get `now` as either a linux or windows compatible string.</span>
 
-<span class="sd">    For linux systems strings in this manner will be returned:</span>
+<span class="sd">    For linux systems, strings in this manner will be returned:</span>
 <span class="sd">        2022-07-13T16:04:04+02:00</span>
 
-<span class="sd">    For windows systems strings in this manner will be returned:</span>
+<span class="sd">    For Windows systems, strings in this manner will be returned:</span>
 <span class="sd">        2022-07-13_16-04-46</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Standard Library Imports</span>
     <span class="kn">import</span> <span class="nn">datetime</span>
     <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">platform</span>
 
     <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;linux&quot;</span> <span class="ow">or</span> <span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;linux2&quot;</span> <span class="ow">or</span> <span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;darwin&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">astimezone</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
     <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;win32&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">_%H-%M-%S&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">_%H-%M-%S&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">all_equal</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns True, when all elements in List are equal&quot;&quot;&quot;</span>
+<span class="k">def</span> <span class="nf">all_equal</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns True, when all elements in a list are equal</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        iterable (Iterable[Any]): An iterable of Any.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: Whether all elements in `iterable` are equal.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">g</span> <span class="o">=</span> <span class="n">groupby</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="_validate_uri"><a class="viewcode-back" href="../../../encodermap.trajinfo.html#encodermap.loading.featurizer._validate_uri">[docs]</a><span class="k">def</span> <span class="nf">_validate_uri</span><span class="p">(</span><span class="n">str_</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Checks whether the str_ is a valid uri.&quot;&quot;&quot;</span>
+<span class="k">def</span> <span class="nf">_validate_uri</span><span class="p">(</span><span class="n">str_</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Checks whether the a str or Path is a valid uri.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        str_ (Union[Path, str]): The str or Path to test.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True when `str_` is a valid URI, False otherwise.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Standard Library Imports</span>
     <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlparse</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">str_</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">all</span><span class="p">([</span><span class="n">result</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">path</span><span class="p">])</span>
     <span class="k">except</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span></div>
+        <span class="k">return</span> <span class="kc">False</span>
 
 
-<div class="viewcode-block" id="_flatten_model"><a class="viewcode-back" href="../../../encodermap.misc.html#encodermap.loading.featurizer._flatten_model">[docs]</a><span class="k">def</span> <span class="nf">_flatten_model</span><span class="p">(</span><span class="n">model_nested</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_model</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="nd">@overload</span>
+<span class="k">def</span> <span class="nf">_flatten_model</span><span class="p">(</span>
+    <span class="n">model_nested</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span>
+    <span class="n">input_dim</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">return_model</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">:</span> <span class="o">...</span>
+
+
+<span class="nd">@overload</span>
+<span class="k">def</span> <span class="nf">_flatten_model</span><span class="p">(</span>
+    <span class="n">model_nested</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span>
+    <span class="n">input_dim</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">return_model</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">]:</span> <span class="o">...</span>
+
+
+<span class="k">def</span> <span class="nf">_flatten_model</span><span class="p">(</span>
+    <span class="n">model_nested</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span>
+    <span class="n">input_dim</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">return_model</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Flattens a nested tensorflow.keras.models.Model.</span>
 
 <span class="sd">    Can be useful if a model consists of two sequential models and needs to</span>
 <span class="sd">    be flattened to be plotted.</span>
+
+<span class="sd">    Union[tf.keras.Model, list[tf.keras.layers.Layer]]:</span>
+<span class="sd">        Either a tf.keras.Model or a list of layers.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">layers_flat</span> <span class="o">=</span> <span class="p">[]</span>
@@ -683,33 +880,79 @@
         <span class="n">model_flat</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">model_flat</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">layers_flat</span></div>
+        <span class="k">return</span> <span class="n">layers_flat</span>
 
 
-<div class="viewcode-block" id="plot_model"><a class="viewcode-back" href="../../../encodermap.misc.html#encodermap.loading.featurizer.plot_model">[docs]</a><span class="k">def</span> <span class="nf">plot_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">):</span>
+<div class="viewcode-block" id="plot_model">
+<a class="viewcode-back" href="../../../api/encodermap.misc.html#encodermap.misc.misc.plot_model">[docs]</a>
+<span class="k">def</span> <span class="nf">plot_model</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span>
+    <span class="n">input_dim</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Image</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Plots keras model using tf.keras.utils.plot_model&quot;&quot;&quot;</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">_flatten_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_model</span><span class="p">(</span>
-            <span class="n">model</span><span class="p">,</span> <span class="n">to_file</span><span class="o">=</span><span class="s2">&quot;tmp.png&quot;</span><span class="p">,</span> <span class="n">show_shapes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rankdir</span><span class="o">=</span><span class="s2">&quot;LR&quot;</span><span class="p">,</span> <span class="n">expand_nested</span><span class="o">=</span><span class="kc">True</span>
-        <span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="k">pass</span>
-    <span class="n">img</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;tmp.png&quot;</span><span class="p">)</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;tmp.png&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">mpl</span><span class="o">.</span><span class="n">get_backend</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;module://ipykernel.pylab.backend_inline&quot;</span><span class="p">:</span>
-        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">get_size_inches</span><span class="p">()</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+    <span class="c1"># Encodermap imports</span>
+    <span class="kn">from</span> <span class="nn">encodermap.models.models</span> <span class="kn">import</span> <span class="n">SequentialModel</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">SequentialModel</span><span class="p">)</span> <span class="ow">and</span> <span class="n">input_dim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">_flatten_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.png&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_model</span><span class="p">(</span>
+                    <span class="n">model</span><span class="p">,</span>
+                    <span class="n">to_file</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">show_shapes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">rankdir</span><span class="o">=</span><span class="s2">&quot;TB&quot;</span><span class="p">,</span>
+                    <span class="n">expand_nested</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="k">return</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.png&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_model</span><span class="p">(</span>
+                <span class="n">model</span><span class="p">,</span>
+                <span class="n">to_file</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">show_shapes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">rankdir</span><span class="o">=</span><span class="s2">&quot;TB&quot;</span><span class="p">,</span>
+                <span class="n">expand_nested</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="c1"># img.putalpha(alpha=255)</span>
+        <span class="n">cube_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;logo_cube_300.png&quot;</span><span class="p">)</span>
+        <span class="n">img</span><span class="o">.</span><span class="n">paste</span><span class="p">(</span><span class="n">cube_img</span><span class="p">,</span> <span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span> <span class="n">cube_img</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">font</span> <span class="o">=</span> <span class="n">ImageFont</span><span class="o">.</span><span class="n">truetype</span><span class="p">(</span>
+                <span class="s2">&quot;/usr/share/fonts/truetype/dejavu/DejaVuMathTeXGyre.ttf&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">40</span>
+            <span class="p">)</span>
+            <span class="n">ImageDraw</span><span class="o">.</span><span class="n">Draw</span><span class="p">(</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>  <span class="c1"># Image</span>
+                <span class="p">(</span><span class="mi">700</span><span class="p">,</span> <span class="mi">800</span><span class="p">),</span>  <span class="c1"># Coordinates</span>
+                <span class="s2">&quot;Made with EncoderMap&quot;</span><span class="p">,</span>  <span class="c1"># Text</span>
+                <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># Color</span>
+                <span class="n">font</span><span class="o">=</span><span class="n">font</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">img</span></div>
 
 
-<div class="viewcode-block" id="run_path"><a class="viewcode-back" href="../../../encodermap.misc.html#encodermap.loading.featurizer.run_path">[docs]</a><span class="k">def</span> <span class="nf">run_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates a directory at &quot;path/run{i}&quot; where the i is corresponding to the smallest not yet existing path.</span>
+        <span class="c1"># plt.close(&quot;all&quot;)</span>
+        <span class="c1"># plt.imshow(img)</span>
+        <span class="c1"># plt.show()</span>
+        <span class="c1"># if mpl.get_backend() == &quot;module://ipykernel.pylab.backend_inline&quot;:</span>
+        <span class="c1">#     fig = plt.gcf()</span>
+        <span class="c1">#     fig.set_size_inches(fig.get_size_inches() * 4)</span>
+        <span class="c1"># ax = plt.gca()</span>
+        <span class="c1"># ax.axis(&quot;off&quot;)</span>
+        <span class="c1"># plt.show()</span>
+
+
+<div class="viewcode-block" id="run_path">
+<a class="viewcode-back" href="../../../api/encodermap.misc.html#encodermap.misc.misc.run_path">[docs]</a>
+<span class="k">def</span> <span class="nf">run_path</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates a directory at &quot;path/run{i}&quot; where the i is corresponding to the</span>
+<span class="sd">    smallest not yet existing path.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path (str): Path to the run folder.</span>
@@ -718,13 +961,23 @@
 <span class="sd">        str: The new output path.</span>
 
 <span class="sd">    Exampples:</span>
-<span class="sd">        &gt;&gt;&gt; import os</span>
 <span class="sd">        &gt;&gt;&gt; import encodermap as em</span>
-<span class="sd">        &gt;&gt;&gt; os.makedirs(&#39;run1/&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; em.misc.run_path(&#39;run1/&#39;)</span>
-<span class="sd">        &#39;run2/&#39;</span>
-<span class="sd">        &gt;&gt;&gt; os.listdir()</span>
-<span class="sd">        [&#39;run1/&#39;, &#39;run2/&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; import tempfile</span>
+<span class="sd">        &gt;&gt;&gt; import os</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; def sort_key(inp: str) -&gt; int:</span>
+<span class="sd">        ...     return int(inp[-1])</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; with tempfile.TemporaryDirectory() as td:</span>
+<span class="sd">        ...     # create some directories</span>
+<span class="sd">        ...     os.makedirs(os.path.join(td, &quot;run0&quot;))</span>
+<span class="sd">        ...     os.makedirs(os.path.join(td, &quot;run1&quot;))</span>
+<span class="sd">        ...     # em.misc.run_path will automatically advance the counter to &#39;run2&#39;</span>
+<span class="sd">        ...     new_path = em.misc.run_path(td)</span>
+<span class="sd">        ...     print(new_path)</span>
+<span class="sd">        ...     print(sorted(os.listdir(td), key=sort_key))  # doctest: +ELLIPSIS</span>
+<span class="sd">        /tmp/.../run2</span>
+<span class="sd">        [&#39;run0&#39;, &#39;run1&#39;, &#39;run2&#39;]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
@@ -739,40 +992,48 @@
     <span class="k">return</span> <span class="n">output_path</span></div>
 
 
-<div class="viewcode-block" id="create_n_cube"><a class="viewcode-back" href="../../../encodermap.misc.html#encodermap.loading.featurizer.create_n_cube">[docs]</a><span class="k">def</span> <span class="nf">create_n_cube</span><span class="p">(</span>
-    <span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">points_along_edge</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">same_colored_edges</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span>
-<span class="p">):</span>
+
+<div class="viewcode-block" id="create_n_cube">
+<a class="viewcode-back" href="../../../api/encodermap.misc.html#encodermap.misc.misc.create_n_cube">[docs]</a>
+<span class="k">def</span> <span class="nf">create_n_cube</span><span class="p">(</span>
+    <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">points_along_edge</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">same_colored_edges</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates points along the edges of an n-dimensional unit hyper-cube.</span>
 
-<span class="sd">    The cube is created using networkx.hypercube_graph and points are placed along</span>
-<span class="sd">    the edges of the cube. By providing a sigma value the points can be shifted</span>
+<span class="sd">    The cube is created using `networkx.hypercube_graph` and points are placed along</span>
+<span class="sd">    the edges of the cube. By providing a `sigma` value, the points can be shifted</span>
 <span class="sd">    by some Gaussian noise.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        n (int, optional): The dimension of the Hypercube (can also take 1 or 2).</span>
+<span class="sd">        n (int): The dimension of the Hypercube (can also take 1 or 2).</span>
 <span class="sd">            Defaults to 3.</span>
-<span class="sd">        points_along_edge (int, optional): How many points should be placed along any edge.</span>
+<span class="sd">        points_along_edge (int): How many points should be placed along any edge.</span>
 <span class="sd">            By increasing the number of dimensions, the number of edges</span>
 <span class="sd">            increases, which also increases the total number of points. Defaults to 500.</span>
-<span class="sd">        sigma (float, optional): The sigma value for np.random.normal which</span>
+<span class="sd">        sigma (float): The sigma value for np.random.normal which</span>
 <span class="sd">            introduces Gaussian noise to the positions of the points. Defaults to 0.05.</span>
-<span class="sd">        same_color_edges (int, optional): How many edges of the Hypercube should</span>
+<span class="sd">        same_color_edges (int): How many edges of the Hypercube should</span>
 <span class="sd">            be colored with the same color. This can be used to later</span>
 <span class="sd">            better visualize the edges of the cube. Defaults to 3.</span>
-<span class="sd">        seed (int, optional): If an int is provided this will be used as a seed</span>
-<span class="sd">            for np.random and fix the random state. Defaults to None which produces</span>
+<span class="sd">        seed (Optional[int]): If an int is provided, this will be used as a seed</span>
+<span class="sd">            for `np.random` and fix the random state. Defaults to None which produces</span>
 <span class="sd">            random results every time this function is called.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        tuple: A tuple containing the following:</span>
-<span class="sd">            coordinates (np.ndarray): The coordinates of the points.</span>
-<span class="sd">            colors (np.ndarray): Integers that can be used for coloration.</span>
+<span class="sd">            - np.ndarray: The coordinates of the points.</span>
+<span class="sd">            - np.ndarray: Integers that can be used for coloration.</span>
 
 <span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from encodermap.misc.misc import create_n_cube</span>
 <span class="sd">        &gt;&gt;&gt; # A sigma value of zero means no noise at all.</span>
 <span class="sd">        &gt;&gt;&gt; coords, colors = create_n_cube(2, sigma=0)</span>
 <span class="sd">        &gt;&gt;&gt; coords[0]</span>
-<span class="sd">        [0., 1.]</span>
+<span class="sd">        array([0., 0.])</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -780,7 +1041,7 @@
     <span class="c1"># create networkx hypercube with given dimensions</span>
     <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">hypercube_graph</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 
-    <span class="c1"># vertices is not really needed</span>
+    <span class="c1"># vertices are not really needed</span>
     <span class="n">vertices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">])</span>
     <span class="c1"># get edges</span>
     <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">])</span>
@@ -830,92 +1091,87 @@
     <span class="c1"># replace the corresponding indices</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">edge_pairs</span><span class="p">:</span>
         <span class="n">new</span> <span class="o">=</span> <span class="n">coordinates</span><span class="p">[</span><span class="n">coordinates</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span>
-        <span class="n">new</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">points_along_edge</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+        <span class="n">new</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">points_along_edge</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
         <span class="n">coordinates</span><span class="p">[</span><span class="n">coordinates</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new</span>
 
     <span class="k">return</span> <span class="n">coordinates</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">coordinates</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
 </pre></div>
 
-            </article>
-            
-            
-            
-            <footer class="bd-footer-article">
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-</div>
-            </footer>
-            
-          </div>
-          
-          
-          
-            <div class="bd-sidebar-secondary bd-toc">
+                </article>
               
-<div class="toc-item">
-  
-<div id="searchbox"></div>
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
 </div>
-
-<div class="toc-item">
-  
-</div>
-
-<div class="toc-item">
-  
-</div>
-
+                </footer>
+              
             </div>
-          
-          
-        </div>
-        <footer class="bd-footer-content">
-          <div class="bd-footer-content__inner">
+            
+            
+              
             
           </div>
-        </footer>
+          <footer class="bd-footer-content">
+            
+          </footer>
         
       </main>
     </div>
   </div>
-
   
-    
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
-<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
-  <footer class="bd-footer"><div class="bd-footer__inner container">
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
   
-  <div class="footer-item">
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
     
-<p class="copyright">
-
-    &copy; Copyright 2023, Kevin Sawade, Tobias Lemke.<br>
-
-</p>
-
-  </div>
-  
-  <div class="footer-item">
-    <p class="theme-version">
-    Built with the
-    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
-        PyData Sphinx Theme
-    </a>
-    0.12.0.
-</p>
-  </div>
-  
-  <div class="footer-item">
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
     
-<p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
-</p>
+  </p>
+</div>
+      
+        <div class="footer-item">
 
-  </div>
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T21:24:25.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
   
 </div>
+
   </footer>
   </body>
 </html>

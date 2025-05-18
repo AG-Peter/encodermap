@@ -1,0 +1,934 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Contributing &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c1026b93" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'contributing/index';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EncoderMap tests" href="testing.html" />
+    <link rel="prev" title="encodermap.trajinfo package" href="../api/encodermap.trajinfo.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T22:43:00"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="testing.html">EncoderMap tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hosting_encodermap.html">Hosting EncoderMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">Scripts</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Contributing</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="contributing">
+<span id="contributing-index"></span><h1>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">#</a></h1>
+<p>When contributing to this repository, please first discuss the change you wish to make via issue,
+email, or any other method with the owners of this repository before making a change.</p>
+<p>Please note we have a code of conduct, please follow it in all your interactions with the project.</p>
+<section id="pull-request-process">
+<h2>Pull Request Process<a class="headerlink" href="#pull-request-process" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Ensure any install or build dependencies are removed before the end of the layer when doing a
+build.</p></li>
+<li><p>Update the README.md with details of changes to the interface, this includes new environment
+variables, exposed ports, useful file locations and container parameters.</p></li>
+<li><p>Increase the version numbers in any examples files and the README.md to the new version that this
+Pull Request would represent. The versioning scheme we use is <a class="reference external" href="http://semver.org/">SemVer</a>.</p></li>
+<li><p>You may merge the Pull Request in once you have the sign-off of two other developers, or if you
+do not have permission to do that, you may request the second reviewer to merge it for you.</p></li>
+</ol>
+</section>
+<section id="code-formatting">
+<h2>Code formatting<a class="headerlink" href="#code-formatting" title="Link to this heading">#</a></h2>
+<p>Use black and isort. Use google-style docstrings. Use vulture and pycodestyle.
+Use section headers for files. A <code class="docutils literal notranslate"><span class="pre">*.py</span></code> file in EncoderMap should look like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># encodermap/subpackage/filename.py</span>
+<span class="o">&lt;&lt;&lt;</span><span class="n">LEGAL</span> <span class="n">DISCLAIMER</span><span class="o">.</span> <span class="n">COPY</span> <span class="n">IT</span> <span class="n">FORM</span> <span class="n">OTHER</span> <span class="n">FILES</span>
+<span class="n">AND</span> <span class="n">ADD</span> <span class="n">YOURSELF</span> <span class="n">AS</span> <span class="n">AN</span> <span class="n">AUTHOR</span><span class="o">&gt;&gt;&gt;</span>
+<span class="sd">&quot;&quot;&quot;Summary of this modules functionality.</span>
+
+<span class="sd">This module-level docstring will appear as the topmost documentation</span>
+<span class="sd">of this module. It should introduce concepts and display how this</span>
+<span class="sd">module ties in with the EncoderMap package. It can also contain examples</span>
+
+<span class="sd">Example:</span>
+<span class="sd">    &gt;&gt;&gt; # This is example python code</span>
+<span class="sd">    &gt;&gt;&gt; # Examples like this will be picked up by EncoderMap&#39;s tests</span>
+<span class="sd">    &gt;&gt;&gt; # Lines that produce outputs should not start with the</span>
+<span class="sd">    &gt;&gt;&gt; # python prompt (&gt;&gt;&gt;), but contain the output. Doctests</span>
+<span class="sd">    &gt;&gt;&gt; # will automatically run on them. Let&#39;s create a sum function</span>
+<span class="sd">    &gt;&gt;&gt; # and test it</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; from __future__ import annotations</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; def my_sum(a: float, b: float) -&gt; float:</span>
+<span class="sd">    ...     return(a + b)</span>
+<span class="sd">    &gt;&gt;&gt; my_sum(1, 2)  # in-line comments have two spaces before the #-sign</span>
+<span class="sd">    3</span>
+<span class="sd">    &gt;&gt;&gt; # the line above is the output, that doctests checks.</span>
+
+<span class="sd">In the module-wide docstring variables, you can also use some reStructuredText</span>
+<span class="sd">markup, which is initialized with two colons::</span>
+
+<span class="sd">    This text will be in a monospace-styled font.</span>
+
+<span class="sd">And restructured text links are added like so:</span>
+
+<span class="sd">.. _Click Me:</span>
+<span class="sd">   https://github.com/AG-Peter/encodermap</span>
+
+<span class="sd">As a general rule, we use two spaces between elements. Elements are:</span>
+<span class="sd">    * Module-level docstrings</span>
+<span class="sd">    * import sections</span>
+<span class="sd">    * global variables</span>
+<span class="sd">    * headers</span>
+<span class="sd">    * functions</span>
+<span class="sd">    * classes</span>
+
+<span class="sd">Docstrings should always close with an empty line.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Import</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="c1"># Future Imports at the top</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+
+<span class="c1"># Standard Library Imports</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="c1"># Third Party Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="c1"># Local Folder Imports</span>
+<span class="kn">from</span> <span class="nn">..misc.misc</span> <span class="kn">import</span> <span class="n">_datetime_windows_and_linux_compatible</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Typing</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="c1"># Standard Library Imports</span>
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">encodermap._typing</span> <span class="kn">import</span> <span class="n">AnyParameters</span>
+    <span class="c1"># import more expensive libraries here</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Globals</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="n">GLOBAL_VARIABLE</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;maybe&quot;</span><span class="p">:</span> <span class="s2">&quot;some data&quot;</span><span class="p">}</span>
+<span class="sd">&quot;&quot;&quot;dict[str, str]: Module level variables are documented inline.</span>
+
+
+<span class="sd">The docstring may span multiple lines. The type may optionally be specified</span>
+<span class="sd">on the first line, separated by a colon.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="n">__all__</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;public_function&quot;</span><span class="p">,</span> <span class="s2">&quot;PublicClass&quot;</span><span class="p">]</span>
+<span class="sd">&quot;&quot;&quot;list[str]: The names, imported when * is imported.&quot;&quot;&quot;</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Utils</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="k">def</span> <span class="nf">_private_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A private function. Use type hints and google-style docstrings.</span>
+
+<span class="sd">    Since PEP 484, we don&#39;t need to specify the types of the arguments</span>
+<span class="sd">    in the &#39;Args&#39; section.</span>
+
+<span class="sd">    .. _PEP 484:</span>
+<span class="sd">       https://www.python.org/dev/peps/pep-0484/</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        *args: Any number of arguments can be float or str type.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True, when the number of args is even, False otherwise.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+       <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Argument </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">a</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+       <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Public</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="k">def</span> <span class="nf">public_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A concise summary: This function returns the sum of *args.</span>
+
+<span class="sd">    Public functions need to be well documented to make them usable.</span>
+<span class="sd">    Maybe with some explanation and examples. This function adds</span>
+<span class="sd">    all positional arguments. Because there are more number types than</span>
+<span class="sd">    just int and float in python, this function is annotated with</span>
+<span class="sd">    the `Numbers` abstract base class from the built-in numbers module.</span>
+
+<span class="sd">    Python&#39;s Number Types:</span>
+<span class="sd">        * int: Signed 64-bit integers. Unlimited precision.</span>
+<span class="sd">        * float: 64-bit floating point number analogous to C&#39;s double.</span>
+<span class="sd">        * complex: Two floats representing a complex.imag and complex.real</span>
+<span class="sd">        * fractions.Fraction: Special type to deal with rational numbers.</span>
+<span class="sd">            Can be a great tool to overcome the shortcomings of</span>
+<span class="sd">            floating-point arithmetic as they have infinite precision.</span>
+<span class="sd">        * decimal.Decimal: Similar to fractions. If you&#39;re working with</span>
+<span class="sd">            financial data, use Decimal.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; public_function(1, 2)</span>
+<span class="sd">        3</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        *args (Number): Variable number of numbers.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Number: The sum of *args.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">PublicClass</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A concise docstring explaining this class.</span>
+
+<span class="sd">    Below you can give more info about the class. Maybe list</span>
+<span class="sd">    parent classes or important attributes:</span>
+
+<span class="sd">    Attrs:</span>
+<span class="sd">        name (str): The name of this class. Default is &#39;PublicClass&#39;</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; c = PublicClass()</span>
+<span class="sd">        &gt;&gt;&gt; c.name</span>
+<span class="sd">        PublicClass</span>
+<span class="sd">        &gt;&gt;&gt; c = PublicClass(name=&quot;MyClass&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; c.name</span>
+<span class="sd">        MyClass</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate the class.</span>
+
+<span class="sd">        The class constructor should be documented in the class&#39;</span>
+<span class="sd">        __init__ function (https://peps.python.org/pep-0257/).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (Optional[str]): A str representing the name of</span>
+<span class="sd">                this class. If None is provided, the default is</span>
+<span class="sd">                &#39;PublicClass&#39;.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+           <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;PublicClass&quot;</span>
+
+</pre></div>
+</div>
+</section>
+<section id="jupyter-notebooks">
+<h2>Jupyter Notebooks<a class="headerlink" href="#jupyter-notebooks" title="Link to this heading">#</a></h2>
+<p>Jupyter Notebooks are a great tool to help users with their first steps with EncoderMap. Notebooks are also included in the documentation using the <code class="docutils literal notranslate"><span class="pre">nbsphinx</span></code> tool. Writing EncoderMap notebooks should follow these design rules:</p>
+<ul>
+<li><p>One H1 heading. All notebooks should only have a single H1 heading at the start. That way they better integrate into the sphinx documentation.</p></li>
+<li><p>Include a primer. About what will be taught in this notebook. This can be aided with a clickable toc, which can be implemented as such:</p>
+<ul>
+<li><p>Add these html at the start of the cell to be linked. Exactly like in this example. Replace spaces with hyphens. Make sure to use the same name in the id as in the section name (that way, the TOC becomes clickable in Sphinx docs).</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">&#39;section-name-with-hyphens&#39;</span><span class="p">&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+
+## Section Name with-hyphens
+</pre></div>
+</div>
+</li>
+<li><p>Add a link with <code class="docutils literal notranslate"><span class="pre">[This</span> <span class="pre">is</span> <span class="pre">the</span> <span class="pre">section</span> <span class="pre">summary](#section-name-with-hyphens')</span></code> in any markdown cell.</p></li>
+</ul>
+</li>
+<li><p>Include a link to the notebook on Google Colab:</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="gh"># Getting started: Basic Cube</span>
+
+<span class="gs">**Welcome**</span>
+
+Welcome to your first EncoderMap tutorial. All EncoderMap tutorials are provided as jupyter notebooks, that you can run locally, on binderhub, or even on google colab.
+
+Run this notebook on Google Colab:
+
+[<span class="nt">![Open in Colab</span>](<span class="na">https://colab.research.google.com/assets/colab-badge.svg</span>)](https://colab.research.google.com/github/AG-Peter/encodermap/blob/main/tutorials/notebooks_starter/01_Basic_Usage-Cube_Example.ipynb)
+
+Find the documentation of EncoderMap:
+
+https://ag-peter.github.io/encodermap
+
+<span class="gs">**Goals:**</span>
+
+In this tutorial you will learn:
+<span class="k">-</span><span class="w"> </span>[<span class="nt">How to set training parameters for EncoderMap.</span>](<span class="na">#select_parameters</span>)
+<span class="k">-</span><span class="w"> </span>[<span class="nt">How to train EncoderMap.</span>](<span class="na">#train_encodermap</span>)
+<span class="k">-</span><span class="w"> </span>[<span class="nt">How to use the decoder part of the network to create high-dimensional data.</span>](<span class="na">#generate_highd_data</span>)
+</pre></div>
+</div>
+</li>
+<li><p>Tag cells accordingly:</p>
+<ul>
+<li><p>Skip execution but show in doc:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;emap&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;skip&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Execute but hide in doc:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;emap&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hide&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Runs the cell, but clears the output afterward. Can be useful, when tqdm is broken again and prints all progress in separate lines.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;emap&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;clear_output&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Allow Error makes a cell run and ignore errors.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;emap&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;allow_error&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+<p>When hiding a cell, make sure to include some info, so that users are not surprised when the raw ipynb file contains more cells.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is a hidden cell to allow sphinx to render this notebook faster,</span>
+<span class="c1"># by loading pre-trained models.</span>
+<span class="c1"># These cells often follow `emap.train()` cells, which are often skipped</span>
+<span class="c1"># when building documentation</span>
+<span class="c1"># You, the user can choose to either run the train cell or this hidden cell,</span>
+<span class="c1"># the output of the notebook should not be affected by this.</span>
+<span class="n">lowd_data</span><span class="p">,</span> <span class="n">e_map</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="s2">&quot;cube&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="type-hints-mypy-and-beartype">
+<h2>Type hints, MyPy and Beartype<a class="headerlink" href="#type-hints-mypy-and-beartype" title="Link to this heading">#</a></h2>
+<p>EncoderMap tries to implement type hints where possible to make the code more reliable by using the static-type checker MyPy. Although python is a dynamically typed language declaring types can be beneficial for code robustness and documentation reasons.</p>
+</section>
+<section id="tests">
+<h2>Tests<a class="headerlink" href="#tests" title="Link to this heading">#</a></h2>
+<p>Find the documentation about tests in the [Test README](<code class="docutils literal notranslate"><span class="pre">EncoderMap</span> <span class="pre">tests</span></code>_).</p>
+</section>
+<section id="building-the-documentation-and-sphinx">
+<h2>Building the documentation and Sphinx<a class="headerlink" href="#building-the-documentation-and-sphinx" title="Link to this heading">#</a></h2>
+<p>The documentation is built using sphinx. Find more</p>
+</section>
+<section id="vulture-flake8-isoprt-and-black">
+<h2>Vulture, flake8, isoprt and black<a class="headerlink" href="#vulture-flake8-isoprt-and-black" title="Link to this heading">#</a></h2>
+<section id="linting">
+<h3>Linting<a class="headerlink" href="#linting" title="Link to this heading">#</a></h3>
+<p>Linting can help identify potential errors and so, EncoderMap is set up to use flake8 as its go-to linter. However, the maintainer of flake8 does not allow it to be configured via a <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>. To save us from adding more .cfg files to EncoderMap, we use pyproject-flake8, which after installed, can be run from EncoderMap’s main directory with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pflake8<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+<section id="vulture">
+<h3>Vulture<a class="headerlink" href="#vulture" title="Link to this heading">#</a></h3>
+<p>Vulture can be used to find unused code. Use it by calling</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vulture<span class="w"> </span>.
+</pre></div>
+</div>
+<p>in EncoderMap’s home main directory.</p>
+</section>
+<section id="isort">
+<h3>Isort<a class="headerlink" href="#isort" title="Link to this heading">#</a></h3>
+<p>Isort automatically sorts imports. It is a great tool to make your code look better.
+Use it with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>isort<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+<section id="black">
+<h3>Black<a class="headerlink" href="#black" title="Link to this heading">#</a></h3>
+<p>Black is a code-formatter, that automatically formats your code. Use it with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>black<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+</section>
+<section id="automate-using-pre-commit-hooks">
+<h2>Automate using pre-commit-hooks<a class="headerlink" href="#automate-using-pre-commit-hooks" title="Link to this heading">#</a></h2>
+<p>The file <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code> contains some automated pre-commit hooks, that can help you with linting and formatting. Install <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pre-commit
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Set up the pre-commit hooks with</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pre-commit<span class="w"> </span>install
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Run the hooks without commit</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pre-commit<span class="w"> </span>run<span class="w"> </span>--all-files
+</pre></div>
+</div>
+<p>These hooks will also run, when you try to <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span></code> your changes. Some hooks might also prevent a commit.</p>
+<p>Current hooks are:</p>
+<ul class="simple">
+<li><p>trailing-whitespace: Trims trailing whitespace from files</p></li>
+<li><p>check-added-large-files: Prevents commit of large files</p></li>
+<li><p>end-of-file-fixer: Fixes files to UNIX style newlines (\n).</p></li>
+<li><p>check-yaml: Can fix broken yaml files.</p></li>
+<li><p>check-private-key: Although EncoderMap does not do networking, this hook prevents you from publishing your keys.</p></li>
+<li><p>isort: Sorts the import statements in .py files.</p></li>
+<li><p>black: Runs black using the configurations in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code></p></li>
+<li><p>vulture: Runs vulture using the configurations in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>.</p></li>
+<li><p>run-pycodestyle: Runs pycodestyle (formerly PEP8).</p></li>
+<li><p>clear-ipynb-cells. Clears the cells of ipynbs.</p></li>
+</ul>
+</section>
+<section id="nektos-act">
+<h2>NektOS act<a class="headerlink" href="#nektos-act" title="Link to this heading">#</a></h2>
+</section>
+<section id="adding-yourself-as-an-author">
+<h2>Adding yourself as an author<a class="headerlink" href="#adding-yourself-as-an-author" title="Link to this heading">#</a></h2>
+</section>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../api/encodermap.trajinfo.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">encodermap.trajinfo package</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="testing.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">EncoderMap tests</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pull-request-process">Pull Request Process</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-formatting">Code formatting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyter-notebooks">Jupyter Notebooks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#type-hints-mypy-and-beartype">Type hints, MyPy and Beartype</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tests">Tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-documentation-and-sphinx">Building the documentation and Sphinx</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vulture-flake8-isoprt-and-black">Vulture, flake8, isoprt and black</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linting">Linting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vulture">Vulture</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#isort">Isort</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#black">Black</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automate-using-pre-commit-hooks">Automate using pre-commit-hooks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nektos-act">NektOS act</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-yourself-as-an-author">Adding yourself as an author</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/contributing/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T22:43:00.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

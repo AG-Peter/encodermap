@@ -1,0 +1,1511 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>encodermap.misc package &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c1026b93" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/encodermap.misc';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="encodermap.models package" href="encodermap.models.html" />
+    <link rel="prev" title="encodermap.loss_functions package" href="encodermap.loss_functions.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T22:43:00"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="encodermap.autoencoder.html">encodermap.autoencoder package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.callbacks.html">encodermap.callbacks package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.encodermap_tf1.html">encodermap.encodermap_tf1 package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.loading.html">encodermap.loading package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.loss_functions.html">encodermap.loss_functions package</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">encodermap.misc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.models.html">encodermap.models package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.moldata.html">encodermap.moldata package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.parameters.html">encodermap.parameters package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.plot.html">encodermap.plot package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encodermap.trajinfo.html">encodermap.trajinfo package</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">API</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">encodermap.misc package</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="encodermap-misc-package">
+<h1>encodermap.misc package<a class="headerlink" href="#encodermap-misc-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-encodermap.misc.backmapping">
+<span id="encodermap-misc-backmapping-module"></span><h2>encodermap.misc.backmapping module<a class="headerlink" href="#module-encodermap.misc.backmapping" title="Link to this heading">#</a></h2>
+<p>Backmapping functions to create new atomistic conformations from intrinsic
+coordinates.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.backmapping.backbone_hydrogen_oxygen_crossproduct">
+<span class="sig-name descname"><span class="pre">backbone_hydrogen_oxygen_crossproduct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backbone_positions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/backmapping.html#backbone_hydrogen_oxygen_crossproduct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.backmapping.backbone_hydrogen_oxygen_crossproduct" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.backmapping.mdtraj_backmapping">
+<span class="sig-name descname"><span class="pre">mdtraj_backmapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Topology</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dihedrals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sidechain_dihedrals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trajs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><span class="pre">TrajEnsemble</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../user_guide/singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><span class="pre">SingleTraj</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_component_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify_every_rotation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'degree'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'radian'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omega</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">guess_amid_atoms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">False</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">progbar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Trajectory</span></span></span><a class="reference internal" href="../_modules/encodermap/misc/backmapping.html#mdtraj_backmapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.backmapping.mdtraj_backmapping" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">mdtraj_backmapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Topology</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dihedrals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sidechain_dihedrals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trajs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><span class="pre">TrajEnsemble</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../user_guide/singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><span class="pre">SingleTraj</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_component_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify_every_rotation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'degree'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'radian'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omega</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">guess_amid_atoms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">True</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">progbar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Trajectory</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></dt>
+<dd><p>Uses MDTraj and Christoph Gohlke’s transformations.py to rotate the
+bonds in the provided topology.</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>Make this faster. Maybe write a C or FORTRAN implementation.</p></li>
+</ul>
+</div>
+<dl class="simple">
+<dt>General procedure:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Decide on which topology to use (if different topologies are in the</dt><dd><p><cite>TrajEnsemble</cite> class, the <cite>dihedrals</cite> and <cite>sidechain_dihedrals</cite> arrays
+need to be altered so that the correct dihedrals are used.
+Because EncoderMap is trained on a full input <cite>dihedrals</cite> and
+<cite>sidechain_dihedrals</cite> contain the dihedrals for the topology
+in <cite>TrajEnsemble</cite> with most of such angles. Some SingleTraj
+classes in TrajEnsemble might not contain all these angles if, for
+example, an amino acid has been modified the mutant contains more
+sidechain dihedrals than the wt. So the correct sidechain dihedrals
+for the wildtype need to be selected.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Get the indices of the far sides of the rotations. The graph is</dt><dd><p>gradually broken apart and the longer sub-graphs are kept.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Extend the trajectory. The lengths of dihedrals and sidechain_dihedrals</dt><dd><p>should match. The frame given by top will be duplicated
+len(dihedrals)-times.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Get the current angles. We know what the final angles should be,</dt><dd><p>but now how far to rotate the bonds. This can be done by getting
+the difference between current and target angle.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Rotate the bonds. Using Christoph Gohlke’s transformations.py,</dt><dd><p>the rotation matrix is constructed and the array is padded
+with zeros to resemble an array of quaternions.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>top</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The topology file to use.</p></li>
+<li><p><strong>dihedrals</strong> (<em>Optional</em><em>[</em><em>np.ndarray</em><em>]</em>) – The dihedrals to put onto the trajectory.
+<cite>len(dihedrals)</cite> is number of frames of output trajectory.
+<cite>dihedrals.shape[1]</cite> needs to be the same as the number of dihedrals
+in the topology. Can be None, in which case dihedrals and
+sidechain dihedrals will be faked.</p></li>
+<li><p><strong>sidechain_dihedrals</strong> (<em>Optional</em><em>[</em><em>np.ndarray</em><em>]</em>) – The sidechain dihedrals to put onto the trajectory.
+If None is provided, the sidechains are kept like they were in
+the topology. Defaults to None.</p></li>
+<li><p><strong>trajs</strong> (<em>Optional</em><em>[</em><em>em.TrajEnsemble</em><em>, </em><em>em.SingleTraj</em><em>]</em>) – Encodermap TrajEnsemble
+class. It Can accelerate the loading of current dihedral angles.
+Checks if provided topology is part of trajs. Defaults to None.</p></li>
+<li><p><strong>verify_every_rotation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the rotation succeeded.</p></li>
+<li><p><strong>angle_type</strong> (<em>Literal</em><em>[</em><em>&quot;degree&quot;</em><em>, </em><em>&quot;radians&quot;</em><em>]</em>) – Whether input is in degrees. Input will be
+converted to radians. Defaults to False.</p></li>
+<li><p><strong>omega</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether your input backbone dihedrals contain the omega angle.</p></li>
+<li><p><strong>return_indices</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – <p>Whether to not only return the back-mapped
+trajectory, but also a dict of labels. This dict contains the keys:</p>
+<blockquote>
+<div><ul>
+<li><p>’dihedrals_labels’</p></li>
+<li><p>’generic_dihedrals_labels’</p></li>
+<li><p>’side_dihedrals_labels’</p></li>
+<li><p>’generic_side_dihedrals_labels’</p></li>
+</ul>
+</div></blockquote>
+<p>Which matches the indices of the returned dihedrals with the input
+MD structures in <cite>top</cite> and/or <cite>trajs</cite>. This can be useful to make
+sure that input dihedrals match output dihedrals. Why? Because there
+are some proline dihedrals that cannot be adjusted. They are filtered
+out before doing backmapping, and the indices give the names of all
+dihedrals that were adjusted. See the Example below.</p>
+</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">em</span><span class="o">.</span><span class="n">get_from_kondata</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="s2">&quot;OTU11&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">mk_parentdir</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">silence_overwrite_message</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">),</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># assign how many backbone angles we need</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;OTU11_wt_only_prot.pdb&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span><span class="o">.</span><span class="n">load_CV</span><span class="p">(</span><span class="s2">&quot;central_dihedrals&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_angles</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">central_dihedrals</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_angles</span>
+<span class="go">732</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create some fake dihedrals with a uniform distribution between -pi and pi</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dihedrals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_angles</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">backmapping</span><span class="o">.</span><span class="n">mdtraj_backmapping</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">top</span><span class="o">=</span><span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;OTU11_wt_only_prot.pdb&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">dihedrals</span><span class="o">=</span><span class="n">dihedrals</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">remove_component_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">return_indices</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">SingleTraj</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span><span class="o">.</span><span class="n">load_CV</span><span class="p">(</span><span class="s2">&quot;central_dihedrals&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Here you will see, what indicies were automatically dropped during backmapping</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># They will be proline phi angles, as these angles can not be</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># freely rotated</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">all_coords</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">_CVs</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;CENTRAL_DIHEDRALS&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">indexed_coords</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">index</span><span class="p">[</span><span class="s1">&#39;dihedrals_labels&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">all_coords</span> <span class="o">-</span> <span class="n">indexed_coords</span><span class="p">)</span>
+<span class="go">{&#39;CENTERDIH PHI   RESID  PRO:   8 CHAIN 0&#39;,</span>
+<span class="go"> &#39;CENTERDIH PHI   RESID  PRO:  70 CHAIN 0&#39;,</span>
+<span class="go"> &#39;CENTERDIH PHI   RESID  PRO:  73 CHAIN 0&#39;,</span>
+<span class="go"> &#39;CENTERDIH PHI   RESID  PRO:  80 CHAIN 0&#39;,</span>
+<span class="go"> &#39;CENTERDIH PHI   RESID  PRO: 151 CHAIN 0&#39;,</span>
+<span class="go"> &#39;CENTERDIH PHI   RESID  PRO: 200 CHAIN 0&#39;,</span>
+<span class="go"> &#39;CENTERDIH PHI   RESID  PRO: 205 CHAIN 0&#39;,</span>
+<span class="go"> &#39;CENTERDIH PHI   RESID  PRO: 231 CHAIN 0&#39;,</span>
+<span class="go"> &#39;CENTERDIH PHI   RESID  PRO: 234 CHAIN 0&#39;,</span>
+<span class="go"> &#39;CENTERDIH PHI   RESID  PRO: 238 CHAIN 0&#39;}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If the input seems like it is in degrees.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If top is not part of the TrajEnsemble class provided in argument <cite>trajs</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An MDTraj trajectory with the correct dihedrals/side-dihedrals.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mdtraj.Trajectory</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.misc.clustering">
+<span id="encodermap-misc-clustering-module"></span><h2>encodermap.misc.clustering module<a class="headerlink" href="#module-encodermap.misc.clustering" title="Link to this heading">#</a></h2>
+<p>Functions for building clusters.</p>
+</section>
+<section id="module-encodermap.misc.distances">
+<span id="encodermap-misc-distances-module"></span><h2>encodermap.misc.distances module<a class="headerlink" href="#module-encodermap.misc.distances" title="Link to this heading">#</a></h2>
+<p>EncoderMap’s implements different distance computations.</p>
+<ul class="simple">
+<li><p>Normal: Euclidean distance between two points.</p></li>
+<li><p>Periodic: Euclidean distance between two points lying in a periodic space.</p></li>
+<li><p>Pairwise: Euclidean distance between sets of points. Either with or without periodicity.</p></li>
+</ul>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.distances.pairwise_dist">
+<span class="sig-name descname"><span class="pre">pairwise_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">squared</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/distances.html#pairwise_dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.distances.pairwise_dist" title="Link to this definition">#</a></dt>
+<dd><p>Tensorflow implementation of <cite>scipy.spatial.distances.cdist</cite>.</p>
+<p>Returns a tensor with shape (positions.shape[1], positions.shape[1]).
+This tensor is the distance matrix of the provided positions. The
+matrix is hollow, i.e., the diagonal elements are zero.</p>
+<p>Thanks to <a class="reference external" href="https://omoindrot.github.io/triplet-loss">https://omoindrot.github.io/triplet-loss</a>
+for this implementation. Find an archived link here:
+<a class="reference external" href="https://archive.is/lNT2L">https://archive.is/lNT2L</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>positions</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>tf.Tensor</em><em>]</em>) – Collection of
+n-dimensional points. <cite>positions[0]</cite> are points.
+<cite>positions[1]</cite> are dimensions.</p></li>
+<li><p><strong>squared</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to return the pairwise squared
+Euclidean distance matrix or normal Euclidean distance matrix.
+Defaults to False.</p></li>
+<li><p><strong>flat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to return only the lower triangle of
+the hollow matrix. Setting this to true mimics the behavior
+of <cite>scipy.spatial.distance.pdist</cite>. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The distances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.distances.pairwise_dist_periodic">
+<span class="sig-name descname"><span class="pre">pairwise_dist_periodic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/distances.html#pairwise_dist_periodic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.distances.pairwise_dist_periodic" title="Link to this definition">#</a></dt>
+<dd><p>Pairwise distances using periodicity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>positions</strong> (<em>tf.Tensor</em>) – The positions of the points.
+Currently only 2D arrays with positions.shape[0] == n_points
+and positions.shape[1] == 1 (rotational values) is supported.</p></li>
+<li><p><strong>periodicity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The periodicity of the data. Most often
+you will use either 2*pi or 360.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The dists.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.distances.periodic_distance">
+<span class="sig-name descname"><span class="pre">periodic_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6.283185307179586</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/distances.html#periodic_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.distances.periodic_distance" title="Link to this definition">#</a></dt>
+<dd><p>Calculates distance between two points and respects periodicity.</p>
+<p>If the provided dataset is periodic (i.e. angles and torsion angles), the returned
+distance is corrected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>tf.Tensor</em>) – Coordinate of point a.</p></li>
+<li><p><strong>b</strong> (<em>tf.Tensor</em>) – Coordinate of point b.</p></li>
+<li><p><strong>periodicity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The periodicity (i.e. the box length/ maximum angle)
+of your data. Defaults to 2*pi. Provide float(‘inf’) for no periodicity.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The distances accounting for periodicity.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.Tensor</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">]]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">3.1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">3.1</span><span class="p">]]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">periodic_distance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+<span class="go">[[1.68318531]</span>
+<span class="go"> [1.68318531]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.distances.periodic_distance_np">
+<span class="sig-name descname"><span class="pre">periodic_distance_np</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6.283185307179586</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/distances.html#periodic_distance_np"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.distances.periodic_distance_np" title="Link to this definition">#</a></dt>
+<dd><p>Calculates distance between two points and respects periodicity.</p>
+<p>If the provided dataset is periodic (i.e. angles and torsion angles), the returned
+distance is corrected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>np.ndarray</em>) – Coordinate of point a.</p></li>
+<li><p><strong>b</strong> (<em>np.ndarray</em>) – Coordinate of point b.</p></li>
+<li><p><strong>periodicity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The periodicity (i.e. the box length/ maximum angle)
+of your data. Defaults to 2*pi. Provide float(‘inf’) for no periodicity.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The distances accounting for periodicity.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.distances.sigmoid">
+<span class="sig-name descname"><span class="pre">sigmoid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/distances.html#sigmoid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.distances.sigmoid" title="Link to this definition">#</a></dt>
+<dd><p>Returns a sigmoid function with specified parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sig</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Sigma.</p></li>
+<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
+<li><p><strong>b</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – <ol class="loweralpha simple" start="2">
+<li></li>
+</ol>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A function that can be used to calculate the sigmoid with the</dt><dd><p>specified parameters.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.misc.function_def">
+<span id="encodermap-misc-function-def-module"></span><h2>encodermap.misc.function_def module<a class="headerlink" href="#module-encodermap.misc.function_def" title="Link to this heading">#</a></h2>
+<p>Wraps tensorflow’s <cite>tf.function</cite> again to accept a debug=True or debug=False argument.</p>
+<p>With debug=True, the function will not be compiled. With debug=False (which is
+teh default), it will be compiled.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.function_def.function">
+<span class="sig-name descname"><span class="pre">function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/function_def.html#function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.function_def.function" title="Link to this definition">#</a></dt>
+<dd><p>Encodermap’s implementation of <cite>tf.function</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>debug</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, the decorated function will not be compiled.
+Defaults to False.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.misc.misc">
+<span id="encodermap-misc-misc-module"></span><h2>encodermap.misc.misc module<a class="headerlink" href="#module-encodermap.misc.misc" title="Link to this heading">#</a></h2>
+<p>Miscellaneous functions.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.misc.create_n_cube">
+<span class="sig-name descname"><span class="pre">create_n_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points_along_edge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">same_colored_edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/misc.html#create_n_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.misc.create_n_cube" title="Link to this definition">#</a></dt>
+<dd><p>Creates points along the edges of an n-dimensional unit hyper-cube.</p>
+<p>The cube is created using <cite>networkx.hypercube_graph</cite> and points are placed along
+the edges of the cube. By providing a <cite>sigma</cite> value, the points can be shifted
+by some Gaussian noise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The dimension of the Hypercube (can also take 1 or 2).
+Defaults to 3.</p></li>
+<li><p><strong>points_along_edge</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – How many points should be placed along any edge.
+By increasing the number of dimensions, the number of edges
+increases, which also increases the total number of points. Defaults to 500.</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The sigma value for np.random.normal which
+introduces Gaussian noise to the positions of the points. Defaults to 0.05.</p></li>
+<li><p><strong>same_color_edges</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – How many edges of the Hypercube should
+be colored with the same color. This can be used to later
+better visualize the edges of the cube. Defaults to 3.</p></li>
+<li><p><strong>seed</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – If an int is provided, this will be used as a seed
+for <cite>np.random</cite> and fix the random state. Defaults to None which produces
+random results every time this function is called.</p></li>
+<li><p><strong>same_colored_edges</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tuple containing the following:</dt><dd><ul class="simple">
+<li><p>np.ndarray: The coordinates of the points.</p></li>
+<li><p>np.ndarray: Integers that can be used for coloration.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">encodermap.misc.misc</span> <span class="kn">import</span> <span class="n">create_n_cube</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># A sigma value of zero means no noise at all.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coords</span><span class="p">,</span> <span class="n">colors</span> <span class="o">=</span> <span class="n">create_n_cube</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">array([0., 0.])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.misc.get_full_common_str_and_ref">
+<span class="sig-name descname"><span class="pre">get_full_common_str_and_ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tops</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">common_str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/misc.html#get_full_common_str_and_ref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.misc.get_full_common_str_and_ref" title="Link to this definition">#</a></dt>
+<dd><p>Matches traj_files, top_files and common string and returns lists with the
+same length matching the provided common str.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – A list of str pointing to trajectory files.</p></li>
+<li><p><strong>tops</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – A list of str pointing to topology files.</p></li>
+<li><p><strong>common_str</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – A list of strings that can be found in
+both trajs and tops (i.e. substrings).</p></li>
+<li><p><strong>tuple</strong> – A tuple containing the following:
+- list[str]: A list of str with the traj file names.
+- list[str]: A list of str with the top file names.
+- list[str]: A list of str with the common_str’s.
+All lists have the same length.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>], <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>], <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.misc.plot_model">
+<span class="sig-name descname"><span class="pre">plot_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/misc.html#plot_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.misc.plot_model" title="Link to this definition">#</a></dt>
+<dd><p>Plots keras model using tf.keras.utils.plot_model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>tf.keras.Model</em>)</p></li>
+<li><p><strong>input_dim</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>]</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Optional[Image]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.misc.run_path">
+<span class="sig-name descname"><span class="pre">run_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/misc.html#run_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.misc.run_path" title="Link to this definition">#</a></dt>
+<dd><p>Creates a directory at “path/run{i}” where the i is corresponding to the
+smallest not yet existing path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Path to the run folder.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The new output path.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+<dl>
+<dt>Exampples:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">sort_key</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">inp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">td</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="c1"># create some directories</span>
+<span class="gp">... </span>    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">td</span><span class="p">,</span> <span class="s2">&quot;run0&quot;</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">td</span><span class="p">,</span> <span class="s2">&quot;run1&quot;</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="c1"># em.misc.run_path will automatically advance the counter to &#39;run2&#39;</span>
+<span class="gp">... </span>    <span class="n">new_path</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">run_path</span><span class="p">(</span><span class="n">td</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">new_path</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">td</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="n">sort_key</span><span class="p">))</span>  
+<span class="go">/tmp/.../run2</span>
+<span class="go">[&#39;run0&#39;, &#39;run1&#39;, &#39;run2&#39;]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.misc.rotate">
+<span id="encodermap-misc-rotate-module"></span><h2>encodermap.misc.rotate module<a class="headerlink" href="#module-encodermap.misc.rotate" title="Link to this heading">#</a></h2>
+<p>Helpers to apply rotations to molecular coordinates.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.rotate.mdtraj_rotate">
+<span class="sig-name descname"><span class="pre">mdtraj_rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_cyclic_backbone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify_every_rotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_proline_angles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete_sulfide_bridges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/rotate.html#mdtraj_rotate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.rotate.mdtraj_rotate" title="Link to this definition">#</a></dt>
+<dd><p>Uses MDTraj and Christoph Gohlke’s transformations.py to set bond
+rotations provided traj.</p>
+<p>Input can be in radian (set <cite>deg</cite> to False) or degree (set <cite>deg</cite> to True).</p>
+<dl class="simple">
+<dt>General procedure:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>Carry out some checks. Shapes of input need to be correct. <cite>traj</cite></dt><dd><p>needs to have a single frame and not be of a cyclic protein nor
+contain multiple chains.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Get the indices of the near and far side of the rotations. Every</dt><dd><p>dihedral angle is indexed by 4 atoms. The rotational axis is located
+between the central two atoms (dihedral[1:3]).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Extend the trajectory. The lengths of dihedrals and sidechain_dihedrals</dt><dd><p>should match. The frame given by top will be duplicated
+len(dihedrals)-times.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Get the current angles. We know what the final angles should be, but</dt><dd><p>now how far to rotate the bonds. This can be done by getting the
+difference between current and target angle.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Rotate the bonds. Using Christoph Gohlke’s transformations.py,</dt><dd><p>the rotation matrix is constructed and the array is padded with
+zeros to resemble an array of quaternions.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>traj</strong> (<em>mdtraj.Trajectory</em>) – The trajectory to use. Needs to have only one frame.</p></li>
+<li><p><strong>angles</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>]</em><em>]</em><em>, </em><em>np.ndarray</em>) – The values the angles should
+assume after the rotations. This arg can either be a nested list
+with floats or (better) a numpy array with the shape angles.shape =
+(n_new_frames, n_indexed_dihedrals). Here, angles.shape[0] defines
+how many frames the output trajectory is going to have and angles.shape[1]
+should be similar to the number of dihedrals you want to rotate around.
+A shape of (4, 2) would indicate that two dihedrals are going to be
+used for rotation and the output trajectory is going to have 4 frames.</p></li>
+<li><p><strong>indices</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>]</em><em>, </em><em>np.ndarray</em>) – A list of ints indexing the
+dihedrals to be rotated around. Naturally indices.shape[1] needs
+to be 4. Additionally indices.shape[0] needs to be the same as
+angles.shape[1]. indices indexes the angles along axis 1 and angles
+sets the values of those angles along axis 0.</p></li>
+<li><p><strong>deg</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether argument <cite>angles</cite> is in deg.
+Defaults to False.</p></li>
+<li><p><strong>check_cyclic_backbone</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the backbone should be
+checked for being cyclic. Rotating around a backbone angle for a
+cyclic protein is not possible and thus an Exception is raised.
+However, rotation around sidechain dihedrals is still possible.
+If you are sure you want to rotate sidechain dihedrals set this
+argument to False to prevent the cyclic backbone check.
+Defaults to True.</p></li>
+<li><p><strong>verify_every_rotation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether the rotation succeeded.</p></li>
+<li><p><strong>drop_proline_angles</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to automatically drop proline
+angles and indices.</p></li>
+<li><p><strong>delete_sulfide_bridges</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to automatically remove bonds from
+between cysteine residues.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If the input seems like it is in degrees, but <cite>deg</cite> is False.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If <cite>traj</cite> contains more than 1 frame.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If traj is not fully connected.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If shapes of <cite>angles</cite> and <cite>indices</cite> mismatches.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If shape[1] of <cite>indices</cite> is not 4.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If backbone is cyclic and check_cyclic_backbone is True.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If the first rotation does not reach a tolerance of 1e-3.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An MDTraj trajectory with applied rotations.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>mdtraj.Trajectory</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mdtraj</span> <span class="k">as</span> <span class="nn">md</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># load an arbitrary protein from the pdb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">load_pdb</span><span class="p">(</span><span class="s1">&#39;https://files.rcsb.org/view/1GHC.pdb&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span><span class="p">)</span>
+<span class="go">14</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># traj has multiple frames so we remove all but one</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">traj</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get indices of psi_angles</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">psi_indices</span><span class="p">,</span> <span class="n">old_values</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">compute_psi</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># set every psi angle to be either 0 or 180 deg</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">psi_indices</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">180</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># create the new traj with the desired rotations</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out_traj</span> <span class="o">=</span> <span class="n">mdtraj_rotate</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">angles</span><span class="p">,</span> <span class="n">psi_indices</span><span class="p">,</span> <span class="n">deg</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">out_traj</span><span class="o">.</span><span class="n">n_frames</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># check values</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="p">,</span> <span class="n">new_values</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">compute_psi</span><span class="p">(</span><span class="n">out_traj</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="n">new_values</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">)))</span> <span class="c1"># prevent rounding inconsistencies</span>
+<span class="go">[0. 0.]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="n">new_values</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">)))</span> <span class="c1"># prevent rounding inconsistencies</span>
+<span class="go">[180. 180.]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.misc.saving_loading_models">
+<span id="encodermap-misc-saving-loading-models-module"></span><h2>encodermap.misc.saving_loading_models module<a class="headerlink" href="#module-encodermap.misc.saving_loading_models" title="Link to this heading">#</a></h2>
+<p>Implementation of saving and loading models.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.saving_loading_models.load_model">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">autoencoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'AutoencoderClass'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trajs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><span class="pre">TrajEnsemble</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sparse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DatasetV2</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">submodel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_previous_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">compat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AutoencoderClass</span></span></span><a class="reference internal" href="../_modules/encodermap/misc/saving_loading_models.html#load_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.saving_loading_models.load_model" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">autoencoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'AutoencoderClass'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trajs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><span class="pre">TrajEnsemble</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sparse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DatasetV2</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">submodel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'encoder'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'decoder'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_previous_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">compat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Model</span></span></span></dt>
+<dd><p>Reloads a model from a checkpoint path.</p>
+<p>An implementation of saving the .keras files procuded by EncoderMap.
+The old legacy .model files can still be loaded by this function. Or use
+the <cite>load_model_legacy</cite> function directly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>autoencoder</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>&quot;AutoencoderClass&quot;</em><em>]</em>) – Kept for
+legacy reasons. The old .model files had a list of “custom_objects”
+that was created by the autoencoder classes (<cite>AutoEncoder</cite>,
+<cite>EncoderMap</cite>. <cite>AngleDihedralCartesianEncoderMap</cite>) and needed to
+be supplied when reloading the models from disk. The new implementations
+use the <cite>from_config</cite> and <cite>get_config</cite> implementations of serializable
+keras objects and thus, the layers and cost functions can save their
+own state. Is only needed to load legacy models and can be None if a
+new .keras model is loaded.</p></li>
+<li><p><strong>checkpoint_path</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Path</em><em>]</em>) – Can be either the path to a .keras
+file or to a directory with multiple .keras files in which case, the
+most recent .keras file will be loaded.</p></li>
+<li><p><strong>trajs</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><em>TrajEnsemble</em></a><em>]</em>) – A <cite>TrajEnsemble</cite> class for when
+a <cite>AngleDihedralCartesianEncoderMap</cite> is reloaded.</p></li>
+<li><p><strong>sparse</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – This argument is also only needed to load legacy .model
+files. Defaults to False.</p></li>
+<li><p><strong>dataset</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>tf.data.Dataset</em><em>, </em><em>np.ndarray</em><em>]</em><em>]</em>) – A pass-through to
+the <cite>dataset</cite> argument of the autoencoder classes (<cite>AutoEncoder</cite>,
+<cite>EncoderMap</cite>. <cite>AngleDihedralCartesianEncoderMap</cite>) which all can take
+a tf.data.Dataset. Can be None, in which case, the data will be
+sourced differently (The <cite>EncoderMap</cite> class uses example data from
+a 4D hypercube, the <cite>AngleDihedralCartesianEncoderMap</cite> uses the
+data from the provided <cite>trajs</cite>.)</p></li>
+<li><p><strong>print_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to print some debug information. Defaults to False.</p></li>
+<li><p><strong>submodel</strong> (<em>Optional</em><em>[</em><em>Literal</em><em>[</em><em>&quot;encoder&quot;</em><em>, </em><em>&quot;decoder&quot;</em><em>]</em><em>]</em>) – Whether to only load
+a specific submodel. In order to use this argument, a file with
+the name <a href="#id2"><span class="problematic" id="id3">*</span></a>encoder.keras or <a href="#id4"><span class="problematic" id="id5">*</span></a>decoder.keras has to be in the
+in <cite>checkpoint_path</cite> specified directory.</p></li>
+<li><p><strong>use_previous_model</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to load a model from an intermediate
+checkpoint step.</p></li>
+<li><p><strong>compat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to fix a parameters.json file that has been saved
+with the legacy .model file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tf.keras.models.Model</dt><dd><p>when you specified submodel. And an appropriate “AutoencoderClass”
+otherwise.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[tf.keras.models.Model, “AutoencoderClass”]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.saving_loading_models.save_model">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">main_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inp_class_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/saving_loading_models.html#save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.saving_loading_models.save_model" title="Link to this definition">#</a></dt>
+<dd><p>Saves a model in the portable .keras format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>tf.keras.models.Model</em>) – The keras model to save. If the
+keras model has the attribute ‘encoder_model’ the encoder_model
+will be saved separately. The same with the attribute ‘decoder_model’.</p></li>
+<li><p><strong>main_path</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Path</em><em>]</em>) – Which directory to save the model to.
+If step is None, the nae will be saved_model_{time}.keras, where time
+is a current ISO-8601 formatted string.</p></li>
+<li><p><strong>step</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – Can be None, in which case the model will bve saved
+using the current time. Otherwise, the step argument will be used like
+so: saved_model_{step}.keras Defaults to None.</p></li>
+<li><p><strong>print_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to print a message after saving the model
+Defaults to False.</p></li>
+<li><p><strong>inp_class_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The path, where the model was saved.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.misc.summaries">
+<span id="encodermap-misc-summaries-module"></span><h2>encodermap.misc.summaries module<a class="headerlink" href="#module-encodermap.misc.summaries" title="Link to this heading">#</a></h2>
+<p>Functions that write stuff to tensorboard. Mainly used for the image callbacks.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.summaries.add_layer_summaries">
+<span class="sig-name descname"><span class="pre">add_layer_summaries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/summaries.html#add_layer_summaries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.summaries.add_layer_summaries" title="Link to this definition">#</a></dt>
+<dd><p>Adds summaries for a layer to Tensorboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layer</strong> (<em>tf.keras.layers.Layer</em>) – The layer.</p></li>
+<li><p><strong>step</strong> (<em>Union</em><em>[</em><em>tf.Tensor</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>None</em><em>]</em><em>, </em><em>optional</em>) – The current step.
+Can be either a Tensor or None. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.summaries.image_summary">
+<span class="sig-name descname"><span class="pre">image_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lowd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist_kws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_fns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'matplotlib'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/summaries.html#image_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.summaries.image_summary" title="Link to this definition">#</a></dt>
+<dd><p>Writes an image to Tensorboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lowd</strong> (<em>np.ndarray</em>) – The data to plot. Usually that
+will be the output of the latent space of the Autoencoder.
+This array has to be of dimensionality 2 (rows and columns).
+The first two points of the rows will be used as xy coordinates
+in a scatter plot.</p></li>
+<li><p><strong>step</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em>) – The training step under which you can find the
+image in tensorboard. Defaults to None.</p></li>
+<li><p><strong>scatter_kws</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Any</em><em>]</em><em>]</em>) – A dict with items that
+<cite>plotly.express.scatter()</cite> will accept. If None is provided,
+a dict with size 20 will be passed to
+<cite>px.scatter(**{‘size_max’: 10, ‘opacity’: 0.2})</cite>,
+which sets an appropriate size of scatter points for the size of
+datasets encodermap is usually used for.</p></li>
+<li><p><strong>hist_kws</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>Any</em><em>]</em><em>]</em>) – A dict with items that
+<cite>encodermap.plot.plotting._plot_free_energy()</cite> will accept. If None is provided a
+dict with bins 50 will be passed to
+<cite>encodermap.plot.plotting._plot_free_energy(**{‘bins’: 50})</cite>.
+You can choose a colormap here by providing <cite>{‘bins’: 50, ‘cmap’:
+‘plasma’}</cite> for this argument.</p></li>
+<li><p><strong>additional_fns</strong> (<em>Optional</em><em>[</em><em>Sequence</em><em>[</em><em>Callable</em><em>]</em><em>]</em>) – A sequence of functions that
+take the data of the latent space and return a tf.Tensor that can
+be logged to tensorboard with tf.summary.image().</p></li>
+<li><p><strong>(</strong><strong>Literal</strong><strong>[</strong><strong>&quot;matplotlib&quot;</strong> (<em>backend</em>) – Which backend to use for
+plotting. Defaults to ‘matplotlib’.</p></li>
+<li><p><strong>&quot;plotly&quot;</strong><strong>]</strong> – Which backend to use for
+plotting. Defaults to ‘matplotlib’.</p></li>
+<li><p><strong>backend</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'matplotlib'</em><em>, </em><em>'plotly'</em><em>]</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.13)"><strong>AssertionError</strong></a> – When lowd.ndim is not 2 and when len(lowd) != len(ids)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.misc.xarray">
+<span id="encodermap-misc-xarray-module"></span><h2>encodermap.misc.xarray module<a class="headerlink" href="#module-encodermap.misc.xarray" title="Link to this heading">#</a></h2>
+<p>EncoderMap’s xarray manipulation functions.</p>
+<p>EncoderMap uses xarray datasets to save CV data alongside with trajectory data.
+These functions implement creation of such xarray datasets.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.xarray.construct_xarray_from_numpy">
+<span class="sig-name descname"><span class="pre">construct_xarray_from_numpy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_n_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/xarray.html#construct_xarray_from_numpy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.xarray.construct_xarray_from_numpy" title="Link to this definition">#</a></dt>
+<dd><p>Constructs a <cite>xarray.DataArray</cite> from a numpy array.</p>
+<dl class="simple">
+<dt>Three cases are recognized:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>The input array in data has ndim == 2. This kind of feature/CV is a</dt><dd><p>per-frame feature, like the membership to clusters. Every frame of
+every trajectory is assigned a single value (most often int values).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>The input array in data has ndim == 3: This is also a per-frame</dt><dd><p>feature/CV, but this time every frame is characterized by a series
+of values. These values can be dihedral angles in the backbone
+starting from the protein’s N-terminus to the C-terminus, or
+pairwise distance features between certain atoms. The xarray
+datarray constructed from this kind of data will have a label
+dimension that will either contain generic labels like
+‘CUSTOM_FEATURE FEATURE 0’ or labels defined by the featurizer,
+such as ‘SIDECHAIN ANGLE CHI1 OF RESIDUE 1LYS’.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>The input array in data has ndim == 4. Here, the same feature/CV is</dt><dd><p>duplicated for the protein’s atoms. Besides the XYZ coordinates of
+the atoms, no other CVs should fall into this case. The labels will be
+2-dimensional with ‘POSITION OF ATOM H1 IN RESIDUE 1LYS’ in
+dimension 0 and either ‘X’, ‘Y’ or ‘Z’ in dimension 1.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>traj</strong> (<em>em.SingleTraj</em>) – The trajectory we want to create the
+<cite>xarray.DataArray</cite> for.</p></li>
+<li><p><strong>data</strong> (<em>np.ndarray</em>) – The numpy array we want to create the data from.
+Note that the data passed into this function should be expanded
+by <cite>np.expand_dim(a, axis=0)</cite>, so to add a new axis to the complete
+data containing the trajectories of a trajectory ensemble.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the feature. This can be chosen freely. Names
+like ‘central_angles’, ‘backbone_torsions’ would make the most sense.</p></li>
+<li><p><strong>deg</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether provided data is in deg or radians.</p></li>
+<li><p><strong>labels</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>]</em>) – If you have specific labels for your CVs in
+mind, you can overwrite the generic ‘CUSTOM_FEATURE FEATURE 0’
+labels by providing a list for this argument. If None is provided,
+generic names will be given to the features. Defaults to None.</p></li>
+<li><p><strong>check_n_frames</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to check whether the number of frames in
+the trajectory matches the len of the data in at least one
+dimension. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An <cite>xarray.DataArray</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html#xarray.DataArray" title="(in xarray v2025.4.1.dev0)">xarray.DataArray</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">encodermap.misc.xarray</span> <span class="kn">import</span> <span class="n">construct_xarray_from_numpy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># load file from RCSB and give it traj num to represent it in a</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># potential trajectory ensemble</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">traj</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;https://files.rcsb.org/view/1GHC.pdb&#39;</span><span class="p">,</span> <span class="n">traj_num</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># single trajectory needs to be expanded into &#39;trajectory&#39; axis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z_coordinate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">xyz</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">da</span> <span class="o">=</span> <span class="n">construct_xarray_from_numpy</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">z_coordinate</span><span class="p">,</span> <span class="s1">&#39;z_coordinate&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;Z_COORDINATE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+<span class="go">[&#39;Z_COORDINATE FEATURE 0&#39; &#39;Z_COORDINATE FEATURE 1&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;traj_num&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="go">[1]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;time_units&#39;</span><span class="p">])</span>
+<span class="go">ps</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.xarray.unpack_data_and_feature">
+<span class="sig-name descname"><span class="pre">unpack_data_and_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/xarray.html#unpack_data_and_feature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.xarray.unpack_data_and_feature" title="Link to this definition">#</a></dt>
+<dd><p>Makes a <cite>xarray.Dataset</cite> from data and a featurizer.</p>
+<p>Usually, if you add multiple features to a featurizer, they are
+stacked along the feature axis. Let’s say, you have a trajectory with 20 frames
+and 3 residues. If you add the Ramachandran angles, you get 6 features (3xphi, 3xpsi).
+If you then also add the end-to-end distance as a feature, the data returned by
+the featurizer will have the shape (20, 7). This function returns the correct indices,
+so that iteration of zip(Featurizer.active_features, indices) will yield the
+correct results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feat</strong> (<em>encodermap.loading.Featurizer</em>) – An instance of the currently used <cite>encodermap.loading.Featurizer</cite>.</p></li>
+<li><p><strong>traj</strong> (<em>encodermap.trajinfo.SingleTraj</em>) – An instance of <cite>encodermap.SingleTraj</cite>, that the data
+in <cite>input_data</cite> was computed from.</p></li>
+<li><p><strong>input_data</strong> (<em>np.ndarray</em>) – The data, as returned from PyEMMA.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An <cite>xarray.Dataset</cite> with all features in a nice format.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2025.4.1.dev0)">xarray.Dataset</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.misc.xarray_save_wrong_hdf5">
+<span id="encodermap-misc-xarray-save-wrong-hdf5-module"></span><h2>encodermap.misc.xarray_save_wrong_hdf5 module<a class="headerlink" href="#module-encodermap.misc.xarray_save_wrong_hdf5" title="Link to this heading">#</a></h2>
+<p>Allows the combined storing of CVs and trajectories in single HDF5/NetCDF4 files.</p>
+<p>These files represent collated and completed trajectory ensembles, which can be
+lazy-loaded (memory efficient) and used as training input for EncoderMap’s NNs.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="encodermap.misc.xarray_save_wrong_hdf5.save_netcdf_alongside_mdtraj">
+<span class="sig-name descname"><span class="pre">save_netcdf_alongside_mdtraj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/misc/xarray_save_wrong_hdf5.html#save_netcdf_alongside_mdtraj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.misc.xarray_save_wrong_hdf5.save_netcdf_alongside_mdtraj" title="Link to this definition">#</a></dt>
+<dd><p>Saves a netcdf dataset alongside an MDTraj trajectory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
+<li><p><strong>dataset</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2025.4.1.dev0)"><em>Dataset</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-encodermap.misc">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-encodermap.misc" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="encodermap.loss_functions.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">encodermap.loss_functions package</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="encodermap.models.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">encodermap.models package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-encodermap.misc.backmapping">encodermap.misc.backmapping module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.backmapping.backbone_hydrogen_oxygen_crossproduct"><code class="docutils literal notranslate"><span class="pre">backbone_hydrogen_oxygen_crossproduct</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.backmapping.mdtraj_backmapping"><code class="docutils literal notranslate"><span class="pre">mdtraj_backmapping</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-encodermap.misc.clustering">encodermap.misc.clustering module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-encodermap.misc.distances">encodermap.misc.distances module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.distances.pairwise_dist"><code class="docutils literal notranslate"><span class="pre">pairwise_dist</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.distances.pairwise_dist_periodic"><code class="docutils literal notranslate"><span class="pre">pairwise_dist_periodic</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.distances.periodic_distance"><code class="docutils literal notranslate"><span class="pre">periodic_distance</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.distances.periodic_distance_np"><code class="docutils literal notranslate"><span class="pre">periodic_distance_np</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.distances.sigmoid"><code class="docutils literal notranslate"><span class="pre">sigmoid</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-encodermap.misc.function_def">encodermap.misc.function_def module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.function_def.function"><code class="docutils literal notranslate"><span class="pre">function</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-encodermap.misc.misc">encodermap.misc.misc module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.misc.create_n_cube"><code class="docutils literal notranslate"><span class="pre">create_n_cube</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.misc.get_full_common_str_and_ref"><code class="docutils literal notranslate"><span class="pre">get_full_common_str_and_ref</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.misc.plot_model"><code class="docutils literal notranslate"><span class="pre">plot_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.misc.run_path"><code class="docutils literal notranslate"><span class="pre">run_path</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-encodermap.misc.rotate">encodermap.misc.rotate module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.rotate.mdtraj_rotate"><code class="docutils literal notranslate"><span class="pre">mdtraj_rotate</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-encodermap.misc.saving_loading_models">encodermap.misc.saving_loading_models module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.saving_loading_models.load_model"><code class="docutils literal notranslate"><span class="pre">load_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.saving_loading_models.save_model"><code class="docutils literal notranslate"><span class="pre">save_model</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-encodermap.misc.summaries">encodermap.misc.summaries module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.summaries.add_layer_summaries"><code class="docutils literal notranslate"><span class="pre">add_layer_summaries</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.summaries.image_summary"><code class="docutils literal notranslate"><span class="pre">image_summary</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-encodermap.misc.xarray">encodermap.misc.xarray module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.xarray.construct_xarray_from_numpy"><code class="docutils literal notranslate"><span class="pre">construct_xarray_from_numpy</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.xarray.unpack_data_and_feature"><code class="docutils literal notranslate"><span class="pre">unpack_data_and_feature</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-encodermap.misc.xarray_save_wrong_hdf5">encodermap.misc.xarray_save_wrong_hdf5 module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encodermap.misc.xarray_save_wrong_hdf5.save_netcdf_alongside_mdtraj"><code class="docutils literal notranslate"><span class="pre">save_netcdf_alongside_mdtraj</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-encodermap.misc">Module contents</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/encodermap.misc.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T22:43:00.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

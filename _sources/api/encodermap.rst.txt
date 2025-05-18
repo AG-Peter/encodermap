@@ -1,0 +1,59 @@
+encodermap package
+==================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   encodermap.autoencoder
+   encodermap.callbacks
+   encodermap.encodermap_tf1
+   encodermap.loading
+   encodermap.loss_functions
+   encodermap.misc
+   encodermap.models
+   encodermap.moldata
+   encodermap.parameters
+   encodermap.plot
+   encodermap.trajinfo
+
+Submodules
+----------
+
+encodermap.\_typing module
+--------------------------
+
+.. automodule:: encodermap._typing
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
+
+encodermap.\_version module
+---------------------------
+
+.. automodule:: encodermap._version
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
+
+encodermap.kondata module
+-------------------------
+
+.. automodule:: encodermap.kondata
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
+
+Module contents
+---------------
+
+.. automodule:: encodermap
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:

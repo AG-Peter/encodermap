@@ -1,7 +1,0 @@
-{
-    "path" : "../../../tutorials/notebooks_customization/writing_custom_loss_functions.ipynb",
-    "extra-media": [
-        "../../../tutorials/notebooks_customization/custom_loss_functions_1.png",
-        "../../../tutorials/notebooks_starter/asp7.csv"
-    ]
-}

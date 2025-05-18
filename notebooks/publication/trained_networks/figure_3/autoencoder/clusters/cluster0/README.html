@@ -1,0 +1,985 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>README for EncoderMap.InteractivePlotting cluster &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/custom.css?v=c1026b93" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../../../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/publication/trained_networks/figure_3/autoencoder/clusters/cluster0/README';</script>
+    <link rel="icon" href="../../../../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T22:43:00"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../../../../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../../../../../../../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../../index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../../../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../../index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../../../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">README for EncoderMap.InteractivePlotting cluster</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="readme-for-encodermap-interactiveplotting-cluster">
+<h1>README for EncoderMap.InteractivePlotting cluster<a class="headerlink" href="#readme-for-encodermap-interactiveplotting-cluster" title="Link to this heading">#</a></h1>
+<p>You just used EncoderMap’s <code class="docutils literal notranslate"><span class="pre">InteractivePlotting</span></code> and saved a cluster. Here’s some information about this cluster. The cluster was selected from a <code class="docutils literal notranslate"><span class="pre">TrajectoryEnsemble</span></code> containing 126 trajectories, 55326 frames and 6 unique topologies. This cluster was assigned the number 0. The file /home/kevin/encodermap_paper_images/submission/datasets/trained_nns/figure_3/autoencoder/clusters/2025-05-04T21:41:08+02:00/cluster_0.h5 contains only  frames, chosen as representatives for this cluster. This file can be loaded with EncoderMap’s <code class="docutils literal notranslate"><span class="pre">TrajEnsemble.from_dataset('/home/kevin/encodermap_paper_images/submission/datasets/trained_nns/figure_3/autoencoder/clusters/2025-05-04T21:41:08+02:00/cluster_0.h5')</span></code> method. Look at EncoderMap’s documentation at https://ag-peter.github.io/encodermap/ to learn more about Trajectory Ensembles.</p>
+<section id="the-complete-ensemble-is-also-present">
+<h2>The complete Ensemble is also present<a class="headerlink" href="#the-complete-ensemble-is-also-present" title="Link to this heading">#</a></h2>
+<p>If you want to get more information about the clustering you carried out, you can refer to these files:</p>
+</section>
+<section id="cluster-0-csv">
+<h2>cluster_0.csv<a class="headerlink" href="#cluster-0-csv" title="Link to this heading">#</a></h2>
+<p>This <code class="docutils literal notranslate"><span class="pre">.csv</span></code> file contains info about the complete ensemble this cluster was selected from. The columns are as follows:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>traj_num</p></th>
+<th class="head"><p>The number of the trajectory in the full dataset. This number is 0-based. If only one trajectory is loaded, its <code class="docutils literal notranslate"><span class="pre">trajectory</span> <span class="pre">number</span></code> might also be <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>frame_num</p></td>
+<td><p>The frame number. The trajectory number and frame number can be used to unmistakably identify frames in a trajectory ensemble. Frame numbers are also 0-based.</p></td>
+</tr>
+<tr class="row-odd"><td><p>traj_file</p></td>
+<td><p>Contains the trajectory data (file formats such as .xtc, .dcd, .h5).</p></td>
+</tr>
+<tr class="row-even"><td><p>top_file</p></td>
+<td><p>Contains the topology of the file (i.e. atom types, masses, residues) (file formats such as .pdb, .gro, .h5). Some trajectory files (.h5) might also contain the topology. In that case <code class="docutils literal notranslate"><span class="pre">trajectory</span> <span class="pre">file</span></code> and <code class="docutils literal notranslate"><span class="pre">topology</span></code> file are identical.</p></td>
+</tr>
+<tr class="row-odd"><td><p>time</p></td>
+<td><p>The time of the frame. This can be used for time-based indexing of trajectories. EncoderMap offers the <code class="docutils literal notranslate"><span class="pre">SingleTraj.tsel[time]</span></code> accessor to distinguish it from frame-based indexing via <code class="docutils literal notranslate"><span class="pre">SingleTraj[frame]</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>x</p></td>
+<td><p>The x coordinate of the low-dimensional projection.</p></td>
+</tr>
+<tr class="row-odd"><td><p>y</p></td>
+<td><p>The y-coordinate of the low-dimensional projection.</p></td>
+</tr>
+<tr class="row-even"><td><p>cluster_id</p></td>
+<td><p>This column contains -1, which are points not included in a cluster (outliers). Cluster 1 is denoted by a 0 in this column. If multiple clusters have been selected this column can contain multiple integer values. For every subsequent cluster, the <code class="docutils literal notranslate"><span class="pre">cluster_id</span></code> is advanced by 1.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="cluster-0-selector-npy">
+<h2>cluster_0_selector.npy<a class="headerlink" href="#cluster-0-selector-npy" title="Link to this heading">#</a></h2>
+<p>This numpy array contains the (x, y)-coordinates of the selector, that was used to highlight the cluster. Be careful, this shape might not be convex, so using convex algortihms to find points inside this Polygon might not work.</p>
+</section>
+<section id="cluster-0-png">
+<h2>cluster_0.png<a class="headerlink" href="#cluster-0-png" title="Link to this heading">#</a></h2>
+<p>A nice render of the selected cluster.</p>
+</section>
+<section id="loading-a-hdf5-file-h5-with-encodermap">
+<h2>Loading a HDF5 file (.h5) with EncoderMap<a class="headerlink" href="#loading-a-hdf5-file-h5-with-encodermap" title="Link to this heading">#</a></h2>
+<p>EncoderMap introduces a way of storing multiple trajectories (a <code class="docutils literal notranslate"><span class="pre">TrajectorEnsemble</span></code>) in a
+single file. These files can be loaded via:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">encodermap</span> <span class="k">as</span> <span class="nn">em</span>
+<span class="n">trajs</span> <span class="o">=</span> <span class="n">em</span><span class="o">.</span><span class="n">TrajEnsemble</span><span class="o">.</span><span class="n">from_dataset</span><span class="p">(</span><span class="s1">&#39;/home/kevin/encodermap_paper_images/submission/datasets/trained_nns/figure_3/autoencoder/clusters/2025-05-04T21:41:08+02:00/cluster_0.h5&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="rendering-this-document">
+<h2>Rendering this document<a class="headerlink" href="#rendering-this-document" title="Link to this heading">#</a></h2>
+<p>If you don’t like to view plain markdown files with a text-viewer there are many viewers available, that are able to render markdown nicely. I am currently using ghostwriter:</p>
+<p>https://ghostwriter.kde.org/</p>
+<p>If you want to create a pdf from this document you can try a combination of pandoc, latex and groff.</p>
+<section id="html">
+<h3>HTML<a class="headerlink" href="#html" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pandoc<span class="w"> </span>/home/kevin/encodermap_paper_images/submission/datasets/trained_nns/figure_3/autoencoder/clusters/2025-05-04T21:41:08+02:00/README.md.md<span class="w"> </span>-o<span class="w"> </span>/home/kevin/encodermap_paper_images/submission/datasets/trained_nns/figure_3/autoencoder/clusters/2025-05-04T21:41:08+02:00/README.md.html
+</pre></div>
+</div>
+</section>
+<section id="latex">
+<h3>Latex<a class="headerlink" href="#latex" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pandoc<span class="w"> </span>/home/kevin/encodermap_paper_images/submission/datasets/trained_nns/figure_3/autoencoder/clusters/2025-05-04T21:41:08+02:00/README.md.md<span class="w"> </span>-o<span class="w"> </span>/home/kevin/encodermap_paper_images/submission/datasets/trained_nns/figure_3/autoencoder/clusters/2025-05-04T21:41:08+02:00/README.md.pdf
+</pre></div>
+</div>
+</section>
+<section id="groff">
+<h3>Groff<a class="headerlink" href="#groff" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pandoc<span class="w"> </span>/home/kevin/encodermap_paper_images/submission/datasets/trained_nns/figure_3/autoencoder/clusters/2025-05-04T21:41:08+02:00/README.md.md<span class="w"> </span>-t<span class="w"> </span>ms<span class="w"> </span>-o<span class="w"> </span>/home/kevin/encodermap_paper_images/submission/datasets/trained_nns/figure_3/autoencoder/clusters/2025-05-04T21:41:08+02:00/README.md.pdf
+</pre></div>
+</div>
+</section>
+</section>
+<section id="debug-info">
+<h2>Debug Info<a class="headerlink" href="#debug-info" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">encodermap</span><span class="o">.</span><span class="n">__version__</span> <span class="o">=</span> <span class="mf">3.0.1</span><span class="o">+</span><span class="mf">6.</span><span class="n">g6db4b33</span><span class="o">.</span><span class="n">dirty</span>
+<span class="n">system_user</span> <span class="o">=</span> <span class="n">kevin</span>
+<span class="n">platform</span> <span class="o">=</span> <span class="n">Linux</span>
+<span class="n">platform_release</span> <span class="o">=</span> <span class="mf">6.8.0</span><span class="o">-</span><span class="mi">57</span><span class="o">-</span><span class="n">generic</span>
+<span class="n">platform_version</span> <span class="o">=</span> <span class="c1">#59~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Mar 19 17:07:41 UTC 2</span>
+<span class="n">architecture</span> <span class="o">=</span> <span class="n">x86_64</span>
+<span class="n">hostname</span> <span class="o">=</span> <span class="n">Marlin</span>
+<span class="n">ip_address</span> <span class="o">=</span> <span class="mf">127.0.1.1</span>
+<span class="n">mac_address</span> <span class="o">=</span> <span class="mi">73</span><span class="p">:</span><span class="n">a9</span><span class="p">:</span><span class="mi">3</span><span class="n">b</span><span class="p">:</span><span class="n">f3</span><span class="p">:</span><span class="mi">9</span><span class="n">c</span><span class="p">:</span><span class="n">fe</span>
+<span class="n">processor</span> <span class="o">=</span> <span class="n">x86_64</span>
+<span class="n">ram</span> <span class="o">=</span> <span class="mi">31</span> <span class="n">GB</span>
+<span class="n">pip</span> <span class="n">freeze</span> <span class="o">=</span> <span class="n">absl</span><span class="o">-</span><span class="n">py</span><span class="o">==</span><span class="mf">1.4.0</span>
+<span class="n">accessible</span><span class="o">-</span><span class="n">pygments</span><span class="o">==</span><span class="mf">0.0.4</span>
+<span class="n">alabaster</span><span class="o">==</span><span class="mf">0.7.16</span>
+<span class="n">anyio</span><span class="o">==</span><span class="mf">4.2.0</span>
+<span class="n">argon2</span><span class="o">-</span><span class="n">cffi</span><span class="o">==</span><span class="mf">23.1.0</span>
+<span class="n">argon2</span><span class="o">-</span><span class="n">cffi</span><span class="o">-</span><span class="n">bindings</span><span class="o">==</span><span class="mf">21.2.0</span>
+<span class="n">array</span><span class="o">-</span><span class="n">record</span><span class="o">==</span><span class="mf">0.5.0</span>
+<span class="n">arrow</span><span class="o">==</span><span class="mf">1.3.0</span>
+<span class="n">asttokens</span><span class="o">==</span><span class="mf">2.4.1</span>
+<span class="n">astunparse</span><span class="o">==</span><span class="mf">1.6.3</span>
+<span class="k">async</span><span class="o">-</span><span class="n">lru</span><span class="o">==</span><span class="mf">2.0.4</span>
+<span class="n">attrs</span><span class="o">==</span><span class="mf">23.2.0</span>
+<span class="n">autoclasstoc</span><span class="o">==</span><span class="mf">1.7.0</span>
+<span class="n">Babel</span><span class="o">==</span><span class="mf">2.14.0</span>
+<span class="n">beartype</span><span class="o">==</span><span class="mf">0.18.5</span>
+<span class="n">beautifulsoup4</span><span class="o">==</span><span class="mf">4.12.3</span>
+<span class="n">binaryornot</span><span class="o">==</span><span class="mf">0.4.4</span>
+<span class="n">biopython</span><span class="o">==</span><span class="mf">1.83</span>
+<span class="n">black</span><span class="o">==</span><span class="mf">24.2.0</span>
+<span class="n">bleach</span><span class="o">==</span><span class="mf">6.1.0</span>
+<span class="n">blinker</span><span class="o">==</span><span class="mf">1.7.0</span>
+<span class="n">blosc2</span><span class="o">==</span><span class="mf">2.5.1</span>
+<span class="n">bokeh</span><span class="o">==</span><span class="mf">3.4.1</span>
+<span class="n">brukeropusreader</span><span class="o">==</span><span class="mf">1.3.4</span>
+<span class="n">cachetools</span><span class="o">==</span><span class="mf">5.3.2</span>
+<span class="n">certifi</span><span class="o">==</span><span class="mf">2024.2.2</span>
+<span class="n">cffi</span><span class="o">==</span><span class="mf">1.16.0</span>
+<span class="n">cfgv</span><span class="o">==</span><span class="mf">3.4.0</span>
+<span class="n">chardet</span><span class="o">==</span><span class="mf">5.2.0</span>
+<span class="n">charset</span><span class="o">-</span><span class="n">normalizer</span><span class="o">==</span><span class="mf">3.3.2</span>
+<span class="n">click</span><span class="o">==</span><span class="mf">8.1.7</span>
+<span class="n">cloudpickle</span><span class="o">==</span><span class="mf">3.0.0</span>
+<span class="n">colour</span><span class="o">==</span><span class="mf">0.1.5</span>
+<span class="n">comm</span><span class="o">==</span><span class="mf">0.2.1</span>
+<span class="n">compose</span><span class="o">-</span><span class="nb">format</span><span class="o">==</span><span class="mf">1.2.0</span>
+<span class="n">contourpy</span><span class="o">==</span><span class="mf">1.2.0</span>
+<span class="n">cookiecutter</span><span class="o">==</span><span class="mf">2.5.0</span>
+<span class="n">coverage</span><span class="o">==</span><span class="mf">7.4.1</span>
+<span class="n">cycler</span><span class="o">==</span><span class="mf">0.12.1</span>
+<span class="n">Cython</span><span class="o">==</span><span class="mf">0.29.37</span>
+<span class="n">dash</span><span class="o">==</span><span class="mf">2.15.0</span>
+<span class="n">dash</span><span class="o">-</span><span class="n">bio</span><span class="o">==</span><span class="mf">1.0.2</span>
+<span class="n">dash</span><span class="o">-</span><span class="n">bootstrap</span><span class="o">-</span><span class="n">components</span><span class="o">==</span><span class="mf">1.5.0</span>
+<span class="n">dash</span><span class="o">-</span><span class="n">bootstrap</span><span class="o">-</span><span class="n">templates</span><span class="o">==</span><span class="mf">1.1.2</span>
+<span class="n">dash</span><span class="o">-</span><span class="n">core</span><span class="o">-</span><span class="n">components</span><span class="o">==</span><span class="mf">2.0.0</span>
+<span class="n">dash</span><span class="o">-</span><span class="n">html</span><span class="o">-</span><span class="n">components</span><span class="o">==</span><span class="mf">2.0.0</span>
+<span class="n">dash</span><span class="o">-</span><span class="n">table</span><span class="o">==</span><span class="mf">5.0.0</span>
+<span class="n">dash_auth</span><span class="o">==</span><span class="mf">2.2.0</span>
+<span class="n">dash_mantine_components</span><span class="o">==</span><span class="mf">0.15.2</span>
+<span class="n">dask</span><span class="o">==</span><span class="mf">2024.2.0</span>
+<span class="n">dask</span><span class="o">-</span><span class="n">jobqueue</span><span class="o">==</span><span class="mf">0.8.5</span>
+<span class="n">data</span><span class="o">-</span><span class="n">science</span><span class="o">-</span><span class="n">types</span><span class="o">==</span><span class="mf">0.2.23</span>
+<span class="n">debugpy</span><span class="o">==</span><span class="mf">1.8.1</span>
+<span class="n">decorator</span><span class="o">==</span><span class="mf">4.4.2</span>
+<span class="n">deeptime</span><span class="o">==</span><span class="mf">0.4.4</span>
+<span class="n">defusedxml</span><span class="o">==</span><span class="mf">0.7.1</span>
+<span class="n">dill</span><span class="o">==</span><span class="mf">0.3.8</span>
+<span class="n">distlib</span><span class="o">==</span><span class="mf">0.3.8</span>
+<span class="n">distributed</span><span class="o">==</span><span class="mf">2024.2.0</span>
+<span class="n">dm</span><span class="o">-</span><span class="n">tree</span><span class="o">==</span><span class="mf">0.1.8</span>
+<span class="n">docker</span><span class="o">==</span><span class="mf">7.0.0</span>
+<span class="n">docstring</span><span class="o">-</span><span class="n">parser</span><span class="o">==</span><span class="mf">0.15</span>
+<span class="n">docutils</span><span class="o">==</span><span class="mf">0.20.1</span>
+<span class="n">einops</span><span class="o">==</span><span class="mf">0.8.0</span>
+<span class="o">-</span><span class="n">e</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">AG</span><span class="o">-</span><span class="n">Peter</span><span class="o">/</span><span class="n">encoder_map_private</span><span class="o">.</span><span class="n">git</span><span class="o">@</span><span class="mi">6</span><span class="n">db4b332be2e2e4fc69fc0daf9e395c701541903</span><span class="c1">#egg=encodermap</span>
+<span class="n">entrypoints</span><span class="o">==</span><span class="mf">0.4</span>
+<span class="n">etils</span><span class="o">==</span><span class="mf">1.7.0</span>
+<span class="n">exceptiongroup</span><span class="o">==</span><span class="mf">1.2.0</span>
+<span class="n">executing</span><span class="o">==</span><span class="mf">2.0.1</span>
+<span class="n">fasteners</span><span class="o">==</span><span class="mf">0.19</span>
+<span class="n">fastjsonschema</span><span class="o">==</span><span class="mf">2.19.1</span>
+<span class="n">filelock</span><span class="o">==</span><span class="mf">3.13.1</span>
+<span class="n">flake8</span><span class="o">==</span><span class="mf">5.0.4</span>
+<span class="n">Flask</span><span class="o">==</span><span class="mf">3.0.2</span>
+<span class="n">flatbuffers</span><span class="o">==</span><span class="mf">23.5.26</span>
+<span class="n">fonttools</span><span class="o">==</span><span class="mf">4.49.0</span>
+<span class="n">fqdn</span><span class="o">==</span><span class="mf">1.5.1</span>
+<span class="n">fsspec</span><span class="o">==</span><span class="mf">2024.2.0</span>
+<span class="n">gast</span><span class="o">==</span><span class="mf">0.5.4</span>
+<span class="n">GEOparse</span><span class="o">==</span><span class="mf">2.0.3</span>
+<span class="n">gitdb</span><span class="o">==</span><span class="mf">4.0.11</span>
+<span class="n">GitPython</span><span class="o">==</span><span class="mf">3.1.42</span>
+<span class="n">google</span><span class="o">-</span><span class="n">auth</span><span class="o">==</span><span class="mf">2.28.0</span>
+<span class="n">google</span><span class="o">-</span><span class="n">auth</span><span class="o">-</span><span class="n">oauthlib</span><span class="o">==</span><span class="mf">1.2.0</span>
+<span class="n">google</span><span class="o">-</span><span class="n">pasta</span><span class="o">==</span><span class="mf">0.2.0</span>
+<span class="n">googleapis</span><span class="o">-</span><span class="n">common</span><span class="o">-</span><span class="n">protos</span><span class="o">==</span><span class="mf">1.62.0</span>
+<span class="n">graphviz</span><span class="o">==</span><span class="mf">0.20.1</span>
+<span class="n">greenlet</span><span class="o">==</span><span class="mf">3.1.1</span>
+<span class="n">GridDataFormats</span><span class="o">==</span><span class="mf">1.0.2</span>
+<span class="n">grpcio</span><span class="o">==</span><span class="mf">1.60.1</span>
+<span class="n">h11</span><span class="o">==</span><span class="mf">0.14.0</span>
+<span class="n">h5netcdf</span><span class="o">==</span><span class="mf">1.3.0</span>
+<span class="n">h5py</span><span class="o">==</span><span class="mf">3.10.0</span>
+<span class="n">hdbscan</span><span class="o">==</span><span class="mf">0.8.33</span>
+<span class="n">html</span><span class="o">-</span><span class="n">testRunner</span><span class="o">==</span><span class="mf">1.2.1</span>
+<span class="n">httpcore</span><span class="o">==</span><span class="mf">1.0.3</span>
+<span class="n">httpx</span><span class="o">==</span><span class="mf">0.26.0</span>
+<span class="n">humanfriendly</span><span class="o">==</span><span class="mf">10.0</span>
+<span class="n">identify</span><span class="o">==</span><span class="mf">2.5.35</span>
+<span class="n">idna</span><span class="o">==</span><span class="mf">3.6</span>
+<span class="n">igraph</span><span class="o">==</span><span class="mf">0.11.4</span>
+<span class="n">imageio</span><span class="o">==</span><span class="mf">2.34.0</span>
+<span class="n">imageio</span><span class="o">-</span><span class="n">ffmpeg</span><span class="o">==</span><span class="mf">0.4.9</span>
+<span class="n">imagesize</span><span class="o">==</span><span class="mf">1.4.1</span>
+<span class="n">imohash</span><span class="o">==</span><span class="mf">1.1.0</span>
+<span class="n">importlib</span><span class="o">-</span><span class="n">metadata</span><span class="o">==</span><span class="mf">7.0.1</span>
+<span class="n">importlib</span><span class="o">-</span><span class="n">resources</span><span class="o">==</span><span class="mf">6.1.1</span>
+<span class="n">iniconfig</span><span class="o">==</span><span class="mf">2.0.0</span>
+<span class="n">ipycanvas</span><span class="o">==</span><span class="mf">0.13.1</span>
+<span class="n">ipykernel</span><span class="o">==</span><span class="mf">6.29.5</span>
+<span class="n">ipympl</span><span class="o">==</span><span class="mf">0.9.3</span>
+<span class="n">ipython</span><span class="o">==</span><span class="mf">8.21.0</span>
+<span class="n">ipython</span><span class="o">-</span><span class="n">genutils</span><span class="o">==</span><span class="mf">0.2.0</span>
+<span class="n">ipywidgets</span><span class="o">==</span><span class="mf">8.1.5</span>
+<span class="n">isoduration</span><span class="o">==</span><span class="mf">20.11.0</span>
+<span class="n">isort</span><span class="o">==</span><span class="mf">5.13.2</span>
+<span class="n">itsdangerous</span><span class="o">==</span><span class="mf">2.1.2</span>
+<span class="n">jedi</span><span class="o">==</span><span class="mf">0.19.1</span>
+<span class="n">Jinja2</span><span class="o">==</span><span class="mf">3.1.3</span>
+<span class="n">joblib</span><span class="o">==</span><span class="mf">1.3.2</span>
+<span class="n">json</span><span class="o">-</span><span class="n">spec</span><span class="o">==</span><span class="mf">0.12.0</span>
+<span class="n">json5</span><span class="o">==</span><span class="mf">0.9.14</span>
+<span class="n">jsonpointer</span><span class="o">==</span><span class="mf">2.4</span>
+<span class="n">jsonschema</span><span class="o">==</span><span class="mf">4.21.1</span>
+<span class="n">jsonschema</span><span class="o">-</span><span class="n">specifications</span><span class="o">==</span><span class="mf">2023.12.1</span>
+<span class="n">jupyter</span><span class="o">-</span><span class="n">cache</span><span class="o">==</span><span class="mf">1.0.1</span>
+<span class="n">jupyter</span><span class="o">-</span><span class="n">events</span><span class="o">==</span><span class="mf">0.9.0</span>
+<span class="n">jupyter</span><span class="o">-</span><span class="n">lsp</span><span class="o">==</span><span class="mf">2.2.2</span>
+<span class="n">jupyter_client</span><span class="o">==</span><span class="mf">8.6.0</span>
+<span class="n">jupyter_core</span><span class="o">==</span><span class="mf">5.7.1</span>
+<span class="n">jupyter_server</span><span class="o">==</span><span class="mf">2.12.5</span>
+<span class="n">jupyter_server_terminals</span><span class="o">==</span><span class="mf">0.5.2</span>
+<span class="n">jupyterlab</span><span class="o">==</span><span class="mf">4.1.1</span>
+<span class="n">jupyterlab_pygments</span><span class="o">==</span><span class="mf">0.3.0</span>
+<span class="n">jupyterlab_server</span><span class="o">==</span><span class="mf">2.25.3</span>
+<span class="n">jupyterlab_widgets</span><span class="o">==</span><span class="mf">3.0.13</span>
+<span class="n">kaggle</span><span class="o">==</span><span class="mf">1.6.6</span>
+<span class="n">kaleido</span><span class="o">==</span><span class="mf">0.2.1</span>
+<span class="n">keras</span><span class="o">==</span><span class="mf">2.15.0</span>
+<span class="n">kiwisolver</span><span class="o">==</span><span class="mf">1.4.5</span>
+<span class="n">latexcodec</span><span class="o">==</span><span class="mf">2.0.1</span>
+<span class="n">libclang</span><span class="o">==</span><span class="mf">16.0.6</span>
+<span class="n">lipsum</span><span class="o">==</span><span class="mf">0.1.2</span>
+<span class="n">livereload</span><span class="o">==</span><span class="mf">2.7.1</span>
+<span class="n">llvmlite</span><span class="o">==</span><span class="mf">0.42.0</span>
+<span class="n">locket</span><span class="o">==</span><span class="mf">1.0.0</span>
+<span class="n">Markdown</span><span class="o">==</span><span class="mf">3.5.2</span>
+<span class="n">markdown</span><span class="o">-</span><span class="n">it</span><span class="o">-</span><span class="n">py</span><span class="o">==</span><span class="mf">3.0.0</span>
+<span class="n">MarkupSafe</span><span class="o">==</span><span class="mf">2.1.5</span>
+<span class="n">matplotlib</span><span class="o">==</span><span class="mf">3.8.3</span>
+<span class="n">matplotlib</span><span class="o">-</span><span class="n">inline</span><span class="o">==</span><span class="mf">0.1.6</span>
+<span class="n">mccabe</span><span class="o">==</span><span class="mf">0.7.0</span>
+<span class="n">mda</span><span class="o">-</span><span class="n">xdrlib</span><span class="o">==</span><span class="mf">0.2.0</span>
+<span class="n">MDAnalysis</span><span class="o">==</span><span class="mf">2.7.0</span>
+<span class="n">mdit</span><span class="o">-</span><span class="n">py</span><span class="o">-</span><span class="n">plugins</span><span class="o">==</span><span class="mf">0.4.2</span>
+<span class="n">mdshare</span><span class="o">==</span><span class="mf">0.4.2</span>
+<span class="n">mdtraj</span><span class="o">==</span><span class="mf">1.9.9</span>
+<span class="n">mdurl</span><span class="o">==</span><span class="mf">0.1.2</span>
+<span class="n">mistune</span><span class="o">==</span><span class="mf">3.0.2</span>
+<span class="n">ml</span><span class="o">-</span><span class="n">dtypes</span><span class="o">==</span><span class="mf">0.2.0</span>
+<span class="n">mmh3</span><span class="o">==</span><span class="mf">4.1.0</span>
+<span class="n">mmtf</span><span class="o">-</span><span class="n">python</span><span class="o">==</span><span class="mf">1.1.3</span>
+<span class="n">more</span><span class="o">-</span><span class="n">itertools</span><span class="o">==</span><span class="mf">10.5.0</span>
+<span class="n">moviepy</span><span class="o">==</span><span class="mf">1.0.3</span>
+<span class="n">mpmath</span><span class="o">==</span><span class="mf">1.3.0</span>
+<span class="n">mrcfile</span><span class="o">==</span><span class="mf">1.5.0</span>
+<span class="n">msgpack</span><span class="o">==</span><span class="mf">1.0.7</span>
+<span class="n">multiprocess</span><span class="o">==</span><span class="mf">0.70.16</span>
+<span class="n">mypy</span><span class="o">==</span><span class="mf">1.10.0</span>
+<span class="n">mypy</span><span class="o">-</span><span class="n">extensions</span><span class="o">==</span><span class="mf">1.0.0</span>
+<span class="n">myst</span><span class="o">-</span><span class="n">nb</span><span class="o">==</span><span class="mf">1.1.2</span>
+<span class="n">myst</span><span class="o">-</span><span class="n">parser</span><span class="o">==</span><span class="mf">4.0.0</span>
+<span class="n">nbclient</span><span class="o">==</span><span class="mf">0.9.0</span>
+<span class="n">nbconvert</span><span class="o">==</span><span class="mf">7.16.4</span>
+<span class="n">nbformat</span><span class="o">==</span><span class="mf">5.9.2</span>
+<span class="n">nbsphinx</span><span class="o">==</span><span class="mf">0.9.6</span>
+<span class="n">nbsphinx</span><span class="o">-</span><span class="n">link</span><span class="o">==</span><span class="mf">1.3.1</span>
+<span class="n">nbval</span><span class="o">==</span><span class="mf">0.11.0</span>
+<span class="n">ndindex</span><span class="o">==</span><span class="mf">1.8</span>
+<span class="n">nest</span><span class="o">-</span><span class="n">asyncio</span><span class="o">==</span><span class="mf">1.6.0</span>
+<span class="n">networkx</span><span class="o">==</span><span class="mf">3.2.1</span>
+<span class="n">nglview</span><span class="o">==</span><span class="mf">3.0.8</span>
+<span class="n">nodeenv</span><span class="o">==</span><span class="mf">1.8.0</span>
+<span class="n">notebook</span><span class="o">==</span><span class="mf">7.1.0</span>
+<span class="n">notebook_shim</span><span class="o">==</span><span class="mf">0.2.4</span>
+<span class="n">numba</span><span class="o">==</span><span class="mf">0.59.0</span>
+<span class="n">numexpr</span><span class="o">==</span><span class="mf">2.9.0</span>
+<span class="n">numpy</span><span class="o">==</span><span class="mf">1.26.4</span>
+<span class="n">nvidia</span><span class="o">-</span><span class="n">cublas</span><span class="o">-</span><span class="n">cu12</span><span class="o">==</span><span class="mf">12.1.3.1</span>
+<span class="n">nvidia</span><span class="o">-</span><span class="n">cuda</span><span class="o">-</span><span class="n">cupti</span><span class="o">-</span><span class="n">cu12</span><span class="o">==</span><span class="mf">12.1.105</span>
+<span class="n">nvidia</span><span class="o">-</span><span class="n">cuda</span><span class="o">-</span><span class="n">nvrtc</span><span class="o">-</span><span class="n">cu12</span><span class="o">==</span><span class="mf">12.1.105</span>
+<span class="n">nvidia</span><span class="o">-</span><span class="n">cuda</span><span class="o">-</span><span class="n">runtime</span><span class="o">-</span><span class="n">cu12</span><span class="o">==</span><span class="mf">12.1.105</span>
+<span class="n">nvidia</span><span class="o">-</span><span class="n">cudnn</span><span class="o">-</span><span class="n">cu12</span><span class="o">==</span><span class="mf">8.9.2.26</span>
+<span class="n">nvidia</span><span class="o">-</span><span class="n">cufft</span><span class="o">-</span><span class="n">cu12</span><span class="o">==</span><span class="mf">11.0.2.54</span>
+<span class="n">nvidia</span><span class="o">-</span><span class="n">curand</span><span class="o">-</span><span class="n">cu12</span><span class="o">==</span><span class="mf">10.3.2.106</span>
+<span class="n">nvidia</span><span class="o">-</span><span class="n">cusolver</span><span class="o">-</span><span class="n">cu12</span><span class="o">==</span><span class="mf">11.4.5.107</span>
+<span class="n">nvidia</span><span class="o">-</span><span class="n">cusparse</span><span class="o">-</span><span class="n">cu12</span><span class="o">==</span><span class="mf">12.1.0.106</span>
+<span class="n">nvidia</span><span class="o">-</span><span class="n">nccl</span><span class="o">-</span><span class="n">cu12</span><span class="o">==</span><span class="mf">2.20.5</span>
+<span class="n">nvidia</span><span class="o">-</span><span class="n">nvjitlink</span><span class="o">-</span><span class="n">cu12</span><span class="o">==</span><span class="mf">12.5.40</span>
+<span class="n">nvidia</span><span class="o">-</span><span class="n">nvtx</span><span class="o">-</span><span class="n">cu12</span><span class="o">==</span><span class="mf">12.1.105</span>
+<span class="n">oauthlib</span><span class="o">==</span><span class="mf">3.2.2</span>
+<span class="n">OpenEXR</span><span class="o">==</span><span class="mf">1.3.9</span>
+<span class="n">OpenMM</span><span class="o">==</span><span class="mf">8.1.0</span>
+<span class="n">opt</span><span class="o">-</span><span class="n">einsum</span><span class="o">==</span><span class="mf">3.3.0</span>
+<span class="n">optional</span><span class="o">-</span><span class="n">imports</span><span class="o">==</span><span class="mf">1.0.4</span>
+<span class="n">orjson</span><span class="o">==</span><span class="mf">3.9.15</span>
+<span class="n">outcome</span><span class="o">==</span><span class="mf">1.3.0</span><span class="o">.</span><span class="n">post0</span>
+<span class="n">overrides</span><span class="o">==</span><span class="mf">7.7.0</span>
+<span class="n">packaging</span><span class="o">==</span><span class="mf">23.2</span>
+<span class="n">pandas</span><span class="o">==</span><span class="mf">2.2.0</span>
+<span class="n">pandoc</span><span class="o">==</span><span class="mf">2.3</span>
+<span class="n">pandoc</span><span class="o">-</span><span class="n">acro</span><span class="o">==</span><span class="mf">0.10.1</span>
+<span class="n">pandocfilters</span><span class="o">==</span><span class="mf">1.5.1</span>
+<span class="n">panflute</span><span class="o">==</span><span class="mf">2.3.1</span>
+<span class="n">papermill</span><span class="o">==</span><span class="mf">2.5.0</span>
+<span class="n">ParmEd</span><span class="o">==</span><span class="mf">4.2.2</span>
+<span class="n">parso</span><span class="o">==</span><span class="mf">0.8.3</span>
+<span class="n">partd</span><span class="o">==</span><span class="mf">1.4.1</span>
+<span class="n">pathos</span><span class="o">==</span><span class="mf">0.3.2</span>
+<span class="n">pathspec</span><span class="o">==</span><span class="mf">0.12.1</span>
+<span class="n">pdbfixer</span> <span class="o">@</span> <span class="n">file</span><span class="p">:</span><span class="o">///</span><span class="n">home</span><span class="o">/</span><span class="n">kevin</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pdbfixer</span>
+<span class="n">peppercorn</span><span class="o">==</span><span class="mf">0.6</span>
+<span class="n">periodictable</span><span class="o">==</span><span class="mf">1.6.1</span>
+<span class="n">pexpect</span><span class="o">==</span><span class="mf">4.9.0</span>
+<span class="n">pillow</span><span class="o">==</span><span class="mf">11.0.0</span>
+<span class="n">pip</span><span class="o">==</span><span class="mf">22.0.2</span>
+<span class="n">platformdirs</span><span class="o">==</span><span class="mf">4.2.0</span>
+<span class="n">plotly</span><span class="o">==</span><span class="mf">5.19.0</span>
+<span class="n">pluggy</span><span class="o">==</span><span class="mf">1.5.0</span>
+<span class="n">plumbum</span><span class="o">==</span><span class="mf">1.8.2</span>
+<span class="n">ply</span><span class="o">==</span><span class="mf">3.11</span>
+<span class="n">pox</span><span class="o">==</span><span class="mf">0.3.4</span>
+<span class="n">ppft</span><span class="o">==</span><span class="mf">1.7.6.8</span>
+<span class="n">pre</span><span class="o">-</span><span class="n">commit</span><span class="o">==</span><span class="mf">3.6.2</span>
+<span class="n">proglog</span><span class="o">==</span><span class="mf">0.1.10</span>
+<span class="n">progress</span><span class="o">-</span><span class="n">reporter</span><span class="o">==</span><span class="mf">2.0</span>
+<span class="n">prometheus_client</span><span class="o">==</span><span class="mf">0.20.0</span>
+<span class="n">promise</span><span class="o">==</span><span class="mf">2.3</span>
+<span class="n">prompt</span><span class="o">-</span><span class="n">toolkit</span><span class="o">==</span><span class="mf">3.0.43</span>
+<span class="n">protobuf</span><span class="o">==</span><span class="mf">3.20.3</span>
+<span class="n">psutil</span><span class="o">==</span><span class="mf">5.9.8</span>
+<span class="n">ptyprocess</span><span class="o">==</span><span class="mf">0.7.0</span>
+<span class="n">pure</span><span class="o">-</span><span class="nb">eval</span><span class="o">==</span><span class="mf">0.2.2</span>
+<span class="n">py</span><span class="o">-</span><span class="n">cpuinfo</span><span class="o">==</span><span class="mf">9.0.0</span>
+<span class="n">pyarrow</span><span class="o">==</span><span class="mf">17.0.0</span>
+<span class="n">pyasn1</span><span class="o">==</span><span class="mf">0.5.1</span>
+<span class="n">pyasn1</span><span class="o">-</span><span class="n">modules</span><span class="o">==</span><span class="mf">0.3.0</span>
+<span class="n">pybtex</span><span class="o">==</span><span class="mf">0.24.0</span>
+<span class="n">pybtex</span><span class="o">-</span><span class="n">docutils</span><span class="o">==</span><span class="mf">1.0.3</span>
+<span class="n">pycodestyle</span><span class="o">==</span><span class="mf">2.9.1</span>
+<span class="n">pycparser</span><span class="o">==</span><span class="mf">2.21</span>
+<span class="n">pydata</span><span class="o">-</span><span class="n">sphinx</span><span class="o">-</span><span class="n">theme</span><span class="o">==</span><span class="mf">0.16.1</span>
+<span class="n">pydoctest</span><span class="o">==</span><span class="mf">0.1.22</span>
+<span class="n">pydot</span><span class="o">==</span><span class="mf">2.0.0</span>
+<span class="n">pydssp</span><span class="o">==</span><span class="mf">0.9.0</span>
+<span class="n">pyEMMA</span><span class="o">==</span><span class="mf">2.5.12</span>
+<span class="n">pyflakes</span><span class="o">==</span><span class="mf">2.5.0</span>
+<span class="n">Pygments</span><span class="o">==</span><span class="mf">2.17.2</span>
+<span class="n">pyparsing</span><span class="o">==</span><span class="mf">3.1.1</span>
+<span class="n">pyPept</span> <span class="o">@</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">Boehringer</span><span class="o">-</span><span class="n">Ingelheim</span><span class="o">/</span><span class="n">pyPept</span><span class="o">.</span><span class="n">git</span><span class="o">@</span><span class="mf">2e9</span><span class="n">b8cce49bfeb26920053c1e1797d9017e52724</span>
+<span class="n">pyproject</span><span class="o">-</span><span class="n">flake8</span><span class="o">==</span><span class="mf">5.0.4</span>
+<span class="n">PyQt5</span><span class="o">==</span><span class="mf">5.15.10</span>
+<span class="n">PyQt5</span><span class="o">-</span><span class="n">Qt5</span><span class="o">==</span><span class="mf">5.15.2</span>
+<span class="n">PyQt5</span><span class="o">-</span><span class="n">sip</span><span class="o">==</span><span class="mf">12.13.0</span>
+<span class="n">PySocks</span><span class="o">==</span><span class="mf">1.7.1</span>
+<span class="n">pytest</span><span class="o">==</span><span class="mf">8.2.2</span>
+<span class="n">python</span><span class="o">-</span><span class="n">dateutil</span><span class="o">==</span><span class="mf">2.8.2</span>
+<span class="n">python</span><span class="o">-</span><span class="n">json</span><span class="o">-</span><span class="n">logger</span><span class="o">==</span><span class="mf">2.0.7</span>
+<span class="n">python</span><span class="o">-</span><span class="n">slugify</span><span class="o">==</span><span class="mf">8.0.4</span>
+<span class="n">python</span><span class="o">-</span><span class="n">version</span><span class="o">==</span><span class="mf">0.0.2</span>
+<span class="n">pytz</span><span class="o">==</span><span class="mf">2024.1</span>
+<span class="n">PyYAML</span><span class="o">==</span><span class="mf">6.0.1</span>
+<span class="n">pyzmq</span><span class="o">==</span><span class="mf">25.1.2</span>
+<span class="n">rdkit</span><span class="o">==</span><span class="mf">2023.9.5</span>
+<span class="n">referencing</span><span class="o">==</span><span class="mf">0.33.0</span>
+<span class="n">requests</span><span class="o">==</span><span class="mf">2.31.0</span>
+<span class="n">requests</span><span class="o">-</span><span class="n">oauthlib</span><span class="o">==</span><span class="mf">1.3.1</span>
+<span class="n">retrying</span><span class="o">==</span><span class="mf">1.3.4</span>
+<span class="n">rfc3339</span><span class="o">-</span><span class="n">validator</span><span class="o">==</span><span class="mf">0.1.4</span>
+<span class="n">rfc3986</span><span class="o">-</span><span class="n">validator</span><span class="o">==</span><span class="mf">0.1.1</span>
+<span class="n">rich</span><span class="o">==</span><span class="mf">13.7.0</span>
+<span class="n">rpds</span><span class="o">-</span><span class="n">py</span><span class="o">==</span><span class="mf">0.18.0</span>
+<span class="n">rsa</span><span class="o">==</span><span class="mf">4.9</span>
+<span class="n">ruamel</span><span class="o">.</span><span class="n">yaml</span><span class="o">==</span><span class="mf">0.18.6</span>
+<span class="n">ruamel</span><span class="o">.</span><span class="n">yaml</span><span class="o">.</span><span class="n">clib</span><span class="o">==</span><span class="mf">0.2.8</span>
+<span class="n">scikit</span><span class="o">-</span><span class="n">learn</span><span class="o">==</span><span class="mf">1.4.1</span><span class="o">.</span><span class="n">post1</span>
+<span class="n">scikit</span><span class="o">-</span><span class="n">spatial</span><span class="o">==</span><span class="mf">7.2.0</span>
+<span class="n">scipy</span><span class="o">==</span><span class="mf">1.12.0</span>
+<span class="n">seaborn</span><span class="o">==</span><span class="mf">0.13.2</span>
+<span class="n">selenium</span><span class="o">==</span><span class="mf">4.21.0</span>
+<span class="n">Send2Trash</span><span class="o">==</span><span class="mf">1.8.2</span>
+<span class="n">setuptools</span><span class="o">==</span><span class="mf">59.6.0</span>
+<span class="n">six</span><span class="o">==</span><span class="mf">1.16.0</span>
+<span class="n">smmap</span><span class="o">==</span><span class="mf">5.0.1</span>
+<span class="n">sniffio</span><span class="o">==</span><span class="mf">1.3.0</span>
+<span class="n">snowballstemmer</span><span class="o">==</span><span class="mf">2.2.0</span>
+<span class="n">sortedcontainers</span><span class="o">==</span><span class="mf">2.4.0</span>
+<span class="n">soupsieve</span><span class="o">==</span><span class="mf">2.5</span>
+<span class="n">Sphinx</span><span class="o">==</span><span class="mf">8.1.3</span>
+<span class="n">sphinx</span><span class="o">-</span><span class="n">click</span><span class="o">==</span><span class="mf">6.0.0</span>
+<span class="n">sphinx</span><span class="o">-</span><span class="n">copybutton</span><span class="o">==</span><span class="mf">0.5.2</span>
+<span class="n">sphinx</span><span class="o">-</span><span class="n">gallery</span><span class="o">==</span><span class="mf">0.18.0</span>
+<span class="n">sphinx_design</span><span class="o">==</span><span class="mf">0.6.1</span>
+<span class="n">sphinxcontrib</span><span class="o">-</span><span class="n">applehelp</span><span class="o">==</span><span class="mf">1.0.8</span>
+<span class="n">sphinxcontrib</span><span class="o">-</span><span class="n">bibtex</span><span class="o">==</span><span class="mf">2.6.3</span>
+<span class="n">sphinxcontrib</span><span class="o">-</span><span class="n">devhelp</span><span class="o">==</span><span class="mf">1.0.6</span>
+<span class="n">sphinxcontrib</span><span class="o">-</span><span class="n">fulltoc</span><span class="o">==</span><span class="mf">1.2.0</span>
+<span class="n">sphinxcontrib</span><span class="o">-</span><span class="n">htmlhelp</span><span class="o">==</span><span class="mf">2.1.0</span>
+<span class="n">sphinxcontrib</span><span class="o">-</span><span class="n">jsmath</span><span class="o">==</span><span class="mf">1.0.1</span>
+<span class="n">sphinxcontrib</span><span class="o">-</span><span class="n">qthelp</span><span class="o">==</span><span class="mf">1.0.7</span>
+<span class="n">sphinxcontrib</span><span class="o">-</span><span class="n">serializinghtml</span><span class="o">==</span><span class="mf">1.1.10</span>
+<span class="n">sphinxcontrib</span><span class="o">-</span><span class="n">youtube</span><span class="o">==</span><span class="mf">1.4.1</span>
+<span class="n">SQLAlchemy</span><span class="o">==</span><span class="mf">2.0.36</span>
+<span class="n">stack</span><span class="o">-</span><span class="n">data</span><span class="o">==</span><span class="mf">0.6.3</span>
+<span class="n">style</span><span class="o">==</span><span class="mf">1.1.0</span>
+<span class="n">sympy</span><span class="o">==</span><span class="mf">1.12.1</span>
+<span class="n">tables</span><span class="o">==</span><span class="mf">3.9.2</span>
+<span class="n">tabulate</span><span class="o">==</span><span class="mf">0.9.0</span>
+<span class="n">tblib</span><span class="o">==</span><span class="mf">3.0.0</span>
+<span class="n">tenacity</span><span class="o">==</span><span class="mf">8.2.3</span>
+<span class="n">tensor</span><span class="o">-</span><span class="n">annotations</span><span class="o">==</span><span class="mf">2.0.3</span>
+<span class="n">tensor</span><span class="o">-</span><span class="n">annotations</span><span class="o">-</span><span class="n">tensorflow</span><span class="o">-</span><span class="n">stubs</span><span class="o">==</span><span class="mf">2.0.3</span>
+<span class="n">tensorboard</span><span class="o">==</span><span class="mf">2.15.2</span>
+<span class="n">tensorboard</span><span class="o">-</span><span class="n">data</span><span class="o">-</span><span class="n">server</span><span class="o">==</span><span class="mf">0.7.2</span>
+<span class="n">tensorflow</span><span class="o">==</span><span class="mf">2.15.0</span><span class="o">.</span><span class="n">post1</span>
+<span class="n">tensorflow</span><span class="o">-</span><span class="n">addons</span><span class="o">==</span><span class="mf">0.23.0</span>
+<span class="n">tensorflow</span><span class="o">-</span><span class="n">datasets</span><span class="o">==</span><span class="mf">4.9.4</span>
+<span class="n">tensorflow</span><span class="o">-</span><span class="n">estimator</span><span class="o">==</span><span class="mf">2.15.0</span>
+<span class="n">tensorflow</span><span class="o">-</span><span class="n">graphics</span><span class="o">==</span><span class="mf">2021.12.3</span>
+<span class="n">tensorflow</span><span class="o">-</span><span class="n">io</span><span class="o">-</span><span class="n">gcs</span><span class="o">-</span><span class="n">filesystem</span><span class="o">==</span><span class="mf">0.36.0</span>
+<span class="n">tensorflow</span><span class="o">-</span><span class="n">metadata</span><span class="o">==</span><span class="mf">1.14.0</span>
+<span class="n">tensorflow</span><span class="o">-</span><span class="n">probability</span><span class="o">==</span><span class="mf">0.23.0</span>
+<span class="n">termcolor</span><span class="o">==</span><span class="mf">2.4.0</span>
+<span class="n">terminado</span><span class="o">==</span><span class="mf">0.18.0</span>
+<span class="n">testbook</span><span class="o">==</span><span class="mf">0.4.2</span>
+<span class="n">text</span><span class="o">-</span><span class="n">unidecode</span><span class="o">==</span><span class="mf">1.3</span>
+<span class="n">texttable</span><span class="o">==</span><span class="mf">1.7.0</span>
+<span class="n">threadpoolctl</span><span class="o">==</span><span class="mf">3.3.0</span>
+<span class="n">tinycss2</span><span class="o">==</span><span class="mf">1.2.1</span>
+<span class="n">tk</span><span class="o">==</span><span class="mf">0.1.0</span>
+<span class="n">toml</span><span class="o">==</span><span class="mf">0.10.2</span>
+<span class="n">tomli</span><span class="o">==</span><span class="mf">2.0.1</span>
+<span class="n">toolz</span><span class="o">==</span><span class="mf">0.12.1</span>
+<span class="n">torch</span><span class="o">==</span><span class="mf">2.3.0</span>
+<span class="n">tornado</span><span class="o">==</span><span class="mf">6.4</span>
+<span class="n">tqdm</span><span class="o">==</span><span class="mf">4.66.2</span>
+<span class="n">traitlets</span><span class="o">==</span><span class="mf">5.14.1</span>
+<span class="n">transformations</span><span class="o">==</span><span class="mf">2024.6.1</span>
+<span class="n">trimesh</span><span class="o">==</span><span class="mf">4.1.4</span>
+<span class="n">trio</span><span class="o">==</span><span class="mf">0.25.1</span>
+<span class="n">trio</span><span class="o">-</span><span class="n">websocket</span><span class="o">==</span><span class="mf">0.11.1</span>
+<span class="n">triton</span><span class="o">==</span><span class="mf">2.3.0</span>
+<span class="n">typeguard</span><span class="o">==</span><span class="mf">2.13.3</span>
+<span class="n">types</span><span class="o">-</span><span class="n">python</span><span class="o">-</span><span class="n">dateutil</span><span class="o">==</span><span class="mf">2.8.19.20240106</span>
+<span class="n">typing_extensions</span><span class="o">==</span><span class="mf">4.9.0</span>
+<span class="n">tzdata</span><span class="o">==</span><span class="mf">2024.1</span>
+<span class="n">unrpa</span><span class="o">==</span><span class="mf">2.3.0</span>
+<span class="n">uri</span><span class="o">-</span><span class="n">template</span><span class="o">==</span><span class="mf">1.3.0</span>
+<span class="n">urllib3</span><span class="o">==</span><span class="mf">2.2.0</span>
+<span class="n">varint</span><span class="o">==</span><span class="mf">1.0.2</span>
+<span class="n">versioneer</span><span class="o">==</span><span class="mf">0.29</span>
+<span class="n">virtualenv</span><span class="o">==</span><span class="mf">20.25.0</span>
+<span class="n">vulture</span><span class="o">==</span><span class="mf">2.11</span>
+<span class="n">wcwidth</span><span class="o">==</span><span class="mf">0.2.13</span>
+<span class="n">webcolors</span><span class="o">==</span><span class="mf">1.13</span>
+<span class="n">webencodings</span><span class="o">==</span><span class="mf">0.5.1</span>
+<span class="n">websocket</span><span class="o">-</span><span class="n">client</span><span class="o">==</span><span class="mf">1.7.0</span>
+<span class="n">Werkzeug</span><span class="o">==</span><span class="mf">3.0.1</span>
+<span class="n">wheel</span><span class="o">==</span><span class="mf">0.42.0</span>
+<span class="n">widgetsnbextension</span><span class="o">==</span><span class="mf">4.0.13</span>
+<span class="o">-</span><span class="n">e</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">kevinsawade</span><span class="o">/</span><span class="n">word_clock</span><span class="o">.</span><span class="n">git</span><span class="nd">@a338bc1b71c5d5538198844a2a7a8841177d64cd</span><span class="c1">#egg=word_clock</span>
+<span class="n">wrapt</span><span class="o">==</span><span class="mf">1.14.1</span>
+<span class="n">wsproto</span><span class="o">==</span><span class="mf">1.2.0</span>
+<span class="n">xarray</span><span class="o">==</span><span class="mf">2024.1.1</span>
+<span class="n">xyzservices</span><span class="o">==</span><span class="mf">2024.4.0</span>
+<span class="n">zict</span><span class="o">==</span><span class="mf">3.0.0</span>
+<span class="n">zipp</span><span class="o">==</span><span class="mf">3.17.0</span>
+
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-complete-ensemble-is-also-present">The complete Ensemble is also present</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-0-csv">cluster_0.csv</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-0-selector-npy">cluster_0_selector.npy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-0-png">cluster_0.png</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-a-hdf5-file-h5-with-encodermap">Loading a HDF5 file (.h5) with EncoderMap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rendering-this-document">Rendering this document</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#html">HTML</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#latex">Latex</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#groff">Groff</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#debug-info">Debug Info</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../../../../_sources/notebooks/publication/trained_networks/figure_3/autoencoder/clusters/cluster0/README.md.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T22:43:00.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

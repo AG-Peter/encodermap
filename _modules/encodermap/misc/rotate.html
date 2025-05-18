@@ -1,0 +1,1080 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>encodermap.misc.rotate &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=c1026b93" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/encodermap/misc/rotate';</script>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T21:24:25"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../../encodermap.html" class="nav-link">encodermap</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">encodermap.misc.rotate</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for encodermap.misc.rotate</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># encodermap/misc/rotate.py</span>
+<span class="c1">################################################################################</span>
+<span class="c1"># EncoderMap: A python library for dimensionality reduction.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2019-2024 University of Konstanz and the Authors</span>
+<span class="c1">#</span>
+<span class="c1"># Authors:</span>
+<span class="c1"># Kevin Sawade</span>
+<span class="c1">#</span>
+<span class="c1"># Encodermap is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as</span>
+<span class="c1"># published by the Free Software Foundation, either version 2.1</span>
+<span class="c1"># of the License, or (at your option) any later version.</span>
+<span class="c1"># This package is distributed in the hope that it will be useful to other</span>
+<span class="c1"># researches. IT DOES NOT COME WITH ANY WARRANTY WHATSOEVER; without even the</span>
+<span class="c1"># implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span>
+<span class="c1"># See the GNU Lesser General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">################################################################################</span>
+<span class="sd">&quot;&quot;&quot;Helpers to apply rotations to molecular coordinates.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Imports</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="c1"># Future Imports at the top</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="c1"># Standard Library Imports</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">overload</span>
+
+<span class="c1"># Third Party Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">transformations</span> <span class="k">as</span> <span class="nn">trans</span>
+<span class="kn">from</span> <span class="nn">optional_imports</span> <span class="kn">import</span> <span class="n">_optional_import</span>
+
+<span class="c1"># Encodermap imports</span>
+<span class="kn">from</span> <span class="nn">encodermap.trajinfo.trajinfo_utils</span> <span class="kn">import</span> <span class="n">_delete_bond</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Optional Imports</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="n">md</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">)</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Typing</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="c1"># Third Party Imports</span>
+    <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+    <span class="kn">from</span> <span class="nn">mdtraj.core.topology</span> <span class="kn">import</span> <span class="n">Atom</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Globals</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="n">__all__</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mdtraj_rotate&quot;</span><span class="p">]</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Functions</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="k">def</span> <span class="nf">arbitrary_dihedral</span><span class="p">(</span>
+    <span class="n">pos</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes the dihedral angles of a position array with shape (n_frames, 4).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pos (np.ndarray): The positions between which to calculate the dihedrals.</span>
+<span class="sd">        out (np.ndarray): A location into which the result is stored. If provided,</span>
+<span class="sd">            it must have a shape that the inputs broadcast to. If not provided</span>
+<span class="sd">            or None, a freshly-allocated array is returned. A tuple (possible</span>
+<span class="sd">            only as a keyword argument) must have length equal to the number of outputs.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: The dihedral angles in radians.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p0</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">p3</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
+
+    <span class="n">b1</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span>
+    <span class="n">b2</span> <span class="o">=</span> <span class="n">p2</span> <span class="o">-</span> <span class="n">p1</span>
+    <span class="n">b3</span> <span class="o">=</span> <span class="n">p3</span> <span class="o">-</span> <span class="n">p2</span>
+
+    <span class="n">c1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">b2</span><span class="p">,</span> <span class="n">b3</span><span class="p">)</span>
+    <span class="n">c2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">)</span>
+
+    <span class="n">p1</span> <span class="o">=</span> <span class="p">(</span><span class="n">b1</span> <span class="o">*</span> <span class="n">c1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">p1</span> <span class="o">*=</span> <span class="p">(</span><span class="n">b2</span> <span class="o">*</span> <span class="n">b2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="p">(</span><span class="n">c1</span> <span class="o">*</span> <span class="n">c2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="mdtraj_rotate">
+<a class="viewcode-back" href="../../../api/encodermap.misc.html#encodermap.misc.rotate.mdtraj_rotate">[docs]</a>
+<span class="k">def</span> <span class="nf">mdtraj_rotate</span><span class="p">(</span>
+    <span class="n">traj</span><span class="p">:</span> <span class="n">md</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">,</span>
+    <span class="n">angles</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">indices</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">deg</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">check_cyclic_backbone</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">verify_every_rotation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">drop_proline_angles</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">delete_sulfide_bridges</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">md</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Uses MDTraj and Christoph Gohlke&#39;s transformations.py to set bond</span>
+<span class="sd">    rotations provided traj.</span>
+
+<span class="sd">    Input can be in radian (set `deg` to False) or degree (set `deg` to True).</span>
+
+<span class="sd">    General procedure:</span>
+<span class="sd">        * Carry out some checks. Shapes of input need to be correct. `traj`</span>
+<span class="sd">            needs to have a single frame and not be of a cyclic protein nor</span>
+<span class="sd">            contain multiple chains.</span>
+<span class="sd">        * Get the indices of the near and far side of the rotations. Every</span>
+<span class="sd">            dihedral angle is indexed by 4 atoms. The rotational axis is located</span>
+<span class="sd">            between the central two atoms (dihedral[1:3]).</span>
+<span class="sd">        * Extend the trajectory. The lengths of dihedrals and sidechain_dihedrals</span>
+<span class="sd">            should match. The frame given by top will be duplicated</span>
+<span class="sd">            len(dihedrals)-times.</span>
+<span class="sd">        * Get the current angles. We know what the final angles should be, but</span>
+<span class="sd">            now how far to rotate the bonds. This can be done by getting the</span>
+<span class="sd">            difference between current and target angle.</span>
+<span class="sd">        * Rotate the bonds. Using Christoph Gohlke&#39;s transformations.py,</span>
+<span class="sd">            the rotation matrix is constructed and the array is padded with</span>
+<span class="sd">            zeros to resemble an array of quaternions.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        traj (mdtraj.Trajectory): The trajectory to use. Needs to have only one frame.</span>
+<span class="sd">        angles (list[list[float]], np.ndarray): The values the angles should</span>
+<span class="sd">            assume after the rotations. This arg can either be a nested list</span>
+<span class="sd">            with floats or (better) a numpy array with the shape angles.shape =</span>
+<span class="sd">            (n_new_frames, n_indexed_dihedrals). Here, angles.shape[0] defines</span>
+<span class="sd">            how many frames the output trajectory is going to have and angles.shape[1]</span>
+<span class="sd">            should be similar to the number of dihedrals you want to rotate around.</span>
+<span class="sd">            A shape of (4, 2) would indicate that two dihedrals are going to be</span>
+<span class="sd">            used for rotation and the output trajectory is going to have 4 frames.</span>
+<span class="sd">        indices (list[list[int]], np.ndarray): A list of ints indexing the</span>
+<span class="sd">            dihedrals to be rotated around. Naturally indices.shape[1] needs</span>
+<span class="sd">            to be 4. Additionally indices.shape[0] needs to be the same as</span>
+<span class="sd">            angles.shape[1]. indices indexes the angles along axis 1 and angles</span>
+<span class="sd">            sets the values of those angles along axis 0.</span>
+<span class="sd">        deg (bool, optional): Whether argument `angles` is in deg.</span>
+<span class="sd">            Defaults to False.</span>
+<span class="sd">        check_cyclic_backbone (bool): Whether the backbone should be</span>
+<span class="sd">            checked for being cyclic. Rotating around a backbone angle for a</span>
+<span class="sd">            cyclic protein is not possible and thus an Exception is raised.</span>
+<span class="sd">            However, rotation around sidechain dihedrals is still possible.</span>
+<span class="sd">            If you are sure you want to rotate sidechain dihedrals set this</span>
+<span class="sd">            argument to False to prevent the cyclic backbone check.</span>
+<span class="sd">            Defaults to True.</span>
+<span class="sd">        verify_every_rotation (bool): Whether the rotation succeeded.</span>
+<span class="sd">        drop_proline_angles (bool): Whether to automatically drop proline</span>
+<span class="sd">            angles and indices.</span>
+<span class="sd">        delete_sulfide_bridges (bool): Whether to automatically remove bonds from</span>
+<span class="sd">            between cysteine residues.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        Exception: If the input seems like it is in degrees, but `deg` is False.</span>
+<span class="sd">        Exception: If `traj` contains more than 1 frame.</span>
+<span class="sd">        Exception: If traj is not fully connected.</span>
+<span class="sd">        Exception: If shapes of `angles` and `indices` mismatches.</span>
+<span class="sd">        Exception: If shape[1] of `indices` is not 4.</span>
+<span class="sd">        Exception: If backbone is cyclic and check_cyclic_backbone is True.</span>
+<span class="sd">        Exception: If the first rotation does not reach a tolerance of 1e-3.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        mdtraj.Trajectory: An MDTraj trajectory with applied rotations.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; import mdtraj as md</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+
+<span class="sd">        &gt;&gt;&gt; # load an arbitrary protein from the pdb</span>
+<span class="sd">        &gt;&gt;&gt; traj = md.load_pdb(&#39;https://files.rcsb.org/view/1GHC.pdb&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; print(traj.n_frames)</span>
+<span class="sd">        14</span>
+
+<span class="sd">        &gt;&gt;&gt; # traj has multiple frames so we remove all but one</span>
+<span class="sd">        &gt;&gt;&gt; traj = traj[0]</span>
+
+<span class="sd">        &gt;&gt;&gt; # Get indices of psi_angles</span>
+<span class="sd">        &gt;&gt;&gt; psi_indices, old_values = md.compute_psi(traj)</span>
+
+<span class="sd">        &gt;&gt;&gt; # set every psi angle to be either 0 or 180 deg</span>
+<span class="sd">        &gt;&gt;&gt; angles = np.full((len(psi_indices), 2), [0, 180]).T</span>
+
+<span class="sd">        &gt;&gt;&gt; # create the new traj with the desired rotations</span>
+<span class="sd">        &gt;&gt;&gt; out_traj = mdtraj_rotate(traj, angles, psi_indices, deg=True)</span>
+<span class="sd">        &gt;&gt;&gt; print(out_traj.n_frames)</span>
+<span class="sd">        2</span>
+
+<span class="sd">        &gt;&gt;&gt; # check values</span>
+<span class="sd">        &gt;&gt;&gt; _, new_values = md.compute_psi(out_traj)</span>
+<span class="sd">        &gt;&gt;&gt; print(np.abs(np.rad2deg(new_values[0, :2]).round(0))) # prevent rounding inconsistencies</span>
+<span class="sd">        [0. 0.]</span>
+<span class="sd">        &gt;&gt;&gt; print(np.abs(np.rad2deg(new_values[1, :2]).round(0))) # prevent rounding inconsistencies</span>
+<span class="sd">        [180. 180.]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Third Party Imports</span>
+    <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+
+    <span class="k">if</span> <span class="n">deg</span><span class="p">:</span>
+        <span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">angles</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Some of your input for `angles` is larger than 2pi. &quot;</span>
+                <span class="s2">&quot;This suggests, that you provided `angles` in deg not in rad. &quot;</span>
+                <span class="s2">&quot;Please set the argument `deg` to True to transpose the values &quot;</span>
+                <span class="s2">&quot;of `angles`.&quot;</span>
+            <span class="p">)</span>
+
+    <span class="c1"># make np arrays</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
+
+    <span class="c1"># if only one rotation/index is given expand dims</span>
+    <span class="k">if</span> <span class="n">angles</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">indices</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># check whether traj has only one frame:</span>
+    <span class="k">if</span> <span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;The provided `traj` has </span><span class="si">{</span><span class="n">traj</span><span class="o">.</span><span class="n">n_frames</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Please provide a traj with only 1 frame.&quot;</span>
+        <span class="p">)</span>
+    <span class="n">traj</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+
+    <span class="c1"># check if shape of indices and dihedrals is consistent</span>
+    <span class="k">if</span> <span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">indices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Shapes of `angles` and `indices` mismatch. Shape[1] of `angles` is &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">, which indicates that you also want to rotate &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;around </span><span class="si">{</span><span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> dihedral(s), but indices indexes &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">indices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> dihedral angle(s). The shapes of the inputs &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;need to match. indices.shape[0] == angles.shape[1]&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># check whether 4 atoms are indexed</span>
+    <span class="k">if</span> <span class="n">indices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;The shape of `indices` needs to be (n_dihedrals, 4), meaning, that &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;a dihedral angle is defined by 4 atoms. Your `indices` argument` &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;has shape </span><span class="si">{</span><span class="n">indices</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> which is not allowed.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># check whether structure is whole</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">to_bondgraph</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">nx</span><span class="o">.</span><span class="n">is_connected</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="s2">&quot;Structure is disjoint and not fully connected. This can be caused by&quot;</span>
+            <span class="s2">&quot;multiple problems: Topology was not parsed correctly &quot;</span>
+            <span class="s2">&quot;(nonstandard residues), traj contains multiple proteins (chains), &quot;</span>
+            <span class="s2">&quot;or water molecules. You can add the bonds with &quot;</span>
+            <span class="s2">&quot;`mdtraj.Topology.add_bond()`, if you know what bonds exactly are missing.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># check whether is cyclic</span>
+    <span class="n">backbone</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">atom_slice</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;backbone&quot;</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">cycles</span><span class="o">.</span><span class="n">find_cycle</span><span class="p">(</span><span class="n">backbone</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">to_bondgraph</span><span class="p">())</span>
+    <span class="k">except</span> <span class="n">nx</span><span class="o">.</span><span class="n">NetworkXNoCycle</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">check_cyclic_backbone</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;The Backbone of your protein is cyclic. You can not rotate &quot;</span>
+                <span class="s2">&quot;around the backbone dihedral (Ramachandran) angles. &quot;</span>
+                <span class="s2">&quot;You can still rotate around sidechain angles. For that set the &quot;</span>
+                <span class="s2">&quot;`check_cyclic_backbone` argument of this function to &quot;</span>
+                <span class="s2">&quot;True to silence this warning.&quot;</span>
+            <span class="p">)</span>
+
+    <span class="c1"># remove proline angles from angles and indices</span>
+    <span class="k">if</span> <span class="n">drop_proline_angles</span><span class="p">:</span>
+        <span class="n">offending_atoms</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;resname PRO and (name CA or name N)&quot;</span><span class="p">))</span>
+        <span class="nb">slice</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">indices</span><span class="p">):</span>
+            <span class="n">ind</span> <span class="o">=</span> <span class="n">ind</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">offending_atoms</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ind</span><span class="p">)))</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="nb">slice</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="nb">slice</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">slice</span><span class="p">)</span>
+        <span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="nb">slice</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="nb">slice</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">offending_atoms</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">indices</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()))</span>
+
+    <span class="c1"># delete sulfide bridges from the topology</span>
+    <span class="k">if</span> <span class="n">delete_sulfide_bridges</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">bonds</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">a</span><span class="o">.</span><span class="n">element</span><span class="o">.</span><span class="n">symbol</span> <span class="o">==</span> <span class="s2">&quot;S&quot;</span>
+                <span class="ow">and</span> <span class="n">b</span><span class="o">.</span><span class="n">element</span><span class="o">.</span><span class="n">symbol</span> <span class="o">==</span> <span class="s2">&quot;S&quot;</span>
+                <span class="ow">and</span> <span class="n">a</span><span class="o">.</span><span class="n">residue</span><span class="o">.</span><span class="n">index</span> <span class="o">!=</span> <span class="n">b</span><span class="o">.</span><span class="n">residue</span><span class="o">.</span><span class="n">index</span>
+            <span class="p">):</span>
+                <span class="n">traj</span><span class="o">.</span><span class="n">top</span> <span class="o">=</span> <span class="n">_delete_bond</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">to_bondgraph</span><span class="p">()</span>
+
+    <span class="c1"># get near and far sides</span>
+    <span class="n">dih_near_sides</span><span class="p">,</span> <span class="n">dih_far_sides</span> <span class="o">=</span> <span class="n">_get_near_and_far_networkx</span><span class="p">(</span>
+        <span class="n">g</span><span class="p">,</span> <span class="n">indices</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">top</span><span class="o">=</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span>
+    <span class="p">)</span>
+
+    <span class="c1"># extend the traj</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">angles</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">out_traj</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">out_traj</span> <span class="o">=</span> <span class="n">out_traj</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+
+    <span class="c1"># adjust the torsions</span>
+    <span class="n">new_xyz</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">out_traj</span><span class="o">.</span><span class="n">xyz</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="c1"># central_dihedrals</span>
+            <span class="n">near_side</span> <span class="o">=</span> <span class="n">dih_near_sides</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">far_side</span> <span class="o">=</span> <span class="n">dih_far_sides</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">dihedral</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">bond</span> <span class="o">=</span> <span class="n">dihedral</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+
+            <span class="c1"># define inputs</span>
+            <span class="n">target_angle</span> <span class="o">=</span> <span class="n">angles</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+            <span class="n">current_angle</span> <span class="o">=</span> <span class="n">_dihedral</span><span class="p">(</span><span class="n">new_xyz</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">dihedral</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">angle</span> <span class="o">=</span> <span class="n">target_angle</span> <span class="o">-</span> <span class="n">current_angle</span>
+            <span class="n">direction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">new_xyz</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">bond</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+            <span class="n">pivot_point</span> <span class="o">=</span> <span class="n">new_xyz</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">bond</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+            <span class="c1"># perform rotation</span>
+            <span class="n">rotmat</span> <span class="o">=</span> <span class="n">trans</span><span class="o">.</span><span class="n">rotation_matrix</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">pivot_point</span><span class="p">)</span>
+            <span class="n">padded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span>
+                <span class="n">new_xyz</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">far_side</span><span class="p">],</span>
+                <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+                <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span>
+                <span class="n">constant_values</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">new_xyz</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">far_side</span><span class="p">]</span> <span class="o">=</span> <span class="n">rotmat</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">padded</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">verify_every_rotation</span><span class="p">:</span>
+                <span class="n">dih_indexes</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">_CVs</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;central_dihedrals&quot;</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Near and far side for dihedral </span><span class="si">{</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">atom</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">dih_indexes</span><span class="p">]</span><span class="si">}</span><span class="s2"> are:&quot;</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Near: </span><span class="si">{</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">atom</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">near_side</span><span class="p">]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">near_side</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Far: </span><span class="si">{</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">atom</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">dih_far_sides</span><span class="p">[</span><span class="n">j</span><span class="p">][:</span><span class="mi">12</span><span class="p">]]</span><span class="si">}</span><span class="s2">..., </span><span class="si">{</span><span class="n">dih_far_sides</span><span class="p">[</span><span class="n">j</span><span class="p">][:</span><span class="mi">12</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Rotation around bond </span><span class="si">{</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">atom</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">bond</span><span class="p">]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">bond</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Positions of near side before rotation are</span><span class="se">\n</span><span class="si">{</span><span class="n">out_traj</span><span class="o">.</span><span class="n">xyz</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">near_side</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Positions of near side after rotation aren</span><span class="se">\n</span><span class="si">{</span><span class="n">new_xyz</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">near_side</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+            <span class="c1"># verify</span>
+            <span class="k">if</span> <span class="n">verify_every_rotation</span><span class="p">:</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="n">_dihedral</span><span class="p">(</span><span class="n">new_xyz</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">dihedral</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">target_angle</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">):</span>
+                    <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Adjusting dihedral angle for atoms </span><span class="si">{</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">atom</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">dihedral</span><span class="p">]</span><span class="si">}</span><span class="s2"> failed with a tolerance of 1e-4.&quot;</span>
+                    <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Target angle was </span><span class="si">{</span><span class="n">target_angle</span><span class="si">}</span><span class="s2"> deg, but rotation yieled angle with </span><span class="si">{</span><span class="n">_</span><span class="si">}</span><span class="s2"> deg.&quot;</span>
+                    <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Current angle was </span><span class="si">{</span><span class="n">current_dih</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="si">}</span><span class="s2">. To reach target angle is a rotation of </span><span class="si">{</span><span class="n">angle</span><span class="si">}</span><span class="s2"> degrees was carried out.&quot;</span>
+                    <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Rotation axis was vector from </span><span class="si">{</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">atom</span><span class="p">(</span><span class="n">bond</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">atom</span><span class="p">(</span><span class="n">bond</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Only these atoms should have been affected by rotation: </span><span class="si">{</span><span class="n">far_side</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="n">s</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">But somehow this method still crashed. Maybe these prints will help.&quot;</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="c1"># overwrite traj and return</span>
+    <span class="n">out_traj</span><span class="o">.</span><span class="n">xyz</span> <span class="o">=</span> <span class="n">new_xyz</span>
+    <span class="k">return</span> <span class="n">out_traj</span></div>
+
+
+
+<span class="nd">@overload</span>
+<span class="k">def</span> <span class="nf">_get_near_and_far_networkx</span><span class="p">(</span>
+    <span class="n">bondgraph</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span>
+    <span class="n">edge_indices</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">top</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">md</span><span class="o">.</span><span class="n">Topology</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">parallel</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span> <span class="o">...</span>
+
+
+<span class="nd">@overload</span>
+<span class="k">def</span> <span class="nf">_get_near_and_far_networkx</span><span class="p">(</span>
+    <span class="n">bondgraph</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span>
+    <span class="n">edge_indices</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">top</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">md</span><span class="o">.</span><span class="n">Topology</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">parallel</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]:</span> <span class="o">...</span>
+
+
+<span class="k">def</span> <span class="nf">_get_near_and_far_networkx</span><span class="p">(</span>
+    <span class="n">bondgraph</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span>
+    <span class="n">edge_indices</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">top</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">md</span><span class="o">.</span><span class="n">Topology</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">parallel</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]],</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns near and far sides for a list of edges giving the indices of the</span>
+<span class="sd">    two atoms at which the structure is broken.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bondgraph (networkx.classes.graph.Graph): The bondgraph describing the protein.</span>
+<span class="sd">        edge_indices (np.ndarray): The edges where the graph will be broken at.</span>
+<span class="sd">        top (Optional[md.Topology]): Used for printing helpful messages in exceptions.</span>
+<span class="sd">        parallel (bool): Whether to return a dense array and None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple[list[np.ndarray], list[np.ndarray]]: A tuple containing the following:</span>
+<span class="sd">            - near_sides (list[np.ndarray]): List of integer arrays giving the near</span>
+<span class="sd">            - sides. len(near_sides) == len(edge_indices).</span>
+<span class="sd">            - far_sides (list[np.ndarray]): Same as near sides, but this time the far sides.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Third Party Imports</span>
+    <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+    <span class="kn">from</span> <span class="nn">networkx.algorithms.components.connected</span> <span class="kn">import</span> <span class="n">connected_components</span>
+
+    <span class="k">assert</span> <span class="n">edge_indices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Can only take `edge_indices` as a numpy array, with shape[1] = 2, but &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;the provided `edge_indices` has shape </span><span class="si">{</span><span class="n">edge_indices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">=}</span><span class="s2">.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">parallel</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">edge_indices</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">bondgraph</span><span class="p">)))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+
+    <span class="n">near_sides</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">far_sides</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">edge</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">edge_indices</span><span class="p">):</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">convert_node_labels_to_integers</span><span class="p">(</span><span class="n">bondgraph</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">G</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="o">*</span><span class="n">edge</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">nx</span><span class="o">.</span><span class="n">NetworkXError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">top</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Seems like the edge </span><span class="si">{</span><span class="p">[</span><span class="n">top</span><span class="o">.</span><span class="n">atom</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">edge</span><span class="p">]</span><span class="si">=}</span><span class="s2"> &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">[</span><span class="n">top</span><span class="o">.</span><span class="n">atom</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">edge</span><span class="p">]</span><span class="si">=}</span><span class="s2">is not &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;part of the graph. This might originate from a bond, that has &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;been deleted, but which atoms are still considered to be part of &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;a dihedral. Maybe you want supplied this topology to the &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;mdtraj_backmapping method with wrong featurization.&quot;</span>
+                <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Please provide arg `top` to learn more about this Exception&quot;</span>
+                <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Could not remove the edge </span><span class="si">{</span><span class="n">edge</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">edge_indices</span><span class="o">.</span><span class="n">shape</span><span class="si">=}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+        <span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="n">connected_components</span><span class="p">(</span><span class="n">G</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">top</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Splitting the topology of the trajectory at the edge &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">edge</span><span class="si">}</span><span class="s2"> does not work. Provide a topology to see, &quot;</span>
+                    <span class="s2">&quot;which atoms are affected&quot;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">shortest_path</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="o">*</span><span class="n">edge</span><span class="p">)</span>
+                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+                <span class="n">path_atoms</span> <span class="o">=</span> <span class="p">[</span><span class="n">top</span><span class="o">.</span><span class="n">atom</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">path</span><span class="p">]</span>
+                <span class="n">a1</span> <span class="o">=</span> <span class="n">top</span><span class="o">.</span><span class="n">atom</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">a2</span> <span class="o">=</span> <span class="n">top</span><span class="o">.</span><span class="n">atom</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Splitting at edge </span><span class="si">{</span><span class="n">edge</span><span class="si">}</span><span class="s2"> does not work. Here are the &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;atoms: </span><span class="si">{</span><span class="n">a1</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">a2</span><span class="si">}</span><span class="s2">. Removing &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;this edge resulted in </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">)</span><span class="si">}</span><span class="s2"> disconnected components. &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;The resSeqs of the residues are </span><span class="si">{</span><span class="n">a1</span><span class="o">.</span><span class="n">residue</span><span class="o">.</span><span class="n">resSeq</span><span class="si">}</span><span class="s2"> and &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">a2</span><span class="o">.</span><span class="n">residue</span><span class="o">.</span><span class="n">resSeq</span><span class="si">}</span><span class="s2">. The indices are </span><span class="si">{</span><span class="n">a1</span><span class="o">.</span><span class="n">residue</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2"> and &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">a2</span><span class="o">.</span><span class="n">residue</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2">. These two atoms are still connected via &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;this path: </span><span class="si">{</span><span class="n">path_atoms</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">components</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">components</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">components</span> <span class="o">=</span> <span class="n">components</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Protein might be cyclic or contain more than 1 chain. </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">assert</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">components</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">components</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;Finding near and far sides failed.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">subgraph</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">components</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">far</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">subgraph</span><span class="o">.</span><span class="n">nodes</span><span class="p">)</span>
+        <span class="n">subgraph</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">components</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">near</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">subgraph</span><span class="o">.</span><span class="n">nodes</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">parallel</span><span class="p">:</span>
+            <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">near</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">far_sides</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">far</span><span class="p">)</span>
+            <span class="n">near_sides</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">near</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">parallel</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">near_sides</span><span class="p">,</span> <span class="n">far_sides</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">out</span><span class="p">,</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">_angle</span><span class="p">(</span>
+    <span class="n">xyz</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">indices</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns current angle between positions.</span>
+
+<span class="sd">    Adapted from MDTraj.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        xyz (np.ndarray). This function only takes a xyz array of a single frame and uses np.expand_dims()</span>
+<span class="sd">            to make that fame work with the `_displacement` function from mdtraj.</span>
+<span class="sd">        indices (Union[np.ndarray, list]): List of 3 ints describing the dihedral.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: The angle.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">indices</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">xyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">ix01</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+    <span class="n">ix21</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+
+    <span class="n">u_prime</span> <span class="o">=</span> <span class="n">_displacement</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="n">ix01</span><span class="p">)</span>
+    <span class="n">v_prime</span> <span class="o">=</span> <span class="n">_displacement</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="n">ix21</span><span class="p">)</span>
+    <span class="n">u_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">u_prime</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">v_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">v_prime</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">u</span> <span class="o">=</span> <span class="n">u_prime</span> <span class="o">/</span> <span class="p">(</span><span class="n">u_norm</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">v_prime</span> <span class="o">/</span> <span class="p">(</span><span class="n">v_norm</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">((</span><span class="n">u</span> <span class="o">*</span> <span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_dihedral</span><span class="p">(</span>
+    <span class="n">xyz</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">indices</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns current dihedral angle between positions.</span>
+
+<span class="sd">    Adapted from MDTraj.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        xyz (np.ndarray). This function only takes a xyz array of a single frame and uses np.expand_dims()</span>
+<span class="sd">            to make that fame work with the `_displacement` function from mdtraj.</span>
+<span class="sd">        indices (Union[np.ndarray, list]): List of 4 ints describing the dihedral.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: The dihedral.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">indices</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">xyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">ix10</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+    <span class="n">ix21</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+    <span class="n">ix32</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+
+    <span class="n">b1</span> <span class="o">=</span> <span class="n">_displacement</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="n">ix10</span><span class="p">)</span>
+    <span class="n">b2</span> <span class="o">=</span> <span class="n">_displacement</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="n">ix21</span><span class="p">)</span>
+    <span class="n">b3</span> <span class="o">=</span> <span class="n">_displacement</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="n">ix32</span><span class="p">)</span>
+
+    <span class="n">c1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">b2</span><span class="p">,</span> <span class="n">b3</span><span class="p">)</span>
+    <span class="n">c2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">)</span>
+
+    <span class="n">p1</span> <span class="o">=</span> <span class="p">(</span><span class="n">b1</span> <span class="o">*</span> <span class="n">c1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">p1</span> <span class="o">*=</span> <span class="p">(</span><span class="n">b2</span> <span class="o">*</span> <span class="n">b2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="p">(</span><span class="n">c1</span> <span class="o">*</span> <span class="n">c2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_displacement</span><span class="p">(</span><span class="n">xyz</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pairs</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Displacement vector between pairs of points in each frame</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        xyz (np.ndarray): The coordinates of the atoms.</span>
+<span class="sd">        pairs (np.ndarray): An array with integers and shape (n_pairs, 2),</span>
+<span class="sd">            defining the atom paris between which the displacement will</span>
+<span class="sd">            be calculated.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: An array with shape (n_pairs, ).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">xyz</span><span class="p">[:,</span> <span class="n">pairs</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">value</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span>
+        <span class="n">xyz</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">pairs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="mi">3</span><span class="p">,</span>
+    <span class="p">),</span> <span class="s2">&quot;v.shape </span><span class="si">%s</span><span class="s2">, xyz.shape </span><span class="si">%s</span><span class="s2">, pairs.shape </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">xyz</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">pairs</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">value</span>
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T21:24:25.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

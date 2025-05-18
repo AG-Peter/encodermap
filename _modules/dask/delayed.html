@@ -1,0 +1,1259 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dask.delayed &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=c1026b93" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/dask/delayed';</script>
+    <link rel="icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T21:24:25"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">dask.delayed</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for dask.delayed</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">types</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">fields</span><span class="p">,</span> <span class="n">is_dataclass</span><span class="p">,</span> <span class="n">replace</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="kn">from</span> <span class="nn">tlz</span> <span class="kn">import</span> <span class="n">concat</span><span class="p">,</span> <span class="n">curry</span><span class="p">,</span> <span class="n">merge</span><span class="p">,</span> <span class="n">unique</span>
+
+<span class="kn">from</span> <span class="nn">dask</span> <span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span> <span class="nn">dask.base</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DaskMethodsMixin</span><span class="p">,</span>
+    <span class="n">dont_optimize</span><span class="p">,</span>
+    <span class="n">is_dask_collection</span><span class="p">,</span>
+    <span class="n">named_schedulers</span><span class="p">,</span>
+    <span class="n">replace_name_in_key</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">dask.base</span> <span class="kn">import</span> <span class="n">tokenize</span> <span class="k">as</span> <span class="n">_tokenize</span>
+<span class="kn">from</span> <span class="nn">dask.context</span> <span class="kn">import</span> <span class="n">globalmethod</span>
+<span class="kn">from</span> <span class="nn">dask.core</span> <span class="kn">import</span> <span class="n">flatten</span><span class="p">,</span> <span class="n">quote</span>
+<span class="kn">from</span> <span class="nn">dask.highlevelgraph</span> <span class="kn">import</span> <span class="n">HighLevelGraph</span>
+<span class="kn">from</span> <span class="nn">dask.typing</span> <span class="kn">import</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">NestedKeys</span>
+<span class="kn">from</span> <span class="nn">dask.utils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">OperatorMethodMixin</span><span class="p">,</span>
+    <span class="n">apply</span><span class="p">,</span>
+    <span class="n">funcname</span><span class="p">,</span>
+    <span class="n">is_namedtuple_instance</span><span class="p">,</span>
+    <span class="n">methodcaller</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Delayed&quot;</span><span class="p">,</span> <span class="s2">&quot;delayed&quot;</span><span class="p">]</span>
+
+
+<span class="n">DEFAULT_GET</span> <span class="o">=</span> <span class="n">named_schedulers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;threads&quot;</span><span class="p">,</span> <span class="n">named_schedulers</span><span class="p">[</span><span class="s2">&quot;sync&quot;</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">unzip</span><span class="p">(</span><span class="n">ls</span><span class="p">,</span> <span class="n">nout</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Unzip a list of lists into ``nout`` outputs.&quot;&quot;&quot;</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">ls</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">out</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[()]</span> <span class="o">*</span> <span class="n">nout</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<span class="k">def</span> <span class="nf">finalize</span><span class="p">(</span><span class="n">collection</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">is_dask_collection</span><span class="p">(</span><span class="n">collection</span><span class="p">)</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;finalize-&quot;</span> <span class="o">+</span> <span class="n">tokenize</span><span class="p">(</span><span class="n">collection</span><span class="p">)</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">__dask_keys__</span><span class="p">()</span>
+    <span class="n">finalize</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">__dask_postcompute__</span><span class="p">()</span>
+    <span class="n">layer</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="p">(</span><span class="n">finalize</span><span class="p">,</span> <span class="n">keys</span><span class="p">)</span> <span class="o">+</span> <span class="n">args</span><span class="p">}</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">HighLevelGraph</span><span class="o">.</span><span class="n">from_collections</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">layer</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span><span class="n">collection</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">Delayed</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">graph</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">unpack_collections</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalize a python object and merge all sub-graphs.</span>
+
+<span class="sd">    - Replace ``Delayed`` with their keys</span>
+<span class="sd">    - Convert literals to things the schedulers can handle</span>
+<span class="sd">    - Extract dask graphs from all enclosed values</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    expr : object</span>
+<span class="sd">        The object to be normalized. This function knows how to handle</span>
+<span class="sd">        dask collections, as well as most builtin python types.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    task : normalized task to be run</span>
+<span class="sd">    collections : a tuple of collections</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import dask</span>
+<span class="sd">    &gt;&gt;&gt; a = delayed(1, &#39;a&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; b = delayed(2, &#39;b&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; task, collections = unpack_collections([a, b, 3])</span>
+<span class="sd">    &gt;&gt;&gt; task</span>
+<span class="sd">    [&#39;a&#39;, &#39;b&#39;, 3]</span>
+<span class="sd">    &gt;&gt;&gt; collections</span>
+<span class="sd">    (Delayed(&#39;a&#39;), Delayed(&#39;b&#39;))</span>
+
+<span class="sd">    &gt;&gt;&gt; task, collections = unpack_collections({a: 1, b: 2})</span>
+<span class="sd">    &gt;&gt;&gt; task</span>
+<span class="sd">    (&lt;class &#39;dict&#39;&gt;, [[&#39;a&#39;, 1], [&#39;b&#39;, 2]])</span>
+<span class="sd">    &gt;&gt;&gt; collections</span>
+<span class="sd">    (Delayed(&#39;a&#39;), Delayed(&#39;b&#39;))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">Delayed</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">expr</span><span class="o">.</span><span class="n">_key</span><span class="p">,</span> <span class="p">(</span><span class="n">expr</span><span class="p">,)</span>
+
+    <span class="k">if</span> <span class="n">is_dask_collection</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span>
+        <span class="n">finalized</span> <span class="o">=</span> <span class="n">finalize</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">finalized</span><span class="o">.</span><span class="n">_key</span><span class="p">,</span> <span class="p">(</span><span class="n">finalized</span><span class="p">,)</span>
+
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="nb">list</span><span class="p">())):</span>
+        <span class="n">expr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="nb">tuple</span><span class="p">())):</span>
+        <span class="n">expr</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="nb">set</span><span class="p">())):</span>
+        <span class="n">expr</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+
+    <span class="n">typ</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">typ</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
+        <span class="n">args</span><span class="p">,</span> <span class="n">collections</span> <span class="o">=</span> <span class="n">unzip</span><span class="p">((</span><span class="n">unpack_collections</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">expr</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">collections</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">unique</span><span class="p">(</span><span class="n">concat</span><span class="p">(</span><span class="n">collections</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="nb">id</span><span class="p">))</span>
+        <span class="c1"># Ensure output type matches input type</span>
+        <span class="k">if</span> <span class="n">typ</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">typ</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">args</span><span class="p">,</span> <span class="n">collections</span>
+
+    <span class="k">if</span> <span class="n">typ</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="n">args</span><span class="p">,</span> <span class="n">collections</span> <span class="o">=</span> <span class="n">unpack_collections</span><span class="p">([[</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">expr</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">args</span><span class="p">),</span> <span class="n">collections</span>
+
+    <span class="k">if</span> <span class="n">typ</span> <span class="ow">is</span> <span class="nb">slice</span><span class="p">:</span>
+        <span class="n">args</span><span class="p">,</span> <span class="n">collections</span> <span class="o">=</span> <span class="n">unpack_collections</span><span class="p">([</span><span class="n">expr</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">expr</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="n">expr</span><span class="o">.</span><span class="n">step</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">slice</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">),</span> <span class="n">collections</span>
+
+    <span class="k">if</span> <span class="n">is_dataclass</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span>
+        <span class="n">args</span><span class="p">,</span> <span class="n">collections</span> <span class="o">=</span> <span class="n">unpack_collections</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span>
+                <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># if init=False, field might not exist</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">collections</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">expr</span><span class="p">,</span> <span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">_fields</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="n">replace</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="o">**</span><span class="n">_fields</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Failed to unpack </span><span class="si">{</span><span class="n">typ</span><span class="si">}</span><span class="s2"> instance. &quot;</span>
+                <span class="s2">&quot;Note that using a custom __init__ is not supported.&quot;</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Failed to unpack </span><span class="si">{</span><span class="n">typ</span><span class="si">}</span><span class="s2"> instance. &quot;</span>
+                <span class="s2">&quot;Note that using fields with `init=False` are not supported.&quot;</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">apply</span><span class="p">,</span> <span class="n">typ</span><span class="p">,</span> <span class="p">(),</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">args</span><span class="p">)),</span> <span class="n">collections</span>
+
+    <span class="k">if</span> <span class="n">is_namedtuple_instance</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span>
+        <span class="n">args</span><span class="p">,</span> <span class="n">collections</span> <span class="o">=</span> <span class="n">unpack_collections</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">expr</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">typ</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">),</span> <span class="n">collections</span>
+
+    <span class="k">return</span> <span class="n">expr</span><span class="p">,</span> <span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">to_task_dask</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalize a python object and merge all sub-graphs.</span>
+
+<span class="sd">    - Replace ``Delayed`` with their keys</span>
+<span class="sd">    - Convert literals to things the schedulers can handle</span>
+<span class="sd">    - Extract dask graphs from all enclosed values</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    expr : object</span>
+<span class="sd">        The object to be normalized. This function knows how to handle</span>
+<span class="sd">        ``Delayed``s, as well as most builtin python types.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    task : normalized task to be run</span>
+<span class="sd">    dask : a merged dask graph that forms the dag for this task</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import dask</span>
+<span class="sd">    &gt;&gt;&gt; a = delayed(1, &#39;a&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; b = delayed(2, &#39;b&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; task, dask = to_task_dask([a, b, 3])  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; task  # doctest: +SKIP</span>
+<span class="sd">    [&#39;a&#39;, &#39;b&#39;, 3]</span>
+<span class="sd">    &gt;&gt;&gt; dict(dask)  # doctest: +SKIP</span>
+<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: 2}</span>
+
+<span class="sd">    &gt;&gt;&gt; task, dasks = to_task_dask({a: 1, b: 2})  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; task  # doctest: +SKIP</span>
+<span class="sd">    (dict, [[&#39;a&#39;, 1], [&#39;b&#39;, 2]])</span>
+<span class="sd">    &gt;&gt;&gt; dict(dask)  # doctest: +SKIP</span>
+<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: 2}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+        <span class="s2">&quot;The dask.delayed.to_dask_dask function has been &quot;</span>
+        <span class="s2">&quot;Deprecated in favor of unpack_collections&quot;</span><span class="p">,</span>
+        <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">Delayed</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">expr</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">expr</span><span class="o">.</span><span class="n">dask</span>
+
+    <span class="k">if</span> <span class="n">is_dask_collection</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;finalize-&quot;</span> <span class="o">+</span> <span class="n">tokenize</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">__dask_keys__</span><span class="p">()</span>
+        <span class="n">opt</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="s2">&quot;__dask_optimize__&quot;</span><span class="p">,</span> <span class="n">dont_optimize</span><span class="p">)</span>
+        <span class="n">finalize</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">__dask_postcompute__</span><span class="p">()</span>
+        <span class="n">dsk</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="p">(</span><span class="n">finalize</span><span class="p">,</span> <span class="n">keys</span><span class="p">)</span> <span class="o">+</span> <span class="n">args</span><span class="p">}</span>
+        <span class="n">dsk</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">opt</span><span class="p">(</span><span class="n">expr</span><span class="o">.</span><span class="n">__dask_graph__</span><span class="p">(),</span> <span class="n">keys</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">name</span><span class="p">,</span> <span class="n">dsk</span>
+
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="nb">list</span><span class="p">())):</span>
+        <span class="n">expr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="nb">tuple</span><span class="p">())):</span>
+        <span class="n">expr</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="nb">set</span><span class="p">())):</span>
+        <span class="n">expr</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+    <span class="n">typ</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">typ</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
+        <span class="n">args</span><span class="p">,</span> <span class="n">dasks</span> <span class="o">=</span> <span class="n">unzip</span><span class="p">((</span><span class="n">to_task_dask</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">expr</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">dsk</span> <span class="o">=</span> <span class="n">merge</span><span class="p">(</span><span class="n">dasks</span><span class="p">)</span>
+        <span class="c1"># Ensure output type matches input type</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">dsk</span><span class="p">)</span> <span class="k">if</span> <span class="n">typ</span> <span class="ow">is</span> <span class="nb">list</span> <span class="k">else</span> <span class="p">((</span><span class="n">typ</span><span class="p">,</span> <span class="n">args</span><span class="p">),</span> <span class="n">dsk</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">typ</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="n">args</span><span class="p">,</span> <span class="n">dsk</span> <span class="o">=</span> <span class="n">to_task_dask</span><span class="p">([[</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">expr</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">args</span><span class="p">),</span> <span class="n">dsk</span>
+
+    <span class="k">if</span> <span class="n">is_dataclass</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span>
+        <span class="n">args</span><span class="p">,</span> <span class="n">dsk</span> <span class="o">=</span> <span class="n">to_task_dask</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span>
+                <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># if init=False, field might not exist</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">apply</span><span class="p">,</span> <span class="n">typ</span><span class="p">,</span> <span class="p">(),</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">args</span><span class="p">)),</span> <span class="n">dsk</span>
+
+    <span class="k">if</span> <span class="n">is_namedtuple_instance</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span>
+        <span class="n">args</span><span class="p">,</span> <span class="n">dsk</span> <span class="o">=</span> <span class="n">to_task_dask</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">expr</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">typ</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">),</span> <span class="n">dsk</span>
+
+    <span class="k">if</span> <span class="n">typ</span> <span class="ow">is</span> <span class="nb">slice</span><span class="p">:</span>
+        <span class="n">args</span><span class="p">,</span> <span class="n">dsk</span> <span class="o">=</span> <span class="n">to_task_dask</span><span class="p">([</span><span class="n">expr</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">expr</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="n">expr</span><span class="o">.</span><span class="n">step</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">slice</span><span class="p">,)</span> <span class="o">+</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">args</span><span class="p">),</span> <span class="n">dsk</span>
+
+    <span class="k">return</span> <span class="n">expr</span><span class="p">,</span> <span class="p">{}</span>
+
+
+<span class="k">def</span> <span class="nf">tokenize</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mapping function from task -&gt; consistent name.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args : object</span>
+<span class="sd">        Python objects that summarize the task.</span>
+<span class="sd">    pure : boolean, optional</span>
+<span class="sd">        If True, a consistent hash function is tried on the input. If this</span>
+<span class="sd">        fails, then a unique identifier is used. If False (default), then a</span>
+<span class="sd">        unique identifier is always used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">pure</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">pure</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;delayed_pure&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">pure</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_tokenize</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+
+
+<span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">delayed</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">traverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wraps a function or object to produce a ``Delayed``.</span>
+
+<span class="sd">    ``Delayed`` objects act as proxies for the object they wrap, but all</span>
+<span class="sd">    operations on them are done lazily by building up a dask graph internally.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    obj : object</span>
+<span class="sd">        The function or object to wrap</span>
+<span class="sd">    name : Dask key, optional</span>
+<span class="sd">        The key to use in the underlying graph for the wrapped object. Defaults</span>
+<span class="sd">        to hashing content. Note that this only affects the name of the object</span>
+<span class="sd">        wrapped by this call to delayed, and *not* the output of delayed</span>
+<span class="sd">        function calls - for that use ``dask_key_name=`` as described below.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">           Because this ``name`` is used as the key in task graphs, you should</span>
+<span class="sd">           ensure that it uniquely identifies ``obj``. If you&#39;d like to provide</span>
+<span class="sd">           a descriptive name that is still unique, combine the descriptive name</span>
+<span class="sd">           with :func:`dask.base.tokenize` of the ``array_like``. See</span>
+<span class="sd">           :ref:`graphs` for more.</span>
+
+<span class="sd">    pure : bool, optional</span>
+<span class="sd">        Indicates whether calling the resulting ``Delayed`` object is a pure</span>
+<span class="sd">        operation. If True, arguments to the call are hashed to produce</span>
+<span class="sd">        deterministic keys. If not provided, the default is to check the global</span>
+<span class="sd">        ``delayed_pure`` setting, and fallback to ``False`` if unset.</span>
+<span class="sd">    nout : int, optional</span>
+<span class="sd">        The number of outputs returned from calling the resulting ``Delayed``</span>
+<span class="sd">        object. If provided, the ``Delayed`` output of the call can be iterated</span>
+<span class="sd">        into ``nout`` objects, allowing for unpacking of results. By default</span>
+<span class="sd">        iteration over ``Delayed`` objects will error. Note, that ``nout=1``</span>
+<span class="sd">        expects ``obj`` to return a tuple of length 1, and consequently for</span>
+<span class="sd">        ``nout=0``, ``obj`` should return an empty tuple.</span>
+<span class="sd">    traverse : bool, optional</span>
+<span class="sd">        By default dask traverses builtin python collections looking for dask</span>
+<span class="sd">        objects passed to ``delayed``. For large collections this can be</span>
+<span class="sd">        expensive. If ``obj`` doesn&#39;t contain any dask objects, set</span>
+<span class="sd">        ``traverse=False`` to avoid doing this traversal.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Apply to functions to delay execution:</span>
+
+<span class="sd">    &gt;&gt;&gt; from dask import delayed</span>
+<span class="sd">    &gt;&gt;&gt; def inc(x):</span>
+<span class="sd">    ...     return x + 1</span>
+
+<span class="sd">    &gt;&gt;&gt; inc(10)</span>
+<span class="sd">    11</span>
+
+<span class="sd">    &gt;&gt;&gt; x = delayed(inc, pure=True)(10)</span>
+<span class="sd">    &gt;&gt;&gt; type(x) == Delayed</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; x.compute()</span>
+<span class="sd">    11</span>
+
+<span class="sd">    Can be used as a decorator:</span>
+
+<span class="sd">    &gt;&gt;&gt; @delayed(pure=True)</span>
+<span class="sd">    ... def add(a, b):</span>
+<span class="sd">    ...     return a + b</span>
+<span class="sd">    &gt;&gt;&gt; add(1, 2).compute()</span>
+<span class="sd">    3</span>
+
+<span class="sd">    ``delayed`` also accepts an optional keyword ``pure``. If False, then</span>
+<span class="sd">    subsequent calls will always produce a different ``Delayed``. This is</span>
+<span class="sd">    useful for non-pure functions (such as ``time`` or ``random``).</span>
+
+<span class="sd">    &gt;&gt;&gt; from random import random</span>
+<span class="sd">    &gt;&gt;&gt; out1 = delayed(random, pure=False)()</span>
+<span class="sd">    &gt;&gt;&gt; out2 = delayed(random, pure=False)()</span>
+<span class="sd">    &gt;&gt;&gt; out1.key == out2.key</span>
+<span class="sd">    False</span>
+
+<span class="sd">    If you know a function is pure (output only depends on the input, with no</span>
+<span class="sd">    global state), then you can set ``pure=True``. This will attempt to apply a</span>
+<span class="sd">    consistent name to the output, but will fallback on the same behavior of</span>
+<span class="sd">    ``pure=False`` if this fails.</span>
+
+<span class="sd">    &gt;&gt;&gt; @delayed(pure=True)</span>
+<span class="sd">    ... def add(a, b):</span>
+<span class="sd">    ...     return a + b</span>
+<span class="sd">    &gt;&gt;&gt; out1 = add(1, 2)</span>
+<span class="sd">    &gt;&gt;&gt; out2 = add(1, 2)</span>
+<span class="sd">    &gt;&gt;&gt; out1.key == out2.key</span>
+<span class="sd">    True</span>
+
+<span class="sd">    Instead of setting ``pure`` as a property of the callable, you can also set</span>
+<span class="sd">    it contextually using the ``delayed_pure`` setting. Note that this</span>
+<span class="sd">    influences the *call* and not the *creation* of the callable:</span>
+
+<span class="sd">    &gt;&gt;&gt; @delayed</span>
+<span class="sd">    ... def mul(a, b):</span>
+<span class="sd">    ...     return a * b</span>
+<span class="sd">    &gt;&gt;&gt; import dask</span>
+<span class="sd">    &gt;&gt;&gt; with dask.config.set(delayed_pure=True):</span>
+<span class="sd">    ...     print(mul(1, 2).key == mul(1, 2).key)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; with dask.config.set(delayed_pure=False):</span>
+<span class="sd">    ...     print(mul(1, 2).key == mul(1, 2).key)</span>
+<span class="sd">    False</span>
+
+<span class="sd">    The key name of the result of calling a delayed object is determined by</span>
+<span class="sd">    hashing the arguments by default. To explicitly set the name, you can use</span>
+<span class="sd">    the ``dask_key_name`` keyword when calling the function:</span>
+
+<span class="sd">    &gt;&gt;&gt; add(1, 2)   # doctest: +SKIP</span>
+<span class="sd">    Delayed(&#39;add-3dce7c56edd1ac2614add714086e950f&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; add(1, 2, dask_key_name=&#39;three&#39;)</span>
+<span class="sd">    Delayed(&#39;three&#39;)</span>
+
+<span class="sd">    Note that objects with the same key name are assumed to have the same</span>
+<span class="sd">    result. If you set the names explicitly you should make sure your key names</span>
+<span class="sd">    are different for different results.</span>
+
+<span class="sd">    &gt;&gt;&gt; add(1, 2, dask_key_name=&#39;three&#39;)</span>
+<span class="sd">    Delayed(&#39;three&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; add(2, 1, dask_key_name=&#39;three&#39;)</span>
+<span class="sd">    Delayed(&#39;three&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; add(2, 2, dask_key_name=&#39;four&#39;)</span>
+<span class="sd">    Delayed(&#39;four&#39;)</span>
+
+<span class="sd">    ``delayed`` can also be applied to objects to make operations on them lazy:</span>
+
+<span class="sd">    &gt;&gt;&gt; a = delayed([1, 2, 3])</span>
+<span class="sd">    &gt;&gt;&gt; isinstance(a, Delayed)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; a.compute()</span>
+<span class="sd">    [1, 2, 3]</span>
+
+<span class="sd">    The key name of a delayed object is hashed by default if ``pure=True`` or</span>
+<span class="sd">    is generated randomly if ``pure=False`` (default).  To explicitly set the</span>
+<span class="sd">    name, you can use the ``name`` keyword. To ensure that the key is unique</span>
+<span class="sd">    you should include the tokenized value as well, or otherwise ensure that</span>
+<span class="sd">    it&#39;s unique:</span>
+
+<span class="sd">    &gt;&gt;&gt; from dask.base import tokenize</span>
+<span class="sd">    &gt;&gt;&gt; data = [1, 2, 3]</span>
+<span class="sd">    &gt;&gt;&gt; a = delayed(data, name=&#39;mylist-&#39; + tokenize(data))</span>
+<span class="sd">    &gt;&gt;&gt; a  # doctest: +SKIP</span>
+<span class="sd">    Delayed(&#39;mylist-55af65871cb378a4fa6de1660c3e8fb7&#39;)</span>
+
+<span class="sd">    Delayed results act as a proxy to the underlying object. Many operators</span>
+<span class="sd">    are supported:</span>
+
+<span class="sd">    &gt;&gt;&gt; (a + [1, 2]).compute()</span>
+<span class="sd">    [1, 2, 3, 1, 2]</span>
+<span class="sd">    &gt;&gt;&gt; a[1].compute()</span>
+<span class="sd">    2</span>
+
+<span class="sd">    Method and attribute access also works:</span>
+
+<span class="sd">    &gt;&gt;&gt; a.count(2).compute()</span>
+<span class="sd">    1</span>
+
+<span class="sd">    Note that if a method doesn&#39;t exist, no error will be thrown until runtime:</span>
+
+<span class="sd">    &gt;&gt;&gt; res = a.not_a_real_method() # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; res.compute()  # doctest: +SKIP</span>
+<span class="sd">    AttributeError(&quot;&#39;list&#39; object has no attribute &#39;not_a_real_method&#39;&quot;)</span>
+
+<span class="sd">    &quot;Magic&quot; methods (e.g. operators and attribute access) are assumed to be</span>
+<span class="sd">    pure, meaning that subsequent calls must return the same results. This</span>
+<span class="sd">    behavior is not overrideable through the ``delayed`` call, but can be</span>
+<span class="sd">    modified using other ways as described below.</span>
+
+<span class="sd">    To invoke an impure attribute or operator, you&#39;d need to use it in a</span>
+<span class="sd">    delayed function with ``pure=False``:</span>
+
+<span class="sd">    &gt;&gt;&gt; class Incrementer:</span>
+<span class="sd">    ...     def __init__(self):</span>
+<span class="sd">    ...         self._n = 0</span>
+<span class="sd">    ...     @property</span>
+<span class="sd">    ...     def n(self):</span>
+<span class="sd">    ...         self._n += 1</span>
+<span class="sd">    ...         return self._n</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt; x = delayed(Incrementer())</span>
+<span class="sd">    &gt;&gt;&gt; x.n.key == x.n.key</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; get_n = delayed(lambda x: x.n, pure=False)</span>
+<span class="sd">    &gt;&gt;&gt; get_n(x).key == get_n(x).key</span>
+<span class="sd">    False</span>
+
+<span class="sd">    In contrast, methods are assumed to be impure by default, meaning that</span>
+<span class="sd">    subsequent calls may return different results. To assume purity, set</span>
+<span class="sd">    ``pure=True``. This allows sharing of any intermediate values.</span>
+
+<span class="sd">    &gt;&gt;&gt; a.count(2, pure=True).key == a.count(2, pure=True).key</span>
+<span class="sd">    True</span>
+
+<span class="sd">    As with function calls, method calls also respect the global</span>
+<span class="sd">    ``delayed_pure`` setting and support the ``dask_key_name`` keyword:</span>
+
+<span class="sd">    &gt;&gt;&gt; a.count(2, dask_key_name=&quot;count_2&quot;)</span>
+<span class="sd">    Delayed(&#39;count_2&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; import dask</span>
+<span class="sd">    &gt;&gt;&gt; with dask.config.set(delayed_pure=True):</span>
+<span class="sd">    ...     print(a.count(2).key == a.count(2).key)</span>
+<span class="sd">    True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Delayed</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="k">if</span> <span class="n">is_dask_collection</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="ow">or</span> <span class="n">traverse</span><span class="p">:</span>
+        <span class="n">task</span><span class="p">,</span> <span class="n">collections</span> <span class="o">=</span> <span class="n">unpack_collections</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="n">collections</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">nout</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">nout</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span> <span class="ow">and</span> <span class="n">nout</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;nout must be None or a non-negative integer, got </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">nout</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">task</span> <span class="ow">is</span> <span class="n">obj</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">prefix</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="n">prefix</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="n">token</span> <span class="o">=</span> <span class="n">tokenize</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">nout</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="n">pure</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">DelayedLeaf</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="n">pure</span><span class="p">,</span> <span class="n">nout</span><span class="o">=</span><span class="n">nout</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">tokenize</span><span class="p">(</span><span class="n">task</span><span class="p">,</span><span class="w"> </span><span class="n">pure</span><span class="o">=</span><span class="n">pure</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">layer</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">task</span><span class="p">}</span>
+        <span class="n">graph</span> <span class="o">=</span> <span class="n">HighLevelGraph</span><span class="o">.</span><span class="n">from_collections</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">layer</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="n">collections</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Delayed</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">nout</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_swap</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">right</span><span class="p">(</span><span class="n">method</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wrapper to create &#39;right&#39; version of operator given left version&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">_swap</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="n">dsk</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">keys</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dsk</span><span class="p">,</span> <span class="n">HighLevelGraph</span><span class="p">):</span>
+        <span class="n">dsk</span> <span class="o">=</span> <span class="n">HighLevelGraph</span><span class="o">.</span><span class="n">from_collections</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">dsk</span><span class="p">),</span> <span class="n">dsk</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="p">())</span>
+    <span class="n">dsk</span> <span class="o">=</span> <span class="n">dsk</span><span class="o">.</span><span class="n">cull</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">flatten</span><span class="p">(</span><span class="n">keys</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">dsk</span>
+
+
+<span class="k">class</span> <span class="nc">Delayed</span><span class="p">(</span><span class="n">DaskMethodsMixin</span><span class="p">,</span> <span class="n">OperatorMethodMixin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents a value to be computed by dask.</span>
+
+<span class="sd">    Equivalent to the output from a single key in a dask graph.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_key&quot;</span><span class="p">,</span> <span class="s2">&quot;_dask&quot;</span><span class="p">,</span> <span class="s2">&quot;_length&quot;</span><span class="p">,</span> <span class="s2">&quot;_layer&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">dsk</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_key</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dask</span> <span class="o">=</span> <span class="n">dsk</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="o">=</span> <span class="n">length</span>
+
+        <span class="c1"># NOTE: Layer is used by `to_delayed` in other collections, but not in normal Delayed use</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_layer</span> <span class="o">=</span> <span class="n">layer</span> <span class="ow">or</span> <span class="n">key</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dsk</span><span class="p">,</span> <span class="n">HighLevelGraph</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_layer</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dsk</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Layer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_layer</span><span class="si">}</span><span class="s2"> not in the HighLevelGraph&#39;s layers: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">dsk</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_key</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dask</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dask</span>
+
+    <span class="k">def</span> <span class="nf">__dask_graph__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Graph</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dask</span>
+
+    <span class="k">def</span> <span class="nf">__dask_keys__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NestedKeys</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__dask_layers__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_layer</span><span class="p">,)</span>
+
+    <span class="k">def</span> <span class="nf">__dask_tokenize__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span>
+
+    <span class="n">__dask_scheduler__</span> <span class="o">=</span> <span class="nb">staticmethod</span><span class="p">(</span><span class="n">DEFAULT_GET</span><span class="p">)</span>
+    <span class="n">__dask_optimize__</span> <span class="o">=</span> <span class="n">globalmethod</span><span class="p">(</span><span class="n">optimize</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;delayed_optimize&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__dask_postcompute__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">single_key</span><span class="p">,</span> <span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__dask_postpersist__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rebuild</span><span class="p">,</span> <span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_rebuild</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dsk</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">rename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">replace_name_in_key</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">rename</span><span class="p">)</span> <span class="k">if</span> <span class="n">rename</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dsk</span><span class="p">,</span> <span class="n">HighLevelGraph</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dsk</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># FIXME Delayed is currently the only collection type that supports both high- and low-level graphs.</span>
+            <span class="c1"># The HLG output of `optimize` will have a layer name that doesn&#39;t match `key`.</span>
+            <span class="c1"># Remove this when Delayed is HLG-only (because `optimize` will only be passed HLGs, so it won&#39;t have</span>
+            <span class="c1"># to generate random layer names).</span>
+            <span class="n">layer</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">dsk</span><span class="o">.</span><span class="n">layers</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">layer</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">Delayed</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">dsk</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="n">layer</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Delayed(</span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__dir__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">dir</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attribute </span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s2"> not found&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">attr</span> <span class="o">==</span> <span class="s2">&quot;visualise&quot;</span><span class="p">:</span>
+            <span class="c1"># added to warn users in case of spelling error</span>
+            <span class="c1"># for more details: https://github.com/dask/dask/issues/5721</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;dask.delayed objects have no `visualise` method. &quot;</span>
+                <span class="s2">&quot;Perhaps you meant `visualize`?&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">DelayedAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="c1"># attr is neither in type(self).__slots__ nor in the __slots__ of any of its</span>
+            <span class="c1"># parent classes, and all the parent classes define __slots__ too.</span>
+            <span class="c1"># This last bit needs to be unit tested: if any of the parent classes omit</span>
+            <span class="c1"># the __slots__ declaration, self will gain a __dict__ and this branch will</span>
+            <span class="c1"># become unreachable.</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Delayed objects are immutable&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Delayed objects are immutable&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Delayed objects of unspecified length are not iterable&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_length</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Delayed objects of unspecified length have no len()&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dask_key_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="n">delayed</span><span class="p">(</span><span class="n">apply</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="n">pure</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dask_key_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">dask_key_name</span><span class="o">=</span><span class="n">dask_key_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Truth of Delayed objects is not supported&quot;</span><span class="p">)</span>
+
+    <span class="n">__nonzero__</span> <span class="o">=</span> <span class="fm">__bool__</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">instance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="n">types</span><span class="o">.</span><span class="n">MethodType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_get_binary_operator</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">inv</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="n">delayed</span><span class="p">(</span><span class="n">right</span><span class="p">(</span><span class="n">op</span><span class="p">)</span> <span class="k">if</span> <span class="n">inv</span> <span class="k">else</span> <span class="n">op</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">_get_unary_operator</span> <span class="o">=</span> <span class="n">_get_binary_operator</span>
+
+
+<span class="k">def</span> <span class="nf">call_function</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">func_token</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">dask_key_name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;dask_key_name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">pure</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;pure&quot;</span><span class="p">,</span> <span class="n">pure</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">dask_key_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">funcname</span><span class="p">(</span><span class="n">func</span><span class="p">),</span>
+            <span class="n">tokenize</span><span class="p">(</span><span class="n">func_token</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="n">pure</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">dask_key_name</span>
+
+    <span class="n">args2</span><span class="p">,</span> <span class="n">collections</span> <span class="o">=</span> <span class="n">unzip</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">unpack_collections</span><span class="p">,</span> <span class="n">args</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">collections</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">concat</span><span class="p">(</span><span class="n">collections</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">dask_kwargs</span><span class="p">,</span> <span class="n">collections2</span> <span class="o">=</span> <span class="n">unpack_collections</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">collections</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">collections2</span><span class="p">)</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="p">(</span><span class="n">apply</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">args2</span><span class="p">),</span> <span class="n">dask_kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="p">(</span><span class="n">func</span><span class="p">,)</span> <span class="o">+</span> <span class="n">args2</span>
+
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">HighLevelGraph</span><span class="o">.</span><span class="n">from_collections</span><span class="p">(</span>
+        <span class="n">name</span><span class="p">,</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">task</span><span class="p">},</span> <span class="n">dependencies</span><span class="o">=</span><span class="n">collections</span>
+    <span class="p">)</span>
+    <span class="n">nout</span> <span class="o">=</span> <span class="n">nout</span> <span class="k">if</span> <span class="n">nout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">Delayed</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">nout</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">DelayedLeaf</span><span class="p">(</span><span class="n">Delayed</span><span class="p">):</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_obj&quot;</span><span class="p">,</span> <span class="s2">&quot;_pure&quot;</span><span class="p">,</span> <span class="s2">&quot;_nout&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span> <span class="o">=</span> <span class="n">obj</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pure</span> <span class="o">=</span> <span class="n">pure</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nout</span> <span class="o">=</span> <span class="n">nout</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dask</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">HighLevelGraph</span><span class="o">.</span><span class="n">from_collections</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_key</span><span class="p">,</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_key</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="p">},</span> <span class="n">dependencies</span><span class="o">=</span><span class="p">()</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">call_function</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_key</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_pure</span><span class="p">,</span> <span class="n">nout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_nout</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">__name__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="vm">__name__</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">__doc__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="vm">__doc__</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">__wrapped__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span>
+
+
+<span class="k">class</span> <span class="nc">DelayedAttr</span><span class="p">(</span><span class="n">Delayed</span><span class="p">):</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_obj&quot;</span><span class="p">,</span> <span class="s2">&quot;_attr&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;getattr-</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">tokenize</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span> <span class="o">=</span> <span class="n">obj</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span> <span class="o">=</span> <span class="n">attr</span>
+
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="c1"># Calling np.dtype(dask.delayed(...)) used to result in a segfault, as</span>
+        <span class="c1"># numpy recursively tries to get `dtype` from the object. This is</span>
+        <span class="c1"># likely a bug in numpy. For now, we can do a dumb for if</span>
+        <span class="c1"># `x.dtype().dtype()` is called (which shouldn&#39;t ever show up in real</span>
+        <span class="c1"># code). See https://github.com/dask/dask/pull/4374#issuecomment-454381465</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="o">==</span> <span class="s2">&quot;dtype&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span> <span class="o">==</span> <span class="s2">&quot;dtype&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Attribute dtype not found&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getattr__</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dask</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">layer</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_key</span><span class="p">:</span> <span class="p">(</span><span class="nb">getattr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">_key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="n">HighLevelGraph</span><span class="o">.</span><span class="n">from_collections</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_key</span><span class="p">,</span> <span class="n">layer</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">call_function</span><span class="p">(</span>
+            <span class="n">methodcaller</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="p">,)</span> <span class="o">+</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>
+        <span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">abs</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">neg</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">invert</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">sub</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">floordiv</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">truediv</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">mod</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">pow</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">and_</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">or_</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">xor</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">lshift</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">rshift</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">eq</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">ge</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">gt</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">ne</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">le</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">lt</span><span class="p">,</span>
+    <span class="n">operator</span><span class="o">.</span><span class="n">getitem</span><span class="p">,</span>
+<span class="p">]:</span>
+    <span class="n">Delayed</span><span class="o">.</span><span class="n">_bind_operator</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">Delayed</span><span class="o">.</span><span class="n">_bind_operator</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">matmul</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">single_key</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pick out the only element of this list, a list of keys&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">seq</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T21:24:25.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

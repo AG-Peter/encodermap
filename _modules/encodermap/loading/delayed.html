@@ -1,0 +1,1126 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>encodermap.loading.delayed &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=c1026b93" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/encodermap/loading/delayed';</script>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
+    <meta name="docbuild:last-update" content="2025-05-15T21:24:25"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../notebooks/index.html">
+    Notebook Gallery
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing/index.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Ag-Peter/encodermap" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../../encodermap.html" class="nav-link">encodermap</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">encodermap.loading.delayed</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for encodermap.loading.delayed</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># encodermap/loading/delayed.py</span>
+<span class="c1">################################################################################</span>
+<span class="c1"># EncoderMap: A python library for dimensionality reduction.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2019-2024 University of Konstanz and the Authors</span>
+<span class="c1">#</span>
+<span class="c1"># Authors:</span>
+<span class="c1"># Kevin Sawade</span>
+<span class="c1">#</span>
+<span class="c1"># Encodermap is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU Lesser General Public License as</span>
+<span class="c1"># published by the Free Software Foundation, either version 2.1</span>
+<span class="c1"># of the License, or (at your option) any later version.</span>
+<span class="c1"># This package is distributed in the hope that it will be useful to other</span>
+<span class="c1"># researches. IT DOES NOT COME WITH ANY WARRANTY WHATSOEVER; without even the</span>
+<span class="c1"># implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span>
+<span class="c1"># See the GNU Lesser General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># See &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c1">################################################################################</span>
+<span class="sd">&quot;&quot;&quot;Functions to use with the DaskFeaturizer class.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Imports</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="c1"># Future Imports at the top</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="c1"># Standard Library Imports</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># Third Party Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">MDAnalysis.coordinates.XTC</span> <span class="kn">import</span> <span class="n">XTCReader</span>
+<span class="kn">from</span> <span class="nn">optional_imports</span> <span class="kn">import</span> <span class="n">_optional_import</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Optional Imports</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="n">dask</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;dask&quot;</span><span class="p">)</span>
+<span class="n">da</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;dask&quot;</span><span class="p">,</span> <span class="s2">&quot;array&quot;</span><span class="p">)</span>
+<span class="n">dd</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;dask&quot;</span><span class="p">,</span> <span class="s2">&quot;dataframe&quot;</span><span class="p">)</span>
+<span class="n">box_vectors_to_lengths_and_angles</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span>
+    <span class="s2">&quot;mdtraj&quot;</span><span class="p">,</span> <span class="s2">&quot;utils.unitcell.box_vectors_to_lengths_and_angles&quot;</span>
+<span class="p">)</span>
+<span class="n">_dist_mic</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry._geometry._dist_mic&quot;</span><span class="p">)</span>
+<span class="n">_dist</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry._geometry._dist&quot;</span><span class="p">)</span>
+<span class="n">_dihedral_mic</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry._geometry._dihedral_mic&quot;</span><span class="p">)</span>
+<span class="n">_dihedral</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry._geometry._dihedral&quot;</span><span class="p">)</span>
+<span class="n">_angle_mic</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry._geometry._angle_mic&quot;</span><span class="p">)</span>
+<span class="n">_angle</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry._geometry._angle&quot;</span><span class="p">)</span>
+<span class="n">jit</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;numba&quot;</span><span class="p">,</span> <span class="s2">&quot;jit&quot;</span><span class="p">)</span>
+<span class="n">prange</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;numba&quot;</span><span class="p">,</span> <span class="s2">&quot;prange&quot;</span><span class="p">)</span>
+<span class="n">xr</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;xarray&quot;</span><span class="p">)</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;mdtraj&quot;</span><span class="p">)</span>
+<span class="n">h5py</span> <span class="o">=</span> <span class="n">_optional_import</span><span class="p">(</span><span class="s2">&quot;h5py&quot;</span><span class="p">)</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Typing</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="c1"># Standard Library Imports</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">overload</span>
+
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="c1"># Third Party Imports</span>
+    <span class="kn">from</span> <span class="nn">dask.delayed</span> <span class="kn">import</span> <span class="n">Delayed</span>
+
+    <span class="c1"># Encodermap imports</span>
+    <span class="kn">from</span> <span class="nn">encodermap.loading.featurizer</span> <span class="kn">import</span> <span class="n">DaskFeaturizer</span>
+    <span class="kn">from</span> <span class="nn">encodermap.trajinfo.info_single</span> <span class="kn">import</span> <span class="n">SingleTraj</span>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Utils</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="c1"># @jit(parallel=True, nopython=True)</span>
+<div class="viewcode-block" id="calc_bravais_box">
+<a class="viewcode-back" href="../../../api/encodermap.loading.html#encodermap.loading.delayed.calc_bravais_box">[docs]</a>
+<span class="k">def</span> <span class="nf">calc_bravais_box</span><span class="p">(</span><span class="n">box_info</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the Bravais vectors from lengths and angles (in degrees).</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        This code is adapted from gyroid, which is licensed under the BSD</span>
+<span class="sd">        http://pythonhosted.org/gyroid/_modules/gyroid/unitcell.html</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        box_info (np.ndarray): The box info, where the columns are ordered as</span>
+<span class="sd">            follows: a, b, c, alpha, beta. gamma in degree.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: The bravais vectors as a shape (n_frames, 3, 3) array.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a_length</span><span class="p">,</span> <span class="n">b_length</span><span class="p">,</span> <span class="n">c_length</span> <span class="o">=</span> <span class="n">box_info</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span> <span class="o">=</span> <span class="n">box_info</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:]</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">a_length</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+    <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">a_length</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">b_length</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+    <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">b_length</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+    <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">b_length</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+    <span class="n">cx</span> <span class="o">=</span> <span class="n">c_length</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+    <span class="n">cy</span> <span class="o">=</span> <span class="n">c_length</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">gamma</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+    <span class="n">cz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">c_length</span> <span class="o">*</span> <span class="n">c_length</span> <span class="o">-</span> <span class="n">cx</span> <span class="o">*</span> <span class="n">cx</span> <span class="o">-</span> <span class="n">cy</span> <span class="o">*</span> <span class="n">cy</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">c_length</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+    <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">cx</span>
+    <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">cy</span>
+    <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">cz</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">b</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">c</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Shape is messed up.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Make sure that all vector components that are _almost_ 0 are set exactly</span>
+    <span class="c1"># to 0</span>
+    <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-6</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">tol</span> <span class="ow">and</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
+                <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">tol</span> <span class="ow">and</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
+                <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">tol</span> <span class="ow">and</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
+                <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="n">unitcell_vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">((</span><span class="n">a</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">T</span><span class="p">)),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">unitcell_vectors</span></div>
+
+
+
+<span class="nd">@dask</span><span class="o">.</span><span class="n">delayed</span><span class="p">(</span><span class="n">nout</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_load_xyz</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">frame_indices</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Distances in nm. Angles in degree.&quot;&quot;&quot;</span>
+    <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span>
+        <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">frame_indices</span><span class="p">),</span> <span class="n">traj</span><span class="o">.</span><span class="n">n_atoms</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;C&quot;</span>
+    <span class="p">)</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">frame_indices</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">)</span>
+    <span class="n">unitcell_info</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">frame_indices</span><span class="p">),</span> <span class="mi">6</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ts</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">traj</span><span class="p">[</span><span class="n">frame_indices</span><span class="p">]):</span>
+        <span class="n">positions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">positions</span>
+        <span class="n">time</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">time</span>
+        <span class="n">unitcell_info</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">_unitcell</span>
+    <span class="n">positions</span> <span class="o">/=</span> <span class="mi">10</span>  <span class="c1"># for some heretical reason, MDAnalysis uses angstrom</span>
+    <span class="n">unitcell_info</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">/=</span> <span class="mi">10</span>
+    <span class="n">unitcell_vectors</span> <span class="o">=</span> <span class="n">calc_bravais_box</span><span class="p">(</span><span class="n">unitcell_info</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">positions</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">unitcell_vectors</span><span class="p">,</span> <span class="n">unitcell_info</span>
+
+
+<div class="viewcode-block" id="load_xyz">
+<a class="viewcode-back" href="../../../api/encodermap.loading.html#encodermap.loading.delayed.load_xyz">[docs]</a>
+<span class="k">def</span> <span class="nf">load_xyz</span><span class="p">(</span>
+    <span class="n">traj_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">frame_indices</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">traj_num</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">da</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">da</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">da</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">da</span><span class="o">.</span><span class="n">array</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">traj_file</span><span class="p">)</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.h5&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">load_xyz_from_h5</span><span class="p">(</span><span class="n">traj_file</span><span class="p">,</span> <span class="n">frame_indices</span><span class="p">,</span> <span class="n">traj_num</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">traj_file</span><span class="p">)</span><span class="o">.</span><span class="n">suffix</span> <span class="o">!=</span> <span class="s2">&quot;.xtc&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Currently only .xtc and .h5 trajectory files are supported. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;But adding more formats is easy. Raise an issue, if you want &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;to have them added.&quot;</span>
+        <span class="p">)</span>
+    <span class="n">traj</span> <span class="o">=</span> <span class="n">XTCReader</span><span class="p">(</span><span class="n">traj_file</span><span class="p">)</span>
+    <span class="n">n_atoms</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">n_atoms</span>
+    <span class="n">n_frames</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame_indices</span><span class="p">)</span>
+    <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">uv</span><span class="p">,</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">_load_xyz</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">frame_indices</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">from_delayed</span><span class="p">(</span>
+        <span class="n">p</span><span class="p">,</span>
+        <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_frames</span><span class="p">,</span> <span class="n">n_atoms</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">from_delayed</span><span class="p">(</span>
+        <span class="n">t</span><span class="p">,</span>
+        <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_frames</span><span class="p">,),</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">uv</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">from_delayed</span><span class="p">(</span>
+        <span class="n">uv</span><span class="p">,</span>
+        <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_frames</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ui</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">from_delayed</span><span class="p">(</span>
+        <span class="n">ui</span><span class="p">,</span>
+        <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_frames</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">uv</span><span class="p">,</span> <span class="n">ui</span></div>
+
+
+
+<span class="nd">@dask</span><span class="o">.</span><span class="n">delayed</span><span class="p">(</span><span class="n">nout</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_load_xyz_from_h5</span><span class="p">(</span>
+    <span class="n">traj_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">frame_indices</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">traj_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Distances in nm. Angles in degree.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        traj_file (str): The file to load.</span>
+<span class="sd">        frame_indices (np.ndarray): An int array giving the positions to load.</span>
+<span class="sd">        traj_num (int): Which traj num the output should be put to.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray: A four-tuple of np</span>
+<span class="sd">            arrays. The order of these arrays is:</span>
+<span class="sd">                * positions: Shape (len(frame_indices), 3): The xyz coordinates in nm.</span>
+<span class="sd">                * time: shape (len(frame_indices), ): The time in ps.</span>
+<span class="sd">                * unitcell_vectors: Shape (len(frame_indices), 3, 3): The unitcell vectors.</span>
+<span class="sd">                * unitcell_info: Shape (len(frame_indices), 6), where [:, :3] are</span>
+<span class="sd">                    the unitcell lengths in nm and [:, 3:] are the unitcell angles</span>
+<span class="sd">                    in degree.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;coordinates&quot;</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;cell_lengths&quot;</span><span class="p">,</span> <span class="s2">&quot;cell_angles&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">traj_num</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">keys_with_num</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">traj_num</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">keys_with_num</span> <span class="o">=</span> <span class="n">keys</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">traj_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">out</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">keys_with_num</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">f</span> <span class="ow">and</span> <span class="n">out</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">out</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">elif</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">out</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">frame_indices</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">out</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">out</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">out</span><span class="p">][</span><span class="n">frame_indices</span><span class="p">]</span>
+    <span class="n">unitcell_info</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">frame_indices</span><span class="p">),</span> <span class="mi">6</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">)</span>
+    <span class="n">unitcell_info</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell_lengths&quot;</span><span class="p">]</span>
+    <span class="n">unitcell_info</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cell_angles&quot;</span><span class="p">]</span>
+    <span class="n">unitcell_vectors</span> <span class="o">=</span> <span class="n">calc_bravais_box</span><span class="p">(</span><span class="n">unitcell_info</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;coordinates&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">],</span> <span class="n">unitcell_vectors</span><span class="p">,</span> <span class="n">unitcell_info</span>
+
+
+<div class="viewcode-block" id="load_xyz_from_h5">
+<a class="viewcode-back" href="../../../api/encodermap.loading.html#encodermap.loading.delayed.load_xyz_from_h5">[docs]</a>
+<span class="k">def</span> <span class="nf">load_xyz_from_h5</span><span class="p">(</span>
+    <span class="n">traj_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">frame_indices</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">traj_num</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">da</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">da</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">da</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">da</span><span class="o">.</span><span class="n">array</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads xyz coordinates and unitcell info from a block in a .h5 file.</span>
+
+<span class="sd">    Standard MDTraj h5 keys are:</span>
+<span class="sd">        [&#39;cell_angles&#39;, &#39;cell_lengths&#39;, &#39;coordinates&#39;, &#39;time&#39;, &#39;topology&#39;]</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        traj_file (str): The file to load.</span>
+<span class="sd">        frame_indices (np.ndarray): An int array giving the positions to load.</span>
+<span class="sd">        traj_num (int): Which traj num the output should be put to.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple[da.array, da.array, da.array, da.array]: A four-tuple of dask</span>
+<span class="sd">            arrays that contain dask delayeds. The order of these arrays is:</span>
+<span class="sd">                * positions: Shape (len(frame_indices), 3): The xyz coordinates in nm.</span>
+<span class="sd">                * time: shape (len(frame_indices), ): The time in ps.</span>
+<span class="sd">                * unitcell_vectors: Shape (len(frame_indices), 3, 3): The unitcell vectors.</span>
+<span class="sd">                * unitcell_info: Shape (len(frame_indices), 6), where [:, :3] are</span>
+<span class="sd">                    the unitcell lengths in nm and [:, 3:] are the unitcell angles</span>
+<span class="sd">                    in degree.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Encodermap imports</span>
+    <span class="kn">from</span> <span class="nn">encodermap.trajinfo.info_all</span> <span class="kn">import</span> <span class="n">HDF5GroupWrite</span>
+
+    <span class="n">n_frames</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame_indices</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">HDF5GroupWrite</span><span class="p">(</span><span class="n">traj_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;topology&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="n">traj_num</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">top</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read_topology</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;topology_</span><span class="si">{</span><span class="n">traj_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">top</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read_topology</span><span class="p">(</span><span class="s2">&quot;topology&quot;</span><span class="p">)</span>
+    <span class="n">n_atoms</span> <span class="o">=</span> <span class="n">top</span><span class="o">.</span><span class="n">n_atoms</span>
+    <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">uv</span><span class="p">,</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">_load_xyz_from_h5</span><span class="p">(</span><span class="n">traj_file</span><span class="p">,</span> <span class="n">frame_indices</span><span class="p">,</span> <span class="n">traj_num</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">from_delayed</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_frames</span><span class="p">,</span> <span class="n">n_atoms</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">from_delayed</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_frames</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+    <span class="n">uv</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">from_delayed</span><span class="p">(</span><span class="n">uv</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_frames</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+    <span class="n">ui</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">from_delayed</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_frames</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">uv</span><span class="p">,</span> <span class="n">ui</span></div>
+
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Dask graph creation</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="nd">@overload</span>
+<span class="k">def</span> <span class="nf">build_dask_xarray</span><span class="p">(</span>
+    <span class="n">featurizer</span><span class="p">:</span> <span class="n">DaskFeaturizer</span><span class="p">,</span>
+    <span class="n">traj</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SingleTraj</span><span class="p">],</span>
+    <span class="n">streamable</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">return_delayeds</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="kc">True</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">xr</span><span class="o">.</span><span class="n">Variable</span><span class="p">]]:</span> <span class="o">...</span>
+
+
+<span class="nd">@overload</span>
+<span class="k">def</span> <span class="nf">build_dask_xarray</span><span class="p">(</span>
+    <span class="n">featurizer</span><span class="p">:</span> <span class="n">DaskFeaturizer</span><span class="p">,</span>
+    <span class="n">traj</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SingleTraj</span><span class="p">],</span>
+    <span class="n">streamable</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">return_delayeds</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span> <span class="o">...</span>
+
+
+<div class="viewcode-block" id="build_dask_xarray">
+<a class="viewcode-back" href="../../../api/encodermap.loading.html#encodermap.loading.delayed.build_dask_xarray">[docs]</a>
+<span class="k">def</span> <span class="nf">build_dask_xarray</span><span class="p">(</span>
+    <span class="n">featurizer</span><span class="p">:</span> <span class="n">DaskFeaturizer</span><span class="p">,</span>
+    <span class="n">traj</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SingleTraj</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">streamable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">return_delayeds</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">xr</span><span class="o">.</span><span class="n">Variable</span><span class="p">]]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Builds a large dask xarray, which will be distributively evaluated.</span>
+
+<span class="sd">    This class takes a `DaskFeaturizer` class, which contains a list of features.</span>
+<span class="sd">    Every feature in this list contains enough information for the delayed functions</span>
+<span class="sd">    to calculate the requested quantities when provided the xyz coordinates of the</span>
+<span class="sd">    atoms, the unitcell vectors, and the unitcell infos as a Bravais matrix.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        featurizer (DaskFeaturizer): An instance of the DaskFeaturizer.</span>
+<span class="sd">        return_coordinates (bool): Whether to add this information:</span>
+<span class="sd">            all_xyz, all_time, all_cell_lengths, all_cell_angles</span>
+<span class="sd">            to the returned values. Defaults to False.</span>
+<span class="sd">        streamable (bool): Whether to divide the calculations into one-frame</span>
+<span class="sd">            blocks, which can then only be calculated when requested.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Union[xr.Dataset, tuple[xr.Dataset, list[dask.delayed]]:</span>
+<span class="sd">            When `return_coordinates` is False, only a xr.Dataset is returned.</span>
+<span class="sd">            Otherwise, a tuple with a xr.Dataset and a sequence of dask.Delayed</span>
+<span class="sd">            objects is returned.</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Imports</span>
+    <span class="c1"># Encodermap imports</span>
+    <span class="kn">from</span> <span class="nn">encodermap.loading.features</span> <span class="kn">import</span> <span class="n">CustomFeature</span>
+    <span class="kn">from</span> <span class="nn">encodermap.misc.xarray</span> <span class="kn">import</span> <span class="p">(</span>
+        <span class="n">FEATURE_NAMES</span><span class="p">,</span>
+        <span class="n">make_dataarray</span><span class="p">,</span>
+        <span class="n">make_frame_CV_dataarray</span><span class="p">,</span>
+        <span class="n">make_position_dataarray</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="kn">from</span> <span class="nn">encodermap.trajinfo.trajinfo_utils</span> <span class="kn">import</span> <span class="n">trajs_combine_attrs</span>
+
+    <span class="c1"># definitions</span>
+    <span class="n">coordinates</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;md_frame&quot;</span><span class="p">,</span> <span class="s2">&quot;md_atom&quot;</span><span class="p">,</span> <span class="s2">&quot;md_cart&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;md_frame&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;cell_lengths&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;md_frame&quot;</span><span class="p">,</span> <span class="s2">&quot;md_length&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;cell_angles&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;md_frame&quot;</span><span class="p">,</span> <span class="s2">&quot;md_angle&quot;</span><span class="p">],</span>
+    <span class="p">}</span>
+
+    <span class="c1"># pre-define blocks from the trajectories</span>
+    <span class="n">n_blocks</span> <span class="o">=</span> <span class="mi">10</span>
+
+    <span class="c1"># append delayeds here:</span>
+    <span class="k">if</span> <span class="n">return_delayeds</span><span class="p">:</span>
+        <span class="n">delayeds</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">delayeds</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">featurizer</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">active_features</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+    <span class="c1"># collect the Datasets in this list</span>
+    <span class="n">DSs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># if the dask featurizer contains an `EnsembleFeaturizer`, we can use `itertrajs()`</span>
+    <span class="k">if</span> <span class="n">traj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">featurizer</span><span class="o">.</span><span class="n">feat</span><span class="p">,</span> <span class="s2">&quot;trajs&quot;</span><span class="p">):</span>
+            <span class="n">iterable</span> <span class="o">=</span> <span class="n">featurizer</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">trajs</span><span class="o">.</span><span class="n">itertrajs</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">iterable</span> <span class="o">=</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">featurizer</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">traj</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">iterable</span> <span class="o">=</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">traj</span><span class="p">])</span>
+
+    <span class="c1"># iter over trajs or just the one</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">traj</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="n">n_frames</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">streamable</span><span class="p">:</span>
+            <span class="n">n_frames_per_block</span> <span class="o">=</span> <span class="n">n_frames</span> <span class="o">//</span> <span class="n">n_blocks</span>
+            <span class="n">blocks</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">n_frames_per_block</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">n_frames_per_block</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_blocks</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="p">]</span>
+            <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">((</span><span class="n">n_blocks</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">n_frames_per_block</span><span class="p">,</span> <span class="n">n_frames</span><span class="p">))</span>
+            <span class="c1"># remove empty blocks</span>
+            <span class="n">blocks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">blocks</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_frames_per_block</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">blocks</span> <span class="o">=</span> <span class="p">[[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_frames</span><span class="p">)]</span>
+
+        <span class="c1"># collect multiple DataArrays here</span>
+        <span class="n">DAs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">indexes</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">delayeds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">xyz_traj</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">time_traj</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">lengths_traj</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">angles_traj</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># distribute the loading to multiple workers</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">block</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">blocks</span><span class="p">):</span>
+            <span class="c1"># get the actual frame indices if the traj was sliced</span>
+            <span class="k">if</span> <span class="n">traj</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">frame_indices</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">id</span><span class="p">[</span><span class="n">block</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">frame_indices</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">id</span><span class="p">[</span><span class="n">block</span><span class="p">]</span>
+
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame_indices</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">frame_indices</span><span class="si">=}</span><span class="s2">&quot;</span>
+            <span class="n">xyz</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">unitcell_vector</span><span class="p">,</span> <span class="n">unitcell_info</span> <span class="o">=</span> <span class="n">load_xyz</span><span class="p">(</span>
+                <span class="n">traj</span><span class="o">.</span><span class="n">traj_file</span><span class="p">,</span> <span class="n">frame_indices</span><span class="p">,</span> <span class="n">traj</span><span class="o">.</span><span class="n">traj_num</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">delayeds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">unitcell_lengths</span> <span class="o">=</span> <span class="n">unitcell_info</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+                <span class="n">unitcell_angles</span> <span class="o">=</span> <span class="n">unitcell_info</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:]</span>
+                <span class="n">xyz_traj</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xyz</span><span class="p">)</span>
+                <span class="n">time_traj</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+                <span class="n">lengths_traj</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unitcell_lengths</span><span class="p">)</span>
+                <span class="n">angles_traj</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unitcell_angles</span><span class="p">)</span>
+
+            <span class="c1"># iterate over the features and let them use the traj information</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">featurizer</span><span class="o">.</span><span class="n">feat</span><span class="p">,</span> <span class="s2">&quot;trajs&quot;</span><span class="p">):</span>
+                <span class="n">features</span> <span class="o">=</span> <span class="n">featurizer</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">active_features</span><span class="p">[</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">features</span> <span class="o">=</span> <span class="n">featurizer</span><span class="o">.</span><span class="n">feat</span><span class="o">.</span><span class="n">active_features</span>
+
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">feat</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">features</span><span class="p">):</span>
+                <span class="c1"># the name of the feature will be used for traceability</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">CustomFeature</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span>
+                    <span class="n">feat</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">CustomFeature</span>
+                <span class="p">):</span>
+                    <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="s2">&quot;dask_indices&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span>
+                        <span class="n">feat</span><span class="p">,</span> <span class="s2">&quot;dask_transform&quot;</span>
+                    <span class="p">),</span> <span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;For `feature.transform()` to be acceptable as delayed, &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;the feature needs to implement the `dask_indices` property &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;and `dask_transform` staticmethod. The feature </span><span class="si">{</span><span class="n">feat</span><span class="si">}</span><span class="s2"> has &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;this these methods and attributes &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">feat</span><span class="o">.</span><span class="fm">__dir__</span><span class="p">()</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">a</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)]</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">assert</span> <span class="n">feat</span><span class="o">.</span><span class="n">delayed</span><span class="p">,</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;The feature </span><span class="si">{</span><span class="n">feat</span><span class="si">}</span><span class="s2"> was not altered to return a delayed &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;transform. Please read up in `encodermap.DaskFeaturizer` how &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;to make features work with dask delayed.&quot;</span>
+                <span class="p">)</span>
+
+                <span class="c1"># decide on the name</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">FEATURE_NAMES</span><span class="p">[</span><span class="n">feat</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+                <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                            <span class="n">name</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">name</span>
+                            <span class="k">if</span> <span class="s2">&quot;mdtraj.trajectory&quot;</span> <span class="ow">in</span> <span class="n">feat</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                                <span class="n">feat</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+                                <span class="n">name</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">name</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+                            <span class="n">feat</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">name</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+                        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;CustomFeature&quot;</span><span class="p">:</span>
+                            <span class="n">name</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">describe</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">feat</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+                <span class="c1"># the feature length is given by the describe() of the feature</span>
+                <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">describe</span><span class="p">()):</span>
+                    <span class="n">feat_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">feat</span><span class="o">.</span><span class="n">describe</span><span class="p">()(</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="p">)])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">feat_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+
+                <span class="c1"># dynamically populate kwargs with feature settings</span>
+                <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;indexes&quot;</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">feat</span><span class="o">.</span><span class="n">dask_indices</span><span class="p">)}</span>
+                <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">_use_periodic</span><span class="p">:</span>
+                    <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;periodic&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">periodic</span>
+                <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">_use_angle</span><span class="p">:</span>
+                    <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;deg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">deg</span>
+                    <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;cossin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">cossin</span>
+                <span class="c1"># if feat._use_omega:</span>
+                <span class="c1">#     kwargs[&quot;omega&quot;] = feat.omega</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="s2">&quot;_nonstandard_transform_args&quot;</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">feat</span><span class="o">.</span><span class="n">_nonstandard_transform_args</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+                            <span class="n">kwargs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">kwargs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">from_delayed</span><span class="p">(</span>
+                    <span class="n">feat</span><span class="o">.</span><span class="n">dask_transform</span><span class="p">(</span>
+                        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+                        <span class="n">xyz</span><span class="o">=</span><span class="n">xyz</span><span class="p">,</span>
+                        <span class="n">unitcell_vectors</span><span class="o">=</span><span class="n">unitcell_vector</span><span class="p">,</span>
+                        <span class="n">unitcell_info</span><span class="o">=</span><span class="n">unitcell_info</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">frame_indices</span><span class="p">),</span> <span class="n">feat_length</span><span class="p">),</span>
+                    <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="s2">&quot;deg&quot;</span><span class="p">):</span>
+                    <span class="n">deg</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">deg</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">deg</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="n">feat</span><span class="o">.</span><span class="n">name</span>
+                    <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;AllCartesians&quot;</span><span class="p">,</span> <span class="s2">&quot;CentralCartesians&quot;</span><span class="p">,</span> <span class="s2">&quot;SideChainCartesians&quot;</span><span class="p">]</span>
+                    <span class="ow">or</span> <span class="n">feat</span><span class="o">.</span><span class="n">atom_feature</span>
+                <span class="p">):</span>
+                    <span class="n">a</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">frame_indices</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+                    <span class="n">a</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">featurizer</span><span class="p">,</span> <span class="s2">&quot;indices_by_top&quot;</span><span class="p">):</span>
+                        <span class="n">feat</span><span class="o">.</span><span class="n">indexes</span> <span class="o">=</span> <span class="n">featurizer</span><span class="o">.</span><span class="n">indices_by_top</span><span class="p">[</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="p">][</span><span class="n">feat</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+                    <span class="n">dataarray</span><span class="p">,</span> <span class="n">ind_dataarray</span> <span class="o">=</span> <span class="n">make_position_dataarray</span><span class="p">(</span>
+                        <span class="n">feat</span><span class="o">.</span><span class="n">describe</span><span class="p">(),</span>
+                        <span class="n">traj</span><span class="p">[</span><span class="n">block</span><span class="p">],</span>
+                        <span class="n">name</span><span class="p">,</span>
+                        <span class="n">a</span><span class="p">,</span>
+                        <span class="n">deg</span><span class="o">=</span><span class="n">deg</span><span class="p">,</span>
+                        <span class="n">feat</span><span class="o">=</span><span class="n">feat</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">a</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">_dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">dataarray</span><span class="p">,</span> <span class="n">ind_dataarray</span> <span class="o">=</span> <span class="n">make_frame_CV_dataarray</span><span class="p">(</span>
+                            <span class="n">feat</span><span class="o">.</span><span class="n">describe</span><span class="p">(),</span>
+                            <span class="n">traj</span><span class="p">[</span><span class="n">block</span><span class="p">],</span>
+                            <span class="n">name</span><span class="p">,</span>
+                            <span class="n">a</span><span class="p">,</span>
+                            <span class="n">deg</span><span class="o">=</span><span class="n">deg</span><span class="p">,</span>
+                            <span class="n">feat</span><span class="o">=</span><span class="n">feat</span><span class="p">,</span>
+                        <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">featurizer</span><span class="p">,</span> <span class="s2">&quot;indices_by_top&quot;</span><span class="p">):</span>
+                            <span class="n">feat</span><span class="o">.</span><span class="n">indexes</span> <span class="o">=</span> <span class="n">featurizer</span><span class="o">.</span><span class="n">indices_by_top</span><span class="p">[</span><span class="n">traj</span><span class="o">.</span><span class="n">top</span><span class="p">][</span>
+                                <span class="n">feat</span><span class="o">.</span><span class="n">name</span>
+                            <span class="p">]</span>
+                        <span class="n">dataarray</span><span class="p">,</span> <span class="n">ind_dataarray</span> <span class="o">=</span> <span class="n">make_dataarray</span><span class="p">(</span>
+                            <span class="n">feat</span><span class="o">.</span><span class="n">describe</span><span class="p">(),</span>
+                            <span class="n">traj</span><span class="p">[</span><span class="n">block</span><span class="p">],</span>
+                            <span class="n">name</span><span class="p">,</span>
+                            <span class="n">a</span><span class="p">,</span>
+                            <span class="n">deg</span><span class="o">=</span><span class="n">deg</span><span class="p">,</span>
+                            <span class="n">feat</span><span class="o">=</span><span class="n">feat</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                <span class="k">assert</span> <span class="n">dataarray</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Dataarray created for feature </span><span class="si">{</span><span class="n">feat</span><span class="si">}</span><span class="s2"> provided with &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;traj </span><span class="si">{</span><span class="n">traj</span><span class="si">}</span><span class="s2"> at frame indices </span><span class="si">{</span><span class="n">block</span><span class="si">}</span><span class="s2"> did not contain &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;any data.&quot;</span>
+                <span class="p">)</span>
+
+                <span class="c1"># append the DataArray to the DAs dictionary</span>
+                <span class="n">DAs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataarray</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">ind_dataarray</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">indexes</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_feature_indices&quot;</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="n">ind_dataarray</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">indexes</span><span class="p">[</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_feature_indices&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+
+        <span class="c1"># after every traj, we combine the datasets</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">DAs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">DAs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+                <span class="n">DAs</span><span class="p">[</span><span class="n">key</span><span class="p">],</span>
+                <span class="s2">&quot;frame_num&quot;</span><span class="p">,</span>
+                <span class="n">combine_attrs</span><span class="o">=</span><span class="n">trajs_combine_attrs</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="c1"># we only need any component from the indexes but make sure that</span>
+            <span class="c1"># they are homogeneous. Every block of a traj should return</span>
+            <span class="c1"># the same index array, as they don&#39;t depend on frame data</span>
+            <span class="k">if</span> <span class="n">indexes</span><span class="p">[</span><span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;_feature_indices&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">i</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indexes</span><span class="p">[</span><span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;_feature_indices&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">:]]</span>
+                <span class="p">),</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Got an inhomogeneous result for indexes for feature </span><span class="si">{</span><span class="n">feat</span><span class="si">=}</span><span class="s2"> &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;at </span><span class="si">{</span><span class="n">frame_indices</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">indexes</span><span class="si">=}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="n">indexes</span><span class="p">[</span><span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;_feature_indices&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">indexes</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;_feature_indices&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># combine data per traj</span>
+        <span class="n">DAs_and_indexes</span> <span class="o">=</span> <span class="n">DAs</span> <span class="o">|</span> <span class="n">indexes</span>
+        <span class="n">DAs_and_indexes</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">DAs_and_indexes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span>
+                <span class="n">DAs_and_indexes</span><span class="p">,</span>
+                <span class="n">attrs</span><span class="o">=</span><span class="n">trajs_combine_attrs</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">attrs</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">{}</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">DAs_and_indexes</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">xr</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">merge</span><span class="o">.</span><span class="n">MergeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">indexes</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+        <span class="n">DSs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+
+        <span class="c1"># and add to the delayeds if needed</span>
+        <span class="k">if</span> <span class="n">delayeds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="n">dims</span><span class="p">),</span> <span class="n">data</span><span class="p">,</span> <span class="n">unit</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+                <span class="n">coordinates</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
+                <span class="p">[</span><span class="n">xyz_traj</span><span class="p">,</span> <span class="n">time_traj</span><span class="p">,</span> <span class="n">lengths_traj</span><span class="p">,</span> <span class="n">angles_traj</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">&quot;nanometers&quot;</span><span class="p">,</span> <span class="s2">&quot;picoseconds&quot;</span><span class="p">,</span> <span class="s2">&quot;nanometers&quot;</span><span class="p">,</span> <span class="s2">&quot;degrees&quot;</span><span class="p">],</span>
+            <span class="p">):</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">coord</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">traj</span><span class="o">.</span><span class="n">traj_num</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">delayeds</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span>
+                    <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">traj</span><span class="o">.</span><span class="n">traj_num</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dims</span><span class="p">],</span>
+                    <span class="n">data</span><span class="o">=</span><span class="n">da</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+                    <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">unit</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)},</span>
+                <span class="p">)</span>
+
+    <span class="c1"># make a large dataset out of this</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+        <span class="n">DSs</span><span class="p">,</span>
+        <span class="n">data_vars</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span>
+        <span class="c1"># compat=&quot;broadcast_equals&quot;,</span>
+        <span class="c1"># coords=&quot;all&quot;,</span>
+        <span class="c1"># join=&quot;outer&quot;,</span>
+        <span class="n">dim</span><span class="o">=</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span>
+        <span class="n">fill_value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+        <span class="n">combine_attrs</span><span class="o">=</span><span class="n">trajs_combine_attrs</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">assert</span> <span class="n">ds</span><span class="p">,</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Concatenation of chunked datasets yielded empty dataset.</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">DSs</span><span class="si">=}</span><span class="se">\n\n</span><span class="si">{</span><span class="n">DAs_and_indexes</span><span class="si">=}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ds</span><span class="p">,</span> <span class="n">delayeds</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Kevin Sawade, Tobias Lemke, University of Konstanz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on 2025-05-15T21:24:25.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
