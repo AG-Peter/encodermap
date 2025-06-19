@@ -6,17 +6,17 @@
 EncoderMap
 ==========
 
-.. image:: https://img.shields.io/endpoint?url=https%3A%2F%2Fencodermap.site%2F_static%2Ftest_badge.json
+.. image:: https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FAG-Peter%2Fencodermap%2Frefs%2Fheads%2Fgh-pages%2Ftest_badge.json
    :alt: Unittest Badge
    :target: _static/html_test_runner_report.html
 
-.. image:: https://img.shields.io/endpoint?url=https%3A%2F%2Fencodermap.site%2F_static%2Fcoverage_badge.json
+.. image:: https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FAG-Peter%2Fencodermap%2Frefs%2Fheads%2Fgh-pages%2Fcoverage_badge.json
    :alt: Coverage Badge
    :target: _static/coverage/index.html
 
-.. image:: https://img.shields.io/endpoint?url=https%3A%2F%2Fencodermap.site%2F_static%2Fdocbuild_badge.json
+.. image:: https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FAG-Peter%2Fencodermap%2Frefs%2Fheads%2Fgh-pages%2Fdocbuild_badge.json
    :alt: Docbuild Badge
-   :target: https://encodermap.site
+   :target: https://ag-peter.github.io/encodermap/
 
 .. image:: https://img.shields.io/badge/color-e77800-e77800
    :alt: EncoderMap's main color

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>encodermap.plot package &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+    <title>encodermap.plot package &#8212; encodermap 3.0.1+11.g6469d37.dirty documentation</title>
   
   
   
@@ -42,7 +42,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../_static/documentation_options.js?v=2b2d1cdd"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -58,8 +58,8 @@
     <link rel="prev" title="encodermap.parameters package" href="encodermap.parameters.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
-    <meta name="docbuild:last-update" content="2025-05-15T22:43:00"/>
+  <meta name="docsearch:version" content="3.0.1+11.g6469d37.dirty" />
+    <meta name="docbuild:last-update" content="2025-06-19T21:05:57"/>
   </head>
   
   
@@ -125,8 +125,8 @@
       
     
     
-    <img src="../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
-    <img src="../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+11.g6469d37.dirty documentation - Home"/>
+    <img src="../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+11.g6469d37.dirty documentation - Home"/>
   
   
 </a></div>
@@ -1061,9 +1061,8 @@ values: (4.5, 12, 6, 1, 2, 6) are chosen. Defaults to None.</p></li>
 <li><p><strong>parameters</strong> (<em>AnyParameters</em>) – An instance of <cite>encodermap.Parameters</cite>, or
 <cite>encodermap.ADCParameters</cite>, to which the sigmoid parameters will be
 set.</p></li>
-<li><p><strong>skip_data_size_check</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to skip a check, that prevents the
-kernel to be killed when large datasets are passed.</p></li>
-<li><p><strong>renderer</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'colab'</em><em>, </em><em>'plotly_mimetype+notebook'</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>renderer</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'colab'</em><em>, </em><em>'plotly_mimetype+notebook'</em><em>] </em><em>| </em><em>None</em>) – What renderer to use for <code class="docutils literal notranslate"><span class="pre">fig.show()</span></code>. Use <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+to automatically select best.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -1079,8 +1078,8 @@ kernel to be killed when large datasets are passed.</p></li>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>traj</strong> (<a class="reference internal" href="../user_guide/singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a>)</p></li>
-<li><p><strong>lowd</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a><em> | </em><em>DataFrame</em>)</p></li>
-<li><p><strong>path</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a>)</p></li>
+<li><p><strong>lowd</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.3)"><em>ndarray</em></a><em> | </em><em>DataFrame</em>)</p></li>
+<li><p><strong>path</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.3)"><em>ndarray</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -1091,7 +1090,7 @@ kernel to be killed when large datasets are passed.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="encodermap.plot.plotting.plot_ball_and_stick">
-<span class="sig-name descname"><span class="pre">plot_ball_and_stick</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_subsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">slice(None,</span> <span class="pre">None,</span> <span class="pre">100)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">highlight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'atoms'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_angle_arcs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">animation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">persistent_hover</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flatten</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/plot/plotting.html#plot_ball_and_stick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.plotting.plot_ball_and_stick" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot_ball_and_stick</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_subsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">slice(None,</span> <span class="pre">None,</span> <span class="pre">100)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">highlight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'atoms'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_angle_arcs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">animation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">persistent_hover</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flatten</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encodermap/plot/plotting.html#plot_ball_and_stick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#encodermap.plot.plotting.plot_ball_and_stick" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1104,6 +1103,7 @@ kernel to be killed when large datasets are passed.</p></li>
 <li><p><strong>animation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
 <li><p><strong>persistent_hover</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
 <li><p><strong>flatten</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>renderer</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'colab'</em><em>, </em><em>'plotly_mimetype+notebook'</em><em>] </em><em>| </em><em>None</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -1120,7 +1120,7 @@ kernel to be killed when large datasets are passed.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>traj</strong> (<a class="reference internal" href="../user_guide/singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a>)</p></li>
 <li><p><strong>simplified</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
-<li><p><strong>subsample</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.13)"><em>slice</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>subsample</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.13)"><em>slice</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.3)"><em>ndarray</em></a><em> | </em><em>None</em>)</p></li>
 <li><p><strong>residue_subsample</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
 </ul>
 </dd>
@@ -1138,7 +1138,7 @@ kernel to be killed when large datasets are passed.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>traj</strong> (<a class="reference internal" href="../user_guide/singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a>)</p></li>
 <li><p><strong>selstr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
-<li><p><strong>subsample</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.13)"><em>slice</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>subsample</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.13)"><em>slice</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.3)"><em>ndarray</em></a><em> | </em><em>None</em>)</p></li>
 <li><p><strong>rolling_avg_window</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
 </ul>
 </dd>
@@ -1194,7 +1194,7 @@ xref is “container”, None becaomses 1 when orientation is “v” and
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>angles</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><em>np.ndarray</em><em>, </em><em>np.ndarray</em><em>]</em><em>, </em><em>np.ndarray</em><em>, </em><em>&quot;SingleTraj&quot;</em><em>]</em>) – Either a tuple of np.ndarray in which case it is assumed that the
-arrays are ordered like (psi, phi). Or an array of shape
+arrays are ordere like (psi, phi). Or an array of shape
 (2, n_frames, n_angles), in which case it is unpacked into psi and
 phi angles.</p></li>
 <li><p><strong>subsample</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.13)"><em>slice</em></a><em>, </em><em>np.ndarray</em><em>]</em><em>]</em>) – Any way to subsample
@@ -1245,8 +1245,8 @@ shape (n_frames, n_atoms, 3) or a SingleTraj object.</p></li>
 <li><p><strong>trajs</strong> (<a class="reference internal" href="../user_guide/singletraj.html#encodermap.trajinfo.info_single.SingleTraj" title="encodermap.trajinfo.info_single.SingleTraj"><em>SingleTraj</em></a><em> | </em><a class="reference internal" href="../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble" title="encodermap.trajinfo.info_all.TrajEnsemble"><em>TrajEnsemble</em></a>)</p></li>
 <li><p><strong>parameter</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'common_str'</em><em>, </em><em>'frame'</em><em>, </em><em>'encoded_frame'</em><em>, </em><em>'traj_num'</em><em>, </em><em>'topology'</em><em>, </em><em>'free_energy'</em><em>] </em><em>| </em><em>str</em>)</p></li>
 <li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'scatter'</em><em>, </em><em>'heatmap'</em><em>]</em>)</p></li>
-<li><p><strong>x</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a><em> | </em><em>None</em>)</p></li>
-<li><p><strong>y</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>x</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.3)"><em>ndarray</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>y</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.3)"><em>ndarray</em></a><em> | </em><em>None</em>)</p></li>
 <li><p><strong>contourtype</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'contour'</em><em>, </em><em>'contourf'</em><em>]</em>)</p></li>
 <li><p><strong>col</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
 <li><p><strong>nbins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
@@ -2028,7 +2028,7 @@ or [‘H’, ‘E’, ‘C’, 75, 76, 0], respectively.</p></li>
     <div class="footer-items__center">
       
         <div class="footer-item"><p class="last-updated">
-  Last updated on 2025-05-15T22:43:00.
+  Last updated on 2025-06-19T21:05:57.
   <br/>
 </p></div>
       
@@ -2037,7 +2037,7 @@ or [‘H’, ‘E’, ‘C’, 75, 76, 0], respectively.</p></li>
   
     <div class="footer-items__end">
       
-        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+        <div class="footer-item">Docs for EncoderMap 3.0.1+11.g6469d37.dirty</div>
       
     </div>
   

@@ -56,8 +56,8 @@
         </aside>
         <h2>
             <span class="text">381 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">84<span class="text"> run</span></button>
-            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">297<span class="text"> missing</span></button>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">82<span class="text"> run</span></button>
+            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">299<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">11<span class="text"> excluded</span></button>
             <button type="button" class="par run show_par button_toggle_par" value="par" data-shortcut="p" title="Toggle lines partially run">0<span class="text"> partial</span></button>
         </h2>
@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="d_184deb7870d60950_interactive_plotting_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.4.1">coverage.py v7.4.1</a>,
-            created at 2025-05-18 17:41 +0200
+            created at 2024-12-31 16:54 +0100
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -1221,7 +1221,7 @@
     <p class="pln"><span class="n"><a id="t1137" href="#t1137">1137</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t1138" href="#t1138">1138</a></span><span class="t">    <span class="key">def</span> <span class="nam">__init__</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t1139" href="#t1139">1139</a></span><span class="t">        <span class="com"># create a dir for cache</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t1140" href="#t1140">1140</a></span><span class="t">        <span class="key">if</span> <span class="nam">self</span><span class="op">.</span><span class="nam">local</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t1140" href="#t1140">1140</a></span><span class="t">        <span class="key">if</span> <span class="nam">self</span><span class="op">.</span><span class="nam">local</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t1141" href="#t1141">1141</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">cache_dir</span> <span class="op">=</span> <span class="nam">Path</span><span class="op">(</span><span class="str">"/tmp/encodermap_dash_cache"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t1142" href="#t1142">1142</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">cache_dir</span><span class="op">.</span><span class="nam">mkdir</span><span class="op">(</span><span class="nam">parents</span><span class="op">=</span><span class="key">True</span><span class="op">,</span> <span class="nam">exist_ok</span><span class="op">=</span><span class="key">True</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t1143" href="#t1143">1143</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -1467,7 +1467,7 @@
     <p class="pln"><span class="n"><a id="t1383" href="#t1383">1383</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t1384" href="#t1384">1384</a></span><span class="t">    <span class="op">@</span><span class="nam">property</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t1385" href="#t1385">1385</a></span><span class="t">    <span class="key">def</span> <span class="nam">local</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t1386" href="#t1386">1386</a></span><span class="t">        <span class="key">return</span> <span class="nam">os</span><span class="op">.</span><span class="nam">getenv</span><span class="op">(</span><span class="str">"ENCODERMAP_DASH_RUN_LOCAL"</span><span class="op">,</span> <span class="str">"False"</span><span class="op">)</span> <span class="op">==</span> <span class="str">"True"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t1386" href="#t1386">1386</a></span><span class="t">        <span class="key">return</span> <span class="nam">os</span><span class="op">.</span><span class="nam">getenv</span><span class="op">(</span><span class="str">"ENCODERMAP_DASH_RUN_LOCAL"</span><span class="op">,</span> <span class="str">"False"</span><span class="op">)</span> <span class="op">==</span> <span class="str">"True"</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t1387" href="#t1387">1387</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t1388" href="#t1388">1388</a></span><span class="t">    <span class="key">def</span> <span class="nam">run</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="op">*</span><span class="nam">args</span><span class="op">,</span> <span class="op">**</span><span class="nam">kwargs</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t1389" href="#t1389">1389</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">app</span><span class="op">.</span><span class="nam">run</span><span class="op">(</span><span class="op">*</span><span class="nam">args</span><span class="op">,</span> <span class="nam">host</span><span class="op">=</span><span class="str">"0.0.0.0"</span><span class="op">,</span> <span class="nam">debug</span><span class="op">=</span><span class="nam">self</span><span class="op">.</span><span class="nam">debug</span><span class="op">,</span> <span class="op">**</span><span class="nam">kwargs</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -1491,7 +1491,7 @@
             <a id="nextFileLink" class="nav" href="d_184deb7870d60950_interactive_plotting_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.4.1">coverage.py v7.4.1</a>,
-            created at 2025-05-18 17:41 +0200
+            created at 2024-12-31 16:54 +0100
         </p>
     </div>
 </footer>

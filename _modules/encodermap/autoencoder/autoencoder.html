@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>encodermap.autoencoder.autoencoder &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+    <title>encodermap.autoencoder.autoencoder &#8212; encodermap 3.0.1+11.g6469d37.dirty documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../../../_static/documentation_options.js?v=2b2d1cdd"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -55,8 +55,8 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
-    <meta name="docbuild:last-update" content="2025-05-15T21:15:05"/>
+  <meta name="docsearch:version" content="3.0.1+11.g6469d37.dirty" />
+    <meta name="docbuild:last-update" content="2025-06-19T21:05:57"/>
   </head>
   
   
@@ -122,8 +122,8 @@
       
     
     
-    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
-    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+11.g6469d37.dirty documentation - Home"/>
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+11.g6469d37.dirty documentation - Home"/>
   
   
 </a></div>
@@ -368,6 +368,9 @@
     </li>
     
     <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../../encodermap.html" class="nav-link">encodermap</a></li>
     
     <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">encodermap.autoencoder.autoencoder</span></li>
   </ul>
@@ -978,7 +981,7 @@
 
 
 <div class="viewcode-block" id="Autoencoder">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.Autoencoder">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.Autoencoder">[docs]</a>
 <span class="k">class</span> <span class="nc">Autoencoder</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Main Autoencoder class. Presents all high-level functions.</span>
 
@@ -1198,7 +1201,7 @@
         <span class="k">return</span>
 
 <div class="viewcode-block" id="Autoencoder.set_train_data">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.Autoencoder.set_train_data">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.Autoencoder.set_train_data">[docs]</a>
     <span class="k">def</span> <span class="nf">set_train_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Resets the train data for reloaded models.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_using_hypercube</span> <span class="o">=</span> <span class="kc">False</span>
@@ -1301,7 +1304,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">tensorboard_write_bool</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="Autoencoder.from_checkpoint">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.Autoencoder.from_checkpoint">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.Autoencoder.from_checkpoint">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_checkpoint</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">AutoencoderType</span><span class="p">],</span>
@@ -1383,7 +1386,7 @@
         <span class="k">return</span> <span class="n">loss</span>
 
 <div class="viewcode-block" id="Autoencoder.train">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.Autoencoder.train">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.Autoencoder.train">[docs]</a>
     <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Starts the training of the model.</span>
 
@@ -1451,7 +1454,7 @@
 
 
 <div class="viewcode-block" id="Autoencoder.add_loss">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.Autoencoder.add_loss">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.Autoencoder.add_loss">[docs]</a>
     <span class="k">def</span> <span class="nf">add_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds a new loss to the existing losses.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
@@ -1461,7 +1464,7 @@
 
 
 <div class="viewcode-block" id="Autoencoder.add_callback">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.Autoencoder.add_callback">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.Autoencoder.add_callback">[docs]</a>
     <span class="k">def</span> <span class="nf">add_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds a new callback to the existing callbacks.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
@@ -1471,14 +1474,14 @@
 
 
 <div class="viewcode-block" id="Autoencoder.add_metric">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.Autoencoder.add_metric">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.Autoencoder.add_metric">[docs]</a>
     <span class="k">def</span> <span class="nf">add_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds a new metric to the existing metrics.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metric</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="Autoencoder.add_images_to_tensorboard">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.Autoencoder.add_images_to_tensorboard">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.Autoencoder.add_images_to_tensorboard">[docs]</a>
     <span class="k">def</span> <span class="nf">add_images_to_tensorboard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds images of the latent space to tensorboard.</span>
 
@@ -1526,7 +1529,7 @@
 
 
 <div class="viewcode-block" id="Autoencoder.plot_network">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.Autoencoder.plot_network">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.Autoencoder.plot_network">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_network</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Tries to plot the network using pydot, pydotplus and graphviz.</span>
 <span class="sd">        Doesn&#39;t raise an exception if plotting is not possible.</span>
@@ -1545,7 +1548,7 @@
 
 
 <div class="viewcode-block" id="Autoencoder.encode">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.Autoencoder.encode">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.Autoencoder.encode">[docs]</a>
     <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calls encoder part of `self.model`.</span>
 
@@ -1592,7 +1595,7 @@
 
 
 <div class="viewcode-block" id="Autoencoder.generate">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.Autoencoder.generate">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.Autoencoder.generate">[docs]</a>
     <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Duplication of `self.decode`.</span>
 
@@ -1614,7 +1617,7 @@
 
 
 <div class="viewcode-block" id="Autoencoder.decode">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.Autoencoder.decode">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.Autoencoder.decode">[docs]</a>
     <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calls the decoder part of the model.</span>
 
@@ -1641,7 +1644,7 @@
 
 
 <div class="viewcode-block" id="Autoencoder.save">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.Autoencoder.save">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.Autoencoder.save">[docs]</a>
     <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">Path</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Saves the model to the current path defined in `parameters.main_path`.</span>
 
@@ -1673,7 +1676,7 @@
 
 
 <div class="viewcode-block" id="Autoencoder.close">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.Autoencoder.close">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.Autoencoder.close">[docs]</a>
     <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Clears the current keras backend and frees up resources.&quot;&quot;&quot;</span>
         <span class="c1"># clear old sessions</span>
@@ -1683,13 +1686,13 @@
 
 
 <div class="viewcode-block" id="EncoderMap">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.EncoderMap">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.EncoderMap">[docs]</a>
 <span class="k">class</span> <span class="nc">EncoderMap</span><span class="p">(</span><span class="n">Autoencoder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Complete copy of Autoencoder class but uses additional distance cost</span>
 <span class="sd">    scaled by the SketchMap sigmoid params&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="EncoderMap.from_checkpoint">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.EncoderMap.from_checkpoint">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.EncoderMap.from_checkpoint">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_checkpoint</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">EncoderMapType</span><span class="p">],</span>
@@ -1766,6 +1769,8 @@
 
 
 
+<div class="viewcode-block" id="DihedralEncoderMap">
+<a class="viewcode-back" href="../../../api/encodermap.autoencoder.html#encodermap.DihedralEncoderMap">[docs]</a>
 <span class="k">class</span> <span class="nc">DihedralEncoderMap</span><span class="p">(</span><span class="n">EncoderMap</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Similar to the `EncoderMap` class, but overwrites the `generate` method.</span>
 
@@ -1776,6 +1781,8 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
+<div class="viewcode-block" id="DihedralEncoderMap.generate">
+<a class="viewcode-back" href="../../../api/encodermap.autoencoder.html#encodermap.DihedralEncoderMap.generate">[docs]</a>
     <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
@@ -1856,11 +1863,13 @@
         <span class="n">dihedrals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">dihedrals</span><span class="p">)</span>
         <span class="n">uni</span> <span class="o">=</span> <span class="n">dihedral_backmapping</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">dihedrals</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">uni</span>
+        <span class="k">return</span> <span class="n">uni</span></div>
+</div>
+
 
 
 <div class="viewcode-block" id="AngleDihedralCartesianEncoderMap">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.AngleDihedralCartesianEncoderMap">[docs]</a>
 <span class="k">class</span> <span class="nc">AngleDihedralCartesianEncoderMap</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Different `__init__` method, than Autoencoder Class. Uses callbacks to tune-in cartesian cost.</span>
 
@@ -2173,7 +2182,7 @@
         <span class="k">return</span> <span class="n">_get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="AngleDihedralCartesianEncoderMap.add_loss">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.add_loss">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.AngleDihedralCartesianEncoderMap.add_loss">[docs]</a>
     <span class="k">def</span> <span class="nf">add_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds a new loss to the existing losses.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
@@ -2183,7 +2192,7 @@
 
 
 <div class="viewcode-block" id="AngleDihedralCartesianEncoderMap.add_callback">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.add_callback">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.AngleDihedralCartesianEncoderMap.add_callback">[docs]</a>
     <span class="k">def</span> <span class="nf">add_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds a new callback to the existing callbacks.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
@@ -2193,14 +2202,14 @@
 
 
 <div class="viewcode-block" id="AngleDihedralCartesianEncoderMap.add_metric">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.add_metric">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.AngleDihedralCartesianEncoderMap.add_metric">[docs]</a>
     <span class="k">def</span> <span class="nf">add_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds a new metric to the existing metrics.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metric</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="AngleDihedralCartesianEncoderMap.add_images_to_tensorboard">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.add_images_to_tensorboard">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.AngleDihedralCartesianEncoderMap.add_images_to_tensorboard">[docs]</a>
     <span class="k">def</span> <span class="nf">add_images_to_tensorboard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds images of the latent space to tensorboard.</span>
 
@@ -2248,7 +2257,7 @@
 
 
 <div class="viewcode-block" id="AngleDihedralCartesianEncoderMap.train">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.train">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.AngleDihedralCartesianEncoderMap.train">[docs]</a>
     <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Overwrites the parent class&#39; `train()` method to implement references.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">v</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="s2">&quot;reference&quot;</span> <span class="ow">in</span> <span class="n">k</span><span class="p">]):</span>
@@ -2292,7 +2301,7 @@
 
 
 <div class="viewcode-block" id="AngleDihedralCartesianEncoderMap.train_for_references">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.train_for_references">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.AngleDihedralCartesianEncoderMap.train_for_references">[docs]</a>
     <span class="k">def</span> <span class="nf">train_for_references</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subsample</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">maxiter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the angle, dihedral, and cartesian costs to so-called</span>
 <span class="sd">        references, which can be used to bring these costs to a similar</span>
@@ -2418,7 +2427,7 @@
 
 
 <div class="viewcode-block" id="AngleDihedralCartesianEncoderMap.save">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.save">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.AngleDihedralCartesianEncoderMap.save">[docs]</a>
     <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">Path</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Saves the model to the current path defined in `parameters.main_path`.</span>
 
@@ -2450,7 +2459,7 @@
 
 
 <div class="viewcode-block" id="AngleDihedralCartesianEncoderMap.close">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.close">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.AngleDihedralCartesianEncoderMap.close">[docs]</a>
     <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Clears the current keras backend and frees up resources.&quot;&quot;&quot;</span>
         <span class="c1"># clear old sessions</span>
@@ -2458,7 +2467,7 @@
 
 
 <div class="viewcode-block" id="AngleDihedralCartesianEncoderMap.set_train_data">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.set_train_data">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.AngleDihedralCartesianEncoderMap.set_train_data">[docs]</a>
     <span class="k">def</span> <span class="nf">set_train_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">TrajEnsemble</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Resets the train data for reloaded models.&quot;&quot;&quot;</span>
         <span class="p">(</span>
@@ -2503,7 +2512,7 @@
 
 
 <div class="viewcode-block" id="AngleDihedralCartesianEncoderMap.plot_network">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.plot_network">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.AngleDihedralCartesianEncoderMap.plot_network">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_network</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Tries to plot the network using pydot, pydotplus and graphviz.</span>
 <span class="sd">        Doesn&#39;t raise an exception if plotting is not possible.</span>
@@ -2522,7 +2531,7 @@
 
 
 <div class="viewcode-block" id="AngleDihedralCartesianEncoderMap.get_train_data_from_trajs">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.get_train_data_from_trajs">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.AngleDihedralCartesianEncoderMap.get_train_data_from_trajs">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_train_data_from_trajs</span><span class="p">(</span>
         <span class="n">trajs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">TrajEnsemble</span><span class="p">,</span> <span class="n">SingleTraj</span><span class="p">],</span>
@@ -2664,7 +2673,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">decoder_model</span>
 
 <div class="viewcode-block" id="AngleDihedralCartesianEncoderMap.from_checkpoint">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.from_checkpoint">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.AngleDihedralCartesianEncoderMap.from_checkpoint">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_checkpoint</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">AngleDihedralCartesianEncoderMapType</span><span class="p">],</span>
@@ -2815,7 +2824,7 @@
         <span class="k">return</span> <span class="n">loss</span>
 
 <div class="viewcode-block" id="AngleDihedralCartesianEncoderMap.encode">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.encode">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.AngleDihedralCartesianEncoderMap.encode">[docs]</a>
     <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">TrajEnsemble</span><span class="p">,</span> <span class="n">SingleTraj</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -2925,7 +2934,7 @@
 
 
 <div class="viewcode-block" id="AngleDihedralCartesianEncoderMap.decode">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.decode">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.AngleDihedralCartesianEncoderMap.decode">[docs]</a>
     <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calls the decoder part of the model.</span>
 
@@ -2970,7 +2979,7 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Universe</span><span class="p">:</span> <span class="o">...</span>
 
 <div class="viewcode-block" id="AngleDihedralCartesianEncoderMap.generate">
-<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.autoencoder.autoencoder.AngleDihedralCartesianEncoderMap.generate">[docs]</a>
+<a class="viewcode-back" href="../../../user_guide/autoencoder_classes.html#encodermap.AngleDihedralCartesianEncoderMap.generate">[docs]</a>
     <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">points</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
@@ -3144,7 +3153,7 @@
     <div class="footer-items__center">
       
         <div class="footer-item"><p class="last-updated">
-  Last updated on 2025-05-15T21:15:05.
+  Last updated on 2025-06-19T21:05:57.
   <br/>
 </p></div>
       
@@ -3153,7 +3162,7 @@
   
     <div class="footer-items__end">
       
-        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+        <div class="footer-item">Docs for EncoderMap 3.0.1+11.g6469d37.dirty</div>
       
     </div>
   

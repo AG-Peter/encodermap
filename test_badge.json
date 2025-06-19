@@ -1,1 +1,1 @@
-{"schemaVersion": 1, "label": "Unittests", "message": "failing", "color": "red", "namedLogo": "pytest"}
+{"schemaVersion": 1, "label": "Unittests", "message": "passing", "color": "green", "namedLogo": "pytest"}

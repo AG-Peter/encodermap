@@ -47,6 +47,23 @@ The starter notebooks help you with your first steps with EncoderMap.
 
         Upload your own data and use this notebook
 
+Notebooks intermediate
+----------------------
+
+The advanced notebooks introduce more advanced techniques and explore more novel features of EncoderMap.
+
+.. grid:: 1
+
+    .. grid-item-card:: Training diverse topologies
+        :margin: 2 0 0 0
+        :img-alt: Img description.
+        :img-bottom: ../_static/glu7_generated.gif
+        :link: intermediate_nb/sparse
+        :link-type: doc
+
+        Training diverse topologies
+
+
 
 Notebooks MD
 ------------
@@ -154,23 +171,6 @@ These notebooks contain the analysis code of an upcoming publication ""EncoderMa
         Notebook to create figure5 of the publication
 
 
-Notebooks Advanced
-------------------
-
-These notebooks contain more advanced training examples, like when you want to train with EncoderMap's sparse networks, that allow simultaneous training of various protein topologies, that could stem from mutations or protein families.
-
-.. grid:: 1
-
-    .. grid-item-card:: Different Topologies
-        :margin: 2 0 0 0
-        :img-bottom: ../_static/intermediate_nb_01_sparse_thumbnail.png
-        :img-alt: Img description.
-        :link: intermediate_nb/intermediate_nb_01_sparse
-        :link-type: doc
-
-        Training EncoderMap on inhomogeneous MD datasets
-
-
 .. toctree::
     :maxdepth: 3
     :caption: Starter Notebooks
@@ -204,12 +204,6 @@ These notebooks contain more advanced training examples, like when you want to t
     publication/figure3
     publication/figure5
 
-
-.. toctree::
-    :maxdepth: 3
-    :caption: Intermediate Notebooks
-
-    intermediate_nb/intermediate_nb_01_sparse
 
 .. toctree::
     :maxdepth: 3

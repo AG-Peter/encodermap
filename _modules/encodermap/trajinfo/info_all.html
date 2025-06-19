@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>encodermap.trajinfo.info_all &#8212; encodermap 3.0.1+10.g67ae638.dirty documentation</title>
+    <title>encodermap.trajinfo.info_all &#8212; encodermap 3.0.1+11.g6469d37.dirty documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=ea0ca436"></script>
+    <script src="../../../_static/documentation_options.js?v=2b2d1cdd"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -55,8 +55,8 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="3.0.1+10.g67ae638.dirty" />
-    <meta name="docbuild:last-update" content="2025-05-15T21:15:05"/>
+  <meta name="docsearch:version" content="3.0.1+11.g6469d37.dirty" />
+    <meta name="docbuild:last-update" content="2025-06-19T21:05:57"/>
   </head>
   
   
@@ -122,8 +122,8 @@
       
     
     
-    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
-    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+10.g67ae638.dirty documentation - Home"/>
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-light" alt="encodermap 3.0.1+11.g6469d37.dirty documentation - Home"/>
+    <img src="../../../_static/logo_cube_300.png" class="logo__image only-dark pst-js-only" alt="encodermap 3.0.1+11.g6469d37.dirty documentation - Home"/>
   
   
 </a></div>
@@ -368,6 +368,9 @@
     </li>
     
     <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../../encodermap.html" class="nav-link">encodermap</a></li>
     
     <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">encodermap.trajinfo.info_all</span></li>
   </ul>
@@ -1578,6 +1581,8 @@
         <span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="TrajEnsemble.from_dataset">
+<a class="viewcode-back" href="../../../api/encodermap.trajinfo.html#encodermap.trajinfo.info_all.TrajEnsemble.from_dataset">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_dataset</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span>
@@ -1607,7 +1612,8 @@
             <span class="p">)</span>
         <span class="n">common_str</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">common_str</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">trajs</span><span class="p">]))</span>
         <span class="n">newclass</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">trajs</span><span class="o">=</span><span class="n">trajs</span><span class="p">,</span> <span class="n">common_str</span><span class="o">=</span><span class="n">common_str</span><span class="p">,</span> <span class="n">basename_fn</span><span class="o">=</span><span class="n">basename_fn</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">newclass</span>
+        <span class="k">return</span> <span class="n">newclass</span></div>
+
 
 <div class="viewcode-block" id="TrajEnsemble.load_custom_topology">
 <a class="viewcode-back" href="../../../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble.load_custom_topology">[docs]</a>
@@ -2386,8 +2392,11 @@
                 <span class="n">e2</span> <span class="o">=</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="k">raise</span> <span class="n">e2</span> <span class="kn">from</span> <span class="nn">e</span>
 
+<div class="viewcode-block" id="TrajEnsemble.copy">
+<a class="viewcode-back" href="../../../api/encodermap.trajinfo.html#encodermap.trajinfo.info_all.TrajEnsemble.copy">[docs]</a>
     <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="TrajEnsemble.split_into_frames">
 <a class="viewcode-back" href="../../../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble.split_into_frames">[docs]</a>
@@ -2566,6 +2575,8 @@
         <span class="k">return</span> <span class="n">out</span></div>
 
 
+<div class="viewcode-block" id="TrajEnsemble.join">
+<a class="viewcode-back" href="../../../api/encodermap.trajinfo.html#encodermap.trajinfo.info_all.TrajEnsemble.join">[docs]</a>
     <span class="k">def</span> <span class="nf">join</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">align_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;name CA&quot;</span><span class="p">,</span>
@@ -2664,8 +2675,11 @@
                 <span class="n">progbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="s2">&quot;join&quot;</span><span class="p">)</span>
 
         <span class="c1"># return</span>
-        <span class="k">return</span> <span class="n">out_by_top</span>
+        <span class="k">return</span> <span class="n">out_by_top</span></div>
 
+
+<div class="viewcode-block" id="TrajEnsemble.stack">
+<a class="viewcode-back" href="../../../api/encodermap.trajinfo.html#encodermap.trajinfo.info_all.TrajEnsemble.stack">[docs]</a>
     <span class="k">def</span> <span class="nf">stack</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">align_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;name CA&quot;</span><span class="p">,</span>
@@ -2715,7 +2729,8 @@
                 <span class="k">if</span> <span class="n">progbar</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">progbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="s2">&quot;stack&quot;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">stacked</span><span class="o">.</span><span class="n">n_atoms</span> <span class="o">==</span> <span class="n">atoms</span>
-        <span class="k">return</span> <span class="n">stacked</span>
+        <span class="k">return</span> <span class="n">stacked</span></div>
+
 
     <span class="k">def</span> <span class="nf">_trace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CV</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a low-dimensional represnetation of the loaded CV data by</span>
@@ -2739,6 +2754,8 @@
             <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 
+<div class="viewcode-block" id="TrajEnsemble.to_dataframe">
+<a class="viewcode-back" href="../../../api/encodermap.trajinfo.html#encodermap.trajinfo.info_all.TrajEnsemble.to_dataframe">[docs]</a>
     <span class="k">def</span> <span class="nf">to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CV</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
         <span class="c1"># frame nums can be inhomogeneous</span>
         <span class="n">frame_num</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2790,7 +2807,8 @@
             <span class="p">},</span>
         <span class="p">)</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s2">&quot;traj_num&quot;</span><span class="p">,</span> <span class="s2">&quot;frame_num&quot;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="TrajEnsemble.dash_summary">
 <a class="viewcode-back" href="../../../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble.dash_summary">[docs]</a>
@@ -3538,6 +3556,8 @@
                 <span class="k">yield</span> <span class="n">out</span></div>
 
 
+<div class="viewcode-block" id="TrajEnsemble.tf_dataset">
+<a class="viewcode-back" href="../../../api/encodermap.trajinfo.html#encodermap.trajinfo.info_all.TrajEnsemble.tf_dataset">[docs]</a>
     <span class="k">def</span> <span class="nf">tf_dataset</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -3612,7 +3632,8 @@
             <span class="n">options</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">with_options</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
             <span class="k">assert</span> <span class="n">dataset</span><span class="o">.</span><span class="n">options</span><span class="p">()</span><span class="o">.</span><span class="n">deterministic</span>
-        <span class="k">return</span> <span class="n">dataset</span>
+        <span class="k">return</span> <span class="n">dataset</span></div>
+
 
 <div class="viewcode-block" id="TrajEnsemble.itertrajs">
 <a class="viewcode-back" href="../../../user_guide/trajensemble.html#encodermap.trajinfo.info_all.TrajEnsemble.itertrajs">[docs]</a>
@@ -3796,12 +3817,12 @@
             <span class="n">y</span><span class="o">.</span><span class="n">load_trajs</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">load_trajs</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_nums</span><span class="p">)</span><span class="o">.</span><span class="n">isdisjoint</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">traj_nums</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Can&#39;t add two `TrajEnsemble` with overlapping traj_nums: &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;left side: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">traj_nums</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;right side: </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">traj_nums</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
+        <span class="c1"># if not set(self.traj_nums).isdisjoint(set(y.traj_nums)):</span>
+        <span class="c1">#     raise Exception(</span>
+        <span class="c1">#         f&quot;Can&#39;t add two `TrajEnsemble` with overlapping traj_nums: &quot;</span>
+        <span class="c1">#         f&quot;left side: {self.traj_nums}\n&quot;</span>
+        <span class="c1">#         f&quot;right side: {y.traj_nums}&quot;</span>
+        <span class="c1">#     )</span>
 
         <span class="c1"># build a common_str_ array with the correct number of entries</span>
         <span class="c1"># use this to create a new class</span>
@@ -3927,7 +3948,7 @@
     <div class="footer-items__center">
       
         <div class="footer-item"><p class="last-updated">
-  Last updated on 2025-05-15T21:15:05.
+  Last updated on 2025-06-19T21:05:57.
   <br/>
 </p></div>
       
@@ -3936,7 +3957,7 @@
   
     <div class="footer-items__end">
       
-        <div class="footer-item">Docs for EncoderMap 3.0.1+10.g67ae638.dirty</div>
+        <div class="footer-item">Docs for EncoderMap 3.0.1+11.g6469d37.dirty</div>
       
     </div>
   
