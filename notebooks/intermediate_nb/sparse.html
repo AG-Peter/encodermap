@@ -50,19 +50,16 @@
     <script src="../../_static/copybutton.js?v=30646c52"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/intermediate_nb/sparse';</script>
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Static Code Examples" href="../static_code.html" />
-    <link rel="prev" title="Publication Figure 5" href="../publication/figure5.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="3.0.1+11.g6469d37.dirty" />
-    <meta name="docbuild:last-update" content="2025-06-19T21:05:57"/>
+    <meta name="docbuild:last-update" content="2025-06-22T21:52:26"/>
   </head>
   
   
@@ -151,7 +148,7 @@
 </li>
 
 
-<li class="nav-item current active">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../index.html">
     Notebook Gallery
   </a>
@@ -251,8 +248,10 @@
       
       
       
+        
+      
       <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
         
 
   
@@ -274,7 +273,7 @@
 </li>
 
 
-<li class="nav-item current active">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../index.html">
     Notebook Gallery
   </a>
@@ -339,47 +338,6 @@
     
   </div>
   
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-<nav class="bd-docs-nav bd-links"
-     aria-label="Section Navigation">
-  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Starter Notebooks</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../starter_nb/starter_nb_01_basic.html">Getting started: Basic Cube</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../starter_nb/starter_nb_02_advanced.html">Advanced Usage: Asp 7</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../starter_nb/starter_nb_03_your_data.html">Your Data</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">MD Notebooks</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../md_nb/md_nb_01_traj_ensemble.html">Working with trajectory ensembles</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Customization Notebooks</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../customization_nb/customization_nb_01_scalars.html">Customize EncoderMap: Logging Custom Scalars</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../customization_nb/customization_nb_02_loss.html">Customize EncoderMap: Custom loss functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../customization_nb/customization_nb_03_images.html">Logging Custom Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../customization_nb/customization_nb_04_lr.html">Learning Rate Schedulers</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publication Notebooks</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../publication/figure1.html">Publication Figure 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../publication/figure2.html">Publication Figure 2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../publication/figure3.html">Publication Figure 3</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../publication/figure5.html">Publication Figure 5</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Intermediate Notebooks</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Intermediate EncoderMap: Different Topologies</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Static Code Examples</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../static_code.html">Static Code Examples</a></li>
-</ul>
-</div>
-</nav></div>
-    </div>
-  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
       <div class="sidebar-primary-item">
@@ -415,9 +373,6 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    
-    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Notebook Gallery</a></li>
-    
     <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Intermediate EncoderMap: Different Topologies</span></li>
   </ul>
 </nav>
@@ -3592,24 +3547,6 @@ Your custom topology for residue name=GLU resSeq=None index=None does not define
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../publication/figure5.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Publication Figure 5</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="../static_code.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Static Code Examples</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -3692,7 +3629,7 @@ Your custom topology for residue name=GLU resSeq=None index=None does not define
     <div class="footer-items__center">
       
         <div class="footer-item"><p class="last-updated">
-  Last updated on 2025-06-19T21:05:57.
+  Last updated on 2025-06-22T21:52:26.
   <br/>
 </p></div>
       

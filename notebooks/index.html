@@ -60,7 +60,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="3.0.1+11.g6469d37.dirty" />
-    <meta name="docbuild:last-update" content="2025-06-19T21:51:22"/>
+    <meta name="docbuild:last-update" content="2025-06-22T22:54:03"/>
   </head>
   
   
@@ -691,27 +691,23 @@ Figure5</div>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html">Customize EncoderMap: Custom loss functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#For-Google-colab-only:">For Google colab only:</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Import-Libraries">Import Libraries</a></li>
-<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#What-are-loss-functions">What are loss functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Cost-functions">Cost functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Import-Libraries">Import Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#What-are-loss-functions">What are loss functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Cost-functions">Cost functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Cost-functions-in-TensorFlow">Cost functions in TensorFlow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Cost-functions-in-EncoderMap">Cost functions in EncoderMap</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Cost-functions-in-TensorFlow">Cost functions in TensorFlow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Cost-functions-in-EncoderMap">Cost functions in EncoderMap</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Custom-cost-functions">Custom cost functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Custom-cost-functions">Custom cost functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Triplet-cost-(contrastive-learning)">Triplet cost (contrastive learning)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Adding-a-unit-circle-cost">Adding a unit circle cost</a></li>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#id1">Train</a></li>
+<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#id2">Output</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#FAT10">FAT10</a></li>
-<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Adding-a-unit-circle-loss">Adding a unit circle loss</a></li>
-<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Include-the-loss-function-in-EncoderMap">Include the loss function in EncoderMap</a></li>
-<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Train">Train</a></li>
-<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Output">Output</a></li>
-<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Loading-logs-into-jupyter-notebook">Loading logs into jupyter notebook</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Conclusion">Conclusion</a></li>
-<li class="toctree-l3"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#References">References</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Loading-logs-into-jupyter-notebook">Loading logs into jupyter notebook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#Conclusion">Conclusion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customization_nb/customization_nb_02_loss.html#References">References</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="customization_nb/customization_nb_03_images.html">Logging Custom Images</a><ul>
@@ -785,7 +781,12 @@ Figure5</div>
 <li class="toctree-l2"><a class="reference internal" href="publication/figure3.html#Imports">Imports</a></li>
 <li class="toctree-l2"><a class="reference internal" href="publication/figure3.html#Trained-network-weights">Trained network weights</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="publication/figure3.html#Get-data">Get data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="publication/figure3.html#Train-Networks">Train Networks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="publication/figure3.html#%22Classical%22-methods">“Classical” methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure3.html#MDS">MDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure3.html#PCA">PCA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publication/figure3.html#Network-methods">Network methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="publication/figure3.html#Final-image">Final image</a></li>
 </ul>
 </li>
@@ -933,7 +934,7 @@ Figure5</div>
     <div class="footer-items__center">
       
         <div class="footer-item"><p class="last-updated">
-  Last updated on 2025-06-19T21:51:22.
+  Last updated on 2025-06-22T22:54:03.
   <br/>
 </p></div>
       
