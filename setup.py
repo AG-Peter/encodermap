@@ -45,7 +45,7 @@ setup(
         "scipy",
         "MDAnalysis",
         "tqdm>=4.4.0",
-        "tensorflow>=2.15.0",
+        "tensorflow==2.15.0",
         "nglview>=3.0.1",
         "seaborn>=0.11.1",
         "pillow>=10.0.1",
