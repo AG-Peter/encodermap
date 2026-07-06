@@ -102,7 +102,7 @@ ADCFunctionalModelInputType = Union[
 ################################################################################
 
 
-__all__: list[str] = ["gen_sequential_model", "gen_functional_model"]
+__all__: list[str] = ["gen_sequential_model", "gen_functional_model_adc"]
 
 
 ################################################################################
@@ -322,8 +322,97 @@ def _get_deterministic_variance_scaling(
     return tf.variance_scaling_initializer(seed=seed)
 
 
+def gen_functional_model_autoencoder(
+    input_shape: Union[
+        tf.data.Dataset,
+        int,
+    ],
+    parameters: Optional[ADCParameters] = None,
+    sparse: bool = False,
+    kernel_initializer: Union[
+        dict[str, np.ndarray], Literal["ones", "VarianceScaling", "deterministic"]
+    ] = "VarianceScaling",
+    bias_initializer: Union[
+        dict[str, np.ndarray], Literal["ones", "RandomNormal", "deterministic"]
+    ] = "RandomNormal",
+    write_summary: bool = True,
+) -> AutoencoderSparseFunctionalModel:
+
+    if not isinstance(input_shape, int):
+        d = input_shape.element_spec
+        if any([isinstance(i, tf.SparseTensorSpec) for i in d]):
+            sparse = True
+        else:
+            sparse = False
+
+        try:
+            input_shape = d[0].shape[1]
+        except TypeError:
+            input_shape = d.shape[1]
+
+    # if parameters are None, create a new instance of `ADCParameters`
+    p = Parameters() if parameters is None else parameters
+
+    # define the regularizer, that will be used from here on out
+    # the L2 regularizer adds a loss with 1/2 * sum(w ** 2) to
+    # each layer
+    regularizer = tf.keras.regularizers.l2(p.l2_reg_constant)
+
+    # define the inputs
+    (
+        input_placeholder,
+        input_unit_circle,
+        input_dense_model,
+    ) = _create_inputs_periodic_maybe_sparse(
+        input_shape,
+        p,
+        name="main",
+        sparse=sparse,
+    )
+
+    # build the encoder provide it with the encoder_input_placeholder
+    encoder_model, encoder_output_placeholder = _get_encoder_model(
+        input_unit_circle,
+        p,
+        input_list=[input_placeholder],
+        kernel_initializer=kernel_initializer,
+        kernel_regularizer=regularizer,
+        bias_initializer=bias_initializer,
+        write_summary=write_summary,
+    )
+    part_decoder, output_placeholder, decoder_input_placeholder = _get_decoder_model(
+        p=p,
+        out_shape=input_shape * 2 if p.periodicity < float("inf") else input_shape,
+        kernel_initializer=kernel_initializer,
+        kernel_regularizer=regularizer,
+        bias_initializer=bias_initializer,
+        write_summary=False,
+        input_placeholder=encoder_output_placeholder,
+    )
+
+    if p.periodicity < float("inf"):
+        model_out = PeriodicOutput(p, "output_from_unit_circle")(output_placeholder)
+        decoder_model = tf.keras.models.Model(
+            inputs=decoder_input_placeholder,
+            outputs=model_out,
+            name="Decoder",
+        )
+    else:
+        decoder_model = part_decoder
+        model_out = output_placeholder
+
+    return AutoencoderSparseFunctionalModel(
+        parameters=p,
+        inputs=input_placeholder,
+        outputs=model_out,
+        encoder=encoder_model,
+        decoder=decoder_model,
+        get_dense_model=input_dense_model,
+    )
+
+
 @overload
-def gen_functional_model(
+def gen_functional_model_adc(
     input_shapes: Union[
         tf.data.Dataset,
         tuple[tuple[int], tuple[int], tuple[int, int], tuple[int], tuple[int]],
@@ -343,7 +432,7 @@ def gen_functional_model(
 
 
 @overload
-def gen_functional_model(
+def gen_functional_model_adc(
     input_shapes: Union[
         tf.data.Dataset,
         tuple[tuple[int], tuple[int], tuple[int, int], tuple[int], tuple[int]],
@@ -363,7 +452,7 @@ def gen_functional_model(
 
 
 @overload
-def gen_functional_model(
+def gen_functional_model_adc(
     input_shapes: Union[
         tf.data.Dataset,
         tuple[tuple[int], tuple[int], tuple[int], tuple[int], tuple[int]],
@@ -382,7 +471,7 @@ def gen_functional_model(
 ) -> ADCSparseFunctionalModel: ...
 
 
-def gen_functional_model(
+def gen_functional_model_adc(
     input_shapes: Union[
         tf.data.Dataset,
         tuple[
@@ -462,7 +551,6 @@ def gen_functional_model(
 
     Returns:
         tf.keras.models.Model: The model.
-
 
     Here's a scheme of the generated network::
 
@@ -1895,7 +1983,11 @@ def _get_encoder_model(
     # for only central dihedrals
     else:
         model.input_shape[1] == input_list[0].shape[1]
-    if p.use_backbone_angles and p.multimer_training is None:
+    if (
+        hasattr(p, "use_backbone_angles")
+        and p.use_backbone_angles
+        and p.multimer_training is None
+    ):
         assert model.input_shape[0][1] - 1 == model.input_shape[1][1]
 
     # print/write info
@@ -2060,6 +2152,7 @@ def _create_inputs_non_periodic_maybe_sparse(
         assert (
             shape[1] == 3
         ), f"Provided tuple of two ints is not of cartesian xyz coordinates!."
+
     if not sparse:
         placeholder = Input(shape=shape, name=f"input_{name}")
         dense_model = None
@@ -2102,7 +2195,7 @@ def _create_inputs_non_periodic_maybe_sparse(
 
 def _create_inputs_periodic_maybe_sparse(
     shape: int,
-    p: ADCParameters,
+    p: ADCParameters | Parameters,
     name: str,
     sparse: bool,
 ) -> tuple[tf.Tensor, tf.Tensor, Union[tf.keras.Model, None]]:
@@ -2140,13 +2233,202 @@ def _create_inputs_periodic_maybe_sparse(
         name=name,
         sparse=sparse,
     )
-    unit_circle = PeriodicInput(p, f"input_{name}_to_unit_circle")(dense_placeholder)
+    if isinstance(p, ADCParameters) or (
+        isinstance(p, Parameters) and p.periodicity < float("inf")
+    ):
+        unit_circle = PeriodicInput(p, f"input_{name}_to_unit_circle")(
+            dense_placeholder
+        )
+    else:
+        unit_circle = dense_placeholder
     return placeholder, unit_circle, dense_model
 
 
 ################################################################################
 # Public Classes
 ################################################################################
+
+
+class AutoencoderSparseFunctionalModel(tf.keras.Model):
+    def __init__(
+        self,
+        parameters: ADCParameters,
+        inputs: Iterable[tf.Tensor],
+        outputs: Iterable[tf.Tensor],
+        encoder: tf.keras.Model,
+        decoder: tf.keras.Model,
+        get_dense_model: tf.keras.Model | None = None,
+    ) -> None:
+        self.p = parameters
+        super().__init__(
+            inputs=inputs, outputs=outputs, name="AutoencoderFunctionalModel"
+        )
+        self.encoder_model = encoder
+        self.decoder_model = decoder
+        self.get_dense_model = get_dense_model
+        self._my_train_counter = K.variable(0, "int64", name="train_counter")
+
+    def compile(self, *args, **kwargs) -> None:
+        super().compile(*args, **kwargs)
+        self.unpacked_loss_fns = {fn.__name__: fn for fn in self.compiled_loss._losses}
+
+    def train_step(self, data) -> None:
+        with tf.GradientTape() as tape:
+            tf.summary.experimental.set_step(self._my_train_counter)
+            loss = self.get_loss(data[0])
+            loggable_encoder_layers = [
+                l for l in self.encoder_model.layers if l.__class__.__name__ == "Dense"
+            ]
+            loggable_decoder_layers = [
+                l for l in self.decoder_model.layers if l.__class__.__name__ == "Dense"
+            ]
+            for l in loggable_encoder_layers + loggable_decoder_layers:
+                add_layer_summaries(l, step=self._my_train_counter)
+
+        # Compute Gradients
+        trainable_vars = self.trainable_variables
+        if self.get_dense_model is not None and not self.p.trainable_dense_to_sparse:
+            trainable_vars = (
+                self.encoder_model.trainable_variables
+                + self.decoder_model.trainable_variables
+            )
+
+        gradients = tape.gradient(loss, trainable_vars)
+
+        # Update weights
+        self.optimizer.apply_gradients(zip(gradients, trainable_vars))
+
+        # Update metrics
+        for metric in self.compiled_metrics._metrics:
+            metric.update_state(data, self(data))
+
+        # update train counter because tensorflow seems to have deprecated it
+        self._my_train_counter.assign_add(1)
+        return {m.name: m.result() for m in self.compiled_metrics._metrics} | {
+            "loss": loss,
+        }
+
+    def get_config(self) -> dict[str, Any]:
+        """Serializes this keras serializable.
+
+        Returns:
+            dict[str, Any]: A dict with the serializable objects.
+
+        """
+        config = super().get_config().copy()
+        config.update(
+            {
+                "parameters": self.p.to_dict(),
+                "input_shape": self.inputs[0].shape,
+                "output_shape": self.outputs[0].shape,
+                "encoder": tf.keras.saving.serialize_keras_object(self.encoder_model),
+                "decoder": tf.keras.saving.serialize_keras_object(self.decoder_model),
+            }
+        )
+        if self.get_dense_model is not None:
+            config.update(
+                {
+                    "get_dense_model": tf.keras.saving.serialize_keras_object(
+                        self.get_dense_model
+                    ),
+                }
+            )
+        return config
+
+    @classmethod
+    def from_config(
+        cls: Type[AutoencoderSparseFunctionalModel],
+        config: dict[str, Any],
+        custom_objects: Optional[dict[Any, Any]] = None,
+    ) -> AutoencoderSparseFunctionalModel:
+        """Reconstructs this keras serializable from a dict.
+
+        Args:
+            config (dict[str, Any]): A dictionary.
+            custom_objects (Optional[dict[str, Any]]): Not needed here, but see
+                https://keras.io/guides/serialization_and_saving/ for yourself.
+
+        Returns:
+            AutoencoderSparseFunctionalModel: An instance of the ADCSparseFunctionalModel.
+
+        """
+        input_shape_config = config.pop("input_shape")
+        input_shape = tf.keras.saving.deserialize_keras_object(input_shape_config)
+        output_shape_config = config.pop("output_shape")
+        output_shape = tf.keras.saving.deserialize_keras_object(output_shape_config)
+        encoder_config = config.pop("encoder")
+        encoder = tf.keras.saving.deserialize_keras_object(encoder_config)
+        decoder_config = config.pop("decoder")
+        decoder = tf.keras.saving.deserialize_keras_object(decoder_config)
+
+        # get the dense models
+        get_dense_model = config.pop("get_dense_model")
+        if get_dense_model is not None:
+            get_dense_model = tf.keras.saving.deserialize_keras_object(get_dense_model)
+
+        parameters = config.pop("parameters")
+        if "cartesian_pwd_start" in parameters:
+            parameters = ADCParameters(**parameters)
+        else:
+            parameters = Parameters(**parameters)
+
+        # create a new functional model and apply the weights from the encoder and decoder
+        new_model = gen_functional_model_autoencoder(
+            input_shape,
+            parameters,
+            write_summary=False,
+            sparse=True,
+        )
+
+        new_model.encoder_model.set_weights(encoder.get_weights())
+        new_model.decoder_model.set_weights(decoder.get_weights())
+
+        if new_model.get_dense_model is not None:
+            new_model.get_dense_model.set_weights(get_dense_model.get_weights())
+
+        return cls(
+            parameters,
+            new_model.inputs,
+            new_model.outputs,
+            new_model.encoder_model,
+            new_model.decoder_model,
+            new_model.get_dense_model,
+        )
+
+    @property
+    def encoder(self) -> tf.keras.Model:
+        return self.encoder_model
+
+    @property
+    def decoder(self) -> tf.keras.Model:
+        return self.decoder_model
+
+    def get_loss(self, inp):
+        if isinstance(inp, tf.sparse.SparseTensor):
+            d = self.get_dense_model(inp, training=True)
+        else:
+            d = inp
+        out = self(inp, training=True)
+        latent = self.encoder_model(inp, training=True)
+        with tf.name_scope("Cost"):
+            loss = 0.0
+
+            # distance loss
+            loss += self.unpacked_loss_fns["distance_loss_func"](d, latent)
+
+            # center loss
+            loss += self.unpacked_loss_fns["center_loss_func"](inp)
+
+            # auto loss
+            loss += self.unpacked_loss_fns["auto_loss_func"](d, out)
+
+            # reg loss
+            # just add the squared weights of all trainable layers
+            loss += self.unpacked_loss_fns["regularization_loss_func"]()
+
+            tf.summary.scalar("Combined Cost", loss)
+
+        return loss
 
 
 class ADCFunctionalModel(tf.keras.Model):
@@ -2234,7 +2516,9 @@ class ADCFunctionalModel(tf.keras.Model):
 
         # create a new functional model and apply the weights from the encoder and decoder
         input_shapes = tuple([tuple(i[1:]) for i in inputs])
-        new_model = gen_functional_model(input_shapes, parameters, write_summary=False)
+        new_model = gen_functional_model_adc(
+            input_shapes, parameters, write_summary=False
+        )
         new_model.encoder_model.set_weights(encoder.get_weights())
         new_model.decoder_model.set_weights(decoder.get_weights())
         return cls(
@@ -2644,7 +2928,9 @@ class ADCFunctionalModelTesting(tf.keras.Model):
 
         # create a new functional model and apply the weights from the encoder and decoder
         input_shapes = tuple([tuple(i[1:]) for i in inputs])
-        new_model = gen_functional_model(input_shapes, parameters, write_summary=False)
+        new_model = gen_functional_model_adc(
+            input_shapes, parameters, write_summary=False
+        )
         new_model.encoder_model.set_weights(encoder.get_weights())
         new_model.decoder_model.set_weights(decoder.get_weights())
         return cls(
@@ -2813,7 +3099,7 @@ class ADCSparseFunctionalModel(ADCFunctionalModel):
 
         # create a new functional model and apply the weights from the encoder and decoder
         input_shapes = tuple([tuple(i[1:]) for i in inputs])
-        new_model = gen_functional_model(
+        new_model = gen_functional_model_adc(
             input_shapes,
             parameters,
             write_summary=False,
@@ -2822,7 +3108,7 @@ class ADCSparseFunctionalModel(ADCFunctionalModel):
         if len(encoder.get_weights()) != len(new_model.encoder_model.get_weights()):
             # here, we can assume that the model was trained with
             # only sparse sidechains
-            new_model = gen_functional_model(
+            new_model = gen_functional_model_adc(
                 input_shapes,
                 parameters,
                 write_summary=False,
@@ -3170,7 +3456,13 @@ class SequentialModel(tf.keras.Model):
                 shape=(int(shape),),
                 sparse=True,
             )
-            x = Dense(shape)(_input_layer)
+            x = Dense(
+                units=shape,
+                kernel_initializer=tf.initializers.VarianceScaling(),
+                kernel_regularizer=regularizer,
+                bias_initializer=tf.initializers.RandomNormal(0.1, 0.5),
+                trainable=self.p.trainable_dense_to_sparse,
+            )(_input_layer)
             self.get_dense_model = tf.keras.Model(
                 inputs=_input_layer,
                 outputs=x,
@@ -3375,15 +3667,17 @@ class SequentialModel(tf.keras.Model):
 
         """
         x, _ = data
-        if self.sparse:
-            x = self.get_dense_model(x)
-
         with tf.GradientTape() as tape:
             tf.summary.experimental.set_step(self._my_train_counter)
+            if self.sparse:
+                x_ = self.get_dense_model(x, training=True)
+            else:
+                x_ = x
+
             with tf.name_scope("Cost"):
                 loss = 0.0
                 for l in self.compiled_loss._losses:
-                    loss += l(x, self(x, training=True))
+                    loss += l(x_, self(x, training=True))
                 tf.summary.scalar("Combined Cost", loss)
             for l in self.encoder_model.layers + self.decoder_model.layers:
                 add_layer_summaries(l, step=self._my_train_counter)

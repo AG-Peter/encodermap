@@ -2066,7 +2066,7 @@ def distance_histogram(
     while True:
         try:
             dists = np.linalg.norm(dists, axis=2)
-        except np.AxisError:
+        except np.exceptions.AxisError:
             break
     dists = dists.reshape(-1)
 

@@ -68,7 +68,7 @@ from encodermap.misc.rotate import mdtraj_rotate
 from encodermap.models.models import (
     MyBiasInitializer,
     MyKernelInitializer,
-    gen_functional_model,
+    gen_functional_model_adc,
 )
 from encodermap.trajinfo.info_single import Capturing
 
@@ -1840,7 +1840,7 @@ class TestTf1Tf2Deterministic(tf.test.TestCase):
         if train_tf2_dummy == "train_and_check":
             parameters_tf2 = em.ADCParameters(**agnostic_params)
             parameters_tf2.main_path = em.misc.run_path(str(output_dir / "runs"))
-            model = gen_functional_model(
+            model = gen_functional_model_adc(
                 input_shapes=[s[1:] for s in shapes],
                 parameters=parameters_tf2,
                 kernel_initializer="deterministic",
@@ -2204,7 +2204,7 @@ class TestTf1Tf2Deterministic(tf.test.TestCase):
             )
             parameters_tf2.tensorboard = True
             parameters_tf2.summary_step = 1
-            model = gen_functional_model(
+            model = gen_functional_model_adc(
                 input_shapes=[s[1:] for s in shapes],
                 parameters=parameters_tf2,
                 kernel_initializer="deterministic",
@@ -2708,7 +2708,7 @@ class TestTf1Tf2Deterministic(tf.test.TestCase):
                         key = f"dense_{i}/{type_}"
                     w_cartesians_init_weights[key] = reader.get_tensor(key)
 
-            model = gen_functional_model(
+            model = gen_functional_model_adc(
                 input_shapes=[s[1:] for s in shapes],
                 parameters=parameters_tf2,
                 kernel_initializer=w_cartesians_init_weights,

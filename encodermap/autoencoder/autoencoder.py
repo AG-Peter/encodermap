@@ -80,7 +80,11 @@ from encodermap.misc.backmapping import dihedral_backmapping, mdtraj_backmapping
 from encodermap.misc.distances import pairwise_dist
 from encodermap.misc.misc import create_n_cube, plot_model
 from encodermap.misc.saving_loading_models import load_model, save_model
-from encodermap.models.models import gen_functional_model, gen_sequential_model
+from encodermap.models.models import (
+    gen_functional_model_adc,
+    gen_sequential_model,
+    gen_functional_model_autoencoder,
+)
 from encodermap.parameters.parameters import ADCParameters, Parameters
 from encodermap.trajinfo.info_all import TrajEnsemble
 from encodermap.trajinfo.info_single import Capturing, SingleTraj
@@ -446,18 +450,26 @@ def _get_model(autoencoder: AutoencoderClass) -> tf.keras.Model:
     """sets self.model according to `model_api` argument in self.parameters."""
     model = autoencoder.p.model_api
     if model == "functional":
-        assert isinstance(autoencoder, AngleDihedralCartesianEncoderMap)
-        d = autoencoder.dataset.take(1)
-        if any(isinstance(_, tf.SparseTensorSpec) for _ in d.element_spec):
-            autoencoder.sparse = True
-        if hasattr(autoencoder.p, "reconstruct_sidechains"):
-            if autoencoder.p.reconstruct_sidechains:
-                assert len(d.element_spec) == 7
-        model = gen_functional_model(
-            autoencoder.dataset,
-            autoencoder.p,
-            sparse=autoencoder.sparse,
-        )
+        if isinstance(autoencoder, AngleDihedralCartesianEncoderMap):
+            d = autoencoder.dataset.take(1)
+            if any(isinstance(_, tf.SparseTensorSpec) for _ in d.element_spec):
+                autoencoder.sparse = True
+            if hasattr(autoencoder.p, "reconstruct_sidechains"):
+                if autoencoder.p.reconstruct_sidechains:
+                    assert len(d.element_spec) == 7
+            model = gen_functional_model_adc(
+                autoencoder.dataset,
+                autoencoder.p,
+                sparse=autoencoder.sparse,
+            )
+        elif isinstance(autoencoder, (EncoderMap, Autoencoder)):
+            model = gen_functional_model_autoencoder(
+                autoencoder.dataset,
+                autoencoder.p,
+                sparse=autoencoder.sparse,
+            )
+        else:
+            raise NotImplementedError
     elif model == "sequential":
         assert (
             isinstance(autoencoder, (Autoencoder, EncoderMap, DihedralEncoderMap))
@@ -720,6 +732,12 @@ class Autoencoder:
 
         # clear old sessions
         tf.keras.backend.clear_session()
+        if sparse and self.p.model_api == "sequential":
+            raise Exception(
+                f"Please choose `parameters.model_api='functional'` for "
+                f"training with sparse data. The sequential model API is not "
+                f"fit for handling sparse data."
+            )
         self.sparse = sparse
 
         # set up train_data

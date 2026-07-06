@@ -274,7 +274,8 @@ def distance_loss(
 
         """
         distance_loss_func.name = "distance_loss"
-        y_pred = latent(y_true, training=True)
+        if y_pred is None:
+            y_pred = latent(y_true, training=True)
         # functional model gives a tuple
         if isinstance(y_true, tuple):
             y_true = tf.concat(y_true[:3], axis=1)

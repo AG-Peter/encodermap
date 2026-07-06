@@ -59,7 +59,7 @@ from rich.console import Console
 import encodermap.models.models
 from conftest import skip_all_tests_except_env_var_specified
 from encodermap.misc.saving_loading_models import load_model, save_model
-from encodermap.models.models import gen_functional_model
+from encodermap.models.models import gen_functional_model_adc
 from encodermap.trajinfo.info_single import Capturing
 from encodermap.trajinfo.trajinfo_utils import load_CVs_ensembletraj
 
@@ -195,7 +195,7 @@ def test_trajs_with_dataset(
     )
     input_dataset = input_dataset.batch(256)
 
-    full_model = em.models.gen_functional_model(input_dataset, P)
+    full_model = em.models.gen_functional_model_adc(input_dataset, P)
     central_angles_sparse_tensor = full_dataset["central_angles"]
     central_dihedrals_sparse_tensor = full_dataset["central_dihedrals"]
     side_dihedrals_sparse_tensor = full_dataset["side_dihedrals"]
@@ -2775,7 +2775,7 @@ class TestAutoencoder(tf.test.TestCase):
 
         # do all of this with tf2
         # Encodermap imports
-        from encodermap.models.models import gen_functional_model
+        from encodermap.models.models import gen_functional_model_adc
 
         trajs = em.load(
             output_dir / "01.xtc",
@@ -2821,7 +2821,7 @@ class TestAutoencoder(tf.test.TestCase):
             trajs.side_dihedrals.shape[1:],
         )
 
-        model = gen_functional_model(
+        model = gen_functional_model_adc(
             input_shapes=input_shapes,
             parameters=parameters,
             bias_initializer="ones",
@@ -3671,7 +3671,7 @@ class TestAutoencoder(tf.test.TestCase):
                 if i > 100:
                     break
 
-        model = gen_functional_model(
+        model = gen_functional_model_adc(
             dataset,
             p,
             write_summary=False,

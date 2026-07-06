@@ -657,7 +657,7 @@ def load_model_legacy(
     """
     # Local Folder Imports
     from ..autoencoder import AngleDihedralCartesianEncoderMap
-    from ..models import gen_functional_model, gen_sequential_model
+    from ..models import gen_functional_model_adc, gen_sequential_model
 
     if "*" in str(checkpoint_path):
         checkpoint_path = list(
@@ -843,7 +843,7 @@ def load_model_legacy(
     )
 
     if autoencoder_class is AngleDihedralCartesianEncoderMap:
-        new_model = gen_functional_model(
+        new_model = gen_functional_model_adc(
             input_shapes=tuple([v[1:] for v in old_model.input_shape]),
             parameters=parameters,
             sparse=sparse,
